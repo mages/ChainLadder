@@ -35,10 +35,10 @@ if(n!=m){
   output[["Models"]] <- myModel
   output[["f"]] <- StdErr$f
   output[["f.se"]] <- StdErr$f.se
-  output[["F.se"]] <- StdErr$F.se # needs to be put into documentation
+  output[["F.se"]] <- StdErr$F.se 
   output[["sigma"]] <- StdErr$sigma
   output[["Mack.S.E"]] <- StdErr$FullTriangle.se
-  output[["Total.Mack.S.E"]] <- TotalMack.seR(FullTriangle, StdErr$f, StdErr$f.se, StdErr$F.se)
+  output[["Total.Mack.S.E"]] <- TotalMack.S.E(FullTriangle, StdErr$f, StdErr$f.se, StdErr$F.se)  
   
   class(output) <- c("MackChainLadder", "TriangleModel", "list")
   return(output)
@@ -100,8 +100,30 @@ predict.TriangleModel <- function(object,...){
     	 )
     	}	
   	}
-  return(list(sigma=sigma, f=f, f.se=f.se, FullTriangle.se=FullTriangle.se, F.se=F.se) )
+  return(list(sigma=sigma, f=f, f.se=f.se, FullTriangle.se=FullTriangle.se) )
   }
+
+################################################################################
+## Total reserve SE
+
+TotalMack.S.E <- function(FullTriangle,f, f.se, F.se){
+
+  C <- FullTriangle
+  n <- ncol(C)
+  m <- nrow(C)
+  
+  total.seR <- 0*c(1:(n))
+  
+  for(k in c(1:(n-1))){
+    total.seR[k+1] <- sqrt(total.seR[k]^2 * f[k]^2 +
+                           sum(C[c((m+1-k):m),k]^2 *
+                               (F.se[c((m+1-k):m),k]^2))
+                           + sum(C[c((m+1-k):m),k])^2 * f.se[k]^2 )
+  }
+  return(total.seR[length(total.seR)])
+}
+
+
 ##############################################################################
 # Summary
 #
@@ -127,10 +149,10 @@ summary.MackChainLadder <- function(object,...){
 # print 
 #
 print.MackChainLadder <- function(x,...){
-   res <- summary(x)
-	print(format(res, big.mark = ",", digits = 3),...)
 
-  Totals <-  c(sum(res$Latest,na.rm=TRUE), sum(res$Ultimate,na.rm=TRUE),
+ res <- summary(x)
+ print(format(res, big.mark = ",", digits = 3),...)
+ Totals <-  c(sum(res$Latest,na.rm=TRUE), sum(res$Ultimate,na.rm=TRUE),
                sum(res$Reserve,na.rm=TRUE), x[["Total.Mack.S.E"]],
                x[["Total.Mack.S.E"]]/sum(res$Reserve,na.rm=TRUE)*100)
   Totals <- formatC(Totals, big.mark=",",digit=0,format="f")
@@ -141,7 +163,6 @@ print.MackChainLadder <- function(x,...){
                         "Total S.E.% of Reserve:")
   cat("\n")
   print(Totals, quote=FALSE)
-
 
 	}
 
@@ -224,44 +245,4 @@ residuals.MackChainLadder <- function(object,...){
    return(na.omit(myResiduals))
    }
  
- 
- ## work on update
 
-################################################################################
-## Total reserve SE
-
-TotalMack.seR <- function(FullTriangle,f, f.se, F.se){
-
-  C <- FullTriangle
-  n <- ncol(C)
-  m <- nrow(C)
-  
-  total.seR <- 0*c(1:(n))
-#  q <- 0
-#  dev <- 1
-#  i <- 1
-  # IF Quarterly
-  
-  for(k in c(1:(n-1))){
-    total.seR[k+1] <- sqrt(total.seR[k]^2 * f[k]^2 +
-                           sum(C[c((m+1-k):m),k]^2 *
-                               (F.se[c((m+1-k):m),k]^2))
-                           + sum(C[c((m+1-k):m),k])^2 * f.se[k]^2 )
-#    if(k%%dev == q){
-#      i <- i+1
-#    }
-  }
-  # if tail factor exsits, calculate the ultimate 
- # if(f[n] > 1){
- #   
- #   se.f[n] <- mack.se.fult(clratios=f, se.f=se.f)
- #   se.F[,n] <- mack.se.Fult(se.fult=se.f[n], se.F=se.F)
- #   
- #   total.seR[n] <- sqrt(total.seR[n]^2 * f[n]^2 +
- #                        sum(C[c(1:m),n]^2 *
- #                            (se.F[c(1:m),n]^2))
- #                        + sum(C[c(1:m),n])^2 * se.f[n]^2 )
- # }
- #
-  return(total.seR[length(total.seR)])
-}
