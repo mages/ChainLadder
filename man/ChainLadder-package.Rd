@@ -40,30 +40,8 @@ Gerhard Quarg and Thomas Mack. Munich Chain Ladder. Blatter DGVFM 26, Munich, 20
 
 \examples{
 
-# Example data sets
-
-# Run off triangle of accumulated claims data. A data frame with 10 underwriting years and 10 
-# development years.
-# Source:Historical Loss Development, Reinsurance Association of America (RAA), 1991, p.96
-# See Also: Which Stochastic Model is Underlying the Chain Ladder Method?, Thomas Mack, 1994,
-# Insurance Mathematics and Economics, 15, 2/3, 133-138
-#
-# P.D.England and R.J.Verrall, Stochastic Claims Reserving in General Insurance, 
-# British Actuarial Journal, Vol. 8, pp443-544, 2002
-RAA <- t(matrix(c(
-  5012,  8269, 10907, 11805, 13539, 16181, 18009, 18608, 18662, 18834,
-   106,  4285,  5396, 10666, 13782, 15599, 15496, 16169, 16704,    NA,
-  3410,  8992, 13873, 16141, 18735, 22214, 22863, 23466,    NA,    NA,
-  5655, 11555, 15766, 21266, 23425, 26083, 27067,    NA,    NA,    NA,
-  1092,  9565, 15836, 22169, 25955, 26180,    NA,    NA,    NA,    NA,
-  1513,  6445, 11702, 12935, 15852,    NA,    NA,    NA,    NA,    NA,
-   557,  4020, 10946, 12314,    NA,    NA,    NA,    NA,    NA,    NA,
-  1351,  6947, 13112,    NA,    NA,    NA,    NA,    NA,    NA,    NA,
-  3133,  5395,    NA,    NA,    NA,    NA,    NA,    NA,    NA,    NA,
-  2063,    NA,    NA,    NA,    NA,    NA,    NA,    NA,    NA,    NA
-  ), ncol=10))
-  
-
+ data(RAA)
+ RAA  
 
  MCL=MackChainLadder(RAA)
  MCL
@@ -71,32 +49,14 @@ RAA <- t(matrix(c(
 
 
  # Munich Chain Ladder
-Paid <- t(matrix(c(
-  576, 1804, 1970, 2024, 2074, 2102, 2131,
-  866, 1948, 2162, 2232, 2284, 2348,   NA,
- 1412, 3758, 4252, 4416, 4494,   NA,   NA,
- 2286, 5292, 5724, 5850,   NA,   NA,   NA,
- 1868, 3778, 4648,   NA,   NA,   NA,   NA,
- 1442, 4010,   NA,   NA,   NA,   NA,   NA,
- 2044,   NA,   NA,   NA,   NA,   NA,   NA
- ), ncol=7))
- 	
-Incurred <- t(matrix(c( 
-  978, 2104, 2134, 2144, 2174, 2182, 2174,
- 1844, 2552, 2466, 2480, 2508, 2454,   NA,
- 2904, 4354, 4698, 4600, 4644,   NA,   NA,
- 3502, 5958, 6070, 6142,   NA,   NA,   NA,
- 2812, 4882, 4852,   NA,   NA,   NA,   NA,
- 2642, 4406,   NA,   NA,   NA,   NA,   NA,
- 5022,   NA,   NA,   NA,   NA,   NA,   NA
- ), ncol=7))
-
-MCL = MunichChainLadder(Paid, Incurred)
-MCL
-plot(MCL)
-
-
-
+ data(MCLpaid)
+ MCLpaid
+ data(MCLincurred)
+ MCLincurred
+ 
+ MCL = MunichChainLadder(MCLpaid, MCLincurred)
+ MCL
+ plot(MCL)
 
 }
 

@@ -54,8 +54,10 @@ A tail factor is not yet implemented.
   \item{Models}{linear regression models for each development year}
   \item{f}{chain-ladder ratios}
   \item{f.se}{standard error for chain-ladder ratios}
+  \item{F.se}{standard error for individual age-to-age ratios}
   \item{sigma}{chain-ladder ratio variance}
-  \item{Mack.S.E}{Mack's estimated standard error}
+  \item{Mack.S.E}{Mack's estimated standard error for the reserves}
+  \item{Total.Mack.S.E}{Mack's estimated overall standard error for the reserves}
   
 }
 \references{
@@ -73,83 +75,29 @@ Thomas Mack. The standard error of chain ladder reserve estimates: Recursive cal
 \seealso{ See also \code{\link{MunichChainLadder}}, \code{\link{residuals.MackChainLadder}} }
 \examples{
 
-# Run off triangle of claims data. A data frame with 9 underwriting years and 
-# 9 development years.
-# Source: Competition Presented at a London Market Actuaries Dinner, D.E.A. Sanders, 
-# 1990
-Mortgage <- t(matrix(c(
- 58046, 127970,  476599, 1027692, 1360489, 1647310, 1819179, 1906852, 1950105,
- 24492, 141767,  984288, 2142656, 2961978, 3683940, 4048898, 4115760,      NA,
- 32848, 274682, 1522637, 3203427, 4445927, 5158781, 5342585,      NA,      NA,
- 21439, 529828, 2900301, 4999019, 6460112, 6853904,      NA,      NA,      NA,
- 40397, 763394, 2920745, 4989572, 5648563,      NA,      NA,      NA,      NA,
- 90748, 951994, 4210640, 5866482,      NA,      NA,      NA,      NA,      NA,
- 62096, 868480, 1954797,      NA,      NA,      NA,      NA,      NA,      NA,
- 24983, 284441,      NA,      NA,      NA,      NA,      NA,      NA,      NA,
- 13121,     NA,      NA,      NA,      NA,      NA,      NA,      NA,      NA
- ), ncol=9))
 
+data(Mortgage)
+Mortgage
 
 MRT <- MackChainLadder(Mortgage)
 MRT
 plot(MRT) # We observe trends along calendar years.
 
 
-# Run off triangle of accumulated claims data. 
-# A data frame with 10 underwriting years and 10 development years.
-# Source: Second moments of estimates of outstanding claims, G.C. Taylor & F.R. Ashe, 
-# Journal of Econometrics, 23, pp 37-61
-# See Also: Distribution-free Calculation of the Standard Error of Chain Ladder Reserve
-# Estimates, Thomas Mack, 1993, ASTIN Bulletin 23, 213 - 225
-#
-# Peter England and Richard Verrall, Analytic and bootstrap estimates of prediction errors 
-# in claims reserving Insurance, Mathematics and Economics Vol. 25, pp 281-293, 1999
-#
-# P.D.England and R.J.Verrall, Stochastic Claims Reserving in General Insurance, 
-# British Actuarial Journal, Vol. 8, pp 443-544, 2002
-GenIns <- t(matrix(c(
-  357848, 1124788, 1735330, 2218270, 2745596, 3319994, 3466336, 3606286, 3833515, 3901463,
-  352118, 1236139, 2170033, 3353322, 3799067, 4120063, 4647867, 4914039, 5339085,      NA,
-  290507, 1292306, 2218525, 3235179, 3985995, 4132918, 4628910, 4909315,      NA,      NA,
-  310608, 1418858, 2195047, 3757447, 4029929, 4381982, 4588268,      NA,      NA,      NA,
-  443160, 1136350, 2128333, 2897821, 3402672, 3873311,      NA,      NA,      NA,      NA,
-  396132, 1333217, 2180715, 2985752, 3691712,      NA,      NA,      NA,      NA,      NA,
-  440832, 1288463, 2419861, 3483130,      NA,      NA,      NA,      NA,      NA,      NA,
-  359480, 1421128, 2864498,      NA,      NA,      NA,      NA,      NA,      NA,      NA,
-  376686, 1363294,      NA,      NA,      NA,      NA,      NA,      NA,      NA,      NA,
-  344014,      NA,      NA,      NA,      NA,      NA,      NA,      NA,      NA,      NA
-  ), ncol=10))
+data(GenIns)
+GenIns
 
 GNI <- MackChainLadder(GenIns)
 GNI
 plot(GNI)
  
   
-# Run off triangle of accumulated claims data. A data frame with 10 underwriting years and 10 
-# development years.
-# Source:Historical Loss Development, Reinsurance Association of America (RAA), 1991, p.96
-# See Also: Which Stochastic Model is Underlying the Chain Ladder Method?, Thomas Mack, 1994,
-# Insurance Mathematics and Economics, 15, 2/3, 133-138
-#
-# P.D.England and R.J.Verrall, Stochastic Claims Reserving in General Insurance, 
-# British Actuarial Journal, Vol. 8, pp443-544, 2002
-RAA <- t(matrix(c(
-  5012,  8269, 10907, 11805, 13539, 16181, 18009, 18608, 18662, 18834,
-   106,  4285,  5396, 10666, 13782, 15599, 15496, 16169, 16704,    NA,
-  3410,  8992, 13873, 16141, 18735, 22214, 22863, 23466,    NA,    NA,
-  5655, 11555, 15766, 21266, 23425, 26083, 27067,    NA,    NA,    NA,
-  1092,  9565, 15836, 22169, 25955, 26180,    NA,    NA,    NA,    NA,
-  1513,  6445, 11702, 12935, 15852,    NA,    NA,    NA,    NA,    NA,
-   557,  4020, 10946, 12314,    NA,    NA,    NA,    NA,    NA,    NA,
-  1351,  6947, 13112,    NA,    NA,    NA,    NA,    NA,    NA,    NA,
-  3133,  5395,    NA,    NA,    NA,    NA,    NA,    NA,    NA,    NA,
-  2063,    NA,    NA,    NA,    NA,    NA,    NA,    NA,    NA,    NA
-  ), ncol=10))
-  
+data(RAA)
+RAA  
  
- MCL=MackChainLadder(RAA)
- MCL
- plot(MCL)
+MCL <- MackChainLadder(RAA)
+MCL
+plot(MCL)
  
  
  # investigate in more detail
@@ -173,8 +121,8 @@ RAA <- t(matrix(c(
  par(op)
 
  # change the model for dev. period one to the newModel
- MCL2=MCL
- MCL2[["Models"]][[1]] = newModel
+ MCL2 <- MCL
+ MCL2[["Models"]][[1]] <- newModel
  predict(MCL2) # predict the full triangle with the new model 
  #(only the last origin year will be affected)
 

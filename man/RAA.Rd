@@ -1,10 +1,11 @@
 \name{RAA}
 \alias{RAA}
 \docType{data}
-\title{Run-off triangle of Automatic Factultative business in General
-  Liability}
+\title{Run off triangle of accumulated claims data}
+\description{Run-off triangle of Automatic Factultative business in General Liability}
+  
 \usage{data(RAA)}
-\format{Run off triangle of accumulated claims data.
+\format{
   A matrix with 10 accident years and 10 development years.
 }
 \source{Historical Loss Development, \emph{Reinsurance Association of Ammerica
