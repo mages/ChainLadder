@@ -14,3 +14,7 @@
 	* R/MackChainLadder: Mack.S.E checks now which sigma>0 before log
 	linear regression of sigma to estimate sigma[n-1]
 
+2008-05-11 Markus Gesmann  <markus.gesmann@web.de>
+
+	* inst/Excel/ChainLadder_in_Excel.xls uses now dynamic functions 
+	and shows how to call 'plot' from Excel 
