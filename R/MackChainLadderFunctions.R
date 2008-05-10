@@ -136,11 +136,11 @@ summary.MackChainLadder <- function(object,...){
   Latest <- rev(.Triangle[row(as.matrix(.Triangle)) == (m+1 - col(as.matrix(.Triangle)))])  
   Ultimate <- object[["FullTriangle"]][,n]
   Dev.To.Date <- Latest/Ultimate
-  Reserve <- Ultimate-Latest
+  IBNR <- Ultimate-Latest
   Mack.S.E <- object[["Mack.S.E"]][,n]  
   Mack.S.E.Ratio <- Mack.S.E/(Ultimate-Latest)
 
-  myResult <- data.frame(Latest, Dev.To.Date, Ultimate, Reserve, Mack.S.E, Mack.S.E.Ratio) 
+  myResult <- data.frame(Latest, Dev.To.Date, Ultimate, IBNR, Mack.S.E, CoV) 
 
   return(myResult)
 }
@@ -153,14 +153,14 @@ print.MackChainLadder <- function(x,...){
  res <- summary(x)
  print(format(res, big.mark = ",", digits = 3),...)
  Totals <-  c(sum(res$Latest,na.rm=TRUE), sum(res$Ultimate,na.rm=TRUE),
-               sum(res$Reserve,na.rm=TRUE), x[["Total.Mack.S.E"]],
-               x[["Total.Mack.S.E"]]/sum(res$Reserve,na.rm=TRUE)*100)
+               sum(res$IBNR,na.rm=TRUE), x[["Total.Mack.S.E"]],
+               x[["Total.Mack.S.E"]]/sum(res$IBNR,na.rm=TRUE)*100)
   Totals <- formatC(Totals, big.mark=",",digit=0,format="f")
   Totals <- as.data.frame(Totals)
   colnames(Totals)=c("Totals:")
   rownames(Totals) <- c("Sum of Latest:","Sum of CL-Ultimate:",
-                        "Sum of CL-Reserve:","Total Mack S.E.:",
-                        "Total S.E.% of Reserve:")
+                        "Sum of CL-IBNR:","Total Mack S.E.:",
+                        "Total CoV:")
   cat("\n")
   print(Totals, quote=FALSE)
 
@@ -180,8 +180,8 @@ plot.MackChainLadder <- function(x, mfrow=c(3,2), title=NULL,...){
   .FullTriangle <- x[["FullTriangle"]]
   .Triangle <- x[["Triangle"]]
   n <- nrow(.Triangle)
-  bp <- barplot(t(as.matrix(.myResult[,c("Latest","Reserve")])), 
-  		legend.text=c("Latest","Reserve"),
+  bp <- barplot(t(as.matrix(.myResult[,c("Latest","IBNR")])), 
+  		legend.text=c("Latest","IBNR"),
   		names.arg=c(1:n),
   		main="Mack Chain Ladder Results",
   		xlab="Origin year",

@@ -27,7 +27,7 @@ License: \tab GPL version 2 or later\cr
 \author{
 Markus Gesmann
 
-Maintainer: Markus Gesmann <markus.gesmann@web.de>
+Maintainer: Markus Gesmann <markus.gesmann@gmail.com>
 }
 \references{
 Thomas Mack. Distribution-free calculation of the standard error of chain ladder reserve estimates. Astin Bulletin. Vol. 23. No 2. 1993. pp.213:225
