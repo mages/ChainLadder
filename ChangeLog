@@ -2,12 +2,12 @@
 
 2008-02-11  Markus Gesmann  <markus.gesmann@web.de>
 
-	* MackChainLadder.R, MackChainLadder.Rd: added function
+	* R/MackChainLadder.R, MackChainLadder.Rd: added function
 	TotalMack.S.E function to estimate the overall standard error for
 	the reserve. MackChainLadder gives now also the
 	Total.Mack.S.E. back plus the estimate standard error for all
 	individual age-to-age factors F.se.
-	
+
 
 2008-02-02  Markus Gesmann  <markus.gesmann@web.de>
 
