@@ -138,7 +138,7 @@ summary.MackChainLadder <- function(object,...){
   Dev.To.Date <- Latest/Ultimate
   IBNR <- Ultimate-Latest
   Mack.S.E <- object[["Mack.S.E"]][,n]  
-  Mack.S.E.Ratio <- Mack.S.E/(Ultimate-Latest)
+  CoV <- Mack.S.E/(Ultimate-Latest)
 
   myResult <- data.frame(Latest, Dev.To.Date, Ultimate, IBNR, Mack.S.E, CoV) 
 
