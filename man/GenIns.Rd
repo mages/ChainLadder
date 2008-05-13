@@ -17,7 +17,6 @@ of Outstanding Claims.  \emph{Journal of Econometrics} \bold{23}, 37-61.
   \emph{ASTIN Bulletin} \bold{23}, 213 - 225
 }
 \examples{
-data(GenIns)
 GenIns
 matplot(t(GenIns), type="l")
 }

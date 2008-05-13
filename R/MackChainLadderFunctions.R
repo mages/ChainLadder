@@ -158,8 +158,8 @@ print.MackChainLadder <- function(x,...){
   Totals <- formatC(Totals, big.mark=",",digit=0,format="f")
   Totals <- as.data.frame(Totals)
   colnames(Totals)=c("Totals:")
-  rownames(Totals) <- c("Sum of Latest:","Sum of CL-Ultimate:",
-                        "Sum of CL-IBNR:","Total Mack S.E.:",
+  rownames(Totals) <- c("Sum of Latest:","Sum of Ultimate:",
+                        "Sum of IBNR:","Total Mack S.E.:",
                         "Total CoV:")
   cat("\n")
   print(Totals, quote=FALSE)

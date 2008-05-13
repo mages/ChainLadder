@@ -19,7 +19,6 @@
   pp443-544, 2002
 }
 \examples{
-data(RAA)
 RAA
 matplot(t(RAA), type="l")
 }

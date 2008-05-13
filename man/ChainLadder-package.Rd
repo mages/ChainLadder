@@ -40,7 +40,6 @@ Gerhard Quarg and Thomas Mack. Munich Chain Ladder. Blatter DGVFM 26, Munich, 20
 
 \examples{
 
- data(RAA)
  RAA  
 
  MCL=MackChainLadder(RAA)
@@ -49,9 +48,7 @@ Gerhard Quarg and Thomas Mack. Munich Chain Ladder. Blatter DGVFM 26, Munich, 20
 
 
  # Munich Chain Ladder
- data(MCLpaid)
  MCLpaid
- data(MCLincurred)
  MCLincurred
  
  MCL = MunichChainLadder(MCLpaid, MCLincurred)

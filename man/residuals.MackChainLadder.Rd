@@ -31,7 +31,7 @@
 
 \examples{
 
- data(RAA)
+ RAA
  MCL=MackChainLadder(RAA)
  MCL  
 

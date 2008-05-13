@@ -76,25 +76,19 @@ Thomas Mack. The standard error of chain ladder reserve estimates: Recursive cal
 \examples{
 
 
-data(Mortgage)
-Mortgage
 
+Mortgage
 MRT <- MackChainLadder(Mortgage)
 MRT
 plot(MRT) # We observe trends along calendar years.
 
-
-data(GenIns)
 GenIns
-
 GNI <- MackChainLadder(GenIns)
 GNI
 plot(GNI)
  
   
-data(RAA)
 RAA  
- 
 MCL <- MackChainLadder(RAA)
 MCL
 plot(MCL)
@@ -131,7 +125,7 @@ plot(MCL)
  MCL2   # Std. Errors have not been re-estimated!
  # plot the result
  
- plot(MCL2, title="Change MCL Model")
+ plot(MCL2, title="Changed MCL Model")
 
 
 }

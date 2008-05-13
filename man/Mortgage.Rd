@@ -17,7 +17,7 @@
   \emph{ASTIN Bulletin} \bold{23}, 213 - 225
 }
 \examples{
-data(Mortgage)
+Mortgage
 Mortgage
 matplot(t(Mortgage), type="l")
 }

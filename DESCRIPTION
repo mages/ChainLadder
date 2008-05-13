@@ -10,3 +10,4 @@ Depends: Hmisc
 License: GPL (>= 2)
 Packaged: Wed Feb  6 23:05:55 2008; markus.gesmann
 URL: http://code.google.com/p/chainladder/
+LazyData: yes

@@ -67,9 +67,7 @@ MunichChainLadder(Paid, Incurred)
 \seealso{ See also \code{\link{MackChainLadder}} }
 \examples{
 
-data(MCLpaid)
 MCLpaid
-data(MCLincurred)
 MCLincurred
 
 MCL = MunichChainLadder(MCLpaid, MCLincurred)

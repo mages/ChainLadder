@@ -36,8 +36,8 @@
 \seealso{ See Also \code{\link{MackChainLadder}} }
 \examples{
 
- data(RAA)
-    
+
+ RAA    
  MCL=MackChainLadder(RAA)
  MCL
  plot(MCL)

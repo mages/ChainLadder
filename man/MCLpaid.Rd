@@ -15,8 +15,8 @@ data(MCLincurred)}
   Munich, 2004. 
   }
 \examples{
-data(MCLpaid)
-data(MCLincurred)
+MCLpaid
+MCLincurred
 op=par(mfrow=c(2,1))
 matplot(t(MCLpaid), type="l")
 matplot(t(MCLincurred), type="l")
