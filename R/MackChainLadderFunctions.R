@@ -65,7 +65,7 @@ predict.TriangleModel <- function(object,...){
 # mean squared error = stochastic error (process variance) + estimation error
 # standard error = sqrt(mean squared error)
  
- Mack.S.E <- function(MackModel, FullTriangle){
+ Mack.S.E <- function(MackModel, FullTriangle, loglinear=TRUE){
    n <- ncol(FullTriangle)
    m <- nrow(FullTriangle)
    f <- rep(1,n)
@@ -78,15 +78,22 @@ predict.TriangleModel <- function(object,...){
    sigma[1:(n-1)] <- sapply(MackModel, function(x) summary(x)$sigma)
    
   
-  # estimate sigma[n-1] via log-linear regression
-  dev=c(1:(n-2))
-  gn <- which(sigma>0)
-  .sigma <- sigma[gn]
-  .dev <- dev[gn]
-  sigmaModel <- lm(log(.sigma) ~ .dev)
-  sigma[n-1] <- exp(predict(sigmaModel, newdata=data.frame(.dev=(n-1))))
+ if(loglinear){
+    # estimate sigma[n-1] via log-linear regression
+    dev=c(1:(n-2))
+    gn <- which(sigma>0)
+    .sigma <- sigma[gn]
+    .dev <- dev[gn]
+    sigmaModel <- lm(log(.sigma) ~ .dev)
+    sigma[n-1] <- exp(predict(sigmaModel, newdata=data.frame(.dev=(n-1))))
+  }else{
+    sigma[n - 1] <- sqrt(abs(min((sigma[n - 2]^4/sigma[n - 
+              3]^2), min(sigma[n - 3]^2, sigma[n - 2]^2))))
+  }
   
   f.se[n-1] = sigma[n-1]/sqrt(FullTriangle[1,n-1]) 
+  
+  
   
   F.se <- t(t(1/sqrt(FullTriangle)[,-n])*(sigma))
   
@@ -100,7 +107,7 @@ predict.TriangleModel <- function(object,...){
     	 )
     	}	
   	}
-  return(list(sigma=sigma, f=f, f.se=f.se, FullTriangle.se=FullTriangle.se) )
+  return(list(sigma=sigma, f=f, f.se=f.se, F.se=F.se, FullTriangle.se=FullTriangle.se) )
   }
 
 ################################################################################

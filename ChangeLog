@@ -9,14 +9,20 @@
 	individual age-to-age factors F.se.
 
 
-2008-02-02  Markus Gesmann  <markus.gesmann@web.de>
+2008-02-02  Markus Gesmann  <markus.gesmann@gmail.com>
 
 	* R/MackChainLadderFunctions.R: Mack.S.E checks now which sigma>0 before log
 	linear regression of sigma to estimate sigma[n-1]
 
-2008-05-11 Markus Gesmann  <markus.gesmann@web.de>
+2008-05-11 Markus Gesmann  <markus.gesmann@gmail.com>
 
 	* inst/Excel/ChainLadder_in_Excel.xls uses now dynamic functions 
 	and shows how to call 'plot' from Excel 
 	* R/MackChainLadderFunctions.R: Changed labels Reserving to IBNR 
 	(=Incurred But Not Reported)
+
+2008-05-19  Markus Gesmann  <markus.gesmann@gmail.com>
+
+         * R/MackChainLadder.R Bug fix: Function Mack.S.E did not give F.se back, 
+           which is needed by TotalMack.S.E. 
+           Many thanks to Florian Leitenstorfer for reporting this issue.
