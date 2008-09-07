@@ -26,3 +26,9 @@
          * R/MackChainLadder.R Bug fix: Function Mack.S.E did not give F.se back, 
            which is needed by TotalMack.S.E. 
            Many thanks to Florian Leitenstorfer for reporting this issue.
+
+2008-09-08 Markus Gesmann  <markus.gesmann@gmail.com>
+
+         * R/MackChainLadder.R Prepared the functions Mack.S.E and 
+	   Total.Mack.S.E to accept triangles with rows full of NA values.
+	   This might be useful for non quadratic triangles
