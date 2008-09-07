@@ -1,10 +1,11 @@
 
 # Author: Markus Gesmann
-# Copyright: Markus Gesmann, markus.gesmann@web.de
+# Copyright: Markus Gesmann, markus.gesmann@gmail.com
 # Date:10/11/2007
+# Date:08/09/2008
 
 MackChainLadder <- function(Triangle, weights=1/Triangle){
-  	
+
   n <- ncol(Triangle)
   m <- nrow(Triangle)
 
@@ -83,16 +84,16 @@ predict.TriangleModel <- function(object,...){
     dev=c(1:(n-2))
     gn <- which(sigma>0)
     .sigma <- sigma[gn]
-    .dev <- dev[gn]
+    .dev <- c(1:n)[gn] #dev[gn]
     sigmaModel <- lm(log(.sigma) ~ .dev)
-    sigma[n-1] <- exp(predict(sigmaModel, newdata=data.frame(.dev=(n-1))))
-  }else{
+    sigma[-gn] <- exp(predict(sigmaModel,
+                              newdata=data.frame(.dev=c(1:(n-1))[-gn])))
+    f.se[-gn] = sigma[n-1]/sqrt(FullTriangle[1,-gn]) 
+}else{
     sigma[n - 1] <- sqrt(abs(min((sigma[n - 2]^4/sigma[n - 
               3]^2), min(sigma[n - 3]^2, sigma[n - 2]^2))))
-  }
-  
-  f.se[n-1] = sigma[n-1]/sqrt(FullTriangle[1,n-1]) 
-  
+    f.se[n-1] = sigma[n-1]/sqrt(FullTriangle[1,n-1]) 
+}
   
   
   F.se <- t(t(1/sqrt(FullTriangle)[,-n])*(sigma))
@@ -124,8 +125,8 @@ TotalMack.S.E <- function(FullTriangle,f, f.se, F.se){
   for(k in c(1:(n-1))){
     total.seR[k+1] <- sqrt(total.seR[k]^2 * f[k]^2 +
                            sum(C[c((m+1-k):m),k]^2 *
-                               (F.se[c((m+1-k):m),k]^2))
-                           + sum(C[c((m+1-k):m),k])^2 * f.se[k]^2 )
+                               (F.se[c((m+1-k):m),k]^2),na.rm=TRUE)
+                           + sum(C[c((m+1-k):m),k],na.rm=TRUE)^2 * f.se[k]^2 )
   }
   return(total.seR[length(total.seR)])
 }
@@ -183,7 +184,8 @@ plot.MackChainLadder <- function(x, mfrow=c(3,2), title=NULL,...){
 
  op=par(mfrow=mfrow, oma=myoma)
 
-  .myResult <- summary(x)
+  .myResult <-  summary(x) 
+  
   .FullTriangle <- x[["FullTriangle"]]
   .Triangle <- x[["Triangle"]]
   n <- nrow(.Triangle)
