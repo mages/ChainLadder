@@ -1,6 +1,6 @@
 
 
-2008-02-11  Markus Gesmann  <markus.gesmann@web.de>
+2008-02-11  Markus Gesmann  <markus.gesmann@gmail.com>
 
 	* R/MackChainLadderFunctions.R: added function
 	TotalMack.S.E function to estimate the overall standard error for
