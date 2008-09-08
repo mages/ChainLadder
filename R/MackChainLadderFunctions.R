@@ -195,7 +195,7 @@ plot.MackChainLadder <- function(x, mfrow=c(3,2), title=NULL,...){
   		main="Mack Chain Ladder Results",
   		xlab="Origin year",
   		ylab="Amounts",#paste(Currency,myUnit), 
-  		ylim=c(0, max(.myResult$Ultimate+.myResult$Mack.S.E)))
+  		ylim=c(0, max(apply(.myResult[c("Ultimate", "Mack.S.E")],1,sum),na.rm=TRUE)))
   		
   # add error ticks
   require("Hmisc")		

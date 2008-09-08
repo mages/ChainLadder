@@ -1,4 +1,4 @@
-
+# source(paste(searchpaths()[grep("ChainLadder", searchpaths())],"/Experimental/BootstrapReserve.R", sep=""))
 
 BootReserve <- function(triangle = RAA, R = 1000, process.distr="gamma"){
 
