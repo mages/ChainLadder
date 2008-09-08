@@ -12,10 +12,10 @@ left.tri <- function(x) col(as.matrix(x)) < ncol(as.matrix(x))-row(as.matrix(x))
 #
 MunichChainLadder <- function(Paid, Incurred){
 	
- if(!all(dim(Paid) == dim(Incurred)))
- 	stop("Paid and Incurred triangle must have same dimension.\n")
- if(nrow(Paid) != ncol(Paid))
- 	stop("Number of origin years has to be equal to number of development years.\n")	
+# if(!all(dim(Paid) == dim(Incurred)))
+# 	stop("Paid and Incurred triangle must have same dimension.\n")
+# if(nrow(Paid) != ncol(Paid))
+# 	stop("Number of origin years has to be equal to number of development years.\n")	
 	
 
  MackPaid = MackChainLadder(Paid)
@@ -77,8 +77,17 @@ MunichChainLadder <- function(Paid, Incurred){
 
 
  # linear regression of the residuals through the origin
- lambdaP <- coef(lm(QinverseResiduals[left.tri(QinverseResiduals)] ~ PaidResiduals[left.tri(PaidResiduals)] +0))
- lambdaI <- coef(lm(QResiduals[left.tri(QResiduals)] ~ IncurredResiduals[left.tri(IncurredResiduals)] +0))
+ 
+ .x <- na.omit(data.frame(QinverseResiduals=QinverseResiduals[left.tri(QinverseResiduals)] , 
+ 						  PaidResiduals=PaidResiduals[left.tri(PaidResiduals)]))
+ .x <- .x[is.finite(.x$QinverseResiduals) & is.finite(.x$PaidResiduals),]
+ 
+ lambdaP <- coef(lm(QinverseResiduals ~ PaidResiduals + 0, data=.x))
+ 
+ .y <- na.omit(data.frame(QResiduals=QResiduals[left.tri(QResiduals)], 
+ 						  IncurredResiduals=IncurredResiduals[left.tri(IncurredResiduals)]))
+ .y <- .y[is.finite(.y$QResiduals) & is.finite(.y$IncurredResiduals),]
+ lambdaI <- coef(lm(QResiduals ~ IncurredResiduals +0, data=.y))
 
 
  # Recursive Munich Chain Ladder Forumla
