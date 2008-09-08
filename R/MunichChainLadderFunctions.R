@@ -12,10 +12,10 @@ left.tri <- function(x) col(as.matrix(x)) < ncol(as.matrix(x))-row(as.matrix(x))
 #
 MunichChainLadder <- function(Paid, Incurred){
 	
-# if(!all(dim(Paid) == dim(Incurred)))
-# 	stop("Paid and Incurred triangle must have same dimension.\n")
-# if(nrow(Paid) != ncol(Paid))
-# 	stop("Number of origin years has to be equal to number of development years.\n")	
+ if(!all(dim(Paid) == dim(Incurred)))
+ 	stop("Paid and Incurred triangle must have same dimension.\n")
+ if(nrow(Paid) != ncol(Paid))
+ 	stop("Number of origin years has to be equal to number of development years.\n")	
 	
 
  MackPaid = MackChainLadder(Paid)
