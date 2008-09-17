@@ -12,7 +12,7 @@
 \arguments{
   \item{object}{a list with two items: \code{Models}, \code{Triangle}
   \describe{
-    \item{\code{Models}}{list of linear models for each development year
+    \item{\code{Models}}{list of linear models for each development period
       }
     \item{\code{Triangle}}{input triangle to forecast
       }

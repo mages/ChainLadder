@@ -193,7 +193,7 @@ plot.MackChainLadder <- function(x, mfrow=c(3,2), title=NULL,...){
   		legend.text=c("Latest","IBNR"),
   		names.arg=c(1:n),
   		main="Mack Chain Ladder Results",
-  		xlab="Origin year",
+  		xlab="Origin period",
   		ylab="Amounts",#paste(Currency,myUnit), 
   		ylim=c(0, max(apply(.myResult[c("Ultimate", "Mack.S.E")],1,sum),na.rm=TRUE)))
   		
@@ -206,8 +206,8 @@ plot.MackChainLadder <- function(x, mfrow=c(3,2), title=NULL,...){
   	add=TRUE)
   
   matplot(t(.FullTriangle), t="l", 
-    main="Chain ladder developments by origin year",
-    xlab="Development year", 
+    main="Chain ladder developments by origin period",
+    xlab="Development period", 
     ylab="Amounts", #paste(Currency, myUnit)
     )
   matplot(t(.Triangle), add=TRUE)
@@ -217,17 +217,17 @@ plot.MackChainLadder <- function(x, mfrow=c(3,2), title=NULL,...){
     	ylab="Standardised residuals", xlab="Fitted")
     	lines(lowess(Residuals$fitted.value, Residuals$standard.residuals), col="red")
     	abline(h=0, col="grey") 
-    plot(standard.residuals ~ origin.year, data=Residuals,
-    	ylab="Standardised residuals", xlab="Origin year")
-    	lines(lowess(Residuals$origin.year, Residuals$standard.residuals), col="red")
+    plot(standard.residuals ~ origin.period, data=Residuals,
+    	ylab="Standardised residuals", xlab="Origin period")
+    	lines(lowess(Residuals$origin.period, Residuals$standard.residuals), col="red")
     	abline(h=0, col="grey")
-    plot(standard.residuals ~ cal.year, data=Residuals,
-    	ylab="Standardised residuals", xlab="Calendar year")
-    	lines(lowess(Residuals$cal.year, Residuals$standard.residuals), col="red")
+    plot(standard.residuals ~ cal.period, data=Residuals,
+    	ylab="Standardised residuals", xlab="Calendar period")
+    	lines(lowess(Residuals$cal.period, Residuals$standard.residuals), col="red")
       abline(h=0, col="grey")
-    plot(standard.residuals ~ dev.year, data=Residuals,
-    	ylab="Standardised residuals", xlab="Development year")
-    	lines(lowess(Residuals$dev.year, Residuals$standard.residuals), col="red")
+    plot(standard.residuals ~ dev.period, data=Residuals,
+    	ylab="Standardised residuals", xlab="Development period")
+    	lines(lowess(Residuals$dev.period, Residuals$standard.residuals), col="red")
   	abline(h=0, col="grey")
 
   title( title , outer=TRUE) 
@@ -241,13 +241,13 @@ residuals.MackChainLadder <- function(object,...){
    myresiduals <- unlist(lapply(object[["Models"]], resid,...))
    standard.residuals <- unlist(lapply(object[["Models"]], rstandard,...))
    fitted.value <- unlist(lapply(object[["Models"]], fitted)) 
-   origin.year <- unlist(lapply(1:(n-1), function(x) 1:length(resid( object[["Models"]][[x]]) )))
-   dev.year <- unlist(lapply(1:(n-1), function(x) rep(x,length(resid( object[["Models"]][[x]]) ))))
-   cal.year <- origin.year + dev.year - 1
+   origin.period <- unlist(lapply(1:(n-1), function(x) 1:length(resid( object[["Models"]][[x]]) )))
+   dev.period <- unlist(lapply(1:(n-1), function(x) rep(x,length(resid( object[["Models"]][[x]]) ))))
+   cal.period <- origin.period + dev.period - 1
    
-   myResiduals=data.frame(origin.year,
-                          dev.year,
-                          cal.year,
+   myResiduals=data.frame(origin.period,
+                          dev.period,
+                          cal.period,
                           residuals=myresiduals, 
                           standard.residuals,
                           fitted.value)

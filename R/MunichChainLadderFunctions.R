@@ -186,13 +186,13 @@ summary.MunichChainLadder <- function(object,...){
   n <- ncol(x[["MCLPaid"]])
   barplot(t(as.matrix(data.frame(Paid=x[["MCLPaid"]][,n], Incurred=x[["MCLIncurred"]][,n]))),
   beside=TRUE, legend.text=c("MCL Paid", "MCL Incurred"), names.arg=c(1:n),
-  xlab="origin year", ylab="Amounts", main="Munich Chain Ladder Results")
+  xlab="origin period", ylab="Amounts", main="Munich Chain Ladder Results")
 
   barplot(t(as.matrix(
   data.frame(SCL.PI=100*x[["SCLPaid"]]$FullTriangle[,n]/x[["SCLIncurred"]]$FullTriangle[,n],
   			MCL.PI=100*x[["MCLPaid"]][,n]/x[["MCLIncurred"]][,n]))),
   beside=TRUE, legend.text=c("SCL P/I", "MCL P/I"), names.arg=c(1:n),
-  xlab="origin year", ylab="%", main="Munich Chain Ladder vs. Standard Chain Ladder")
+  xlab="origin period", ylab="%", main="Munich Chain Ladder vs. Standard Chain Ladder")
 
 
   plot(x[["PaidResiduals"]][left.tri(x[["PaidResiduals"]])] ~ x[["QinverseResiduals"]][left.tri(x[["QinverseResiduals"]])],

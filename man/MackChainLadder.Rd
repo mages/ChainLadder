@@ -33,17 +33,19 @@ MackChainLadder(Triangle, weights = 1/Triangle)
 }
 \details{
 
-Let \eqn{C_{ik}} denote the cumulative loss amounts of origin year \eqn{i=1,\ldots,n}, with losses know for development year \eqn{k \leq n+1-i}.
+Let \eqn{C_{ik}} denote the cumulative loss amounts of origin period (e.g. accident year) 
+\eqn{i=1,\ldots,n}, with losses know for development period \eqn{k \leq n+1-i}.
 In order to forecast the amounts \eqn{C_{ik}} for  \eqn{k > n+1-i} the Mack chain-ladder-model assumes:
   \deqn{ E[ \frac{C_{i,k+1}}{C_{ik}} | C_{i1},C_{i2},\ldots,C_{ik} ] = f_k }
   \deqn{ Var( \frac{C_{i,k+1}}{C_{ik}} | C_{i1},C_{i2},\ldots,C_{ik} ) = \frac{\sigma_k^2}{C_{ik}} }
-  \deqn{\{ C_{i1},\ldots,C_{in}\}, \{ C_{j1},\ldots,C_{jn}\},\; are\; independent\; for\; origin\; year\; i \neq j }
-If these assumptions are hold, the Mack chain-ladder-model gives an unbiased estimator for IBNR (Incurred But Not Reported) claims.
+  \deqn{\{ C_{i1},\ldots,C_{in}\}, \{ C_{j1},\ldots,C_{jn}\},\; are\; independent\; for\; origin\; period\; i \neq j }
+If these assumptions are hold, the Mack chain-ladder-model gives an unbiased estimator for IBNR 
+(Incurred But Not Reported) claims.
   
 The chain-ladder model can be regarded as weighted linear regression through the 
-origin for each development year: \code{lm(y ~ x  + 0, weights=1/x)}, 
-where \code{y} is the vector of claims at development year k+1 and \code{x} is 
-the vector of claims at development year k. 
+origin for each development period: \code{lm(y ~ x  + 0, weights=1/x)}, 
+where \code{y} is the vector of claims at development period k+1 and \code{x} is 
+the vector of claims at development period k. 
 
 A tail factor is not yet implemented.
 }
@@ -51,7 +53,7 @@ A tail factor is not yet implemented.
 
   \item{Triangle}{input triangle of cumulative claims}
   \item{FullTriangle}{forecasted full triangle}
-  \item{Models}{linear regression models for each development year}
+  \item{Models}{linear regression models for each development period}
   \item{f}{chain-ladder ratios}
   \item{f.se}{standard error for chain-ladder ratios}
   \item{F.se}{standard error for individual age-to-age ratios}
