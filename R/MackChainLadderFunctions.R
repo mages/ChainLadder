@@ -159,7 +159,7 @@ summary.MackChainLadder <- function(object,...){
 print.MackChainLadder <- function(x,...){
 
  res <- summary(x)
- print(format(res, big.mark = ",", digits = 3),...)
+ print(format(res[!is.na(res$Latest),], big.mark = ",", digits = 3),...)
  Totals <-  c(sum(res$Latest,na.rm=TRUE), sum(res$Ultimate,na.rm=TRUE),
                sum(res$IBNR,na.rm=TRUE), x[["Total.Mack.S.E"]],
                x[["Total.Mack.S.E"]]/sum(res$IBNR,na.rm=TRUE)*100)

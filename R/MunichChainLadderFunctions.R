@@ -1,11 +1,25 @@
 # Author: Markus Gesmann
-# Copyright: Markus Gesmann, markus.gesmann@web.de
-# Date:10/11/2007
+# Copyright: Markus Gesmann, markus.gesmann@gmail.com
+# Date:10/11/2007; 17/09/2008
 
-####################################################
+##############################################################################
 # Get the top left triangle of a matrix
 left.tri <- function(x) col(as.matrix(x)) < ncol(as.matrix(x))-row(as.matrix(x)) + 2
-####################################################
+##############################################################################
+
+
+##############################################################################
+
+estimate.sigma <- function(sigma){
+if(!all(is.na(sigma))){
+ n <- length(sigma)
+ dev <- 1:n
+ my.dev <- dev[!is.na(sigma)]
+ my.model <- lm(log(sigma[my.dev]) ~ my.dev)
+ sigma[is.na(sigma)] <- exp(predict(my.model, newdata=data.frame(my.dev=dev[is.na(sigma)])))
+ }
+ return(sigma)
+}
 
 ##############################################################################
 # Munich Chain Ladder
@@ -38,7 +52,7 @@ MunichChainLadder <- function(Paid, Incurred){
 	q.f[s] = summary(myQModel[[s]])$coef[1]
 	rhoI.sigma[s] = summary(myQModel[[s]])$sigma
  }
-
+ rhoI.sigma <- estimate.sigma(rhoI.sigma)
 
  myQinverseModel <- vector("list", n)
  qinverse.f <- rep(1,n)
@@ -51,7 +65,8 @@ MunichChainLadder <- function(Paid, Incurred){
 	qinverse.f[s] = summary(myQinverseModel[[s]])$coef[1]
 	rhoP.sigma[s] = summary(myQinverseModel[[s]])$sigma
  }
-
+ rhoP.sigma <- estimate.sigma(rhoP.sigma)
+ 
   # Estimate the residuals
 
   Paidf <-  t(matrix(rep(MackPaid$f[-n],(n-1)), ncol=(n-1)))
@@ -155,7 +170,8 @@ summary.MunichChainLadder <- function(object,...){
 # print 
 #	
  print.MunichChainLadder <- function(x,...){
-  	print(format(summary(x), big.mark = ",", digits = 3),...)
+   res <- summary(x)
+  	print(format(res[!is.na(res$LatestPaid),], big.mark = ",", digits = 3),...)
  }
 
 ##############################################################################
