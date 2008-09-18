@@ -25,12 +25,12 @@ if(!all(is.na(sigma))){
 # Munich Chain Ladder
 #
 MunichChainLadder <- function(Paid, Incurred){
-	
+
  if(!all(dim(Paid) == dim(Incurred)))
  	stop("Paid and Incurred triangle must have same dimension.\n")
  if(nrow(Paid) != ncol(Paid))
- 	stop("Number of origin years has to be equal to number of development years.\n")	
-	
+ 	stop("Number of origin years has to be equal to number of development years.\n")
+
 
  MackPaid = MackChainLadder(Paid)
  MackIncurred = MackChainLadder(Incurred)
@@ -66,7 +66,7 @@ MunichChainLadder <- function(Paid, Incurred){
 	rhoP.sigma[s] = summary(myQinverseModel[[s]])$sigma
  }
  rhoP.sigma <- estimate.sigma(rhoP.sigma)
- 
+
   # Estimate the residuals
 
   Paidf <-  t(matrix(rep(MackPaid$f[-n],(n-1)), ncol=(n-1)))
@@ -92,14 +92,14 @@ MunichChainLadder <- function(Paid, Incurred){
 
 
  # linear regression of the residuals through the origin
- 
- .x <- na.omit(data.frame(QinverseResiduals=QinverseResiduals[left.tri(QinverseResiduals)] , 
+
+ .x <- na.omit(data.frame(QinverseResiduals=QinverseResiduals[left.tri(QinverseResiduals)] ,
  						  PaidResiduals=PaidResiduals[left.tri(PaidResiduals)]))
  .x <- .x[is.finite(.x$QinverseResiduals) & is.finite(.x$PaidResiduals),]
- 
+
  lambdaP <- coef(lm(QinverseResiduals ~ PaidResiduals + 0, data=.x))
- 
- .y <- na.omit(data.frame(QResiduals=QResiduals[left.tri(QResiduals)], 
+
+ .y <- na.omit(data.frame(QResiduals=QResiduals[left.tri(QResiduals)],
  						  IncurredResiduals=IncurredResiduals[left.tri(IncurredResiduals)]))
  .y <- .y[is.finite(.y$QResiduals) & is.finite(.y$IncurredResiduals),]
  lambdaI <- coef(lm(QResiduals ~ IncurredResiduals +0, data=.y))
@@ -142,23 +142,23 @@ MunichChainLadder <- function(Paid, Incurred){
    class(output) <- c("MunichChainLadder", "list")
 
    return(output)
- 
+
  }
 
 ##############################################################################
-# summary 
+# summary
 #
 summary.MunichChainLadder <- function(object,...){
-   n <- ncol(object[["MCLPaid"]])	
+   n <- ncol(object[["MCLPaid"]])
    .Paid <- as.matrix(object[["Paid"]])
-   .Incurred <- as.matrix(object[["Incurred"]])   
+   .Incurred <- as.matrix(object[["Incurred"]])
 
   	LatestPaid = rev(.Paid[row(.Paid) == (n+1 - col(.Paid))])
     LatestIncurred = rev(.Incurred[row(.Incurred) == (n+1 - col(.Incurred))])
     UltimatePaid = object[["MCLPaid"]][,n]
     UltimateIncurred = object[["MCLIncurred"]][,n]
-   	
-       Result <- data.frame(LatestPaid,	LatestIncurred, 
+
+       Result <- data.frame(LatestPaid,	LatestIncurred,
        				Latest.P.I.Ratio=LatestPaid/LatestIncurred,
        				UltimatePaid,
        				UltimateIncurred,
@@ -167,22 +167,22 @@ summary.MunichChainLadder <- function(object,...){
 }
 
 ##############################################################################
-# print 
-#	
+# print
+#
  print.MunichChainLadder <- function(x,...){
    res <- summary(x)
   	print(format(res[!is.na(res$LatestPaid),], big.mark = ",", digits = 3),...)
  }
 
 ##############################################################################
-# plot 
+# plot
 #
  plot.MunichChainLadder <- function(x, mfrow=c(2,2), title=NULL, ...){
 
  if(is.null(title)) myoma <- c(0,0,0,0) else myoma <- c(0,0,2,0)
 
  op=par(mfrow=mfrow, oma=myoma)
- 
+
   n <- ncol(x[["MCLPaid"]])
   barplot(t(as.matrix(data.frame(Paid=x[["MCLPaid"]][,n], Incurred=x[["MCLIncurred"]][,n]))),
   beside=TRUE, legend.text=c("MCL Paid", "MCL Incurred"), names.arg=c(1:n),
@@ -213,6 +213,6 @@ summary.MunichChainLadder <- function(object,...){
 	abline(h=0)
 	abline(a=0,b=x[["lambdaI"]], col="red")
 
-  title( title , outer=TRUE) 
+  title( title , outer=TRUE)
   par(op)
   }

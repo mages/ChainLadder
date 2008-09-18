@@ -11,7 +11,7 @@
   claims triangle.
 }
 \usage{
-MackChainLadder(Triangle, weights = 1/Triangle)
+MackChainLadder(Triangle, weights = 1/Triangle, tail=FALSE)
 
 \method{print}{MackChainLadder}(x, \dots)
 
@@ -25,6 +25,7 @@ MackChainLadder(Triangle, weights = 1/Triangle)
   \item{Triangle}{ a cumulative claims triangle.  A quadratic (nxn)-matrix \eqn{C_{ik}} 
     which is filled for \eqn{k \leq n+1-i, i=1,\ldots,n }}
   \item{weights}{ weights. Default: 1/Triangle} 
+  \item{tail}{can be logical or a numeric value. If tail=FALSE no tail factor will be applied, if tail=TRUE a tail factor will be estimate via a linear extrapolation of log(chain ladder factors - 1), if tail is a numeric value than this value will be used as tail factor. }
   \item{x, object}{an object of class \code{"MackChainLadder"}}
   \item{mfrow}{see \code{\link{par}}}
   \item{title}{see \code{\link{title}}}  
@@ -47,7 +48,6 @@ origin for each development period: \code{lm(y ~ x  + 0, weights=1/x)},
 where \code{y} is the vector of claims at development period k+1 and \code{x} is 
 the vector of claims at development period k. 
 
-A tail factor is not yet implemented.
 }
 \value{
 
@@ -60,7 +60,7 @@ A tail factor is not yet implemented.
   \item{sigma}{chain-ladder ratio variance}
   \item{Mack.S.E}{Mack's estimated standard error for the reserves}
   \item{Total.Mack.S.E}{Mack's estimated overall standard error for the reserves}
-  
+  \item{tail}{tail factor used. It tail was set to TRUE the output will include the linear model used to estimate the tail factor}  
 }
 \references{
 Thomas Mack. Distribution-free calculation of the standard error of chain ladder reserve estimates. Astin Bulletin. Vol. 23. No 2. 1993. pp.213:225
@@ -88,7 +88,10 @@ GenIns
 GNI <- MackChainLadder(GenIns)
 GNI
 plot(GNI)
- 
+## include a tail factor
+GNIt <- MackChainLadder(GenIns, tail=TRUE)
+## extract more information on the tail factor
+GNIt$tail 
   
 RAA  
 MCL <- MackChainLadder(RAA)
