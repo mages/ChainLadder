@@ -4,7 +4,7 @@
 # Date:10/11/2007
 # Date:08/09/2008
 
-MackChainLadder <- function(Triangle, weights=1/Triangle){
+MackChainLadder <- function(Triangle, weights=1/Triangle, tail=FALSE){
 
   n <- ncol(Triangle)
   m <- nrow(Triangle)
@@ -22,11 +22,41 @@ if(n!=m){
   	myModel[[i]] <- lm(y~x+0, weights=weights[1:(m-i),i], data=data.frame(x,y))   	
  	 }
  	 
- 	 # Predict the chain ladder model
-   FullTriangle <- predict.TriangleModel(list(Models=myModel, Triangle=Triangle))
+  # Predict the chain ladder model
+  FullTriangle <- predict.TriangleModel(list(Models=myModel, Triangle=Triangle))
+      
+  # Estimate the standard error
+  StdErr <- Mack.S.E(myModel, FullTriangle, loglinear=FALSE)
+  Total.SE <- TotalMack.S.E(FullTriangle, StdErr$f, StdErr$f.se, StdErr$F.se)
+ 
+  # Check for tail factor
+  if(is.logical(tail)){
+    if(tail){
+        tail.factor <- tailfactor(StdErr$f)$tail.factor        
+      }else{       
+        tail.factor <- tail    
+      }
+    }else{
+     tail.factor <- tail
+    }
+
+  # Now do something   
+  if(tail.factor>1){
+   FullTriangle[,n] <- FullTriangle[,n] * tail.factor
+   StdErr$f[n] <- tail.factor
    
-   # Estimate the standard error
-   StdErr <- Mack.S.E(myModel, FullTriangle)
+    StdErr$f.se[n] <- mack.se.fult(clratios = StdErr$f, se.f = StdErr$f.se)
+    StdErr$F.se <- cbind(StdErr$F.se, mack.se.Fult(se.fult = StdErr$f.se[n], se.F = StdErr$F.se))
+        for (i in c(1:m)) {
+           StdErr$FullTriangle.se[i,n] <- sqrt(FullTriangle[i, n]^2 * (StdErr$F.se[i,n]^2 + StdErr$f.se[n]^2) + 
+                StdErr$FullTriangle.se[i,n]^2 * tail.factor^2)
+       }
+       
+   Total.SE <- sqrt(Total.SE^2 * StdErr$f[n]^2 + sum(FullTriangle[c(1:m), n]^2 * 
+                  (StdErr$F.se[c(1:m), n]^2)) + sum(FullTriangle[c(1:m), n])^2 * 
+                   StdErr$f.se[n]^2)              
+      }
+
   
   #Collect the output                  
   output <- list()
@@ -39,7 +69,7 @@ if(n!=m){
   output[["F.se"]] <- StdErr$F.se 
   output[["sigma"]] <- StdErr$sigma
   output[["Mack.S.E"]] <- StdErr$FullTriangle.se
-  output[["Total.Mack.S.E"]] <- TotalMack.S.E(FullTriangle, StdErr$f, StdErr$f.se, StdErr$F.se)  
+  output[["Total.Mack.S.E"]] <- Total.SE  
   
   class(output) <- c("MackChainLadder", "TriangleModel", "list")
   return(output)
@@ -254,22 +284,109 @@ residuals.MackChainLadder <- function(object,...){
    return(na.omit(myResiduals))
    }
  
-
+################################################################################
+# estimate tail factor, idea from Thomas Mack:
+#       THE STANDARD ERROR OF CHAIN LADDER RESERVE ESTIMATES:
+#       RECURSIVE CALCULATION AND INCLUSION OF A TAIL FACTOR
+#
 tailfactor <- function (clratios) 
 {
     f <- clratios
     n <- length(f)
     if (f[n - 2] * f[n - 1] > 1.0001) {
-        f <- clratios[which(clratios > 1)]
+        fn <- which(clratios > 1)
+        f <- clratios[fn]
         n <- length(f)
-        co <- coef(lm(log(f - 1) ~ c(1:n)))
+        tail.model <- lm(log(f - 1) ~ fn)
+        co <- coef(tail.model)
         tail <- exp(co[1] + c(n:(n + 100)) * co[2]) + 1
         tail <- prod(tail)
-        if (tail > 2) 
+        if (tail > 2){ 
+            print("The estimate tail factor was bigger than 2 and has been reset to 1.")
             tail <- 1
+            }
     }
     else {
         tail <- 1
     }
-    return(tail)
+    return(list(tail.factor=tail, tail.model=tail.model))
+}
+
+
+
+##############################################################################
+## estimate the stanard error of the tail factor
+
+mack.se.fult <- function (clratios, se.f) 
+{
+    f <- clratios
+    n <- length(f)
+    fult <- f[n]
+    k <- findInterval(fult, sort(f[-n]))
+    if (k != 0) {
+        k <- order(f[-n])[k]
+    }
+    if ((1 < k) && (k < n)) {
+        if (abs(f[k] - f[k - 1]) > 0) {
+            se.fult <- (1 - (f[k] - fult)/(f[k] - f[k - 1])) * 
+                se.f[k - 1] + (f[k] - fult)/(f[k] - f[k - 1]) * 
+                se.f[k]
+        }
+        else {
+            se.fult <- se.f[n - 1]
+        }
+    }
+    else {
+        se.fult <- se.f[n - 1]
+    }
+    return(se.fult)
+}
+
+##############################################################################
+## estimate the stanard error of the tail factor ratios
+
+
+mack.se.Fult <- function (se.fult, se.F) 
+{
+    n <- ncol(se.F)
+    se.Fult <- se.F[, n]
+    se.Fult <- as.matrix(se.Fult)
+    se.Fult <- se.fult * (1 + se.Fult)
+    return(se.Fult)
+}
+
+
+
+mack.recursive.seR <- function (object, se.f, se.F, clratios, quarterly = FALSE) 
+{
+    C <- object
+    n <- ncol(C)
+    m <- nrow(C)
+    f <- clratios
+    se.C <- C * 0
+    q <- 0
+    dev <- 1
+    i <- 1
+    if (quarterly == TRUE) {
+        dev <- 4
+        q <- n%%dev - 1
+    }
+    if (m > 1) {
+        for (i in c(2:m)) {
+            for (k in c((n - (i - 1) * dev):(n - 1))) {
+                se.C[i, k + 1] <- sqrt(C[i, k]^2 * (se.F[i, k]^2 + 
+                  se.f[k]^2) + se.C[i, k]^2 * f[k]^2)
+            }
+        }
+    }
+    if (f[n] > 1) {
+        se.fult <- mack.se.fult(clratios = f, se.f = se.f)
+        se.Fult <- mack.se.Fult(se.fult = se.fult, se.F = se.F)
+        for (i in c(1:m)) {
+            se.C[i, n] <- sqrt(C[i, n]^2 * (se.Fult[i]^2 + se.fult^2) + 
+                se.C[i, n]^2 * f[n]^2)
+        }
+    }
+    print(se.C)
+    return(se.C)
 }
