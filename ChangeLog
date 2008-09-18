@@ -1,5 +1,4 @@
 
-
 2008-02-11  Markus Gesmann  <markus.gesmann@gmail.com>
 
 	* R/MackChainLadderFunctions.R: added function
@@ -7,7 +6,6 @@
 	the reserve. MackChainLadder gives now also the
 	Total.Mack.S.E. back plus the estimate standard error for all
 	individual age-to-age factors F.se.
-
 
 2008-02-02  Markus Gesmann  <markus.gesmann@gmail.com>
 
@@ -32,3 +30,10 @@
          * R/MackChainLadder.R Prepared the functions Mack.S.E and 
 	   Total.Mack.S.E to accept triangles with rows full of NA values.
 	   This might be useful for non quadratic triangles
+
+2008-09-18 Markus Gesmann <markus.gesmann@gmail.com>
+
+	* R/MackChainLadder.R Included tail factor estimation. The
+	function MackChainLadder has a new argument: tail.
+	* data/qpaid.RData, qincurred.RData Examples of quarterly
+	development triangles 
