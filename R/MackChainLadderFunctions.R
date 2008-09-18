@@ -26,7 +26,7 @@ MackChainLadder <- function(Triangle, weights=1/Triangle, tail=FALSE){
     FullTriangle <- predict.TriangleModel(list(Models=myModel, Triangle=Triangle))
 
     ## Estimate the standard error
-    StdErr <- Mack.S.E(myModel, FullTriangle, loglinear=FALSE)
+    StdErr <- Mack.S.E(myModel, FullTriangle, loglinear=TRUE)
     Total.SE <- TotalMack.S.E(FullTriangle, StdErr$f, StdErr$f.se, StdErr$F.se)
 
     ## Check for tail factor
@@ -50,7 +50,7 @@ MackChainLadder <- function(Triangle, weights=1/Triangle, tail=FALSE){
         StdErr$F.se <- cbind(StdErr$F.se, mack.se.Fult(se.fult = StdErr$f.se[n], se.F = StdErr$F.se))
         StdErr$FullTriangle.se[,n] <- sqrt(FullTriangle[, n]^2 * (StdErr$F.se[,n]^2 + StdErr$f.se[n]^2) +
                                            StdErr$FullTriangle.se[,n]^2 * tail.factor^2)
-        
+
         Total.SE <- sqrt(Total.SE^2 * StdErr$f[n]^2 + sum(FullTriangle[c(1:m), n]^2 * (StdErr$F.se[c(1:m), n]^2)) +
                          sum(FullTriangle[c(1:m), n])^2 * StdErr$f.se[n]^2)
     }
