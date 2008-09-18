@@ -255,3 +255,21 @@ residuals.MackChainLadder <- function(object,...){
    }
  
 
+tailfactor <- function (clratios) 
+{
+    f <- clratios
+    n <- length(f)
+    if (f[n - 2] * f[n - 1] > 1.0001) {
+        f <- clratios[which(clratios > 1)]
+        n <- length(f)
+        co <- coef(lm(log(f - 1) ~ c(1:n)))
+        tail <- exp(co[1] + c(n:(n + 100)) * co[2]) + 1
+        tail <- prod(tail)
+        if (tail > 2) 
+            tail <- 1
+    }
+    else {
+        tail <- 1
+    }
+    return(tail)
+}
