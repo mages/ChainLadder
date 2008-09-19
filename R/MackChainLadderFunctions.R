@@ -82,10 +82,8 @@ predict.TriangleModel <- function(object,...){
     m <- nrow(object[["Triangle"]])
     FullTriangle <- object[["Triangle"]]
     for(j in c(1:(n-1))){
-    	for(k in c((n-j+1):m)){
-            FullTriangle[k, j+1] <- predict(object[["Models"]][[j]],
-                                            newdata=data.frame(x=FullTriangle[k, j]),...)
-        }
+        FullTriangle[c((n-j+1):m), j+1] <- predict(object[["Models"]][[j]],
+                                                   newdata=data.frame(x=FullTriangle[c((n-j+1):m), j]),...)
     }
     return(FullTriangle)
 }

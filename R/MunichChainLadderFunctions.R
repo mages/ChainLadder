@@ -110,12 +110,12 @@ MunichChainLadder <- function(Paid, Incurred){
     FullIncurred <- Incurred
     for(j in c(1:(n-1))){
         for(i in c((n-j+1):n) ){
-                                        # Paid
+            ## Paid
             mclcorrection <- lambdaP*MackPaid$sigma[j]/rhoP.sigma[j]*(
                                                                       FullIncurred[i,j]/FullPaid[i,j]-qinverse.f[j]
                                                                       )
             FullPaid[i,j+1] = FullPaid[i,j] * (MackPaid$f[j] + mclcorrection)
-                                        # Incurred
+            ## Incurred
             mclcorrection <- lambdaI*MackIncurred$sigma[j]/rhoI.sigma[j]*(
                                                                           FullPaid[i,j]/FullIncurred[i,j]-q.f[j]
                                                                           )
