@@ -3,8 +3,7 @@
 ## Copyright: Markus Gesmann, markus.gesmann@gmail.com
 ## Date:10/11/2007
 ## Date:08/09/2008
-
-MackChainLadder <- function(Triangle, weights=1/Triangle, tail=FALSE){
+ChainLadder <- function(Triangle, weights=1/Triangle){
 
     n <- ncol(Triangle)
     m <- nrow(Triangle)
@@ -22,11 +21,23 @@ MackChainLadder <- function(Triangle, weights=1/Triangle, tail=FALSE){
   	myModel[[i]] <- lm(y~x+0, weights=weights[1:(m-i),i], data=data.frame(x,y))
     }
 
+    output <- list(Models=myModel, Triangle=Triangle)
+    class(output) <- c("TriangleModel", class(output))
+return(output)
+}
+
+
+MackChainLadder <- function(Triangle, weights=1/Triangle, tail=FALSE){
+
+    n <- ncol(Triangle)
+    m <- nrow(Triangle)
+
+    myModel <- ChainLadder(Triangle, weights)
     ## Predict the chain ladder model
-    FullTriangle <- predict.TriangleModel(list(Models=myModel, Triangle=Triangle))
+    FullTriangle <- predict.TriangleModel(list(Models=myModel$Models, Triangle=Triangle))
 
     ## Estimate the standard error
-    StdErr <- Mack.S.E(myModel, FullTriangle, loglinear=TRUE)
+    StdErr <- Mack.S.E(myModel$Models, FullTriangle, loglinear=TRUE)
     Total.SE <- TotalMack.S.E(FullTriangle, StdErr$f, StdErr$f.se, StdErr$F.se)
 
     ## Check for tail factor
