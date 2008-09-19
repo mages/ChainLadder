@@ -3,7 +3,7 @@
 \alias{qincurred}
 \docType{data}
 \title{Quarterly run off triangle of accumulated claims data}
-\description{}
+\description{Sample data to demonstrate how to work with quarterly development triangles}
   
 \usage{data(qpaid); data(qincurred)}
 \format{
@@ -11,8 +11,8 @@
 }
 \source{Made up data}
 \examples{
-qpaid
-qincurred
+dim(qpaid)
+dim(qincurred)
 op=par(mfrow=c(1,2))
 ymax <- max(c(qpaid,qincurred),na.rm=TRUE)*1.05
 matplot(t(qpaid), type="l", main="Paid development", xlab="Dev. quarter", ylab="$", ylim=c(0,ymax))

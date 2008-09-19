@@ -23,7 +23,7 @@ MackChainLadder(Triangle, weights = 1/Triangle, tail=FALSE)
 %- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{Triangle}{ a cumulative claims triangle.  A quadratic (nxn)-matrix \eqn{C_{ik}} 
-    which is filled for \eqn{k \leq n+1-i, i=1,\ldots,n }}
+    which is filled for \eqn{k \leq n+1-i, i=1,\ldots,n }, see \code{\link{qpaid}} for how to use (mxn)-development triangles with m<n.}
   \item{weights}{ weights. Default: 1/Triangle} 
   \item{tail}{can be logical or a numeric value. If tail=FALSE no tail factor will be applied, if tail=TRUE a tail factor will be estimate via a linear extrapolation of log(chain ladder factors - 1), if tail is a numeric value than this value will be used as tail factor. }
   \item{x, object}{an object of class \code{"MackChainLadder"}}
@@ -74,7 +74,7 @@ Thomas Mack. The standard error of chain ladder reserve estimates: Recursive cal
 %
 % ~Make other sections like Warning with \section{Warning }{....} ~
 %}
-\seealso{ See also \code{\link{MunichChainLadder}}, \code{\link{residuals.MackChainLadder}} }
+\seealso{ See also \code{\link{MunichChainLadder}}, \code{\link{qpaid}}, \code{\link{residuals.MackChainLadder}} }
 \examples{
 
 
