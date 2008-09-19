@@ -8,6 +8,5 @@ Maintainer: Markus Gesmann <markus.gesmann@gmail.com>
 Description: The package contains the Mack- and Munich-chain-ladder methods which are used in insurance claims reserving exercise.
 Depends: Hmisc
 License: GPL (>= 2)
-Packaged: Wed Feb  6 23:05:55 2008; markus.gesmann
 URL: http://code.google.com/p/chainladder/
 LazyData: yes

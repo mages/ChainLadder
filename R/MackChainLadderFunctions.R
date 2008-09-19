@@ -58,7 +58,7 @@ MackChainLadder <- function(Triangle, weights=1/Triangle, tail=FALSE){
 
     ## Collect the output
     output <- list()
-
+    output[["Call"]] <-  match.call(expand.dots = FALSE)
     output[["Triangle"]] <- Triangle
     output[["FullTriangle"]] <- FullTriangle
     output[["Models"]] <- myModel
@@ -188,18 +188,24 @@ summary.MackChainLadder <- function(object,...){
 print.MackChainLadder <- function(x,...){
 
     res <- summary(x)
+    print(x$Call)
+    cat("\n")
     print(format(res[!is.na(res$Latest),], big.mark = ",", digits = 3),...)
     Totals <-  c(sum(res$Latest,na.rm=TRUE), sum(res$Ultimate,na.rm=TRUE),
-                 sum(res$IBNR,na.rm=TRUE), x[["Total.Mack.S.E"]],
-                 x[["Total.Mack.S.E"]]/sum(res$IBNR,na.rm=TRUE)*100)
-    Totals <- formatC(Totals, big.mark=",",digit=0,format="f")
+                 sum(res$IBNR,na.rm=TRUE), x[["Total.Mack.S.E"]]
+                 #,x[["Total.Mack.S.E"]]/sum(res$IBNR,na.rm=TRUE)
+                 )
+    Totals <- formatC(Totals, big.mark=",",digits=0,format="f")
+    Totals <- c(Totals, round(x[["Total.Mack.S.E"]]/sum(res$IBNR,na.rm=TRUE),2))
     Totals <- as.data.frame(Totals)
+
     colnames(Totals)=c("Totals:")
     rownames(Totals) <- c("Sum of Latest:","Sum of Ultimate:",
                           "Sum of IBNR:","Total Mack S.E.:",
                           "Total CoV:")
     cat("\n")
     print(Totals, quote=FALSE)
+    #invisible(x)
 
 }
 
