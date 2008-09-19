@@ -58,7 +58,7 @@ MackChainLadder <- function(Triangle, weights=1/Triangle, tail=FALSE){
 
     ## Collect the output
     output <- list()
-    output[["Call"]] <-  match.call(expand.dots = FALSE)
+    output[["call"]] <-  match.call(expand.dots = FALSE)
     output[["Triangle"]] <- Triangle
     output[["FullTriangle"]] <- FullTriangle
     output[["Models"]] <- myModel
@@ -188,7 +188,7 @@ summary.MackChainLadder <- function(object,...){
 print.MackChainLadder <- function(x,...){
 
     res <- summary(x)
-    print(x$Call)
+    print(x$call)
     cat("\n")
     print(format(res[!is.na(res$Latest),], big.mark = ",", digits = 3),...)
     Totals <-  c(sum(res$Latest,na.rm=TRUE), sum(res$Ultimate,na.rm=TRUE),

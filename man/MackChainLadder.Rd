@@ -50,7 +50,7 @@ the vector of claims at development period k.
 
 }
 \value{
-
+  \item{Call}{the matched call} 
   \item{Triangle}{input triangle of cumulative claims}
   \item{FullTriangle}{forecasted full triangle}
   \item{Models}{linear regression models for each development period}
