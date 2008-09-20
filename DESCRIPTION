@@ -1,11 +1,11 @@
 Package: ChainLadder
 Type: Package
 Title: Mack- and Munich-chain-ladder methods for insurance claims reserving
-Version: 0.1.1-6
-Date: 2008-09-08
+Version: 0.1.2-1
+Date: 2008-09-20
 Author: Markus Gesmann
 Maintainer: Markus Gesmann <markus.gesmann@gmail.com>
-Description: The package contains the Mack- and Munich-chain-ladder methods which are used in insurance claims reserving exercise.
+Description: The package contains the Mack-, Munich-, and Bootstrap chain-ladder methods which are used in insurance claims reserving exercise.
 Depends: Hmisc
 License: GPL (>= 2)
 URL: http://code.google.com/p/chainladder/
