@@ -24,7 +24,7 @@ estimate.sigma <- function(sigma){
 ##############################################################################
 ## Munich Chain Ladder
 ##
-MunichChainLadder <- function(Paid, Incurred){
+MunichChainLadder <- function(Paid, Incurred,...){
 
     if(!all(dim(Paid) == dim(Incurred)))
  	stop("Paid and Incurred triangle must have same dimension.\n")
@@ -32,8 +32,8 @@ MunichChainLadder <- function(Paid, Incurred){
  	stop("Number of origin years has to be equal to number of development years.\n")
 
 
-    MackPaid = MackChainLadder(Paid)
-    MackIncurred = MackChainLadder(Incurred)
+    MackPaid = MackChainLadder(Paid,...)
+    MackIncurred = MackChainLadder(Incurred,...)
 
     n <- ncol(Paid)
 

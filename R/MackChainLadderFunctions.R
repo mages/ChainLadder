@@ -52,18 +52,12 @@ MackChainLadder <- function(Triangle, weights=1/Triangle, tail=FALSE){
         tail.factor <- tail
     }
 
-    ## Estimate standard error for the tail factor
+    ## Estimate standard error for the tail
     if(tail.factor>1){
-        FullTriangle[,n] <- FullTriangle[,n] * tail.factor
-        StdErr$f[n] <- tail.factor
-
-        StdErr$f.se[n] <- mack.se.fult(clratios = StdErr$f, se.f = StdErr$f.se)
-        StdErr$F.se <- cbind(StdErr$F.se, mack.se.Fult(se.fult = StdErr$f.se[n], se.F = StdErr$F.se))
-        StdErr$FullTriangle.se[,n] <- sqrt(FullTriangle[, n]^2 * (StdErr$F.se[,n]^2 + StdErr$f.se[n]^2) +
-                                           StdErr$FullTriangle.se[,n]^2 * tail.factor^2)
-
-        Total.SE <- sqrt(Total.SE^2 * StdErr$f[n]^2 + sum(FullTriangle[c(1:m), n]^2 * (StdErr$F.se[c(1:m), n]^2)) +
-                         sum(FullTriangle[c(1:m), n])^2 * StdErr$f.se[n]^2)
+        tail.out <- tail.SE(FullTriangle, StdErr, Total.SE, tail.factor)
+        FullTriangle <- tail.out[["FullTriangle"]]
+        StdErr <- tail.out[["StdErr"]]
+        Total.SE <- tail.out[["Total.SE"]]
     }
 
 
@@ -84,6 +78,24 @@ MackChainLadder <- function(Triangle, weights=1/Triangle, tail=FALSE){
     class(output) <- c("MackChainLadder", "TriangleModel", "list")
     return(output)
 }
+########################################################################
+## Estimate standard error for tail
+
+tail.SE <- function(FullTriangle, StdErr, Total.SE, tail.factor){
+    n <- ncol(FullTriangle)
+    m <- nrow(FullTriangle)
+    FullTriangle[,n] <- FullTriangle[,n] * tail.factor
+    StdErr$f[n] <- tail.factor
+    StdErr$f.se[n] <- mack.se.fult(clratios = StdErr$f, se.f = StdErr$f.se)
+    StdErr$F.se <- cbind(StdErr$F.se, mack.se.Fult(se.fult = StdErr$f.se[n], se.F = StdErr$F.se))
+    StdErr$FullTriangle.se[,n] <- sqrt(FullTriangle[, n]^2 * (StdErr$F.se[,n]^2 + StdErr$f.se[n]^2) +
+                                       StdErr$FullTriangle.se[,n]^2 * tail.factor^2)
+    Total.SE <- sqrt(Total.SE^2 * StdErr$f[n]^2 + sum(FullTriangle[c(1:m), n]^2 * (StdErr$F.se[c(1:m), n]^2)) +
+                     sum(FullTriangle[c(1:m), n])^2 * StdErr$f.se[n]^2)
+    output <- list(FullTriangle=FullTriangle, StdErr=StdErr, Total.SE=Total.SE)
+    return(output)
+}
+
 
 ###############################################################################
 ## predict
@@ -321,6 +333,7 @@ tailfactor <- function (clratios){
     }
     else {
         tail <- 1
+        tail.model <- NULL
     }
     return(list(tail.factor=tail, tail.model=tail.model))
 }
