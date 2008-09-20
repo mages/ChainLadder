@@ -31,6 +31,8 @@ MunichChainLadder <- function(Paid, Incurred){
     if(nrow(Paid) != ncol(Paid))
  	stop("Number of origin years has to be equal to number of development years.\n")
 
+    Paid <- checkTriangle(Paid)$Triangle
+    Incurred <- checkTriangle(Incurred)$Triangle
 
     MackPaid = MackChainLadder(Paid)
     MackIncurred = MackChainLadder(Incurred)

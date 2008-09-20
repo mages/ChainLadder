@@ -3,34 +3,30 @@
 ## Copyright: Markus Gesmann, markus.gesmann@gmail.com
 ## Date:10/11/2007
 ## Date:08/09/2008
-ChainLadder <- function(Triangle, weights=1/Triangle){
 
-    n <- ncol(Triangle)
-    m <- nrow(Triangle)
+checkTriangle <- function(Triangle){
 
-    if(n!=m){
-        print(dim(Triangle))
-        stop("Number of origin years has to be equal to number of development years.\n")
+    .dim <- dim(Triangle)
+    n <- .dim[2]
+    m <- .dim[1]
+
+    if(length(.dim)==3 & .dim[3]==1){
+        dim(Triangle) <- c(m,n)
     }
-    myModel <- vector("list", (n-1))
-    for(i in c(1:(n-1))){
-        ## weighted linear regression through origin
-        x <- Triangle[1:(m-i),i]
-   	y <- Triangle[1:(m-i),i+1]
-
-  	myModel[[i]] <- lm(y~x+0, weights=weights[1:(m-i),i], data=data.frame(x,y))
+    if(class(Triangle)=="data.frame"){
+        Triangle <- as.matrix(Triangle)
     }
 
-    output <- list(Models=myModel, Triangle=Triangle)
-    class(output) <- c("TriangleModel", class(output))
-return(output)
+    return(list(Triangle=Triangle, m=m,n=n))
 }
 
 
 MackChainLadder <- function(Triangle, weights=1/Triangle, tail=FALSE){
 
-    n <- ncol(Triangle)
-    m <- nrow(Triangle)
+    cTriangle <- checkTriangle(Triangle)
+    m <- cTriangle$m
+    n <- cTriangle$n
+    Triangle <- cTriangle$Triangle
 
     myModel <- ChainLadder(Triangle, weights)
     ## Predict the chain ladder model
@@ -60,8 +56,7 @@ MackChainLadder <- function(Triangle, weights=1/Triangle, tail=FALSE){
         Total.SE <- tail.out[["Total.SE"]]
     }
 
-
-    ## Collect the output
+    ## Collect the output
     output <- list()
     output[["call"]] <-  match.call(expand.dots = FALSE)
     output[["Triangle"]] <- Triangle
@@ -97,19 +92,6 @@ tail.SE <- function(FullTriangle, StdErr, Total.SE, tail.factor){
 }
 
 
-###############################################################################
-## predict
-##
-predict.TriangleModel <- function(object,...){
-    n <- ncol(object[["Triangle"]])
-    m <- nrow(object[["Triangle"]])
-    FullTriangle <- object[["Triangle"]]
-    for(j in c(1:(n-1))){
-        FullTriangle[c((n-j+1):m), j+1] <- predict(object[["Models"]][[j]],
-                                                   newdata=data.frame(x=FullTriangle[c((n-j+1):m), j]),...)
-    }
-    return(FullTriangle)
-}
 
 ##############################################################################
 ## Calculation of the mean squared error and standard error
@@ -220,10 +202,10 @@ print.MackChainLadder <- function(x,...){
     Totals <- c(Totals, round(x[["Total.Mack.S.E"]]/sum(res$IBNR,na.rm=TRUE),2))
     Totals <- as.data.frame(Totals)
 
-    colnames(Totals)=c("Totals:")
-    rownames(Totals) <- c("Sum of Latest:","Sum of Ultimate:",
-                          "Sum of IBNR:","Total Mack S.E.:",
-                          "Total CoV:")
+    colnames(Totals)=c("Totals")
+    rownames(Totals) <- c("Latest:","Ultimate:",
+                          "IBNR:","Mack S.E.:",
+                          "CoV:")
     cat("\n")
     print(Totals, quote=FALSE)
     #invisible(x)
@@ -309,35 +291,6 @@ residuals.MackChainLadder <- function(object,...){
     fitted.value)
     return(na.omit(myResiduals))
 }
-
-################################################################################
-## estimate tail factor, idea from Thomas Mack:
-##       THE STANDARD ERROR OF CHAIN LADDER RESERVE ESTIMATES:
-##       RECURSIVE CALCULATION AND INCLUSION OF A TAIL FACTOR
-##
-tailfactor <- function (clratios){
-    f <- clratios
-    n <- length(f)
-    if (f[n - 2] * f[n - 1] > 1.0001) {
-        fn <- which(clratios > 1)
-        f <- clratios[fn]
-        n <- length(f)
-        tail.model <- lm(log(f - 1) ~ fn)
-        co <- coef(tail.model)
-        tail <- exp(co[1] + c(n:(n + 100)) * co[2]) + 1
-        tail <- prod(tail)
-        if (tail > 2){
-            print("The estimate tail factor was bigger than 2 and has been reset to 1.")
-            tail <- 1
-        }
-    }
-    else {
-        tail <- 1
-        tail.model <- NULL
-    }
-    return(list(tail.factor=tail, tail.model=tail.model))
-}
-
 
 
 ##############################################################################
