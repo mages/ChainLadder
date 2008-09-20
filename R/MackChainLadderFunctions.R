@@ -90,8 +90,8 @@ tail.SE <- function(FullTriangle, StdErr, Total.SE, tail.factor){
     StdErr$F.se <- cbind(StdErr$F.se, mack.se.Fult(se.fult = StdErr$f.se[n], se.F = StdErr$F.se))
     StdErr$FullTriangle.se[,n] <- sqrt(FullTriangle[, n]^2 * (StdErr$F.se[,n]^2 + StdErr$f.se[n]^2) +
                                        StdErr$FullTriangle.se[,n]^2 * tail.factor^2)
-    Total.SE <- sqrt(Total.SE^2 * StdErr$f[n]^2 + sum(FullTriangle[c(1:m), n]^2 * (StdErr$F.se[c(1:m), n]^2)) +
-                     sum(FullTriangle[c(1:m), n])^2 * StdErr$f.se[n]^2)
+    Total.SE <- sqrt(Total.SE^2 * StdErr$f[n]^2 + sum(FullTriangle[c(1:m), n]^2 * (StdErr$F.se[c(1:m), n]^2), na.rm=TRUE) +
+                     sum(FullTriangle[c(1:m), n], na.rm=TRUE)^2 * StdErr$f.se[n]^2)
     output <- list(FullTriangle=FullTriangle, StdErr=StdErr, Total.SE=Total.SE)
     return(output)
 }
