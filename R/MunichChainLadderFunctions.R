@@ -123,6 +123,7 @@ MunichChainLadder <- function(Paid, Incurred){
     }
 
     output <- list()
+    output[["call"]] <-  match.call(expand.dots = FALSE)
     output[["Paid"]] <- Paid
     output[["Incurred"]] <- Incurred
     output[["MCLPaid"]] <- FullPaid
@@ -156,24 +157,48 @@ summary.MunichChainLadder <- function(object,...){
     UltimatePaid = object[["MCLPaid"]][,n]
     UltimateIncurred = object[["MCLIncurred"]][,n]
 
-    Result <- data.frame(LatestPaid,	LatestIncurred,
+    ex.origin.period <- !is.na(LatestIncurred)
+
+    ByOrigin <- data.frame(LatestPaid,	LatestIncurred,
                          Latest.P.I.Ratio=LatestPaid/LatestIncurred,
                          UltimatePaid,
                          UltimateIncurred,
                          Ultimate.P.I.Ratio=UltimatePaid/UltimateIncurred)
-    return(Result)
+    ByOrigin <- ByOrigin[ex.origin.period,]
+    names(ByOrigin) <- c("Latest Paid",
+                         "Latest Incurred",
+                         "Latest P/I Ratio",
+                         "Ult. Paid",
+                         "Ult. Incurred",
+                         "Ult. P/I Ratio")
+
+    Totals <- data.frame(Paid=c(sum(LatestPaid, na.rm=TRUE),
+                         sum(UltimatePaid, na.rm=TRUE)),
+                         Incurred=c(sum(LatestIncurred, na.rm=TRUE),
+                         sum(UltimateIncurred, na.rm=TRUE))
+                         )
+    Totals["P/I Ratio"] <- with(Totals, Paid/Incurred)
+    rownames(Totals) <- c("Latest:", "Ultimate:")
+
+    output <- list(ByOrigin=ByOrigin, Totals=Totals)
+    return(output)
 }
 
 ##############################################################################
 ## print
 ##
 print.MunichChainLadder <- function(x,...){
-    res <- summary(x)
-    print(format(res[!is.na(res$LatestPaid),], big.mark = ",", digits = 3),...)
+    summary.x <- summary(x)
+    print(x$call)
+    cat("\n")
+    print(format(summary.x$ByOrigin, big.mark = ",", digits = 3),...)
+    cat("\nTotals\n")
+    print(format(summary.x$Totals, big.mark = ",", digits = 2),...)
+
 }
 
 ##############################################################################
-## plot
+## Plot
 ##
 plot.MunichChainLadder <- function(x, mfrow=c(2,2), title=NULL, ...){
 

@@ -5,7 +5,6 @@
 ## Date:08/09/2008
 
 
-
 MackChainLadder <- function(Triangle, weights=1/Triangle, tail=FALSE){
 
     cTriangle <- checkTriangle(Triangle)
@@ -159,15 +158,32 @@ summary.MackChainLadder <- function(object,...){
     m <- nrow(.Triangle)
 
     Latest <- rev(.Triangle[row(as.matrix(.Triangle)) == (m+1 - col(as.matrix(.Triangle)))])
+
+    ex.origin.period <- !is.na(Latest)
+
     Ultimate <- object[["FullTriangle"]][,n]
     Dev.To.Date <- Latest/Ultimate
     IBNR <- Ultimate-Latest
     Mack.S.E <- object[["Mack.S.E"]][,n]
     CoV <- Mack.S.E/(Ultimate-Latest)
 
-    myResult <- data.frame(Latest, Dev.To.Date, Ultimate, IBNR, Mack.S.E, CoV)
+    ByOrigin <- data.frame(Latest, Dev.To.Date, Ultimate, IBNR, Mack.S.E, CoV)
+    ByOrigin <- ByOrigin[ex.origin.period,]
 
-    return(myResult)
+    Totals <-  c(sum(Latest,na.rm=TRUE), sum(Ultimate,na.rm=TRUE),
+                 sum(IBNR,na.rm=TRUE), object[["Total.Mack.S.E"]],
+                 object[["Total.Mack.S.E"]]/sum(IBNR,na.rm=TRUE)
+                 )
+    # Totals <- c(Totals, round(x[["Total.Mack.S.E"]]/sum(res$IBNR,na.rm=TRUE),2))
+    Totals <- as.data.frame(Totals)
+
+    colnames(Totals)=c("Totals")
+    rownames(Totals) <- c("Latest:","Ultimate:",
+                          "IBNR:","Mack S.E.:",
+                          "CoV:")
+
+    output <- list(ByOrigin=ByOrigin, Totals=Totals)
+    return(output)
 }
 
 ##############################################################################
@@ -175,22 +191,13 @@ summary.MackChainLadder <- function(object,...){
 ##
 print.MackChainLadder <- function(x,...){
 
-    res <- summary(x)
+    summary.x <- summary(x)
     print(x$call)
     cat("\n")
-    print(format(res[!is.na(res$Latest),], big.mark = ",", digits = 3),...)
-    Totals <-  c(sum(res$Latest,na.rm=TRUE), sum(res$Ultimate,na.rm=TRUE),
-                 sum(res$IBNR,na.rm=TRUE), x[["Total.Mack.S.E"]]
-                 #,x[["Total.Mack.S.E"]]/sum(res$IBNR,na.rm=TRUE)
-                 )
-    Totals <- formatC(Totals, big.mark=",",digits=0,format="f")
-    Totals <- c(Totals, round(x[["Total.Mack.S.E"]]/sum(res$IBNR,na.rm=TRUE),2))
-    Totals <- as.data.frame(Totals)
+    print(format(summary.x$ByOrigin, big.mark = ",", digits = 3),...)
 
-    colnames(Totals)=c("Totals")
-    rownames(Totals) <- c("Latest:","Ultimate:",
-                          "IBNR:","Mack S.E.:",
-                          "CoV:")
+    Totals <- summary.x$Totals
+    Totals[1:5,] <- formatC(Totals[1:5,], big.mark=",",digits=2,format="f")
     cat("\n")
     print(Totals, quote=FALSE)
     #invisible(x)

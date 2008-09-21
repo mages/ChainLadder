@@ -39,6 +39,7 @@ MunichChainLadder(Paid, Incurred)
 %}
 \value{
   MunichChainLadder returns a list with the following values
+  \item{call}{the matched call} 
   \item{Paid}{input paid triangle}
   \item{Incurred}{input incurred triangle}
   \item{MCLPaid}{Munich-chain-ladder forecasted full triangle on paid data}
@@ -59,7 +60,7 @@ MunichChainLadder(Paid, Incurred)
   Gerhard Quarg and Thomas Mack. Munich Chain Ladder. Blatter DGVFM 26,
   Munich, 2004. 
   }
-\author{ Markus Gesmann \email{markus.gesmann@web.de} }
+\author{ Markus Gesmann \email{markus.gesmann@gmail.com} }
 %\note{ ~~further notes~~ 
 %
 % ~Make other sections like Warning with \section{Warning }{....} ~

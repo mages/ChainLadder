@@ -69,7 +69,7 @@ Thomas Mack. Distribution-free calculation of the standard error of chain ladder
 Thomas Mack. The standard error of chain ladder reserve estimates: Recursive calculation and inclusion of a tail factor. Astin Bulletin. Vol. 29. No 2. 1999. pp.361:366
 \url{http://www.casact.org/library/astin/vol29no2/361.pdf}
 }
-\author{Markus Gesmann \email{markus.gesmann@web.de}}
+\author{Markus Gesmann \email{markus.gesmann@gmail.com}}
 %\note{ ~~further notes~~ 
 %
 % ~Make other sections like Warning with \section{Warning }{....} ~

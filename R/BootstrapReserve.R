@@ -5,11 +5,11 @@
 
 ## source(paste(searchpaths()[grep("ChainLadder", searchpaths())],"/Experimental/BootstrapReserve.R", sep=""))
 
-BootReserve <- function(Triangle = RAA, R = 1000, process.distr="gamma"){
+BootReserve <- function(Triangle = RAA, R = 999, process.distr="gamma"){
 
     triangle <- Triangle
-   # if(nrow(triangle) != ncol(triangle))
-# 	stop("Number of origin years has to be equal to number of development years.\n")
+    if(nrow(triangle) != ncol(triangle))
+ 	stop("Number of origin years has to be equal to number of development years.\n")
 
     ## Obtain the standard chain-ladder development factors from cumulative data.
 
@@ -86,7 +86,11 @@ BootReserve <- function(Triangle = RAA, R = 1000, process.distr="gamma"){
 
     IBNR <- processTriangle #apply(getLatest(gammaTriangle),3,sum)
 
-    output <- list(Triangle=Triangle, IBNR=IBNR, R=R, call=match.call(expand.dots = FALSE))
+    output <- list( call=match.call(expand.dots = FALSE),
+                   Triangle=Triangle,
+                   IBNR=IBNR,
+                   R=R)
+
     class(output) <- c("BootReserve", class(output))
     return(output)
 
@@ -102,43 +106,51 @@ summary.BootReserve <- function(object,probs=c(0.75,0.99),...){
     IBNR.mean <- apply(IBNR, 1, mean)
     IBNR.sd <- apply(IBNR, 1, sd)
     sumIBNR <- as.data.frame(t(rbind(IBNR.mean, IBNR.sd, IBNR.q)))
-    result <- data.frame(Latest, Ult.mean=Latest+sumIBNR$IBNR.mean, sumIBNR)
+    ByOrigin <- data.frame(Latest, Ult.mean=Latest+sumIBNR$IBNR.mean, sumIBNR)
 
-    names(result) <- c("Latest", "Mean Ultimate", "Mean IBNR", "SD IBNR", paste("IBNR ", probs*100, "%", sep=""))
+    names(ByOrigin) <- c("Latest", "Mean Ultimate", "Mean IBNR",
+                         "SD IBNR", paste("IBNR ", probs*100, "%", sep=""))
+    ex.origin.period <- !is.na(Latest)
 
-    return(result)
-}
+    ByOrigin <- ByOrigin[ex.origin.period,]
 
-print.BootReserve <- function(x,probs=c(0.75,0.99),...){
-    print(x$call)
-    cat("\n")
-    res <- summary(x,probs=probs)
 
-    print(res, big.mark = ",", digits = 3,...)
-
-    Total.Latest <- sum(res$Latest,na.rm=TRUE)
-    Total.IBNR <- apply(getLatest(x$IBNR),3,sum)
-
+    ## Totals
+    Total.Latest <- sum(Latest,na.rm=TRUE)
+    Total.IBNR <- apply(object$IBNR,3,sum)
     Total.IBNR.mean <-  mean(Total.IBNR)
     Total.IBNR.sd <-  sd(Total.IBNR)
     Total.IBNR.q <- quantile(Total.IBNR, probs=probs)
 
-    Totals <-  c(Total.Latest, Total.Latest+Total.IBNR.mean, Total.IBNR.mean, Total.IBNR.sd, Total.IBNR.q)
-    Totals <- formatC(Totals, big.mark=",",digits=0,format="f")
+    Totals <-  c(Total.Latest, Total.Latest+Total.IBNR.mean,
+                 Total.IBNR.mean, Total.IBNR.sd, Total.IBNR.q)
     Totals <- as.data.frame(Totals)
 
     colnames(Totals)=c("Totals")
     rownames(Totals) <- c("Latest:","Mean Ultimate:",
                           "Mean IBNR:","SD IBNR:",
                           paste("Total IBNR ", probs, "%:", sep="") )
+
+    output <- list(ByOrigin=ByOrigin, Totals=Totals)
+    return(output)
+}
+
+print.BootReserve <- function(x,probs=c(0.75,0.99),...){
+    print(x$call)
     cat("\n")
-    print(Totals, quote=FALSE)
+    summary.x <- summary(x,probs=probs)
+
+    print(format(summary.x$ByOrigin, big.mark = ",", digits = 3),...)
+
+    cat("\n")
+    Totals <- summary.x$Totals
+    print(format(Totals, big.mark=",",digits=3), quote=FALSE)
 
   }
 
 plot.BootReserve <- function(x,...){
-    IBNR <- getLatest(object$IBNR)
-    Total.IBNR <- apply(getLatest(x$IBNR),3,sum)
+    IBNR <- getLatest(x$IBNR)
+    Total.IBNR <- apply(IBNR,3,sum)
     op <- par(mfrow=c(1,2))
     hist(Total.IBNR, xlab="Total IBNR")
     lines(density(Total.IBNR))
