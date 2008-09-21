@@ -3,7 +3,7 @@
 \alias{print.BootReserve}
 \alias{plot.BootReserve}
 %- Also NEED an '\alias' for EACH other topic documented here.
-\title{ ~~function to do ... ~~ }
+\title{ Bootstrap  }
 \description{
   ~~ A concise (1-5 lines) description of what the function does. ~~
 }
@@ -12,7 +12,8 @@ BootReserve(Triangle = RAA, R = 999, process.distr = "gamma")
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
-  \item{Triangle}{ ~~Describe \code{Triangle} here~~ }
+  \item{Triangle}{
+~~Describe \code{Triangle} here~~ }
   \item{R}{ ~~Describe \code{R} here~~ }
   \item{process.distr}{ ~~Describe \code{process.distr} here~~ }
 }

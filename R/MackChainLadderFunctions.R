@@ -177,7 +177,7 @@ summary.MackChainLadder <- function(object,...){
     # Totals <- c(Totals, round(x[["Total.Mack.S.E"]]/sum(res$IBNR,na.rm=TRUE),2))
     Totals <- as.data.frame(Totals)
 
-    colnames(Totals)=c("Totals")
+    colnames(Totals)=c("Total")
     rownames(Totals) <- c("Latest:","Ultimate:",
                           "IBNR:","Mack S.E.:",
                           "CoV:")

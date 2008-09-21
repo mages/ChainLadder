@@ -96,6 +96,29 @@ BootReserve <- function(Triangle = RAA, R = 999, process.distr="gamma"){
 
 }
 
+quantile.BootReserve <- function(x,probs=c(0.75, 0.99),...){
+    IBNR <- getLatest(x$IBNR)
+    ByOrigin <- apply(IBNR, 1, quantile, probs)
+    if(length(probs)>1){
+        ByOrigin <- as.data.frame(t(ByOrigin))
+    }else{
+        ByOrigin <- as.data.frame(ByOrigin)
+    }
+    names(ByOrigin) <- paste("IBNR ", probs*100, "%", sep="")
+
+    Total.IBNR <- apply(x$IBNR,3,sum)
+    Total.IBNR.q <- quantile(Total.IBNR, probs=probs)
+
+    Totals <- as.data.frame(Total.IBNR.q)
+
+    colnames(Totals)=c("Total")
+    rownames(Totals) <- paste("IBNR ", probs, "%:", sep="")
+
+    output <- list(ByOrigin=ByOrigin, Totals=Totals)
+
+    return(output)
+}
+
 summary.BootReserve <- function(object,probs=c(0.75,0.99),...){
 
     .Triangle <- object$Triangle
@@ -126,7 +149,7 @@ summary.BootReserve <- function(object,probs=c(0.75,0.99),...){
                  Total.IBNR.mean, Total.IBNR.sd, Total.IBNR.q)
     Totals <- as.data.frame(Totals)
 
-    colnames(Totals)=c("Totals")
+    colnames(Totals)=c("Total")
     rownames(Totals) <- c("Latest:","Mean Ultimate:",
                           "Mean IBNR:","SD IBNR:",
                           paste("Total IBNR ", probs, "%:", sep="") )
@@ -149,8 +172,13 @@ print.BootReserve <- function(x,probs=c(0.75,0.99),...){
   }
 
 plot.BootReserve <- function(x,...){
+
+    IBNR <- getLatest(x$IBNR)
+    Total.IBNR <- apply(getLatest(x$IBNR),3,sum)
+
     IBNR <- getLatest(x$IBNR)
     Total.IBNR <- apply(IBNR,3,sum)
+
     op <- par(mfrow=c(1,2))
     hist(Total.IBNR, xlab="Total IBNR")
     lines(density(Total.IBNR))
@@ -160,6 +188,20 @@ plot.BootReserve <- function(x,...){
     par(op)
 }
 
+
+##plotBoot <- function(x, probs=c(0.25, 0.5, 0.75,0.99),...){
+##    require(lattice)
+##    m <- nrow(x$Triangle)
+##    n <- ncol(x$Triangle)
+##    .Triangle <- x$Triangle
+##    IBNR.tria <- apply(x$IBNR,c(1,2), function(.x) c(quantile(.x, probs), mean=mean(.x)))
+##    dimnames(IBNR.tria)=list(measurements=dimnames(IBNR.tria)[[1]],
+##            origin=dimnames(x$Triangle)[[1]],
+##            dev=dimnames(x$Triangle)[[2]])
+##    out <- expand.grid(dimnames(IBNR.tria))
+##    out$IBNR <- as.vector(IBNR.tria)
+##    xyplot(IBNR ~ dev|origin, groups=measurements, as.table=TRUE, t="l", auto.key=TRUE)
+##}
 
 makeCumulative <- function(tri){
     ## Author: Nigel de Silva
