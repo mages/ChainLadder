@@ -1,13 +1,13 @@
-export(MackChainLadder, MunichChainLadder, BootReserve)
+export(MackChainLadder, MunichChainLadder, BootChainLadder)
 
 #Methods
 S3method(plot, MackChainLadder)
 S3method(plot, MunichChainLadder)
-S3method(plot, BootReserve)
+S3method(plot, BootChainLadder)
 
 S3method(print, MackChainLadder)
 S3method(print, MunichChainLadder)
-S3method(print, BootReserve)
+S3method(print, BootChainLadder)
 
 
 S3method(summary, MackChainLadder)
@@ -15,4 +15,4 @@ S3method(summary, MunichChainLadder)
 
 S3method(predict, TriangleModel)
 S3method(residuals, MackChainLadder)
-
+S3method(quantile, BootChainLadder)

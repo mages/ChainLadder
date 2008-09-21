@@ -5,7 +5,7 @@
 
 ## source(paste(searchpaths()[grep("ChainLadder", searchpaths())],"/Experimental/BootstrapReserve.R", sep=""))
 
-BootReserve <- function(Triangle = RAA, R = 999, process.distr="gamma"){
+BootChainLadder <- function(Triangle = RAA, R = 999, process.distr="gamma"){
 
     triangle <- Triangle
     if(nrow(triangle) != ncol(triangle))
@@ -84,63 +84,71 @@ BootReserve <- function(Triangle = RAA, R = 999, process.distr="gamma"){
     processTriangle[is.na(processTriangle)] <- 0
 
 
-    IBNR <- processTriangle #apply(getLatest(gammaTriangle),3,sum)
+    IBNR.Triangles <- processTriangle
+    IBNR <- getLatest(IBNR.Triangles)
+    IBNR.Totals <- apply(IBNR.Triangles,3,sum)
+
 
     output <- list( call=match.call(expand.dots = FALSE),
                    Triangle=Triangle,
-                   IBNR=IBNR,
+                   IBNR.ByOrigin=IBNR,
+                   IBNR.Triangles=IBNR.Triangles,
+                   IBNR.Totals = IBNR.Totals,
+                   process.distr=process.distr,
                    R=R)
 
-    class(output) <- c("BootReserve", class(output))
+    class(output) <- c("BootChainLadder", class(output))
     return(output)
 
 }
+############################################################################
+## quantile.BootChainLadder
+##
+quantile.BootChainLadder <- function(x,probs=c(0.75, 0.99),...){
 
-quantile.BootReserve <- function(x,probs=c(0.75, 0.99),...){
-    IBNR <- getLatest(x$IBNR)
-    ByOrigin <- apply(IBNR, 1, quantile, probs)
+    ByOrigin <- apply(x$IBNR.ByOrigin, 1, quantile, probs)
     if(length(probs)>1){
         ByOrigin <- as.data.frame(t(ByOrigin))
     }else{
         ByOrigin <- as.data.frame(ByOrigin)
     }
     names(ByOrigin) <- paste("IBNR ", probs*100, "%", sep="")
-
-    Total.IBNR <- apply(x$IBNR,3,sum)
-    Total.IBNR.q <- quantile(Total.IBNR, probs=probs)
+    Total.IBNR.q <- quantile(x$IBNR.Totals, probs=probs)
 
     Totals <- as.data.frame(Total.IBNR.q)
 
     colnames(Totals)=c("Total")
-    rownames(Totals) <- paste("IBNR ", probs, "%:", sep="")
+    rownames(Totals) <- paste("IBNR ", probs*100, "%:", sep="")
 
     output <- list(ByOrigin=ByOrigin, Totals=Totals)
 
     return(output)
 }
-
-summary.BootReserve <- function(object,probs=c(0.75,0.99),...){
+############################################################################
+## summary.BootChainLadder
+##
+summary.BootChainLadder <- function(object,probs=c(0.75,0.99),...){
 
     .Triangle <- object$Triangle
     Latest <- rev(.Triangle[row(as.matrix(.Triangle)) == (nrow(.Triangle)+1 - col(as.matrix(.Triangle)))])
-    IBNR <- getLatest(object$IBNR)
+    IBNR <- object$IBNR.ByOrigin
     dim(IBNR) <- dim(IBNR)[c(1,3)]
     IBNR.q <- apply(IBNR, 1, quantile, probs)
     IBNR.mean <- apply(IBNR, 1, mean)
     IBNR.sd <- apply(IBNR, 1, sd)
     sumIBNR <- as.data.frame(t(rbind(IBNR.mean, IBNR.sd, IBNR.q)))
-    ByOrigin <- data.frame(Latest, Ult.mean=Latest+sumIBNR$IBNR.mean, sumIBNR)
 
+    ## ByOrigin
+    ByOrigin <- data.frame(Latest, Ult.mean=Latest+sumIBNR$IBNR.mean, sumIBNR)
     names(ByOrigin) <- c("Latest", "Mean Ultimate", "Mean IBNR",
                          "SD IBNR", paste("IBNR ", probs*100, "%", sep=""))
     ex.origin.period <- !is.na(Latest)
-
     ByOrigin <- ByOrigin[ex.origin.period,]
 
 
     ## Totals
     Total.Latest <- sum(Latest,na.rm=TRUE)
-    Total.IBNR <- apply(object$IBNR,3,sum)
+    Total.IBNR <- object$IBNR.Totals
     Total.IBNR.mean <-  mean(Total.IBNR)
     Total.IBNR.sd <-  sd(Total.IBNR)
     Total.IBNR.q <- quantile(Total.IBNR, probs=probs)
@@ -152,13 +160,15 @@ summary.BootReserve <- function(object,probs=c(0.75,0.99),...){
     colnames(Totals)=c("Total")
     rownames(Totals) <- c("Latest:","Mean Ultimate:",
                           "Mean IBNR:","SD IBNR:",
-                          paste("Total IBNR ", probs, "%:", sep="") )
+                          paste("Total IBNR ", probs*100, "%:", sep="") )
 
     output <- list(ByOrigin=ByOrigin, Totals=Totals)
     return(output)
 }
-
-print.BootReserve <- function(x,probs=c(0.75,0.99),...){
+############################################################################
+## print.BootChainLadder
+##
+print.BootChainLadder <- function(x,probs=c(0.75,0.99),...){
     print(x$call)
     cat("\n")
     summary.x <- summary(x,probs=probs)
@@ -171,20 +181,23 @@ print.BootReserve <- function(x,probs=c(0.75,0.99),...){
 
   }
 
-plot.BootReserve <- function(x,...){
+plot.BootChainLadder <- function(x,mfrow=c(1,2),title=NULL,...){
 
-    IBNR <- getLatest(x$IBNR)
-    Total.IBNR <- apply(getLatest(x$IBNR),3,sum)
+    if(is.null(title)) myoma <- c(0,0,0,0) else myoma <- c(0,0,2,0)
 
-    IBNR <- getLatest(x$IBNR)
-    Total.IBNR <- apply(IBNR,3,sum)
+    op=par(mfrow=mfrow, oma=myoma)
 
-    op <- par(mfrow=c(1,2))
+    Total.IBNR <- x$IBNR.Total
+
+    op <- par(mfrow=mfrow)
+    ## Histogram
     hist(Total.IBNR, xlab="Total IBNR")
     lines(density(Total.IBNR))
     rug(Total.IBNR)
-
+    ## Empirical distribution
     plot(ecdf(Total.IBNR), xlab="Total IBNR")
+
+    title( title , outer=TRUE)
     par(op)
 }
 

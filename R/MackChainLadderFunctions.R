@@ -214,7 +214,7 @@ plot.MackChainLadder <- function(x, mfrow=c(3,2), title=NULL,...){
 
     op=par(mfrow=mfrow, oma=myoma)
 
-    .myResult <-  summary(x)
+    .myResult <-  summary(x)$ByOrigin
 
     .FullTriangle <- x[["FullTriangle"]]
     .Triangle <- x[["Triangle"]]

@@ -74,7 +74,10 @@ Thomas Mack. The standard error of chain ladder reserve estimates: Recursive cal
 %
 % ~Make other sections like Warning with \section{Warning }{....} ~
 %}
-\seealso{ See also \code{\link{MunichChainLadder}}, \code{\link{qpaid}}, \code{\link{residuals.MackChainLadder}} }
+\seealso{ See also \code{\link{qpaid}},
+  \code{\link{residuals.MackChainLadder}},
+  \code{\link{MunichChainLadder}},  \code{\link{BootChainLadder}},
+}
 \examples{
 
 
