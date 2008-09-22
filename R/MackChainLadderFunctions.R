@@ -218,8 +218,10 @@ plot.MackChainLadder <- function(x, mfrow=c(3,2), title=NULL,...){
 
     .FullTriangle <- x[["FullTriangle"]]
     .Triangle <- x[["Triangle"]]
-    n <- nrow(.Triangle)
-    bp <- barplot(t(as.matrix(.myResult[,c("Latest","IBNR")])),
+
+    plotdata <- t(as.matrix(.myResult[,c("Latest","IBNR")]))
+    n <- ncol(plotdata)
+    bp <- barplot(plotdata,
                   legend.text=c("Latest","IBNR"),
                   names.arg=c(1:n),
                   main="Mack Chain Ladder Results",

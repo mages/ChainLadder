@@ -104,16 +104,17 @@ BootChainLadder <- function(Triangle = RAA, R = 999, process.distr="gamma"){
 ############################################################################
 ## quantile.BootChainLadder
 ##
-quantile.BootChainLadder <- function(x,probs=c(0.75, 0.99),...){
+quantile.BootChainLadder <- function(x,probs=c(0.75, 0.99), na.rm = FALSE,
+                                     names = TRUE, type = 7,...){
 
-    ByOrigin <- apply(x$IBNR.ByOrigin, 1, quantile, probs)
+    ByOrigin <- apply(x$IBNR.ByOrigin, 1, quantile, probs=probs,...)
     if(length(probs)>1){
         ByOrigin <- as.data.frame(t(ByOrigin))
     }else{
         ByOrigin <- as.data.frame(ByOrigin)
     }
     names(ByOrigin) <- paste("IBNR ", probs*100, "%", sep="")
-    Total.IBNR.q <- quantile(x$IBNR.Totals, probs=probs)
+    Total.IBNR.q <- quantile(x$IBNR.Totals, probs=probs,...)
 
     Totals <- as.data.frame(Total.IBNR.q)
 
@@ -133,7 +134,7 @@ summary.BootChainLadder <- function(object,probs=c(0.75,0.99),...){
     Latest <- rev(.Triangle[row(as.matrix(.Triangle)) == (nrow(.Triangle)+1 - col(as.matrix(.Triangle)))])
     IBNR <- object$IBNR.ByOrigin
     dim(IBNR) <- dim(IBNR)[c(1,3)]
-    IBNR.q <- apply(IBNR, 1, quantile, probs)
+    IBNR.q <- apply(IBNR, 1, quantile, probs=probs,...)
     IBNR.mean <- apply(IBNR, 1, mean)
     IBNR.sd <- apply(IBNR, 1, sd)
     sumIBNR <- as.data.frame(t(rbind(IBNR.mean, IBNR.sd, IBNR.q)))
@@ -151,7 +152,7 @@ summary.BootChainLadder <- function(object,probs=c(0.75,0.99),...){
     Total.IBNR <- object$IBNR.Totals
     Total.IBNR.mean <-  mean(Total.IBNR)
     Total.IBNR.sd <-  sd(Total.IBNR)
-    Total.IBNR.q <- quantile(Total.IBNR, probs=probs)
+    Total.IBNR.q <- quantile(Total.IBNR, probs=probs,...)
 
     Totals <-  c(Total.Latest, Total.Latest+Total.IBNR.mean,
                  Total.IBNR.mean, Total.IBNR.sd, Total.IBNR.q)
@@ -180,16 +181,16 @@ print.BootChainLadder <- function(x,probs=c(0.75,0.99),...){
     print(format(Totals, big.mark=",",digits=3), quote=FALSE)
 
   }
-
+############################################################################
+## plot.BootChainLadder
+##
 plot.BootChainLadder <- function(x,mfrow=c(1,2),title=NULL,...){
 
     if(is.null(title)) myoma <- c(0,0,0,0) else myoma <- c(0,0,2,0)
 
-    op=par(mfrow=mfrow, oma=myoma)
-
     Total.IBNR <- x$IBNR.Total
-
-    op <- par(mfrow=mfrow)
+    
+    op=par(mfrow=mfrow, oma=myoma,...)
     ## Histogram
     hist(Total.IBNR, xlab="Total IBNR")
     lines(density(Total.IBNR))

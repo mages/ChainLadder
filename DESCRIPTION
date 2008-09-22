@@ -6,7 +6,7 @@ Date: 2008-09-20
 Author: Markus Gesmann
 Maintainer: Markus Gesmann <markus.gesmann@gmail.com>
 Description: The package contains the Mack-, Munich-, and Bootstrap chain-ladder methods which are used in insurance claims reserving exercise.
-Depends: Hmisc
+Depends: Hmisc,stats
 License: GPL (>= 2)
 URL: http://code.google.com/p/chainladder/
 LazyData: yes

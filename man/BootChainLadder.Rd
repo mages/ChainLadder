@@ -11,13 +11,16 @@
 }
 \usage{
 BootChainLadder(Triangle = RAA, R = 999, process.distr = "gamma")
-\method{summary}{BootChainLadder}(object, probs=c(0.75, 0.99), \dots)
+\method{summary}{BootChainLadder}(object,probs=c(0.75,0.99), \dots)
 
-\method{print}{BootChainLadder}(x, \dots)
+\method{print}{BootChainLadder}(x,probs=c(0.75,0.99), \dots)
 
-\method{quantile}{BootChainLadder}(x, \dots)
+\method{plot}{BootChainLadder}(x,mfrow=c(1,2),title=NULL, \dots)
 
-\method{plot}{BootChainLadder}(x, mfrow=c(1,2), title=NULL, \dots)
+\method{quantile}{BootChainLadder}(x,probs=c(0.75, 0.99), na.rm = FALSE,
+              names = TRUE, type = 7,\dots)
+
+
 
 }
 
@@ -28,6 +31,20 @@ BootChainLadder(Triangle = RAA, R = 999, process.distr = "gamma")
   \item{R}{the number of bootstrap replicates. }
   \item{process.distr}{ a string of (currently) either "gamma" or
     "od.pois" to model the process distribution. }
+  \item{x}{output from BootChainLadder}
+  \item{object}{output from BootChainLadder}
+  \item{mfrow}{see \code{\link{par}}}
+  \item{title}{see \code{\link{title}}} 
+  \item{probs}{numeric vector of probabilities with values in [0,1], see \code{\link{quantile}}}
+  \item{na.rm}{logical; if true, any \code{NA} and \code{NaN}'s are removed from 'x'
+          before the quantiles are computed, see \code{\link{quantile}}}
+  \item{names}{logical; if true, the result has a \code{names} attribute.  Set to
+          \code{FALSE} for speedup with many 'probs', see \code{\link{quantile}}}
+ \item{type}{an integer between 1 and 9 selecting one of the nine quantile
+          algorithms detailed below to be used, see \code{\link{quantile}}}         
+  \item{\dots}{further arguments passed to or from other methods}
+
+
 }
 \details{
   ~~ If necessary, more details than the description above ~~
@@ -43,6 +60,7 @@ BootChainLadder(Triangle = RAA, R = 999, process.distr = "gamma")
   \item{IBNR.Totals}{a vector R samples of total IBNRs}
   \item{process.distr}{input process distribution}
   \item{R}{input number of bootstraps}
+
  
 }
 \references{ England, PD and Verrall, RJ (2002). Stochastic Claims Reserving in General Insurance (with discussion), British Actuarial Journal 8, III }
@@ -55,7 +73,7 @@ BootChainLadder(Triangle = RAA, R = 999, process.distr = "gamma")
 B <- BootChainLadder(RAA, R=99, process.distr="gamma")
 B
 # Compare to MackChainLadder
-MackChainLadder(B)
+MackChainLadder(RAA)
 quantile(B, c(0.75,0.9,0.99, 0.995))
 
 # fitdistribution
