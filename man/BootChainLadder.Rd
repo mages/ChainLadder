@@ -4,6 +4,7 @@
 \alias{print.BootChainLadder}
 \alias{plot.BootChainLadder}
 \alias{quantile.BootChainLadder}
+\alias{residuals.BootChainLadder}
 
 \title{ Bootstrap-Chain-Ladder Model }
 \description{
@@ -18,6 +19,8 @@ BootChainLadder(Triangle = RAA, R = 999, process.distr = "gamma")
 \method{print}{BootChainLadder}(x,probs=c(0.75,0.99), \dots)
 
 \method{plot}{BootChainLadder}(x,mfrow=c(1,2),title=NULL, \dots)
+
+\method{residuals}{BootChainLadder}(object, \dots)
 
 \method{quantile}{BootChainLadder}(x,probs=c(0.75, 0.99), na.rm = FALSE,
               names = TRUE, type = 7,\dots)
@@ -65,6 +68,7 @@ distribution, from which summary statistics such as mean, prediction error or pe
   \item{IBNR.Triangles}{the array fo dimension \code{c(m,n,R)} with the modeled
     IBNR development triangles}
   \item{IBNR.Totals}{the vector of R samples of the total IBNRs}
+  \iem{residuals}{adjusted Person residuals}
   \item{process.distr}{the name of the process distribution}
   \item{R}{the number of bootstraps}
 

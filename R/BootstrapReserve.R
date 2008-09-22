@@ -88,18 +88,25 @@ BootChainLadder <- function(Triangle = RAA, R = 999, process.distr="gamma"){
     IBNR <- getLatest(IBNR.Triangles)
     IBNR.Totals <- apply(IBNR.Triangles,3,sum)
 
+    residuals <- adj.resids
+    dim(residuals) <- dim(Triangle)
+    dimnames(residuals) <-  dimnames(Triangle)
 
     output <- list( call=match.call(expand.dots = FALSE),
                    Triangle=Triangle,
                    IBNR.ByOrigin=IBNR,
                    IBNR.Triangles=IBNR.Triangles,
                    IBNR.Totals = IBNR.Totals,
+                   residuals=residuals,
                    process.distr=process.distr,
                    R=R)
 
     class(output) <- c("BootChainLadder", class(output))
     return(output)
 
+}
+residuals.BootChainLadder <- function(object,...){
+    return(object$residuals)
 }
 ############################################################################
 ## quantile.BootChainLadder

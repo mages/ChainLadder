@@ -15,10 +15,13 @@ dim(qpaid)
 dim(qincurred)
 op=par(mfrow=c(1,2))
 ymax <- max(c(qpaid,qincurred),na.rm=TRUE)*1.05
-matplot(t(qpaid), type="l", main="Paid development", xlab="Dev. quarter", ylab="$", ylim=c(0,ymax))
-matplot(t(qincurred), type="l", main="Incurred development", xlab="Dev. quarter", ylab="$", ylim=c(0,ymax))
+matplot(t(qpaid), type="l", main="Paid development", 
+		  xlab="Dev. quarter", ylab="$", ylim=c(0,ymax))
+matplot(t(qincurred), type="l", main="Incurred development", 
+		      xlab="Dev. quarter", ylab="$", ylim=c(0,ymax))
 par(op)
-# MackChainLadder expects a quadratic matrix so let's expand the triangle to a quarterly origin period.
+## MackChainLadder expects a quadratic matrix so let's expand 
+## the triangle to a quarterly origin period.
 n <- ncol(qpaid)
 Paid <- matrix(NA, n, n)
 Paid[seq(1,n,4),] <- qpaid
