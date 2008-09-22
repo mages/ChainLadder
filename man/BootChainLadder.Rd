@@ -58,6 +58,18 @@ B
 MackChainLadder(B)
 quantile(B, c(0.75,0.9,0.99, 0.995))
 
+# fitdistribution
+library(MASS)
+plot(ecdf(B$IBNR.Totals))
+fit <-  fitdistr(B$IBNR.Totals, "lognormal")
+fit
+curve(plnorm(x,fit$estimate["meanlog"], fit$estimate["sdlog"]), col="red", add=TRUE)
+
+
+
+
+
+
 C <- BootChainLadder(RAA, R=99, process.distr="od.pois")
 }
 \keyword{ models }
