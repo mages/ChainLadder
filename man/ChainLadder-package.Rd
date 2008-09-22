@@ -7,14 +7,13 @@
 }
 \description{The ChainLadder-package grew out of presentations
   the author gave at the Stochastic Reserving Seminar at the Institute of Actuaries in November 2007.
-  This package implements the Mack- and Munich-chain-ladder model using weighted
-  linear regression, see \code{\link{lm}}.
+  This package implements the Mack-, Munich and Bootstrap-chain-ladder models.
   
   An example spreadsheet of how you might want to use these 
   functions in Excel is available in the installation directory of this package.
-  Usually along the line  \emph{C:/Programmes/R/R-Version/library/ChainLadder/Excel}.
+  Usually along the line  \emph{C:/Programme Files/R/R-Version/library/ChainLadder/Excel}.
   You need the RExcel-Addin, from \url{http://sunsite.univie.ac.at/rcom/}, in order to use the spreadsheet.
-}
+} 
 \details{
 \tabular{ll}{
 Package: \tab ChainLadder\cr
@@ -35,6 +34,8 @@ Thomas Mack. Distribution-free calculation of the standard error of chain ladder
 Thomas Mack. The standard error of chain ladder reserve estimates: Recursive calculation and inclusion of a tail factor. Astin Bulletin. Vol. 29. No 2. 1999. pp.361:366
 
 Gerhard Quarg and Thomas Mack. Munich Chain Ladder. Blatter DGVFM 26, Munich, 2004. 
+
+England, PD and Verrall, RJ (2002). Stochastic Claims Reserving in General Insurance (with discussion), British Actuarial Journal 8, III 
 }
 \keyword{ package }
 
@@ -46,6 +47,17 @@ Gerhard Quarg and Thomas Mack. Munich Chain Ladder. Blatter DGVFM 26, Munich, 20
  MCL
  plot(MCL)
 
+# BootChainLadder
+B <- BootChainLadder(RAA, R=199, process.distr="gamma")
+B
+plot(B)
+# fitdistribution
+library(MASS)
+# fit a log-normal distribution 
+fit <-  fitdistr(B$IBNR.Totals, "lognormal")
+fit
+plot(ecdf(B$IBNR.Totals))
+curve(plnorm(x,fit$estimate["meanlog"], fit$estimate["sdlog"]), col="red", add=TRUE)
 
  # Munich Chain Ladder
  MCLpaid
@@ -54,6 +66,7 @@ Gerhard Quarg and Thomas Mack. Munich Chain Ladder. Blatter DGVFM 26, Munich, 20
  MCL = MunichChainLadder(MCLpaid, MCLincurred)
  MCL
  plot(MCL)
+
 
 }
 

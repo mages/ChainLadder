@@ -146,7 +146,6 @@ summary.BootChainLadder <- function(object,probs=c(0.75,0.99),...){
     ex.origin.period <- !is.na(Latest)
     ByOrigin <- ByOrigin[ex.origin.period,]
 
-
     ## Totals
     Total.Latest <- sum(Latest,na.rm=TRUE)
     Total.IBNR <- object$IBNR.Totals
@@ -189,7 +188,7 @@ plot.BootChainLadder <- function(x,mfrow=c(1,2),title=NULL,...){
     if(is.null(title)) myoma <- c(0,0,0,0) else myoma <- c(0,0,2,0)
 
     Total.IBNR <- x$IBNR.Total
-    
+
     op=par(mfrow=mfrow, oma=myoma,...)
     ## Histogram
     hist(Total.IBNR, xlab="Total IBNR")
