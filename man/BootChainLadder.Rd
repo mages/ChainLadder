@@ -56,9 +56,8 @@ distribution, from which summary statistics such as mean, prediction error or pe
 
 }
 
- BootChainLadder gives a list with the following elements back:
 \value{
-
+ BootChainLadder gives a list with the following elements back:
   \item{call}{the matched call}
   \item{Triangle}{the input triangle}
   \item{IBNR.ByOrigin}{the array of dimension \code{c(m,1,R)} with the modeled
@@ -68,9 +67,9 @@ distribution, from which summary statistics such as mean, prediction error or pe
   \item{IBNR.Totals}{the vector of R samples of the total IBNRs}
   \item{process.distr}{the name of the process distribution}
   \item{R}{the number of bootstraps}
-}
+
 summary.BootChainLadder gives a list with the following elements back:
-\value{
+
  \item{ByOrigin}{a data frame with summary statistics by origin period}
  \item{Totals}{a data frame with total summary statistics for all origin period}
 }
@@ -91,8 +90,9 @@ quantile(B, c(0.75,0.9,0.99, 0.995))
 
 # fitdistribution
 library(MASS)
+plot(ecdf(B$IBNR.Totals))
 # fit a log-normal distribution 
-fit <-  fitdistr(B$IBNR.Totals, "lognormal")
+fit <- fitdistr(B$IBNR.Totals, "lognormal")
 fit
 curve(plnorm(x,fit$estimate["meanlog"], fit$estimate["sdlog"]), col="red", add=TRUE)
 
