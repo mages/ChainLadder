@@ -142,9 +142,9 @@ quantile.BootChainLadder <- function(x,probs=c(0.75, 0.99), na.rm = FALSE,
 ############################################################################
 ## mean.BootChainLadder
 ##
-mean.BootChainLadder <- function(x, trim = 0, na.rm = FALSE,...){
+mean.BootChainLadder <- function(x,...){
 
-    ByOrigin <- apply(x$IBNR.ByOrigin, 1, mean, trim=trim, na.rm=na.rm,...)
+    ByOrigin <- apply(x$IBNR.ByOrigin, 1, mean,...)
     ByOrigin <- as.data.frame(ByOrigin)
     names(ByOrigin) <- "Mean IBNR"
 
@@ -153,8 +153,7 @@ mean.BootChainLadder <- function(x, trim = 0, na.rm = FALSE,...){
         rownames(ByOrigin) <- origin
     }
 
-    Total.IBNR.q <- mean(x$IBNR.Totals, mean, trim=trim, na.rm=na.rm,...)
-
+    Total.IBNR.q <- mean(x$IBNR.Totals, mean,...)
     Totals <- as.data.frame(Total.IBNR.q)
 
     colnames(Totals)=c("Total")
@@ -187,7 +186,7 @@ summary.BootChainLadder <- function(object,probs=c(0.75,0.99),...){
     ex.origin.period <- !is.na(Latest)
     ByOrigin <- ByOrigin[ex.origin.period,]
 
-    origin <- dimnames(x$Triangle)[[1]]
+    origin <- dimnames(object$Triangle)[[1]]
     if(length(origin)==nrow(ByOrigin)){
         rownames(ByOrigin) <- origin
     }

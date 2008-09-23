@@ -5,6 +5,7 @@
 \alias{plot.BootChainLadder}
 \alias{quantile.BootChainLadder}
 \alias{residuals.BootChainLadder}
+\alias{mean.BootChainLadder}
 
 \title{ Bootstrap-Chain-Ladder Model }
 \description{
@@ -24,6 +25,8 @@ BootChainLadder(Triangle = RAA, R = 999, process.distr = "gamma")
 
 \method{quantile}{BootChainLadder}(x,probs=c(0.75, 0.99), na.rm = FALSE,
               names = TRUE, type = 7,\dots)
+
+\method{mean}{BootChainLadder}(x, \dots)
 
 }
 
