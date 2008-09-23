@@ -7,8 +7,8 @@
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{ Mack-Chain-Ladder Model }
 \description{
-  Mack-chain-ladder model to forecast IBNR claims based on a cumulative
-  claims triangle.
+  Mack-chain-ladder model to forecast IBNR (Incurred But Not Reported) claims based on a cumulative
+  claims development triangle.
 }
 \usage{
 MackChainLadder(Triangle, weights = 1/Triangle, tail=FALSE)

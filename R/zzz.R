@@ -1,6 +1,6 @@
 .onLoad<- function(lib, pkg, ...)
 {
-    cat("\n\n",
+    cat("\n",
         "ChainLadder library by Markus Gesmann <markus.gesmann@gmail.com>\n\n",
         "Type library(help='ChainLadder') or ?ChainLadder\n",
         "to see overall documentation.\n\n",

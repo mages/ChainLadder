@@ -114,14 +114,21 @@ residuals.BootChainLadder <- function(object,...){
 quantile.BootChainLadder <- function(x,probs=c(0.75, 0.99), na.rm = FALSE,
                                      names = TRUE, type = 7,...){
 
-    ByOrigin <- apply(x$IBNR.ByOrigin, 1, quantile, probs=probs,...)
+    ByOrigin <- apply(x$IBNR.ByOrigin, 1, quantile, probs=probs, names=names, type=type,...)
     if(length(probs)>1){
         ByOrigin <- as.data.frame(t(ByOrigin))
     }else{
         ByOrigin <- as.data.frame(ByOrigin)
     }
     names(ByOrigin) <- paste("IBNR ", probs*100, "%", sep="")
-    Total.IBNR.q <- quantile(x$IBNR.Totals, probs=probs,...)
+
+    origin <- dimnames(x$Triangle)[[1]]
+    if(length(origin)==nrow(ByOrigin)){
+        rownames(ByOrigin) <- origin
+    }
+
+
+    Total.IBNR.q <- quantile(x$IBNR.Totals, probs=probs, names=names, type=type, ...)
 
     Totals <- as.data.frame(Total.IBNR.q)
 
@@ -132,6 +139,33 @@ quantile.BootChainLadder <- function(x,probs=c(0.75, 0.99), na.rm = FALSE,
 
     return(output)
 }
+############################################################################
+## mean.BootChainLadder
+##
+mean.BootChainLadder <- function(x, trim = 0, na.rm = FALSE,...){
+
+    ByOrigin <- apply(x$IBNR.ByOrigin, 1, mean, trim=trim, na.rm=na.rm,...)
+    ByOrigin <- as.data.frame(ByOrigin)
+    names(ByOrigin) <- "Mean IBNR"
+
+    origin <- dimnames(x$Triangle)[[1]]
+    if(length(origin)==nrow(ByOrigin)){
+        rownames(ByOrigin) <- origin
+    }
+
+    Total.IBNR.q <- mean(x$IBNR.Totals, mean, trim=trim, na.rm=na.rm,...)
+
+    Totals <- as.data.frame(Total.IBNR.q)
+
+    colnames(Totals)=c("Total")
+    rownames(Totals) <- "Mean IBNR:"
+
+    output <- list(ByOrigin=ByOrigin, Totals=Totals)
+
+    return(output)
+}
+
+
 ############################################################################
 ## summary.BootChainLadder
 ##
@@ -152,6 +186,11 @@ summary.BootChainLadder <- function(object,probs=c(0.75,0.99),...){
                          "SD IBNR", paste("IBNR ", probs*100, "%", sep=""))
     ex.origin.period <- !is.na(Latest)
     ByOrigin <- ByOrigin[ex.origin.period,]
+
+    origin <- dimnames(x$Triangle)[[1]]
+    if(length(origin)==nrow(ByOrigin)){
+        rownames(ByOrigin) <- origin
+    }
 
     ## Totals
     Total.Latest <- sum(Latest,na.rm=TRUE)

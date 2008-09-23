@@ -34,6 +34,22 @@
 2008-09-18 Markus Gesmann <markus.gesmann@gmail.com>
 
 	* R/MackChainLadder.R Included tail factor estimation. The
-	function MackChainLadder has a new argument: tail.
-	* data/qpaid.RData, qincurred.RData Examples of quarterly
+	function MackChainLadder has a new argument "tail" to either
+	estimate the tail factor via a log-linear regression or to set it manually.
+	* data/qpaid.RData, qincurred.RData Added examples of quarterly
 	development triangles 
+
+2008-09-23 Markus Gesmann <markus.gesmann@gmail>
+
+	* R/BootstrapReserve.R Included all the functions for the BootChainLadder
+	function. The BootChainLadder procedure	provides a predictive
+	distribution of reserves for a cumulative claims development
+	triangle.
+	* R/BootstrapReserve.R, MackChainLadder.R, MunichChainLadder The summary
+	methods for MackChainLadder, MunichChainLadder, BootChainLadder
+	give a list back with two elements "ByOrigin" and "Totals"
+	* R/zzz.R Included a .onLoad function to produce a little meassage
+	after the ChainLadder packge is loaded.
+	* Excel/ChainLadder_in_Excel.xls Added new examples for
+	BootChainLadder and how to use Rapply to call functions from the
+	ChainLadder package.
