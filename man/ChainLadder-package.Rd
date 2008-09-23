@@ -7,12 +7,14 @@
 }
 \description{The ChainLadder-package grew out of presentations
   the author gave at the Stochastic Reserving Seminar at the Institute of Actuaries in November 2007.
-  This package implements the Mack-, Munich and Bootstrap-chain-ladder models.
+  This package implements the Mack-, Munich- and Bootstrap-chain-ladder models.
   
-  An example spreadsheet of how you might want to use these 
+  An example spreadsheet of how you can use these 
   functions in Excel is available in the installation directory of this package.
-  Usually along the line  \emph{C:/Programme Files/R/R-Version/library/ChainLadder/Excel}.
-  You need the RExcel-Addin, from \url{http://sunsite.univie.ac.at/rcom/}, in order to use the spreadsheet.
+  The R command \code{searchpaths()[grep('ChainLadder', searchpaths())]} will tell you the exact path to the folder.
+
+  You will need the RExcel-Addin, from \url{http://sunsite.univie.ac.at/rcom/}, in order to use the spreadsheet.
+  Get the R-package \code{RExcelInstaller} and call \code{installRExcel()} to install the Add-in.
 } 
 \details{
 \tabular{ll}{
@@ -48,7 +50,7 @@ England, PD and Verrall, RJ (2002). Stochastic Claims Reserving in General Insur
  plot(MCL)
 
 # BootChainLadder
-B <- BootChainLadder(RAA, R=199, process.distr="gamma")
+B <- BootChainLadder(RAA, R=999, process.distr="gamma")
 B
 plot(B)
 # fitdistribution

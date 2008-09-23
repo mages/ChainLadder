@@ -86,13 +86,16 @@ Many thanks to Nigel de Silva for all the ideas on how to use arrays effiecently
 }
 \seealso{ See also  \code{\link{MackChainLadder}} }
 \examples{
-B <- BootChainLadder(RAA, R=99, process.distr="gamma")
+
+# See as well the example in section 8 of England & Verrall's paper on page 55.
+B <- BootChainLadder(RAA, R=999, process.distr="gamma")
 B
+plot(B)
 # Compare to MackChainLadder
 MackChainLadder(RAA)
 quantile(B, c(0.75,0.9,0.99, 0.995))
 
-# fitdistribution
+# fit a distribution to the IBNR
 library(MASS)
 plot(ecdf(B$IBNR.Totals))
 # fit a log-normal distribution 
