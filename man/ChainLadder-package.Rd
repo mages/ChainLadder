@@ -7,21 +7,24 @@
 }
 \description{The ChainLadder-package grew out of presentations
   the author gave at the Stochastic Reserving Seminar at the Institute of Actuaries in November 2007.
-  This package implements the Mack-, Munich- and Bootstrap-chain-ladder models.
+  This package has currently implementations of the Mack-, Munich- and Bootstrap-chain-ladder models.
   
-  An example spreadsheet of how you can use these 
-  functions in Excel is available in the installation directory of this package.
+  A presentation given at the R-user conference 2008 in Dortmund is available in the 
+  \code{doc} folder of the installation directory of the ChainLadder package.
   The R command \code{searchpaths()[grep('ChainLadder', searchpaths())]} will tell you the exact path to the folder.
+  
+  An example spreadsheet is provided in the Excel folder of the above path and demonstrates how to use the ChainLadder 
+  functions in Excel.
 
-  You will need the RExcel-Addin, from \url{http://sunsite.univie.ac.at/rcom/}, in order to use the spreadsheet.
-  Get the R-package \code{RExcelInstaller} and call \code{installRExcel()} to install the Add-in.
+  Tu run the spreadsheet you will need the RExcel-Addin, see \url{http://sunsite.univie.ac.at/rcom/}.
+  To install the Add-in get the R-package \code{RExcelInstaller} and call \code{installRExcel()}.
 } 
 \details{
 \tabular{ll}{
 Package: \tab ChainLadder\cr
 Type: \tab Package\cr
 Version: \tab 0.1.2\cr
-Date: \tab 2007-12-05\cr
+Date: \tab 2008-09-23\cr
 License: \tab GPL version 2 or later\cr
 }
 }
