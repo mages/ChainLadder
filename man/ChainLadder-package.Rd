@@ -18,6 +18,10 @@
 
   Tu run the spreadsheet you will need the RExcel-Addin, see \url{http://sunsite.univie.ac.at/rcom/}.
   To install the Add-in get the R-package \code{RExcelInstaller} and call \code{installRExcel()}.
+  
+  If you are also interested in loss distributions modeling, risk theory (including ruin theory), 
+  simulation of compound hierarchical models and credibility theory check out the \code{actuar} package 
+  by C. Dutang, V. Goulet and M. Pigeon.
 } 
 \details{
 \tabular{ll}{
