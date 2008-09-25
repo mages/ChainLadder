@@ -50,12 +50,6 @@ ChainLadder <- function(Triangle, weights=1/Triangle){
 return(output)
 }
 
-print.ChainLadder <- function(x,...){
-cat("Chain-ladder factors:\n")
-print(sapply(x$Models, function(x) coef(x)))
-cat("Forecasted triangle:\n")
-print(predict(x))
-}
 
 ###############################################################################
 ## predict
