@@ -12,7 +12,9 @@
   to the paid and incurred claims triangle, see \code{\link{MackChainLadder}}.
 }
 \usage{
-MunichChainLadder(Paid, Incurred)
+MunichChainLadder(Paid, Incurred, 
+                  sigmaP = NULL, sigmaI = NULL, 
+                  tailP=FALSE, tailI=FALSE)
 
 \method{print}{MunichChainLadder}(x, \dots)
 
@@ -27,6 +29,10 @@ MunichChainLadder(Paid, Incurred)
     which is filled for \eqn{k \leq n+1-i, i=1,\ldots,n }}
   \item{Incurred}{cumulative incurred claims triangle. A quadratic (nxn)-matrix \eqn{I_{ik}} 
     which is filled for \eqn{k \leq n+1-i, i=1,\ldots,n }}
+  \item{sigmaP}{hello}
+  \item{sigmaI}{hello}  
+  \item{tailP}{hello}
+  \item{tailP}{hello}
   \item{x, object}{an object of class \code{"MunichChainLadder"}}
   \item{mfrow}{see \code{\link{par}}}
   \item{title}{see \code{\link{title}}}  
@@ -55,6 +61,10 @@ MunichChainLadder(Paid, Incurred)
     incurred/paid ratios}
   \item{lambdaI}{dependency coefficient between incurred chain ladder ratios and
     paid/incurred ratios}
+  \item{qinverse.f}{hello}
+  \item{rhoP.sigma}{hello}
+  \item{q.f}{hello}
+  \item{rhoI.sigma}{hello}
 }
 \references{
   Gerhard Quarg and Thomas Mack. Munich Chain Ladder. Blatter DGVFM 26,
@@ -71,9 +81,40 @@ MunichChainLadder(Paid, Incurred)
 MCLpaid
 MCLincurred
 
-MCL = MunichChainLadder(MCLpaid, MCLincurred)
-MCL
-plot(MCL)
+M = MunichChainLadder(MCLpaid, MCLincurred)
+M
+plot(M)
+# You can access the standard chain ladder (Mack) output
+M$SCLPaid
+M$SCLIncurred
+
+# Following the example output in Quarg's paper:
+MCL <- MunichChainLadder(MCLpaid, MCLincurred, sigmaP=0.1, sigmaI=0.1)
+# Input triangles
+MCL$Paid
+MCL$Incurred
+#Standard chain ladder factors
+MCL$SCLPaid$f
+MCL$SCLIncurred$f
+MCL$SCLPaid$sigma
+MCL$SCLIncurred$sigma
+
+MCL$q.f
+MCL$rhoP.sigma
+MCL$rhoI.sigma
+
+MCL$PaidResiduals
+MCL$IncurredResiduals
+
+MCL$QinverseResiduals
+MCL$QResiduals
+
+MCL$lambdaP
+MCL$lambdaI
+
+MCL$MCLPaid
+MCL$MCLIncurred
+
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

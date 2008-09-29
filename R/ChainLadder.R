@@ -95,8 +95,12 @@ tailfactor <- function (clratios){
 
 
 checkTriangle <- function(Triangle){
-
+    ## if a triangle is an array with 3 dimension convert it into a matrix
     .dim <- dim(Triangle)
+    if(length(.dim)>3){
+      stop("Your array has to many dimensions.")
+    }
+
     n <- .dim[2]
     m <- .dim[1]
 
@@ -109,3 +113,4 @@ checkTriangle <- function(Triangle){
 
     return(list(Triangle=Triangle, m=m,n=n))
 }
+

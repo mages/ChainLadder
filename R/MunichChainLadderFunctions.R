@@ -21,10 +21,23 @@ estimate.sigma <- function(sigma){
     return(sigma)
 }
 
+
+##############################################################################
+## getMCLResiduals
+## transform a triangle of residuals into a vector as needed by MunichChainLadder
+
+ getMCLResiduals <- function(x, n){
+     my.tri <-function(x) col(as.matrix(x)) <= ncol(as.matrix(x))-row(as.matrix(x)) + 2
+     x <- x[1:(n-2), 1:(n-2)]
+     x <- x[my.tri(x)]
+     x <- as.vector(x)
+     return(x)
+ }
+
 ##############################################################################
 ## Munich Chain Ladder
 ##
-MunichChainLadder <- function(Paid, Incurred){
+MunichChainLadder <- function(Paid, Incurred, sigmaP=NULL, sigmaI=NULL, tailP=FALSE, tailI=FALSE){
 
     if(!all(dim(Paid) == dim(Incurred)))
  	stop("Paid and Incurred triangle must have same dimension.\n")
@@ -34,8 +47,8 @@ MunichChainLadder <- function(Paid, Incurred){
     Paid <- checkTriangle(Paid)$Triangle
     Incurred <- checkTriangle(Incurred)$Triangle
 
-    MackPaid = MackChainLadder(Paid)
-    MackIncurred = MackChainLadder(Incurred)
+    MackPaid = MackChainLadder(Paid, tail=tailP)
+    MackIncurred = MackChainLadder(Incurred, tail=tailI)
 
     n <- ncol(Paid)
 
@@ -47,23 +60,32 @@ MunichChainLadder <- function(Paid, Incurred){
  	myQModel[[s]] <- lm(Paid[1:(n-s+1),s] ~ Incurred[1:(n-s+1),s] + 0,
                             weight=1/Incurred[1:(n-s+1),s])
 
-	q.f[s] = summary(myQModel[[s]])$coef[1]
-	rhoI.sigma[s] = summary(myQModel[[s]])$sigma
+	q.f[s] <- summary(myQModel[[s]])$coef[1]
+	rhoI.sigma[s] <- summary(myQModel[[s]])$sigma
     }
-    rhoI.sigma <- estimate.sigma(rhoI.sigma)
+
+    if(is.null(sigmaI)){
+        rhoI.sigma <-  estimate.sigma(rhoI.sigma)
+    }else{
+        rhoI.sigma[is.na(rhoI.sigma)] <- sigmaI
+    }
 
     myQinverseModel <- vector("list", n)
     qinverse.f <- rep(1,n)
     rhoP.sigma <- rep(0,n)
 
     for(s in c(1:n)){
- 	myQinverseModel[[s]] <- lm(Incurred[1:(n-s+1),s] ~ Paid[1:(n-s+1),s] + 0,
+        myQinverseModel[[s]] <- lm(Incurred[1:(n-s+1),s] ~ Paid[1:(n-s+1),s] + 0,
                                    weight=1/Paid[1:(n-s+1),s])
 
 	qinverse.f[s] = summary(myQinverseModel[[s]])$coef[1]
 	rhoP.sigma[s] = summary(myQinverseModel[[s]])$sigma
     }
-    rhoP.sigma <- estimate.sigma(rhoP.sigma)
+    if(is.null(sigmaP)){
+        rhoP.sigma <- estimate.sigma(rhoP.sigma)
+    }else{
+        rhoP.sigma[is.na(rhoP.sigma)] <- sigmaP
+    }
 
     ## Estimate the residuals
 
@@ -88,20 +110,18 @@ MunichChainLadder <- function(Paid, Incurred){
     QinverseSigma <- t(matrix(rep(rhoP.sigma[-n],n), ncol=n))
     QinverseResiduals <- (QinverseRatios - Qinversef)/QinverseSigma * sqrt(Paid[,-n])
 
+    .QinverseResiduals <-  getMCLResiduals(QinverseResiduals,n)
+    .QResiduals <-  getMCLResiduals(QResiduals,n)
+    .IncurredResiduals <-  getMCLResiduals(IncurredResiduals,n)
+    .PaidResiduals <-  getMCLResiduals(PaidResiduals,n)
+
 
     ## linear regression of the residuals through the origin
+    inc.res.model <- lm(.IncurredResiduals ~ .QResiduals+0)
+    lambdaI <- coef(inc.res.model)[1]
 
-    .x <- na.omit(data.frame(QinverseResiduals=QinverseResiduals[left.tri(QinverseResiduals)] ,
-                             PaidResiduals=PaidResiduals[left.tri(PaidResiduals)]))
-    .x <- .x[is.finite(.x$QinverseResiduals) & is.finite(.x$PaidResiduals),]
-
-    lambdaP <- coef(lm(QinverseResiduals ~ PaidResiduals + 0, data=.x))
-
-    .y <- na.omit(data.frame(QResiduals=QResiduals[left.tri(QResiduals)],
-                             IncurredResiduals=IncurredResiduals[left.tri(IncurredResiduals)]))
-    .y <- .y[is.finite(.y$QResiduals) & is.finite(.y$IncurredResiduals),]
-    lambdaI <- coef(lm(QResiduals ~ IncurredResiduals +0, data=.y))
-
+    paid.res.model <- lm(.PaidResiduals ~ .QinverseResiduals+0)
+    lambdaP <- coef(paid.res.model)[1]
 
     ## Recursive Munich Chain Ladder Forumla
     FullPaid <- Paid
@@ -136,6 +156,10 @@ MunichChainLadder <- function(Paid, Incurred){
     output[["QinverseResiduals"]] <- QinverseResiduals
     output[["lambdaP"]] <- lambdaP
     output[["lambdaI"]] <- lambdaI
+    output[["qinverse.f"]] <- qinverse.f
+    output[["rhoP.sigma"]] <- rhoP.sigma
+    output[["q.f"]] <- q.f
+    output[["rhoI.sigma"]] <- rhoI.sigma
 
 
     class(output) <- c("MunichChainLadder", "list")
