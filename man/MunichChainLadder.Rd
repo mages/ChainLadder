@@ -13,7 +13,7 @@
 }
 \usage{
 MunichChainLadder(Paid, Incurred, 
-                  sigmaP = NULL, sigmaI = NULL, 
+                  est.sigmaP = NULL, est.sigmaI = NULL, 
                   tailP=FALSE, tailI=FALSE)
 
 \method{print}{MunichChainLadder}(x, \dots)

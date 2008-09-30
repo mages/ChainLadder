@@ -5,7 +5,7 @@
 ## Date:08/09/2008
 
 
-MackChainLadder <- function(Triangle, weights=1/Triangle, tail=FALSE){
+MackChainLadder <- function(Triangle, weights=1/Triangle, tail=FALSE, est.sigma="loglinear"){
 
     cTriangle <- checkTriangle(Triangle)
     m <- cTriangle$m
@@ -17,7 +17,7 @@ MackChainLadder <- function(Triangle, weights=1/Triangle, tail=FALSE){
     FullTriangle <- predict.TriangleModel(list(Models=myModel, Triangle=Triangle))
 
     ## Estimate the standard error
-    StdErr <- Mack.S.E(myModel, FullTriangle, loglinear=TRUE)
+    StdErr <- Mack.S.E(myModel, FullTriangle, est.sigma=est.sigma)
     Total.SE <- TotalMack.S.E(FullTriangle, StdErr$f, StdErr$f.se, StdErr$F.se)
 
     ## Check for tail factor
@@ -57,6 +57,21 @@ MackChainLadder <- function(Triangle, weights=1/Triangle, tail=FALSE){
     class(output) <- c("MackChainLadder", "TriangleModel", "list")
     return(output)
 }
+
+##############################################################################
+
+estimate.sigma <- function(sigma){
+    if(!all(is.na(sigma))){
+        n <- length(sigma)
+        dev <- 1:n
+        my.dev <- dev[!is.na(sigma)]
+        my.model <- lm(log(sigma[my.dev]) ~ my.dev)
+        sigma[is.na(sigma)] <- exp(predict(my.model, newdata=data.frame(my.dev=dev[is.na(sigma)])))
+    }
+    return(sigma)
+}
+
+
 ########################################################################
 ## Estimate standard error for tail
 
@@ -82,7 +97,7 @@ tail.SE <- function(FullTriangle, StdErr, Total.SE, tail.factor){
 ## mean squared error = stochastic error (process variance) + estimation error
 ## standard error = sqrt(mean squared error)
 
-Mack.S.E <- function(MackModel, FullTriangle, loglinear=TRUE){
+Mack.S.E <- function(MackModel, FullTriangle, est.sigma="loglinear"){
     n <- ncol(FullTriangle)
     m <- nrow(FullTriangle)
     f <- rep(1,n)
@@ -95,19 +110,18 @@ Mack.S.E <- function(MackModel, FullTriangle, loglinear=TRUE){
     sigma[1:(n-1)] <- sapply(MackModel, function(x) summary(x)$sigma)
 
 
-    if(loglinear){
+    if(est.sigma %in% "loglinear"){
         ## estimate sigma[n-1] via log-linear regression
-        dev=c(1:(n-2))
-        gn <- which(sigma>0)
-        .sigma <- sigma[gn]
-        .dev <- c(1:n)[gn] #dev[gn]
-        sigmaModel <- lm(log(.sigma) ~ .dev)
-        sigma[-gn] <- exp(predict(sigmaModel,
-                                  newdata=data.frame(.dev=c(1:(n-1))[-gn])))
+        sigma <- estimate.sigma(sigma)
         f.se[-gn] = sigma[n-1]/sqrt(FullTriangle[1,-gn])
-    }else{
+    }
+    if(est.sigma %in% "Mack"){
         sigma[n - 1] <- sqrt(abs(min((sigma[n - 2]^4/sigma[n -
                                                            3]^2), min(sigma[n - 3]^2, sigma[n - 2]^2))))
+        f.se[n-1] = sigma[n-1]/sqrt(FullTriangle[1,n-1])
+    }
+    if(is.numeric(est.sigma)){
+        sigma[n-1] <- est.sigma
         f.se[n-1] = sigma[n-1]/sqrt(FullTriangle[1,n-1])
     }
 

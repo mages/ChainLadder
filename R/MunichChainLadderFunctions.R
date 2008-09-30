@@ -8,36 +8,25 @@ left.tri <- function(x) col(as.matrix(x)) < ncol(as.matrix(x))-row(as.matrix(x))
 ##############################################################################
 
 
-##############################################################################
-
-estimate.sigma <- function(sigma){
-    if(!all(is.na(sigma))){
-        n <- length(sigma)
-        dev <- 1:n
-        my.dev <- dev[!is.na(sigma)]
-        my.model <- lm(log(sigma[my.dev]) ~ my.dev)
-        sigma[is.na(sigma)] <- exp(predict(my.model, newdata=data.frame(my.dev=dev[is.na(sigma)])))
-    }
-    return(sigma)
-}
-
 
 ##############################################################################
 ## getMCLResiduals
 ## transform a triangle of residuals into a vector as needed by MunichChainLadder
 
- getMCLResiduals <- function(x, n){
-     my.tri <-function(x) col(as.matrix(x)) <= ncol(as.matrix(x))-row(as.matrix(x)) + 2
-     x <- x[1:(n-2), 1:(n-2)]
-     x <- x[my.tri(x)]
-     x <- as.vector(x)
-     return(x)
+ getMCLResiduals <- function(res, n){
+     x <- matrix(NA,n,n)
+     my.tri <-function(x) col(as.matrix(x)) < ncol(as.matrix(x))-row(as.matrix(x)) + 1
+     .ind <- which(my.tri(x), TRUE)
+     x[.ind] <- res[.ind]
+     x[,(n-1):n] <- NA
+
+     return(as.vector(x))
  }
 
 ##############################################################################
 ## Munich Chain Ladder
 ##
-MunichChainLadder <- function(Paid, Incurred, sigmaP=NULL, sigmaI=NULL, tailP=FALSE, tailI=FALSE){
+MunichChainLadder <- function(Paid, Incurred, est.sigmaP="loglinear", est.sigmaI="loglinear", tailP=FALSE, tailI=FALSE){
 
     if(!all(dim(Paid) == dim(Incurred)))
  	stop("Paid and Incurred triangle must have same dimension.\n")
@@ -47,8 +36,8 @@ MunichChainLadder <- function(Paid, Incurred, sigmaP=NULL, sigmaI=NULL, tailP=FA
     Paid <- checkTriangle(Paid)$Triangle
     Incurred <- checkTriangle(Incurred)$Triangle
 
-    MackPaid = MackChainLadder(Paid, tail=tailP)
-    MackIncurred = MackChainLadder(Incurred, tail=tailI)
+    MackPaid = MackChainLadder(Paid, tail=tailP, est.sigma=est.sigmaP)
+    MackIncurred = MackChainLadder(Incurred, tail=tailI, est.sigma=est.sigmaI)
 
     n <- ncol(Paid)
 
@@ -63,12 +52,7 @@ MunichChainLadder <- function(Paid, Incurred, sigmaP=NULL, sigmaI=NULL, tailP=FA
 	q.f[s] <- summary(myQModel[[s]])$coef[1]
 	rhoI.sigma[s] <- summary(myQModel[[s]])$sigma
     }
-
-    if(is.null(sigmaI)){
-        rhoI.sigma <-  estimate.sigma(rhoI.sigma)
-    }else{
-        rhoI.sigma[is.na(rhoI.sigma)] <- sigmaI
-    }
+    rhoI.sigma <-  estimate.sigma(rhoI.sigma)
 
     myQinverseModel <- vector("list", n)
     qinverse.f <- rep(1,n)
@@ -81,11 +65,7 @@ MunichChainLadder <- function(Paid, Incurred, sigmaP=NULL, sigmaI=NULL, tailP=FA
 	qinverse.f[s] = summary(myQinverseModel[[s]])$coef[1]
 	rhoP.sigma[s] = summary(myQinverseModel[[s]])$sigma
     }
-    if(is.null(sigmaP)){
-        rhoP.sigma <- estimate.sigma(rhoP.sigma)
-    }else{
-        rhoP.sigma[is.na(rhoP.sigma)] <- sigmaP
-    }
+    rhoP.sigma <- estimate.sigma(rhoP.sigma)
 
     ## Estimate the residuals
 
@@ -110,18 +90,18 @@ MunichChainLadder <- function(Paid, Incurred, sigmaP=NULL, sigmaI=NULL, tailP=FA
     QinverseSigma <- t(matrix(rep(rhoP.sigma[-n],n), ncol=n))
     QinverseResiduals <- (QinverseRatios - Qinversef)/QinverseSigma * sqrt(Paid[,-n])
 
-    .QinverseResiduals <-  getMCLResiduals(QinverseResiduals,n)
-    .QResiduals <-  getMCLResiduals(QResiduals,n)
-    .IncurredResiduals <-  getMCLResiduals(IncurredResiduals,n)
-    .PaidResiduals <-  getMCLResiduals(PaidResiduals,n)
-
+    QinverseResiduals <-  getMCLResiduals(QinverseResiduals,n)
+    QResiduals <-  getMCLResiduals(QResiduals,n)
+    IncurredResiduals <-  getMCLResiduals(IncurredResiduals,n)
+    PaidResiduals <-  getMCLResiduals(PaidResiduals,n)
 
     ## linear regression of the residuals through the origin
-    inc.res.model <- lm(.IncurredResiduals ~ .QResiduals+0)
+    inc.res.model <- lm(IncurredResiduals ~ QResiduals+0)
     lambdaI <- coef(inc.res.model)[1]
 
-    paid.res.model <- lm(.PaidResiduals ~ .QinverseResiduals+0)
+    paid.res.model <- lm(PaidResiduals ~ QinverseResiduals+0)
     lambdaP <- coef(paid.res.model)[1]
+
 
     ## Recursive Munich Chain Ladder Forumla
     FullPaid <- Paid
@@ -152,10 +132,10 @@ MunichChainLadder <- function(Paid, Incurred, sigmaP=NULL, sigmaI=NULL, tailP=FA
     output[["SCLIncurred"]] <- MackIncurred
     output[["PaidResiduals"]] <-  PaidResiduals
     output[["IncurredResiduals"]] <- IncurredResiduals
-    output[["QResiduals"]] <- QResiduals
+    output[["QResiduals"]] <-  QResiduals
     output[["QinverseResiduals"]] <- QinverseResiduals
-    output[["lambdaP"]] <- lambdaP
-    output[["lambdaI"]] <- lambdaI
+    output[["lambdaP"]] <- paid.res.model
+    output[["lambdaI"]] <- inc.res.model
     output[["qinverse.f"]] <- qinverse.f
     output[["rhoP.sigma"]] <- rhoP.sigma
     output[["q.f"]] <- q.f
@@ -242,23 +222,23 @@ plot.MunichChainLadder <- function(x, mfrow=c(2,2), title=NULL, ...){
             xlab="origin period", ylab="%", main="Munich Chain Ladder vs. Standard Chain Ladder")
 
 
-    plot(x[["PaidResiduals"]][left.tri(x[["PaidResiduals"]])] ~ x[["QinverseResiduals"]][left.tri(x[["QinverseResiduals"]])],
+    plot(x[["PaidResiduals"]] ~ x[["QinverseResiduals"]],
          xlim=c(-2,2), ylim=c(-2,2),
          xlab="Paid residuals",
          ylab="Incurred/Paid residuals",
          main="Paid residual plot")
     abline(v=0)
     abline(h=0)
-    abline(a=0,b=x[["lambdaP"]], col="red")
+    abline(a=0,b=coef(x[["lambdaP"]])[1], col="red")
 
-    plot(x[["IncurredResiduals"]][left.tri(x[["IncurredResiduals"]])] ~ x[["QResiduals"]][left.tri(x[["QResiduals"]])],
+    plot(x[["IncurredResiduals"]] ~ x[["QResiduals"]],
          xlim=c(-2,2), ylim=c(-2,2),
          xlab="Incurred residuals",
          ylab="Paid/Incurred residuals",
          main="Incurred residual plot")
     abline(v=0)
     abline(h=0)
-    abline(a=0,b=x[["lambdaI"]], col="red")
+    abline(a=0,b=coef(x[["lambdaI"]])[1], col="red")
 
     title( title , outer=TRUE)
     par(op)

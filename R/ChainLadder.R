@@ -2,30 +2,6 @@
 ## Copyright: Markus Gesmann, markus.gesmann@gmail.com
 ## Date:19/09/2008
 
-##
-## CL <- function(formula, weights=1/Triangle, Triangle){
-##     cl <- match.call()
-##     mf <- match.call(expand.dots = FALSE)
-##     m <- match("formula", names(mf), 0L)
-##     mf <- mf[c(m)]
-##     myModel <- vector("list", (n-1))
-##
-##     for(i in c(1:(n-1))){
-##         ## weighted linear regression through origin
-##         x <- Triangle[1:(m-i),i]
-##    	y <- Triangle[1:(m-i),i+1]
-##
-##   	myModel[[i]] <- lm(as.formula(mf), weights=weights[1:(m-i),i], data=data.frame(x,y))
-##     }
-##
-##     output <- list(Models=myModel, Triangle=Triangle)
-##     class(output) <- c("ChainLadder", "TriangleModel", class(output))
-##
-##  return(output)
-##
-## }
-
-
 
 ChainLadder <- function(Triangle, weights=1/Triangle){
 
@@ -114,3 +90,26 @@ checkTriangle <- function(Triangle){
     return(list(Triangle=Triangle, m=m,n=n))
 }
 
+
+##
+## CL <- function(formula, weights=1/Triangle, Triangle){
+##     cl <- match.call()
+##     mf <- match.call(expand.dots = FALSE)
+##     m <- match("formula", names(mf), 0L)
+##     mf <- mf[c(m)]
+##     myModel <- vector("list", (n-1))
+##
+##     for(i in c(1:(n-1))){
+##         ## weighted linear regression through origin
+##         x <- Triangle[1:(m-i),i]
+##    	y <- Triangle[1:(m-i),i+1]
+##
+##   	myModel[[i]] <- lm(as.formula(mf), weights=weights[1:(m-i),i], data=data.frame(x,y))
+##     }
+##
+##     output <- list(Models=myModel, Triangle=Triangle)
+##     class(output) <- c("ChainLadder", "TriangleModel", class(output))
+##
+##  return(output)
+##
+## }

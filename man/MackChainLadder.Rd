@@ -11,7 +11,7 @@
   claims development triangle.
 }
 \usage{
-MackChainLadder(Triangle, weights = 1/Triangle, tail=FALSE)
+MackChainLadder(Triangle, weights = 1/Triangle, tail=FALSE, est.sigma="loglinear")
 
 \method{print}{MackChainLadder}(x, \dots)
 
@@ -26,6 +26,7 @@ MackChainLadder(Triangle, weights = 1/Triangle, tail=FALSE)
     which is filled for \eqn{k \leq n+1-i, i=1,\ldots,n }, see \code{\link{qpaid}} for how to use (mxn)-development triangles with m<n.}
   \item{weights}{ weights. Default: 1/Triangle} 
   \item{tail}{can be logical or a numeric value. If tail=FALSE no tail factor will be applied, if tail=TRUE a tail factor will be estimate via a linear extrapolation of log(chain ladder factors - 1), if tail is a numeric value than this value will be used as tail factor. }
+  \item{est.sigma}{defines how to estimate sigma n-1. Default is  "loglinear" for a log-linear regression, "Mack" for a blabal, or if a numeric value is given it will be used instead.
   \item{x, object}{an object of class \code{"MackChainLadder"}}
   \item{mfrow}{see \code{\link{par}}}
   \item{title}{see \code{\link{title}}}  
