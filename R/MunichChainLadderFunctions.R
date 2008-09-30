@@ -209,16 +209,17 @@ plot.MunichChainLadder <- function(x, mfrow=c(2,2), title=NULL, ...){
     if(is.null(title)) myoma <- c(0,0,0,0) else myoma <- c(0,0,2,0)
 
     op=par(mfrow=mfrow, oma=myoma)
+    .origin <- dimnames(x$Paid)[[1]]
 
     n <- ncol(x[["MCLPaid"]])
     barplot(t(as.matrix(data.frame(Paid=x[["MCLPaid"]][,n], Incurred=x[["MCLIncurred"]][,n]))),
-            beside=TRUE, legend.text=c("MCL Paid", "MCL Incurred"), names.arg=c(1:n),
+            beside=TRUE, legend.text=c("MCL Paid", "MCL Incurred"), names.arg=.origin,
             xlab="origin period", ylab="Amounts", main="Munich Chain Ladder Results")
 
     barplot(t(as.matrix(
                         data.frame(SCL.PI=100*x[["SCLPaid"]]$FullTriangle[,n]/x[["SCLIncurred"]]$FullTriangle[,n],
                                    MCL.PI=100*x[["MCLPaid"]][,n]/x[["MCLIncurred"]][,n]))),
-            beside=TRUE, legend.text=c("SCL P/I", "MCL P/I"), names.arg=c(1:n),
+            beside=TRUE, legend.text=c("SCL P/I", "MCL P/I"), names.arg=.origin,
             xlab="origin period", ylab="%", main="Munich Chain Ladder vs. Standard Chain Ladder")
 
 

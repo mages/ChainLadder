@@ -113,7 +113,7 @@ Mack.S.E <- function(MackModel, FullTriangle, est.sigma="loglinear"){
     if(est.sigma %in% "loglinear"){
         ## estimate sigma[n-1] via log-linear regression
         sigma <- estimate.sigma(sigma)
-        f.se[-gn] = sigma[n-1]/sqrt(FullTriangle[1,-gn])
+        f.se[n-1] = sigma[n-1]/sqrt(FullTriangle[1,n-1])
     }
     if(est.sigma %in% "Mack"){
         sigma[n - 1] <- sqrt(abs(min((sigma[n - 2]^4/sigma[n -
@@ -237,7 +237,7 @@ plot.MackChainLadder <- function(x, mfrow=c(3,2), title=NULL,...){
     n <- ncol(plotdata)
     bp <- barplot(plotdata,
                   legend.text=c("Latest","IBNR"),
-                  names.arg=c(1:n),
+                  names.arg=rownames(.myResult),
                   main="Mack Chain Ladder Results",
                   xlab="Origin period",
                   ylab="Amounts",#paste(Currency,myUnit),
@@ -288,6 +288,7 @@ residuals.MackChainLadder <- function(object,...){
     standard.residuals <- unlist(lapply(object[["Models"]], rstandard,...))
     fitted.value <- unlist(lapply(object[["Models"]], fitted))
     origin.period <- unlist(lapply(1:(n-1), function(x) 1:length(resid( object[["Models"]][[x]]) )))
+    origin.period <- as.numeric(as.character(dimnames(object$Triangle)[["origin"]][origin.period]))
     dev.period <- unlist(lapply(1:(n-1), function(x) rep(x,length(resid( object[["Models"]][[x]]) ))))
     cal.period <- origin.period + dev.period - 1
 
@@ -299,7 +300,6 @@ residuals.MackChainLadder <- function(object,...){
     fitted.value)
     return(na.omit(myResiduals))
 }
-
 
 ##############################################################################
 ## estimate the stanard error of the tail factor

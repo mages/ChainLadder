@@ -11,8 +11,8 @@
 \source{Historical Loss Development, \emph{Reinsurance Association of Ammerica
     (RAA)}, \bold{1991}, p.96}
 \references{See Also: Which Stochastic Model is Underlying
-  the Chain Ladder Method?, Thomas Mack,  1994, \emph{Insurance
-    Mathematics and Economics},  \bold{15, 2/3}, 133-138
+  the Chain Ladder Method?, Thomas Mack, \emph{Insurance
+    Mathematics and Economics},  \bold{15, 2/3}, pp133-138, 1994
 
   P.D.England and R.J.Verrall, \emph{Stochastic Claims Reserving in
     General Insurance}, British Actuarial Journal, \bold{Vol. 8},

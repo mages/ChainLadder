@@ -28,10 +28,16 @@ Paid[seq(1,n,4),] <- qpaid
 M <- MackChainLadder(Paid)
 plot(M)
 
+# We expand the incurred triangle in the same way 
 Incurred <- matrix(NA, n, n)
 Incurred[seq(1,n,4),] <- qincurred
 
+# With the expanded triangles we can now apply MunichChainLadder
 MunichChainLadder(Paid, Incurred)
+
+# In the same way we can apply BootChainLadder
+# We reduce R from 999 to 99 in this example purely to reduce run time.
+BootChainLadder(Paid, R=99) 
 
 }
 \keyword{datasets}

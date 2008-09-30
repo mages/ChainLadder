@@ -15,16 +15,16 @@ ChainLadder <- function(Triangle, weights=1/Triangle){
     myModel <- vector("list", (n-1))
     for(i in c(1:(n-1))){
         ## weighted linear regression through origin
-        x <- Triangle[1:(m-i),i]
-   	y <- Triangle[1:(m-i),i+1]
-
-  	myModel[[i]] <- lm(y~x+0, weights=weights[1:(m-i),i], data=data.frame(x,y))
+        dev.data <- data.frame(x=Triangle[1:(m-i),i], y=Triangle[1:(m-i),i+1])
+  	myModel[[i]] <- lm(y~x+0, weights=weights[1:(m-i),i], data=dev.data)
     }
 
     output <- list(Models=myModel, Triangle=Triangle)
     class(output) <- c("ChainLadder", "TriangleModel", class(output))
-return(output)
+    return(output)
 }
+
+
 
 
 ###############################################################################
@@ -79,6 +79,8 @@ checkTriangle <- function(Triangle){
 
     n <- .dim[2]
     m <- .dim[1]
+    if(n!=m)
+	stop("Number of origin years has to be equal to number of development years.\n")
 
     if(length(.dim)==3 & .dim[3]==1){
         dim(Triangle) <- c(m,n)
@@ -87,29 +89,15 @@ checkTriangle <- function(Triangle){
         Triangle <- as.matrix(Triangle)
     }
 
+    tri.dimnames <- dimnames(Triangle)
+    if(is.null(tri.dimnames[[1]])){
+        .origin <- 1:m
+    }else{
+        .origin <- tri.dimnames[[1]]
+    }
+    .dev <- 1:n
+
+    dimnames(Triangle) <- list(origin=.origin, dev=.dev)
+
     return(list(Triangle=Triangle, m=m,n=n))
 }
-
-
-##
-## CL <- function(formula, weights=1/Triangle, Triangle){
-##     cl <- match.call()
-##     mf <- match.call(expand.dots = FALSE)
-##     m <- match("formula", names(mf), 0L)
-##     mf <- mf[c(m)]
-##     myModel <- vector("list", (n-1))
-##
-##     for(i in c(1:(n-1))){
-##         ## weighted linear regression through origin
-##         x <- Triangle[1:(m-i),i]
-##    	y <- Triangle[1:(m-i),i+1]
-##
-##   	myModel[[i]] <- lm(as.formula(mf), weights=weights[1:(m-i),i], data=data.frame(x,y))
-##     }
-##
-##     output <- list(Models=myModel, Triangle=Triangle)
-##     class(output) <- c("ChainLadder", "TriangleModel", class(output))
-##
-##  return(output)
-##
-## }

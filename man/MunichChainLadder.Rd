@@ -13,7 +13,7 @@
 }
 \usage{
 MunichChainLadder(Paid, Incurred, 
-                  est.sigmaP = NULL, est.sigmaI = NULL, 
+                  est.sigmaP = "loglinear", est.sigmaI = "loglinear", 
                   tailP=FALSE, tailI=FALSE)
 
 \method{print}{MunichChainLadder}(x, \dots)
@@ -29,10 +29,10 @@ MunichChainLadder(Paid, Incurred,
     which is filled for \eqn{k \leq n+1-i, i=1,\ldots,n }}
   \item{Incurred}{cumulative incurred claims triangle. A quadratic (nxn)-matrix \eqn{I_{ik}} 
     which is filled for \eqn{k \leq n+1-i, i=1,\ldots,n }}
-  \item{sigmaP}{hello}
-  \item{sigmaI}{hello}  
+  \item{est.sigmaP}{hello}
+  \item{est.sigmaI}{hello}  
   \item{tailP}{hello}
-  \item{tailP}{hello}
+  \item{tailI}{hello}
   \item{x, object}{an object of class \code{"MunichChainLadder"}}
   \item{mfrow}{see \code{\link{par}}}
   \item{title}{see \code{\link{title}}}  
@@ -89,7 +89,7 @@ M$SCLPaid
 M$SCLIncurred
 
 # Following the example output in Quarg's paper:
-MCL <- MunichChainLadder(MCLpaid, MCLincurred, sigmaP=0.1, sigmaI=0.1)
+MCL <- MunichChainLadder(MCLpaid, MCLincurred, est.sigmaP=0.1, est.sigmaI=0.1)
 # Input triangles
 MCL$Paid
 MCL$Incurred
@@ -98,6 +98,9 @@ MCL$SCLPaid$f
 MCL$SCLIncurred$f
 MCL$SCLPaid$sigma
 MCL$SCLIncurred$sigma
+# Check Mack's assumptions graphically
+plot(MCL$SCLPaid)
+plot(MCL$SCLIncurred)
 
 MCL$q.f
 MCL$rhoP.sigma
