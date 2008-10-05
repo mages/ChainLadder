@@ -5,13 +5,11 @@
 
 ChainLadder <- function(Triangle, weights=1/Triangle){
 
-    n <- ncol(Triangle)
-    m <- nrow(Triangle)
+    Triangle <- checkTriangle(Triangle)
 
-    if(n!=m){
-        print(dim(Triangle))
-        stop("Number of origin years has to be equal to number of development years.\n")
-    }
+    n <- dim(Triangle)[2]
+    m <- dim(Triangle)[1]
+
     myModel <- vector("list", (n-1))
     for(i in c(1:(n-1))){
         ## weighted linear regression through origin
@@ -79,8 +77,12 @@ checkTriangle <- function(Triangle){
 
     n <- .dim[2]
     m <- .dim[1]
-    if(n!=m)
-	stop("Number of origin years has to be equal to number of development years.\n")
+
+    if(n>m){
+        print(.dim)
+        stop("Number of origin periods has to be equal or greater to the number of development periods.\n")
+    }
+
 
     if(length(.dim)==3 & .dim[3]==1){
         dim(Triangle) <- c(m,n)
@@ -99,5 +101,5 @@ checkTriangle <- function(Triangle){
 
     dimnames(Triangle) <- list(origin=.origin, dev=.dev)
 
-    return(list(Triangle=Triangle, m=m,n=n))
+    return(Triangle)
 }

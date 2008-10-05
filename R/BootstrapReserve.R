@@ -8,14 +8,9 @@
 BootChainLadder <- function(Triangle, R = 999, process.distr=c("gamma", "od.pois")){
 
     process.distr <- match.arg(process.distr)
-    triangle <- Triangle
-    if(nrow(triangle) != ncol(triangle))
- 	stop("Number of origin years has to be equal to number of development years.\n")
-
-    cTriangle <- checkTriangle(Triangle)
-    m <- cTriangle$m
-    n <- cTriangle$n
-    triangle <- cTriangle$Triangle
+    triangle <- checkTriangle(Triangle)
+    m <- dim(triangle)[1]
+    n <- dim(triangle)[2]
 
     ## Obtain the standard chain-ladder development factors from cumulative data.
 

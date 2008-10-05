@@ -7,10 +7,10 @@
 
 MackChainLadder <- function(Triangle, weights=1/Triangle, tail=FALSE, est.sigma="loglinear"){
 
-    cTriangle <- checkTriangle(Triangle)
-    m <- cTriangle$m
-    n <- cTriangle$n
-    Triangle <- cTriangle$Triangle
+    Triangle <- checkTriangle(Triangle)
+    m <- dim(Triangle)[1]
+    n <- dim(Triangle)[2]
+
 
     myModel <- ChainLadder(Triangle, weights)$Models
     ## Predict the chain ladder model
