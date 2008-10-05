@@ -132,10 +132,11 @@ Mack.S.E <- function(MackModel, FullTriangle, est.sigma="loglinear"){
     ## Recursive Formula
     for(i in 2:m){
         for(k in c((n+1-i):(n-1))){
-            FullTriangle.se[i,k+1] = sqrt(
-                           FullTriangle[i,k]^2*(F.se[i,k]^2+f.se[k]^2) #
-                           + FullTriangle.se[i,k]^2*f[k]^2
-                           )
+            if(k>0)
+                FullTriangle.se[i,k+1] = sqrt(
+                               FullTriangle[i,k]^2*(F.se[i,k]^2+f.se[k]^2) #
+                               + FullTriangle.se[i,k]^2*f[k]^2
+                               )
     	}
     }
     return(list(sigma=sigma, f=f, f.se=f.se, F.se=F.se, FullTriangle.se=FullTriangle.se) )
@@ -171,7 +172,15 @@ summary.MackChainLadder <- function(object,...){
     n <- ncol(.Triangle)
     m <- nrow(.Triangle)
 
-    Latest <- rev(.Triangle[row(as.matrix(.Triangle)) == (m+1 - col(as.matrix(.Triangle)))])
+    getCurrent <- function(.x){
+            rev(.x[row(as.matrix(.x)) == (nrow(.x)+1 - col(as.matrix(.x)))])
+        }
+
+    if(m > n){
+        Latest <- c(.Triangle[1:(m-n),n], getCurrent(.Triangle[(m-n+1):m,]))
+    }else{
+        Latest <- getCurrent(.Triangle)
+        }
 
     ex.origin.period <- !is.na(Latest)
 

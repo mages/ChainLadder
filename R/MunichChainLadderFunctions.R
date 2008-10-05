@@ -30,9 +30,6 @@ MunichChainLadder <- function(Paid, Incurred, est.sigmaP="loglinear", est.sigmaI
 
     if(!all(dim(Paid) == dim(Incurred)))
  	stop("Paid and Incurred triangle must have same dimension.\n")
-    if(nrow(Paid) != ncol(Paid))
- 	stop("Number of origin years has to be equal to number of development years.\n")
-
 
     MackPaid = MackChainLadder(Paid, tail=tailP, est.sigma=est.sigmaP)
     MackIncurred = MackChainLadder(Incurred, tail=tailI, est.sigma=est.sigmaI)

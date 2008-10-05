@@ -89,11 +89,11 @@ BootChainLadder <- function(Triangle, R = 999, process.distr=c("gamma", "od.pois
     IBNR.Totals <- apply(IBNR.Triangles,3,sum)
 
     residuals <- adj.resids
-    dim(residuals) <- dim(cTriangle$Triangle)
-    dimnames(residuals) <-  dimnames(cTriangle$Triangle)
+    dim(residuals) <- dim(triangle)
+    dimnames(residuals) <-  dimnames(triangle)
 
     output <- list( call=match.call(expand.dots = FALSE),
-                   Triangle=cTriangle$Triangle,
+                   Triangle=Triangle,
                    simClaims=simClaims,
                    IBNR.ByOrigin=IBNR,
                    IBNR.Triangles=IBNR.Triangles,
@@ -172,7 +172,21 @@ mean.BootChainLadder <- function(x,...){
 summary.BootChainLadder <- function(object,probs=c(0.75,0.95),...){
 
     .Triangle <- object$Triangle
-    Latest <- rev(.Triangle[row(as.matrix(.Triangle)) == (nrow(.Triangle)+1 - col(as.matrix(.Triangle)))])
+    m <- dim(.Triangle)[1]
+    n <- dim(.Triangle)[2]
+
+    getCurrent <- function(.x){
+            rev(.x[row(as.matrix(.x)) == (nrow(.x)+1 - col(as.matrix(.x)))])
+        }
+
+    ##    if(m > n){
+    ##        Latest <- c(.Triangle[1:(m-n),n], getCurrent(.Triangle[(m-n+1):m,]))
+    ##    }else{
+    ##        Latest <- getCurrent(.Triangle)
+    ##    }
+    Latest <- c(getCurrent(.Triangle[(m-n+1):m,]))
+
+
     IBNR <- object$IBNR.ByOrigin
     dim(IBNR) <- dim(IBNR)[c(1,3)]
     IBNR.q <- apply(IBNR, 1, quantile, probs=probs,...)
