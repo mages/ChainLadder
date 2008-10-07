@@ -13,7 +13,7 @@ left.tri <- function(x) col(as.matrix(x)) < ncol(as.matrix(x))-row(as.matrix(x))
 ## getMCLResiduals
 ## transform a triangle of residuals into a vector as needed by MunichChainLadder
 
- getMCLResiduals <- function(res, n){
+getMCLResiduals <- function(res, n){
      x <- matrix(NA,n,n)
      my.tri <-function(x) col(as.matrix(x)) < ncol(as.matrix(x))-row(as.matrix(x)) + 1
      .ind <- which(my.tri(x), TRUE)
@@ -35,6 +35,7 @@ MunichChainLadder <- function(Paid, Incurred, est.sigmaP="loglinear", est.sigmaI
     MackIncurred = MackChainLadder(Incurred, tail=tailI, est.sigma=est.sigmaI)
 
     n <- ncol(Paid)
+    m <- nrow(Paid)
 
     myQModel <- vector("list", n)
     q.f <- rep(1,n)
@@ -64,25 +65,25 @@ MunichChainLadder <- function(Paid, Incurred, est.sigmaP="loglinear", est.sigmaI
 
     ## Estimate the residuals
 
-    Paidf <-  t(matrix(rep(MackPaid$f[-n],(n-1)), ncol=(n-1)))
-    PaidSigma <- t(matrix(rep(MackPaid$sigma,(n-1)), ncol=(n-1)))
-    PaidRatios <- Paid[-n,-1]/Paid[-n,-n]
-    PaidResiduals <- (PaidRatios - Paidf)/PaidSigma * sqrt(Paid[-n,-n])
+    Paidf <-  t(matrix(rep(MackPaid$f[-n],(m-1)), ncol=(m-1)))
+    PaidSigma <- t(matrix(rep(MackPaid$sigma,(m-1)), ncol=(m-1)))
+    PaidRatios <- Paid[-m,-1]/Paid[-m,-n]
+    PaidResiduals <- (PaidRatios - Paidf)/PaidSigma * sqrt(Paid[-m,-n])
 
-    Incurredf <-  t(matrix(rep(MackIncurred$f[-n],(n-1)), ncol=(n-1)))
-    IncurredSigma <- t(matrix(rep(MackIncurred$sigma,(n-1)), ncol=(n-1)))
-    IncurredRatios <- Incurred[-n,-1]/Incurred[-n,-n]
-    IncurredResiduals <- (IncurredRatios - Incurredf)/IncurredSigma * sqrt(Incurred[-n,-n])
+    Incurredf <-  t(matrix(rep(MackIncurred$f[-n],(m-1)), ncol=(m-1)))
+    IncurredSigma <- t(matrix(rep(MackIncurred$sigma,(m-1)), ncol=(m-1)))
+    IncurredRatios <- Incurred[-m,-1]/Incurred[-m,-n]
+    IncurredResiduals <- (IncurredRatios - Incurredf)/IncurredSigma * sqrt(Incurred[-m,-n])
 
 
     QRatios <- (Paid/Incurred)[,-n]
-    Qf <- t(matrix(rep(q.f[-n],n), ncol=n))
-    QSigma <- t(matrix(rep(rhoI.sigma[-n],n), ncol=n))
+    Qf <- t(matrix(rep(q.f[-n],m), ncol=m))
+    QSigma <- t(matrix(rep(rhoI.sigma[-n],m), ncol=m))
     QResiduals <- (QRatios - Qf)/QSigma * sqrt(Incurred[,-n])
 
     QinverseRatios <- 1/QRatios
     Qinversef <- 1/Qf
-    QinverseSigma <- t(matrix(rep(rhoP.sigma[-n],n), ncol=n))
+    QinverseSigma <- t(matrix(rep(rhoP.sigma[-n],m), ncol=m))
     QinverseResiduals <- (QinverseRatios - Qinversef)/QinverseSigma * sqrt(Paid[,-n])
 
     QinverseResiduals <-  getMCLResiduals(QinverseResiduals,n)
@@ -102,7 +103,7 @@ MunichChainLadder <- function(Paid, Incurred, est.sigmaP="loglinear", est.sigmaI
     FullPaid <- Paid
     FullIncurred <- Incurred
     for(j in c(1:(n-1))){
-        for(i in c((n-j+1):n) ){
+        for(i in c((n-j+1):m) ){
             ## Paid
             mclcorrection <- lambdaP*MackPaid$sigma[j]/rhoP.sigma[j]*(
                                                                       FullIncurred[i,j]/FullPaid[i,j]-qinverse.f[j]
@@ -148,11 +149,23 @@ MunichChainLadder <- function(Paid, Incurred, est.sigmaP="loglinear", est.sigmaI
 ##
 summary.MunichChainLadder <- function(object,...){
     n <- ncol(object[["MCLPaid"]])
+    m <- nrow(object[["MCLPaid"]])
+
     .Paid <- as.matrix(object[["Paid"]])
     .Incurred <- as.matrix(object[["Incurred"]])
 
-    LatestPaid = rev(.Paid[row(.Paid) == (n+1 - col(.Paid))])
-    LatestIncurred = rev(.Incurred[row(.Incurred) == (n+1 - col(.Incurred))])
+    getCurrent <- function(.x){
+            rev(.x[row(as.matrix(.x)) == (nrow(.x)+1 - col(as.matrix(.x)))])
+        }
+
+    if(m > n){
+        LatestPaid <- c(.Paid[1:(m-n),n], getCurrent(.Paid[(m-n+1):m,]))
+        LatestIncurred <- c(.Incurred[1:(m-n),n], getCurrent(.Incurred[(m-n+1):m,]))
+    }else{
+        LatestPaid <- getCurrent(.Paid)
+        LatestIncurred <- getCurrent(.Incurred)
+    }
+
     UltimatePaid = object[["MCLPaid"]][,n]
     UltimateIncurred = object[["MCLIncurred"]][,n]
 

@@ -130,7 +130,11 @@ Mack.S.E <- function(MackModel, FullTriangle, est.sigma="loglinear"){
 
     FullTriangle.se <- FullTriangle * 0
     ## Recursive Formula
-    for(i in 2:m){
+
+    rowindex <- 2:m
+    if(m>n)
+        rowindex <- c((m-n+1):m)
+    for(i in rowindex){
         for(k in c((n+1-i):(n-1))){
             if(k>0)
                 FullTriangle.se[i,k+1] = sqrt(
@@ -171,6 +175,8 @@ summary.MackChainLadder <- function(object,...){
     .Triangle <- object[["Triangle"]]
     n <- ncol(.Triangle)
     m <- nrow(.Triangle)
+
+
 
     getCurrent <- function(.x){
             rev(.x[row(as.matrix(.x)) == (nrow(.x)+1 - col(as.matrix(.x)))])
@@ -292,21 +298,22 @@ plot.MackChainLadder <- function(x, mfrow=c(3,2), title=NULL,...){
 ## residuals
 ##
 residuals.MackChainLadder <- function(object,...){
-    n <- nrow(object[["Triangle"]])
+    m <- nrow(object[["Triangle"]])
+    n <- ncol(object[["Triangle"]])
     myresiduals <- unlist(lapply(object[["Models"]], resid,...))
     standard.residuals <- unlist(lapply(object[["Models"]], rstandard,...))
     fitted.value <- unlist(lapply(object[["Models"]], fitted))
-    origin.period <- unlist(lapply(1:(n-1), function(x) 1:length(resid( object[["Models"]][[x]]) )))
-    origin.period <- as.numeric(as.character(dimnames(object$Triangle)[["origin"]][origin.period]))
-    dev.period <- unlist(lapply(1:(n-1), function(x) rep(x,length(resid( object[["Models"]][[x]]) ))))
+    origin.period <- as.numeric(unlist(lapply(lapply(object[["Models"]],residuals),names)))
+    dev.period <-rep(1:(n-1), sapply(lapply(object[["Models"]],residuals),length))
     cal.period <- origin.period + dev.period - 1
 
-    myResiduals=data.frame(origin.period,
-    dev.period,
-    cal.period,
-    residuals=myresiduals,
-    standard.residuals,
-    fitted.value)
+    myResiduals <- data.frame(origin.period,
+                              dev.period,
+                              cal.period,
+                              residuals=myresiduals,
+                              standard.residuals,
+                              fitted.value)
+
     return(na.omit(myResiduals))
 }
 

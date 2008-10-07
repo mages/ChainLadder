@@ -32,9 +32,10 @@ predict.TriangleModel <- function(object,...){
     n <- ncol(object[["Triangle"]])
     m <- nrow(object[["Triangle"]])
     FullTriangle <- object[["Triangle"]]
+
     for(j in c(1:(n-1))){
-        FullTriangle[c((n-j+1):m), j+1] <- predict(object[["Models"]][[j]],
-                                                   newdata=data.frame(x=FullTriangle[c((n-j+1):m), j]),...)
+        FullTriangle[c((m-j+1):m), j+1] <- predict(object[["Models"]][[j]],
+                                                   newdata=data.frame(x=FullTriangle[c((m-j+1):m), j]),...)
     }
     return(FullTriangle)
 }
@@ -77,6 +78,9 @@ checkTriangle <- function(Triangle){
 
     n <- .dim[2]
     m <- .dim[1]
+
+    if(m<n)
+	stop("Number of origin years has to be equal or greater than the number of development years.\n")
 
     if(n>m){
         print(.dim)
