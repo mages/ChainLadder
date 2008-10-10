@@ -159,8 +159,8 @@ mean.BootChainLadder <- function(x,...){
         rownames(ByOrigin) <- origin
     }
 
-    Total.IBNR.q <- mean(x$IBNR.Totals, mean,...)
-    Totals <- as.data.frame(Total.IBNR.q)
+    Total.IBNR <- mean(x$IBNR.Totals,...)
+    Totals <- as.data.frame(Total.IBNR)
 
     colnames(Totals)=c("Total")
     rownames(Totals) <- "Mean IBNR:"
