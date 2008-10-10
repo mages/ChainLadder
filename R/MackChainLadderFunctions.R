@@ -109,20 +109,26 @@ Mack.S.E <- function(MackModel, FullTriangle, est.sigma="loglinear"){
     f.se[1:(n-1)] <- sapply(MackModel, function(x) summary(x)$coef["x","Std. Error"])
     sigma[1:(n-1)] <- sapply(MackModel, function(x) summary(x)$sigma)
 
+    isna <- is.na(sigma)
 
     if(est.sigma %in% "loglinear"){
         ## estimate sigma[n-1] via log-linear regression
         sigma <- estimate.sigma(sigma)
-        f.se[n-1] = sigma[n-1]/sqrt(FullTriangle[1,n-1])
+        f.se[isna] <- sigma[isna]/sqrt(FullTriangle[1,isna])
     }
     if(est.sigma %in% "Mack"){
-        sigma[n - 1] <- sqrt(abs(min((sigma[n - 2]^4/sigma[n -
-                                                           3]^2), min(sigma[n - 3]^2, sigma[n - 2]^2))))
-        f.se[n-1] = sigma[n-1]/sqrt(FullTriangle[1,n-1])
+        for(i in which(isna)){   # usually i = n - 1
+            sigma[i] <- sqrt(abs(min((sigma[i - 1]^4/sigma[i -
+                                                           2]^2), min(sigma[i - 2]^2, sigma[i - 1]^2))))
+            f.se[i] <- sigma[i]/sqrt(FullTriangle[1,i])
+        }
     }
     if(is.numeric(est.sigma)){
-        sigma[n-1] <- est.sigma
-        f.se[n-1] = sigma[n-1]/sqrt(FullTriangle[1,n-1])
+        for(i in seq(along=est.sigma)){
+            l <- length(est.sigma)
+            sigma[n-i] <- est.sigma[l-i+1]
+            f.se[n-i] <- sigma[n-i]/sqrt(FullTriangle[1,n-i])
+        }
     }
 
 
