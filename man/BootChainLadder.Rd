@@ -66,6 +66,7 @@ from which summary statistics such as mean, prediction error or percentiles can 
  BootChainLadder gives a list with the following elements back:
   \item{call}{the matched call}
   \item{Triangle}{the input triangle}
+  \item{f}{chain ladder factors}
   \item{simClaims}{array of dimension \code{c(m,1,R)} with the simulated claims}	      
   \item{IBNR.ByOrigin}{array of dimension \code{c(m,1,R)} with the modeled
     IBNRs by origin period}

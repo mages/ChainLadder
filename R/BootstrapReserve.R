@@ -12,6 +12,8 @@ BootChainLadder <- function(Triangle, R = 999, process.distr=c("gamma", "od.pois
  	stop("Number of origin periods has to be equal or greater then the number of development periods.\n")
 
     triangle <- checkTriangle(Triangle)
+    output.triangle <- triangle
+
     m <- dim(triangle)[1]
     n <- dim(triangle)[2]
     origins <- c((m-n+1):m)
@@ -89,12 +91,22 @@ BootChainLadder <- function(Triangle, R = 999, process.distr=c("gamma", "od.pois
 
     IBNR.Triangles <- processTriangle
     IBNR <- getLatest(IBNR.Triangles)
+    if(m>n){
+        IBNR <- apply(IBNR, 3, function(x) c(rep(0, m-n),x))
+        dim(IBNR) <- c(m,1,R)
+        IBNR.Triangles <- apply(IBNR.Triangles,3, function(x) rbind(matrix(0,m-n,n),x))
+        dim(IBNR.Triangles) <- c(m,n,R)
+
+        simClaims <- apply(simClaims,3, function(x) rbind(matrix(0,m-n,n),x))
+        dim(simClaims) <- c(m,n,R)
+    }
+
     IBNR.Totals <- apply(IBNR.Triangles,3,sum)
 
     residuals <- adj.resids
 
     output <- list( call=match.call(expand.dots = FALSE),
-                   Triangle=Triangle,
+                   Triangle=output.triangle,
                    f=as.vector(avDFs),
                    simClaims=simClaims,
                    IBNR.ByOrigin=IBNR,
@@ -108,6 +120,11 @@ BootChainLadder <- function(Triangle, R = 999, process.distr=c("gamma", "od.pois
     return(output)
 
 }
+
+############################################################################
+## residuals.BootChainLadder
+##
+
 residuals.BootChainLadder <- function(object,...){
     return(object$ChainLadder.Residuals)
 }
@@ -117,15 +134,20 @@ residuals.BootChainLadder <- function(object,...){
 quantile.BootChainLadder <- function(x,probs=c(0.75, 0.95), na.rm = FALSE,
                                      names = TRUE, type = 7,...){
 
-    ByOrigin <- apply(x$IBNR.ByOrigin, 1, quantile, probs=probs, names=names, type=type,...)
+    m <- dim(x$Triangle)[1]
+    n <- dim(x$Triangle)[2]
+
+    ByOrigin <- t(apply(x$IBNR.ByOrigin, 1, quantile, probs=probs, names=names, type=type,...))
+
     if(length(probs)>1){
-        ByOrigin <- as.data.frame(t(ByOrigin))
-    }else{
         ByOrigin <- as.data.frame(ByOrigin)
+    }else{
+        ByOrigin <- as.data.frame(t(ByOrigin))
     }
     names(ByOrigin) <- paste("IBNR ", probs*100, "%", sep="")
 
     origin <- dimnames(x$Triangle)[[1]]
+
     if(length(origin)==nrow(ByOrigin)){
         rownames(ByOrigin) <- origin
     }
@@ -147,8 +169,13 @@ quantile.BootChainLadder <- function(x,probs=c(0.75, 0.95), na.rm = FALSE,
 ##
 mean.BootChainLadder <- function(x,...){
 
+    m <- dim(x$Triangle)[1]
+    n <- dim(x$Triangle)[2]
+
     ByOrigin <- apply(x$IBNR.ByOrigin, 1, mean,...)
+
     ByOrigin <- as.data.frame(ByOrigin)
+
     names(ByOrigin) <- "Mean IBNR"
 
     origin <- dimnames(x$Triangle)[[1]]
@@ -194,9 +221,6 @@ summary.BootChainLadder <- function(object,probs=c(0.75,0.95),...){
     IBNR.mean <- apply(IBNR, 1, mean)
     IBNR.sd <- apply(IBNR, 1, sd)
     sumIBNR <- t(rbind(IBNR.mean, IBNR.sd, IBNR.q))
-    if(m>n){
-        sumIBNR <- rbind(matrix(0, m-n, ncol(sumIBNR)), sumIBNR)
-    }
     sumIBNR <- as.data.frame(sumIBNR)
 
     ## ByOrigin
@@ -397,8 +421,6 @@ rnbinom.od<-function (n, size, prob, mu, d=1) {
 }
 
 
-
-
 ############################################################################
 ## plot.BootChainLadder
 ##
@@ -421,7 +443,7 @@ plot.BootChainLadder <- function(x,mfrow=c(2,2),title=NULL,log=FALSE,...){
 
     ## Backtest last developemt year and check for cal. year trends
     backTest <- backTestLatestIncremental(x)
-    plotLatestIncremental(backTest[["sim.Latest"]], backTest[["actual.Latest"]], log=log)
+    plotLatestIncremental(backTest, log=log)
 
     title( title , outer=TRUE)
     par(op)
@@ -433,28 +455,25 @@ backTestLatestIncremental <- function(x){
     if(!any(class(x) %in% "BootChainLadder"))
        stop("This function expects an object of class BootChainLadder")
     # Simulated Latest Incremental
+    simLatest <- getLatest(getIncremental(x$simClaims))
 
-    getCurrent <- function(.x){
-        rev(.x[row(as.matrix(.x)) == (nrow(.x)+1 - col(as.matrix(.x)))])
-    }
-    simLatest <- apply(x$simClaims,3, getCurrent)#getLatest(getIncremental(x$simClaims))
-    # Actual Latest Incremental
+    ## Actual Latest Incremental
     triangle <- x$Triangle
     dim(triangle) <- c(dim(triangle)[1:2],1)
-    actual.incr.Latest <- as.vector(apply(getIncremental(triangle), 3, getCurrent))
+    actual.incr.Latest <- as.vector(getLatest(getIncremental(getIncremental(triangle))))
+    df.actual <- data.frame(actual.incr.Latest, origin=dimnames(x$Triangle)[[1]])
 
     Long.simLatest <- expand.grid(origin=dimnames(x$Triangle)[[1]], sample=c(1:x$R))
     Long.simLatest$sim.incr.Latest <- as.vector(simLatest)
-
-    return(list(sim.Latest=Long.simLatest,
-                actual.Latest=actual.incr.Latest))
+    LongSimActual <- merge(Long.simLatest, df.actual)
+    return(LongSimActual)
 }
 
-plotLatestIncremental <- function(sim.Latest,
-                                  actual.Latest,
+plotLatestIncremental <- function(LongSimActual,##sim.Latest,
+                                  ##actual.Latest,
                                   log=TRUE,
                                   xlab="origin period",
-                                  ylab="latest incremental claim",
+                                  ylab="latest incremental claims",
                                   main="Latest actual incremental claims\nagainst simulated values",
                                   col="bisque",
                                   ...){
@@ -464,33 +483,43 @@ plotLatestIncremental <- function(sim.Latest,
     ## x <- backTestLatestIncremental(B)
     ## plotLatestIncremental(x[[1]], x[[1]])
 
+    LongSimActual <- LongSimActual[LongSimActual$sim.incr.Latest>0 & LongSimActual$actual.incr.Latest>0,]
+    LongSimActual$origin <- factor(LongSimActual$origin)
     if(log){
-        sim.Latest <- sim.Latest[sim.Latest$sim.incr.Latest>0,]
-        boxplot(sim.Latest$sim.incr.Latest ~ sim.Latest$origin, log="y",
+        boxplot(LongSimActual$sim.incr.Latest ~ LongSimActual$origin, log="y",
                 xlab=xlab, ylab=paste("Log(",ylab,")", sep=""), main=main,col=col,...)
     }else{
-        boxplot(sim.Latest$sim.incr.Latest ~ sim.Latest$origin,
+        boxplot(LongSimActual$sim.incr.Latest ~ LongSimActual$origin,
                 xlab=xlab, ylab=ylab, main=main,col=col,...)
     }
-    points(actual.Latest,col=2, pch=19)
+    points(y=LongSimActual$actual.incr.Latest,x=LongSimActual$origin, col=2, pch=19)
     legend("topleft","Latest actual", pch=19, col=2)
 }
 
 plotBootstrapUltimates <- function(x, xlab="origin period", ylab="ultimate claims costs",
                                    main="Simulated ultimate claims cost",...){
 
-    .Triangle <- x$Triangle
-    Latest <- rev(.Triangle[row(as.matrix(.Triangle)) == (nrow(.Triangle)+1 - col(as.matrix(.Triangle)))])
-    Ultimates <- apply(x$IBNR.ByOrigin, 3, function(.x) .x+Latest)
-    meanUltimates <- apply(Ultimates,1,mean)
+    tri <- x$Triangle
+    dim(tri) <- c(dim(tri),1)
+    Latest <- as.vector(getLatest(getIncremental(tri)))
 
     .origin <- dimnames(x$Triangle)[[1]]
+    meanUlt <- data.frame(mean(x)$ByOrigin+Latest, .origin)
+    names(meanUlt) <- c("meanUltimate", "origin")
+    Ultimate <- apply(x$IBNR.ByOrigin, 3, function(.x) .x+Latest)
 
-    simUltimate <- expand.grid(origin.period=.origin, sample=c(1:dim(x$IBNR.ByOrigin)[3]))
-    simUltimate$Ultimates <- as.vector(Ultimates)
-    boxplot(Ultimates ~ origin.period, data=simUltimate,
+
+    simUlt <- expand.grid(origin=.origin, sample=c(1:dim(x$IBNR.ByOrigin)[3]))
+    simUlt$Ultimate <- as.vector(Ultimate)
+
+    simUlt <- subset(merge(simUlt, meanUlt) , Ultimate > 0)
+    simUlt$origin <- factor(simUlt$origin)
+
+
+    boxplot(Ultimate ~ origin, data=simUlt,
             xlab=xlab, ylab=ylab,main=main,col="bisque",...)
-    points(meanUltimates,col=2, pch=19)
+
+    points(y=simUlt$meanUltimate, x=simUlt$origin,col=2, pch=19)
     legend("topleft","Mean ultimate claim", pch=19, col=2)
 
 }
