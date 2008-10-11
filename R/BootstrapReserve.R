@@ -1,45 +1,43 @@
 ## Author: Markus Gesmann
 ## Copyright: Markus Gesmann, markus.gesmann@gmail.com
-## Date:19/09/2008
-
-
-## source(paste(searchpaths()[grep("ChainLadder", searchpaths())],"/Experimental/BootstrapReserve.R", sep=""))
+## Date:19/10/2008
 
 BootChainLadder <- function(Triangle, R = 999, process.distr=c("gamma", "od.pois")){
 
     process.distr <- match.arg(process.distr)
+    weights <- 1/Triangle
 
     triangle <- Triangle
     if(nrow(triangle) < ncol(triangle))
- 	stop("Number of origin years has to be equal to number of development years.\n")
+ 	stop("Number of origin periods has to be equal or greater then the number of development periods.\n")
 
     triangle <- checkTriangle(Triangle)
     m <- dim(triangle)[1]
     n <- dim(triangle)[2]
+    origins <- c((m-n+1):m)
 
     ## Obtain the standard chain-ladder development factors from cumulative data.
 
     triangle <- array(triangle, dim=c(m,n,1))
+    weights <-  array(weights, dim=c(m,n,1))
     inc.triangle <- getIncremental(triangle)
-
-    lobs <- row(triangle[,,1]) == (n+1 - col(triangle[,,1]))
-    obs <- row(triangle[,,1]) <= (n+1 - col(triangle[,,1]))
-    Latest <- getLatest(inc.triangle)
+    Latest <- getLatest(inc.triangle)[origins]
 
     ## Obtain cumulative fitted values for the past triangle by backwards
     ## recursion, starting with the observed cumulative paid to date in the latest
     ## diagonal
 
     dfs <- getIndivDFs(triangle)
-    weights <- triangle
-    avDFs <- getAvDFs(dfs, weights)
+    avDFs <- getAvDFs(dfs, 1/weights)
     ultDFs <- getUltDFs(avDFs)
     ults <- getUltimates(Latest, ultDFs)
     ## Obtain incremental fitted values, m^ ij, for the past triangle by differencing.
     exp.inc.triangle <- getIncremental(getExpected(ults, 1/ultDFs))
-    exp.inc.triangle[is.na(inc.triangle[,,1])] <- NA
-
+    ## exp.inc.triangle[is.na(inc.triangle[,,1])] <- NA
+    exp.inc.triangle[is.na(inc.triangle[origins,,1])] <- NA
     ## Calculate the unscaled Pearson residuals for the past triangle using:
+    inc.triangle <- inc.triangle[origins,,]
+    dim(inc.triangle) <- c(n,n,1)
     unscaled.residuals  <- (inc.triangle - exp.inc.triangle)/sqrt(abs(exp.inc.triangle))
 
     ## Calculate the Pearson scale parameter
@@ -94,11 +92,10 @@ BootChainLadder <- function(Triangle, R = 999, process.distr=c("gamma", "od.pois
     IBNR.Totals <- apply(IBNR.Triangles,3,sum)
 
     residuals <- adj.resids
-    dim(residuals) <- dim(triangle)
-    dimnames(residuals) <-  dimnames(triangle)
 
     output <- list( call=match.call(expand.dots = FALSE),
                    Triangle=Triangle,
+                   f=as.vector(avDFs),
                    simClaims=simClaims,
                    IBNR.ByOrigin=IBNR,
                    IBNR.Triangles=IBNR.Triangles,
@@ -184,12 +181,11 @@ summary.BootChainLadder <- function(object,probs=c(0.75,0.95),...){
             rev(.x[row(as.matrix(.x)) == (nrow(.x)+1 - col(as.matrix(.x)))])
         }
 
-    ##    if(m > n){
-    ##        Latest <- c(.Triangle[1:(m-n),n], getCurrent(.Triangle[(m-n+1):m,]))
-    ##    }else{
-    ##        Latest <- getCurrent(.Triangle)
-    ##    }
-    Latest <- c(getCurrent(.Triangle[(m-n+1):m,]))
+    if(m > n){
+        Latest <- c(.Triangle[1:(m-n),n], getCurrent(.Triangle[(m-n+1):m,]))
+    }else{
+        Latest <- getCurrent(.Triangle)
+    }
 
 
     IBNR <- object$IBNR.ByOrigin
@@ -197,10 +193,16 @@ summary.BootChainLadder <- function(object,probs=c(0.75,0.95),...){
     IBNR.q <- apply(IBNR, 1, quantile, probs=probs,...)
     IBNR.mean <- apply(IBNR, 1, mean)
     IBNR.sd <- apply(IBNR, 1, sd)
-    sumIBNR <- as.data.frame(t(rbind(IBNR.mean, IBNR.sd, IBNR.q)))
+    sumIBNR <- t(rbind(IBNR.mean, IBNR.sd, IBNR.q))
+    if(m>n){
+        sumIBNR <- rbind(matrix(0, m-n, ncol(sumIBNR)), sumIBNR)
+    }
+    sumIBNR <- as.data.frame(sumIBNR)
 
     ## ByOrigin
-    ByOrigin <- data.frame(Latest, Ult.mean=Latest+sumIBNR$IBNR.mean, sumIBNR)
+    ByOrigin <- data.frame(Latest,
+                           Ult.mean=Latest+sumIBNR$IBNR.mean,
+                           sumIBNR)
     names(ByOrigin) <- c("Latest", "Mean Ultimate", "Mean IBNR",
                          "SD IBNR", paste("IBNR ", probs*100, "%", sep=""))
     ex.origin.period <- !is.na(Latest)

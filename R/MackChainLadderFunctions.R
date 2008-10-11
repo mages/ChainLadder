@@ -200,9 +200,9 @@ summary.MackChainLadder <- function(object,...){
     Dev.To.Date <- Latest/Ultimate
     IBNR <- Ultimate-Latest
     Mack.S.E <- object[["Mack.S.E"]][,n]
-    CoV <- Mack.S.E/(Ultimate-Latest)
+    CV <- Mack.S.E/(Ultimate-Latest)
 
-    ByOrigin <- data.frame(Latest, Dev.To.Date, Ultimate, IBNR, Mack.S.E, CoV)
+    ByOrigin <- data.frame(Latest, Dev.To.Date, Ultimate, IBNR, Mack.S.E, CV)
     ByOrigin <- ByOrigin[ex.origin.period,]
 
     Totals <-  c(sum(Latest,na.rm=TRUE), sum(Ultimate,na.rm=TRUE),
@@ -215,7 +215,7 @@ summary.MackChainLadder <- function(object,...){
     colnames(Totals)=c("Total")
     rownames(Totals) <- c("Latest:","Ultimate:",
                           "IBNR:","Mack S.E.:",
-                          "CoV:")
+                          "CV:")
 
     output <- list(ByOrigin=ByOrigin, Totals=Totals)
     return(output)
