@@ -12,7 +12,7 @@
 }
 
 \arguments{
-
+  \item{x}{output from \code{MackChainLadder}}
   \item{mfrow}{see \code{\link{par}}}
   \item{title}{see \code{\link{title}}}  
   \item{\dots}{ optional arguments to \code{plot} method} 

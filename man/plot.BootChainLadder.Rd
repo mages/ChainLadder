@@ -34,7 +34,7 @@
 \note{
   The box-plot of latest actual incremental claims against simulated
   claims follows ideas of B. Zehnwirth and G. Barnett in:
-  \cite{Barnett and Zehnwirth. \emp{The need for diagnostic assessment of
+  \cite{Barnett and Zehnwirth. \emph{The need for diagnostic assessment of
     bootstrap predictive models}, Insureware technical report. 2007}
 }
 \seealso{ See Also \code{\link{BootChainLadder}} }

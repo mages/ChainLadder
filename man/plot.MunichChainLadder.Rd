@@ -15,6 +15,7 @@
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
+  \item{x}{output from \code{MunichChainLadder}}
   \item{mfrow}{see \code{\link{par}}}
   \item{title}{see \code{\link{title}}}  
   \item{\dots}{ optional arguments to \code{plot} method }

@@ -8,7 +8,7 @@
   Summarise a \code{MackChainLadder} object;
   Print a \code{MackChainLadder} object
 }
-\Usage{
+\usage{
 
 \method{summary}{MackChainLadder}(object, \dots)
 
