@@ -1,12 +1,5 @@
 \name{BootChainLadder}
 \alias{BootChainLadder}
-%\alias{summary.BootChainLadder}
-%\alias{print.BootChainLadder}
-\alias{plot.BootChainLadder}
-%\alias{quantile.BootChainLadder}
-%\alias{residuals.BootChainLadder}
-%\alias{mean.BootChainLadder}
-
 \title{ Bootstrap-Chain-Ladder Model }
 \description{
   The \code{BootChainLadder} procedure provides a predictive
@@ -14,20 +7,6 @@
 }
 \usage{
 BootChainLadder(Triangle, R = 999, process.distr=c("gamma", "od.pois"))
-
-\method{summary}{BootChainLadder}(object, probs=c(0.75,0.95), \dots)
-
-\method{print}{BootChainLadder}(x, probs=c(0.75,0.95), \dots)
-
-\method{plot}{BootChainLadder}(x, mfrow=c(2,2), title=NULL, log=FALSE, \dots)
-
-\method{residuals}{BootChainLadder}(object, \dots)
-
-\method{quantile}{BootChainLadder}(x, probs=c(0.75, 0.95), na.rm = FALSE,
-              names = TRUE, type = 7,\dots)
-
-\method{mean}{BootChainLadder}(x, \dots)
-
 }
 
 \arguments{
@@ -40,23 +19,6 @@ BootChainLadder(Triangle, R = 999, process.distr=c("gamma", "od.pois"))
   \item{process.distr}{ character string indicating which process
     distributionto be assumed. One of "gamma" (default), 
     or "od.pois" (overdispersed Poisson), can be abbreviated}
-  \item{x}{output from BootChainLadder}
-  \item{object}{output from BootChainLadder}
-  \item{mfrow}{see \code{\link{par}}}
-  \item{title}{see \code{\link{title}}} 
-  \item{log}{logical. If \code{TRUE} the y-axes of the 'latest
-    incremental actual vs. simulated' plot will be on a log-scale}
-    \item{probs}{numeric vector of probabilities with values in [0,1],
-      see \code{\link{quantile}} for more help}
-    \item{na.rm}{logical; if true, any \code{NA} and \code{NaN}'s are
-      removed from 'x' before the quantiles are computed,
-      see \code{\link{quantile}} for more help}
-    \item{names}{logical; if true, the result has a \code{names}
-      attribute. Set to \code{FALSE} for speedup with many 'probs',
-      see \code{\link{quantile}} for more help}
- \item{type}{an integer between 1 and 9 selecting one of the nine quantile
-   algorithms detailed below to be used, see \code{\link{quantile}}}         
- \item{\dots}{further arguments passed to or from other methods}
 }
 \details{
   The \code{BootChainLadder} function uses a two-stage
@@ -86,11 +48,6 @@ BootChainLadder(Triangle, R = 999, process.distr=c("gamma", "od.pois"))
   \item{ChainLadder.Residuals}{adjusted Pearson chain-ladder residuals}
   \item{process.distr}{assumed process distribution}
   \item{R}{number of bootstraps}
-
-summary.BootChainLadder gives a list with the following elements back:
-
- \item{ByOrigin}{a data frame with summary statistics by origin period}
- \item{Totals}{a data frame with total summary statistics for all origin period}
 }
 \references{
   \cite{England, PD and Verrall, RJ. Stochastic Claims Reserving in
@@ -101,10 +58,6 @@ summary.BootChainLadder gives a list with the following elements back:
 \note{ The implimentation of \code{BootChainLadder} follows closely the
   discussion of the bootstrap model in section 8 and appendix 3 of the
   above paper by England and Verall.
-
-  The box-plots follow the ideas of B. Zehnwirth and G. Barnett in:
-  \cite{Barnett and Zehnwirth. The need for diagnostic assessment of
-    bootstrap predictive models, Insureware technical report. 2007}
 }
 \seealso{ See also  \code{\link{MackChainLadder}} }
 \examples{

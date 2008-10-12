@@ -1,95 +1,69 @@
 \name{summary.BootChainLadder}
 \alias{summary.BootChainLadder}
-%- Also NEED an '\alias' for EACH other topic documented here.
-\title{ ~~function to do ... ~~ }
+\alias{print.BootChainLadder}
+\alias{quantile.BootChainLadder}
+\alias{mean.BootChainLadder}
+\alias{residuals.BootChainLadder}
+\title{ Methods for BootChainLadder objects }
+
 \description{
-  ~~ A concise (1-5 lines) description of what the function does. ~~
+  \code{summary}, \code{print}, \code{mean}, and \code{quantile}
+  methods for \code{BootChainLadder} objects
 }
 \usage{
-summary.BootChainLadder(object, probs = c(0.75, 0.95), ...)
+\method{summary}{BootChainLadder}(object, probs=c(0.75,0.95), \dots)
+
+\method{print}{BootChainLadder}(x, probs=c(0.75,0.95), \dots)
+
+\method{quantile}{BootChainLadder}(x, probs=c(0.75, 0.95), na.rm = FALSE,
+              names = TRUE, type = 7,\dots)
+
+\method{mean}{BootChainLadder}(x, \dots)
+
+\method{residuals}{BootChainLadder}(object, \dots)
+
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
-  \item{object}{ ~~Describe \code{object} here~~ }
-  \item{probs}{ ~~Describe \code{probs} here~~ }
-  \item{\dots}{ ~~Describe \code{\dots} here~~ }
+  \item{x, object}{output from \code{\link{BootChainLadder}}}
+  \item{probs}{numeric vector of probabilities with values in [0,1],
+    see \code{\link{quantile}} for more help}
+  \item{na.rm}{logical; if true, any \code{NA} and \code{NaN}'s are
+    removed from 'x' before the quantiles are computed,
+    see \code{\link{quantile}} for more help}
+  \item{names}{logical; if true, the result has a \code{names}
+    attribute. Set to \code{FALSE} for speedup with many 'probs',
+    see \code{\link{quantile}} for more help}
+  \item{type}{an integer between 1 and 9 selecting one of the nine quantile
+    algorithms detailed below to be used, see \code{\link{quantile}}}         
+  \item{\dots}{further arguments passed to or from other methods}
 }
 \details{
-  ~~ If necessary, more details than the description above ~~
+  \code{print.BootChainLadder} calls \code{summary.BootChainLadder} and
+  prints a formatted version of the summary.
+  \code{residuals.BootChainLadder} gives the residual triangle of
+  the expected chain-ladder minus the actual triangle back.
+
 }
 \value{
-  ~Describe the value returned
-  If it is a LIST, use
-  \item{comp1 }{Description of 'comp1'}
-  \item{comp2 }{Description of 'comp2'}
-  ...
-}
-\references{ ~put references to the literature/web site here ~ }
-\author{ ~~who you are~~ }
-\note{ ~~further notes~~ 
+  \code{summary.BootChainLadder}, \code{mean.BootChainLadder}, and
+  \code{quantile.BootChainLadder}, give a list with two elements back:
 
- ~Make other sections like Warning with \section{Warning }{....} ~
+  \item{ByOrigin}{data frame with summary/mean/quantile statistics by
+    origin period}
+  \item{Totals}{data frame with total summary/mean/quantile statistics
+    for all origin period}
 }
-\seealso{ ~~objects to See Also as \code{\link{help}}, ~~~ }
+
+\author{ Markus Gesmann }
+\seealso{ See Also \code{\link{BootChainLadder}} }
 \examples{
-##---- Should be DIRECTLY executable !! ----
-##-- ==>  Define data, use random,
-##--	or do  help(data=index)  for the standard data sets.
+B <- BootChainLadder(RAA, R=999, process.distr="gamma")
+B
+summary(B)
+mean(B)
+quantile(B, c(0.75,0.95,0.99, 0.995))
 
-## The function is currently defined as
-function(object,probs=c(0.75,0.95),...){
-
-    .Triangle <- object$Triangle
-    m <- dim(.Triangle)[1]
-    n <- dim(.Triangle)[2]
-
-    dim(.Triangle) <- c(dim(.Triangle),1)
-    Latest <- as.vector(getLatest(getIncremental(.Triangle)))
-
-
-    IBNR <- object$IBNR.ByOrigin
-    dim(IBNR) <- dim(IBNR)[c(1,3)]
-    IBNR.q <- apply(IBNR, 1, quantile, probs=probs,...)
-    IBNR.mean <- apply(IBNR, 1, mean)
-    IBNR.sd <- apply(IBNR, 1, sd)
-    sumIBNR <- t(rbind(IBNR.mean, IBNR.sd, IBNR.q))
-    sumIBNR <- as.data.frame(sumIBNR)
-
-    ## ByOrigin
-    ByOrigin <- data.frame(Latest,
-                           Ult.mean=Latest+sumIBNR$IBNR.mean,
-                           sumIBNR)
-    names(ByOrigin) <- c("Latest", "Mean Ultimate", "Mean IBNR",
-                         "SD IBNR", paste("IBNR ", probs*100, "\%", sep=""))
-    ex.origin.period <- Latest!=0
-    ByOrigin <- ByOrigin[ex.origin.period,]
-
-    origin <- dimnames(object$Triangle)[[1]]
-    if(length(origin)==nrow(ByOrigin)){
-        rownames(ByOrigin) <- origin
-    }
-
-    ## Totals
-    Total.Latest <- sum(Latest,na.rm=TRUE)
-    Total.IBNR <- object$IBNR.Totals
-    Total.IBNR.mean <-  mean(Total.IBNR)
-    Total.IBNR.sd <-  sd(Total.IBNR)
-    Total.IBNR.q <- quantile(Total.IBNR, probs=probs,...)
-
-    Totals <-  c(Total.Latest, Total.Latest+Total.IBNR.mean,
-                 Total.IBNR.mean, Total.IBNR.sd, Total.IBNR.q)
-    Totals <- as.data.frame(Totals)
-
-    colnames(Totals)=c("Totals")
-    rownames(Totals) <- c("Latest:","Mean Ultimate:",
-                          "Mean IBNR:","SD IBNR:",
-                          paste("Total IBNR ", probs*100, "\%:", sep="") )
-
-    output <- list(ByOrigin=ByOrigin, Totals=Totals)
-    return(output)
-  }
 }
-% Add one or more standard keywords, see file 'KEYWORDS' in the
-% R documentation directory.
-\keyword{ ~kwd1 }
-\keyword{ ~kwd2 }% __ONLY ONE__ keyword per line
+\keyword{ methods }
+\keyword{ print }% __ONLY ONE__ keyword per line

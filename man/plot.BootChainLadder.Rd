@@ -1,70 +1,46 @@
 \name{plot.BootChainLadder}
 \alias{plot.BootChainLadder}
-%- Also NEED an '\alias' for EACH other topic documented here.
-\title{ ~~function to do ... ~~ }
+\title{ Plot method for a BootChainLadder object}
 \description{
-  ~~ A concise (1-5 lines) description of what the function does. ~~
+  \code{plot.BootChainLadder}, a method to plot the output of
+  \code{\link{BootChainLadder}}. It is designed to give a quick look at a
+  \code{BootChainLadder} object, to check the result and the model assumptions.
 }
 \usage{
-plot.BootChainLadder(x, mfrow = c(2, 2), title = NULL, log = FALSE, ...)
+\method{plot}{BootChainLadder}(x, mfrow=c(2,2), title=NULL, log=FALSE, \dots)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
-  \item{x}{ ~~Describe \code{x} here~~ }
-  \item{mfrow}{ ~~Describe \code{mfrow} here~~ }
-  \item{title}{ ~~Describe \code{title} here~~ }
-  \item{log}{ ~~Describe \code{log} here~~ }
-  \item{\dots}{ ~~Describe \code{\dots} here~~ }
+  \item{x}{output from \code{BootChainLadder}}
+  \item{mfrow}{see \code{\link{par}}}
+  \item{title}{see \code{\link{title}}} 
+  \item{log}{logical. If \code{TRUE} the y-axes of the 'latest
+    incremental actual vs. simulated' plot will be on a log-scale}
+  \item{\dots}{ optional arguments to \code{plot} method }
 }
 \details{
-  ~~ If necessary, more details than the description above ~~
+ \code{plot.BootChainLadder} shows four graphs, staring with a histogram
+ of the total simulated IBNRs over all origin periods, including a rug
+ plot; a plot of the empirical cumulative distribution of the total
+ IBNRs over all origin periods; a box-whisker plot of simulated ultimate
+ claims costs against origin periods; and a box-whisker plot of
+ simulated incremental claims cost for the latest available calendar period
+ against actual incremental claims in the same period. In the last plot
+ the simulated data should follow the same trend as the actual,
+ otherwise the original data might have some intrinsic trends which are
+ not reflected in the model.
 }
-\value{
-  ~Describe the value returned
-  If it is a LIST, use
-  \item{comp1 }{Description of 'comp1'}
-  \item{comp2 }{Description of 'comp2'}
-  ...
+\author{Markus Gesmann}
+\note{
+  The box-plot of latest actual incremental claims against simulated
+  claims follows ideas of B. Zehnwirth and G. Barnett in:
+  \cite{Barnett and Zehnwirth. \emp{The need for diagnostic assessment of
+    bootstrap predictive models}, Insureware technical report. 2007}
 }
-\references{ ~put references to the literature/web site here ~ }
-\author{ ~~who you are~~ }
-\note{ ~~further notes~~ 
-
- ~Make other sections like Warning with \section{Warning }{....} ~
-}
-\seealso{ ~~objects to See Also as \code{\link{help}}, ~~~ }
+\seealso{ See Also \code{\link{BootChainLadder}} }
 \examples{
-##---- Should be DIRECTLY executable !! ----
-##-- ==>  Define data, use random,
-##--	or do  help(data=index)  for the standard data sets.
-
-## The function is currently defined as
-function(x,mfrow=c(2,2),title=NULL,log=FALSE,...){
-
-    if(is.null(title)) myoma <- c(0,0,0,0) else myoma <- c(0,0,2,0)
-
-    Total.IBNR <- x$IBNR.Total
-
-    op=par(mfrow=mfrow, oma=myoma,...)
-    ## Histogram
-    hist(Total.IBNR, xlab="Total IBNR")
-    lines(density(Total.IBNR))
-    rug(Total.IBNR)
-    ## Empirical distribution
-    plot(ecdf(Total.IBNR), xlab="Total IBNR")
-
-    ## Plot simultated Ultiamtes by Origin
-    plotBootstrapUltimates(x)
-
-    ## Backtest last developemt year and check for cal. year trends
-    backTest <- backTestLatestIncremental(x)
-    plotLatestIncremental(backTest, log=log)
-
-    title( title , outer=TRUE)
-    par(op)
-  }
+B <- BootChainLadder(RAA)
+plot(B)
 }
-% Add one or more standard keywords, see file 'KEYWORDS' in the
-% R documentation directory.
-\keyword{ ~kwd1 }
-\keyword{ ~kwd2 }% __ONLY ONE__ keyword per line
+\keyword{ aplot }
+
