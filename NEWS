@@ -1,1 +1,58 @@
-NEWS
+=== ChainLadder: R package for insurance claims reserving ===
+
+Version 0.1.2-4
+===============
+
+NEW FEATURES
+
+  o New function 'BootChainLadder', based on papers by England and Verrall, 
+    and Barnett and Zehnwirth
+ 
+  o 'MackChainLadder' and 'MunichChainLadder' allow for tail factors
+
+  o 'MackChainLadder' estimates the overall standard error for the total IBNR
+		
+  o New arguments 'tail' and 'est.sigma' for MackChainLadder, to control 
+    the tail factor and the estimation of sigma_{n-1}
+
+  o New arguments 'tailP', 'tailI' and 'est.sigmaP', 'est.sigmaI' for
+    'MunichChainLadder', which are passed on to 'MackChainLadder' to control 
+    the tail factor and the estimation of sigma_{n-1} for the Paid and 
+    Incurred triangle
+
+  o 'Mack-, 'Munich-, and 'BootChainLadder' accept (mxn) matrices with m>=n,
+    e.g more accident years than development years
+
+  o New example data sets: 'ABC' (annual run-off triangle of a worker's 
+    compensation portfolio of a large company), 'qpaid', 'qincurred' ('made-up'
+    data of a quarterly development triangle of annual origin period)
+	
+  o Triangles with higher development period frequency (e.g quarterly) than 
+    origin period frequency (e.g annual) can be used after being 'blown-up'
+    to a common period frequency, see the help of 'qpaid'
+
+  o 'Mack-, 'Munich- and 'BootChainLadder' accept 'blown-up' triangles of 
+    higher development period frequency than origin period frequency filled 
+    with 'NA', see the help of 'qpaid'
+
+USER-VISIBLE CHANGES
+
+  o summary functions for 'Mack-, 'Munich-, 'BootChainLadder' give all a list 
+    back with two elements: 'ByOrigin' and 'Totals'	
+ 
+  o Change of labels: origin years -> origin period and development years ->
+    development origin
+
+  o Coefficient of Variance is abbreviate with 'CV' instead of 'CoV'
+
+  o The example spreadsheet 'ChainLadder_in_Excel.xls' has new examples, 
+    including 'BootChainLadder'
+
+  o New greeting message after the R-call 'library(ChainLadder)'
+
+  o Improved documentation
+
+BUG FIXES
+
+  o 'MunichChainLadder': calculation of 'lambdaP' and 'lambdI' was incorrect. 
+    Thanks to Beat Huggler for reporting this issue.

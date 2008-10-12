@@ -204,7 +204,7 @@ print.MunichChainLadder <- function(x,...){
     print(x$call)
     cat("\n")
     print(format(summary.x$ByOrigin, big.mark = ",", digits = 3),...)
-    cat("\nTotal\n")
+    cat("\nTotals\n")
     print(format(summary.x$Totals, big.mark = ",", digits = 2),...)
 
 }

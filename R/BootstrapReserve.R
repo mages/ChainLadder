@@ -157,7 +157,7 @@ quantile.BootChainLadder <- function(x,probs=c(0.75, 0.95), na.rm = FALSE,
 
     Totals <- as.data.frame(Total.IBNR.q)
 
-    colnames(Totals)=c("Total")
+    colnames(Totals)=c("Totals")
     rownames(Totals) <- paste("IBNR ", probs*100, "%:", sep="")
 
     output <- list(ByOrigin=ByOrigin, Totals=Totals)
@@ -241,7 +241,7 @@ summary.BootChainLadder <- function(object,probs=c(0.75,0.95),...){
                  Total.IBNR.mean, Total.IBNR.sd, Total.IBNR.q)
     Totals <- as.data.frame(Totals)
 
-    colnames(Totals)=c("Total")
+    colnames(Totals)=c("Totals")
     rownames(Totals) <- c("Latest:","Mean Ultimate:",
                           "Mean IBNR:","SD IBNR:",
                           paste("Total IBNR ", probs*100, "%:", sep="") )
