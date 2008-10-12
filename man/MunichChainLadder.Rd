@@ -1,8 +1,6 @@
 \name{MunichChainLadder}
 \alias{MunichChainLadder}
-\alias{print.MunichChainLadder}
-\alias{summary.MunichChainLadder}
-\alias{plot.MunichChainLadder}
+
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{Munich-Chain-Ladder Model }
 \description{
@@ -15,13 +13,6 @@
 MunichChainLadder(Paid, Incurred, 
                   est.sigmaP = "loglinear", est.sigmaI = "loglinear", 
                   tailP=FALSE, tailI=FALSE)
-
-\method{print}{MunichChainLadder}(x, \dots)
-
-\method{plot}{MunichChainLadder}(x,  mfrow=c(2,2), title=NULL, \dots)
-
-\method{summary}{MunichChainLadder}(object, \dots)
-
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -43,12 +34,6 @@ MunichChainLadder(Paid, Incurred,
     is passed on to \code{\link{MackChainLadder}}, see \code{tail} just there.}
   \item{tailI}{defines how the tail of the Incurred triangle is estimated and
     is passed on to \code{\link{MackChainLadder}}, see \code{tail} just there.}
-  \item{x, object}{object of class \code{"MunichChainLadder"}}
-  \item{mfrow}{see \code{\link{par}}}
-  \item{title}{see \code{\link{title}}}  
-  \item{\dots}{not in use}
-
-  
 }
 %\details{
 % 
@@ -86,7 +71,9 @@ MunichChainLadder(Paid, Incurred,
 %
 % ~Make other sections like Warning with \section{Warning }{....} ~
 %}
-\seealso{ See also \code{\link{MackChainLadder}} }
+\seealso{ See also \code{\link{MackChainLadder}},
+  \code{\link{summary.MunichChainLadder}},
+  \code{\link{plot.MunichChainLadder}} }
 \examples{
 
 MCLpaid

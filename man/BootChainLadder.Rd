@@ -1,11 +1,11 @@
 \name{BootChainLadder}
 \alias{BootChainLadder}
-\alias{summary.BootChainLadder}
-\alias{print.BootChainLadder}
+%\alias{summary.BootChainLadder}
+%\alias{print.BootChainLadder}
 \alias{plot.BootChainLadder}
-\alias{quantile.BootChainLadder}
-\alias{residuals.BootChainLadder}
-\alias{mean.BootChainLadder}
+%\alias{quantile.BootChainLadder}
+%\alias{residuals.BootChainLadder}
+%\alias{mean.BootChainLadder}
 
 \title{ Bootstrap-Chain-Ladder Model }
 \description{

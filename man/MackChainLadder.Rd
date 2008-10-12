@@ -1,8 +1,5 @@
 \name{MackChainLadder}
 \alias{MackChainLadder}
-\alias{print.MackChainLadder}
-\alias{summary.MackChainLadder}
-\alias{plot.MackChainLadder}
 
 \title{ Mack-Chain-Ladder Model }
 \description{
@@ -11,14 +8,8 @@
   the standard error around it.
 }
 \usage{
-MackChainLadder(Triangle, weights = 1/Triangle, tail=FALSE, est.sigma="loglinear")
-
-\method{print}{MackChainLadder}(x, \dots)
-
-\method{plot}{MackChainLadder}(x, mfrow=c(3,2), title=NULL, \dots)
-
-\method{summary}{MackChainLadder}(object, \dots)
-
+MackChainLadder(Triangle, weights = 1/Triangle,
+tail=FALSE, est.sigma="loglinear")
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -37,12 +28,7 @@ MackChainLadder(Triangle, weights = 1/Triangle, tail=FALSE, est.sigma="loglinear
   \item{est.sigma}{defines how to estimate \eqn{sigma_{n-1}}.
     Default is "loglinear" for a log-linear regression, "Mack" for
     Mack's approximation from his 1999 paper, or if a numeric value is
-    given it will be used instead.}
-  \item{x, object}{object of class \code{"MackChainLadder"}}
-  \item{mfrow}{see \code{\link{par}}}
-  \item{title}{see \code{\link{title}}}  
-  \item{\dots}{not in use}
-  
+    given it will be used instead.}  
 }
 \details{
 
@@ -101,6 +87,8 @@ MackChainLadder(Triangle, weights = 1/Triangle, tail=FALSE, est.sigma="loglinear
 % ~Make other sections like Warning with \section{Warning }{....} ~
 }
 \seealso{ See also \code{\link{qpaid}},
+  \code{\link{summary.MackChainLadder}},
+  \code{\link{plot.MackChainLadder}},
   \code{\link{residuals.MackChainLadder}},
   \code{\link{MunichChainLadder}},  \code{\link{BootChainLadder}},
 }
