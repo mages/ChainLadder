@@ -6,8 +6,9 @@
 
 \title{ Mack-Chain-Ladder Model }
 \description{
-  The Mack-chain-ladder model forecasts IBNR (Incurred But Not Reported) claims based on a cumulative
-  claims development triangle and estimates the standard error around it.
+  The Mack-chain-ladder model forecasts IBNR (Incurred But Not Reported)
+  claims based on a cumulative claims development triangle and estimates
+  the standard error around it.
 }
 \usage{
 MackChainLadder(Triangle, weights = 1/Triangle, tail=FALSE, est.sigma="loglinear")
@@ -26,12 +27,17 @@ MackChainLadder(Triangle, weights = 1/Triangle, tail=FALSE, est.sigma="loglinear
     \code{\link{qpaid}} for how to use (mxn)-development triangles with
     m<n, say higher development period frequency (e.g quarterly) than
     origin period frequency (e.g accident years).}
-  \item{weights}{ weights. Default: 1/Triangle, to use volume weighted chain ladder factors.} 
-  \item{tail}{can be logical or a numeric value. If tail=FALSE no tail factor will be applied, if \code{tail=TRUE} 
-  a tail factor will be estimate via a linear extrapolation of \eqn{log(chain ladder factors - 1)}, 
-  if \code{tail} is a numeric value than this value will be used as tail factor. }
-  \item{est.sigma}{defines how to estimate \eqn{sigma_{n-1}}. Default is "loglinear" for 
-  a log-linear regression, "Mack" for Mack's approximation from his 1999 paper, or if a numeric value is given it will be used instead.}
+  \item{weights}{ weights. Default: 1/Triangle, to use volume weighted
+    chain ladder factors.} 
+  \item{tail}{can be logical or a numeric value.
+    If tail=FALSE no tail factor will be applied, if \code{tail=TRUE} 
+    a tail factor will be estimate via a linear extrapolation of
+    \eqn{log(chain ladder factors - 1)}, if \code{tail} is a numeric
+    value than this value will be used as tail factor. }
+  \item{est.sigma}{defines how to estimate \eqn{sigma_{n-1}}.
+    Default is "loglinear" for a log-linear regression, "Mack" for
+    Mack's approximation from his 1999 paper, or if a numeric value is
+    given it will be used instead.}
   \item{x, object}{object of class \code{"MackChainLadder"}}
   \item{mfrow}{see \code{\link{par}}}
   \item{title}{see \code{\link{title}}}  
@@ -40,23 +46,30 @@ MackChainLadder(Triangle, weights = 1/Triangle, tail=FALSE, est.sigma="loglinear
 }
 \details{
 
-Let \eqn{C_{ik}} denote the cumulative loss amounts of origin period  (e.g. accident year) 
-\eqn{i=1,\ldots,m}, with losses known for development period
-(e.g. development year) \eqn{k \leq n+1-i}.
-In order to forecast the amounts \eqn{C_{ik}} for  \eqn{k > n+1-i} the Mack chain-ladder-model assumes:
+  Let \eqn{C_{ik}} denote the cumulative loss amounts of origin period
+  (e.g. accident year) 
+  \eqn{i=1,\ldots,m}, with losses known for development period
+  (e.g. development year) \eqn{k \leq n+1-i}.
+  In order to forecast the amounts \eqn{C_{ik}} for
+  \eqn{k > n+1-i} the Mack chain-ladder-model assumes:
   \deqn{ E[ \frac{C_{i,k+1}}{C_{ik}} | C_{i1},C_{i2},\ldots,C_{ik} ] = f_k }
-  \deqn{ Var( \frac{C_{i,k+1}}{C_{ik}} | C_{i1},C_{i2},\ldots,C_{ik} ) = \frac{\sigma_k^2}{C_{ik}} }
-  \deqn{\{ C_{i1},\ldots,C_{in}\}, \{ C_{j1},\ldots,C_{jn}\},\; are\; independent\; for\; origin\; period\; i \neq j }
-If these assumptions are hold, the Mack chain-ladder-model gives an unbiased estimator for IBNR 
-(Incurred But Not Reported) claims.
+  \deqn{ Var( \frac{C_{i,k+1}}{C_{ik}} | C_{i1},C_{i2},
+    \ldots,C_{ik} ) = \frac{\sigma_k^2}{C_{ik}} }
+  \deqn{\{ C_{i1},\ldots,C_{in}\}, \{ C_{j1},\ldots,C_{jn}\},\; are\;
+    independent\; for\; origin\; period\; i \neq j }
+  If these assumptions are hold, the Mack-chain-ladder-model gives an
+  unbiased estimator for IBNR (Incurred But Not Reported) claims.
   
-The chain-ladder model can be regarded as a weighted linear regression through the 
-origin for each development period: \code{lm(y ~ x  + 0, weights=1/x)}, 
-where \code{y} is the vector of claims at development period \eqn{k+1} and \code{x} is 
-the vector of claims at development period \eqn{k}. 
+  The Mack-chain-ladder model can be regarded as a weighted linear regression
+  through the origin for each development period:
+  \code{lm(y ~ x  + 0, weights=1/x)}, 
+  where \code{y} is the vector of claims at development period
+  \eqn{k+1} and \code{x} is  the vector of claims at development period
+  \eqn{k}. 
 
 }
 \value{
+  MackChainLadder returns a list with the following elements
   \item{call}{the matched call} 
   \item{Triangle}{input triangle of cumulative claims}
   \item{FullTriangle}{forecasted full triangle}
@@ -64,10 +77,11 @@ the vector of claims at development period \eqn{k}.
   \item{f}{chain-ladder ratios}
   \item{f.se}{estimation error of the chain-ladder ratios}
   \item{F.se}{stochastic error of the chain-ladder ratios}
-  \item{sigma}{estimation of the deviation around the \eqn{C_{ik}}}
+  \item{sigma}{estimation of the conditional standard deviation}
   \item{Mack.S.E}{Mack's estimated standard error for the reserves}
   \item{Total.Mack.S.E}{Mack's estimated overall standard error for the reserves}
-  \item{tail}{tail factor used. If tail was set to TRUE the output will include the linear model used to estimate the tail factor}  
+  \item{tail}{tail factor used. If tail was set to TRUE the output will
+    include the linear model used to estimate the tail factor}  
 }
 \references{
 \cite{Thomas Mack. Distribution-free calculation of the standard error of chain ladder reserve estimates. Astin Bulletin. Vol. 23. No 2. 1993. pp.213:225}
