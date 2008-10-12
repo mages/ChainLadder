@@ -45,7 +45,7 @@ MunichChainLadder <- function(Paid, Incurred, est.sigmaP="log-linear", est.sigma
  	myQModel[[s]] <- lm(Paid[1:(n-s+1),s] ~ Incurred[1:(n-s+1),s] + 0,
                             weight=1/Incurred[1:(n-s+1),s])
 
-	q.f[s] <- summary(myQModel[[s]])$coef[1]
+        q.f[s] <- summary(myQModel[[s]])$coef[1]
 	rhoI.sigma[s] <- summary(myQModel[[s]])$sigma
     }
     rhoI.sigma <-  estimate.sigma(rhoI.sigma)
