@@ -11,7 +11,7 @@ BootChainLadder(Triangle, R = 999, process.distr=c("gamma", "od.pois"))
 
 \arguments{
   \item{Triangle}{cumulative claims triangle.  A (mxn)-matrix \eqn{C_{ik}} 
-    which is filled for \eqn{k \leq n+1-i, i=1,\ldots,m, m>=n }, see
+    which is filled for \eqn{k \leq n+1-i, i=1,\ldots,m; m\geq n }, see
     \code{\link{qpaid}} for how to use (mxn)-development triangles with
     m<n, say higher development period frequency (e.g quarterly) than
     origin period frequency (e.g accident years).}
@@ -51,7 +51,7 @@ BootChainLadder(Triangle, R = 999, process.distr=c("gamma", "od.pois"))
 }
 \references{
   \cite{England, PD and Verrall, RJ. Stochastic Claims Reserving in
-    General Insurance (with discussion), British Actuarial Journal 8,
+    General Insurance (with discussion), \emph{British Actuarial Journal} 8,
     III. 2002 }
   }
 \author{ Markus Gesmann, \email{markus.gesmann@gmail.com} }

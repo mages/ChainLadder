@@ -28,8 +28,8 @@
   \code{summary.MunichChainLadder} gives a list of two elements back
   \item{ByOrigin}{data frame with \emph{Latest Paid} (latest actual paid
     claims costs), \emph{Latest Incurred} (latest actual incurred
-    claims position),\emph{Latest P/I Ratio} (ratio of latest
-    paid/incurred claims),  \emph{Ult. Paid} (estimate ultimate claims
+    claims position), \emph{Latest P/I Ratio} (ratio of latest
+    paid/incurred claims), \emph{Ult. Paid} (estimate ultimate claims
     cost based on the paid triangle), \emph{Ult. Incurred} (estimate
     ultimate claims cost based on the incurred triangle),\emph{Ult. P/I
       Ratio} (ratio of ultimate paid forecast / utimate incurred forecast)

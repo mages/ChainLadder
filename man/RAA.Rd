@@ -17,8 +17,8 @@
   the Chain Ladder Method?, Thomas Mack, \emph{Insurance	
     Mathematics and Economics},  \bold{15, 2/3}, pp133-138, 1994	}
     
-  \cite{P.D.England and R.J.Verrall, \emph{Stochastic Claims Reserving in
-    General Insurance}, British Actuarial Journal, \bold{Vol. 8},
+  \cite{P.D.England and R.J.Verrall, Stochastic Claims Reserving in
+    General Insurance, \emph{British Actuarial Journal}, \bold{Vol. 8},
   pp443-544, 2002}
 }
 \examples{

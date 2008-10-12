@@ -19,7 +19,7 @@
 %}
 \value{
   The function returns a \code{data.frame} of residuals and standardised residuals 
-  by origin year, calendar year and development year.
+  by origin-, calendar- and development period.
 }
 %\references{ ~put references to the literature/web site here ~ }
 \author{ Markus Gesmann }

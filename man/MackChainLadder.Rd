@@ -8,20 +8,19 @@
   the standard error around it.
 }
 \usage{
-MackChainLadder(Triangle, weights = 1/Triangle,
-tail=FALSE, est.sigma="loglinear")
+MackChainLadder(Triangle, weights = 1/Triangle, tail=FALSE, est.sigma="loglinear")
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{Triangle}{cumulative claims triangle.  A (mxn)-matrix \eqn{C_{ik}} 
-    which is filled for \eqn{k \leq n+1-i, i=1,\ldots,m, m>=n }, see
+    which is filled for \eqn{k \leq n+1-i; i=1,\ldots,m; m\geq n }, see
     \code{\link{qpaid}} for how to use (mxn)-development triangles with
     m<n, say higher development period frequency (e.g quarterly) than
     origin period frequency (e.g accident years).}
   \item{weights}{ weights. Default: 1/Triangle, to use volume weighted
     chain ladder factors.} 
   \item{tail}{can be logical or a numeric value.
-    If tail=FALSE no tail factor will be applied, if \code{tail=TRUE} 
+    If \code{tail=FALSE} no tail factor will be applied, if \code{tail=TRUE} 
     a tail factor will be estimate via a linear extrapolation of
     \eqn{log(chain ladder factors - 1)}, if \code{tail} is a numeric
     value than this value will be used as tail factor. }
@@ -70,17 +69,17 @@ tail=FALSE, est.sigma="loglinear")
     include the linear model used to estimate the tail factor}  
 }
 \references{
-\cite{Thomas Mack. Distribution-free calculation of the standard error of chain ladder reserve estimates. Astin Bulletin. Vol. 23. No 2. 1993. pp.213:225}
+\cite{Thomas Mack. Distribution-free calculation of the standard error of chain ladder reserve estimates. \emph{Astin Bulletin}. Vol. 23. No 2. 1993. pp.213:225}
 
-\cite{Thomas Mack. The standard error of chain ladder reserve estimates: Recursive calculation and inclusion of a tail factor. Astin Bulletin. Vol. 29. No 2. 1999. pp.361:366}
+\cite{Thomas Mack. The standard error of chain ladder reserve estimates: Recursive calculation and inclusion of a tail factor. \emph{Astin Bulletin}. Vol. 29. No 2. 1999. pp.361:366}
 }
 \author{Markus Gesmann \email{markus.gesmann@gmail.com}}
 \note{
   Additional references for further reading:
   
-  \cite{England, PD and Verrall, RJ. Stochastic Claims Reserving in General Insurance (with discussion), British Actuarial Journal 8, III. 2002}
+  \cite{England, PD and Verrall, RJ. Stochastic Claims Reserving in General Insurance (with discussion), \emph{British Actuarial Journal} 8, III. 2002}
 
-  \cite{Murphy, Daniel M. Unbiased Loss Development Factors. Proceedings of the Casualty Actuarial Society Casualty Actuarial Society - Arlington, Virginia 1994: LXXXI 154-222.}
+  \cite{Murphy, Daniel M. Unbiased Loss Development Factors. \emph{Proceedings of the Casualty Actuarial Society Casualty Actuarial Society} - Arlington, Virginia 1994: LXXXI 154-222.}
   
   \cite{Zehnwirth and Barnett. Best estimates for reserves. Proceedings of the CAS, LXXXVI I(167), November 2000.}
   

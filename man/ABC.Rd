@@ -9,7 +9,7 @@
   A matrix with 11 accident years and 11 development years.
 }
 \source{
-	\cite{B. Zehnwirth and G. Barnett. \emph{Best Estimates for Reserves}. Proceedings of the CAS. Volume LXXXVII. Number 167.
+	\cite{B. Zehnwirth and G. Barnett. Best Estimates for Reserves. \emph{Proceedings of the CAS.} Volume LXXXVII. Number 167.
 	November 2000.}
 }
 \examples{

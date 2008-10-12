@@ -17,9 +17,10 @@ MunichChainLadder(Paid, Incurred,
 %- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{Paid}{cumulative paid claims triangle. A (mxn)-matrix \eqn{P_{ik}} 
-    which is filled for \eqn{k \leq n+1-i, i=1,\ldots,m , m>=n}}
+    which is filled for \eqn{k \leq n+1-i, i=1,\ldots,m; m\geq n}}
   \item{Incurred}{cumulative incurred claims triangle. A (mxn)-matrix
-    \eqn{I_{ik}} which is filled for \eqn{k \leq n+1-i, i=1,\ldots,m, m>=n }}
+    \eqn{I_{ik}} which is filled for \eqn{k \leq n+1-i, i=1,\ldots,m,
+      m\geq n }}
   \item{est.sigmaP}{defines how \eqn{sigma_{n-1}} for the Paid triangle
     is estimated, see \code{est.sigma} in \code{\link{MackChainLadder}} for
     more details, as \code{est.sigmaP} gets passed on to
@@ -63,7 +64,7 @@ MunichChainLadder(Paid, Incurred,
     incurred/paid ratios}
 }
 \references{
-  \cite{Gerhard Quarg and Thomas Mack. Munich Chain Ladder. Blatter DGVFM 26,
+  \cite{Gerhard Quarg and Thomas Mack. Munich Chain Ladder. \emph{Blatter DGVFM} 26,
   Munich, 2004.}
   }
 \author{ Markus Gesmann \email{markus.gesmann@gmail.com} }
