@@ -26,7 +26,7 @@ getMCLResiduals <- function(res, n){
 ##############################################################################
 ## Munich Chain Ladder
 ##
-MunichChainLadder <- function(Paid, Incurred, est.sigmaP="loglinear", est.sigmaI="loglinear", tailP=FALSE, tailI=FALSE){
+MunichChainLadder <- function(Paid, Incurred, est.sigmaP="log-linear", est.sigmaI="log-linear", tailP=FALSE, tailI=FALSE){
 
     if(!all(dim(Paid) == dim(Incurred)))
  	stop("Paid and Incurred triangle must have same dimension.\n")

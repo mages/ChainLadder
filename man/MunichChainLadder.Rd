@@ -11,7 +11,7 @@
 }
 \usage{
 MunichChainLadder(Paid, Incurred, 
-                  est.sigmaP = "loglinear", est.sigmaI = "loglinear", 
+                  est.sigmaP = "log-linear", est.sigmaI = "log-linear", 
                   tailP=FALSE, tailI=FALSE)
 }
 %- maybe also 'usage' for other objects documented here.

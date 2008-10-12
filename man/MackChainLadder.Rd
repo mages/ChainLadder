@@ -8,7 +8,7 @@
   the standard error around it.
 }
 \usage{
-MackChainLadder(Triangle, weights = 1/Triangle, tail=FALSE, est.sigma="loglinear")
+MackChainLadder(Triangle, weights = 1/Triangle, tail=FALSE, est.sigma="log-linear")
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -25,7 +25,7 @@ MackChainLadder(Triangle, weights = 1/Triangle, tail=FALSE, est.sigma="loglinear
     \eqn{log(chain ladder factors - 1)}, if \code{tail} is a numeric
     value than this value will be used as tail factor. }
   \item{est.sigma}{defines how to estimate \eqn{sigma_{n-1}}.
-    Default is "loglinear" for a log-linear regression, "Mack" for
+    Default is "log-linear" for a log-linear regression, "Mack" for
     Mack's approximation from his 1999 paper, or if a numeric value is
     given it will be used instead.}  
 }

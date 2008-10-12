@@ -5,7 +5,7 @@
 ## Date:08/09/2008
 
 
-MackChainLadder <- function(Triangle, weights=1/Triangle, tail=FALSE, est.sigma="loglinear"){
+MackChainLadder <- function(Triangle, weights=1/Triangle, tail=FALSE, est.sigma="log-linear"){
 
     Triangle <- checkTriangle(Triangle)
     m <- dim(Triangle)[1]
@@ -111,7 +111,7 @@ Mack.S.E <- function(MackModel, FullTriangle, est.sigma="loglinear"){
 
     isna <- is.na(sigma)
 
-    if(est.sigma %in% "loglinear"){
+    if(est.sigma %in% "log-linear"){
         ## estimate sigma[n-1] via log-linear regression
         sigma <- estimate.sigma(sigma)
         f.se[isna] <- sigma[isna]/sqrt(FullTriangle[1,isna])

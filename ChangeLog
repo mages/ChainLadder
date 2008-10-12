@@ -53,3 +53,8 @@
 	* Excel/ChainLadder_in_Excel.xls Added new examples for
 	BootChainLadder and how to use Rapply to call functions from the
 	ChainLadder package.
+
+2008-10-01 Markus Gesmann <markus.gesmann@gmail>
+
+	* The ChangeLog is now part of version control system on the
+	project web-site under Google code.
