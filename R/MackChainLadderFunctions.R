@@ -182,19 +182,10 @@ summary.MackChainLadder <- function(object,...){
     n <- ncol(.Triangle)
     m <- nrow(.Triangle)
 
+    dim(.Triangle) <- c(dim(.Triangle),1)
+    Latest <- as.vector(getLatest(getIncremental(.Triangle)))
 
-
-    getCurrent <- function(.x){
-            rev(.x[row(as.matrix(.x)) == (nrow(.x)+1 - col(as.matrix(.x)))])
-        }
-
-    if(m > n){
-        Latest <- c(.Triangle[1:(m-n),n], getCurrent(.Triangle[(m-n+1):m,]))
-    }else{
-        Latest <- getCurrent(.Triangle)
-        }
-
-    ex.origin.period <- !is.na(Latest)
+    ex.origin.period <- Latest!=0
 
     Ultimate <- object[["FullTriangle"]][,n]
     Dev.To.Date <- Latest/Ultimate

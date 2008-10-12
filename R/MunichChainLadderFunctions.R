@@ -124,8 +124,8 @@ MunichChainLadder <- function(Paid, Incurred, est.sigmaP="loglinear", est.sigmaI
     output[["Incurred"]] <- Incurred
     output[["MCLPaid"]] <- FullPaid
     output[["MCLIncurred"]] <- FullIncurred
-    output[["SCLPaid"]] <- MackPaid
-    output[["SCLIncurred"]] <- MackIncurred
+    output[["MackPaid"]] <- MackPaid
+    output[["MackIncurred"]] <- MackIncurred
     output[["PaidResiduals"]] <-  PaidResiduals
     output[["IncurredResiduals"]] <- IncurredResiduals
     output[["QResiduals"]] <-  QResiduals
@@ -225,9 +225,9 @@ plot.MunichChainLadder <- function(x, mfrow=c(2,2), title=NULL, ...){
             xlab="origin period", ylab="Amounts", main="Munich Chain Ladder Results")
 
     barplot(t(as.matrix(
-                        data.frame(SCL.PI=100*x[["SCLPaid"]]$FullTriangle[,n]/x[["SCLIncurred"]]$FullTriangle[,n],
+                        data.frame(SCL.PI=100*x[["MackPaid"]]$FullTriangle[,n]/x[["MackIncurred"]]$FullTriangle[,n],
                                    MCL.PI=100*x[["MCLPaid"]][,n]/x[["MCLIncurred"]][,n]))),
-            beside=TRUE, legend.text=c("SCL P/I", "MCL P/I"), names.arg=.origin,
+            beside=TRUE, legend.text=c("Mack P/I", "MCL P/I"), names.arg=.origin,
             xlab="origin period", ylab="%", main="Munich Chain Ladder vs. Standard Chain Ladder")
 
 

@@ -204,15 +204,8 @@ summary.BootChainLadder <- function(object,probs=c(0.75,0.95),...){
     m <- dim(.Triangle)[1]
     n <- dim(.Triangle)[2]
 
-    getCurrent <- function(.x){
-            rev(.x[row(as.matrix(.x)) == (nrow(.x)+1 - col(as.matrix(.x)))])
-        }
-
-    if(m > n){
-        Latest <- c(.Triangle[1:(m-n),n], getCurrent(.Triangle[(m-n+1):m,]))
-    }else{
-        Latest <- getCurrent(.Triangle)
-    }
+    dim(.Triangle) <- c(dim(.Triangle),1)
+    Latest <- as.vector(getLatest(getIncremental(.Triangle)))
 
 
     IBNR <- object$IBNR.ByOrigin
@@ -229,7 +222,7 @@ summary.BootChainLadder <- function(object,probs=c(0.75,0.95),...){
                            sumIBNR)
     names(ByOrigin) <- c("Latest", "Mean Ultimate", "Mean IBNR",
                          "SD IBNR", paste("IBNR ", probs*100, "%", sep=""))
-    ex.origin.period <- !is.na(Latest)
+    ex.origin.period <- Latest!=0
     ByOrigin <- ByOrigin[ex.origin.period,]
 
     origin <- dimnames(object$Triangle)[[1]]
@@ -499,9 +492,9 @@ plotLatestIncremental <- function(LongSimActual,##sim.Latest,
 plotBootstrapUltimates <- function(x, xlab="origin period", ylab="ultimate claims costs",
                                    main="Simulated ultimate claims cost",...){
 
-    tri <- x$Triangle
-    dim(tri) <- c(dim(tri),1)
-    Latest <- as.vector(getLatest(getIncremental(tri)))
+    triangle <- x$Triangle
+    dim(triangle) <- c(dim(triangle),1)
+    Latest <- as.vector(getLatest(getIncremental(triangle)))
 
     .origin <- dimnames(x$Triangle)[[1]]
     meanUlt <- data.frame(mean(x)$ByOrigin+Latest, .origin)

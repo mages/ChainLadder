@@ -3,13 +3,13 @@
 \alias{qincurred}
 \docType{data}
 \title{Quarterly run off triangle of accumulated claims data}
-\description{Sample data to demonstrate how to work with quarterly development triangles}
+\description{Sample data to demonstrate how to work with triangles with a higher development period frequency than origin period frequency}
   
 \usage{data(qpaid); data(qincurred)}
 \format{
-  A matrix with 12 accident years and 45 development quarters of claims developments.
+  A matrix with 12 accident years and 45 development quarters of claims costs.
 }
-\source{Made up data}
+\source{Made up data for testing purpose}
 \examples{
 dim(qpaid)
 dim(qincurred)
@@ -32,11 +32,11 @@ plot(M)
 Incurred <- matrix(NA, n, n)
 Incurred[seq(1,n,4),] <- qincurred
 
-# With the expanded triangles we can now apply MunichChainLadder
+# With the expanded triangles we can apply MunichChainLadder
 MunichChainLadder(Paid, Incurred)
 
 # In the same way we can apply BootChainLadder
-# We reduce R from 999 to 99 in this example purely to reduce run time.
+# We reduce the resample size R from the default of 999 to 99 in this example purely to reduce run time.
 BootChainLadder(Paid, R=99) 
 
 }

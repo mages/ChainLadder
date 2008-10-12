@@ -4,11 +4,10 @@
 \alias{summary.MackChainLadder}
 \alias{plot.MackChainLadder}
 
-%- Also NEED an '\alias' for EACH other topic documented here.
 \title{ Mack-Chain-Ladder Model }
 \description{
-  Mack-chain-ladder model to forecast IBNR (Incurred But Not Reported) claims based on a cumulative
-  claims development triangle.
+  The Mack-chain-ladder model forecasts IBNR (Incurred But Not Reported) claims based on a cumulative
+  claims development triangle and estimates the standard error around it.
 }
 \usage{
 MackChainLadder(Triangle, weights = 1/Triangle, tail=FALSE, est.sigma="loglinear")
@@ -22,9 +21,12 @@ MackChainLadder(Triangle, weights = 1/Triangle, tail=FALSE, est.sigma="loglinear
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
-  \item{Triangle}{cumulative claims triangle.  A quadratic (nxn)-matrix \eqn{C_{ik}} 
-    which is filled for \eqn{k \leq n+1-i, i=1,\ldots,n }, see \code{\link{qpaid}} for how to use (mxn)-development triangles with m<n.}
-  \item{weights}{ weights. Default: 1/Triangle} 
+  \item{Triangle}{cumulative claims triangle.  A (mxn)-matrix \eqn{C_{ik}} 
+    which is filled for \eqn{k \leq n+1-i, i=1,\ldots,m, m>=n }, see
+    \code{\link{qpaid}} for how to use (mxn)-development triangles with
+    m<n, say higher development period frequency (e.g quarterly) than
+    origin period frequency (e.g accident years).}
+  \item{weights}{ weights. Default: 1/Triangle, to use volume weighted chain ladder factors.} 
   \item{tail}{can be logical or a numeric value. If tail=FALSE no tail factor will be applied, if \code{tail=TRUE} 
   a tail factor will be estimate via a linear extrapolation of \eqn{log(chain ladder factors - 1)}, 
   if \code{tail} is a numeric value than this value will be used as tail factor. }
@@ -38,8 +40,9 @@ MackChainLadder(Triangle, weights = 1/Triangle, tail=FALSE, est.sigma="loglinear
 }
 \details{
 
-Let \eqn{C_{ik}} denote the cumulative loss amounts of origin period (e.g. accident year) 
-\eqn{i=1,\ldots,n}, with losses known for development period \eqn{k \leq n+1-i}.
+Let \eqn{C_{ik}} denote the cumulative loss amounts of origin period  (e.g. accident year) 
+\eqn{i=1,\ldots,m}, with losses known for development period
+(e.g. development year) \eqn{k \leq n+1-i}.
 In order to forecast the amounts \eqn{C_{ik}} for  \eqn{k > n+1-i} the Mack chain-ladder-model assumes:
   \deqn{ E[ \frac{C_{i,k+1}}{C_{ik}} | C_{i1},C_{i2},\ldots,C_{ik} ] = f_k }
   \deqn{ Var( \frac{C_{i,k+1}}{C_{ik}} | C_{i1},C_{i2},\ldots,C_{ik} ) = \frac{\sigma_k^2}{C_{ik}} }
@@ -59,25 +62,30 @@ the vector of claims at development period \eqn{k}.
   \item{FullTriangle}{forecasted full triangle}
   \item{Models}{linear regression models for each development period}
   \item{f}{chain-ladder ratios}
-  \item{f.se}{standard error for chain-ladder ratios}
-  \item{F.se}{standard error for individual age-to-age ratios}
-  \item{sigma}{chain-ladder ratio variance}
+  \item{f.se}{estimation error of the chain-ladder ratios}
+  \item{F.se}{stochastic error of the chain-ladder ratios}
+  \item{sigma}{estimation of the deviation around the \eqn{C_{ik}}}
   \item{Mack.S.E}{Mack's estimated standard error for the reserves}
   \item{Total.Mack.S.E}{Mack's estimated overall standard error for the reserves}
-  \item{tail}{tail factor used. It tail was set to TRUE the output will include the linear model used to estimate the tail factor}  
+  \item{tail}{tail factor used. If tail was set to TRUE the output will include the linear model used to estimate the tail factor}  
 }
 \references{
-Thomas Mack. Distribution-free calculation of the standard error of chain ladder reserve estimates. Astin Bulletin. Vol. 23. No 2. 1993. pp.213:225
-\url{http://www.casact.org/library/astin/vol23no2/213.pdf}
+\cite{Thomas Mack. Distribution-free calculation of the standard error of chain ladder reserve estimates. Astin Bulletin. Vol. 23. No 2. 1993. pp.213:225}
 
-Thomas Mack. The standard error of chain ladder reserve estimates: Recursive calculation and inclusion of a tail factor. Astin Bulletin. Vol. 29. No 2. 1999. pp.361:366
-\url{http://www.casact.org/library/astin/vol29no2/361.pdf}
+\cite{Thomas Mack. The standard error of chain ladder reserve estimates: Recursive calculation and inclusion of a tail factor. Astin Bulletin. Vol. 29. No 2. 1999. pp.361:366}
 }
 \author{Markus Gesmann \email{markus.gesmann@gmail.com}}
-%\note{ ~~further notes~~ 
-%
+\note{
+  Additional references for further reading:
+  
+  \cite{England, PD and Verrall, RJ. Stochastic Claims Reserving in General Insurance (with discussion), British Actuarial Journal 8, III. 2002}
+
+  \cite{Murphy, Daniel M. Unbiased Loss Development Factors. Proceedings of the Casualty Actuarial Society Casualty Actuarial Society - Arlington, Virginia 1994: LXXXI 154-222.}
+  
+  \cite{Zehnwirth and Barnett. Best estimates for reserves. Proceedings of the CAS, LXXXVI I(167), November 2000.}
+  
 % ~Make other sections like Warning with \section{Warning }{....} ~
-%}
+}
 \seealso{ See also \code{\link{qpaid}},
   \code{\link{residuals.MackChainLadder}},
   \code{\link{MunichChainLadder}},  \code{\link{BootChainLadder}},
@@ -95,53 +103,68 @@ MRT$F.se[3,]
 MRT$sigma
 plot(MRT) # We observe trends along calendar years.
 
+# See the Taylor/Ashe example in Mack's 1993 paper
 GenIns
-GNI <- MackChainLadder(GenIns)
-GNI
+GNI <- MackChainLadder(GenIns, est.sigma="Mack")
+GNI$f
+GNI$sigma^2
+GNI # compare to table 2 and 3 in Mack's 1993 paper
 plot(GNI)
-## include a tail factor
-GNIt <- MackChainLadder(GenIns, tail=TRUE)
-## extract more information on the tail factor
+## Include a tail factor
+GNIt <- MackChainLadder(GenIns, est.sigma="Mack", tail=TRUE)
+## Extract more information on the tail factor
 GNIt$tail 
+
   
-RAA  
-MCL <- MackChainLadder(RAA)
-MCL
-plot(MCL)
+# This data set is discussed many papers, e.g. England and Verall 2000
+  paper, see Table 1 just there  
+RAA
+R <- MackChainLadder(RAA)
+R
+plot(R)
+# Table 12 in England and Verall 2000 paper
+R$f
+R$sigma^2
+# Table 13 in England and Verall 2000 paper
+# Please note the different indexing of sigma
+MackChainLadder(RAA, est.sigma=R$sigma[7])
+# Table 14 in England and Verall 2000 paper
+MackChainLadder(RAA, est.sigma=R$sigma[8])
+
  
  
- # investigate in more detail
- MCL[["Models"]][[1]]   # Model for first development period
- summary( MCL[["Models"]][[1]]) # Look at the model stats
- op=par(mfrow=c(2,2)) # plot residuals
-   plot( MCL[["Models"]][[1]])
+ # Let's investigate the Mack model more detail
+ R[["Models"]][[1]]   # Model for first development period
+ summary( R[["Models"]][[1]]) # Look at the model stats
+ op <- par(mfrow=c(2,2)) # plot residuals
+   plot( R[["Models"]][[1]])
  par(op)
 
- # let's include an intercept in our model
- newModel <- update(MCL[["Models"]][[1]], y ~ x+1, 
-              weights=1/MCL[["Triangle"]][1:9,1],
-              data=data.frame(x=MCL[["Triangle"]][1:9,1], 
-                              y=MCL[["Triangle"]][1:9,2])
+ # Let's include an intercept in our model
+ newModel <- update(R[["Models"]][[1]], y ~ x+1, 
+              weights=1/R[["Triangle"]][1:9,1],
+              data=data.frame(x=R[["Triangle"]][1:9,1], 
+                              y=R[["Triangle"]][1:9,2])
                ) 
 
-# view the new model
+# View the new model
  summary(newModel)
- op=par(mfrow=c(2,2)) 
+ op <- par(mfrow=c(2,2)) 
    plot( newModel )
  par(op)
 
- # change the model for dev. period one to the newModel
- MCL2 <- MCL
- MCL2[["Models"]][[1]] <- newModel
- predict(MCL2) # predict the full triangle with the new model 
+ # Change the model for dev. period one to the newModel
+ R2 <- R
+ R2[["Models"]][[1]] <- newModel
+ predict(R2) # predict the full triangle with the new model 
  #(only the last origin year will be affected)
 
- MCL2[["FullTriangle"]] <-  predict(MCL2)
- MCL2[["FullTriangle"]] 
- MCL2   # Std. Errors have not been re-estimated!
- # plot the result
+ R2[["FullTriangle"]] <-  predict(R2)
+ R2[["FullTriangle"]] 
+ R2   # Std. Errors have not been re-estimated!
+ # Plot the result
  
- plot(MCL2, title="Changed MCL Model")
+ plot(R2, title="Changed R Model")
 
 ## 
 }

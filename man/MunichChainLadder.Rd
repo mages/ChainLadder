@@ -25,10 +25,10 @@ MunichChainLadder(Paid, Incurred,
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
-  \item{Paid}{cumulative paid claims triangle. A quadratic (nxn)-matrix \eqn{P_{ik}} 
-    which is filled for \eqn{k \leq n+1-i, i=1,\ldots,n }}
-  \item{Incurred}{cumulative incurred claims triangle. A quadratic (nxn)-matrix \eqn{I_{ik}} 
-    which is filled for \eqn{k \leq n+1-i, i=1,\ldots,n }}
+  \item{Paid}{cumulative paid claims triangle. A (mxn)-matrix \eqn{P_{ik}} 
+    which is filled for \eqn{k \leq n+1-i, i=1,\ldots,m , m>=n}}
+  \item{Incurred}{cumulative incurred claims triangle. A (mxn)-matrix \eqn{I_{ik}} 
+    which is filled for \eqn{k \leq n+1-i, i=1,\ldots,m, m>=n }}
   \item{est.sigmaP}{hello}
   \item{est.sigmaI}{hello}  
   \item{tailP}{hello}
@@ -41,7 +41,7 @@ MunichChainLadder(Paid, Incurred,
   
 }
 %\details{
-%  ~~ If necessary, more details than the description above ~~
+% 
 %}
 \value{
   MunichChainLadder returns a list with the following values
@@ -50,8 +50,8 @@ MunichChainLadder(Paid, Incurred,
   \item{Incurred}{input incurred triangle}
   \item{MCLPaid}{Munich-chain-ladder forecasted full triangle on paid data}
   \item{MCLIncurred}{Munich-chain-ladder forecasted full triangle on incurred data}
-  \item{SCLPaid}{standard-chain-ladder forecasted full triangle on paid data}
-  \item{SCLIncurred}{standard-chain-ladder forecasted full triangle on
+  \item{MackPaid}{Mack-chain-ladder forecasted full triangle on paid data}
+  \item{MackIncurred}{Mack-chain-ladder forecasted full triangle on
     Incurred data}
   \item{PaidResiduals}{paid residuals}
   \item{IncurredResiduals}{incurred residuals}
@@ -67,8 +67,8 @@ MunichChainLadder(Paid, Incurred,
   \item{rhoI.sigma}{hello}
 }
 \references{
-  Gerhard Quarg and Thomas Mack. Munich Chain Ladder. Blatter DGVFM 26,
-  Munich, 2004. 
+  \cite{Gerhard Quarg and Thomas Mack. Munich Chain Ladder. Blatter DGVFM 26,
+  Munich, 2004.}
   }
 \author{ Markus Gesmann \email{markus.gesmann@gmail.com} }
 %\note{ ~~further notes~~ 
@@ -81,12 +81,12 @@ MunichChainLadder(Paid, Incurred,
 MCLpaid
 MCLincurred
 
-M = MunichChainLadder(MCLpaid, MCLincurred)
+M <- MunichChainLadder(MCLpaid, MCLincurred)
 M
 plot(M)
-# You can access the standard chain ladder (Mack) output
-M$SCLPaid
-M$SCLIncurred
+# You can access the standard chain ladder (Mack) output via
+M$MackPaid
+M$MackIncurred
 
 # Following the example output in Quarg's paper:
 MCL <- MunichChainLadder(MCLpaid, MCLincurred, est.sigmaP=0.1, est.sigmaI=0.1)
@@ -94,13 +94,13 @@ MCL <- MunichChainLadder(MCLpaid, MCLincurred, est.sigmaP=0.1, est.sigmaI=0.1)
 MCL$Paid
 MCL$Incurred
 #Standard chain ladder factors
-MCL$SCLPaid$f
-MCL$SCLIncurred$f
-MCL$SCLPaid$sigma
-MCL$SCLIncurred$sigma
+MCL$MackPaid$f
+MCL$MackIncurred$f
+MCL$MackPaid$sigma
+MCL$MackIncurred$sigma
 # Check Mack's assumptions graphically
-plot(MCL$SCLPaid)
-plot(MCL$SCLIncurred)
+plot(MCL$MackPaid)
+plot(MCL$MackIncurred)
 
 MCL$q.f
 MCL$rhoP.sigma
