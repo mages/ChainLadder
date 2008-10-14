@@ -4,7 +4,7 @@
 \docType{data}
 \title{Run off triangles of accumulated paid and incurred claims data.}
 \description{Run-off triangles based on a fire portfolio}
-\usage{data(MCLpaid); data(MCLincurred)
+\usage{data(MCLpaid)
 data(MCLincurred)}
 \format{
   A matrix with 7 origin years and 7 development years.

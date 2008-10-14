@@ -8,7 +8,8 @@
   the standard error around it.
 }
 \usage{
-MackChainLadder(Triangle, weights = 1/Triangle, tail=FALSE, est.sigma="log-linear")
+MackChainLadder(Triangle, weights = 1/Triangle,
+tail=FALSE, est.sigma="log-linear")
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -55,14 +56,15 @@ MackChainLadder(Triangle, weights = 1/Triangle, tail=FALSE, est.sigma="log-linea
 }
 \value{
   MackChainLadder returns a list with the following elements
-  \item{call}{the matched call} 
+  \item{call}{matched call} 
   \item{Triangle}{input triangle of cumulative claims}
   \item{FullTriangle}{forecasted full triangle}
   \item{Models}{linear regression models for each development period}
   \item{f}{chain-ladder ratios}
   \item{f.se}{estimation error of the chain-ladder ratios}
   \item{F.se}{stochastic error of the chain-ladder ratios}
-  \item{sigma}{estimation of the conditional standard deviation}
+  \item{sigma}{estimation of the conditional deviation of the individual
+    chain ladder ratios}
   \item{Mack.S.E}{Mack's estimated standard error for the reserves}
   \item{Total.Mack.S.E}{Mack's estimated overall standard error for the reserves}
   \item{tail}{tail factor used. If tail was set to TRUE the output will
@@ -85,11 +87,12 @@ MackChainLadder(Triangle, weights = 1/Triangle, tail=FALSE, est.sigma="log-linea
   
 % ~Make other sections like Warning with \section{Warning }{....} ~
 }
-\seealso{ See also \code{\link{qpaid}},
-  \code{\link{summary.MackChainLadder}},
-  \code{\link{plot.MackChainLadder}},
-  \code{\link{residuals.MackChainLadder}},
-  \code{\link{MunichChainLadder}},  \code{\link{BootChainLadder}},
+\seealso{ See also \code{\link{qpaid}}, 
+  \code{\link{summary.MackChainLadder}}, 
+  \code{\link{plot.MackChainLadder}}, 
+  \code{\link{residuals.MackChainLadder}}, 
+  \code{\link{MunichChainLadder}},
+  \code{\link{BootChainLadder}},
 }
 \examples{
 
@@ -132,7 +135,10 @@ MackChainLadder(RAA, est.sigma=R$sigma[7])
 # Table 14 in England and Verall 2000 paper
 MackChainLadder(RAA, est.sigma=R$sigma[8])
 
- 
+# Different weights
+# Using 1/Triangle^2 as weight will use mean chain ladder ratios 
+MackChainLadder(RAA, weights=1/RAA^2)$f
+apply(RAA[,-1]/RAA[,-10],2, mean, na.rm=TRUE)
  
  # Let's investigate the Mack model more detail
  R[["Models"]][[1]]   # Model for first development period

@@ -32,8 +32,8 @@
 }
 \author{Markus Gesmann}
 \note{
-  The box-plot of latest actual incremental claims against simulated
-  claims follows ideas of B. Zehnwirth and G. Barnett in:
+  The box-whisker plot of latest actual incremental claims against simulated
+  claims follows ideas of Barnett and Zehnwirth in:
   \cite{Barnett and Zehnwirth. The need for diagnostic assessment of
     bootstrap predictive models, \emph{Insureware technical report}. 2007}
 }

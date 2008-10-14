@@ -25,7 +25,7 @@
   left with a barchart of forecasted ultimate claims costs by
   Munich-chain-ladder (MCL) on paid and incurred data by origin period;
   the barchart next to it compares the ratio of forecasted ultimate
-  claims cost on paid/incurred data based on the Mack-chain-ladder and
+  claims cost on paid and incurred data based on the Mack-chain-ladder and
   Munich-chain-ladder methods; the two residual plots at the bottom show the
   correlation of (incurred/paid)-chain-ladder factors against the
   paid-chain-ladder factors and the correlation of

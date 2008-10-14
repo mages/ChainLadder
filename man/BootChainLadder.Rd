@@ -11,13 +11,13 @@ BootChainLadder(Triangle, R = 999, process.distr=c("gamma", "od.pois"))
 
 \arguments{
   \item{Triangle}{cumulative claims triangle.  A (mxn)-matrix \eqn{C_{ik}} 
-    which is filled for \eqn{k \leq n+1-i, i=1,\ldots,m; m\geq n }, see
+    which is filled for \eqn{k \leq n+1-i; i=1,\ldots,m; m\geq n }, see
     \code{\link{qpaid}} for how to use (mxn)-development triangles with
     m<n, say higher development period frequency (e.g quarterly) than
     origin period frequency (e.g accident years).}
   \item{R}{the number of bootstrap replicates.}
   \item{process.distr}{ character string indicating which process
-    distributionto be assumed. One of "gamma" (default), 
+    distribution to be assumed. One of "gamma" (default), 
     or "od.pois" (overdispersed Poisson), can be abbreviated}
 }
 \details{
@@ -25,21 +25,21 @@ BootChainLadder(Triangle, R = 999, process.distr=c("gamma", "od.pois"))
   bootstrapping/simulation approach. In the first stage an ordinary
   chain-ladder methods is applied to the cumulative claims triangle.
   From this we calculate the scaled Pearson residuals which we bootstrap
-  R times to forecasts future incremental claims payements via the
+  R times to forecast future incremental claims payements via the
   standard chain-ladder method. 
   In the second stage we simulate the process error with the bootstrap
   value as the mean and using the process distribution asumed. 
   The set of reserves obtained in this way forms the predictive distribution, 
   from which summary statistics such as mean, prediction error or
-  percentiles can be derived.
+  quantiles can be derived.
 }
 
 \value{
  BootChainLadder gives a list with the following elements back:
-  \item{call}{the matched call}
+  \item{call}{matched call}
   \item{Triangle}{input triangle}
   \item{f}{chain-ladder factors}
-  \item{simClaims}{array of dimension \code{c(m,1,R)} with the simulated claims}	      
+  \item{simClaims}{array of dimension \code{c(m,n,R)} with the simulated claims}	      
   \item{IBNR.ByOrigin}{array of dimension \code{c(m,1,R)} with the modeled
     IBNRs by origin period}
   \item{IBNR.Triangles}{array fo dimension \code{c(m,n,R)} with the modeled
@@ -53,13 +53,16 @@ BootChainLadder(Triangle, R = 999, process.distr=c("gamma", "od.pois"))
   \cite{England, PD and Verrall, RJ. Stochastic Claims Reserving in
     General Insurance (with discussion), \emph{British Actuarial Journal} 8,
     III. 2002 }
-  }
+  
+  \cite{Barnett and Zehnwirth. The need for diagnostic assessment of
+    bootstrap predictive models, \emph{Insureware technical report}. 2007}
+}
 \author{ Markus Gesmann, \email{markus.gesmann@gmail.com} }
 \note{ The implimentation of \code{BootChainLadder} follows closely the
   discussion of the bootstrap model in section 8 and appendix 3 of the
-  above paper by England and Verall.
+  paper by England and Verall.
 }
-\seealso{ See also  \code{\link{MackChainLadder}} }
+\seealso{ See also   \code{\link{summary.BootChainLadder}}, \code{\link{MackChainLadder}} }
 \examples{
 # See as well the example in section 8 of England & Verrall's paper on page 55.
 B <- BootChainLadder(RAA, R=999, process.distr="gamma")
@@ -77,7 +80,7 @@ fit <- fitdistr(B$IBNR.Totals, "lognormal")
 fit
 curve(plnorm(x,fit$estimate["meanlog"], fit$estimate["sdlog"]), col="red", add=TRUE)
 
-# See as well the ABC example in Zehnwirth and Barnett paper
+# See as well the ABC example in the Barnett and Zehnwirth paper
 A <- BootChainLadder(ABC, R=999, process.distr="gamma")
 A
 plot(A, log=TRUE)

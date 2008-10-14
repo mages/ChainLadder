@@ -4,9 +4,7 @@
 
 \title{ Summary and print function for Munich-chain-ladder}
 \description{
-  Summarise a \code{MunichChainLadder} object;
-  Print a \code{MunichChainLadder} object
-
+  \code{summary} and \code{print} methods for a \code{MunichChainLadder} object
 }
 \usage{
 \method{summary}{MunichChainLadder}(object, \dots)

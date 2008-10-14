@@ -2,7 +2,7 @@
 \alias{Mortgage}
 \docType{data}
 \title{Run off triangle of accumulated claims data}
-\description{Development triangle (accumulated figures) of a mortgage guarantee
+\description{Development triangle of a mortgage guarantee
   business}
   
 \usage{data(Mortgage)}

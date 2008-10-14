@@ -5,8 +5,8 @@
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{ Summary and print function for Mack-chain-ladder }
 \description{
-  Summarise a \code{MackChainLadder} object;
-  Print a \code{MackChainLadder} object
+  \code{summary} and \code{print} methods for a \code{MackChainLadder}
+  object
 }
 \usage{
 

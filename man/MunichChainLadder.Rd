@@ -17,9 +17,9 @@ MunichChainLadder(Paid, Incurred,
 %- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{Paid}{cumulative paid claims triangle. A (mxn)-matrix \eqn{P_{ik}} 
-    which is filled for \eqn{k \leq n+1-i, i=1,\ldots,m; m\geq n}}
+    which is filled for \eqn{k \leq n+1-i; i=1,\ldots,m; m\geq n}}
   \item{Incurred}{cumulative incurred claims triangle. A (mxn)-matrix
-    \eqn{I_{ik}} which is filled for \eqn{k \leq n+1-i, i=1,\ldots,m,
+    \eqn{I_{ik}} which is filled for \eqn{k \leq n+1-i; i=1,\ldots,m,
       m\geq n }}
   \item{est.sigmaP}{defines how \eqn{sigma_{n-1}} for the Paid triangle
     is estimated, see \code{est.sigma} in \code{\link{MackChainLadder}} for
@@ -31,9 +31,9 @@ MunichChainLadder(Paid, Incurred,
     more details, as \code{est.sigmaI} is passed on to
     \code{MackChainLadder}
   }
-  \item{tailP}{defines how the tail of the Paid triangle is estimated and
+  \item{tailP}{defines how the tail of the \code{Paid} triangle is estimated and
     is passed on to \code{\link{MackChainLadder}}, see \code{tail} just there.}
-  \item{tailI}{defines how the tail of the Incurred triangle is estimated and
+  \item{tailI}{defines how the tail of the \code{Incurred} triangle is estimated and
     is passed on to \code{\link{MackChainLadder}}, see \code{tail} just there.}
 }
 %\details{
@@ -41,13 +41,13 @@ MunichChainLadder(Paid, Incurred,
 %}
 \value{
   MunichChainLadder returns a list with the following elements
-  \item{call}{the matched call} 
+  \item{call}{matched call} 
   \item{Paid}{input paid triangle}
   \item{Incurred}{input incurred triangle}
   \item{MCLPaid}{Munich-chain-ladder forecasted full triangle on paid data}
   \item{MCLIncurred}{Munich-chain-ladder forecasted full triangle on incurred data}
   \item{MackPaid}{Mack-chain-ladder output of the paid triangle}
-  \item{MackIncurred}{Mack-chain-ladder output of the inncurred triangle}
+  \item{MackIncurred}{Mack-chain-ladder output of the incurred triangle}
   \item{PaidResiduals}{paid residuals}
   \item{IncurredResiduals}{incurred residuals}
   \item{QResiduals}{paid/incurred residuals}
@@ -72,8 +72,8 @@ MunichChainLadder(Paid, Incurred,
 %
 % ~Make other sections like Warning with \section{Warning }{....} ~
 %}
-\seealso{ See also \code{\link{MackChainLadder}},
-  \code{\link{summary.MunichChainLadder}},
+\seealso{ See also \code{\link{MackChainLadder}}, 
+  \code{\link{summary.MunichChainLadder}}, 
   \code{\link{plot.MunichChainLadder}} }
 \examples{
 

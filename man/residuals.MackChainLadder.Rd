@@ -4,14 +4,14 @@
 \title{ Extract residuals of a MackChainLadder model }
 \description{
   Extract residuals of a \code{\link{MackChainLadder}} model by 
-  origin year, calendar year and development year.
+  origin period, calendar period and development period.
 }
 \usage{
 \method{residuals}{MackChainLadder}(object, ...)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
-  \item{object}{output of \code{link{MackChainLadder}}}
+  \item{object}{output of \code{\link{MackChainLadder}}}
   \item{\dots}{not in use}
 }
 %\details{

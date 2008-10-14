@@ -24,7 +24,7 @@
  plot of the forcasted development patterns of all origin periods
  (numbered, starting with 1 for the oldest origin period),
  and 4 residual plots. The residual plots
- show the standard resdiuals against fitted values, origin period,
+ show the standardised resdiuals against fitted values, origin period,
  calendar period and development period. All residual plot should show
  no pattern or direction for Mack's method to be applicable.
  Pattern in any direction can be the result of trends.
@@ -37,7 +37,7 @@
 %
 % ~Make other sections like Warning with \section{Warning }{....} ~
 %}
-\seealso{ See Also \code{\link{MackChainLadder}},
+\seealso{ See Also \code{\link{MackChainLadder}}, 
   \code{\link{residuals.MackChainLadder}}}
 \examples{
 plot(MackChainLadder(RAA))

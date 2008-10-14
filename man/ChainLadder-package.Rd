@@ -12,7 +12,7 @@
   A presentation given at the R-user conference 2008 in Dortmund is available in the 
   \code{doc} folder of the installation directory of the ChainLadder package.
 
-  The R command \code{searchpaths()[grep('ChainLadder', searchpaths())]} will tell you the exact path to the folder.
+  The R command \code{searchpaths()[grep('ChainLadder', searchpaths())]} will tell you the exact path to the directory.
   
   An example spreadsheet is provided in the Excel folder of the above path and demonstrates how to use the \code{ChainLadder} 
   functions in Excel. For the the spreadsheet you will need the RExcel-Addin, see \url{http://sunsite.univie.ac.at/rcom/}.
@@ -51,11 +51,11 @@ Maintainer: Markus Gesmann <markus.gesmann@gmail.com>
 
 \examples{
 
- RAA  
+RAA  
 
- MCL=MackChainLadder(RAA)
- MCL
- plot(MCL)
+MCL=MackChainLadder(RAA)
+MCL
+plot(MCL)
 
 # BootChainLadder
 B <- BootChainLadder(RAA, R=999, process.distr="gamma")
