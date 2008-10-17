@@ -109,6 +109,12 @@ MRT$F.se[3,]
 MRT$sigma
 plot(MRT) # We observe trends along calendar years.
 
+# Access process risk error
+MRT$Mack.ProcessRisk
+
+# Access parameter risk error
+MRT$Mack.ParameterRisk
+
 op <- par(mfrow=c(2,1))
 plot(with(summary(MRT)$ByOrigin, Mack.S.E/Ultimate),t="l",
 ylab="CV(Ultimate)", xlab="origin period")
