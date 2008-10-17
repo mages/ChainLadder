@@ -13,8 +13,8 @@ ChainLadder <- function(Triangle, weights=1/Triangle){
     myModel <- vector("list", (n-1))
     for(i in c(1:(n-1))){
         ## weighted linear regression through origin
-        dev.data <- data.frame(x=Triangle[1:(m-i),i], y=Triangle[1:(m-i),i+1])
-  	myModel[[i]] <- lm(y~x+0, weights=weights[1:(m-i),i], data=dev.data)
+        dev.data <- data.frame(x=Triangle[,i], y=Triangle[,i+1])
+  	myModel[[i]] <- lm(y~x+0, weights=weights[,i], data=dev.data)
     }
 
     output <- list(Models=myModel, Triangle=Triangle)

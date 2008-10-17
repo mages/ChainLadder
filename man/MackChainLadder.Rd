@@ -60,11 +60,13 @@ tail=FALSE, est.sigma="log-linear")
   \item{Triangle}{input triangle of cumulative claims}
   \item{FullTriangle}{forecasted full triangle}
   \item{Models}{linear regression models for each development period}
-  \item{f}{chain-ladder ratios}
-  \item{f.se}{estimation error of the chain-ladder ratios}
-  \item{F.se}{stochastic error of the chain-ladder ratios}
+  \item{f}{chain-ladder-link-ratios}
+  \item{f.se}{estimation error of the chain-ladder-link-ratios}
+  \item{F.se}{stochastic error of the chain-ladder-link-ratios}
   \item{sigma}{estimation of the conditional deviation of the individual
-    chain ladder ratios}
+    chain-ladder-link-ratios (residual standard error)}
+  \item{Mack.ProcessRisk}{estimated process risk error}
+  \item{Mack.ParameterRisk}{estimated parameter risk error}
   \item{Mack.S.E}{Mack's estimated standard error for the reserves}
   \item{Total.Mack.S.E}{Mack's estimated overall standard error for the reserves}
   \item{tail}{tail factor used. If tail was set to TRUE the output will
@@ -106,6 +108,13 @@ MRT$f.se
 MRT$F.se[3,]
 MRT$sigma
 plot(MRT) # We observe trends along calendar years.
+
+op <- par(mfrow=c(2,1))
+plot(with(summary(MRT)$ByOrigin, Mack.S.E/Ultimate),t="l",
+ylab="CV(Ultimate)", xlab="origin period")
+plot(summary(MRT)$ByOrigin[["CV(IBNR)"]], t="l", ylab="CV(IBNR)",
+xlab="origin period")
+par(op)
 
 # See the Taylor/Ashe example in Mack's 1993 paper
 GenIns

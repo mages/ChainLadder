@@ -56,10 +56,10 @@ MunichChainLadder(Paid, Incurred,
     incurred/paid ratios}
   \item{lambdaI}{dependency coefficient between incurred chain ladder
     ratios and paid/incurred ratios}
-  \item{qinverse.f}{chain-ladder factors of the incurred/paid triangle}
+  \item{qinverse.f}{chain-ladder-link-ratio of the incurred/paid triangle}
   \item{rhoP.sigma}{estimation of the conditional deviation around the
     paid/incurred ratios}
-  \item{q.f}{chain-ladder factors of the paid/incurred triangle}
+  \item{q.f}{chain-ladder-link-ratio of the paid/incurred triangle}
   \item{rhoI.sigma}{estimation of the conditional deviation around the
     incurred/paid ratios}
 }

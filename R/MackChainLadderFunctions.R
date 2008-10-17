@@ -50,6 +50,8 @@ MackChainLadder <- function(Triangle, weights=1/Triangle, tail=FALSE, est.sigma=
     output[["f.se"]] <- StdErr$f.se
     output[["F.se"]] <- StdErr$F.se
     output[["sigma"]] <- StdErr$sigma
+    output[["Mack.ProcessRisk"]]   <- StdErr$FullTriangle.procrisk  # new dmm
+    output[["Mack.ParameterRisk"]] <- StdErr$FullTriangle.paramrisk  # new dmm
     output[["Mack.S.E"]] <- StdErr$FullTriangle.se
     output[["Total.Mack.S.E"]] <- Total.SE
     output[["tail"]] <- tail
@@ -135,6 +137,9 @@ Mack.S.E <- function(MackModel, FullTriangle, est.sigma="loglinear"){
     F.se <- t(t(1/sqrt(FullTriangle)[,-n])*(sigma))
 
     FullTriangle.se <- FullTriangle * 0
+    FullTriangle.procrisk <- FullTriangle * 0
+    FullTriangle.paramrisk <- FullTriangle * 0
+
     ## Recursive Formula
 
     rowindex <- 2:m
@@ -142,14 +147,30 @@ Mack.S.E <- function(MackModel, FullTriangle, est.sigma="loglinear"){
         rowindex <- c((m-n+1):m)
     for(i in rowindex){
         for(k in c((n+1-i):(n-1))){
-            if(k>0)
-                FullTriangle.se[i,k+1] = sqrt(
+            if(k>0) {
+                FullTriangle.se[i,k+1] <- sqrt(
                                FullTriangle[i,k]^2*(F.se[i,k]^2+f.se[k]^2) #
                                + FullTriangle.se[i,k]^2*f[k]^2
                                )
+		FullTriangle.procrisk[i,k+1] <- sqrt(                       # new dmm
+                               FullTriangle[i,k]^2*(F.se[i,k]^2          )
+                               + FullTriangle.procrisk[i,k]^2*f[k]^2
+			       )
+		FullTriangle.paramrisk[i,k+1] <- sqrt(                       # new dmm
+                               FullTriangle[i,k]^2*(            f.se[k]^2)
+                               + FullTriangle.paramrisk[i,k]^2*f[k]^2
+			       )
+            }
     	}
     }
-    return(list(sigma=sigma, f=f, f.se=f.se, F.se=F.se, FullTriangle.se=FullTriangle.se) )
+    return(list(sigma=sigma,
+                f=f,
+                f.se=f.se,
+                F.se=F.se,
+                FullTriangle.se=FullTriangle.se,  # new dmm
+                FullTriangle.procrisk=FullTriangle.procrisk,
+                FullTriangle.paramrisk=FullTriangle.paramrisk)
+           )
 }
 
 ################################################################################
@@ -194,6 +215,7 @@ summary.MackChainLadder <- function(object,...){
     CV <- Mack.S.E/(Ultimate-Latest)
 
     ByOrigin <- data.frame(Latest, Dev.To.Date, Ultimate, IBNR, Mack.S.E, CV)
+    names(ByOrigin)[6]="CV(IBNR)"
     ByOrigin <- ByOrigin[ex.origin.period,]
 
     Totals <-  c(sum(Latest,na.rm=TRUE), sum(Ultimate,na.rm=TRUE),
@@ -206,7 +228,7 @@ summary.MackChainLadder <- function(object,...){
     colnames(Totals)=c("Totals")
     rownames(Totals) <- c("Latest:","Ultimate:",
                           "IBNR:","Mack S.E.:",
-                          "CV:")
+                          "CV(IBNR):")
 
     output <- list(ByOrigin=ByOrigin, Totals=Totals)
     return(output)

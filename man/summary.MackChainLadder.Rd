@@ -26,11 +26,11 @@
 }
 \value{
   \code{summary.MackChainLadder} gives a list of two elements back
-  \item{ByOrigin}{data frame with \emph{Latest} (latest actual claims costs),
-    \emph{Dev.To.Date} (chain ladder development to date),
-    \emph{Ultimate} (estimate ultimate claims cost), \emph{IBNR}
-    (estimated IBNR), \emph{Mack.S.E} (Mack's estimation of the standard
-    error of the IBNR), and \emph{CV} (Coefficient of Variance, Mack.S.E/IBNR)}
+  \item{ByOrigin}{data frame with \code{Latest} (latest actual claims costs),
+    \code{Dev.To.Date} (chain ladder development to date),
+    \code{Ultimate} (estimate ultimate claims cost), \code{IBNR}
+    (estimated IBNR), \code{Mack.S.E} (Mack's estimation of the standard
+    error of the IBNR), and \code{CV(IBNR)} (Coefficient of Variance, Mack.S.E/IBNR)}
   \item{Totals}{data frame of totals over all origin periods. The items
     follow the same naming convention as in \code{ByOrigin} above}
 }
