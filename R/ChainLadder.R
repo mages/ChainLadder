@@ -8,7 +8,7 @@ ChainLadder <- function(Triangle, weights=1/Triangle){
     Triangle <- checkTriangle(Triangle)
 
     n <- dim(Triangle)[2]
-    m <- dim(Triangle)[1]
+
 
     myModel <- vector("list", (n-1))
     for(i in c(1:(n-1))){
