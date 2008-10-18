@@ -25,10 +25,10 @@ BootChainLadder(Triangle, R = 999, process.distr=c("gamma", "od.pois"))
   bootstrapping/simulation approach. In the first stage an ordinary
   chain-ladder methods is applied to the cumulative claims triangle.
   From this we calculate the scaled Pearson residuals which we bootstrap
-  R times to forecast future incremental claims payements via the
+  R times to forecast future incremental claims payments via the
   standard chain-ladder method. 
   In the second stage we simulate the process error with the bootstrap
-  value as the mean and using the process distribution asumed. 
+  value as the mean and using the process distribution assumed. 
   The set of reserves obtained in this way forms the predictive distribution, 
   from which summary statistics such as mean, prediction error or
   quantiles can be derived.
@@ -42,7 +42,7 @@ BootChainLadder(Triangle, R = 999, process.distr=c("gamma", "od.pois"))
   \item{simClaims}{array of dimension \code{c(m,n,R)} with the simulated claims}	      
   \item{IBNR.ByOrigin}{array of dimension \code{c(m,1,R)} with the modeled
     IBNRs by origin period}
-  \item{IBNR.Triangles}{array fo dimension \code{c(m,n,R)} with the modeled
+  \item{IBNR.Triangles}{array of dimension \code{c(m,n,R)} with the modeled
     IBNR development triangles}
   \item{IBNR.Totals}{vector of R samples of the total IBNRs}
   \item{ChainLadder.Residuals}{adjusted Pearson chain-ladder residuals}
@@ -65,6 +65,7 @@ BootChainLadder(Triangle, R = 999, process.distr=c("gamma", "od.pois"))
 \seealso{ See also   \code{\link{summary.BootChainLadder}}, \code{\link{MackChainLadder}} }
 \examples{
 # See as well the example in section 8 of England & Verrall's paper on page 55.
+
 B <- BootChainLadder(RAA, R=999, process.distr="gamma")
 B
 plot(B)
@@ -76,7 +77,7 @@ quantile(B, c(0.75,0.95,0.99, 0.995))
 library(MASS)
 plot(ecdf(B$IBNR.Totals))
 # fit a log-normal distribution 
-fit <- fitdistr(B$IBNR.Totals, "lognormal")
+fit <- fitdistr(B$IBNR.Totals[B$IBNR.Totals>0], "lognormal")
 fit
 curve(plnorm(x,fit$estimate["meanlog"], fit$estimate["sdlog"]), col="red", add=TRUE)
 

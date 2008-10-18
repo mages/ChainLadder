@@ -19,12 +19,12 @@
 }
 \details{
  \code{plot.MackChainLadder} shows six graphs, starting from the top left
- with a stacked barchart of the latest claims postion plus IBNR and
+ with a stacked bar-chart of the latest claims position plus IBNR and
  Mack's standard error by origin period; next to it on the right is a
- plot of the forcasted development patterns of all origin periods
+ plot of the forecasted development patterns of all origin periods
  (numbered, starting with 1 for the oldest origin period),
  and 4 residual plots. The residual plots
- show the standardised resdiuals against fitted values, origin period,
+ show the standardised residuals against fitted values, origin period,
  calendar period and development period. All residual plot should show
  no pattern or direction for Mack's method to be applicable.
  Pattern in any direction can be the result of trends.

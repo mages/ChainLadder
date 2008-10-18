@@ -30,7 +30,7 @@
     paid/incurred claims), \emph{Ult. Paid} (estimate ultimate claims
     cost based on the paid triangle), \emph{Ult. Incurred} (estimate
     ultimate claims cost based on the incurred triangle),\emph{Ult. P/I
-      Ratio} (ratio of ultimate paid forecast / utimate incurred forecast)
+      Ratio} (ratio of ultimate paid forecast / ultimate incurred forecast)
   }
   \item{Totals}{data frame of totals over all origin periods. The items
     follow the same naming convention as in \code{ByOrigin} above
