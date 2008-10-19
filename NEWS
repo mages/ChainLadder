@@ -6,6 +6,8 @@ USER-VISIBLE CHANGES
   
   o 'MackChainLadder' gives two more elements back: 'Mack.ProcessRisk' and 'Mack.ParameterRisk' 
     for the process and parameter risk error (Thanks to Daniel Murphy)
+  o In the sumumary output of'MackChainLadder' the label 'CV'  changed to 'CV(IBNR)' to clarify 
+    that we show the coefficient of variance of the IBNR.
   o 'MackChainLadder' provides new example plots for CV(IBNR) vs. origin period and CV(Ultimate) vs. origin period  
   o Updated documentation
 
