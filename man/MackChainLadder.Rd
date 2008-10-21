@@ -133,7 +133,6 @@ plot(GNI)
 GNIt <- MackChainLadder(GenIns, est.sigma="Mack", tail=TRUE)
 ## Extract more information on the tail factor
 GNIt$tail 
-
   
 # This data set is discussed many papers, e.g. England and Verall 2000
 # paper, see Table 1 just there  
@@ -150,43 +149,53 @@ MackChainLadder(RAA, est.sigma=R$sigma[7])
 # Table 14 in England and Verall 2000 paper
 MackChainLadder(RAA, est.sigma=R$sigma[8])
 
+# Use lattice to plot the individual origin years
+longRAA <- expand.grid(origin=as.numeric(dimnames(RAA)$origin), dev=as.numeric(dimnames(RAA)$dev))
+longRAA$value <- as.vector(R$FullTriangle)
+longRAA$valuePlusMack.S.E <-  longRAA$value + as.vector(R$Mack.S.E)
+longRAA$valueMinusMack.S.E <- longRAA$value - as.vector(R$Mack.S.E)
+library(lattice)
+xyplot(valuePlusMack.S.E + valueMinusMack.S.E + value ~ dev |
+factor(origin), data=longRAA, t="l", col=c("red","red","black"), as.table=TRUE)
+
+
 # Different weights
 # Using 1/Triangle^2 as weight will use mean chain ladder ratios 
 MackChainLadder(RAA, weights=1/RAA^2)$f
 apply(RAA[,-1]/RAA[,-10],2, mean, na.rm=TRUE)
  
- # Let's investigate the Mack model more detail
- R[["Models"]][[1]]   # Model for first development period
- summary( R[["Models"]][[1]]) # Look at the model stats
- op <- par(mfrow=c(2,2)) # plot residuals
-   plot( R[["Models"]][[1]])
- par(op)
+# Let's investigate the Mack model more detail
+R[["Models"]][[1]]   # Model for first development period
+summary( R[["Models"]][[1]]) # Look at the model stats
+op <- par(mfrow=c(2,2)) # plot residuals
+  plot( R[["Models"]][[1]])
+par(op)
 
- # Let's include an intercept in our model
- newModel <- update(R[["Models"]][[1]], y ~ x+1, 
-              weights=1/R[["Triangle"]][1:9,1],
-              data=data.frame(x=R[["Triangle"]][1:9,1], 
-                              y=R[["Triangle"]][1:9,2])
-               ) 
+# Let's include an intercept in our model
+newModel <- update(R[["Models"]][[1]], y ~ x+1, 
+             weights=1/R[["Triangle"]][1:9,1],
+             data=data.frame(x=R[["Triangle"]][1:9,1], 
+                             y=R[["Triangle"]][1:9,2])
+              ) 
 
 # View the new model
- summary(newModel)
- op <- par(mfrow=c(2,2)) 
-   plot( newModel )
- par(op)
+summary(newModel)
+op <- par(mfrow=c(2,2)) 
+  plot( newModel )
+par(op)
 
- # Change the model for dev. period one to the newModel
- R2 <- R
- R2[["Models"]][[1]] <- newModel
- predict(R2) # predict the full triangle with the new model 
- #(only the last origin year will be affected)
+# Change the model for dev. period one to the newModel
+R2 <- R
+R2[["Models"]][[1]] <- newModel
+predict(R2) # predict the full triangle with the new model 
+#(only the last origin year will be affected)
 
- R2[["FullTriangle"]] <-  predict(R2)
- R2[["FullTriangle"]] 
- R2   # Std. Errors have not been re-estimated!
- # Plot the result
+R2[["FullTriangle"]] <-  predict(R2)
+R2[["FullTriangle"]] 
+R2   # Std. Errors have not been re-estimated!
+# Plot the result
  
- plot(R2, title="Changed R Model")
+plot(R2, title="Changed R Model")
 
 ## 
 }
