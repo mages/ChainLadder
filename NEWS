@@ -1,5 +1,11 @@
 === ChainLadder: R package for insurance claims reserving ===
 
+Version 0.1.2-8
+===============
+USER-VISIBLE CHANGES
+
+  o Updated documentation for 'MackChainLadder' (Thanks to Daniel Murphy)
+
 Version 0.1.2-7
 ===============
 USER-VISIBLE CHANGES
