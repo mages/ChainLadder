@@ -31,18 +31,22 @@ tail=FALSE, est.sigma="log-linear")
     given it will be used instead.}  
 }
 \details{
-
-  Let \eqn{C_{ik}} denote the cumulative loss amounts of origin period
+  Following Mack's 1999 paper let \eqn{C_{ik}} denote the cumulative loss amounts of origin period
   (e.g. accident year) 
   \eqn{i=1,\ldots,m}, with losses known for development period
   (e.g. development year) \eqn{k \leq n+1-i}.
   In order to forecast the amounts \eqn{C_{ik}} for
   \eqn{k > n+1-i} the Mack chain-ladder-model assumes:
-  \deqn{ E[ \frac{C_{i,k+1}}{C_{ik}} | C_{i1},C_{i2},\ldots,C_{ik} ] = f_k }
-  \deqn{ Var( \frac{C_{i,k+1}}{C_{ik}} | C_{i1},C_{i2},
-    \ldots,C_{ik} ) = \frac{\sigma_k^2}{C_{ik}} }
-  \deqn{\{ C_{i1},\ldots,C_{in}\}, \{ C_{j1},\ldots,C_{jn}\},\; are\;
-    independent\; for\; origin\; period\; i \neq j }
+  \deqn{\mbox{CL1: }  E[ F_{ik}| C_{i1},C_{i2},\ldots,C_{ik} ] = f_k
+    \mbox{ with } F_{ik}=\frac{C_{i,k+1}}{C_{ik}}
+  }
+  \deqn{\mbox{CL2: }  Var( \frac{C_{i,k+1}}{C_{ik}} | C_{i1},C_{i2},
+    \ldots,C_{ik} ) = \frac{\sigma_k^2}{w_{ik} C^\alpha_{ik}}
+  }
+  \deqn{\mbox{CL3: }  \{ C_{i1},\ldots,C_{in}\}, \{
+    C_{j1},\ldots,C_{jn}\},\mbox{ are independent for origin period } i
+    \neq j 
+  } with \eqn{w_{ik} \in [0;1]}, \eqn{\alpha \in \{0,1,2\}}.   
   If these assumptions are hold, the Mack-chain-ladder-model gives an
   unbiased estimator for IBNR (Incurred But Not Reported) claims.
   
@@ -61,16 +65,23 @@ tail=FALSE, est.sigma="log-linear")
   \item{FullTriangle}{forecasted full triangle}
   \item{Models}{linear regression models for each development period}
   \item{f}{chain-ladder-link-ratios}
-  \item{f.se}{estimation error of the chain-ladder-link-ratios}
-  \item{F.se}{stochastic error of the chain-ladder-link-ratios}
-  \item{sigma}{estimation of the conditional deviation of the individual
-    chain-ladder-link-ratios (residual standard error)}
-  \item{Mack.ProcessRisk}{estimated process risk error}
-  \item{Mack.ParameterRisk}{estimated parameter risk error}
-  \item{Mack.S.E}{Mack's estimated standard error for the reserves}
-  \item{Total.Mack.S.E}{Mack's estimated overall standard error for the reserves}
+  \item{f.se}{standard errors of the chain-ladder-link-ratios f
+    (assumption CL1)}
+  \item{F.se}{standard errors of the true chain-ladder-link-ratios
+    \eqn{F_{ik}} (square root of the variance in assumption CL2)}
+  \item{sigma}{sigma parameter in CL2}
+  \item{Mack.ProcessRisk}{variability in the projection of future losses
+    not explained by the variability of the link ratio estimators (unexplained variation)}
+  \item{Mack.ParameterRisk}{variability in the projection of future
+    losses explained by the variability of the link-ratio estimators
+    alone (explained variation)}
+  \item{Mack.S.E}{total variability in the projection of future losses
+    by the chain ladder method; the square root of the mean square error
+    of the chain ladder estimate: \eqn{\mbox{Mack.S.E.}^2 = \mbox{Mack.ProcessRisk}^2 +
+    \mbox{Mack.ParameterRisk}^2}}  
+  \item{Total.Mack.S.E}{total variability of projected loss for all origin years combined}
   \item{tail}{tail factor used. If tail was set to TRUE the output will
-    include the linear model used to estimate the tail factor}  
+    include the linear model used to estimate the tail factor}
 }
 \references{
 \cite{Thomas Mack. Distribution-free calculation of the standard error of chain ladder reserve estimates. \emph{Astin Bulletin}. Vol. 23. No 2. 1993. pp.213:225}
