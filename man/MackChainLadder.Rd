@@ -39,14 +39,19 @@ tail=FALSE, est.sigma="log-linear")
   \eqn{k > n+1-i} the Mack chain-ladder-model assumes:
   \deqn{\mbox{CL1: }  E[ F_{ik}| C_{i1},C_{i2},\ldots,C_{ik} ] = f_k
     \mbox{ with } F_{ik}=\frac{C_{i,k+1}}{C_{ik}}
-  }
+  }{CL1: E[ F_ik| C_i1,C_i2,...,C_ik ] = f_k with F_ik=C_{i,k+1}/C_ik}
+  
   \deqn{\mbox{CL2: }  Var( \frac{C_{i,k+1}}{C_{ik}} | C_{i1},C_{i2},
     \ldots,C_{ik} ) = \frac{\sigma_k^2}{w_{ik} C^\alpha_{ik}}
+  }{CL2: Var( C_{i,k+1}/C_ik | C_i1, C_i2, ... ,C_ik ) = sigma_k^2/( w_ik C^alpha_ik)
   }
   \deqn{\mbox{CL3: }  \{ C_{i1},\ldots,C_{in}\}, \{
     C_{j1},\ldots,C_{jn}\},\mbox{ are independent for origin period } i
     \neq j 
-  } with \eqn{w_{ik} \in [0;1]}, \eqn{\alpha \in \{0,1,2\}}.   
+  }{CL3: \{ C_i1, ... ,C_in\}, \{
+    C_j1, ... ,C_jn\}, are independent for origin period i != j 
+  }
+  with \eqn{w_{ik} \in [0;1]}{w_{ik} in [0;1]}, \eqn{\alpha \in \{0,1,2\}}{alpha in \{0,1,2\}}.   
   If these assumptions are hold, the Mack-chain-ladder-model gives an
   unbiased estimator for IBNR (Incurred But Not Reported) claims.
   
@@ -78,7 +83,8 @@ tail=FALSE, est.sigma="log-linear")
   \item{Mack.S.E}{total variability in the projection of future losses
     by the chain ladder method; the square root of the mean square error
     of the chain ladder estimate: \eqn{\mbox{Mack.S.E.}^2 = \mbox{Mack.ProcessRisk}^2 +
-    \mbox{Mack.ParameterRisk}^2}}  
+    \mbox{Mack.ParameterRisk}^2}{Mack.S.E.^2 = Mack.ProcessRisk^2 +
+  Mack.ParameterRisk^2}}
   \item{Total.Mack.S.E}{total variability of projected loss for all origin years combined}
   \item{tail}{tail factor used. If tail was set to TRUE the output will
     include the linear model used to estimate the tail factor}
