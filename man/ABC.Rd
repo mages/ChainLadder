@@ -4,7 +4,7 @@
 \title{Run off triangle of accumulated claims data}
 \description{Run-off triangle of a worker's compensation portfolio of a large company}
   
-\usage{data(RAA)}
+\usage{data(ABC)}
 \format{
   A matrix with 11 accident years and 11 development years.
 }

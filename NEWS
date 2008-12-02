@@ -1,5 +1,12 @@
 === ChainLadder: R package for insurance claims reserving ===
 
+Version 0.1.2-9
+===============
+USER-VISIBLE CHANGES
+
+  o Updated documentation for 'ABC' data (Thanks to Glen Barnett)
+
+
 Version 0.1.2-8
 ===============
 USER-VISIBLE CHANGES
