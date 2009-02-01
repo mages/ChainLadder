@@ -62,7 +62,7 @@ op <- par(mfrow=c(2,2))
 plot(res ~ dev, data=y)
 lines(x=unique(y$dev),y=as.vector(by(y, list(dev=y$dev),
                     function(x) mean(x$res))), col="red")
-plot(res ~ origin, data=z)
+plot(res ~ origin, data=y)
 lines(x=unique(y$origin), y=as.vector(by(y, list(dev=y$origin),
                     function(x) mean(x$res))), col="red")
 plot(res ~ cal, data=y)
@@ -72,6 +72,7 @@ plot(res ~ paid.noise, data=y)
 lines(lowess(y$paid.noise, y$res), col="red")
 par(op)
 
+ pairs(y[c("paid.noise", "dev", "cal")], panel=panel.smooth)
 ### Add payment year trends to the model
 
 y$cal.cut <- cut(y$cal, c(1977, 1982, 1983, 1991))
