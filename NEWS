@@ -4,8 +4,8 @@ Version 0.1.2-9
 ===============
 USER-VISIBLE CHANGES
 
+  o Updated documentation to work with new Rd-file parser (R version >= 2.9.0)
   o Updated documentation for 'ABC' data (Thanks to Glen Barnett)
-
 
 Version 0.1.2-8
 ===============

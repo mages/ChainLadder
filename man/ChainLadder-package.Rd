@@ -6,18 +6,21 @@
   Various chain-ladder methods for claims reserving
 }
 \description{The ChainLadder-package grew out of presentations
-  the author gave at the Stochastic Reserving Seminar at the Institute of Actuaries in November 2007.
+  the author gave at the Stochastic Reserving Seminar at the Institute
+  of Actuaries in November 2007 and 2008.
   This package has currently implementations for the Mack-, Munich- and Bootstrap-chain-ladder methods.
-  
-  A presentation given at the R-user conference 2008 in Dortmund is available in the 
-  \code{doc} folder of the installation directory of the ChainLadder package.
-
-  The R command \code{searchpaths()[grep('ChainLadder', searchpaths())]} will tell you the exact path to the directory.
-  
-  An example spreadsheet is provided in the Excel folder of the above path and demonstrates how to use the \code{ChainLadder} 
-  functions in Excel. For the the spreadsheet you will need the RExcel-Addin, see \url{http://sunsite.univie.ac.at/rcom/}.
-  To install the Add-in get the R-package \code{RExcelInstaller} and call \code{installRExcel()}.
-  
+   
+  The ChainLadder-package comes with an example spreadsheet which
+  demonstrates how to use how to use the \code{ChainLadder} 
+  functions in Excel. The spreadsheet is located in the Excel folder of
+  the package. The R command \code{searchpaths()[grep('ChainLadder',
+    searchpaths())]} will tell you the exact path to the directory.
+  For the the spreadsheet you will need the RExcel-Addin, see
+  \url{http://sunsite.univie.ac.at/rcom/} for more details.
+   
+  More information and various presentations given on the ChainLadder-package are available
+  on the project web site \url{http://code.google.com/p/chainladder/}
+    
   If you are also interested in loss distributions modeling, risk theory (including ruin theory), 
   simulation of compound hierarchical models and credibility theory check out the \code{actuar} package 
   by C. Dutang, V. Goulet and M. Pigeon.
