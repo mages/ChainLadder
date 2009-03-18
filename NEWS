@@ -9,7 +9,7 @@ USER-VISIBLE CHANGES
  
 BUG FIXES
 
-  o 'MunichChainLadder': calculation of 'Mack.S.E' did not use an ultimate simga factor to estimate 
+  o 'MunichChainLadder': calculation of 'Mack.S.E' did not use an ultimate sigma factor to estimate 
     'Mack.S.E' when a tail factor > 1 was used.
     Thanks to Mark Hoffmann for reporting this issue.
 
