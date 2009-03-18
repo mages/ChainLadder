@@ -9,7 +9,7 @@
 }
 \usage{
 MackChainLadder(Triangle, weights = 1/Triangle,
-tail=FALSE, est.sigma="log-linear")
+tail=FALSE, est.sigma="log-linear", ult.sigma=NULL)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
