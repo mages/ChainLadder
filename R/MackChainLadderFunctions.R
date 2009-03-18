@@ -5,7 +5,7 @@
 ## Date:08/09/2008
 
 
-MackChainLadder <- function(Triangle, weights=1/Triangle, tail=FALSE, est.sigma="log-linear"){
+MackChainLadder <- function(Triangle, weights=1/Triangle, tail=FALSE, est.sigma="log-linear", ult.sigma=NULL){
 
     Triangle <- checkTriangle(Triangle)
     m <- dim(Triangle)[1]
@@ -34,7 +34,7 @@ MackChainLadder <- function(Triangle, weights=1/Triangle, tail=FALSE, est.sigma=
 
     ## Estimate standard error for the tail
     if(tail.factor>1){
-        tail.out <- tail.SE(FullTriangle, StdErr, Total.SE, tail.factor)
+        tail.out <- tail.SE(FullTriangle, StdErr, Total.SE, tail.factor, ult.sigma=ult.sigma)
         FullTriangle <- tail.out[["FullTriangle"]]
         StdErr <- tail.out[["StdErr"]]
         Total.SE <- tail.out[["Total.SE"]]
@@ -77,15 +77,32 @@ estimate.sigma <- function(sigma){
 ########################################################################
 ## Estimate standard error for tail
 
-tail.SE <- function(FullTriangle, StdErr, Total.SE, tail.factor){
+tail.SE <- function(FullTriangle, StdErr, Total.SE, tail.factor, ult.sigma=NULL){
     n <- ncol(FullTriangle)
     m <- nrow(FullTriangle)
+
     FullTriangle[,n] <- FullTriangle[,n] * tail.factor
     StdErr$f[n] <- tail.factor
-    StdErr$f.se[n] <- mack.se.fult(clratios = StdErr$f, se.f = StdErr$f.se)
-    StdErr$F.se <- cbind(StdErr$F.se, mack.se.Fult(se.fult = StdErr$f.se[n], se.F = StdErr$F.se))
+
+    ## find position of tail factor in age-to-age factors
+    tail.pos <- 1
+    while((StdErr$f[n] < StdErr$f[tail.pos]) & (tail.pos<n))
+        tail.pos <- tail.pos+1
+
+    ## estimate the stanard error of the tail factor
+    StdErr$f.se[n] <- mean(StdErr$f.se[(tail.pos-1) : tail.pos])
+
+    if(is.null(ult.sigma))
+        ult.sigma <- mean(StdErr$sigma[(tail.pos-1):tail.pos])
+    StdErr$sigma <- c(StdErr$sigma, ult.sigma)
+
+    ## estimate the stanard error of the tail factor ratios
+    se.Fult <- ult.sigma/sqrt(FullTriangle[,n])
+    StdErr$F.se <- cbind(StdErr$F.se, se.Fult)
+
     StdErr$FullTriangle.se[,n] <- sqrt(FullTriangle[, n]^2 * (StdErr$F.se[,n]^2 + StdErr$f.se[n]^2) +
                                        StdErr$FullTriangle.se[,n]^2 * tail.factor^2)
+
     Total.SE <- sqrt(Total.SE^2 * StdErr$f[n]^2 + sum(FullTriangle[c(1:m), n]^2 * (StdErr$F.se[c(1:m), n]^2), na.rm=TRUE) +
                      sum(FullTriangle[c(1:m), n], na.rm=TRUE)^2 * StdErr$f.se[n]^2)
     output <- list(FullTriangle=FullTriangle, StdErr=StdErr, Total.SE=Total.SE)
@@ -336,43 +353,5 @@ residuals.MackChainLadder <- function(object,...){
     return(na.omit(myResiduals))
 }
 
-##############################################################################
-## estimate the stanard error of the tail factor
-
-mack.se.fult <- function (clratios, se.f){
-    f <- clratios
-    n <- length(f)
-    fult <- f[n]
-    k <- findInterval(fult, sort(f[-n]))
-    if (k != 0) {
-        k <- order(f[-n])[k]
-    }
-    if ((1 < k) && (k < n)) {
-        if (abs(f[k] - f[k - 1]) > 0) {
-            se.fult <- (1 - (f[k] - fult)/(f[k] - f[k - 1])) *
-                se.f[k - 1] + (f[k] - fult)/(f[k] - f[k - 1]) *
-                    se.f[k]
-        }
-        else {
-            se.fult <- se.f[n - 1]
-        }
-    }
-    else {
-        se.fult <- se.f[n - 1]
-    }
-    return(se.fult)
-}
-
-##############################################################################
-## estimate the stanard error of the tail factor ratios
-
-
-mack.se.Fult <- function (se.fult, se.F){
-    n <- ncol(se.F)
-    se.Fult <- se.F[, n]
-    se.Fult <- as.matrix(se.Fult)
-    se.Fult <- se.fult * (1 + se.Fult)
-    return(se.Fult)
-}
 
 

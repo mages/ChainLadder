@@ -1,5 +1,19 @@
 === ChainLadder: R package for insurance claims reserving ===
 
+Version 0.1.2-10
+===============
+USER-VISIBLE CHANGES
+
+  o 'MackChainLadder' has new argument 'ult.sigma' to provide a user estimate for ultimate sigma 
+    when a tail factor is included
+ 
+BUG FIXES
+
+  o 'MunichChainLadder': calculation of 'Mack.S.E' did not use an ultimate simga factor to estimate 
+    'Mack.S.E' when a tail factor > 1 was used.
+    Thanks to Mark Hoffmann for reporting this issue.
+
+
 Version 0.1.2-9
 ===============
 USER-VISIBLE CHANGES
