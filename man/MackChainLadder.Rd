@@ -9,7 +9,7 @@
 }
 \usage{
 MackChainLadder(Triangle, weights = 1/Triangle,
-tail=FALSE, est.sigma="log-linear", ult.sigma=NULL)
+tail=FALSE, est.sigma="log-linear", tail.sigma=NULL)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -29,9 +29,9 @@ tail=FALSE, est.sigma="log-linear", ult.sigma=NULL)
     Default is "log-linear" for a log-linear regression, "Mack" for
     Mack's approximation from his 1999 paper, or if a numeric value is
     given it will be used instead.}  
-\item{ult.sigma}{defines how to estimate \eqn{sigma_{n}. Only needed if
+\item{tail.sigma}{defines how to estimate \eqn{sigma_{n}. Only needed if
     a tail factor > 1 is provided}.
-    Default is \code{NULL}. If \code{ult.sigma} is \code{NULL}, the
+    Default is \code{NULL}. If \code{tail.sigma} is \code{NULL}, the
     ultimate sigma factor is estimated using a sigma factor from the
     age-to-age factor with the closest match to the tail
     factor. Otherwise a numerical value can be proivded.}  

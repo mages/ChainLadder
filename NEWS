@@ -4,8 +4,7 @@ Version 0.1.2-10
 ===============
 USER-VISIBLE CHANGES
 
-  o 'MackChainLadder' has new argument 'ult.sigma' to provide a user estimate for ultimate sigma 
-    when a tail factor is included
+  o 'MackChainLadder' has new argument 'tail.sigma' to provide to estimate sigma for a given tail factor
  
 BUG FIXES
 
