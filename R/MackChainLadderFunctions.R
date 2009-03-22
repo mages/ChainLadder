@@ -86,41 +86,23 @@ tail.SE <- function(FullTriangle, StdErr, Total.SE, tail.factor, tail.sigma=NULL
     FullTriangle[,n] <- FullTriangle[,n] * tail.factor
     StdErr$f[n] <- tail.factor
 
-    ## find position of tail factor in age-to-age factors
-    tail.pos <- 1
-    while((StdErr$f[n] < StdErr$f[tail.pos]) & (tail.pos<n))
-        tail.pos <- tail.pos+1
-
     ## Idea: linear model for f, estimate dev for tail factor
     ## linear model for f.se and sigma and put dev from above in
+    start <- 1
+    .f <- StdErr$f[start:(n-1)]
+    .dev <- c(start:(n-1))
+    mf <- lm(log(.f-1) ~ .dev)
+    tail.pos <- ( log(StdErr$f[n]-1) - coef(mf)[1] ) / coef(mf)[2]
 
-#    if(tail.pos < (n-1)){
-        .f <- StdErr$f[1:(n-1)]
-        .dev <- c(1:(n-1))
-        mf <- lm(log(.f-1) ~ .dev)
-        tail.pos <- ( log(StdErr$f[n]-1) - coef(mf)[1] ) / coef(mf)[2]
-print(tail.pos)
-        .fse <- StdErr$f.se[1:(n-1)]
-        mse <- lm(log(.fse) ~ .dev)
-        StdErr$f.se[n] <- exp(predict(mse, newdata=data.frame(.dev=tail.pos)))
+    .fse <- StdErr$f.se[start:(n-1)]
+    mse <- lm(log(.fse) ~ .dev)
+    StdErr$f.se[n] <- exp(predict(mse, newdata=data.frame(.dev=tail.pos)))
 
-        .sigma <- StdErr$sigma[1:(n-1)]
+    if(is.null(tail.sigma)){
+        .sigma <- StdErr$sigma[start:(n-1)]
         msig <- lm(log(.sigma) ~ .dev)
-    if(is.null(tail.sigma))
-##
         tail.sigma <- exp(predict(msig, newdata=data.frame(.dev=tail.pos)))
-
-        ## calculate ratio
-       # cf <- (StdErr$f[tail.pos-1] - StdErr$f[n])/(StdErr$f[tail.pos-1] - StdErr$f[tail.pos])
-        ## estimate the stanard error of the tail factor
-  ##      StdErr$f.se[n] <- (1-cf) * StdErr$f.se[(tail.pos-1)] + cf * StdErr$f.se[tail.pos]
-             # tail.sigma <- (1-cf) * StdErr$sigma[(tail.pos-1)] + cf * StdErr$sigma[tail.pos]
- #   }else{
-  #      r <- StdErr$f[n]/StdErr$f[n-1]
-   #     StdErr$f.se[n] <- StdErr$f.se[n-1] / r
-    #    tail.sigma <- StdErr$sigma[n-2] / r
-    #}
-
+    }
     StdErr$sigma <- c(StdErr$sigma, tail.sigma)
 
     ## estimate the stanard error of the tail factor ratios
