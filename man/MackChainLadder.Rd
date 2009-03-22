@@ -8,8 +8,8 @@
   the standard error around it.
 }
 \usage{
-MackChainLadder(Triangle, weights = 1/Triangle,
-tail=FALSE, est.sigma="log-linear", tail.sigma=NULL)
+MackChainLadder(Triangle, weights = 1/Triangle, est.sigma="log-linear",
+tail=FALSE, tail.se=NULL, tail.sigma=NULL)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -20,21 +20,24 @@ tail=FALSE, est.sigma="log-linear", tail.sigma=NULL)
     origin period frequency (e.g accident years).}
   \item{weights}{ weights. Default: 1/Triangle, to use volume weighted
     chain ladder factors.} 
-  \item{tail}{can be logical or a numeric value.
-    If \code{tail=FALSE} no tail factor will be applied, if \code{tail=TRUE} 
-    a tail factor will be estimate via a linear extrapolation of
-    \eqn{log(chain ladder factors - 1)}, if \code{tail} is a numeric
-    value than this value will be used as tail factor. }
   \item{est.sigma}{defines how to estimate \eqn{sigma_{n-1}}.
     Default is "log-linear" for a log-linear regression, "Mack" for
     Mack's approximation from his 1999 paper, or if a numeric value is
     given it will be used instead.}  
-\item{tail.sigma}{defines how to estimate \eqn{sigma_{n}. Only needed if
-    a tail factor > 1 is provided}.
+  \item{tail}{can be logical or a numeric value.
+    If \code{tail=FALSE} no tail factor will be applied, if \code{tail=TRUE} 
+    a tail factor will be estimate via a linear extrapolation of
+    \eqn{log(chain ladder factors - 1)}, if \code{tail} is a numeric
+    value than this value will be used as tail factor.}
+  \item{tail.se}{defines how to estimate the standard error of the tail factor. Only needed if
+    a tail factor > 1 is provided. Default is \code{NULL}. If \code{tail.se} is \code{NULL},
+    \code{tail.se} is estimated via "log-linear" regression, if \code{tail.se} is a numeric
+    value than this value will be used instead.}  
+  \item{tail.sigma}{defines how to estimate \eqn{tail sigma_{n}}. Only needed if
+      a tail factor > 1 is provided.
     Default is \code{NULL}. If \code{tail.sigma} is \code{NULL}, the
-    ultimate sigma factor is estimated using a sigma factor from the
-    age-to-age factor with the closest match to the tail
-    factor. Otherwise a numerical value can be proivded.}  
+    sigma tail factor is estimated via "log-linear" regression, if \code{tail.sigma} is a numeric
+    value than this value will be used instead}  
 }
 \details{
   Following Mack's 1999 paper let \eqn{C_{ik}} denote the cumulative loss amounts of origin period
@@ -123,7 +126,7 @@ tail=FALSE, est.sigma="log-linear", tail.sigma=NULL)
 
 # See the example in Mack's 1999 paper
 Mortgage
-MRT <- MackChainLadder(Mortgage, est.sigma="Mack", tail=1.05, ult.sigma=71)
+MRT <- MackChainLadder(Mortgage, tail=1.05, tail.sigma=71, tail.se=0.02, est.sigma="Mack")
 MRT
 # Table 1
 MRT$f
@@ -137,6 +140,9 @@ MRT$Mack.ProcessRisk
 
 # Access parameter risk error
 MRT$Mack.ParameterRisk
+
+# Total risk
+MRT$Mack.S.E
 
 op <- par(mfrow=c(2,1))
 plot(with(summary(MRT)$ByOrigin, Mack.S.E/Ultimate),t="l",

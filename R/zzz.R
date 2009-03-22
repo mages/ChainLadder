@@ -1,7 +1,7 @@
 .onLoad<- function(lib, pkg, ...)
 {
-    cat("\n",
-        "ChainLadder library by Markus Gesmann <markus.gesmann@gmail.com>\n\n",
+    cat("\n",paste("ChainLadder version", packageDescription("ChainLadder")$Version,
+                   "by Markus Gesmann <markus.gesmann@gmail.com>\n\n"),
         "Type library(help='ChainLadder') or ?ChainLadder\n",
         "to see overall documentation.\n\n",
         "Type example(ChainLadder) to get an idea of the functionality of this package.\n\n",

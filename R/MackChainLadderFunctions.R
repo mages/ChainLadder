@@ -5,14 +5,24 @@
 ## Date:08/09/2008
 
 
-MackChainLadder <- function(Triangle, weights=1/Triangle, tail=FALSE, est.sigma="log-linear", tail.sigma=NULL){
+MackChainLadder <- function(Triangle,
+                            weights=1/Triangle,
+                            est.sigma="log-linear",
+                            tail=FALSE,
+                            tail.se=NULL,
+                            tail.sigma=NULL)
+{
+    ## idea: have a list for tail factor
+    ## tail=list(f=FALSE, f.se=NULL, sigma=NULL, F.se=NULL)
+    ##
 
     Triangle <- checkTriangle(Triangle)
     m <- dim(Triangle)[1]
     n <- dim(Triangle)[2]
 
-
+    ## Create chain ladder models
     myModel <- ChainLadder(Triangle, weights)$Models
+
     ## Predict the chain ladder model
     FullTriangle <- predict.TriangleModel(list(Models=myModel, Triangle=Triangle))
 
@@ -29,16 +39,26 @@ MackChainLadder <- function(Triangle, weights=1/Triangle, tail=FALSE, est.sigma=
             tail.factor <- tail
         }
     }else{
-        tail.factor <- tail
+        if(is.numeric(tail))
+            tail.factor <- tail
     }
+
 
     ## Estimate standard error for the tail
     if(tail.factor>1){
-        tail.out <- tail.SE(FullTriangle, StdErr, Total.SE, tail.factor, tail.sigma=tail.sigma)
+        tail.out <- tail.SE(FullTriangle, StdErr, Total.SE, tail.factor,
+                            tail.se=tail.se, tail.sigma=tail.sigma)
+
         FullTriangle <- tail.out[["FullTriangle"]]
         StdErr <- tail.out[["StdErr"]]
         Total.SE <- tail.out[["Total.SE"]]
+    }else{
+        Total.SE <- TotalMack.S.E(FullTriangle, StdErr$f, StdErr$f.se, StdErr$F.se)
     }
+
+    StdErr <- c(StdErr, MackTriangle.SE(FullTriangle, StdErr$f, StdErr$f.se, StdErr$F.se))
+
+
 
     ## Collect the output
     output <- list()
@@ -77,9 +97,7 @@ estimate.sigma <- function(sigma){
 ########################################################################
 ## Estimate standard error for tail
 
-
-
-tail.SE <- function(FullTriangle, StdErr, Total.SE, tail.factor, tail.sigma=NULL){
+tail.SE <- function(FullTriangle, StdErr, Total.SE, tail.factor, tail.se=NULL, tail.sigma=NULL){
     n <- ncol(FullTriangle)
     m <- nrow(FullTriangle)
 
@@ -94,16 +112,19 @@ tail.SE <- function(FullTriangle, StdErr, Total.SE, tail.factor, tail.sigma=NULL
     mf <- lm(log(.f-1) ~ .dev)
     tail.pos <- ( log(StdErr$f[n]-1) - coef(mf)[1] ) / coef(mf)[2]
 
-    .fse <- StdErr$f.se[start:(n-1)]
-    mse <- lm(log(.fse) ~ .dev)
-    StdErr$f.se[n] <- exp(predict(mse, newdata=data.frame(.dev=tail.pos)))
+    if(is.null(tail.se)){
+        .fse <- StdErr$f.se[start:(n-1)]
+        mse <- lm(log(.fse) ~ .dev)
+        tail.se <- exp(predict(mse, newdata=data.frame(.dev=tail.pos)))
+    }
+    StdErr$f.se[n] <- tail.se
 
     if(is.null(tail.sigma)){
         .sigma <- StdErr$sigma[start:(n-1)]
         msig <- lm(log(.sigma) ~ .dev)
         tail.sigma <- exp(predict(msig, newdata=data.frame(.dev=tail.pos)))
     }
-    StdErr$sigma <- c(StdErr$sigma, tail.sigma)
+    StdErr$sigma <- c(StdErr$sigma, tail.sigma=as.numeric(tail.sigma))
 
     ## estimate the stanard error of the tail factor ratios
     se.F.tail <- tail.sigma/sqrt(FullTriangle[,n])
@@ -148,8 +169,8 @@ Mack.S.E <- function(MackModel, FullTriangle, est.sigma="loglinear"){
     }
     if(est.sigma %in% "Mack"){
         for(i in which(isna)){   # usually i = n - 1
-            sigma[i] <- sqrt(abs(min((sigma[i - 1]^4/sigma[i -
-                                                           2]^2), min(sigma[i - 2]^2, sigma[i - 1]^2))))
+            sigma[i] <- sqrt(abs(min((sigma[i - 1]^4/sigma[i - 2]^2),
+                                     min(sigma[i - 2]^2, sigma[i - 1]^2))))
             f.se[i] <- sigma[i]/sqrt(FullTriangle[1,i])
         }
     }
@@ -163,6 +184,19 @@ Mack.S.E <- function(MackModel, FullTriangle, est.sigma="loglinear"){
 
 
     F.se <- t(t(1/sqrt(FullTriangle)[,-n])*(sigma))
+
+
+    return(list(sigma=sigma,
+                f=f,
+                f.se=f.se,
+                F.se=F.se)
+           )
+}
+
+MackTriangle.SE <- function(FullTriangle, f, f.se, F.se){
+
+    n <- ncol(FullTriangle)
+    m <- nrow(FullTriangle)
 
     FullTriangle.se <- FullTriangle * 0
     FullTriangle.procrisk <- FullTriangle * 0
@@ -185,20 +219,32 @@ Mack.S.E <- function(MackModel, FullTriangle, est.sigma="loglinear"){
                                + FullTriangle.procrisk[i,k]^2*f[k]^2
 			       )
 		FullTriangle.paramrisk[i,k+1] <- sqrt(                       # new dmm
-                               FullTriangle[i,k]^2*(            f.se[k]^2)
+                               FullTriangle[i,k]^2*(f.se[k]^2)
                                + FullTriangle.paramrisk[i,k]^2*f[k]^2
 			       )
             }
     	}
     }
-    return(list(sigma=sigma,
-                f=f,
-                f.se=f.se,
-                F.se=F.se,
-                FullTriangle.se=FullTriangle.se,  # new dmm
+    if(f[n] > 1){ ## tail factor > 1
+        k <- n
+        Full.se <- sqrt(FullTriangle[,k]^2*(F.se[,k]^2+f.se[k]^2) #
+                        + FullTriangle.se[,k]^2*f[k]^2)
+        FullTriangle.se <- cbind(FullTriangle.se, Full.se)
+
+        Full.procrisk <- sqrt(FullTriangle[,k]^2*(F.se[,k]^2)
+                               + FullTriangle.procrisk[,k]^2*f[k]^2)
+        FullTriangle.procrisk <- cbind(FullTriangle.procrisk, Full.procrisk)
+
+        Full.paramrisk <- sqrt(FullTriangle[,k]^2*(f.se[k]^2)
+                               + FullTriangle.paramrisk[,k]^2*f[k]^2)
+        FullTriangle.paramrisk <- cbind(FullTriangle.paramrisk,Full.paramrisk)
+    }
+
+    return(list(FullTriangle.se=FullTriangle.se,
                 FullTriangle.procrisk=FullTriangle.procrisk,
                 FullTriangle.paramrisk=FullTriangle.paramrisk)
            )
+
 }
 
 ################################################################################
@@ -239,7 +285,7 @@ summary.MackChainLadder <- function(object,...){
     Ultimate <- object[["FullTriangle"]][,n]
     Dev.To.Date <- Latest/Ultimate
     IBNR <- Ultimate-Latest
-    Mack.S.E <- object[["Mack.S.E"]][,n]
+    Mack.S.E <- object[["Mack.S.E"]][,ncol(object[["Mack.S.E"]])]
     CV <- Mack.S.E/(Ultimate-Latest)
 
     ByOrigin <- data.frame(Latest, Dev.To.Date, Ultimate, IBNR, Mack.S.E, CV)
