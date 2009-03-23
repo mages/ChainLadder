@@ -1,5 +1,6 @@
 .onLoad<- function(lib, pkg, ...)
 {
+    require(utils)
     cat("\n",paste("ChainLadder version", packageDescription("ChainLadder")$Version,
                    "by Markus Gesmann <markus.gesmann@gmail.com>\n\n"),
         "Type library(help='ChainLadder') or ?ChainLadder\n",

@@ -4,13 +4,13 @@ Version 0.1.2-10
 ===============
 USER-VISIBLE CHANGES
 
-  o 'MackChainLadder' has new argument 'tail.sigma' to provide to estimate sigma for a given tail factor
+  o 'MackChainLadder' has new arguments 'tail.sigma' and 'tail.se' to provide to estimates for 
+    the variablities of for a given tail factor
  
 BUG FIXES
 
   o 'MunichChainLadder': calculation of 'Mack.S.E' did not use an ultimate sigma factor to estimate 
-    'Mack.S.E' when a tail factor > 1 was used.
-    Thanks to Mark Hoffmann for reporting this issue.
+    'Mack.S.E' when a tail factor > 1 was provided (Thanks to Mark Hoffmann for reporting this issue).
 
 
 Version 0.1.2-9

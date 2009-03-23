@@ -3,7 +3,7 @@
 ## Copyright: Markus Gesmann, markus.gesmann@gmail.com
 ## Date:10/11/2007
 ## Date:08/09/2008
-
+## Date:22/03/2009
 
 MackChainLadder <- function(Triangle,
                             weights=1/Triangle,
@@ -26,7 +26,7 @@ MackChainLadder <- function(Triangle,
     ## Predict the chain ladder model
     FullTriangle <- predict.TriangleModel(list(Models=myModel, Triangle=Triangle))
 
-    ## Estimate the standard error
+    ## Estimate the standard error for f and F
     StdErr <- Mack.S.E(myModel, FullTriangle, est.sigma=est.sigma)
     Total.SE <- TotalMack.S.E(FullTriangle, StdErr$f, StdErr$f.se, StdErr$F.se)
 
@@ -44,7 +44,7 @@ MackChainLadder <- function(Triangle,
     }
 
 
-    ## Estimate standard error for the tail
+    ## Estimate standard error for the tail factor f and F
     if(tail.factor>1){
         tail.out <- tail.SE(FullTriangle, StdErr, Total.SE, tail.factor,
                             tail.se=tail.se, tail.sigma=tail.sigma)
@@ -55,10 +55,8 @@ MackChainLadder <- function(Triangle,
     }else{
         Total.SE <- TotalMack.S.E(FullTriangle, StdErr$f, StdErr$f.se, StdErr$F.se)
     }
-
-    StdErr <- c(StdErr, MackTriangle.SE(FullTriangle, StdErr$f, StdErr$f.se, StdErr$F.se))
-
-
+    ## Add process and parameter risk
+    StdErr <- c(StdErr, MackRecursive.S.E(FullTriangle, StdErr$f, StdErr$f.se, StdErr$F.se))
 
     ## Collect the output
     output <- list()
@@ -72,13 +70,125 @@ MackChainLadder <- function(Triangle,
     output[["sigma"]] <- StdErr$sigma
     output[["Mack.ProcessRisk"]]   <- StdErr$FullTriangle.procrisk  # new dmm
     output[["Mack.ParameterRisk"]] <- StdErr$FullTriangle.paramrisk  # new dmm
-    output[["Mack.S.E"]] <- StdErr$FullTriangle.se
+    output[["Mack.S.E"]] <- sqrt(StdErr$FullTriangle.procrisk^2 +StdErr$FullTriangle.paramrisk^2)
     output[["Total.Mack.S.E"]] <- Total.SE
     output[["tail"]] <- tail
 
     class(output) <- c("MackChainLadder", "TriangleModel", "list")
     return(output)
 }
+
+##############################################################################
+## Calculation of the mean squared error and standard error
+## mean squared error = stochastic error (process variance) + estimation error
+## standard error = sqrt(mean squared error)
+
+Mack.S.E <- function(MackModel, FullTriangle, est.sigma="loglinear"){
+    n <- ncol(FullTriangle)
+    m <- nrow(FullTriangle)
+    f <- rep(1,n)
+    f.se <- rep(0,n)
+    sigma <- rep(0,(n-1))
+
+    ## Extract estimated slopes, std. error and sigmas
+    f[1:(n-1)] <- sapply(MackModel, function(x) summary(x)$coef["x","Estimate"])
+    f.se[1:(n-1)] <- sapply(MackModel, function(x) summary(x)$coef["x","Std. Error"])
+    sigma[1:(n-1)] <- sapply(MackModel, function(x) summary(x)$sigma)
+
+    isna <- is.na(sigma)
+
+    if(est.sigma %in% "log-linear"){
+        ## estimate sigma[n-1] via log-linear regression
+        sigma <- estimate.sigma(sigma)
+        f.se[isna] <- sigma[isna]/sqrt(FullTriangle[1,isna])
+    }
+    if(est.sigma %in% "Mack"){
+        for(i in which(isna)){   # usually i = n - 1
+            sigma[i] <- sqrt(abs(min((sigma[i - 1]^4/sigma[i - 2]^2),
+                                     min(sigma[i - 2]^2, sigma[i - 1]^2))))
+            f.se[i] <- sigma[i]/sqrt(FullTriangle[1,i])
+        }
+    }
+    if(is.numeric(est.sigma)){
+        for(i in seq(along=est.sigma)){
+            l <- length(est.sigma)
+            sigma[n-i] <- est.sigma[l-i+1]
+            f.se[n-i] <- sigma[n-i]/sqrt(FullTriangle[1,n-i])
+        }
+    }
+
+
+    F.se <- t(t(1/sqrt(FullTriangle)[,-n])*(sigma))
+
+
+    return(list(sigma=sigma,
+                f=f,
+                f.se=f.se,
+                F.se=F.se)
+           )
+}
+
+MackRecursive.S.E <- function(FullTriangle, f, f.se, F.se){
+
+    n <- ncol(FullTriangle)
+    m <- nrow(FullTriangle)
+
+    FullTriangle.procrisk <- FullTriangle * 0
+    FullTriangle.paramrisk <- FullTriangle * 0
+
+    ## Recursive Formula
+    rowindex <- 2:m
+    if(m>n)
+        rowindex <- c((m-n+1):m)
+    for(i in rowindex){
+        for(k in c((n+1-i):(n-1))){
+            if(k>0) {
+		FullTriangle.procrisk[i,k+1] <- sqrt(                       # new dmm
+                               FullTriangle[i,k]^2*(F.se[i,k]^2          )
+                               + FullTriangle.procrisk[i,k]^2*f[k]^2
+			       )
+		FullTriangle.paramrisk[i,k+1] <- sqrt(                       # new dmm
+                               FullTriangle[i,k]^2*(f.se[k]^2)
+                               + FullTriangle.paramrisk[i,k]^2*f[k]^2
+			       )
+            }
+    	}
+    }
+    if(f[n] > 1){ ## tail factor > 1
+        k <- n
+        Tail.procrisk <- sqrt(FullTriangle[,k]^2*(F.se[,k]^2)
+                               + FullTriangle.procrisk[,k]^2*f[k]^2)
+        FullTriangle.procrisk <- cbind(FullTriangle.procrisk, Tail.procrisk)
+
+        Tail.paramrisk <- sqrt(FullTriangle[,k]^2*(f.se[k]^2)
+                               + FullTriangle.paramrisk[,k]^2*f[k]^2)
+        FullTriangle.paramrisk <- cbind(FullTriangle.paramrisk,Tail.paramrisk)
+    }
+
+    return(list(FullTriangle.procrisk=FullTriangle.procrisk,
+                FullTriangle.paramrisk=FullTriangle.paramrisk))
+}
+
+################################################################################
+## Total reserve SE
+
+TotalMack.S.E <- function(FullTriangle,f, f.se, F.se){
+
+    C <- FullTriangle
+    n <- ncol(C)
+    m <- nrow(C)
+
+    total.seR <- 0*c(1:(n))
+
+    for(k in c(1:(n-1))){
+        total.seR[k+1] <- sqrt(total.seR[k]^2 * f[k]^2 +
+                               sum(C[c((m+1-k):m),k]^2 *
+                                   (F.se[c((m+1-k):m),k]^2),na.rm=TRUE)
+                               + sum(C[c((m+1-k):m),k],na.rm=TRUE)^2 * f.se[k]^2 )
+    }
+    return(total.seR[length(total.seR)])
+}
+
 
 ##############################################################################
 
@@ -142,130 +252,6 @@ tail.SE <- function(FullTriangle, StdErr, Total.SE, tail.factor, tail.se=NULL, t
 }
 
 
-
-##############################################################################
-## Calculation of the mean squared error and standard error
-## mean squared error = stochastic error (process variance) + estimation error
-## standard error = sqrt(mean squared error)
-
-Mack.S.E <- function(MackModel, FullTriangle, est.sigma="loglinear"){
-    n <- ncol(FullTriangle)
-    m <- nrow(FullTriangle)
-    f <- rep(1,n)
-    f.se <- rep(0,n)
-    sigma <- rep(0,(n-1))
-
-    ## Extract estimated slopes, std. error and sigmas
-    f[1:(n-1)] <- sapply(MackModel, function(x) summary(x)$coef["x","Estimate"])
-    f.se[1:(n-1)] <- sapply(MackModel, function(x) summary(x)$coef["x","Std. Error"])
-    sigma[1:(n-1)] <- sapply(MackModel, function(x) summary(x)$sigma)
-
-    isna <- is.na(sigma)
-
-    if(est.sigma %in% "log-linear"){
-        ## estimate sigma[n-1] via log-linear regression
-        sigma <- estimate.sigma(sigma)
-        f.se[isna] <- sigma[isna]/sqrt(FullTriangle[1,isna])
-    }
-    if(est.sigma %in% "Mack"){
-        for(i in which(isna)){   # usually i = n - 1
-            sigma[i] <- sqrt(abs(min((sigma[i - 1]^4/sigma[i - 2]^2),
-                                     min(sigma[i - 2]^2, sigma[i - 1]^2))))
-            f.se[i] <- sigma[i]/sqrt(FullTriangle[1,i])
-        }
-    }
-    if(is.numeric(est.sigma)){
-        for(i in seq(along=est.sigma)){
-            l <- length(est.sigma)
-            sigma[n-i] <- est.sigma[l-i+1]
-            f.se[n-i] <- sigma[n-i]/sqrt(FullTriangle[1,n-i])
-        }
-    }
-
-
-    F.se <- t(t(1/sqrt(FullTriangle)[,-n])*(sigma))
-
-
-    return(list(sigma=sigma,
-                f=f,
-                f.se=f.se,
-                F.se=F.se)
-           )
-}
-
-MackTriangle.SE <- function(FullTriangle, f, f.se, F.se){
-
-    n <- ncol(FullTriangle)
-    m <- nrow(FullTriangle)
-
-    FullTriangle.se <- FullTriangle * 0
-    FullTriangle.procrisk <- FullTriangle * 0
-    FullTriangle.paramrisk <- FullTriangle * 0
-
-    ## Recursive Formula
-
-    rowindex <- 2:m
-    if(m>n)
-        rowindex <- c((m-n+1):m)
-    for(i in rowindex){
-        for(k in c((n+1-i):(n-1))){
-            if(k>0) {
-                FullTriangle.se[i,k+1] <- sqrt(
-                               FullTriangle[i,k]^2*(F.se[i,k]^2+f.se[k]^2) #
-                               + FullTriangle.se[i,k]^2*f[k]^2
-                               )
-		FullTriangle.procrisk[i,k+1] <- sqrt(                       # new dmm
-                               FullTriangle[i,k]^2*(F.se[i,k]^2          )
-                               + FullTriangle.procrisk[i,k]^2*f[k]^2
-			       )
-		FullTriangle.paramrisk[i,k+1] <- sqrt(                       # new dmm
-                               FullTriangle[i,k]^2*(f.se[k]^2)
-                               + FullTriangle.paramrisk[i,k]^2*f[k]^2
-			       )
-            }
-    	}
-    }
-    if(f[n] > 1){ ## tail factor > 1
-        k <- n
-        Full.se <- sqrt(FullTriangle[,k]^2*(F.se[,k]^2+f.se[k]^2) #
-                        + FullTriangle.se[,k]^2*f[k]^2)
-        FullTriangle.se <- cbind(FullTriangle.se, Full.se)
-
-        Full.procrisk <- sqrt(FullTriangle[,k]^2*(F.se[,k]^2)
-                               + FullTriangle.procrisk[,k]^2*f[k]^2)
-        FullTriangle.procrisk <- cbind(FullTriangle.procrisk, Full.procrisk)
-
-        Full.paramrisk <- sqrt(FullTriangle[,k]^2*(f.se[k]^2)
-                               + FullTriangle.paramrisk[,k]^2*f[k]^2)
-        FullTriangle.paramrisk <- cbind(FullTriangle.paramrisk,Full.paramrisk)
-    }
-
-    return(list(FullTriangle.se=FullTriangle.se,
-                FullTriangle.procrisk=FullTriangle.procrisk,
-                FullTriangle.paramrisk=FullTriangle.paramrisk)
-           )
-
-}
-
-################################################################################
-## Total reserve SE
-
-TotalMack.S.E <- function(FullTriangle,f, f.se, F.se){
-
-    C <- FullTriangle
-    n <- ncol(C)
-    m <- nrow(C)
-
-    total.seR <- 0*c(1:(n))
-
-    for(k in c(1:(n-1))){
-        total.seR[k+1] <- sqrt(total.seR[k]^2 * f[k]^2 +
-                               sum(C[c((m+1-k):m),k]^2 *
-                                   (F.se[c((m+1-k):m),k]^2),na.rm=TRUE)
-                               + sum(C[c((m+1-k):m),k],na.rm=TRUE)^2 * f.se[k]^2 )
-    }
-    return(total.seR[length(total.seR)])
-}
 
 
 ##############################################################################

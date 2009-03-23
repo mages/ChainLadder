@@ -3,7 +3,7 @@
 
 \title{ Mack-Chain-Ladder Model }
 \description{
-  The Mack-chain-ladder model forecasts IBNR (Incurred But Not Reported)
+  The Mack-chain-ladder model forecasts reserves or IBNR (Incurred But Not Reported)
   claims based on a cumulative claims development triangle and estimates
   the standard error around it.
 }
@@ -20,30 +20,33 @@ tail=FALSE, tail.se=NULL, tail.sigma=NULL)
     origin period frequency (e.g accident years).}
   \item{weights}{ weights. Default: 1/Triangle, to use volume weighted
     chain ladder factors.} 
-  \item{est.sigma}{defines how to estimate \eqn{sigma_{n-1}}.
+  \item{est.sigma}{defines how to estimate \eqn{sigma_{n-1}}, the
+    variability of the individual age-to-age factors at development time
+    \eqn{n-1}.
     Default is "log-linear" for a log-linear regression, "Mack" for
-    Mack's approximation from his 1999 paper, or if a numeric value is
-    given it will be used instead.}  
+    Mack's approximation from his 1999 paper. Alternatively the user can
+    provide a numeric value.}  
   \item{tail}{can be logical or a numeric value.
     If \code{tail=FALSE} no tail factor will be applied, if \code{tail=TRUE} 
-    a tail factor will be estimate via a linear extrapolation of
+    a tail factor will be estimated via a linear extrapolation of
     \eqn{log(chain ladder factors - 1)}, if \code{tail} is a numeric
     value than this value will be used as tail factor.}
   \item{tail.se}{defines how to estimate the standard error of the tail factor. Only needed if
     a tail factor > 1 is provided. Default is \code{NULL}. If \code{tail.se} is \code{NULL},
     \code{tail.se} is estimated via "log-linear" regression, if \code{tail.se} is a numeric
     value than this value will be used instead.}  
-  \item{tail.sigma}{defines how to estimate \eqn{tail sigma_{n}}. Only needed if
+  \item{tail.sigma}{defines how to estimate individual tail variability. Only needed if
       a tail factor > 1 is provided.
-    Default is \code{NULL}. If \code{tail.sigma} is \code{NULL}, the
-    sigma tail factor is estimated via "log-linear" regression, if \code{tail.sigma} is a numeric
+    Default is \code{NULL}. If \code{tail.sigma} is \code{NULL},
+    \code{tail.sigma} 
+    is estimated via "log-linear" regression, if \code{tail.sigma} is a numeric
     value than this value will be used instead}  
 }
 \details{
   Following Mack's 1999 paper let \eqn{C_{ik}} denote the cumulative loss amounts of origin period
   (e.g. accident year) 
   \eqn{i=1,\ldots,m}, with losses known for development period
-  (e.g. development year) \eqn{k \leq n+1-i}.
+  (e.g. development year) \eqn{k \le n+1-i}.
   In order to forecast the amounts \eqn{C_{ik}} for
   \eqn{k > n+1-i} the Mack chain-ladder-model assumes:
   \deqn{\mbox{CL1: }  E[ F_{ik}| C_{i1},C_{i2},\ldots,C_{ik} ] = f_k

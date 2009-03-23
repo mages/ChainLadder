@@ -3,7 +3,7 @@
 \title{ Bootstrap-Chain-Ladder Model }
 \description{
   The \code{BootChainLadder} procedure provides a predictive
-  distribution of reserves for a cumulative claims development triangle.
+  distribution of reserves or IBNRs for a cumulative claims development triangle.
 }
 \usage{
 BootChainLadder(Triangle, R = 999, process.distr=c("gamma", "od.pois"))
@@ -11,7 +11,7 @@ BootChainLadder(Triangle, R = 999, process.distr=c("gamma", "od.pois"))
 
 \arguments{
   \item{Triangle}{cumulative claims triangle.  A (mxn)-matrix \eqn{C_{ik}} 
-    which is filled for \eqn{k \leq n+1-i; i=1,\ldots,m; m\geq n }, see
+    which is filled for \eqn{k \le n+1-i; i=1,\ldots,m; m\ge n }, see
     \code{\link{qpaid}} for how to use (mxn)-development triangles with
     m<n, say higher development period frequency (e.g quarterly) than
     origin period frequency (e.g accident years).}
