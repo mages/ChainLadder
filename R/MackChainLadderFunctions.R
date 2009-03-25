@@ -55,8 +55,15 @@ MackChainLadder <- function(Triangle,
     }else{
         Total.SE <- TotalMack.S.E(FullTriangle, StdErr$f, StdErr$f.se, StdErr$F.se)
     }
+
     ## Add process and parameter risk
     StdErr <- c(StdErr, MackRecursive.S.E(FullTriangle, StdErr$f, StdErr$f.se, StdErr$F.se))
+
+
+    #Total.Process <- apply(StdErr$FullTriangle.procrisk, 2, function(x) sqrt(sum(x^2)))
+    #Total.Param <- apply(StdErr$FullTriangle.paramrisk, 2, function(x) sqrt(sum(x^2)))
+    #Total.SE <- sqrt(sum( (Total.Process + Total.Param)^2 ))
+
 
     ## Collect the output
     output <- list()
@@ -71,9 +78,8 @@ MackChainLadder <- function(Triangle,
     output[["Mack.ProcessRisk"]]   <- StdErr$FullTriangle.procrisk  # new dmm
     output[["Mack.ParameterRisk"]] <- StdErr$FullTriangle.paramrisk  # new dmm
     output[["Mack.S.E"]] <- sqrt(StdErr$FullTriangle.procrisk^2 +StdErr$FullTriangle.paramrisk^2)
-    output[["Total.Mack.S.E"]] <- Total.SE
+    output[["Total.Mack.S.E"]] <- Total.SE#[length(Total.SE)]
     output[["tail"]] <- tail
-
     class(output) <- c("MackChainLadder", "TriangleModel", "list")
     return(output)
 }
@@ -127,35 +133,37 @@ Mack.S.E <- function(MackModel, FullTriangle, est.sigma="loglinear"){
                 F.se=F.se)
            )
 }
-
+################################################################
 MackRecursive.S.E <- function(FullTriangle, f, f.se, F.se){
 
+    nn <- length(f)
     n <- ncol(FullTriangle)
     m <- nrow(FullTriangle)
 
-    FullTriangle.procrisk <- FullTriangle * 0
-    FullTriangle.paramrisk <- FullTriangle * 0
+    FullTriangle.procrisk <- FullTriangle[,1:nn] * 0
+    FullTriangle.paramrisk <- FullTriangle[,1:nn] * 0
 
     ## Recursive Formula
     rowindex <- 2:m
-    if(m>n)
-        rowindex <- c((m-n+1):m)
+    if(m>nn)
+        rowindex <- c((m-nn+1):m)
     for(i in rowindex){
-        for(k in c((n+1-i):(n-1))){
+        for(k in c((nn+1-i):(nn-1))){
             if(k>0) {
-		FullTriangle.procrisk[i,k+1] <- sqrt(                       # new dmm
-                               FullTriangle[i,k]^2*(F.se[i,k]^2          )
+		FullTriangle.procrisk[i,k+1] <- sqrt(
+                               FullTriangle[i,k]^2*(F.se[i,k]^2)
                                + FullTriangle.procrisk[i,k]^2*f[k]^2
 			       )
-		FullTriangle.paramrisk[i,k+1] <- sqrt(                       # new dmm
+		FullTriangle.paramrisk[i,k+1] <- sqrt(
                                FullTriangle[i,k]^2*(f.se[k]^2)
                                + FullTriangle.paramrisk[i,k]^2*f[k]^2
 			       )
             }
     	}
     }
-    if(f[n] > 1){ ## tail factor > 1
-        k <- n
+
+     if(f[nn] > 1){ ## tail factor > 1
+        k <- nn
         Tail.procrisk <- sqrt(FullTriangle[,k]^2*(F.se[,k]^2)
                                + FullTriangle.procrisk[,k]^2*f[k]^2)
         FullTriangle.procrisk <- cbind(FullTriangle.procrisk, Tail.procrisk)
@@ -164,6 +172,8 @@ MackRecursive.S.E <- function(FullTriangle, f, f.se, F.se){
                                + FullTriangle.paramrisk[,k]^2*f[k]^2)
         FullTriangle.paramrisk <- cbind(FullTriangle.paramrisk,Tail.paramrisk)
     }
+
+
 
     return(list(FullTriangle.procrisk=FullTriangle.procrisk,
                 FullTriangle.paramrisk=FullTriangle.paramrisk))
@@ -178,17 +188,16 @@ TotalMack.S.E <- function(FullTriangle,f, f.se, F.se){
     n <- ncol(C)
     m <- nrow(C)
 
-    total.seR <- 0*c(1:(n))
+    total.seR <- 0*c(1:n)
 
     for(k in c(1:(n-1))){
         total.seR[k+1] <- sqrt(total.seR[k]^2 * f[k]^2 +
                                sum(C[c((m+1-k):m),k]^2 *
-                                   (F.se[c((m+1-k):m),k]^2),na.rm=TRUE)
+                                   (F.se[c((m+1-k):n),k]^2),na.rm=TRUE)
                                + sum(C[c((m+1-k):m),k],na.rm=TRUE)^2 * f.se[k]^2 )
     }
     return(total.seR[length(total.seR)])
 }
-
 
 ##############################################################################
 
@@ -211,7 +220,7 @@ tail.SE <- function(FullTriangle, StdErr, Total.SE, tail.factor, tail.se=NULL, t
     n <- ncol(FullTriangle)
     m <- nrow(FullTriangle)
 
-    FullTriangle[,n] <- FullTriangle[,n] * tail.factor
+    FullTriangle <- cbind(FullTriangle, FullTriangle[,n] * tail.factor)
     StdErr$f[n] <- tail.factor
 
     ## Idea: linear model for f, estimate dev for tail factor
@@ -236,17 +245,15 @@ tail.SE <- function(FullTriangle, StdErr, Total.SE, tail.factor, tail.se=NULL, t
     }
     StdErr$sigma <- c(StdErr$sigma, tail.sigma=as.numeric(tail.sigma))
 
+
     ## estimate the stanard error of the tail factor ratios
-    se.F.tail <- tail.sigma/sqrt(FullTriangle[,n])
+    se.F.tail <- tail.sigma/sqrt(FullTriangle[,n+1])
     StdErr$F.se <- cbind(StdErr$F.se, se.F.tail)
-
-
-    StdErr$FullTriangle.se[,n] <- sqrt(FullTriangle[, n]^2 * (StdErr$F.se[,n]^2 + StdErr$f.se[n]^2) +
-                                       StdErr$FullTriangle.se[,n]^2 * tail.factor^2)
 
     Total.SE <- sqrt(Total.SE^2 * StdErr$f[n]^2
                      + sum(FullTriangle[c(1:m), n]^2 * (StdErr$F.se[c(1:m), n]^2), na.rm=TRUE)
                      + sum(FullTriangle[c(1:m), n], na.rm=TRUE)^2 * StdErr$f.se[n]^2)
+
     output <- list(FullTriangle=FullTriangle, StdErr=StdErr, Total.SE=Total.SE)
     return(output)
 }
@@ -268,7 +275,7 @@ summary.MackChainLadder <- function(object,...){
 
     ex.origin.period <- Latest!=0
 
-    Ultimate <- object[["FullTriangle"]][,n]
+    Ultimate <- object[["FullTriangle"]][,ncol(object[["FullTriangle"]])]
     Dev.To.Date <- Latest/Ultimate
     IBNR <- Ultimate-Latest
     Mack.S.E <- object[["Mack.S.E"]][,ncol(object[["Mack.S.E"]])]
