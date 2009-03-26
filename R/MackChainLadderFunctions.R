@@ -59,12 +59,6 @@ MackChainLadder <- function(Triangle,
     ## Add process and parameter risk
     StdErr <- c(StdErr, MackRecursive.S.E(FullTriangle, StdErr$f, StdErr$f.se, StdErr$F.se))
 
-
-    #Total.Process <- apply(StdErr$FullTriangle.procrisk, 2, function(x) sqrt(sum(x^2)))
-    #Total.Param <- apply(StdErr$FullTriangle.paramrisk, 2, function(x) sqrt(sum(x^2)))
-    #Total.SE <- sqrt(sum( (Total.Process + Total.Param)^2 ))
-
-
     ## Collect the output
     output <- list()
     output[["call"]] <-  match.call(expand.dots = FALSE)
@@ -78,6 +72,8 @@ MackChainLadder <- function(Triangle,
     output[["Mack.ProcessRisk"]]   <- StdErr$FullTriangle.procrisk  # new dmm
     output[["Mack.ParameterRisk"]] <- StdErr$FullTriangle.paramrisk  # new dmm
     output[["Mack.S.E"]] <- sqrt(StdErr$FullTriangle.procrisk^2 +StdErr$FullTriangle.paramrisk^2)
+
+
     output[["Total.Mack.S.E"]] <- Total.SE#[length(Total.SE)]
     output[["tail"]] <- tail
     class(output) <- c("MackChainLadder", "TriangleModel", "list")
@@ -244,7 +240,6 @@ tail.SE <- function(FullTriangle, StdErr, Total.SE, tail.factor, tail.se=NULL, t
         tail.sigma <- exp(predict(msig, newdata=data.frame(.dev=tail.pos)))
     }
     StdErr$sigma <- c(StdErr$sigma, tail.sigma=as.numeric(tail.sigma))
-
 
     ## estimate the stanard error of the tail factor ratios
     se.F.tail <- tail.sigma/sqrt(FullTriangle[,n+1])

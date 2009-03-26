@@ -125,18 +125,34 @@ tail=FALSE, tail.se=NULL, tail.sigma=NULL)
   \code{\link{MunichChainLadder}},
   \code{\link{BootChainLadder}},
 }
+% sqrt(5608^2*(0.03^2+0.02^2)+140^2*1.05^2)
+% sqrt(MRT$FullTriangle[3,9]^2 * (MRT$F.se[3,9]^2 + MRT$f.se[9]^2) + MRT$Mack.S.E[3,9]^2*MRT$f[9]^2)
+
 \examples{
+
+# See the Taylor/Ashe example in Mack's 1993 paper
+GenIns
+GNI <- MackChainLadder(GenIns, est.sigma="Mack")
+GNI$f
+GNI$sigma^2
+GNI # compare to table 2 and 3 in Mack's 1993 paper
+plot(GNI)
 
 # See the example in Mack's 1999 paper
 Mortgage
 MRT <- MackChainLadder(Mortgage, tail=1.05, tail.sigma=71, tail.se=0.02, est.sigma="Mack")
 MRT
-# Table 1
+# Table 1 in the above paper
 MRT$f
 MRT$f.se
 MRT$F.se[3,]
 MRT$sigma
 plot(MRT) # We observe trends along calendar years.
+
+# Table 2 in the above paper
+MRT$FullTriangle[,9]/1000 ## C_{i9}
+MRT$FullTriangle[,10]/1000 ## C_{i,ult}
+MRT$Mack.S.E[,9]/1000 ## s.e.(C_{i9}), difference due to rounding
 
 # Access process risk error
 MRT$Mack.ProcessRisk
@@ -154,17 +170,6 @@ plot(summary(MRT)$ByOrigin[["CV(IBNR)"]], t="l", ylab="CV(IBNR)",
 xlab="origin period")
 par(op)
 
-# See the Taylor/Ashe example in Mack's 1993 paper
-GenIns
-GNI <- MackChainLadder(GenIns, est.sigma="Mack")
-GNI$f
-GNI$sigma^2
-GNI # compare to table 2 and 3 in Mack's 1993 paper
-plot(GNI)
-## Include a tail factor
-GNIt <- MackChainLadder(GenIns, est.sigma="Mack", tail=TRUE)
-## Extract more information on the tail factor
-GNIt$tail 
   
 # This data set is discussed many papers, e.g. England and Verall 2000
 # paper, see Table 1 just there  
