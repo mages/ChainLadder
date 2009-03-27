@@ -152,7 +152,7 @@ plot(MRT) # We observe trends along calendar years.
 # Table 2 in the above paper
 MRT$FullTriangle[,9]/1000 ## C_{i9}
 MRT$FullTriangle[,10]/1000 ## C_{i,ult}
-MRT$Mack.S.E[,9]/1000 ## s.e.(C_{i9}), difference due to rounding
+MRT$Mack.S.E[,9]/1000 ## s.e.(C_{i9})
 
 # Access process risk error
 MRT$Mack.ProcessRisk

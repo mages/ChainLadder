@@ -160,6 +160,7 @@ MackRecursive.S.E <- function(FullTriangle, f, f.se, F.se){
 
      if(f[nn] > 1){ ## tail factor > 1
         k <- nn
+        print(k)
         Tail.procrisk <- sqrt(FullTriangle[,k]^2*(F.se[,k]^2)
                                + FullTriangle.procrisk[,k]^2*f[k]^2)
         FullTriangle.procrisk <- cbind(FullTriangle.procrisk, Tail.procrisk)
@@ -242,7 +243,7 @@ tail.SE <- function(FullTriangle, StdErr, Total.SE, tail.factor, tail.se=NULL, t
     StdErr$sigma <- c(StdErr$sigma, tail.sigma=as.numeric(tail.sigma))
 
     ## estimate the stanard error of the tail factor ratios
-    se.F.tail <- tail.sigma/sqrt(FullTriangle[,n+1])
+    se.F.tail <- tail.sigma/sqrt(FullTriangle[,n])
     StdErr$F.se <- cbind(StdErr$F.se, se.F.tail)
 
     Total.SE <- sqrt(Total.SE^2 * StdErr$f[n]^2
