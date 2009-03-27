@@ -1,5 +1,12 @@
 === ChainLadder: R package for insurance claims reserving ===
 
+Version 0.1.2-11
+===============
+
+BUG FIXES
+
+  o 'MackChainLadder': 'F.se'[ultimate] was caculated off the ultimate column instead of the latest paid. 
+
 Version 0.1.2-10
 ===============
 USER-VISIBLE CHANGES
@@ -9,9 +16,8 @@ USER-VISIBLE CHANGES
  
 BUG FIXES
 
-  o 'MunichChainLadder': calculation of 'Mack.S.E' did not use an ultimate sigma factor to estimate 
+  o 'MackChainLadder': calculation of 'Mack.S.E' did not use an ultimate sigma factor to estimate 
     'Mack.S.E' when a tail factor > 1 was provided (Thanks to Mark Hoffmann for reporting this issue).
-
 
 Version 0.1.2-9
 ===============

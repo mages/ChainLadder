@@ -161,11 +161,13 @@ MackRecursive.S.E <- function(FullTriangle, f, f.se, F.se){
      if(f[nn] > 1){ ## tail factor > 1
         k <- nn
         print(k)
-        Tail.procrisk <- sqrt(FullTriangle[,k]^2*(F.se[,k]^2)
-                               + FullTriangle.procrisk[,k]^2*f[k]^2)
+        Tail.procrisk <- sqrt(
+                              FullTriangle[,k]^2*(F.se[,k]^2)
+                              + FullTriangle.procrisk[,k]^2*f[k]^2)
         FullTriangle.procrisk <- cbind(FullTriangle.procrisk, Tail.procrisk)
 
-        Tail.paramrisk <- sqrt(FullTriangle[,k]^2*(f.se[k]^2)
+        Tail.paramrisk <- sqrt(
+                               FullTriangle[,k]^2*(f.se[k]^2)
                                + FullTriangle.paramrisk[,k]^2*f[k]^2)
         FullTriangle.paramrisk <- cbind(FullTriangle.paramrisk,Tail.paramrisk)
     }
