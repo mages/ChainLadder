@@ -171,7 +171,7 @@ xlab="origin period")
 par(op)
 
   
-# This data set is discussed many papers, e.g. England and Verall 2000
+# This data set is discussed in many papers, e.g. England and Verall 2000
 # paper, see Table 1 just there  
 RAA
 R <- MackChainLadder(RAA)

@@ -73,6 +73,7 @@ MackChainLadder <- function(Triangle,
     output[["Mack.ParameterRisk"]] <- StdErr$FullTriangle.paramrisk  # new dmm
     output[["Mack.S.E"]] <- sqrt(StdErr$FullTriangle.procrisk^2 +StdErr$FullTriangle.paramrisk^2)
 
+    ## total.procrisk <- apply(StdErr$FullTriangle.procrisk, 2, function(x) sqrt(sum(x^2)))
 
     output[["Total.Mack.S.E"]] <- Total.SE#[length(Total.SE)]
     output[["tail"]] <- tail

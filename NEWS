@@ -2,10 +2,9 @@
 
 Version 0.1.2-11
 ===============
-
 BUG FIXES
 
-  o 'MackChainLadder': 'F.se'[ultimate] was caculated off the ultimate column instead of the latest paid. 
+  o 'MackChainLadder': 'F.se'[ultimate] was caculated of the ultimate column instead of the latest paid. 
 
 Version 0.1.2-10
 ===============
