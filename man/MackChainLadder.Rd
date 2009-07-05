@@ -143,10 +143,16 @@ Mortgage
 MRT <- MackChainLadder(Mortgage, tail=1.05, tail.sigma=71, tail.se=0.02, est.sigma="Mack")
 MRT
 # Table 1 in the above paper
+f <- c(11.10, 4.092, 1.708, 1.276, 1.139, 1.069, 1.026, 1.023, 1.05)
+f.se <- c(2.24, 0.517, 0.122, 0.051, 0.042, 0.023, 0.015, 0.012, 0.02)
+F.se3 <- c(7.38, 1.89, 0.357, 0.116, 0.078, 0.033, 0.015, 0.007, 0.03)
+sig <- c(1337, 988.5, 440.1, 207, 164.2, 74.60, 35.49, 16.89,71)
+# test output from MackChainLadder
 MRT$f
 MRT$f.se
 MRT$F.se[3,]
 MRT$sigma
+
 plot(MRT) # We observe trends along calendar years.
 
 # Table 2 in the above paper

@@ -6,7 +6,8 @@
 ## Date:22/03/2009
 
 MackChainLadder <- function(Triangle,
-                            weights=1/Triangle,
+                            weights=1,
+                            alpha=1,/Triangle,
                             est.sigma="log-linear",
                             tail=FALSE,
                             tail.se=NULL,
@@ -86,7 +87,7 @@ MackChainLadder <- function(Triangle,
 ## mean squared error = stochastic error (process variance) + estimation error
 ## standard error = sqrt(mean squared error)
 
-Mack.S.E <- function(MackModel, FullTriangle, est.sigma="loglinear"){
+Mack.S.E <- function(MackModel, FullTriangle, est.sigma="log-linear"){
     n <- ncol(FullTriangle)
     m <- nrow(FullTriangle)
     f <- rep(1,n)
