@@ -6,8 +6,7 @@
 ## Date:22/03/2009
 
 MackChainLadder <- function(Triangle,
-                            weights=1,
-                            alpha=1,/Triangle,
+                            weights=1/Triangle,
                             est.sigma="log-linear",
                             tail=FALSE,
                             tail.se=NULL,
@@ -327,7 +326,7 @@ plot.MackChainLadder <- function(x, mfrow=c(3,2), title=NULL,...){
 
     if(is.null(title)) myoma <- c(0,0,0,0) else myoma <- c(0,0,2,0)
 
-    op=par(mfrow=mfrow, oma=myoma)
+    op=par(mfrow=mfrow, oma=myoma, mar=c(4.1,4.1,1.1,1.1))
 
     .myResult <-  summary(x)$ByOrigin
 
