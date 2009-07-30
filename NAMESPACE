@@ -1,4 +1,6 @@
 export(MackChainLadder, MunichChainLadder, BootChainLadder)
+export(as.ArrayTriangle, as.LongTriangle)
+export(incr2cum, cum2incr)
 importFrom(stats, quantile)
 #Methods
 S3method(plot, MackChainLadder)
