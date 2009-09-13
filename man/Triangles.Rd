@@ -59,6 +59,14 @@
 %% ~~objects to See Also as \code{\link{help}}, ~~~
 }
 \examples{
+class(RAA) <- c("triangle", "matrix")
+RAA
+plot(RAA)
+longRAA <- as.data.frame(RAA)
+library(lattice)
+xyplot(value ~ dev | factor(origin), data=longRAA, as.table=TRUE, t="l")
+as.triangle(longRAA)
+
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.
