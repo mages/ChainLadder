@@ -28,11 +28,6 @@
 \examples{
 data(M3IR5)
 
-
-df=data.frame(x=1:10, y=c(1:5,(6:10)*2), f=gl(2,5))
-plot(y~x, df, t="b", col=f)
-lm(y ~ x:f, data=df)
-
 sim <- expand.grid(dimnames(M3IR5))
 sim$value <- as.vector(M3IR5)
 
@@ -41,9 +36,9 @@ require(lattice)
 xyplot(log(value) ~ dev, groups=origin, data=sim, t="l", auto.key=list(space="right"))
 
 
- sim$origin <- as.numeric(sim$origin) 
- sim$dev <- as.numeric(sim$dev)  - 1
- sim$cal <- sim$origin + sim$dev 
+sim$origin <- as.numeric(sim$origin) 
+sim$dev <- as.numeric(sim$dev)  - 1
+sim$cal <- sim$origin + sim$dev 
 # Table 3.1
 summary(lm(log(value) ~ dev + cal, data=sim))
 

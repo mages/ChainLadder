@@ -50,6 +50,10 @@ plot.triangle <- function(x,t="b",xlab="dev. period",ylab=NULL,...){
             ylab=ifelse(is.null(ylab), deparse(substitute(x)), ylab),...)
 }
 
+print.triangle <- function(x,...){
+    print.simple.list(x,...)
+}
+
 .as.MatrixTriangle <- function(x, origin="origin", dev="dev", value="value"){
     ## x has to be a data.frame with columns: origin, dev and value
     x <- x[,c(origin, dev, value)]

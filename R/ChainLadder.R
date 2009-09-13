@@ -70,6 +70,7 @@ tailfactor <- function (clratios){
 
 
 checkTriangle <- function(Triangle){
+
     ## if a triangle is an array with 3 dimension convert it into a matrix
     .dim <- dim(Triangle)
     if(length(.dim)>3){
@@ -88,8 +89,8 @@ checkTriangle <- function(Triangle){
     if(length(.dim)==3 & .dim[3]==1){
         dim(Triangle) <- c(m,n)
     }
-    if(class(Triangle)=="data.frame"){
-        Triangle <- as.matrix(Triangle)
+    if("data.frame" %in% class(Triangle)){
+        Triangle <- as.triangle(Triangle)
     }
 
     tri.dimnames <- dimnames(Triangle)
