@@ -1,5 +1,13 @@
 === ChainLadder: R package for insurance claims reserving ===
 
+Version 0.1.2.12
+================
+NEW FEATURES
+
+ o New utitilty functions 'incr2cum' and 'cum2incr' to convert incremental triangles into cumulative triangles
+ and vis versa. Thanks to Chritophe Dutang.
+ o New triangle class with S3 methods to convert triangels into data.frames and vis versa
+
 Version 0.1.2-11
 ===============
 BUG FIXES

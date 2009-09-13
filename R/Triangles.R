@@ -76,3 +76,5 @@ plot.triangle <- function(x,t="b",xlab="dev. period",ylab=NULL,...){
     }
     return(lx)
 }
+
+# Idea: think about a class triangles, which stores an array of triangles, e.g. for several lines of business
