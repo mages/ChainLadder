@@ -1,5 +1,5 @@
 export(MackChainLadder, MunichChainLadder, BootChainLadder)
-export(as.ArrayTriangle, as.LongTriangle)
+export(as.triangle, as.triangle.data.frame, as.triangle.matrix, as.data.frame.triangle)
 export(incr2cum, cum2incr)
 importFrom(stats, quantile)
 #Methods
