@@ -1,16 +1,22 @@
 export(MackChainLadder, MunichChainLadder, BootChainLadder)
-export(as.triangle, as.triangle.data.frame, as.triangle.matrix, as.data.frame.triangle)
+export(as.triangle)
 export(incr2cum, cum2incr)
 importFrom(stats, quantile)
 #Methods
 S3method(plot, MackChainLadder)
 S3method(plot, MunichChainLadder)
 S3method(plot, BootChainLadder)
+S3method(plot, triangle)
 
 S3method(print, MackChainLadder)
 S3method(print, MunichChainLadder)
 S3method(print, BootChainLadder)
+S3method(print, triangle)
 
+
+S3method(as.triangle, matrix)
+S3method(as.triangle, data.frame)
+S3method(as.data.frame, triangle)
 
 S3method(summary, MackChainLadder)
 S3method(summary, MunichChainLadder)

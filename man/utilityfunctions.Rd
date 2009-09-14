@@ -14,7 +14,6 @@ cum2incr(Triangle)
   \item{Triangle}{triangle. Assume columns are the development
 	period, use transpose otherwise.}
   \item{na.rm}{logical. Should missing values be removed?}
-\item{x}{\code{data.frame} of a triangle in long format with}
 }
 %\details{
 %I don't know  

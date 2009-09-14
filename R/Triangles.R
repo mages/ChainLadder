@@ -21,22 +21,22 @@ cum2incr <- function(Triangle){
 }
 
 
-as.triangle <- function(Triangle){
+as.triangle <- function(Triangle, origin="origin", dev="dev", value="value",...){
   UseMethod("as.triangle")
 }
 
-as.triangle.matrix <- function(Triangle){
+as.triangle.matrix <- function(Triangle, origin="origin", dev="dev", value="value",...){
  class(Triangle) <- c("triangle", "matrix")
  return(Triangle)
 }
 
-as.triangle.data.frame <- function(Triangle, origin="origin", dev="dev", value="value"){
+as.triangle.data.frame <- function(Triangle, origin="origin", dev="dev", value="value",...){
     matrixTriangle <- .as.MatrixTriangle(Triangle, origin, dev, value)
     class(matrixTriangle) <- c("triangle", "matrix")
     return(matrixTriangle)
 }
 
-as.data.frame.triangle <- function(x, na.rm=FALSE){
+as.data.frame.triangle <- function(x, row.names, optional, na.rm=FALSE,...){
     longTriangle <- .as.LongTriangle(x, na.rm)
     class(longTriangle) <- c("long.triangle", "data.frame")
     return(longTriangle)
