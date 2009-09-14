@@ -132,6 +132,7 @@ tail=FALSE, tail.se=NULL, tail.sigma=NULL)
 
 # See the Taylor/Ashe example in Mack's 1993 paper
 GenIns
+plot(GenIns)
 GNI <- MackChainLadder(GenIns, est.sigma="Mack")
 GNI$f
 GNI$sigma^2
@@ -140,6 +141,7 @@ plot(GNI)
 
 # See the example in Mack's 1999 paper
 Mortgage
+plot(Mortgage)
 MRT <- MackChainLadder(Mortgage, tail=1.05, tail.sigma=71, tail.se=0.02, est.sigma="Mack")
 MRT
 # Table 1 in the above paper
@@ -180,6 +182,7 @@ par(op)
 # This data set is discussed in many papers, e.g. England and Verall 2000
 # paper, see Table 1 just there  
 RAA
+plot(RAA)
 R <- MackChainLadder(RAA)
 R
 plot(R)

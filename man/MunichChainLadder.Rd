@@ -79,6 +79,10 @@ MunichChainLadder(Paid, Incurred,
 
 MCLpaid
 MCLincurred
+op <- par(mfrow=c(1,2))
+plot(MCLpaid)
+plot(MCLincurred)
+par(op)
 
 M <- MunichChainLadder(MCLpaid, MCLincurred)
 M
