@@ -27,11 +27,30 @@ as.triangle <- function(Triangle, origin="origin", dev="dev", value="value",...)
 
 as.triangle.matrix <- function(Triangle, origin="origin", dev="dev", value="value",...){
  class(Triangle) <- c("triangle", "matrix")
+ if(is.null(dimnames(Triangle))){
+     dimnames(Triangle) <- list(origin=1:nrow(Triangle), dev=1:ncol(Triangle))
+ }
+ names(dimnames(Triangle)) <- c(origin, dev)
+
+ if(is.null(dimnames(Triangle)$origin)){
+     dimnames(Triangle)$origin <- 1:nrow(Triangle)
+ }
+ if(is.null(dimnames(Triangle)$dev)){
+     dimnames(Triangle)$dev <- 1:col(Triangle)
+ }
+
+
  return(Triangle)
 }
 
 as.triangle.data.frame <- function(Triangle, origin="origin", dev="dev", value="value",...){
-    matrixTriangle <- .as.MatrixTriangle(Triangle, origin, dev, value)
+    d <- dim(Triangle)
+    if(length(d) == 2 & d[1]==d[2]){
+        matrixTriangle <- as.matrix(Triangle)
+        matrixTriangle <- as.triangle(matrixTriangle)
+    }else{
+        matrixTriangle <- .as.MatrixTriangle(Triangle, origin, dev, value)
+    }
     class(matrixTriangle) <- c("triangle", "matrix")
     return(matrixTriangle)
 }
@@ -42,12 +61,17 @@ as.data.frame.triangle <- function(x, row.names, optional, na.rm=FALSE,...){
     return(longTriangle)
 }
 
-plot.triangle <- function(x,t="b",xlab="dev. period",ylab=NULL,...){
+plot.triangle <- function(x,t="b",xlab="dev. period",ylab=NULL, lattice=FALSE,...){
     .x <- x
     class(.x) <- "matrix"
-    matplot(t(.x),t=t,
-            xlab=xlab,
-            ylab=ifelse(is.null(ylab), deparse(substitute(x)), ylab),...)
+    if(!lattice){
+        matplot(t(.x),t=t,
+                xlab=xlab,
+                ylab=ifelse(is.null(ylab), deparse(substitute(x)), ylab),...)
+    }else{
+        df <- as.data.frame(as.triangle(.x))
+        xyplot(value ~ dev | factor(origin), data=df, t="l", as.table=TRUE,...)
+    }
 }
 
 print.triangle <- function(x,...){

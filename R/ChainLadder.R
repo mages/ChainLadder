@@ -89,7 +89,9 @@ checkTriangle <- function(Triangle){
     if(length(.dim)==3 & .dim[3]==1){
         dim(Triangle) <- c(m,n)
     }
+
     if("data.frame" %in% class(Triangle)){
+        Triangle <- as.matrix(Triangle)
         Triangle <- as.triangle(Triangle)
     }
 

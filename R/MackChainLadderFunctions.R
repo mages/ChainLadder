@@ -322,62 +322,78 @@ print.MackChainLadder <- function(x,...){
 ################################################################################
 ## plot
 ##
-plot.MackChainLadder <- function(x, mfrow=c(3,2), title=NULL,...){
+plot.MackChainLadder <- function(x, mfrow=c(3,2), title=NULL,lattice=FALSE,...){
 
-    if(is.null(title)) myoma <- c(0,0,0,0) else myoma <- c(0,0,2,0)
-
-    op=par(mfrow=mfrow, oma=myoma, mar=c(4.1,4.1,1.1,1.1))
 
     .myResult <-  summary(x)$ByOrigin
 
     .FullTriangle <- x[["FullTriangle"]]
     .Triangle <- x[["Triangle"]]
 
-    plotdata <- t(as.matrix(.myResult[,c("Latest","IBNR")]))
-    n <- ncol(plotdata)
-    bp <- barplot(plotdata,
-                  legend.text=c("Latest","IBNR"),
-                  names.arg=rownames(.myResult),
-                  main="Mack Chain Ladder Results",
-                  xlab="Origin period",
-                  ylab="Amounts",#paste(Currency,myUnit),
-                  ylim=c(0, max(apply(.myResult[c("Ultimate", "Mack.S.E")],1,sum),na.rm=TRUE)))
+    if(!lattice){
+        if(is.null(title)) myoma <- c(0,0,0,0) else myoma <- c(0,0,2,0)
 
-                                        # add error ticks
-    require("Hmisc")
-    errbar(x=bp, y=.myResult$Ultimate,
-           yplus=(.myResult$Ultimate + .myResult$Mack.S.E),
-           yminus=(.myResult$Ultimate - .myResult$Mack.S.E),
-           cap=0.05,
-           add=TRUE)
+        op=par(mfrow=mfrow, oma=myoma, mar=c(4.5,4.5,2,2))
 
-    matplot(t(.FullTriangle), t="l",
-            main="Chain ladder developments by origin period",
-            xlab="Development period",
-            ylab="Amounts", #paste(Currency, myUnit)
-            )
-    matplot(t(.Triangle), add=TRUE)
+        plotdata <- t(as.matrix(.myResult[,c("Latest","IBNR")]))
+        n <- ncol(plotdata)
+        bp <- barplot(plotdata,
+                      legend.text=c("Latest","IBNR"),
+                      names.arg=rownames(.myResult),
+                      main="Mack Chain Ladder Results",
+                      xlab="Origin period",
+                      ylab="Value",#paste(Currency,myUnit),
+                      ylim=c(0, max(apply(.myResult[c("Ultimate", "Mack.S.E")],1,sum),na.rm=TRUE)))
 
-    Residuals=residuals(x)
-    plot(standard.residuals ~ fitted.value, data=Residuals,
-         ylab="Standardised residuals", xlab="Fitted")
-    lines(lowess(Residuals$fitted.value, Residuals$standard.residuals), col="red")
-    abline(h=0, col="grey")
-    plot(standard.residuals ~ origin.period, data=Residuals,
-         ylab="Standardised residuals", xlab="Origin period")
-    lines(lowess(Residuals$origin.period, Residuals$standard.residuals), col="red")
-    abline(h=0, col="grey")
-    plot(standard.residuals ~ cal.period, data=Residuals,
-         ylab="Standardised residuals", xlab="Calendar period")
-    lines(lowess(Residuals$cal.period, Residuals$standard.residuals), col="red")
-    abline(h=0, col="grey")
-    plot(standard.residuals ~ dev.period, data=Residuals,
-         ylab="Standardised residuals", xlab="Development period")
-    lines(lowess(Residuals$dev.period, Residuals$standard.residuals), col="red")
-    abline(h=0, col="grey")
+        ## add error ticks
+        require("Hmisc")
+        errbar(x=bp, y=.myResult$Ultimate,
+               yplus=(.myResult$Ultimate + .myResult$Mack.S.E),
+               yminus=(.myResult$Ultimate - .myResult$Mack.S.E),
+               cap=0.05,
+               add=TRUE)
 
-    title( title , outer=TRUE)
-    par(op)
+        matplot(t(.FullTriangle), t="l",
+                main="Chain ladder developments by origin period",
+                xlab="Development period",
+                ylab="Amount", #paste(Currency, myUnit)
+                )
+        matplot(t(.Triangle), add=TRUE)
+
+        Residuals=residuals(x)
+        plot(standard.residuals ~ fitted.value, data=Residuals,
+             ylab="Standardised residuals", xlab="Fitted")
+        lines(lowess(Residuals$fitted.value, Residuals$standard.residuals), col="red")
+        abline(h=0, col="grey")
+        plot(standard.residuals ~ origin.period, data=Residuals,
+             ylab="Standardised residuals", xlab="Origin period")
+        lines(lowess(Residuals$origin.period, Residuals$standard.residuals), col="red")
+        abline(h=0, col="grey")
+        plot(standard.residuals ~ cal.period, data=Residuals,
+             ylab="Standardised residuals", xlab="Calendar period")
+        lines(lowess(Residuals$cal.period, Residuals$standard.residuals), col="red")
+        abline(h=0, col="grey")
+        plot(standard.residuals ~ dev.period, data=Residuals,
+             ylab="Standardised residuals", xlab="Development period")
+        lines(lowess(Residuals$dev.period, Residuals$standard.residuals), col="red")
+        abline(h=0, col="grey")
+
+        title( title , outer=TRUE)
+        par(op)
+
+    }else{
+        long <- expand.grid(origin=as.numeric(dimnames(.Triangle)$origin), dev=as.numeric(dimnames(.Triangle)$dev))
+        long$value <- as.vector(.FullTriangle)
+        long$valuePlusMack.S.E <-  long$value + as.vector(x$Mack.S.E)
+        long$valueMinusMack.S.E <- long$value - as.vector(x$Mack.S.E)
+        xyplot(valuePlusMack.S.E + valueMinusMack.S.E + value ~ dev |
+               factor(origin), data=long, t="l", lty=c(3,3,1), as.table=TRUE,
+               main="Chain ladder developments by origin period",
+               xlab="Development period",
+               ylab="Amount",col=1,
+               key=list(lines=list(lty=c(1,3), col=1),text=list(lab=c("Chain-ladder dev.", "Mack's S.E")),
+               space="top", columns=2),...)
+    }
 }
 ################################################################################
 ## residuals

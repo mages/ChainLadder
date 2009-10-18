@@ -1,9 +1,9 @@
-\name{Utility functions}
+\name{Cumulative and incremental triangles}
 \alias{incr2cum}
 \alias{cum2incr}
-\title{Utility functions}
+\title{Conversion between cumulative and incremental triangles}
 \description{
-Utility functions to handle reserving triangles
+  Conversion between cumulative and incremental triangles
 }
 \usage{
 incr2cum(Triangle, na.rm=FALSE)
@@ -15,14 +15,13 @@ cum2incr(Triangle)
 	period, use transpose otherwise.}
   \item{na.rm}{logical. Should missing values be removed?}
 }
-%\details{
-%I don't know  
-%
-%}
+\details{
+  \code{incr2cum} transforms an incremental triangle into a cumulative
+  triangle, 
+  \code{cum2incr} the reserve operation
+}
 \value{
-  \code{incr2cum} transforms an incremental triangle into a cumulative triangle, \code{cum2incr} the reserve operation
-  \code{as.data.frame.matrix} returns a \code{data.frame} with three columns.
-  \code{as.matrix.triangle} returns a \code{matrix}. 
+ Both functions return a \code{triangle}.  
 }
 \author{Markus Gesmann \email{markus.gesmann@gmail.com}
 Christophe Dutang}
@@ -50,17 +49,17 @@ incr2cum(cum2incr(GenIns))
 
 #original triangle
 Mortgage
-
+incMortgage <- cum2incr(Mortgage)
 #add missing values
-Mortgage[1,1] <- NA
-Mortgage[2,1] <- NA
-Mortgage[1,2] <- NA
+incMortgage[1,1] <- NA
+incMortgage[2,1] <- NA
+incMortgage[1,2] <- NA
 
 #with missing values argument
-cum2incr(Mortgage)
+incr2cum(incMortgage, na.rm=TRUE)
 
 #compared to 
-cum2incr(Mortgage)
+incr2cum(Mortgage)
 
 }
 \keyword{ array }

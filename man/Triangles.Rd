@@ -16,7 +16,7 @@
  'triangle' is a matrix with some new generic functions.
 }
 \usage{
-\method{plot}{triangle}(x, t = "b", xlab = "dev. period", ylab = NULL, ...)
+\method{plot}{triangle}(x, t = "b", xlab = "dev. period", ylab = NULL, lattice=FALSE, ...)
 \method{as.data.frame}{triangle}(x, row.names, optional, na.rm=FALSE, ...)
 as.triangle(Triangle, origin="origin", dev="dev", value="value",...)
 \method{as.triangle}{data.frame}(Triangle, origin="origin", dev="dev", value="value",...)
@@ -36,6 +36,11 @@ as.triangle(Triangle, origin="origin", dev="dev", value="value",...)
   \item{optional}{not used}
   \item{xlab}{a label for the x axis, defaults to 'dev. period'}
   \item{ylab}{a label for the y axis, defaults to NULL}
+  \item{lattice}{logical. If \code{FALSE} the function
+    \code{\link{matplot}} is used to plot the developments of the
+    triangle in one graph, otherwise the \code{\link{xyplot}} function
+    of the lattice package is used, to plot developments of each origin
+    period in a different panel.}
   \item{t}{type, see \code{\link{plot.default}}}
   \item{na.rm}{logical. Remove missing values?}
   \item{\dots}{Arguments to be passed to methods}
@@ -62,18 +67,14 @@ as.triangle(Triangle, origin="origin", dev="dev", value="value",...)
 
 %% ~Make other sections like Warning with \section{Warning }{....} ~
 
-\seealso{
+%\seealso{
 %% ~~objects to See Also as \code{\link{help}}, ~~~
-}
+%}
 \examples{
 class(RAA) <- c("triangle", "matrix")
 RAA
 plot(RAA)
-longRAA <- as.data.frame(RAA)
-library(lattice)
-xyplot(value ~ dev | factor(origin), data=longRAA, as.table=TRUE, t="l")
-as.triangle(longRAA)
-
+plot(RAA, lattice=TRUE)
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

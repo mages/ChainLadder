@@ -196,14 +196,7 @@ MackChainLadder(RAA, est.sigma=R$sigma[7])
 MackChainLadder(RAA, est.sigma=R$sigma[8])
 
 # Use lattice to plot the individual origin years
-longRAA <- expand.grid(origin=as.numeric(dimnames(RAA)$origin), dev=as.numeric(dimnames(RAA)$dev))
-longRAA$value <- as.vector(R$FullTriangle)
-longRAA$valuePlusMack.S.E <-  longRAA$value + as.vector(R$Mack.S.E)
-longRAA$valueMinusMack.S.E <- longRAA$value - as.vector(R$Mack.S.E)
-library(lattice)
-xyplot(valuePlusMack.S.E + valueMinusMack.S.E + value ~ dev |
-factor(origin), data=longRAA, t="l", col=c("red","red","black"), as.table=TRUE)
-
+plot(R, lattice=TRUE)
 
 # Different weights
 # Using 1/Triangle^2 as weight will use mean chain ladder ratios 

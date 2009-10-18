@@ -4,22 +4,29 @@ Version 0.1.2.12
 ================
 NEW FEATURES
 
- o New utitilty functions 'incr2cum' and 'cum2incr' to convert incremental triangles into cumulative triangles
+ o New utility functions 'incr2cum' and 'cum2incr' to convert incremental triangles into cumulative triangles
  and vis versa. Thanks to Chritophe Dutang.
- o New triangle class with S3 methods for plot, print and to convert triangels into data.frames and vis versa
+ o New triangle class with S3 methods for plot, print and to convert triangles into data.frames and vis versa
+ o New logical argument lattice for plot.MackChainLadder (and plot.triangle), which allows to plot developments 
+   by origin period in separate panels.  
+
+BUG FIXES
+
+  o 'MunichChainLadder': tail factors were not accepted (Thanks to Stefan Pohl) 
+
 
 Version 0.1.2-11
 ===============
 BUG FIXES
 
-  o 'MackChainLadder': 'F.se'[ultimate] was caculated of the ultimate column instead of the latest paid. 
+  o 'MackChainLadder': 'F.se'[ultimate] was calculated of the ultimate column instead of the latest paid. 
 
 Version 0.1.2-10
 ===============
 USER-VISIBLE CHANGES
 
-  o 'MackChainLadder' has new arguments 'tail.sigma' and 'tail.se' to provide to estimates for 
-    the variablities of for a given tail factor
+  o 'MackChainLadder' has new arguments 'tail.sigma' and 'tail.se' to provide estimates for 
+    the variability of for a given tail factor
  
 BUG FIXES
 
@@ -45,7 +52,7 @@ USER-VISIBLE CHANGES
   
   o 'MackChainLadder' gives two more elements back: 'Mack.ProcessRisk' and 'Mack.ParameterRisk' 
     for the process and parameter risk error (Thanks to Daniel Murphy)
-  o In the sumumary output of'MackChainLadder' the label 'CV'  changed to 'CV(IBNR)' to clarify 
+  o In the summary output of 'MackChainLadder' the label 'CV'  changed to 'CV(IBNR)' to clarify 
     that we show the coefficient of variance of the IBNR.
   o 'MackChainLadder' provides new example plots for CV(IBNR) vs. origin period and CV(Ultimate) vs. origin period  
   o Updated documentation
