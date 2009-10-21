@@ -391,7 +391,7 @@ plot.MackChainLadder <- function(x, mfrow=c(3,2), title=NULL,lattice=FALSE,...){
                main="Chain ladder developments by origin period",
                xlab="Development period",
                ylab="Amount",col=1,
-               key=list(lines=list(lty=c(1,3), col=1),text=list(lab=c("Chain-ladder dev.", "Mack's S.E")),
+               key=list(lines=list(lty=c(1,3), col=1),text=list(lab=c("Chain-ladder dev.", "Mack's S.E.")),
                space="top", columns=2),...)
     }
 }
