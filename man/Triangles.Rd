@@ -1,5 +1,6 @@
 \name{triangle S3 Methods}
 \Rdversion{1.1}
+\alias{triangle}
 \alias{plot.triangle}
 \alias{as.data.frame.triangle}
 \alias{as.triangle}
@@ -13,28 +14,32 @@
 }
 \description{
  Functions to ease the work with triangle shaped matrix data. A
- 'triangle' is a matrix with some new generic functions.
+ 'triangle' is a matrix with some generic functions.
+ Triangles are usually stored in a 'long' format in data bases. The
+ function \code{as.triangle} can transform \code{data.frames} into a
+ triangle shape.
 }
 \usage{
-\method{plot}{triangle}(x, t = "b", xlab = "dev. period", ylab = NULL, lattice=FALSE, ...)
+\method{as.triangle}{matrix}(Triangle,origin="origin", dev="dev", value="value",...)
+\method{as.triangle}{data.frame}(Triangle, origin="origin", dev="dev", value="value",...)
 \method{as.data.frame}{triangle}(x, row.names, optional, na.rm=FALSE, ...)
 as.triangle(Triangle, origin="origin", dev="dev", value="value",...)
-\method{as.triangle}{data.frame}(Triangle, origin="origin", dev="dev", value="value",...)
-\method{as.triangle}{matrix}(Triangle,origin="origin", dev="dev", value="value",...)
+\method{plot}{triangle}(x, t = "b", xlab = "dev. period", ylab = NULL, lattice=FALSE, ...)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
-  \item{x}{a matrix of class 'triangle'}
-  \item{data}{a \code{data.frame} or a \code{data.frame} with
-    additional class attribute 'triangle' columns for origin and development periods and a value column,e.g
-    claims}
   \item{Triangle}{a triangle}
   \item{origin}{name of the origin period, default is \code{"origin"}.}
   \item{dev}{name of the origin period, default is \code{"dev"}.}
   \item{value}{name of the value, default is \code{"value"}.}
   \item{row.names}{not used}
   \item{optional}{not used}
-  \item{xlab}{a label for the x axis, defaults to 'dev. period'}
+  \item{na.rm}{logical. Remove missing values?}
+  \item{x}{a matrix of class 'triangle'}
+  \item{data}{a \code{data.frame} or a \code{data.frame} with
+    additional class attribute 'triangle' columns for origin and development periods and a value column,e.g
+    claims}
+    \item{xlab}{a label for the x axis, defaults to 'dev. period'}
   \item{ylab}{a label for the y axis, defaults to NULL}
   \item{lattice}{logical. If \code{FALSE} the function
     \code{\link{matplot}} is used to plot the developments of the
@@ -42,7 +47,6 @@ as.triangle(Triangle, origin="origin", dev="dev", value="value",...)
     of the lattice package is used, to plot developments of each origin
     period in a different panel.}
   \item{t}{type, see \code{\link{plot.default}}}
-  \item{na.rm}{logical. Remove missing values?}
   \item{\dots}{Arguments to be passed to methods}
 }
 %\details{
@@ -71,10 +75,16 @@ as.triangle(Triangle, origin="origin", dev="dev", value="value",...)
 %% ~~objects to See Also as \code{\link{help}}, ~~~
 %}
 \examples{
-class(RAA) <- c("triangle", "matrix")
-RAA
-plot(RAA)
-plot(RAA, lattice=TRUE)
+GenIns
+plot(GenIns)
+plot(GenIns, lattice=TRUE)
+
+
+## Convert long format into triangle
+## Triangles are usually stored as 'long' tables in data bases
+head(GenInsLong)
+as.triangle(GenInsLong, origin="accyear", dev="devyear", "incurred claims")
+
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

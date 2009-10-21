@@ -1,12 +1,15 @@
 \name{GenIns}
 \alias{GenIns}
+\alias{GenInsLong}
 \docType{data}
 \title{
-Run off triangle of accumulated general insurance claims data
+  Run off triangle of claims data.
 }
-\description{Run off triangle of claims data.
+\description{
+  Run off triangle (\code{GenIns}) of accumulated general insurance claims
+  data. \code{GenInsLong} provides the same data in a 'long' format.
 }
-\usage{data(GenIns)}
+\usage{GenIns}
 \format{ A matrix with 10 accident years and 10 development years.
 }
 \source{
@@ -20,6 +23,11 @@ of Outstanding Claims.  \emph{Journal of Econometrics} \bold{23}, 37-61. }
 }
 \examples{
 GenIns
-matplot(t(GenIns), type="l")
+plot(GenIns)
+
+## Convert long format into triangle
+## Triangles are usually stored as 'long' tables in data bases
+as.triangle(GenInsLong, origin="accyear", dev="devyear", "incurred claims")
+
 }
 \keyword{datasets}
