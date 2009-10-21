@@ -2,18 +2,18 @@
 
 Version 0.1.2.12
 ================
+
 NEW FEATURES
 
+ o New triangle class with S3 methods for plot, print and conversion from triangles to data.frames and vis versa
  o New utility functions 'incr2cum' and 'cum2incr' to convert incremental triangles into cumulative triangles
  and vis versa. Thanks to Chritophe Dutang.
- o New triangle class with S3 methods for plot, print and to convert triangles into data.frames and vis versa
  o New logical argument lattice for plot.MackChainLadder (and plot.triangle), which allows to plot developments 
    by origin period in separate panels.  
 
 BUG FIXES
 
-  o 'MunichChainLadder': tail factors were not accepted (Thanks to Stefan Pohl) 
-
+  o 'MunichChainLadder': tail factors were not accepted. Thanks to Stefan Pohl for reporting this issue.
 
 Version 0.1.2-11
 ===============
