@@ -1,7 +1,7 @@
 Package: ChainLadder
 Type: Package
 Title: Mack-, Bootstrap and Munich-chain-ladder methods for insurance claims reserving
-Version: 0.1.2-12	
+Version: 0.1.2-13
 Date: 2009-10-18
 Author: Markus Gesmann
 Maintainer: Markus Gesmann <markus.gesmann@gmail.com>

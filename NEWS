@@ -1,5 +1,12 @@
 === ChainLadder: R package for insurance claims reserving ===
 
+Version 0.1.2-13
+===============
+BUG FIXES
+
+  o 'MackChainLadder':  Latest position of incomplete triangles were not returned correctly. 
+    Thanks to Ben Escoto for reporting and providing a patch.
+
 Version 0.1.2.12
 ================
 

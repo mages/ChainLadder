@@ -265,12 +265,7 @@ tail.SE <- function(FullTriangle, StdErr, Total.SE, tail.factor, tail.se=NULL, t
 ##
 summary.MackChainLadder <- function(object,...){
     ## Summarise my results
-    .Triangle <- object[["Triangle"]]
-    n <- ncol(.Triangle)
-    m <- nrow(.Triangle)
-
-    dim(.Triangle) <- c(dim(.Triangle),1)
-    Latest <- as.vector(getLatest(getIncremental(.Triangle)))
+    Latest <- getLatestCumulative(object$Triangle)
 
     ex.origin.period <- Latest!=0
 
@@ -299,6 +294,16 @@ summary.MackChainLadder <- function(object,...){
     output <- list(ByOrigin=ByOrigin, Totals=Totals)
     return(output)
 }
+
+getLatestCumulative <- function(cumulative.tri) {
+  # Return the latest diagonal as a vector from a cumulative triangle
+  available.indicies <- apply(!is.na(cumulative.tri), 1, which)
+  latest.indicies <- sapply(available.indicies, max)
+  if (any(latest.indicies < 1))
+    stop("Some year (row) has no available losses")
+  return(cumulative.tri[cbind(1:nrow(cumulative.tri), latest.indicies)])
+}
+
 
 ##############################################################################
 ## print
