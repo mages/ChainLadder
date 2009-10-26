@@ -57,6 +57,7 @@ as.triangle.data.frame <- function(Triangle, origin="origin", dev="dev", value="
 
 as.data.frame.triangle <- function(x, row.names, optional, na.rm=FALSE,...){
     longTriangle <- .as.LongTriangle(x, na.rm)
+    rownames(longTriangle) <- paste(longTriangle$origin, longTriangle$dev, sep="-")
     class(longTriangle) <- c("long.triangle", "data.frame")
     return(longTriangle)
 }
