@@ -161,7 +161,6 @@ MackRecursive.S.E <- function(FullTriangle, f, f.se, F.se){
 
      if(f[nn] > 1){ ## tail factor > 1
         k <- nn
-        print(k)
         Tail.procrisk <- sqrt(
                               FullTriangle[,k]^2*(F.se[,k]^2)
                               + FullTriangle.procrisk[,k]^2*f[k]^2)
@@ -424,4 +423,86 @@ residuals.MackChainLadder <- function(object,...){
 }
 
 
+Mack <- function(triangle, weights=1, alpha=1){
+    m <- nrow(triangle)
+    n <- ncol(triangle)
 
+    F <- triangle[,-1]/triangle[,-n]
+
+
+    wCa <- weights * triangle[,-n]^alpha
+    wCa[is.na(triangle[,-n])] <- NA
+    wCaF <- wCa*F
+    ## Set diagonal of wCa to na
+    wCa[row(wCa)==n+1-col(wCa)] <- NA
+    # Chain-ladder age-to-age factors
+    f <- apply( wCaF, 2, sum, na.rm=TRUE)/apply( wCa, 2, sum, na.rm=TRUE)
+
+    ## Get full triangle
+    avDFs <- c(f,1)
+    dim(avDFs) <- c(1,n,1)
+    ultDFs <- getUltDFs(avDFs)
+
+    Latest <- getLatestCumulative(triangle)
+    ults <- getUltimates(Latest, ultDFs)
+    FullTriangle <- getExpected(ults, 1/ultDFs)
+    dim(FullTriangle)=c(n,n)
+
+    ## Estimate standard errors
+
+    k <- c(1:(n-2))
+    wCa_F_minus_f <- weights * triangle[,k]^alpha * t(t(F)-f)[,k]^2
+
+    sigma <- sqrt( 1/c(n-k-1) * apply(wCa_F_minus_f, 2, sum, na.rm=TRUE) )
+    # Mack approximation for sigma_{n-1}
+    sigma_n1 <- sqrt( abs(min(sigma[n-2]^4/sigma[n-3]^2, min(sigma[n-3]^2, sigma[n-2]^2)) ))
+
+    sigma <- c(sigma, sigma_n1)
+
+    # Estimate f.se
+    wCa2 <-  weights * triangle[,c(1:(n-1))]^alpha
+    ## Set diagonal of wCa to na
+    wCa2[row(wCa2)==n+1-col(wCa2)] <- NA
+    f.se <- sigma / sqrt( apply(wCa2, 2, sum, na.rm=TRUE))
+
+    # Estimate F.se
+    F.se <- t(sigma/sqrt(t(FullTriangle[,c(1:(n-1))])))
+
+    FullTriangle.se <- FullTriangle * 0
+    ## Recursive Formula
+    rowindex <- 2:m
+    if(m>n)
+        rowindex <- c((m-n+1):m)
+    for(i in rowindex){
+        for(k in c((n+1-i):(n-1))){
+            if(k>0)
+                FullTriangle.se[i,k+1] = sqrt(
+                               FullTriangle[i,k]^2*(F.se[i,k]^2+f.se[k]^2) #
+                               + FullTriangle.se[i,k]^2*f[k]^2
+                               )
+    	}
+    }
+
+
+    output <- list()
+    output[["call"]] <-  match.call(expand.dots = FALSE)
+    output[["Triangle"]] <- triangle
+    output[["Latest"]] <- Latest
+    output[["FullTriangle"]] <- FullTriangle
+    output[["f"]] <- f
+    output[["f.se"]] <- f.se
+    output[["F.se"]] <- F.se
+    output[["sigma"]] <-sigma
+    output[["Mack.S.E"]] <- FullTriangle.se
+    class(output) <- c("Mack","list")
+    return(output)
+}
+
+print.Mack <- function(x,...){
+    n <- ncol(x$Triangle)
+    df <- data.frame(Latest=x$Latest, f=c(NA, x$f), f.se=c(NA, x$f.se),
+                     Ultimate=x$FullTriangle[,n], Mack.S.E=x$Mack.S.E[,n])
+    df$IBNR <- df$Ultimate-df$Latest
+    df$CV=df$Mack.S.E/df$IBNR
+    print(df)
+}
