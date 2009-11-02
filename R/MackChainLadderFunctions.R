@@ -424,18 +424,29 @@ residuals.MackChainLadder <- function(object,...){
 
 
 Mack <- function(triangle, weights=1, alpha=1){
+    ## Mack Chain Ladder:
+    ## triangle: cumulative claims triangle
+    ## weights : weights
+    ## alpha=0 : gives straight average of the chain ladder age-to-age factors
+    ## alpha=1 : gives the historical chain ladder age-to-age factors
+    ## alpha=2 : is the result of an ordinary regression of C_{i,k+1} against C_{i,k} with intercept 0.
+
+
     m <- nrow(triangle)
     n <- ncol(triangle)
 
+    ## Individual chain ladder age-to-age factors:
     F <- triangle[,-1]/triangle[,-n]
 
 
     wCa <- weights * triangle[,-n]^alpha
+    ## Note NA^0=1, hence set all cells which are originally NA back to NA
     wCa[is.na(triangle[,-n])] <- NA
+
     wCaF <- wCa*F
-    ## Set diagonal of wCa to na
+    ## Set diagonal of wCa to NA
     wCa[row(wCa)==n+1-col(wCa)] <- NA
-    # Chain-ladder age-to-age factors
+    ## Chain-ladder age-to-age factors
     f <- apply( wCaF, 2, sum, na.rm=TRUE)/apply( wCa, 2, sum, na.rm=TRUE)
 
     ## Get full triangle
@@ -456,17 +467,20 @@ Mack <- function(triangle, weights=1, alpha=1){
     sigma <- sqrt( 1/c(n-k-1) * apply(wCa_F_minus_f, 2, sum, na.rm=TRUE) )
     # Mack approximation for sigma_{n-1}
     sigma_n1 <- sqrt( abs(min(sigma[n-2]^4/sigma[n-3]^2, min(sigma[n-3]^2, sigma[n-2]^2)) ))
-
     sigma <- c(sigma, sigma_n1)
 
     # Estimate f.se
     wCa2 <-  weights * triangle[,c(1:(n-1))]^alpha
+    ## Note NA^0=1, hence set all cells which are originally NA back to NA
+    wCa2[is.na(triangle[,-n])] <- NA
+
     ## Set diagonal of wCa to na
     wCa2[row(wCa2)==n+1-col(wCa2)] <- NA
     f.se <- sigma / sqrt( apply(wCa2, 2, sum, na.rm=TRUE))
 
     # Estimate F.se
-    F.se <- t(sigma/sqrt(t(FullTriangle[,c(1:(n-1))])))
+    F.se <- t(sigma/sqrt(t(FullTriangle[,c(1:(n-1))]^alpha)))
+    F.se[is.na(FullTriangle[,c(1:(n-1))])] <- NA
 
     FullTriangle.se <- FullTriangle * 0
     ## Recursive Formula
@@ -482,7 +496,6 @@ Mack <- function(triangle, weights=1, alpha=1){
                                )
     	}
     }
-
 
     output <- list()
     output[["call"]] <-  match.call(expand.dots = FALSE)
