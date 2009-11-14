@@ -2,10 +2,25 @@
 
 Version 0.1.2-13
 ===============
+USER-VISIBLE CHANGES
+
+  o 'MackChainLadder' has new argument 'alpha' and 'weights' has a different meaning.
+    alpha describes differnt chain ladder age-to-age factors.  
+   
+   - The default for all alphas is 1. 
+     See Mack's 1999 paper; alpha=1 gives the historical chain ladder age-to-age factors, 
+     alpha=0 gives the straight average of the observed individual development factors and 
+     alpha=2 is the result of an ordinary regression with intercept 0 
+   - Weights are now just that, weights in [0;1]
+
 BUG FIXES
 
   o 'MackChainLadder':  Latest position of incomplete triangles were not returned correctly. 
     Thanks to Ben Escoto for reporting and providing a patch.
+
+  o 'MackChainLadder': Mack.S.E for non-standard chain ladder factors (e.g. straight averages or 
+    ordinary regression through the origin) where not correctly calculated due to a missing argument 
+    for alpha. See also Mack's 1999 paper. Many thanks to Przemyslaw Sloma for reporting this bug. 
 
 Version 0.1.2.12
 ================

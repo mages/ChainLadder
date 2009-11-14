@@ -6,7 +6,8 @@
 ## Date:22/03/2009
 
 MackChainLadder <- function(Triangle,
-                            weights=1/Triangle,
+                            weights=1,
+                            alpha=1,
                             est.sigma="log-linear",
                             tail=FALSE,
                             tail.se=NULL,
@@ -20,14 +21,19 @@ MackChainLadder <- function(Triangle,
     m <- dim(Triangle)[1]
     n <- dim(Triangle)[2]
 
+
+    weights <- checkWeights(weights, Triangle)
+    alpha <- checkAlpha(alpha,n)
+
+
     ## Create chain ladder models
-    myModel <- ChainLadder(Triangle, weights)$Models
+    myModel <- ChainLadder(Triangle, weights, alpha)$Models
 
     ## Predict the chain ladder model
     FullTriangle <- predict.TriangleModel(list(Models=myModel, Triangle=Triangle))
 
     ## Estimate the standard error for f and F
-    StdErr <- Mack.S.E(myModel, FullTriangle, est.sigma=est.sigma)
+    StdErr <- Mack.S.E(myModel, FullTriangle, est.sigma=est.sigma, alpha)
     Total.SE <- TotalMack.S.E(FullTriangle, StdErr$f, StdErr$f.se, StdErr$F.se)
 
     ## Check for tail factor
@@ -86,7 +92,7 @@ MackChainLadder <- function(Triangle,
 ## mean squared error = stochastic error (process variance) + estimation error
 ## standard error = sqrt(mean squared error)
 
-Mack.S.E <- function(MackModel, FullTriangle, est.sigma="log-linear"){
+Mack.S.E <- function(MackModel, FullTriangle, est.sigma="log-linear", alpha){
     n <- ncol(FullTriangle)
     m <- nrow(FullTriangle)
     f <- rep(1,n)
@@ -109,19 +115,19 @@ Mack.S.E <- function(MackModel, FullTriangle, est.sigma="log-linear"){
         for(i in which(isna)){   # usually i = n - 1
             sigma[i] <- sqrt(abs(min((sigma[i - 1]^4/sigma[i - 2]^2),
                                      min(sigma[i - 2]^2, sigma[i - 1]^2))))
-            f.se[i] <- sigma[i]/sqrt(FullTriangle[1,i])
+            f.se[i] <- sigma[i]/sqrt(FullTriangle[1,i]^alpha[i])
         }
     }
     if(is.numeric(est.sigma)){
         for(i in seq(along=est.sigma)){
             l <- length(est.sigma)
             sigma[n-i] <- est.sigma[l-i+1]
-            f.se[n-i] <- sigma[n-i]/sqrt(FullTriangle[1,n-i])
+            f.se[n-i] <- sigma[n-i]/sqrt(FullTriangle[1,n-i]^alpha[n-i])
         }
     }
 
 
-    F.se <- t(t(1/sqrt(FullTriangle)[,-n])*(sigma))
+    F.se <- t(t(1/sqrt(FullTriangle)[,-n]^alpha)*(sigma))
 
 
     return(list(sigma=sigma,
@@ -430,16 +436,20 @@ Mack <- function(triangle, weights=1, alpha=1){
     ## alpha=0 : gives straight average of the chain ladder age-to-age factors
     ## alpha=1 : gives the historical chain ladder age-to-age factors
     ## alpha=2 : is the result of an ordinary regression of C_{i,k+1} against C_{i,k} with intercept 0.
-
+    weights <- checkWeights(weights, triangle)
 
     m <- nrow(triangle)
     n <- ncol(triangle)
 
     ## Individual chain ladder age-to-age factors:
     F <- triangle[,-1]/triangle[,-n]
+#    if(is.numeric(weights)){
+#        weights2 <- triangle
+#        weights2[!is.na(weights2)] <- weights
+#        weights <- weights2
+#    }
 
-
-    wCa <- weights * triangle[,-n]^alpha
+    wCa <- weights[,-n] * triangle[,-n]^alpha
     ## Note NA^0=1, hence set all cells which are originally NA back to NA
     wCa[is.na(triangle[,-n])] <- NA
 
@@ -462,7 +472,9 @@ Mack <- function(triangle, weights=1, alpha=1){
     ## Estimate standard errors
 
     k <- c(1:(n-2))
-    wCa_F_minus_f <- weights * triangle[,k]^alpha * t(t(F)-f)[,k]^2
+    wCa_F_minus_f <- weights[,k] * triangle[,k]^alpha * t(t(F)-f)[,k]^2
+
+    wCa_F_minus_f <-  triangle[,k]^alpha * t(t(F)-f)[,k]^2
 
     sigma <- sqrt( 1/c(n-k-1) * apply(wCa_F_minus_f, 2, sum, na.rm=TRUE) )
     # Mack approximation for sigma_{n-1}
@@ -470,7 +482,7 @@ Mack <- function(triangle, weights=1, alpha=1){
     sigma <- c(sigma, sigma_n1)
 
     # Estimate f.se
-    wCa2 <-  weights * triangle[,c(1:(n-1))]^alpha
+    wCa2 <-  weights[,c(1:(n-1))] * triangle[,c(1:(n-1))]^alpha
     ## Note NA^0=1, hence set all cells which are originally NA back to NA
     wCa2[is.na(triangle[,-n])] <- NA
 
@@ -479,7 +491,11 @@ Mack <- function(triangle, weights=1, alpha=1){
     f.se <- sigma / sqrt( apply(wCa2, 2, sum, na.rm=TRUE))
 
     # Estimate F.se
-    F.se <- t(sigma/sqrt(t(FullTriangle[,c(1:(n-1))]^alpha)))
+    W <- weights
+    W[is.na(W)] <- 1
+    F.se <- t(sigma/sqrt(t(W[,c(1:(n-1))]*FullTriangle[,c(1:(n-1))]^alpha)))
+#    F.se <- t(sigma/sqrt(t(FullTriangle[,c(1:(n-1))]^alpha)))
+
     F.se[is.na(FullTriangle[,c(1:(n-1))])] <- NA
 
     FullTriangle.se <- FullTriangle * 0
@@ -503,6 +519,7 @@ Mack <- function(triangle, weights=1, alpha=1){
     output[["Latest"]] <- Latest
     output[["FullTriangle"]] <- FullTriangle
     output[["f"]] <- f
+    output[["F"]] <- F
     output[["f.se"]] <- f.se
     output[["F.se"]] <- F.se
     output[["sigma"]] <-sigma
@@ -514,8 +531,9 @@ Mack <- function(triangle, weights=1, alpha=1){
 print.Mack <- function(x,...){
     n <- ncol(x$Triangle)
     df <- data.frame(Latest=x$Latest, f=c(NA, x$f), f.se=c(NA, x$f.se),
-                     Ultimate=x$FullTriangle[,n], Mack.S.E=x$Mack.S.E[,n])
+                     Ultimate=x$FullTriangle[,n])
     df$IBNR <- df$Ultimate-df$Latest
+    df$Mack.S.E=x$Mack.S.E[,n]
     df$CV=df$Mack.S.E/df$IBNR
     print(df)
 }

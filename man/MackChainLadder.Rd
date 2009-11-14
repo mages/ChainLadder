@@ -8,7 +8,7 @@
   the standard error around it.
 }
 \usage{
-MackChainLadder(Triangle, weights = 1/Triangle, est.sigma="log-linear",
+MackChainLadder(Triangle, weights = 1, alpha=1, est.sigma="log-linear",
 tail=FALSE, tail.se=NULL, tail.sigma=NULL)
 }
 %- maybe also 'usage' for other objects documented here.
@@ -18,8 +18,14 @@ tail=FALSE, tail.se=NULL, tail.sigma=NULL)
     \code{\link{qpaid}} for how to use (mxn)-development triangles with
     m<n, say higher development period frequency (e.g quarterly) than
     origin period frequency (e.g accident years).}
-  \item{weights}{ weights. Default: 1/Triangle, to use volume weighted
-    chain ladder factors.} 
+  \item{weights}{ weights. Default: 1, which sets the weights for all
+    triangle entries to 1. Otherwise specify a weights as the same
+    dimension as \code{Triangle} with all weight entries in [0; 1]}
+  \item{alpha}{Default: 1. See Mack's 1999 paper; alpha=1 gives the historical chain
+    ladder age-to-age factors, alpha=0 gives the straight average of the
+    observed individual development factors and alpha=2 is the result of
+    an ordinary regression of \eqn{C_{i,k+1}} against \eqn{C_{i,k}} with
+    intercept 0}
   \item{est.sigma}{defines how to estimate \eqn{sigma_{n-1}}, the
     variability of the individual age-to-age factors at development time
     \eqn{n-1}.
@@ -199,8 +205,8 @@ MackChainLadder(RAA, est.sigma=R$sigma[8])
 plot(R, lattice=TRUE)
 
 # Different weights
-# Using 1/Triangle^2 as weight will use mean chain ladder ratios 
-MackChainLadder(RAA, weights=1/RAA^2)$f
+# Using alpha=2 will use straight average age-to-age factors 
+MackChainLadder(RAA, alpha=2)$f
 apply(RAA[,-1]/RAA[,-10],2, mean, na.rm=TRUE)
  
 # Let's investigate the Mack model more detail

@@ -3,23 +3,63 @@
 ## Date:19/09/2008
 
 
-ChainLadder <- function(Triangle, weights=1/Triangle){
+ChainLadder <- function(Triangle, weights=1, alpha=1){
 
     Triangle <- checkTriangle(Triangle)
-
     n <- dim(Triangle)[2]
 
+
+    ## Mack uses alpha between 0 and 2 to distinguish
+    ## alpha = 0 ordinary regression with intercept 0
+    ## alpha = 1 historical chain ladder age-to-age factors
+    ## alpha = 2 straight averages
+
+    ## However, in Zehnwirth & Barnett they use the notation of delta, whereby delta = 2 - alpha
+    ## the delta is than used in a linear modelling context.
+
+    delta <- 2-alpha
 
     myModel <- vector("list", (n-1))
     for(i in c(1:(n-1))){
         ## weighted linear regression through origin
         dev.data <- data.frame(x=Triangle[,i], y=Triangle[,i+1])
-  	myModel[[i]] <- lm(y~x+0, weights=weights[,i], data=dev.data)
+  	myModel[[i]] <- lm(y~x+0, weights=weights[,i]/Triangle[,i]^delta[i], data=dev.data)
     }
 
     output <- list(Models=myModel, Triangle=Triangle)
     class(output) <- c("ChainLadder", "TriangleModel", class(output))
     return(output)
+}
+
+checkWeights <- function(weights, Triangle){
+
+    if(is.null(dim(weights))){
+        if(length(weights)==1){
+            my.weights <- Triangle
+            my.weights[!is.na(Triangle)] <- weights
+            weights <- my.weights
+        }
+    }
+
+return(weights)
+
+}
+
+checkAlpha <- function(alpha, n){
+
+    if(! (all(alpha %in% c(0,1,2))) )
+        stop("Please specify alpha with integer values in {0;1;2}\n")
+
+    alpha.n <- length(alpha)
+    if(alpha.n==1){
+        alpha <- rep(alpha, n)
+    }
+
+    if(alpha.n > 1 && alpha.n <= (n-1)){
+        print("alpha has more than one entry but less than n-1 entries. Therefore I will use the first entry only.")
+        alpha <- rep(alpha[1], n)
+    }
+    return(alpha)
 }
 
 
