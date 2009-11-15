@@ -19,7 +19,7 @@ tail=FALSE, tail.se=NULL, tail.sigma=NULL)
     m<n, say higher development period frequency (e.g quarterly) than
     origin period frequency (e.g accident years).}
   \item{weights}{ weights. Default: 1, which sets the weights for all
-    triangle entries to 1. Otherwise specify a weights as the same
+    triangle entries to 1. Otherwise specify a weights as a matrix of the same
     dimension as \code{Triangle} with all weight entries in [0; 1]}
   \item{alpha}{Default: 1. See Mack's 1999 paper; alpha=1 gives the historical chain
     ladder age-to-age factors, alpha=0 gives the straight average of the

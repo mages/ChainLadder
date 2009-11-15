@@ -3,7 +3,8 @@
 ## Date:19/09/2008
 
 
-ChainLadder <- function(Triangle, weights=1, alpha=1){
+ChainLadder <- function(Triangle, weights=checkWeights(1, Triangle),
+                        alpha=checkAlpha(1, ncol(Triangle))){
 
     Triangle <- checkTriangle(Triangle)
     n <- dim(Triangle)[2]
@@ -74,8 +75,12 @@ predict.TriangleModel <- function(object,...){
     FullTriangle <- object[["Triangle"]]
 
     for(j in c(1:(n-1))){
-        FullTriangle[c((m-j+1):m), j+1] <- predict(object[["Models"]][[j]],
-                                                   newdata=data.frame(x=FullTriangle[c((m-j+1):m), j]),...)
+        i <- which(is.na(FullTriangle[, j+1]))
+        ##        FullTriangle[c((m-j+1):m), j+1] <- predict(object[["Models"]][[j]],
+        ##                                                  newdata=data.frame(x=FullTriangle[c((m-j+1):m), j]),...)
+        FullTriangle[i, j+1] <- predict(object[["Models"]][[j]],
+                                                   newdata=data.frame(x=FullTriangle[i, j]),...)
+
     }
     return(FullTriangle)
 }

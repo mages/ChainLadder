@@ -21,6 +21,10 @@ BUG FIXES
   o 'MackChainLadder': Mack.S.E for non-standard chain ladder factors (e.g. straight averages or 
     ordinary regression through the origin) where not correctly calculated due to a missing argument 
     for alpha. See also Mack's 1999 paper. Many thanks to Przemyslaw Sloma for reporting this bug. 
+  
+  o 'MackChainLadder': Forecasts were wrong if input triangle had known figures below diagonal.  
+    Many thanks to Przemyslaw Sloma for reporting this bug. 
+  
 
 Version 0.1.2.12
 ================
