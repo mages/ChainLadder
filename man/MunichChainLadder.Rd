@@ -4,7 +4,7 @@
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{Munich-Chain-Ladder Model }
 \description{
-  The Munich-Chain-Ladder model forecasts IBNR claims based on a cumulative
+  The Munich-Chain-Ladder model forecasts ultimate claims based on a cumulative
   paid and incurred claims triangle. 
   The Munich-Chain-Ladder model assumes that the Mack-model is applicable
   to the paid and incurred claims triangle, see \code{\link{MackChainLadder}}.
@@ -86,6 +86,7 @@ par(op)
 
 # Following the example output in Quarg's paper:
 MCL <- MunichChainLadder(MCLpaid, MCLincurred, est.sigmaP=0.1, est.sigmaI=0.1)
+MCL
 plot(MCL)
 # You can access the standard chain ladder (Mack) output via
 MCL$MackPaid

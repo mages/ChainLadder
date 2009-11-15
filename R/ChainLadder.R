@@ -77,8 +77,6 @@ predict.TriangleModel <- function(object,...){
 
     for(j in c(1:(n-1))){
         i <- which(is.na(FullTriangle[, j+1]))
-        ##        FullTriangle[c((m-j+1):m), j+1] <- predict(object[["Models"]][[j]],
-        ##                                                  newdata=data.frame(x=FullTriangle[c((m-j+1):m), j]),...)
         FullTriangle[i, j+1] <- predict(object[["Models"]][[j]],
                                                    newdata=data.frame(x=FullTriangle[i, j]),...)
 
@@ -104,7 +102,7 @@ tailfactor <- function (clratios){
         n <- length(f)
         tail.model <- lm(log(f - 1) ~ fn)
         co <- coef(tail.model)
-        tail <- exp(co[1] + c(n:(n + 100)) * co[2]) + 1
+        tail <- exp(co[1] + c((n+1):(n + 100)) * co[2]) + 1
         tail <- prod(tail)
         if (tail > 2){
             print("The estimate tail factor was bigger than 2 and has been reset to 1.")

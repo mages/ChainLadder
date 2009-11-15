@@ -1,4 +1,6 @@
-
+## Author: Markus Gesmann
+## Copyright: Markus Gesmann, markus.gesmann@gmail.com
+## Date:10/11/2007; 17/09/2008; 16/11/2009
 
 incr2cum <- function(Triangle, na.rm=FALSE){
     if(na.rm){
