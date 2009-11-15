@@ -23,8 +23,7 @@ cum2incr(Triangle)
 \value{
  Both functions return a \code{triangle}.  
 }
-\author{Markus Gesmann \email{markus.gesmann@gmail.com}
-Christophe Dutang}
+\author{Markus Gesmann, Christophe Dutang}
 \seealso{ See also \code{\link{qpaid}}, 
   \code{\link{RAA}}, 
   \code{\link{plot.MackChainLadder}}, 

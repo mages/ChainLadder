@@ -56,7 +56,7 @@
 }
 
 \author{ Markus Gesmann }
-\seealso{ See Also \code{\link{BootChainLadder}} }
+\seealso{ See also \code{\link{BootChainLadder}} }
 \examples{
 B <- BootChainLadder(RAA, R=999, process.distr="gamma")
 B

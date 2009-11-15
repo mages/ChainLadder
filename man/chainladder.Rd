@@ -1,4 +1,4 @@
-\name{ChainLadder}
+\name{chainladder}
 \Rdversion{1.1}
 \alias{chainladder}
 \title{ Estimate age-to-age factors }
@@ -38,16 +38,17 @@ chainladder(Triangle, weights = 1, delta = 1)
   \code{i+1}, and \code{x} at development period \code{i}, \code{w} are
   weighting factors and \code{F} the individual age-to-age factors \code{F=y/x}, than
   we get the various age-to-age factors for different deltas (alphas) as:
-  \code{
-  sum(w*x^alpha*F)/sum(w*x^alpha) # Mack's (1999) notation
-  delta <- 2-alpha
-  lm(y~x + 0 ,weights=w/x^delta) # Zehnwirth & Barnett (2000) notation
-  }
 
+  \code{
+    sum(w*x^alpha*F)/sum(w*x^alpha) # Mack's (1999) notation}
+  
+  \code{delta <- 2-alpha}
+  
+  \code{lm(y~x + 0 ,weights=w/x^delta) # Zehnwirth & Barnett (2000) notation}
   
  }
 \value{
-  \code{chainladder} returns a list with the following elements
+  \code{chainladder} returns a list with the following elements:
   \item{Models}{linear regression models for each development period}
   \item{Triangle}{input triangle of cumulative claims}
   \item{weights}{weights used}

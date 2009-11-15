@@ -36,7 +36,7 @@
 }
 
 \author{ Markus Gesmann }
-\seealso{ See Also \code{\link{MackChainLadder}},
+\seealso{ See also \code{\link{MackChainLadder}},
   \code{\link{plot.MackChainLadder}} }
 \examples{
  R <- MackChainLadder(RAA)

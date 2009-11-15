@@ -78,13 +78,13 @@ fit
 plot(ecdf(B$IBNR.Totals))
 curve(plnorm(x,fit$estimate["meanlog"], fit$estimate["sdlog"]), col="red", add=TRUE)
 
- # Munich Chain Ladder
- MCLpaid
- MCLincurred
+# Munich Chain Ladder
+MCLpaid
+MCLincurred
  
- MCL = MunichChainLadder(MCLpaid, MCLincurred)
- MCL
- plot(MCL)
+MCL = MunichChainLadder(MCLpaid, MCLincurred)
+MCL
+plot(MCL)
 
 # Working with triangles
 # RAA is a matrix with additional class attribute 'triangle'

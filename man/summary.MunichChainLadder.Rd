@@ -37,7 +37,7 @@
   }
 }
 \author{ Markus Gesmann }
-\seealso{ See Also \code{\link{MunichChainLadder}},
+\seealso{ See also \code{\link{MunichChainLadder}},
   \code{\link{plot.MunichChainLadder}} }
 \examples{
 M <- MunichChainLadder(MCLpaid, MCLincurred)

@@ -3,9 +3,9 @@
 
 \title{ Mack-Chain-Ladder Model }
 \description{
-  The Mack-chain-ladder model forecasts reserves or IBNR (Incurred But Not Reported)
-  claims based on a cumulative claims development triangle and estimates
-  the standard error around it.
+  The Mack-chain-ladder model forecasts future claims developemts
+  based on a historical cumulative claims development triangle and estimates
+  the standard error around those.
 }
 \usage{
 MackChainLadder(Triangle, weights = 1, alpha=1, est.sigma="log-linear",
@@ -77,7 +77,7 @@ tail=FALSE, tail.se=NULL, tail.sigma=NULL)
   
   The Mack-chain-ladder model can be regarded as a weighted linear regression
   through the origin for each development period:
-  \code{lm(y ~ x  + 0, weights=1/x)}, 
+  \code{lm(y ~ x  + 0, weights=w/x^(2-alpha))}, 
   where \code{y} is the vector of claims at development period
   \eqn{k+1} and \code{x} is  the vector of claims at development period
   \eqn{k}. 
