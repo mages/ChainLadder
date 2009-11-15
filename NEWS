@@ -4,27 +4,28 @@ Version 0.1.2-13
 ===============
 USER-VISIBLE CHANGES
 
-  o Basic 'chainladder' function now availble using linear models. See ?ChainLadder
-  o 'MackChainLadder' has new argument 'alpha' and 'weights' has a different meaning.
-    alpha describes differnt chain ladder age-to-age factors.  
-   
-   - The default for all alphas is 1. 
-     See Mack's 1999 paper; alpha=1 gives the historical chain ladder age-to-age factors, 
+  o 'MackChainLadder' has new argument 'alpha' as an additional weighting parameter. 
+     As a result, the argument 'weights' is now just that, weights between 0 and 1.
+     The argument 'alpha' describes the differnt chain ladder age-to-age factors:
+     The default for all alpha for all development periods is 1. See Mack's 1999 paper: 
+     alpha=1 gives the historical chain ladder age-to-age factors, 
      alpha=0 gives the straight average of the observed individual development factors and 
      alpha=2 is the result of an ordinary regression with intercept 0 
-   - Weights are now just that, weights in [0;1]
+   
+  o Basic 'chainladder' function now availble using linear models. See ?chainladder for more.
+
 
 BUG FIXES
 
-  o 'MackChainLadder':  Latest position of incomplete triangles were not returned correctly. 
-    Thanks to Ben Escoto for reporting and providing a patch.
+  o 'MackChainLadder':  Latest position of incomplete triangles were in some cases not returned 
+    correctly. Thanks to Ben Escoto for reporting and providing a patch.
 
   o 'MackChainLadder': Mack.S.E for non-standard chain ladder factors (e.g. straight averages or 
     ordinary regression through the origin) where not correctly calculated due to a missing argument 
     for alpha. See also Mack's 1999 paper. Many thanks to Przemyslaw Sloma for reporting this bug. 
   
-  o 'MackChainLadder': Forecasts were wrong if input triangle had known figures below diagonal.  
-    Many thanks to Przemyslaw Sloma for reporting this bug. 
+  o 'MackChainLadder': Forecasts were always based on diagonal, although data in sub-triangle 
+    could exsist. Many thanks to Przemyslaw Sloma for reporting this bug. 
   
 
 Version 0.1.2.12
@@ -32,11 +33,12 @@ Version 0.1.2.12
 
 NEW FEATURES
 
- o New triangle class with S3 methods for plot, print and conversion from triangles to data.frames and vis versa
- o New utility functions 'incr2cum' and 'cum2incr' to convert incremental triangles into cumulative triangles
- and vis versa. Thanks to Chritophe Dutang.
- o New logical argument lattice for plot.MackChainLadder (and plot.triangle), which allows to plot developments 
-   by origin period in separate panels.  
+ o New triangle class with S3 methods for plot, print and conversion from triangles to data.frames 
+   and vis versa
+ o New utility functions 'incr2cum' and 'cum2incr' to convert incremental triangles into 
+   cumulative triangles and vis versa. Thanks to Chritophe Dutang.
+ o New logical argument lattice for plot.MackChainLadder (and plot.triangle), which allows to plot 
+   developments by origin period in separate panels.  
 
 BUG FIXES
 
@@ -81,7 +83,8 @@ USER-VISIBLE CHANGES
     for the process and parameter risk error (Thanks to Daniel Murphy)
   o In the summary output of 'MackChainLadder' the label 'CV'  changed to 'CV(IBNR)' to clarify 
     that we show the coefficient of variance of the IBNR.
-  o 'MackChainLadder' provides new example plots for CV(IBNR) vs. origin period and CV(Ultimate) vs. origin period  
+  o 'MackChainLadder' provides new example plots for CV(IBNR) vs. origin period and CV(Ultimate) 
+    vs. origin period  
   o Updated documentation
 
 Version 0.1.2-6
