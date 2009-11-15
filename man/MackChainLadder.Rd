@@ -212,7 +212,7 @@ plot(R, lattice=TRUE)
 
 # Different weights
 # Using alpha=2 will use straight average age-to-age factors 
-MackChainLadder(RAA, alpha=2)$f
+MackChainLadder(RAA, alpha=0)$f
 apply(RAA[,-1]/RAA[,-10],2, mean, na.rm=TRUE)
  
 # Let's investigate the Mack model more detail
