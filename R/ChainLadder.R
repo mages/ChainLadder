@@ -3,8 +3,8 @@
 ## Date:19/09/2008
 
 
-ChainLadder <- function(Triangle, weights=checkWeights(1, Triangle),
-                        alpha=checkAlpha(1, ncol(Triangle))){
+chainladder <- function(Triangle, weights=1,
+                        delta=1){
 
     Triangle <- checkTriangle(Triangle)
     n <- dim(Triangle)[2]
@@ -18,7 +18,8 @@ ChainLadder <- function(Triangle, weights=checkWeights(1, Triangle),
     ## However, in Zehnwirth & Barnett they use the notation of delta, whereby delta = 2 - alpha
     ## the delta is than used in a linear modelling context.
 
-    delta <- 2-alpha
+    weights <- checkWeights(weights, Triangle)
+    delta <- checkDelta(delta,n)
 
     myModel <- vector("list", (n-1))
     for(i in c(1:(n-1))){
@@ -27,7 +28,7 @@ ChainLadder <- function(Triangle, weights=checkWeights(1, Triangle),
   	myModel[[i]] <- lm(y~x+0, weights=weights[,i]/Triangle[,i]^delta[i], data=dev.data)
     }
 
-    output <- list(Models=myModel, Triangle=Triangle)
+    output <- list(Models=myModel, Triangle=Triangle, delta=delta, weights=weights)
     class(output) <- c("ChainLadder", "TriangleModel", class(output))
     return(output)
 }
@@ -46,21 +47,21 @@ return(weights)
 
 }
 
-checkAlpha <- function(alpha, n){
+checkDelta <- function(delta, n){
 
-    if(! (all(alpha %in% c(0,1,2))) )
+    if(! (all(delta %in% c(0,1,2))) )
         stop("Please specify alpha with integer values in {0;1;2}\n")
 
-    alpha.n <- length(alpha)
-    if(alpha.n==1){
-        alpha <- rep(alpha, n)
+    delta.n <- length(delta)
+    if(delta.n==1){
+        delta <- rep(delta, n)
     }
 
-    if(alpha.n > 1 && alpha.n <= (n-1)){
-        print("alpha has more than one entry but less than n-1 entries. Therefore I will use the first entry only.")
-        alpha <- rep(alpha[1], n)
+    if(delta.n > 1 && delta.n <= (n-1)){
+        print("delta=has more than one entry but less than n-1 entries. Therefore I will use the first entry only.")
+        delta <- rep(delta[1], n)
     }
-    return(alpha)
+    return(delta)
 }
 
 
@@ -83,6 +84,10 @@ predict.TriangleModel <- function(object,...){
 
     }
     return(FullTriangle)
+}
+
+predict.ChainLadder <- function(object,...){
+    predict.TriangleModel(object,...)
 }
 
 ################################################################################

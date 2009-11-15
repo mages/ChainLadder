@@ -52,7 +52,7 @@ MunichChainLadder <- function(Paid, Incurred,
         q.f[s] <- summary(myQModel[[s]])$coef[1]
 	rhoI.sigma[s] <- summary(myQModel[[s]])$sigma
     }
-    rhoI.sigma <-  estimate.sigma(rhoI.sigma)
+    rhoI.sigma <-  estimate.sigma(rhoI.sigma)$sigma
 
     myQinverseModel <- vector("list", n)
     qinverse.f <- rep(1,n)
@@ -65,7 +65,7 @@ MunichChainLadder <- function(Paid, Incurred,
 	qinverse.f[s] = summary(myQinverseModel[[s]])$coef[1]
 	rhoP.sigma[s] = summary(myQinverseModel[[s]])$sigma
     }
-    rhoP.sigma <- estimate.sigma(rhoP.sigma)
+    rhoP.sigma <- estimate.sigma(rhoP.sigma)$sigma
 
     ## Estimate the residuals
 

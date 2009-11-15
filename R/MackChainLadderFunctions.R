@@ -21,19 +21,26 @@ MackChainLadder <- function(Triangle,
     m <- dim(Triangle)[1]
     n <- dim(Triangle)[2]
 
-
-    weights <- checkWeights(weights, Triangle)
-    alpha <- checkAlpha(alpha,n)
-
-
     ## Create chain ladder models
-    myModel <- ChainLadder(Triangle, weights, alpha)$Models
+
+    ## Mack uses alpha between 0 and 2 to distinguish
+    ## alpha = 0 ordinary regression with intercept 0
+    ## alpha = 1 historical chain ladder age-to-age factors
+    ## alpha = 2 straight averages
+
+    ## However, in Zehnwirth & Barnett they use the notation of delta, whereby delta = 2 - alpha
+    ## the delta is than used in a linear modelling context.
+    delta <- 2-alpha
+    CL <- chainladder(Triangle, weights=weights, delta=delta)
+    alpha <- 2 - CL$delta
 
     ## Predict the chain ladder model
-    FullTriangle <- predict.TriangleModel(list(Models=myModel, Triangle=Triangle))
+    FullTriangle <- predict.TriangleModel(list(Models=CL[["Models"]], Triangle=Triangle))
 
     ## Estimate the standard error for f and F
-    StdErr <- Mack.S.E(myModel, FullTriangle, est.sigma=est.sigma, alpha)
+    StdErr <- Mack.S.E(CL[["Models"]], FullTriangle, est.sigma=est.sigma,
+                       weights=CL[["weights"]], alpha=alpha)
+
     Total.SE <- TotalMack.S.E(FullTriangle, StdErr$f, StdErr$f.se, StdErr$F.se)
 
     ## Check for tail factor
@@ -70,7 +77,7 @@ MackChainLadder <- function(Triangle,
     output[["call"]] <-  match.call(expand.dots = FALSE)
     output[["Triangle"]] <- Triangle
     output[["FullTriangle"]] <- FullTriangle
-    output[["Models"]] <- myModel
+    output[["Models"]] <- CL[["Models"]]
     output[["f"]] <- StdErr$f
     output[["f.se"]] <- StdErr$f.se
     output[["F.se"]] <- StdErr$F.se
@@ -78,10 +85,10 @@ MackChainLadder <- function(Triangle,
     output[["Mack.ProcessRisk"]]   <- StdErr$FullTriangle.procrisk  # new dmm
     output[["Mack.ParameterRisk"]] <- StdErr$FullTriangle.paramrisk  # new dmm
     output[["Mack.S.E"]] <- sqrt(StdErr$FullTriangle.procrisk^2 +StdErr$FullTriangle.paramrisk^2)
-
+    output[["weights"]] <- CL$weights
+    output[["alpha"]] <- alpha
     ## total.procrisk <- apply(StdErr$FullTriangle.procrisk, 2, function(x) sqrt(sum(x^2)))
-
-    output[["Total.Mack.S.E"]] <- Total.SE#[length(Total.SE)]
+    output[["Total.Mack.S.E"]] <- Total.SE
     output[["tail"]] <- tail
     class(output) <- c("MackChainLadder", "TriangleModel", "list")
     return(output)
@@ -92,7 +99,7 @@ MackChainLadder <- function(Triangle,
 ## mean squared error = stochastic error (process variance) + estimation error
 ## standard error = sqrt(mean squared error)
 
-Mack.S.E <- function(MackModel, FullTriangle, est.sigma="log-linear", alpha){
+Mack.S.E <- function(MackModel, FullTriangle, est.sigma="log-linear", weights, alpha){
     n <- ncol(FullTriangle)
     m <- nrow(FullTriangle)
     f <- rep(1,n)
@@ -105,30 +112,43 @@ Mack.S.E <- function(MackModel, FullTriangle, est.sigma="log-linear", alpha){
     sigma[1:(n-1)] <- sapply(MackModel, function(x) summary(x)$sigma)
 
     isna <- is.na(sigma)
+    ## Think about weights!!!
 
     if(est.sigma %in% "log-linear"){
         ## estimate sigma[n-1] via log-linear regression
-        sigma <- estimate.sigma(sigma)
-        f.se[isna] <- sigma[isna]/sqrt(FullTriangle[1,isna])
+        sig.model <- estimate.sigma(sigma)
+        sigma <- sig.model$sigma
+
+        p.value.of.model <- summary(sig.model$model)$coefficient[2,4]
+        if(p.value.of.model > 0.05){
+            warning(paste("'loglinear' model to estimate sigma_n doesn't appear appropriate.",
+                          "\np-value > 5.\n",
+                          "est.sigma will be overwritten to 'Mack'.\n",
+                          "Mack's estimation method will be used instead."))
+
+            est.sigma <- "Mack"
+        }else{
+            f.se[isna] <- sigma[isna]/sqrt(weights[1,isna]*FullTriangle[1,isna]^alpha[isna])
+        }
     }
     if(est.sigma %in% "Mack"){
         for(i in which(isna)){   # usually i = n - 1
             sigma[i] <- sqrt(abs(min((sigma[i - 1]^4/sigma[i - 2]^2),
                                      min(sigma[i - 2]^2, sigma[i - 1]^2))))
-            f.se[i] <- sigma[i]/sqrt(FullTriangle[1,i]^alpha[i])
+            f.se[i] <- sigma[i]/sqrt(weights[1,i]*FullTriangle[1,i]^alpha[i])
         }
     }
     if(is.numeric(est.sigma)){
         for(i in seq(along=est.sigma)){
             l <- length(est.sigma)
             sigma[n-i] <- est.sigma[l-i+1]
-            f.se[n-i] <- sigma[n-i]/sqrt(FullTriangle[1,n-i]^alpha[n-i])
+            f.se[n-i] <- sigma[n-i]/sqrt(weights[1,n-i]*FullTriangle[1,n-i]^alpha[n-i])
         }
     }
 
-
-    F.se <- t(t(1/sqrt(FullTriangle)[,-n]^alpha)*(sigma))
-
+    W <- weights
+    W[is.na(W)] <- 1
+    F.se <- t(sigma/t(sqrt(W[,-n]*t(t(FullTriangle[,-n])^alpha[-n]))))
 
     return(list(sigma=sigma,
                 f=f,
@@ -214,7 +234,8 @@ estimate.sigma <- function(sigma){
         my.model <- lm(log(sigma[my.dev]) ~ my.dev)
         sigma[is.na(sigma)] <- exp(predict(my.model, newdata=data.frame(my.dev=dev[is.na(sigma)])))
     }
-    return(sigma)
+
+    return(list(sigma=sigma, model=my.model))
 }
 
 

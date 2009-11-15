@@ -4,6 +4,7 @@ Version 0.1.2-13
 ===============
 USER-VISIBLE CHANGES
 
+  o Basic 'chainladder' function now availble using linear models. See ?ChainLadder
   o 'MackChainLadder' has new argument 'alpha' and 'weights' has a different meaning.
     alpha describes differnt chain ladder age-to-age factors.  
    

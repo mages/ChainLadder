@@ -19,9 +19,10 @@ tail=FALSE, tail.se=NULL, tail.sigma=NULL)
     m<n, say higher development period frequency (e.g quarterly) than
     origin period frequency (e.g accident years).}
   \item{weights}{ weights. Default: 1, which sets the weights for all
-    triangle entries to 1. Otherwise specify a weights as a matrix of the same
+    triangle entries to 1. Otherwise specify weights as a matrix of the same
     dimension as \code{Triangle} with all weight entries in [0; 1]}
-  \item{alpha}{Default: 1. See Mack's 1999 paper; alpha=1 gives the historical chain
+  \item{alpha}{'weighting' pararmeter.
+    Default: 1, see Mack's 1999 paper; alpha=1 gives the historical chain
     ladder age-to-age factors, alpha=0 gives the straight average of the
     observed individual development factors and alpha=2 is the result of
     an ordinary regression of \eqn{C_{i,k+1}} against \eqn{C_{i,k}} with
@@ -31,7 +32,8 @@ tail=FALSE, tail.se=NULL, tail.sigma=NULL)
     \eqn{n-1}.
     Default is "log-linear" for a log-linear regression, "Mack" for
     Mack's approximation from his 1999 paper. Alternatively the user can
-    provide a numeric value.}  
+    provide a numeric value. If the log-linear model appears to be
+    inappropriate (p-value > 0.05) the 'Mack' method will be used instead.}  
   \item{tail}{can be logical or a numeric value.
     If \code{tail=FALSE} no tail factor will be applied, if \code{tail=TRUE} 
     a tail factor will be estimated via a linear extrapolation of
@@ -103,7 +105,10 @@ tail=FALSE, tail.se=NULL, tail.sigma=NULL)
     of the chain ladder estimate: \eqn{\mbox{Mack.S.E.}^2 = \mbox{Mack.ProcessRisk}^2 +
     \mbox{Mack.ParameterRisk}^2}{Mack.S.E.^2 = Mack.ProcessRisk^2 +
   Mack.ParameterRisk^2}}
-  \item{Total.Mack.S.E}{total variability of projected loss for all origin years combined}
+  \item{Total.Mack.S.E}{total variability of projected loss for all
+    origin years combined}
+  \item{weights}{weights used.}
+  \item{alpha}{alphas used.}
   \item{tail}{tail factor used. If tail was set to TRUE the output will
     include the linear model used to estimate the tail factor}
 }
@@ -125,6 +130,7 @@ tail=FALSE, tail.se=NULL, tail.sigma=NULL)
 % ~Make other sections like Warning with \section{Warning }{....} ~
 }
 \seealso{ See also \code{\link{qpaid}}, 
+  \code{\link{chainladder}}, 
   \code{\link{summary.MackChainLadder}}, 
   \code{\link{plot.MackChainLadder}}, 
   \code{\link{residuals.MackChainLadder}}, 

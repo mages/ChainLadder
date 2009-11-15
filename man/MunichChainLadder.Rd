@@ -84,15 +84,13 @@ plot(MCLpaid)
 plot(MCLincurred)
 par(op)
 
-M <- MunichChainLadder(MCLpaid, MCLincurred)
-M
-plot(M)
-# You can access the standard chain ladder (Mack) output via
-M$MackPaid
-M$MackIncurred
-
 # Following the example output in Quarg's paper:
 MCL <- MunichChainLadder(MCLpaid, MCLincurred, est.sigmaP=0.1, est.sigmaI=0.1)
+plot(MCL)
+# You can access the standard chain ladder (Mack) output via
+MCL$MackPaid
+MCL$MackIncurred
+
 # Input triangles section 3.3.1
 MCL$Paid
 MCL$Incurred
