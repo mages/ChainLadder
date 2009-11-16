@@ -3,7 +3,7 @@
 
 \title{ Mack-Chain-Ladder Model }
 \description{
-  The Mack-chain-ladder model forecasts future claims developemts
+  The Mack-chain-ladder model forecasts future claims developments
   based on a historical cumulative claims development triangle and estimates
   the standard error around those.
 }
@@ -21,7 +21,7 @@ tail=FALSE, tail.se=NULL, tail.sigma=NULL)
   \item{weights}{ weights. Default: 1, which sets the weights for all
     triangle entries to 1. Otherwise specify weights as a matrix of the same
     dimension as \code{Triangle} with all weight entries in [0; 1]}
-  \item{alpha}{'weighting' pararmeter.
+  \item{alpha}{'weighting' parameter.
     Default: 1, see Mack's 1999 paper; alpha=1 gives the historical chain
     ladder age-to-age factors, alpha=0 gives the straight average of the
     observed individual development factors and alpha=2 is the result of

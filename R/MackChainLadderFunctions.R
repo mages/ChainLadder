@@ -369,7 +369,8 @@ plot.MackChainLadder <- function(x, mfrow=c(3,2), title=NULL,lattice=FALSE,...){
         plotdata <- t(as.matrix(.myResult[,c("Latest","IBNR")]))
         n <- ncol(plotdata)
         bp <- barplot(plotdata,
-                      legend.text=c("Latest","IBNR"),
+                      legend.text=c("Latest","Forecast"),
+                      args.legend=list(x="topleft"),
                       names.arg=rownames(.myResult),
                       main="Mack Chain Ladder Results",
                       xlab="Origin period",

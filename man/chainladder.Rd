@@ -31,16 +31,15 @@ chainladder(Triangle, weights = 1, delta = 1)
 
 \details{
  
-  The key idea is to see the chain ladder algorithm as a weighted linear model
+  The key idea is to see the chain ladder algorithm as a weighted linear regression
   through the origin applied to each development period.
 
-  Say \code{y} are all cummulative claims at development period
+  Say \code{y} are all cumulative claims at development period
   \code{i+1}, and \code{x} at development period \code{i}, \code{w} are
   weighting factors and \code{F} the individual age-to-age factors \code{F=y/x}, than
   we get the various age-to-age factors for different deltas (alphas) as:
 
-  \code{
-    sum(w*x^alpha*F)/sum(w*x^alpha) # Mack's (1999) notation}
+  \code{sum(w*x^alpha*F)/sum(w*x^alpha) # Mack's (1999) notation}
   
   \code{delta <- 2-alpha}
   
@@ -48,7 +47,7 @@ chainladder(Triangle, weights = 1, delta = 1)
   
  }
 \value{
-  \code{chainladder} returns a list with the following elements:
+  chainladder returns a list with the following elements:
   \item{Models}{linear regression models for each development period}
   \item{Triangle}{input triangle of cumulative claims}
   \item{weights}{weights used}

@@ -18,7 +18,7 @@ BootChainLadder(Triangle, R = 999, process.distr=c("gamma", "od.pois"))
   \item{R}{the number of bootstrap replicates.}
   \item{process.distr}{ character string indicating which process
     distribution to be assumed. One of "gamma" (default), 
-    or "od.pois" (overdispersed Poisson), can be abbreviated}
+    or "od.pois" (over-dispersed Poisson), can be abbreviated}
 }
 \details{
   The \code{BootChainLadder} function uses a two-stage
@@ -58,9 +58,9 @@ BootChainLadder(Triangle, R = 999, process.distr=c("gamma", "od.pois"))
     bootstrap predictive models, \emph{Insureware technical report}. 2007}
 }
 \author{ Markus Gesmann, \email{markus.gesmann@gmail.com} }
-\note{ The implimentation of \code{BootChainLadder} follows closely the
+\note{ The implementation of \code{BootChainLadder} follows closely the
   discussion of the bootstrap model in section 8 and appendix 3 of the
-  paper by England and Verall.
+  paper by England and Verrall.
 }
 \seealso{ See also   \code{\link{summary.BootChainLadder}}, \code{\link{MackChainLadder}} }
 \examples{

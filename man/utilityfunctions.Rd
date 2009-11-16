@@ -17,8 +17,7 @@ cum2incr(Triangle)
 }
 \details{
   \code{incr2cum} transforms an incremental triangle into a cumulative
-  triangle, 
-  \code{cum2incr} the reserve operation
+  triangle, \code{cum2incr} provides the reserve operation.
 }
 \value{
  Both functions return a \code{triangle}.  

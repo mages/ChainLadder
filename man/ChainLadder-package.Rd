@@ -10,7 +10,7 @@
   of Actuaries in November 2007 and 2008.
   This package has currently implementations for the Mack-, Munich- and
   Bootstrap-chain-ladder methods. The package offers also some utility
-  function to convert quickly from tables into triangles, triangles into
+  function to convert quickly tables into triangles, triangles into
   tables, cumulative into incremental and incremental into cumulative triangles.
    
   The ChainLadder-package comes with an example spreadsheet which
@@ -18,7 +18,7 @@
   functions in Excel. The spreadsheet is located in the Excel folder of
   the package. The R command \code{searchpaths()[grep('ChainLadder',
     searchpaths())]} will tell you the exact path to the directory.
-  For the the spreadsheet you will need the RExcel-Addin, see
+  In order to use the spreadsheet you will need the RExcel-Addin, see
   \url{http://sunsite.univie.ac.at/rcom/} for more details.
    
   More information and various presentations given about the ChainLadder-package are available
@@ -27,6 +27,10 @@
   If you are also interested in loss distributions modeling, risk theory (including ruin theory), 
   simulation of compound hierarchical models and credibility theory check out the \code{actuar} package 
   by C. Dutang, V. Goulet and M. Pigeon.
+  
+  For more financial packages see also CRAN Task View 'Emperical Finance'
+  at \url{http://cran.r-project.org/web/views/Finance.html}.
+  
 } 
 \details{
 \tabular{ll}{
