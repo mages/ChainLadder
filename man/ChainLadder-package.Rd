@@ -109,7 +109,7 @@ triangle
 
 ## More for a laugh - 3d plot of a triangle
 if(require(rgl)){ #provides interactive 3d plotting functions
-MCL=MackChainLadder(GenIns/1e6) 
+MCL=MackChainLadder(GenIns/1e6, est.sigma="Mack") 
 FT <- MCL$FullTriangle 
 FTpSE <- FT+MCL$Mack.S.E 
 FTpSE[which(MCL$Mack.S.E==0, arr.ind=TRUE)] <- NA 

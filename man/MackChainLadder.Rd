@@ -151,6 +151,12 @@ GNI$sigma^2
 GNI # compare to table 2 and 3 in Mack's 1993 paper
 plot(GNI)
 
+# Different weights
+# Using alpha=0 will use straight average age-to-age factors 
+MackChainLadder(GenIns, alpha=0)$f
+# You get the same result via:
+apply(GenIns[,-1]/GenIns[,-10],2, mean, na.rm=TRUE)
+
 # See the example in Mack's 1999 paper
 Mortgage
 plot(Mortgage)
@@ -209,11 +215,6 @@ MackChainLadder(RAA, est.sigma=R$sigma[8])
 
 # Use lattice to plot the individual origin years
 plot(R, lattice=TRUE)
-
-# Different weights
-# Using alpha=0 will use straight average age-to-age factors 
-MackChainLadder(GenIns, alpha=0)$f
-apply(GenIns[,-1]/GenIns[,-10],2, mean, na.rm=TRUE)
  
 # Let's investigate the Mack model more detail
 R[["Models"]][[1]]   # Model for first development period

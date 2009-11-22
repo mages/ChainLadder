@@ -5,9 +5,9 @@ Version 0.1.2-13
 USER-VISIBLE CHANGES
 
   o 'MackChainLadder' has new argument 'alpha' as an additional weighting parameter. 
-     As a result, the argument 'weights' is now just that, weights between 0 and 1.
+     As a result, the argument 'weights' is now just that, weights should be between 0 and 1.
      The argument 'alpha' describes the different chain ladder age-to-age factors:
-     The default for all alpha for all development periods is 1. See Mack's 1999 paper: 
+     The default for alpha for all development periods is 1. See Mack's 1999 paper: 
      alpha=1 gives the historical chain ladder age-to-age factors, 
      alpha=0 gives the straight average of the observed individual development factors and 
      alpha=2 is the result of an ordinary regression with intercept 0 
