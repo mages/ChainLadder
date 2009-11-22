@@ -197,20 +197,20 @@ xlab="origin period")
 par(op)
 
   
-# This data set is discussed in many papers, e.g. England and Verall 2000
+# This data set is discussed in many papers, e.g. England and Verrall 2000
 # paper, see Table 1 just there  
 RAA
 plot(RAA)
 R <- MackChainLadder(RAA)
 R
 plot(R)
-# Table 12 in England and Verall 2000 paper
+# Table 12 in England and Verrall 2000 paper
 R$f
 R$sigma^2
-# Table 13 in England and Verall 2000 paper
+# Table 13 in England and Verrall 2000 paper
 # Please note the different indexing of sigma
 MackChainLadder(RAA, est.sigma=R$sigma[7])
-# Table 14 in England and Verall 2000 paper
+# Table 14 in England and Verrall 2000 paper
 MackChainLadder(RAA, est.sigma=R$sigma[8])
 
 # Use lattice to plot the individual origin years
@@ -252,18 +252,17 @@ plot(R2, title="Changed R Model")
 
 ## Suppose you have a long table with claims development by line of
 ## business and would like to apply the MackChainLadder on all triangles
-## in one go.
+## in one go. Of course this is purely illustrative!
 
 ## First lets create a table similar to what you would get from a 'real' data base
 
 myList <- list("General Liabilty" = RAA,
-               "General Insurance" = GenIns,
-               "Workers Comp"=ABC,
-               "Mortgage Guarantee"=Mortgage)
+               "General Insurance" = GenIns/1e3,
+               "Workers Comp"=ABC/1e3,
+               "Mortgage Guarantee"=Mortgage/1e3)
 
-myData <- do.call("rbind" , lapply(names(myList), function(x)
-                             as.data.frame(myList[[x]], lob=x,
-                na.rm=TRUE)))
+myData <- do.call("rbind" , lapply(names(myList),
+                            function(x) as.data.frame(myList[[x]],lob=x ,na.rm=TRUE)))
 
 head(myData)  ## Does this look familiar? ;-)
 
@@ -288,6 +287,17 @@ ByOrigin
 Totals <- do.call("rbind", lapply(names(myResults) ,
             function(x) data.frame(LOB=x, t(summary(myResults[[x]])$Totals))))
 Totals
+
+## Let's plot a nice summary, but first lets normalise the origin years
+ByOrigin <- do.call("rbind",
+    by(ByOrigin, list(lob=ByOrigin$lob),
+    function(x) {org=as.numeric(as.character(x$origin))
+      x$origin <- org-min(org)+2000;x}
+    ))
+
+require(lattice)
+barchart(Latest + IBNR ~ factor(origin) | lob, stack=TRUE, data=ByOrigin,
+        scale="free", auto.key=TRUE, as.table=TRUE, xlab="origin")
 
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
