@@ -19,7 +19,7 @@ chainladder <- function(Triangle, weights=1,
     ## the delta is than used in a linear modelling context.
 
     weights <- checkWeights(weights, Triangle)
-    delta <- checkDelta(delta,n)
+    delta <- rep(delta,(n-1))[1:(n-1)]
 
     myModel <- vector("list", (n-1))
     for(i in c(1:(n-1))){
@@ -45,23 +45,6 @@ checkWeights <- function(weights, Triangle){
 
 return(weights)
 
-}
-
-checkDelta <- function(delta, n){
-
-    if(! (all(delta %in% c(0,1,2))) )
-        stop("Please specify alpha with integer values in {0;1;2}\n")
-
-    delta.n <- length(delta)
-    if(delta.n==1){
-        delta <- rep(delta, n)
-    }
-
-    if(delta.n > 1 && delta.n <= (n-1)){
-        print("delta=has more than one entry but less than n-1 entries. Therefore I will use the first entry only.")
-        delta <- rep(delta[1], n)
-    }
-    return(delta)
 }
 
 

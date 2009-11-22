@@ -368,7 +368,20 @@ plot.MackChainLadder <- function(x, mfrow=c(3,2), title=NULL,lattice=FALSE,...){
 
         plotdata <- t(as.matrix(.myResult[,c("Latest","IBNR")]))
         n <- ncol(plotdata)
+
+if(getRversion() < "2.9.0") { ## work around missing feature
+
         bp <- barplot(plotdata,
+                      legend.text=c("Latest","Forecast"),
+                      ##    args.legend=list(x="topleft"), only avilable from R version >= 2.9.0
+                      names.arg=rownames(.myResult),
+                      main="Mack Chain Ladder Results",
+                      xlab="Origin period",
+                      ylab="Value",#paste(Currency,myUnit),
+                      ylim=c(0, max(apply(.myResult[c("Ultimate", "Mack.S.E")],1,sum),na.rm=TRUE)))
+
+    }else{
+   bp <- barplot(plotdata,
                       legend.text=c("Latest","Forecast"),
                       args.legend=list(x="topleft"),
                       names.arg=rownames(.myResult),
@@ -376,7 +389,7 @@ plot.MackChainLadder <- function(x, mfrow=c(3,2), title=NULL,lattice=FALSE,...){
                       xlab="Origin period",
                       ylab="Value",#paste(Currency,myUnit),
                       ylim=c(0, max(apply(.myResult[c("Ultimate", "Mack.S.E")],1,sum),na.rm=TRUE)))
-
+    }
         ## add error ticks
         require("Hmisc")
         errbar(x=bp, y=.myResult$Ultimate,
