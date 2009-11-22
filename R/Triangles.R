@@ -45,7 +45,7 @@ as.triangle.matrix <- function(Triangle, origin="origin", dev="dev", value="valu
  return(Triangle)
 }
 
-as.triangle.data.frame <- function(Triangle, origin="origin", dev="dev", value="value",...){
+as.triangle.data.frame <- function(Triangle, origin="origin", dev="dev", value="value", ...){
     d <- dim(Triangle)
     if(length(d) == 2 & d[1]==d[2]){
         matrixTriangle <- as.matrix(Triangle)
@@ -57,9 +57,13 @@ as.triangle.data.frame <- function(Triangle, origin="origin", dev="dev", value="
     return(matrixTriangle)
 }
 
-as.data.frame.triangle <- function(x, row.names, optional, na.rm=FALSE,...){
+as.data.frame.triangle <- function(x, row.names=NULL, optional, lob=NULL, na.rm=FALSE,...){
     longTriangle <- .as.LongTriangle(x, na.rm)
-    rownames(longTriangle) <- paste(longTriangle$origin, longTriangle$dev, sep="-")
+    if(is.null(row.names))
+        rownames(longTriangle) <- paste(longTriangle$origin, longTriangle$dev, sep="-")
+    if(!is.null(lob))
+        longTriangle$lob=lob
+
     class(longTriangle) <- c("long.triangle", "data.frame")
     return(longTriangle)
 }

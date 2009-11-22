@@ -22,7 +22,7 @@
 \usage{
 \method{as.triangle}{matrix}(Triangle,origin="origin", dev="dev", value="value",...)
 \method{as.triangle}{data.frame}(Triangle, origin="origin", dev="dev", value="value",...)
-\method{as.data.frame}{triangle}(x, row.names, optional, na.rm=FALSE, ...)
+\method{as.data.frame}{triangle}(x, row.names=NULL, optional, lob=NULL, na.rm=FALSE, ...)
 as.triangle(Triangle, origin="origin", dev="dev", value="value",...)
 \method{plot}{triangle}(x, t = "b", xlab = "dev. period", ylab = NULL, lattice=FALSE, ...)
 }
@@ -32,13 +32,17 @@ as.triangle(Triangle, origin="origin", dev="dev", value="value",...)
   \item{origin}{name of the origin period, default is \code{"origin"}.}
   \item{dev}{name of the origin period, default is \code{"dev"}.}
   \item{value}{name of the value, default is \code{"value"}.}
-  \item{row.names}{not used}
+  \item{row.names}{default is set to \code{NULL} an will merge origin
+    and dev. period to create row names.}
+  \item{lob}{default is \code{NULL}. The idea is to use \code{lob} (line
+  of business) as and additional column to label a triangle in a long format, see the
+  examples for more details.}
   \item{optional}{not used}
   \item{na.rm}{logical. Remove missing values?}
   \item{x}{a matrix of class 'triangle'}
   \item{data}{a \code{data.frame} or a \code{data.frame} with
-    additional class attribute 'triangle' columns for origin and development periods and a value column,e.g
-    claims}
+    additional class attribute 'triangle' columns for origin and
+    development periods and a value column,e.g claims}
     \item{xlab}{a label for the x axis, defaults to 'dev. period'}
   \item{ylab}{a label for the y axis, defaults to NULL}
   \item{lattice}{logical. If \code{FALSE} the function
@@ -84,6 +88,12 @@ plot(GenIns, lattice=TRUE)
 ## Triangles are usually stored as 'long' tables in data bases
 head(GenInsLong)
 as.triangle(GenInsLong, origin="accyear", dev="devyear", "incurred claims")
+
+X <- as.data.frame(RAA)
+head(X)
+
+Y <- as.data.frame(RAA, lob="General Liability")
+head(Y)
 
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the

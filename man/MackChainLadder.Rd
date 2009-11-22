@@ -249,7 +249,46 @@ R2   # Std. Errors have not been re-estimated!
  
 plot(R2, title="Changed R Model")
 
-## 
+
+## Suppose you have a long table with claims development by line of
+## business and would like to apply the MackChainLadder on all triangles
+## in one go.
+
+## First lets create a table similar to what you would get from a 'real' data base
+
+myList <- list("General Liabilty" = RAA,
+               "General Insurance" = GenIns,
+               "Workers Comp"=ABC,
+               "Mortgage Guarantee"=Mortgage)
+
+myData <- do.call("rbind" , lapply(names(myList), function(x)
+                             as.data.frame(myList[[x]], lob=x,
+                na.rm=TRUE)))
+
+head(myData)  ## Does this look familiar? ;-)
+
+## Lets create triangles again and apply MackChainLadder for each lob:
+
+myResults <- by(myData, list(lob=myData$lob), function(x)
+                MackChainLadder(as.triangle(x), est.sigma="Mack"))
+## That's it, lets look at the output
+myResults
+
+## Summarise all results by origin period in one data frame:
+by.origin <- function(x){
+              data.frame(lob=x,
+              origin=dimnames(myResults[[x]]$Triangle)$origin,
+              summary(myResults[[x]])$ByOrigin)
+             }  
+
+ByOrigin <-do.call("rbind", lapply(names(myResults) , by.origin))
+ByOrigin
+
+## Similar for the totals
+Totals <- do.call("rbind", lapply(names(myResults) ,
+            function(x) data.frame(LOB=x, t(summary(myResults[[x]])$Totals))))
+Totals
+
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.
