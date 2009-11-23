@@ -10,7 +10,7 @@ USER-VISIBLE CHANGES
      The default for alpha for all development periods is 1. See Mack's 1999 paper: 
      alpha=1 gives the historical chain ladder age-to-age factors, 
      alpha=0 gives the straight average of the observed individual development factors and 
-     alpha=2 is the result of an ordinary regression with intercept 0 
+     alpha=2 is the result of an ordinary regression with intercept 0. 
   
   o Basic 'chainladder' function now available using linear models. See ?chainladder for more information.
 
@@ -26,12 +26,12 @@ BUG FIXES
     correctly. Thanks to Ben Escoto for reporting and providing a patch.
 
   o 'MackChainLadder': 
-    - Mack.S.E for non-standard chain ladder factors (e.g. straight averages or 
-      ordinary regression through the origin) where not correctly calculated due the missing argument 
-      for alpha. 
+    - Mack.S.E was not correctly calculated for non-standard chain ladder age-to-age factors (e.g. 
+      straight averages or ordinary regression through the origin) due the missing argument 
+      for 'alpha'. 
     - Chain ladder age-to-age factors were always applied to diagonal elements to calculate forecasts,
       although data in sub-diagonal triangle could exist. 
-    Many thanks to Przemyslaw Sloma for reporting those bug. 
+    Many thanks to Przemyslaw Sloma for reporting those issues. 
   
 Version 0.1.2-12
 ================
