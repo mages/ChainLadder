@@ -6,7 +6,7 @@
   Run off triangle of claims data.
 }
 \description{
-  Run off triangle (\code{GenIns}) of accumulated general insurance claims
+  Run off triangle of accumulated general insurance claims
   data. \code{GenInsLong} provides the same data in a 'long' format.
 }
 \usage{GenIns}
@@ -24,6 +24,11 @@ of Outstanding Claims.  \emph{Journal of Econometrics} \bold{23}, 37-61. }
 \examples{
 GenIns
 plot(GenIns)
+
+plot(GenIns, lattice=TRUE)
+
+
+head(GenInsLong)
 
 ## Convert long format into triangle
 ## Triangles are usually stored as 'long' tables in data bases

@@ -4,7 +4,7 @@
 \title{ Estimate age-to-age factors }
 \description{
 Basic chain ladder function to estimate age-to-age factors for a given
-cumulative run-off triangle. This function is used by Mack- and MunicChainLadder.
+cumulative run-off triangle. This function is used by Mack- and MunichChainLadder.
 }
 \usage{
 chainladder(Triangle, weights = 1, delta = 1)
@@ -19,12 +19,12 @@ chainladder(Triangle, weights = 1, delta = 1)
   \item{weights}{ weights. Default: 1, which sets the weights for all
     triangle entries to 1. Otherwise specify weights as a matrix of the same
     dimension as \code{Triangle} with all weight entries in [0; 1]}
-  \item{delta}{'weighting' parameters, either 0,1 or 2. Default: 1.
-    See Zehnwirth & Barnett (2000); delta=1 gives the historical chain
+  \item{delta}{'weighting' parameters, either 0,1 or 2. Default: 1;
+    delta=1 gives the historical chain
     ladder age-to-age factors, delta=0 gives the straight average of the
     observed individual development factors and delta=2 is the result of
     an ordinary regression of \eqn{C_{i,k+1}} against \eqn{C_{i,k}} with
-    intercept 0.
+    intercept 0, see Barnett & Zehnwirth (2000);.
     Please note that Mack (1999) used the notation of alphas, with alpha=2-delta.
   }
 }
@@ -32,18 +32,18 @@ chainladder(Triangle, weights = 1, delta = 1)
 \details{
  
   The key idea is to see the chain ladder algorithm as a weighted linear regression
-  through the origin applied to each development period.
+  through the origin applied for each development period.
 
-  Say \code{y} are all cumulative claims at development period
+  Suppose \code{y} is the vector of cumulative claims at development period
   \code{i+1}, and \code{x} at development period \code{i}, \code{w} are
   weighting factors and \code{F} the individual age-to-age factors \code{F=y/x}, than
   we get the various age-to-age factors for different deltas (alphas) as:
 
-  \code{sum(w*x^alpha*F)/sum(w*x^alpha) # Mack's (1999) notation}
+  \code{sum(w*x^alpha*F)/sum(w*x^alpha) # Mack (1999) notation}
   
   \code{delta <- 2-alpha}
   
-  \code{lm(y~x + 0 ,weights=w/x^delta) # Zehnwirth & Barnett (2000) notation}
+  \code{lm(y~x + 0 ,weights=w/x^delta) # Barnett & Zehnwirth (2000) notation}
   
  }
 \value{
@@ -57,7 +57,7 @@ chainladder(Triangle, weights = 1, delta = 1)
   
 \cite{Thomas Mack. The standard error of chain ladder reserve estimates: Recursive calculation and inclusion of a tail factor. \emph{Astin Bulletin}. Vol. 29. No 2. 1999. pp.361:366}
 
-\cite{B. Zehnwirth and G. Barnett. Best Estimates for
+\cite{G. Barnett and B. Zehnwirth. Best Estimates for
   Reserves. \emph{Proceedings of the CAS.} Volume LXXXVII. Number 167. November 2000.}
 
 }
@@ -71,12 +71,13 @@ chainladder(Triangle, weights = 1, delta = 1)
 %% ~Make other sections like Warning with \section{Warning }{....} ~
 
 \seealso{See also
- \code{\link{MackChainLadder}}, 
  \code{\link{predict.ChainLadder}}
+ \code{\link{MackChainLadder}},  
 }
 \examples{
 
-## Concept of different chain ladder age-to-age factors
+## Concept of different chain ladder age-to-age factors.
+## Compare Mack's and Barnett & Zehnwirth's papers.
 x <- RAA[1:9,1]
 y <- RAA[1:9,2]
 
@@ -100,7 +101,7 @@ sum(w*x^alpha*F)/sum(w*x^alpha)
 lm(y~x + 0 ,weights=w/x^(2-alpha))
 summary(chainladder(RAA, weights=weights, delta=delta)$Models[[1]])$coef
 
-## regression age-to-age factors
+## ordinary regression age-to-age factors
 alpha=2
 delta <- 2-alpha
 sum(w*x^alpha*F)/sum(w*x^alpha)
@@ -126,7 +127,7 @@ sum(w*x^alpha*F)/sum(w*x^alpha)
 lm(y~x + 0 ,weights=w/x^(2-alpha))
 summary(chainladder(RAA, weights=weights, delta=delta)$Models[[1]])$coef
 
-## regression age-to-age factors
+## ordinary regression age-to-age factors
 alpha=2
 delta <- 2-alpha
 sum(w*x^alpha*F)/sum(w*x^alpha)

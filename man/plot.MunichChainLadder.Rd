@@ -4,8 +4,8 @@
 \title{  Plot method for a MunichChainLadder object }
 \description{
   \code{plot.MunichChainLadder}, a method to plot the output of
-  \code{\link{MunichChainLadder}}. It is designed to give a quick look at a
-  \code{MunichChainLadder} object, to check the result and the
+  \code{\link{MunichChainLadder}} object. It is designed to give a quick
+  overview of a \code{MunichChainLadder} object and to check the
   correlation between the paid and incurred residuals.
 }
 \usage{
@@ -17,9 +17,10 @@
 \arguments{
   \item{x}{output from \code{MunichChainLadder}}
   \item{mfrow}{see \code{\link{par}}}
-  \item{title}{see \code{\link{title}}}  
-  \item{\dots}{ optional arguments to \code{plot} method }
-}
+  \item{title}{see \code{\link{title}}}
+  \item{\dots}{ optional arguments. See \code{\link{plot.default}} for
+    more details.}
+  }
 \details{
   \code{plot.MunichChainLadder} shows four plots, starting from the top
   left with a barchart of forecasted ultimate claims costs by
@@ -33,11 +34,11 @@
   factors.
 }
 \author{ Markus Gesmann}
-\note{ The design of the plots follows those of Quarg's paper:
+\note{ The design of the plots follows those in Quarg's (2004) paper:
     \cite{Gerhard Quarg and Thomas Mack. Munich Chain Ladder. Blatter DGVFM 26,
   Munich, 2004.}
 }
-\seealso{ See Also as \code{\link{MunichChainLadder}}}
+\seealso{ See also \code{\link{MunichChainLadder}}}
 \examples{
 M <- MunichChainLadder(MCLpaid, MCLincurred)
 plot(M)

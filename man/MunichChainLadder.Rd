@@ -2,11 +2,11 @@
 \alias{MunichChainLadder}
 
 %- Also NEED an '\alias' for EACH other topic documented here.
-\title{Munich-Chain-Ladder Model }
+\title{Munich-chain-ladder Model }
 \description{
-  The Munich-Chain-Ladder model forecasts ultimate claims based on a cumulative
+  The Munich-chain-ladder model forecasts ultimate claims based on a cumulative
   paid and incurred claims triangle. 
-  The Munich-Chain-Ladder model assumes that the Mack-model is applicable
+  The model assumes that the Mack-chain-ladder model is applicable
   to the paid and incurred claims triangle, see \code{\link{MackChainLadder}}.
 }
 \usage{
@@ -16,9 +16,11 @@ MunichChainLadder(Paid, Incurred,
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
-  \item{Paid}{cumulative paid claims triangle. A (mxn)-matrix \eqn{P_{ik}} 
+  \item{Paid}{cumulative paid claims triangle. Assume columns are the development
+    period, use transpose otherwise. A (mxn)-matrix \eqn{P_{ik}} 
     which is filled for \eqn{k \leq n+1-i; i=1,\ldots,m; m\geq n}}
-  \item{Incurred}{cumulative incurred claims triangle. A (mxn)-matrix
+  \item{Incurred}{cumulative incurred claims triangle. Assume columns are the development
+    period, use transpose otherwise. A (mxn)-matrix
     \eqn{I_{ik}} which is filled for \eqn{k \leq n+1-i; i=1,\ldots,m,
       m\geq n }}
   \item{est.sigmaP}{defines how \eqn{sigma_{n-1}} for the Paid triangle
@@ -52,16 +54,17 @@ MunichChainLadder(Paid, Incurred,
   \item{IncurredResiduals}{incurred residuals}
   \item{QResiduals}{paid/incurred residuals}
   \item{QinverseResiduals}{incurred/paid residuals}
-  \item{lambdaP}{dependency coefficient between paid chain ladder ratios and
-    incurred/paid ratios}
+  \item{lambdaP}{dependency coefficient between paid chain ladder
+    age-to-age factors and
+    incurred/paid age-to-age factors}
   \item{lambdaI}{dependency coefficient between incurred chain ladder
     ratios and paid/incurred ratios}
-  \item{qinverse.f}{chain-ladder-link-ratio of the incurred/paid triangle}
-  \item{rhoP.sigma}{estimation of the conditional deviation around the
-    paid/incurred ratios}
-  \item{q.f}{chain-ladder-link-ratio of the paid/incurred triangle}
-  \item{rhoI.sigma}{estimation of the conditional deviation around the
-    incurred/paid ratios}
+  \item{qinverse.f}{chain-ladder-link age-to-age factors of the incurred/paid triangle}
+  \item{rhoP.sigma}{estimated conditional deviation around the
+    paid/incurred age-to-age factors}
+  \item{q.f}{chain-ladder age-to-age factors of the paid/incurred triangle}
+  \item{rhoI.sigma}{estimated conditional deviation around the
+    incurred/paid age-to-age factors}
 }
 \references{
   \cite{Gerhard Quarg and Thomas Mack. Munich Chain Ladder. \emph{Blatter DGVFM} 26,
@@ -72,9 +75,11 @@ MunichChainLadder(Paid, Incurred,
 %
 % ~Make other sections like Warning with \section{Warning }{....} ~
 %}
-\seealso{ See also \code{\link{MackChainLadder}}, 
+\seealso{ See also  
   \code{\link{summary.MunichChainLadder}}, 
-  \code{\link{plot.MunichChainLadder}} }
+  \code{\link{plot.MunichChainLadder}} ,
+  \code{\link{MackChainLadder}}
+}
 \examples{
 
 MCLpaid
@@ -84,7 +89,7 @@ plot(MCLpaid)
 plot(MCLincurred)
 par(op)
 
-# Following the example output in Quarg's paper:
+# Following the example in Quarg's (2004) paper:
 MCL <- MunichChainLadder(MCLpaid, MCLincurred, est.sigmaP=0.1, est.sigmaI=0.1)
 MCL
 plot(MCL)
@@ -96,7 +101,7 @@ MCL$MackIncurred
 MCL$Paid
 MCL$Incurred
 # Parameters from section 3.3.2
-# Standard chain ladder factors
+# Standard chain ladder age-to-age factors
 MCL$MackPaid$f
 MCL$MackIncurred$f
 MCL$MackPaid$sigma

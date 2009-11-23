@@ -21,6 +21,7 @@
 \examples{
 Mortgage
 Mortgage
-matplot(t(Mortgage), type="l")
+plot(Mortgage)
+plot(Mortgage, lattice=TRUE)
 }
 \keyword{datasets}

@@ -10,7 +10,7 @@
   of Actuaries in November 2007 and 2008.
   This package has currently implementations for the Mack-, Munich- and
   Bootstrap-chain-ladder methods. The package offers also some utility
-  function to convert quickly tables into triangles, triangles into
+  functions to convert quickly tables into triangles, triangles into
   tables, cumulative into incremental and incremental into cumulative triangles.
    
   The ChainLadder-package comes with an example spreadsheet which
@@ -18,10 +18,10 @@
   functions in Excel. The spreadsheet is located in the Excel folder of
   the package. The R command \code{searchpaths()[grep('ChainLadder',
     searchpaths())]} will tell you the exact path to the directory.
-  In order to use the spreadsheet you will need the RExcel-Addin, see
+  To use the spreadsheet you will need to have the RExcel-Addin, see
   \url{http://sunsite.univie.ac.at/rcom/} for more details.
    
-  More information and various presentations given about the ChainLadder-package are available
+  More information is available
   on the project web site \url{http://code.google.com/p/chainladder/}
     
   If you are also interested in loss distributions modeling, risk theory (including ruin theory), 
@@ -75,7 +75,7 @@ plot(MCL, lattice=TRUE)
 B <- BootChainLadder(RAA, R=999, process.distr="gamma")
 B
 plot(B)
-# fitdistribution
+# fit a log-normal distribution
 library(MASS)
 # fit a log-normal distribution 
 fit <-  fitdistr(B$IBNR.Totals, "lognormal")
@@ -107,7 +107,7 @@ triangle <- as.triangle(X, origin="origin", dev="dev", value="value")
 triangle
 
 
-## More for a laugh - 3d plot of a triangle
+## More for a laugh - 3d plot of a triangle and MackChainLadder output
 if(require(rgl)){ #provides interactive 3d plotting functions
 MCL=MackChainLadder(GenIns/1e6, est.sigma="Mack") 
 FT <- MCL$FullTriangle 
@@ -132,4 +132,5 @@ points3d(xyz.coords(x=as.numeric(as.character(pSE$origin)),
     y=as.numeric(as.character(pSE$dev)),z=pSE$Freq), size=2) 
 }
 }
+
 

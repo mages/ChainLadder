@@ -19,8 +19,8 @@ data(MCLincurred)}
 MCLpaid
 MCLincurred
 op=par(mfrow=c(2,1))
-matplot(t(MCLpaid), type="l")
-matplot(t(MCLincurred), type="l")
+plot(MCLpaid)
+plot(MCLincurred)
 par(op)
 }
 \keyword{datasets}

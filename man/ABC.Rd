@@ -14,7 +14,8 @@
 }
 \examples{
 ABC
-matplot(t(ABC), type="l")
+plot(ABC)
+plot(ABC, lattice=TRUE)
 }
 \keyword{datasets}
 

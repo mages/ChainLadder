@@ -6,19 +6,19 @@
 Run off triangle of claims data
 }
 \description{
-Run off triangle of incremental simulated claims data
+Run off triangle of simulated incremental claims data
 }
 \usage{data(M3IR5)}
 \format{
-  A matrix with incremental underwriting statistic of 14 accident years and 14 development years.
+  A matrix with simulated incremental claims of 14 accident years and 14 development years.
 }
 %%\details{
 %%  ~~ If necessary, more details than the __description__ above ~~
 %%}
 \source{
-	\cite{B. Zehnwirth and G. Barnett. Best Estimates for Reserves. \emph{Proceedings of the CAS.} Volume LXXXVII. Number 167.
-	November 2000.}
-
+	\cite{ G. Barnett and B. Zehnwirth. Best Estimates for
+	  Reserves. \emph{Proceedings of the CAS.} Volume
+	  LXXXVII. Number 167. November 2000.}
 }
 %%\references{
 %%  ~~ possibly secondary sources and usages ~~
@@ -26,9 +26,8 @@ Run off triangle of incremental simulated claims data
 \examples{
 
 M3IR5
-incr2cum(M3IR5)
 plot(M3IR5)
-
+plot(incr2cum(M3IR5), lattice=TRUE)
 }
 \keyword{datasets}
 %data(M3IR5)

@@ -16,7 +16,7 @@
  Functions to ease the work with triangle shaped matrix data. A
  'triangle' is a matrix with some generic functions.
  Triangles are usually stored in a 'long' format in data bases. The
- function \code{as.triangle} can transform \code{data.frames} into a
+ function \code{as.triangle} can transform a \code{data.frame} into a
  triangle shape.
 }
 \usage{
@@ -30,20 +30,20 @@ as.triangle(Triangle, origin="origin", dev="dev", value="value",...)
 \arguments{
   \item{Triangle}{a triangle}
   \item{origin}{name of the origin period, default is \code{"origin"}.}
-  \item{dev}{name of the origin period, default is \code{"dev"}.}
+  \item{dev}{name of the development period, default is \code{"dev"}.}
   \item{value}{name of the value, default is \code{"value"}.}
   \item{row.names}{default is set to \code{NULL} an will merge origin
     and dev. period to create row names.}
   \item{lob}{default is \code{NULL}. The idea is to use \code{lob} (line
-  of business) as and additional column to label a triangle in a long format, see the
-  examples for more details.}
+    of business) as an additional column to label a triangle in a long format, see the
+    examples for more details.}
   \item{optional}{not used}
   \item{na.rm}{logical. Remove missing values?}
   \item{x}{a matrix of class 'triangle'}
-  \item{data}{a \code{data.frame} or a \code{data.frame} with
-    additional class attribute 'triangle' columns for origin and
-    development periods and a value column,e.g claims}
-    \item{xlab}{a label for the x axis, defaults to 'dev. period'}
+  %  \item{data}{a \code{data.frame} or a \code{data.frame} with
+  %    additional class attribute 'triangle' columns for origin and
+  %    development periods and a value column,e.g claims}
+  \item{xlab}{a label for the x axis, defaults to 'dev. period'}
   \item{ylab}{a label for the y axis, defaults to NULL}
   \item{lattice}{logical. If \code{FALSE} the function
     \code{\link{matplot}} is used to plot the developments of the
@@ -51,7 +51,7 @@ as.triangle(Triangle, origin="origin", dev="dev", value="value",...)
     of the lattice package is used, to plot developments of each origin
     period in a different panel.}
   \item{t}{type, see \code{\link{plot.default}}}
-  \item{\dots}{Arguments to be passed to methods}
+  \item{\dots}{arguments to be passed to other methods}
 }
 %\details{
   %%  ~~ If necessary, more details than the description above ~~

@@ -36,7 +36,7 @@ Incurred[seq(1,n,4),] <- qincurred
 MunichChainLadder(Paid, Incurred)
 
 # In the same way we can apply BootChainLadder
-# We reduce the resample size R from the default of 999 to 99 in this example purely to reduce run time.
+# We reduce the size of bootstrap replicates R from the default of 999 to 99 purely to reduce run time.
 BootChainLadder(Paid, R=99) 
 
 }

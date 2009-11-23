@@ -23,6 +23,7 @@
 }
 \examples{
 RAA
-matplot(t(RAA), type="l")
+plot(RAA)
+plot(RAA, lattice=TRUE)
 }
 \keyword{datasets}

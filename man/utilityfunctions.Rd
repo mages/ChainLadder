@@ -1,9 +1,9 @@
 \name{Cumulative and incremental triangles}
 \alias{incr2cum}
 \alias{cum2incr}
-\title{Conversion between cumulative and incremental triangles}
+\title{Cumulative and incremental triangles}
 \description{
-  Conversion between cumulative and incremental triangles
+ Functions to convert between cumulative and incremental triangles
 }
 \usage{
 incr2cum(Triangle, na.rm=FALSE)
@@ -23,13 +23,7 @@ cum2incr(Triangle)
  Both functions return a \code{triangle}.  
 }
 \author{Markus Gesmann, Christophe Dutang}
-\seealso{ See also \code{\link{qpaid}}, 
-  \code{\link{RAA}}, 
-  \code{\link{plot.MackChainLadder}}, 
-  \code{\link{residuals.MackChainLadder}}, 
-  \code{\link{MunichChainLadder}},
-  \code{\link{BootChainLadder}},
-}
+\seealso{ See also \code{\link{as.triangle}}}
 \examples{
 
 # See the Taylor/Ashe example in Mack's 1993 paper

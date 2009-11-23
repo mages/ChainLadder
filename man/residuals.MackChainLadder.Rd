@@ -4,7 +4,7 @@
 \title{ Extract residuals of a MackChainLadder model }
 \description{
   Extract residuals of a \code{\link{MackChainLadder}} model by 
-  origin period, calendar period and development period.
+  origin-, calendar- and development period.
 }
 \usage{
 \method{residuals}{MackChainLadder}(object, ...)
