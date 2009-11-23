@@ -247,6 +247,9 @@ tail.SE <- function(FullTriangle, StdErr, Total.SE, tail.factor, tail.se=NULL, t
     m <- nrow(FullTriangle)
 
     FullTriangle <- cbind(FullTriangle, FullTriangle[,n] * tail.factor)
+    dimnames(FullTriangle) <- list(origin=dimnames(FullTriangle)[[1]],
+                                   dev=c(dimnames(FullTriangle)[[2]][1:n], "Inf"))
+
     StdErr$f[n] <- tail.factor
 
     ## Idea: linear model for f, estimate dev for tail factor
@@ -427,7 +430,8 @@ if(getRversion() < "2.9.0") { ## work around missing feature
         par(op)
 
     }else{
-        long <- expand.grid(origin=as.numeric(dimnames(.Triangle)$origin), dev=as.numeric(dimnames(.Triangle)$dev))
+        long <- expand.grid(origin=as.numeric(dimnames(.FullTriangle)$origin),
+                            dev=as.numeric(dimnames(.FullTriangle)$dev))
         long$value <- as.vector(.FullTriangle)
         long$valuePlusMack.S.E <-  long$value + as.vector(x$Mack.S.E)
         long$valueMinusMack.S.E <- long$value - as.vector(x$Mack.S.E)
@@ -436,7 +440,8 @@ if(getRversion() < "2.9.0") { ## work around missing feature
                main="Chain ladder developments by origin period",
                xlab="Development period",
                ylab="Amount",col=1,
-               key=list(lines=list(lty=c(1,3), col=1),text=list(lab=c("Chain-ladder dev.", "Mack's S.E.")),
+               key=list(lines=list(lty=c(1,3), col=1),
+               text=list(lab=c("Chain ladder dev.", "Mack's S.E.")),
                space="top", columns=2),...)
     }
 }
