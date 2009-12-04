@@ -1,8 +1,7 @@
 test.getLatestCumulative.RAA <- function() {
     ## by Markus Gesmann
     ## Test the MackChainLadder against example given in Mack's 1999 paper
-    MRT <- ChainLadder:::getLatestCumulative(Mortgae)
-
+    MRT <- ChainLadder:::MackChainLadder(Mortgage, tail=1.05, tail.sigma=71, tail.se=0.02, est.sigma="Mack")
     ## Table 1 in the above paper
     f <- c(11.10, 4.092, 1.708, 1.276, 1.139, 1.069, 1.026, 1.023, 1.05)
     f.se <- c(2.24, 0.517, 0.122, 0.051, 0.042, 0.023, 0.015, 0.012, 0.02)
