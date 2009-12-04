@@ -36,8 +36,8 @@
 \tabular{ll}{
 Package: \tab ChainLadder\cr
 Type: \tab Package\cr
-Version: \tab 0.1.2-13\cr
-Date: \tab 2008-10-12\cr
+Version: \tab 0.1.2-14\cr
+Date: \tab 2009-12-04\cr
 License: \tab GPL version 2 or later\cr
 }
 }

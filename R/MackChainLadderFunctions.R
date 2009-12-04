@@ -257,6 +257,7 @@ tail.SE <- function(FullTriangle, StdErr, Total.SE, tail.factor, tail.se=NULL, t
     start <- 1
     .f <- StdErr$f[start:(n-1)]
     .dev <- c(start:(n-1))
+##    mf <- lm(log(.f[.f>1]-1) ~ .dev[.f>1])
     mf <- lm(log(.f-1) ~ .dev)
     tail.pos <- ( log(StdErr$f[n]-1) - coef(mf)[1] ) / coef(mf)[2]
 
@@ -327,7 +328,7 @@ summary.MackChainLadder <- function(object,...){
 getLatestCumulative <- function(cumulative.tri) {
   # Return the latest diagonal as a vector from a cumulative triangle
   available.indicies <- apply(!is.na(cumulative.tri), 1, which)
-  latest.indicies <- sapply(available.indicies, function(x) ifelse(length(x)>1, max(x), 1) )
+  latest.indicies <- sapply(available.indicies, function(x) ifelse(length(x)>0, max(x), 1) )
   if (any(latest.indicies < 1))
     stop("Some year (row) has no available losses")
   return(cumulative.tri[cbind(1:nrow(cumulative.tri), latest.indicies)])
