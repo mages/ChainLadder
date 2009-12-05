@@ -1,5 +1,3 @@
-##library("RUnit")
-##library("ChainLadder")
 
 test.getLatestCumulative.RAA <- function() {
     ## by Ben Escoto
