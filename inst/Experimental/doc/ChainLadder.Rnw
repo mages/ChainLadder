@@ -1,31 +1,30 @@
 % -*- mode: noweb; noweb-default-code-mode: R-mode; -*-
 %
-% Copyright (C) 2004 Markus Gesmann
+% Copyright (C) 2009 Markus Gesmann
 
 
 \documentclass[a4paper]{article}
+\usepackage{amsmath,color,hyperref}
+\usepackage[round]{natbib}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage{Sweave}
+\SweaveOpts{echo=FALSE}
 
-  \usepackage{amsmath,color,hyperref}
-  \usepackage[round]{natbib}
-  \usepackage[T1]{fontenc}
-  \usepackage[utf8]{inputenc}
-  \usepackage[english]{babel}
-  \usepackage{Sweave}
-  \SweaveOpts{echo=FALSE}
-  
-% \VignetteIndexEntry{An R Package for claims reserving } 
-% \VignetteDepends{Hmisc, lattice} 
-% \VignetteKeyword{ChainLadder} 
+% \VignetteIndexEntry{An R Package for claims reserving }
+% \VignetteDepends{Hmisc, lattice}
+% \VignetteKeyword{ChainLadder}
 
-  \newcommand{\proglang}[1]{\textsf{#1}}
-  \newcommand{\pkg}[1]{\textbf{#1}}
-  \renewcommand{\familydefault}{\sfdefault}
-  
-  \bibliographystyle{plainnat}
-      
-  \title{The \pkg{ChainLadder} package }
-  \author{Markus Gesmann\\
-	  	markus.gesmann@gmail.com}
+\newcommand{\proglang}[1]{\textsf{#1}}
+\newcommand{\pkg}[1]{\textbf{#1}}
+\renewcommand{\familydefault}{\sfdefault}
+
+\bibliographystyle{plainnat}
+
+\title{The \pkg{ChainLadder} package }
+\author{Markus Gesmann\\
+  markus.gesmann@gmail.com}
 
 
 \begin{document}
@@ -33,15 +32,10 @@
 \maketitle
 
 \begin{abstract}
-
-  The \pkg{ChainLadder} package~\citep{chainladder} was developed out of 
-  presentation the author gave on stochastic reserving at the Institute of Actuaries 
-  in 2007 and 2008. 
-  Currently the Mack-, Munich- and Bootstrap-chain-ladder methods are implemented. 
-  Further the package provides an example spreadsheet, which shows how to use the
-  \pkg{ChainLadder} functions within Excel using the RExcel Add-in~\citep{rexcel}. 
-
+The \pkg{ChainLadder} package~\citep{chainladder} started its life out of presentations the author gave on stochastic reserving at the Institute of Actuaries from 2007 - 2009. Currently the Mack-, Munich- and Bootstrap-chain-ladder methods are implemented. The package also provides an example spreadsheet, which shows how to use the \pkg{ChainLadder} functions within Excel using the RExcel Add-in~\citep{rexcel}.
 \end{abstract}
+\subsection*{Thanks}
+\input{"../../../THANKS"}
 \clearpage
 \tableofcontents
 \clearpage
@@ -49,29 +43,28 @@
 
 \subsection{Claims reserving in insurance}
 Insurance companies are different.\\[2mm]
-Insurers sell the promise to pay for future claims occurring over an agreed period for an 
-upfront received premium. Unlike other industries insurers don't know the 
-production cost of their product. The estimated future claim payments have to be held 
-in the reserves, one of the biggest liability items on an insurer's balance sheet. 
-The \pkg{ChainLadder} package can help to assess those reserves. 
+Unlike any other industry insurers don't know the production cost of their product. 
+Insurers sell the promise to pay for future claims occurring over an agreed period for an
+upfront received premium. The estimated future claim payments have to be held
+in the reserves, one of the biggest liability items on an insurer's balance sheet.
+The \pkg{ChainLadder} package can help to assess those reserves.
 
 \subsection{Typical scenario}
-Usually an insurance portfolio is split into ''homogeneous" classes of business, 
-e.g. motor, marine, property, etc. 
-Policy information are than aggregated by class of business to view at its historical claims development over time for each year of origin. This cross-tab view of claims data looks in most cases like a triangle filled in in the top left area. The aim is to forecast future claims developments, which would fill the bottom right of the matrix, see Figure~\ref{triangle}.
+Usually an insurance portfolio is split into ''homogeneous" classes of business,
+e.g. motor, marine, property, etc. Policy claims data are than aggregated by class of business, origin- and development period. This cross-tab view of historical claims developments looks in most cases like a triangle, filled with figures in in the top left area. The objective is to forecast future claims developments, which would fill the bottom right of the matrix, see Figure~\ref{triangle}. The difference between the estimated ultimate claims costs and claims paid to date have to be held in the reserves.
 \begin{figure}[h]
   \begin{center}
-\includegraphics[width=0.4\textwidth]{Triangles}
-    \caption{Schematic example of claims triangles}\label{triangle}
+    \includegraphics[width=0.4\textwidth]{Triangles}
+    \caption{Schematic example of a claims triangles}\label{triangle}
   \end{center}
 \end{figure}
 
 \subsection{Stochastic reserving }
-Over recent years stochastic methods have been developed and published. 
-However, their usage seems to be inhibited by the usage of Excel as the standard tool for reserve analysis, which  is not an ideal environment for implementing those stochastic methods.  
-Our idea is to use R as the language to implement stochastic reserving 
-methods, and to share them in the \pkg{ChainLadder} package via CRAN. 
-Using R as a language of choice gives us also the opportunity to embed the developed R functions back into Excel via the RExcel Addin~\cite{rexcel}. Therefore colleagues who are afraid of R can further use Excel as a front end. The \pkg{ChainLadder} package provides a spreadsheet showing some basic examples.
+Over recent years stochastic methods have been developed and published, to provide more information than just a point estimator of the reserves. Changes in regulatory requirements such as Solvency II will foster the usage of stochastic reserving methods.
+However, their usage seems to be inhibited by the usage of Excel as the standard tool for reserve analysis, which  is not an ideal environment for implementing those stochastic methods.
+Our idea is to use R to implement stochastic reserving
+methods, and to share them in the \pkg{ChainLadder} package via CRAN.
+Using R as a language of choice gives us also the opportunity to embed the developed R functions back into Excel via the RExcel Addin~\cite{rexcel}. Therefore colleagues who are afraid of R can continue to use Excel as a front end. The \pkg{ChainLadder} package provides a spreadsheet showing some basic examples. The following R command \texttt{system.file("Excel", package="ChainLadder")} will give you the details to the folder containing the Excel spreadsheet.
 
 \subsection{Getting started}
 Start R and type for
@@ -88,58 +81,58 @@ The ChainLadder package comes with some example data sets, e.g.
 <<echo=TRUE>>=
 library(ChainLadder)
 RAA
-@ 
+@
 \begin{figure}[h]
   \begin{center}
 <<fig=TRUE>>=
-matplot(t(RAA), t="b", ylab="Incurred Claims", xlab="Development Year")
+print(plot(RAA))
 @
-    \caption{\texttt{plot(M)}}
+    \caption{\texttt{plot(RAA)}}
   \end{center}
 \end{figure}
 
 \subsection{Working with triangles}
-Most reserving methods are applied on data stored in a triangle format, usually with origin periods in rows and development periods in columns. However, claims development should be stored in table like formats in databases. 
+Most reserving methods are applied on data stored in a triangle format, usually with origin periods in rows and development periods in columns. However, claims development should be stored in table like formats in databases.
 
-Also one distinguish between cumulative and incremental claims development pattern. 
-Transform from cumulative to incremental 
+Also one distinguish between cumulative and incremental claims development pattern.
+Transform from cumulative to incremental
 <<echo=TRUE>>=
-incRAA <- cbind(RAA[,1], t(apply(RAA,1,diff))) 
+incRAA <- cbind(RAA[,1], t(apply(RAA,1,diff)))
 incRAA
 @
-Transform from incremental to cumulative 
+Transform from incremental to cumulative
 <<echo=TRUE>>==
-cumRAA <- t(apply(incRAA,1, cumsum)) 
+cumRAA <- t(apply(incRAA,1, cumsum))
 @
-Triangles to long format 
+Triangles to long format
 <<echo=TRUE>>=
-lRAA <- expand.grid(origin=as.numeric(dimnames(RAA) 
-$origin), dev=as.numeric(dimnames(RAA)$dev)) 
-lRAA$value <- as.vector(RAA) 
+lRAA <- expand.grid(origin=as.numeric(dimnames(RAA)
+$origin), dev=as.numeric(dimnames(RAA)$dev))
+lRAA$value <- as.vector(RAA)
 head(lRAA)
 @
-Long format to triangle (see later for as.ArrayTriangle function, works much better with ChainLadder) 
+Long format to triangle (see later for as.ArrayTriangle function, works much better with ChainLadder)
 <<echo=TRUE>>=
-reshape(lRAA, timevar="dev", idvar="origin", 
-v.names="value", direction="wide") 
+reshape(lRAA, timevar="dev", idvar="origin",
+v.names="value", direction="wide")
 @
 
 \section{ChainLadder package philosophy}
-Use the linear regression function "lm" as 
-much as possible and utilise its output 
- The chain-ladder model for volume weighted 
-average link ratios is expressed as a formula: 
+Use the linear regression function "lm" as
+much as possible and utilise its output
+ The chain-ladder model for volume weighted
+average link ratios is expressed as a formula:
 \texttt{ y ~ x + 0, weights=1/x }
-and can easily be changed 
- Provide tests for the model assumptions 
- 
+and can easily be changed
+ Provide tests for the model assumptions
+
 \subsection{Chain-ladder as linear regression }
-Chain-ladder can be regarded as weighted linear 
-regression through the origin: 
+Chain-ladder can be regarded as weighted linear
+regression through the origin:
 <<echo=TRUE>>=
-x <- RAA[,1] # dev. period 1 
-y <- RAA[,2] # dev. period 2 
-model <- lm(y ~ x + 0, weights=1/x) 
+x <- RAA[,1] # dev. period 1
+y <- RAA[,2] # dev. period 2
+model <- lm(y ~ x + 0, weights=1/x)
 model
 @
 Full regression output
@@ -187,17 +180,17 @@ The method works for a cumulative triangle Cik if the following assumptions are 
 $$\left\{ C_{i1},\ldots,C_{in}\right\}, \left\{ C_{j1},\ldots,C_{jn}\right\},\; i \neq j $$%,\; 1 \leq i \leq n$$
 $$ E\left[ \frac{C_{i,k+1}}{C_{ik}} | C_{i1},C_{i2},\ldots,C_{ik} \right] = f_k$$
 $$ \mbox{Var}\left( \frac{C_{i,k+1}}{C_{ik}} | C_{i1},C_{i2},\ldots,C_{ik} \right) = \frac{\sigma_k^2}{C_{ik}}$$
-All accident years are independent  
+All accident years are independent
 
 If these assumptions are hold, the Mack-chain-ladder-model gives an
 unbiased estimator for IBNR (Incurred But Not Reported) claims.
 
 \subsection{MackChainLadder}
 Usage:\texttt{
-MackChainLadder(Triangle, 
+MackChainLadder(Triangle,
     weights = 1/Triangle,
     est.sigma="log-linear",
-    tail=FALSE, tail.se=NULL,           
+    tail=FALSE, tail.se=NULL,
     tail.sigma=NULL)
 }
 
@@ -220,9 +213,9 @@ plot(M)
   \end{center}
 \end{figure}
 
-The residual plots show the standardised residuals against fitted values, origin period, calendar period and development period. 
+The residual plots show the standardised residuals against fitted values, origin period, calendar period and development period.
 
-All residual plots should show no pattern or direction for Mack's method to be applicable. 
+All residual plots should show no pattern or direction for Mack's method to be applicable.
 
 Pattern in any direction can be the result of trends and require further investigations.
 
@@ -230,7 +223,7 @@ Pattern in any direction can be the result of trends and require further investi
 \subsection{MunichChainLadder}
 Munich-chain-ladder (MCL) is an extension of Mack?s method that reduces the gap between IBNR projections based on paid (P) and incurred (I) losses
 Mack has to be applicable to both triangles
-MCL adjusts the chain-ladder link-ratios depending if the momentary (P/I) ratio is above or below average 
+MCL adjusts the chain-ladder link-ratios depending if the momentary (P/I) ratio is above or below average
 MCL uses the correlation of residuals between P vs. (I/P) and I vs. (P/I) chain-ladder link-ratio to estimate the correction factor
 <<echo=TRUE>>=
 Paid <- MCLpaid
@@ -243,28 +236,28 @@ MackIncurred = MackChainLadder(Incurred)
 \begin{figure}[h]
   \begin{center}
 <<fig=TRUE>>=
- 
+
   op=par(mfrow=c(1,2))
-  matplot(t(Paid/Incurred), 
+  matplot(t(Paid/Incurred),
   	main="P/I triangle", xlab="Development year", ylab="Paid/Incurred")
   lines(mean.pi)
-   
+
   matplot(t(MackPaid$FullTriangle/MackIncurred$FullTriangle),
-   main="Full P/I triangle using chain ladder", 
-   xlab="Development year", ylab="Paid/Incurred")   
+   main="Full P/I triangle using chain ladder",
+   xlab="Development year", ylab="Paid/Incurred")
   lines(mean.pi)
-  par(op) 
+  par(op)
 @
     \caption{\texttt{plot(M)}}
   \end{center}
 \end{figure}
 
-Usage: 
+Usage:
 \texttt{
-MunichChainLadder(Paid, Incurred, 
-      est.sigmaP = "log-linear",    
-      est.sigmaI = "log-linear", 
-      tailP=FALSE, tailI=FALSE) 
+MunichChainLadder(Paid, Incurred,
+      est.sigmaP = "log-linear",
+      est.sigmaI = "log-linear",
+      tailP=FALSE, tailI=FALSE)
 }
 
 Paid: cumulative paid claims triangle
@@ -272,7 +265,7 @@ Incurred: cumulative incurred claims triangle
 est.sigmaP, est.sigmaI: Estimator for sigman-1
 tailP, tailI: estimator for the tail
 <<echo=TRUE>>=
-MCL <- MunichChainLadder(Paid = MCLpaid, Incurred = MCLincurred, est.sigmaP = 0.1, 
+MCL <- MunichChainLadder(Paid = MCLpaid, Incurred = MCLincurred, est.sigmaP = 0.1,
        est.sigmaI = 0.1)
 MCL
 @
@@ -292,9 +285,9 @@ P/I link-ratio residuals against I link-ratios residuals
 
 \subsection{BootChainLadder}
 
-BootChainLadder uses a two-stage approach. 
-Calculate the scaled Pearson residuals and bootstrap R times to forecast future incremental claims payments via the standard chain-ladder method. 
-Simulate the process error with the bootstrap value as the mean and using an assumed process distribution. 
+BootChainLadder uses a two-stage approach.
+Calculate the scaled Pearson residuals and bootstrap R times to forecast future incremental claims payments via the standard chain-ladder method.
+Simulate the process error with the bootstrap value as the mean and using an assumed process distribution.
 The set of reserves obtained in this way forms the predictive distribution, from which summary statistics such as mean, prediction error or quantiles can be derived.
 
 Usage: \texttt{
@@ -343,12 +336,12 @@ quantile: gives quantiles of the simulation back
 
 \section{R and databases}
 Triangles are usually stored in databases
-Triangles are stored in long tables 
+Triangles are stored in long tables
 Use ODBC to connect to databases
 Use SQL to interact with databases
 Use R to transform tables into triangles
 Apply ChainLadder function across many triangles in one statement
-Write results back into database 
+Write results back into database
 \begin{figure}[h]
   \begin{center}
 \includegraphics{Rdatabases}
@@ -393,7 +386,7 @@ Access data via ODBC and SQL-statements
 # From database
 channel <- odbcConnectAccess(
   "C:/Temp/ChainLadderTestData.mdb")
-myData <- sqlQuery(channel, 
+myData <- sqlQuery(channel,
    "SELECT * FROM tblTestTriangles;")
 odbcClose(channel)
 }
@@ -410,9 +403,9 @@ myData <- triangleTable
 <<echo=TRUE>>=
 library(lattice)
 P <- xyplot(
- value/1e6 ~ dev | LOB, 
- groups=origin, t="l",    
- data=myData,  
+ value/1e6 ~ dev | LOB,
+ groups=origin, t="l",
+ data=myData,
  scales="free"
 )
 @
@@ -451,10 +444,10 @@ convert table for each LOB into a triangle
 apply MackChainLadder for each triangle
 Output is stored in a list
 <<echo=TRUE>>=
-myResults <- by(myData, list(LOB=myData$LOB), 
+myResults <- by(myData, list(LOB=myData$LOB),
 function(x){
  triangle <- as.ArrayTriangle(x)
- M <- MackChainLadder(triangle, est.sigma="Mack")  
+ M <- MackChainLadder(triangle, est.sigma="Mack")
  return(M)
  })
 myResults
@@ -467,16 +460,16 @@ Access origin year and total results separately
 <<echo=TRUE>>=
 OriginResults <- lapply(lapply(myResults, summary), "[[", "ByOrigin")
 # add the names of the triangles to the list
-OriginResults <- lapply(names(OriginResults ), 
+OriginResults <- lapply(names(OriginResults ),
 function(x) data.frame(LOB=x, OriginResults[[x]]))
 # transform list into data.frame
 OriginResultsTable <- do.call("rbind", OriginResults)
 OriginResultsTable
 
-TotalResults <- lapply(lapply(lapply(myResults, summary), 
+TotalResults <- lapply(lapply(lapply(myResults, summary),
 "[[", "Totals"),t)
 # add the names of the triangles to the list
-TotalResults <- lapply(names(TotalResults ), 
+TotalResults <- lapply(names(TotalResults ),
 function(x) data.frame(LOB=x, TotalResults[[x]]))
 # transform list into data.frame
 TotalResultsTable <- do.call("rbind", TotalResults)
@@ -487,9 +480,9 @@ Write results back into new tables of the database via QDBC and sqlSave
 
 \begin{verbatim}
 channel <- odbcConnectAccess("C:/Temp/ChainLadderTestData.mdb")
-sqlSave(channel, OriginResultsTable, "myOriginResults", 
+sqlSave(channel, OriginResultsTable, "myOriginResults",
 rownames=FALSE)
-sqlSave(channel, TotalResultsTable, "myTotalResults", 
+sqlSave(channel, TotalResultsTable, "myTotalResults",
 rownames=FALSE)
 odbcClose(channel)
 \end{verbatim}
@@ -517,7 +510,7 @@ Copy and paste from R to and from Excel
 \subsubsection{R $\to$ Excel}
 
 \begin{verbatim}
-mydf=data.frame(x=1:10, y=letters[1:10]) 
+mydf=data.frame(x=1:10, y=letters[1:10])
 write.table(mydf, file="clipboard", sep="\t", row.names=FALSE)
 \end{verbatim}
 \subsubsection{Excel $\to$ R}
@@ -526,7 +519,7 @@ read.table(file= "clipboard", sep="\t")
 \end{verbatim}
 
 \subsection{RExcel - Using R from within Excel}
-RExcel Add-in allows to use R functions from Excel, see: http://sunsite.univie.ac.at/rcom/ 
+RExcel Add-in allows to use R functions from Excel, see: http://sunsite.univie.ac.at/rcom/
 
 There are at least three different ways of using R from within Excel
 
@@ -562,8 +555,8 @@ With StaR
 	x = .Evaluate("summary(x)")
 End With
 
-Debug.Print "Min.  1st Qu.  Median  Mean  3rd Qu.  Max. " 
-Debug.Print x(0), x(1), x(2), x(3), x(4), x(5) 
+Debug.Print "Min.  1st Qu.  Median  Mean  3rd Qu.  Max. "
+Debug.Print x(0), x(1), x(2), x(3), x(4), x(5)
 
 End Sub
 \end{verbatim}
@@ -607,7 +600,7 @@ Follow examples in R:
 
 \begin{verbatim}
 example(MackChainLadder)
-example(MunichChainLadder) 
+example(MunichChainLadder)
 example(BootChainLadder)
 \end{verbatim}
 
@@ -615,7 +608,7 @@ See also the \pkg{actuar}~\citep{actuar} and R introduction for actuaries~\citep
 
 \section{Conclusion}
 
-R is ideal for reserving 
+R is ideal for reserving
 Built-in functions for statistical modelling
 Powerful language for data manipulations
 Fantastic graphical capabilities for analysis and presentation
@@ -626,27 +619,27 @@ Effective knowledge transfer - plain text files
 
 \begin{verbatim}
 library(rgl) #provides interactive 3d plotting functions
-MCL=MackChainLadder(GenIns/1e6) 
-FT <- MCL$FullTriangle 
-FTpSE <- FT+MCL$Mack.S.E 
-FTpSE[which(MCL$Mack.S.E==0, arr.ind=TRUE)] <- NA 
-FTmSE <- FT-MCL$Mack.S.E 
-FTmSE[which(MCL$Mack.S.E==0, arr.ind=TRUE)] <- NA 
-zr <- round(FT/FT[1,10]*100) 
-zlim <- range(zr, na.rm=TRUE) 
-zlen <- zlim[2] - zlim[1] + 1 
-colorlut <- terrain.colors(zlen) # height color lookup table 
-cols <- colorlut[ zr -zlim[1]+1 ] # assign colors to heights for each point  
-x <- as.numeric(dimnames(FT)$origin) 
-y <- as.numeric(dimnames(FT)$dev) 
-persp3d(x, y=y, 
-        z=(FT), col=cols, xlab="origin", ylab="dev", zlab="loss",back="lines") 
-mSE <- data.frame(as.table(FTmSE)) 
-points3d(xyz.coords(x=as.numeric(as.character(mSE$origin)), 
-    y=as.numeric(as.character(mSE$dev)),z=mSE$Freq), size=2) 
-pSE <- data.frame(as.table(FTpSE)) 
-points3d(xyz.coords(x=as.numeric(as.character(pSE$origin)), 
-    y=as.numeric(as.character(pSE$dev)),z=pSE$Freq), size=2) 
+MCL=MackChainLadder(GenIns/1e6)
+FT <- MCL$FullTriangle
+FTpSE <- FT+MCL$Mack.S.E
+FTpSE[which(MCL$Mack.S.E==0, arr.ind=TRUE)] <- NA
+FTmSE <- FT-MCL$Mack.S.E
+FTmSE[which(MCL$Mack.S.E==0, arr.ind=TRUE)] <- NA
+zr <- round(FT/FT[1,10]*100)
+zlim <- range(zr, na.rm=TRUE)
+zlen <- zlim[2] - zlim[1] + 1
+colorlut <- terrain.colors(zlen) # height color lookup table
+cols <- colorlut[ zr -zlim[1]+1 ] # assign colors to heights for each point
+x <- as.numeric(dimnames(FT)$origin)
+y <- as.numeric(dimnames(FT)$dev)
+persp3d(x, y=y,
+        z=(FT), col=cols, xlab="origin", ylab="dev", zlab="loss",back="lines")
+mSE <- data.frame(as.table(FTmSE))
+points3d(xyz.coords(x=as.numeric(as.character(mSE$origin)),
+    y=as.numeric(as.character(mSE$dev)),z=mSE$Freq), size=2)
+pSE <- data.frame(as.table(FTpSE))
+points3d(xyz.coords(x=as.numeric(as.character(pSE$origin)),
+    y=as.numeric(as.character(pSE$dev)),z=pSE$Freq), size=2)
 
 \end{verbatim}
 
@@ -658,22 +651,22 @@ points3d(xyz.coords(x=as.numeric(as.character(pSE$origin)),
 \end{figure}
 \pagebreak
 
-Reserves cover IBNR (Incurred But Not 
-Reported) claims Reserves are usually estimated based on 
-historical claims payment/reporting patterns  In the past a point estimator for the reserves 
-was sufficient New regulatory requirements ($\to$ Solvency II) 
-foster stochastic methods 
-R is a programming environment for data analysis and graphics. 
-R can be regarded as an implementation of 
-the S language which was developed at Bell Laboratories by Rick Becker, 
-John Chambers and Allan Wilks, and also forms the basis of the 
+Reserves cover IBNR (Incurred But Not
+Reported) claims Reserves are usually estimated based on
+historical claims payment/reporting patterns  In the past a point estimator for the reserves
+was sufficient New regulatory requirements ($\to$ Solvency II)
+foster stochastic methods
+R is a programming environment for data analysis and graphics.
+R can be regarded as an implementation of
+the S language which was developed at Bell Laboratories by Rick Becker,
+John Chambers and Allan Wilks, and also forms the basis of the
 S-Plus systems~\cite{splus}.
-The R project was started by Robert Gentleman and Ross Ihaka of the Statistics 
-Department of the University of Auckland in 1995~\cite{IhakaGentelman1996}. 
+The R project was started by Robert Gentleman and Ross Ihaka of the Statistics
+Department of the University of Auckland in 1995~\cite{IhakaGentelman1996}.
 It has quickly gained a widespread audience. It is currently maintained by
-the R core-development team under the GNU General Public License 
-(GPL)~\cite{GNU}. 
-The R project web page 
+the R core-development team under the GNU General Public License
+(GPL)~\cite{GNU}.
+The R project web page
 %\begin{center}
 \url{http://www.r-project.org}
 %\end{center}
@@ -682,7 +675,7 @@ The R project web page
 \section{The \pkg{ChainLadder} package}
 <<echo=TRUE>>=
 library(ChainLadder)
-@ 
+@
 
 \subsection{Mack Chain Ladder}
 <<echo=TRUE,print=FALSE>>=

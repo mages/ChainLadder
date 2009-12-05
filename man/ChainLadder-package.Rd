@@ -16,8 +16,7 @@
   The ChainLadder-package comes with an example spreadsheet which
   demonstrates how to use the \code{ChainLadder} 
   functions in Excel. The spreadsheet is located in the Excel folder of
-  the package. The R command \code{searchpaths()[grep('ChainLadder',
-    searchpaths())]} will tell you the exact path to the directory.
+  the package. The R command \code{system.file("Excel", package="ChainLadder")} will tell you the exact path to the directory.
   To use the spreadsheet you will need to have the RExcel-Addin, see
   \url{http://sunsite.univie.ac.at/rcom/} for more details.
    
