@@ -3,7 +3,8 @@
 Version 0.1.2-14
 ================
 CHANGES
-  o New test suits
+  o as.triangle.data.frame sort the data frame by origin and dev period before creating a triangle. 
+  o New test suits using RUnit
 
 
 Version 0.1.2-13

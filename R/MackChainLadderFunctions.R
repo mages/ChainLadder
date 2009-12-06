@@ -437,7 +437,7 @@ if(getRversion() < "2.9.0") { ## work around missing feature
         long$valuePlusMack.S.E <-  long$value + as.vector(x$Mack.S.E)
         long$valueMinusMack.S.E <- long$value - as.vector(x$Mack.S.E)
         xyplot(valuePlusMack.S.E + valueMinusMack.S.E + value ~ dev |
-               factor(origin), data=long, t="l", lty=c(3,3,1), as.table=TRUE,
+               factor(origin), data=long[!is.na(long$value),], t="l", lty=c(3,3,1), as.table=TRUE,
                main="Chain ladder developments by origin period",
                xlab="Development period",
                ylab="Amount",col=1,

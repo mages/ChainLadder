@@ -6,6 +6,7 @@ incr2cum <- function(Triangle, na.rm=FALSE){
     if(na.rm){
         upper <- col(Triangle) <= ncol(Triangle) + 1 - row(Triangle)
         upperna <- which(is.na(Triangle[upper]), arr.ind=TRUE)
+
         Triangle[upper][upperna] <- 0
     }
     cum <- t(apply(Triangle,1, cumsum))
@@ -88,6 +89,7 @@ print.triangle <- function(x,...){
 .as.MatrixTriangle <- function(x, origin="origin", dev="dev", value="value"){
     ## x has to be a data.frame with columns: origin, dev and value
     x <- x[,c(origin, dev, value)]
+    x <- x[order(x[origin], x[dev]),]
     names(x) <- c("origin", "dev", "value")
     .names <- apply(x[,c("origin", "dev", "value")], 2, unique)
     .namesOD <- .names[c("origin", "dev")]
