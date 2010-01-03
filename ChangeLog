@@ -58,3 +58,8 @@
 
 	* The ChangeLog is now part of version control system on the
 	project web-site under Google code.
+
+2010-01-03  Yanwei (Wayne) Zhang  <actuaryzhang@uchicago.edu>
+	Merge the package gmcl with ChainLadder. A couple of multivariate functions
+	are included now. 
+   
