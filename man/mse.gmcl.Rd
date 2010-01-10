@@ -30,7 +30,7 @@ In the MCL model, the conditional  mean square error for single accident years a
 
 \deqn{\hat{mse}(\hat{Y}_{i,k+1}|D)=(\hat{\beta}_k \hat{\beta}_k') \odot \hat{mse}(\hat{Y}_{i,k}|D)  + \hat{\Sigma}_{\beta_k} \odot (\hat{Y}_{i,k} \hat{Y}_{i,k}') +  \hat{\Sigma}_{\epsilon_{i_k}} +\hat{\Sigma}_{\beta_k} \odot \hat{mse}^E(\hat{Y}_{i,k}|D) .}
 
-\deqn{\hat{mse}(\sum^I_{i=a_k}\hat{Y}_{i,k+1}|D)=(\hat{\beta}_k \hat{\beta}_k') \odot \sum^I_{i=a_k+1}\hat{mse}(\hat{Y}_{i,k}|D)  + \hat{\Sigma}_{\beta_k} \odot (\sum^I_{i=a_k}\hat{Y}_{i,k} \sum^I_{i=a_k}\hat{Y}_{i,k}') +  \sum^I_{i=a_k}\hat{\Sigma}_{\epsilon_{i_k}} \cr
+\deqn{\hat{mse}(\sum^I_{i=a_k}\hat{Y}_{i,k+1}|D)=(\hat{\beta}_k \hat{\beta}_k') \odot \sum^I_{i=a_k+1}\hat{mse}(\hat{Y}_{i,k}|D)  + \hat{\Sigma}_{\beta_k} \odot (\sum^I_{i=a_k}\hat{Y}_{i,k} \sum^I_{i=a_k}\hat{Y}_{i,k}') +  \sum^I_{i=a_k}\hat{\Sigma}_{\epsilon_{i_k}} 
  +\hat{\Sigma}_{\beta_k} \odot \sum^I_{i=a_k}\hat{mse}^E(\hat{Y}_{i,k}|D) .}
 
 For the Mack approach, the cross-product term \eqn{\hat{\Sigma}_{\beta_k} \odot \hat{mse}^E(\hat{Y}_{i,k}|D) }in the above two formulas will drop out.
