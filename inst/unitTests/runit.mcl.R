@@ -4,6 +4,6 @@ test.mcl.triangles <- function(){
                    "Workers Comp"=ABC, "Mortgage Guarantee"=Mortgage)
 
     ## Test should fail as triangles of different dimesnions have been combined
-    checkException(mcl(myList))
+    checkException(check.triangles.dimensions(myList))
 
 }
