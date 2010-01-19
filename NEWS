@@ -6,6 +6,11 @@ USER-VISIBLE CHANGES
 
   o A couple of multivariate functions are included now. Provided by Yanwei (Wayne) Zhang  <actuaryzhang@uchicago.edu>
 
+BUG FIXES
+
+  o 'plot.MunichChainLadder':  The labels of the axis of the residuals plots where the mixed up. 
+    Thanks to Ben Escoto for reporting this issue.
+
 Version 0.1.2-14
 ================
 CHANGES

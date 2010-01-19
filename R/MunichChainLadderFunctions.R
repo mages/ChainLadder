@@ -241,8 +241,8 @@ plot.MunichChainLadder <- function(x, mfrow=c(2,2), title=NULL, ...){
 
     plot(x[["PaidResiduals"]] ~ x[["QinverseResiduals"]],
          xlim=c(-2,2), ylim=c(-2,2),
-         xlab="Paid residuals",
-         ylab="Incurred/Paid residuals",
+         ylab="Paid residuals",
+         xlab="Incurred/Paid residuals",
          main="Paid residual plot")
     abline(v=0)
     abline(h=0)
@@ -250,8 +250,8 @@ plot.MunichChainLadder <- function(x, mfrow=c(2,2), title=NULL, ...){
 
     plot(x[["IncurredResiduals"]] ~ x[["QResiduals"]],
          xlim=c(-2,2), ylim=c(-2,2),
-         xlab="Incurred residuals",
-         ylab="Paid/Incurred residuals",
+         ylab="Incurred residuals",
+         xlab="Paid/Incurred residuals",
          main="Incurred residual plot")
     abline(v=0)
     abline(h=0)
