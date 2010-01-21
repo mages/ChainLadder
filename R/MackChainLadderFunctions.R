@@ -36,10 +36,10 @@ MackChainLadder <- function(Triangle,
 
     ## Predict the chain ladder model
     FullTriangle <- predict.TriangleModel(list(Models=CL[["Models"]], Triangle=Triangle))
-
     ## Estimate the standard error for f and F
     StdErr <- Mack.S.E(CL[["Models"]], FullTriangle, est.sigma=est.sigma,
                        weights=CL[["weights"]], alpha=alpha)
+
 
     Total.SE <- TotalMack.S.E(FullTriangle, StdErr$f, StdErr$f.se, StdErr$F.se)
 
@@ -230,7 +230,7 @@ estimate.sigma <- function(sigma){
     if(!all(is.na(sigma))){
         n <- length(sigma)
         dev <- 1:n
-        my.dev <- dev[!is.na(sigma)]
+        my.dev <- dev[!is.na(sigma) & sigma > 0]
         my.model <- lm(log(sigma[my.dev]) ~ my.dev)
         sigma[is.na(sigma)] <- exp(predict(my.model, newdata=data.frame(my.dev=dev[is.na(sigma)])))
     }
