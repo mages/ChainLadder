@@ -10,6 +10,7 @@ BUG FIXES
 
   o 'plot.MunichChainLadder':  The labels of the axis of the residuals plots where the mixed up. 
     Thanks to Ben Escoto for reporting this issue.
+  o 'estimate.sigma' didn't check for sigma>0 before applying a log-linear regression. Thanks to Dan Murphy reporting this bug.
 
 Version 0.1.2-14
 ================
