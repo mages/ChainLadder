@@ -16,7 +16,7 @@ extract.cols(da.list,cols)
 
 \author{Yanwei (Wayne) Zhang \email{actuaryzhang@uchicago.edu}}
 
-\seealso{ See also \link{mcl}, \link{gmcl}
+\seealso{ See also \link{MultiChainLadder}, \link{GeneralMultiChainLadder}
 }
 
 \examples{
