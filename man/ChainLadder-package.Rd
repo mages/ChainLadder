@@ -41,7 +41,7 @@ License: \tab GPL version 2 or later\cr
 }
 }
 \author{
-Markus Gesmann
+Markus Gesmann, Yanwei (Wayne) Zhang
 
 Maintainer: Markus Gesmann <markus.gesmann@gmail.com>
 }

@@ -92,6 +92,9 @@ print.triangle <- function(x,...){
     x <- x[order(x[origin], x[dev]),]
     names(x) <- c("origin", "dev", "value")
     .names <- apply(x[,c("origin", "dev", "value")], 2, unique)
+    if(class(.names) != "list"){
+        .names <- as.list(as.data.frame(.names))
+    }
     .namesOD <- .names[c("origin", "dev")]
     ## Expand to include entire array, in case don't have complete data
     .id <- paste(x$origin, x$dev,  sep='.')

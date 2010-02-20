@@ -2,9 +2,10 @@
 
 Version 0.1.3-2
 ================
-USER-VISIBLE CHANGES
+NEW FEATURES
 
-  o A couple of multivariate functions are included now. Provided by Yanwei (Wayne) Zhang  <actuaryzhang@uchicago.edu>
+  o New multivariate chain ladder functions 'MultiChainLadder' and 'GeneralMultiChainLadder' by Yanwei (Wayne) Zhang  <actuaryzhang@uchicago.edu>
+  o New function 'getLatestCumulative' available. It returns for a given triangle the most recent values for each origin period.
 
 BUG FIXES
 
