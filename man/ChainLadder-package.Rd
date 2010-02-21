@@ -26,6 +26,9 @@
   If you are also interested in loss distributions modeling, risk theory (including ruin theory), 
   simulation of compound hierarchical models and credibility theory check out the \code{actuar} package 
   by C. Dutang, V. Goulet and M. Pigeon.
+
+  lossDev - A Bayesian time series loss development model. Features include skewed-t distribution with time-varying scale parameter, Reversible Jump MCMC for determining the functional form of the consumption path, and a structural break in this path; by Christopher W. Laws and Frank A. Schmid
+\url{http://lossdev.r-forge.r-project.org/}
   
   For more financial packages see also CRAN Task View 'Emperical Finance'
   at \url{http://cran.r-project.org/web/views/Finance.html}.
