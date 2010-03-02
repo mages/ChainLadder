@@ -1,0 +1,19 @@
+citHeader("To cite package 'ChainLadder' in publications use:")
+
+desc <- packageDescription("ChainLadder")
+year <- sub(".*(2[[:digit:]]{3})-.*", "\\1", desc$Date)
+vers <- paste("R package version", desc$Version)
+
+citEntry(entry="Manual",
+         title = "ChainLadder: Mack, Bootstrap, Munich and Multivariate-chain-ladder Methods",
+         author = personList(as.person("Markus Gesmann"),
+                             as.person("Yanwei Zhang")),
+         year = year,
+         note = vers,
+
+         textVersion =
+         paste("Markus Gesmann, Yanwei Zhang and the R Core team (",
+               year,
+               "). ChainLadder: Mack, Bootstrap, Munich and Multivariate-chain-ladder Methods. ",
+               vers, ".", sep=""))
+

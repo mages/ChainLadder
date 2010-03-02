@@ -1,13 +1,21 @@
-export(MackChainLadder, MunichChainLadder, BootChainLadder)
+export(MackChainLadder, MunichChainLadder, BootChainLadder, MultiChainLadder)
 export(as.triangle)
 export(chainladder)
 export(getLatestCumulative)
 export(incr2cum, cum2incr)
-export(GeneralMultiChainLadder, fit.GeneralMultiChainLadder, predict.GeneralMultiChainLadderFit, mse.GeneralMultiChainLadder,
- summary.GeneralMultiChainLadder, print.GeneralMultiChainLadder, transf.Bcov,extract.cols )
-export(MultiChainLadder, fit.MultiChainLadder, predict.MultiChainLadderFit, mse.MultiChainLadder)
-importFrom(stats, quantile)
+export(Join2Fits, JoinFitMse, Mse, residCov)
 
+
+importFrom(stats, quantile, predict, coef, vcov,
+              residuals, fitted, fitted.values, rstandard)
+importFrom(methods,  show, coerce)
+importFrom(graphics, plot)
+importFrom(Matrix, summary)
+
+#Classes
+exportClasses(triangles, MultiChainLadder, MultiChainLadderFit,
+              MCLFit, GMCLFit, MultiChainLadderMse)
+           
 #Methods
 S3method(plot, MackChainLadder)
 S3method(plot, MunichChainLadder)
@@ -18,7 +26,7 @@ S3method(print, MackChainLadder)
 S3method(print, MunichChainLadder)
 S3method(print, BootChainLadder)
 S3method(print, triangle)
-S3method(print, GeneralMultiChainLadder)
+
 
 
 S3method(as.triangle, matrix)
@@ -28,13 +36,16 @@ S3method(as.data.frame, triangle)
 S3method(summary, MackChainLadder)
 S3method(summary, MunichChainLadder)
 S3method(summary, BootChainLadder)
-S3method(summary, GeneralMultiChainLadder)
+
 
 S3method(predict, TriangleModel)
 S3method(predict, ChainLadder)
-S3method(predict, MultiChainLadderFit)
-S3method(predict, GeneralMultiChainLadderFit)
 S3method(residuals, MackChainLadder)
 S3method(quantile, BootChainLadder)
 S3method(residuals, BootChainLadder)
 S3method(mean, BootChainLadder)
+
+
+exportMethods(predict, Mse, summary, print, show, coerce,
+              "[", "$", "[[", names, coef, vcov, residCov,
+              residuals, rstandard, fitted, fitted.values, plot)

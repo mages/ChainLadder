@@ -2,7 +2,7 @@
 \alias{auto}
 \docType{data}
 \title{Run off triangle of accumulated claim data}
-\description{Run-off triangles of Personal Auto and Commercial Auto insurance}
+\description{Run-off triangles of Personal Auto and Commercial Auto insurance.}
   
 \usage{data(auto)}
 \format{

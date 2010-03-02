@@ -2,7 +2,7 @@
 \alias{liab}
 \docType{liab}
 \title{Run off triangle of accumulated claim data}
-\description{Run-off triangles of General Liability and Auto Liability}
+\description{Run-off triangles of General Liability and Auto Liability.}
   
 \usage{data(auto)}
 \format{
