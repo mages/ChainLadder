@@ -110,6 +110,7 @@ print.triangle <- function(x,...){
 .as.LongTriangle <- function(Triangle, na.rm=FALSE){
     x <- Triangle
     lx <- expand.grid(origin=as.numeric(dimnames(x)$origin), dev=as.numeric(dimnames(x)$dev))
+    ##    lx <- expand.grid(origin=dimnames(x)$origin, dev=dimnames(x)$dev)
     lx$value <- as.vector(x)
     if(na.rm){
         lx <- na.omit(lx)

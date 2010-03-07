@@ -309,7 +309,9 @@ summary.MackChainLadder <- function(object,...){
     names(ByOrigin)[6]="CV(IBNR)"
     ByOrigin <- ByOrigin[ex.origin.period,]
 
-    Totals <-  c(sum(Latest,na.rm=TRUE), sum(Ultimate,na.rm=TRUE),
+    Totals <-  c(sum(Latest,na.rm=TRUE),
+                 sum(Latest,na.rm=TRUE)/sum(Ultimate,na.rm=TRUE),
+                 sum(Ultimate,na.rm=TRUE),
                  sum(IBNR,na.rm=TRUE), object[["Total.Mack.S.E"]],
                  object[["Total.Mack.S.E"]]/sum(IBNR,na.rm=TRUE)
                  )
@@ -317,7 +319,7 @@ summary.MackChainLadder <- function(object,...){
     Totals <- as.data.frame(Totals)
 
     colnames(Totals)=c("Totals")
-    rownames(Totals) <- c("Latest:","Ultimate:",
+    rownames(Totals) <- c("Latest:","Dev:","Ultimate:",
                           "IBNR:","Mack S.E.:",
                           "CV(IBNR):")
 
