@@ -7,6 +7,7 @@ Author: Markus Gesmann, Wayne (Yanwei) Zhang
 Maintainer: Markus Gesmann <markus.gesmann@gmail.com>
 Description: The package provides Mack-, Munich-, Bootstrap and Multivariate-chain-ladder methods. These methods are typically used in insurance claims reserving.
 Depends: Hmisc, lattice, Matrix, methods, stats, systemfit
+Suggests: RODBC
 License: GPL (>= 2)
 URL: http://code.google.com/p/chainladder/
 LazyLoad: yes

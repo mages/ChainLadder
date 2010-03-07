@@ -3,6 +3,7 @@ export(as.triangle)
 export(chainladder)
 export(getLatestCumulative)
 export(incr2cum, cum2incr)
+export(getDatabaseExampleData, DataTableToTriangles,ChainLadderSummaries, writeDatabaseExampleResults)
 export(Join2Fits, JoinFitMse, Mse, residCov)
 
 

@@ -12,6 +12,9 @@ testData <- do.call("rbind",
                            )
                     )
 
+testDataDir <- system.file("Database", package="ChainLadder")
+fn.csv <- paste(testDataDir,"/TestData.csv", sep="")
+write.csv(testData, file=fn.csv, row.names=FALSE)
 
 xyplot(value/1000 ~ dev | lob, groups=origin, data=testData, as.table=TRUE, scales="free", t="l", layout=c(5,2))
 
@@ -27,44 +30,19 @@ testData <- do.call("rbind",
                     )
 
 
-xyplot(cumsum(value)/1e6 ~ dev | lob, groups=origin, data=testData, as.table=TRUE, scales="free", t="l", layout=c(5,2))
+   
+testData <- getDatabaseExampleData()
 
-DataTableToTriangles <- function(data, origin="origin", dev="dev", value="value", lob="lob",
-                                  inputCum=FALSE, outputCum=TRUE){
+list.triangles <- DataTableToTriangles(testData,
+                                  origin="origin", dev="dev", value="value", lob="lob",
+                                  inputCum=FALSE, outputCum=TRUE)
 
-    list.tria <- by(data, list(lob=data[[lob]]), function(x){
-        tria <- as.triangle(x[c(origin, dev, value)], origin=origin, dev=dev, value=value)
-        if(inputCum != outputCum){
-            if(outputCum==FALSE){
-                tria <- cum2incr(tria)
-            }else{
-                tria <- incr2cum(tria, na.rm=TRUE)
-            }
-        }
-    }
-                    )
-
-    return(list.tria)
-}
-
-
-list.triangles <- DataTableToTriangles(testData)
+op <- par(mfrow=c(5,2), mar=rep(2,4))
+lapply(list.triangles, plot)
+par(op)
 
 MackResults <- lapply(list.triangles, MackChainLadder, est.sigma="Mack")
+MackResultsByOrigin <- ChainLadderSummaries(MackResults, summary.by="ByOrigin")
 
-ChainLadderSummaries <- function(CL, summary.by="ByOrigin"){
-
-    res <- do.call("rbind",
-                   lapply(names(CL), function(x){
-                       originResults <- summary(CL[[x]])[[summary.by]]
-                       if(summary.by=="ByOrigin"){
-                           originResults <- data.frame(lob=x, origin=rownames(originResults), originResults)
-                       }else{
-                           originResults <- data.frame(lob=x,origin="Totals", t(originResults))
-                       }
-                       originResults
-                   }))
-    return(res)
-}
-
-fn <- paste(system.file("Database", package="ChainLadder"),"/TestData.csv", sep="")
+writeDatabaseExampleResults(MackResultsByOrigin,
+                            tablename=paste('T_ChainLadderResults', format(Sys.time(), "%Y %B %d %H:%M:%S")))
