@@ -24,14 +24,27 @@
  \code{summary} calculations the summary statistics for each triangle and the whole portfolio from \code{portfolio}. \code{portfolio} defaults to the sum of all input triangles. It can also be specified as "i+j" format, which means the sum of the i-th and j-th triangle as portfolio. For example, \code{"1+3"} means the sum of the first and third triangle as portfolio.
   
 }
-\value{
-  For N (\eqn{N \neq 1}) input triangles, \code{summary} gives a list of N+1 elements back, each of which has the following fields:
-   \code{Latest} (latest actual claims costs),
-    \code{Dev.To.Date} (chain ladder development to date),
-    \code{Ultimate} (estimate ultimate claims cost), \code{IBNR}
-    (estimated IBNR), \code{S.E} (Estimation of the standard
-    error of the IBNR),  \code{CV(IBNR)} (Coefficient of Variation, S.E/IBNR),
-     \code{S.E.Est} (Estimation error) and \code{S.E.Proc} (Process error).
+\value{ The \code{summary} function returns an object of class "MultiChainLadderSummary" that has the following slots:
+  \item{Triangles}{input triangles}
+  \item{FullTriangles}{predicted triangles}
+  \item{S.E.Full}{a list of prediction errors for each cell}
+  \item{S.E.Est.Full}{a list of estimation errors for each cell}
+  \item{S.E.Proc.Full}{a list of process errors for each cell}
+  \item{Ultimate}{predicted ultimate losses for each triangle and portfolio  }
+  \item{Latest}{ latest observed losses for each triangle and portfolio  }
+  \item{IBNR}{ predicted IBNR for each triangle and portfolio  }
+  \item{S.E.Ult}{ a matrix of prediction errors of ultimate losses for each triangle and portfolio  }
+  \item{S.E.Est.Ult}{ a matrix of estimation errors of ultimate losses for each triangle and portfolio  }
+  \item{S.E.Proc.Ult}{ a matrix of process errors of ultimate losses for each triangle and portfolio  }
+  \item{report.summary}{ summary statistics for each triangle and portfolio  }
+  \item{coefficients}{estimated coefficients from \code{systemfit}. They are put into the matrix format for GMCL}
+  \item{coefCov}{estimated variance-covariance matrix returned by \code{systemfit}}
+  \item{residCov}{estimated residual covariance matrix returned by \code{systemfit}}
+  \item{rstandard}{ standardized residuals  }
+  \item{fitted.values}{ fitted.values  }
+  \item{residCor}{ residual correlation  }
+  \item{model.summary}{ summary statistics for the cofficients including p-values }
+  \item{portfolio}{how portfolio is calculated}
 }
 
 \author{Wayne (Yanwei) Zhang \email{actuaryzhang@uchicago.edu}}

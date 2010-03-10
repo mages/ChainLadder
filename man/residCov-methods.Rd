@@ -1,17 +1,23 @@
 \name{residCov}
 \docType{genericFunction}
 \alias{residCov}
+\alias{residCor}
 \alias{residCov-methods}
+\alias{residCor-methods}
 \alias{residCov,MultiChainLadder-method}
-\title{ Generic function for residCov}
+\alias{residCor,MultiChainLadder-method}
+\title{ Generic function for residCov and residCor}
 \description{
- \code{residCov}  is a generic function to extract residual covariance from a system of fitted regressions. 
+ \code{residCov} and  \code{residCov} are a generic functions to extract residual covariance and residual correlation from a system of fitted regressions respectively. 
+
 }
 
 \usage{
 residCov(object,...)
+residCor(object,...)
 
 \S4method{residCov}{MultiChainLadder}(object,...)
+\S4method{residCor}{MultiChainLadder}(object,...)
 }
 
 \arguments{

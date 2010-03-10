@@ -4,19 +4,23 @@
 \alias{plot,MultiChainLadder,missing-method}
 \title{ Methods for Function plot }
 \description{
- Methods for function \code{plot} to produce different diagonostic plots. 
+ Methods for function \code{plot} to produce different diagonostic plots for an object of class "MultiChainLadder". 
 }
 
 \usage{
 
-\S4method{plot}{MultiChainLadder,missing}(x, y, which.plot=1:4, which.triangle=NULL, 
-		main=NULL,  portfolio=NULL,lowess=TRUE, legend.cex=0.75,...)
+\S4method{plot}{MultiChainLadder,missing}(x, y, which.plot=1:4, 
+						which.triangle=NULL, 
+						main=NULL,  
+						portfolio=NULL,
+						lowess=TRUE, 
+						legend.cex=0.75,...)
 }
 
 \arguments{
   \item{x}{An object of class "MultiChainLadder". }
   \item{y}{"missing" }
-  \item{which.plot}{This specifies which type of plot is desired. Its range is 1:4, where 1 is the barplot of observed losses and predicted IBNR stacked and MSE predictions as error bars;  2 is a trajectory plot of the development pattern; 3 is the residual plot of standardized residuals against the fitted values; 4 is the Normal-QQ plot of the standardized residuals. Note 3 and 4 are not available for portfolio. }
+  \item{which.plot}{This specifies which type of plot is desired. Its range is 1:5, but defaults to 1:4. "1" is the barplot of observed losses and predicted IBNR stacked and MSE predictions as error bars;  "2" is a trajectory plot of the development pattern; "3" is the residual plot of standardized residuals against the fitted values; "4" is the Normal-QQ plot of the standardized residuals. "5" is the "xyplot" of development with confidence intervals for each accident year.  Note that "3" and "4" are not available for portfolio. }
   \item{which.triangle}{This specifies which triangles are to be plotted. Default value is NULL, where all triangles plus the portfolio result will be plotted.}
   \item{main}{It should be a list of titles for each plot. If not supplied, use default titles.}
   \item{portfolio}{It specifies which triangles are to be summed as the portfolio, to be passed on to \code{summary}.}
@@ -29,32 +33,17 @@
 
 \examples{
 \dontrun{
-data(auto)
-auto <- as(auto, "triangles")
-da1 <- auto[,1:7]
-da2 <- auto[,7:10]	
-coefr <- matrix(0,9,4)
-coefr[1,1] <- coefr[2,2] <- coefr[5,3] <- coefr[9,4] <- 1
-fit.restr1 <- MultiChainLadder(da1,restrict.regMat=coefr,model="GMCL")
-fit.restr2 <- MultiChainLadder(da2,fit.method="OLS",model="MCL")
-models <- Join2Fits(fit.restr1,fit.restr2)
-FullTriangles <- predict(models)
-mse.models <- Mse(ModelFit=models,FullTriangles=FullTriangles)
-fit.restr=JoinFitMse(models,mse.models)
+data(liab)
+fit.liab <- MultiChainLadder(liab)
 
 # generate diagonostic plots
-X11()
-par(mfcol=c(2,2) )
-plot(fit.restr,which.plot=1,portfolio="1+3",legend.cex=0.55)
+par(mfcol=(c(3,2)))
+plot(fit.liab,which.plot=1:2)
 
-X11()
-par(mfcol=c(2,2) )
-plot(fit.restr,which.plot=2,portfolio="1+3")
+par(mfrow=(c(2,2)))
+plot(fit.liab,which.plot=3:4)
 
-X11()
-par(mfcol=c(3,2) )
-plot(fit.restr,which.plot=3:4)
-
+plot(fit.liab,which.triangle=1,which.plot=5)
 graphics.off()
 }
 

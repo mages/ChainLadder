@@ -12,7 +12,7 @@ citEntry(entry="Manual",
          note = vers,
 
          textVersion =
-         paste("Markus Gesmann, Yanwei Zhang and the R Core team (",
+         paste("Markus Gesmann and Yanwei Zhang (",
                year,
                "). ChainLadder: Mack, Bootstrap, Munich and Multivariate-chain-ladder Methods. ",
                vers, ".", sep=""))
