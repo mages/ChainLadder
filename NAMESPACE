@@ -5,7 +5,6 @@ export(getLatestCumulative)
 export(incr2cum, cum2incr)
 export(Join2Fits, JoinFitMse, Mse, residCov, residCor)
 
-
 importFrom(stats, quantile, predict, coef, vcov,
               residuals, resid, fitted, fitted.values, rstandard)
 importFrom(methods, show, coerce, cbind2, rbind2 )

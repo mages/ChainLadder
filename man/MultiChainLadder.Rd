@@ -34,7 +34,7 @@ This function fits the multivariate models within the chain ladder framework. Co
 
 Some technical details about the GMCL model. Assume N triangles are available. Denote \eqn{Y_{i,k}=(Y^{(1)}_{i,k}, \ldots ,Y^{(N)}_{i,k})} as an \eqn{N \times 1} vector of  cumulative losses at accident year i and development year k where (n) refers to the n-th triangle. The GMCL model in development period k is:
   \deqn{Y_{i,k+1}=A_k + B_k \cdot Y_{i,k}+\epsilon_{i,k},}
-where \eqn{A_k} is a column of intercepts and \eqn{B_k} is the usual development matrix. By default, \code{MultiChainLadder} sets \eqn{A_k} to be zero, but one can specify a model with intercepts using the \cdoe{int} argument.
+where \eqn{A_k} is a column of intercepts and \eqn{B_k} is the usual development matrix. By default, \code{MultiChainLadder} sets \eqn{A_k} to be zero, but one can specify a model with intercepts using the \code{int} argument.
 Assumptions for this model are:
 \deqn{E(\epsilon_{i,k}|Y_{i,1},\ldots,Y_{i,I+1-k})=0.}
 \deqn{cov(\epsilon_{i,k}|Y_{i,1},\ldots,Y_{i,I+1-k})=\Sigma_{\epsilon_{i,k}}=D(Y_{i,k}^{-\delta/2})\Sigma_k D(Y_{i,k}^{-\delta/2}).}
