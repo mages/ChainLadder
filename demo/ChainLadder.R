@@ -2,13 +2,14 @@
 ## See also the demos for:
 ## demo(MackChainLadder)
 ## demo(DatabaseExamples)
+## demo(MSOffice)
 
 
 ## Example triangle
 RAA
 plot(RAA)
 plot(RAA, lattice=TRUE)
-MCL=MackChainLadder(RAA, est.sigma="Mack")
+MCL <- MackChainLadder(RAA, est.sigma="Mack")
 MCL
 plot(MCL)
 # plot developments by origin period
@@ -30,7 +31,7 @@ curve(plnorm(x,fit$estimate["meanlog"], fit$estimate["sdlog"]), col="red", add=T
 MCLpaid
 MCLincurred
 
-MCL = MunichChainLadder(MCLpaid, MCLincurred)
+MCL <- MunichChainLadder(MCLpaid, MCLincurred, est.sigmaP="Mack", est.sigmaI="Mack")
 MCL
 plot(MCL)
 
@@ -52,22 +53,22 @@ triangle
 
 ## More for a laugh - 3d plot of a triangle and MackChainLadder output
 if(require(rgl)){ #provides interactive 3d plotting functions
-MCL=MackChainLadder(GenIns/1e6, est.sigma="Mack")
-FT <- MCL$FullTriangle
-FTpSE <- FT+MCL$Mack.S.E
-FTpSE[which(MCL$Mack.S.E==0, arr.ind=TRUE)] <- NA
-FTmSE <- FT-MCL$Mack.S.E
-FTmSE[which(MCL$Mack.S.E==0, arr.ind=TRUE)] <- NA
-zr <- round(FT/FT[1,10]*100)
-zlim <- range(zr, na.rm=TRUE)
-zlen <- zlim[2] - zlim[1] + 1
-colorlut <- terrain.colors(zlen) # height color lookup table
-cols <- colorlut[ zr -zlim[1]+1 ] # assign colors to heights for each point
-x <- as.numeric(dimnames(FT)$origin)
-y <- as.numeric(dimnames(FT)$dev)
-persp3d(x, y=y, z=(FT), col=cols, xlab="origin", ylab="dev", zlab="loss",back="lines")
-mSE <- data.frame(as.table(FTmSE))
-points3d(xyz.coords(x=as.numeric(as.character(mSE$origin)), y=as.numeric(as.character(mSE$dev)),z=mSE$Freq), size=2)
-pSE <- data.frame(as.table(FTpSE))
-points3d(xyz.coords(x=as.numeric(as.character(pSE$origin)), y=as.numeric(as.character(pSE$dev)),z=pSE$Freq), size=2)
+    MCL=MackChainLadder(GenIns/1e6, est.sigma="Mack")
+    FT <- MCL$FullTriangle
+    FTpSE <- FT+MCL$Mack.S.E
+    FTpSE[which(MCL$Mack.S.E==0, arr.ind=TRUE)] <- NA
+    FTmSE <- FT-MCL$Mack.S.E
+    FTmSE[which(MCL$Mack.S.E==0, arr.ind=TRUE)] <- NA
+    zr <- round(FT/FT[1,10]*100)
+    zlim <- range(zr, na.rm=TRUE)
+    zlen <- zlim[2] - zlim[1] + 1
+    colorlut <- terrain.colors(zlen) # height color lookup table
+    cols <- colorlut[ zr -zlim[1]+1 ] # assign colors to heights for each point
+    x <- as.numeric(dimnames(FT)$origin)
+    y <- as.numeric(dimnames(FT)$dev)
+    persp3d(x, y=y, z=(FT), col=cols, xlab="origin", ylab="dev", zlab="loss",back="lines")
+    mSE <- data.frame(as.table(FTmSE))
+    points3d(xyz.coords(x=as.numeric(as.character(mSE$origin)), y=as.numeric(as.character(mSE$dev)),z=mSE$Freq), size=2)
+    pSE <- data.frame(as.table(FTpSE))
+    points3d(xyz.coords(x=as.numeric(as.character(pSE$origin)), y=as.numeric(as.character(pSE$dev)),z=pSE$Freq), size=2)
 }
