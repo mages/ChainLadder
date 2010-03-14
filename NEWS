@@ -1,12 +1,20 @@
 === ChainLadder: R package for insurance claims reserving ===
 
-Version 0.1.3-2
+Version 0.1.3-3
 ================
 NEW FEATURES
 
   o New multivariate chain ladder functions 'MultiChainLadder' and 'GeneralMultiChainLadder' by Yanwei (Wayne) Zhang  <actuaryzhang@uchicago.edu>
   o New function 'getLatestCumulative' available. It returns for a given triangle the most recent values for each origin period.
+  o New ChainLadder comes now with demo files! Type demo(package='ChainLadder') for more information.
+  o Demos exsist for the following topics: ChainLadder, MackChainLadder, DatabaseExamples, MSOffice
 
+USER-VISIBLE CHANGES
+   o The examples in MackChainLadder and ChainLadder-package have been shortened and demo files have been created instead.
+     The examples focus on the syntax of the function calls, while the demos give more detailed information 
+     on how you might want to use the functions in a business context.
+      
+   
 BUG FIXES
 
   o 'plot.MunichChainLadder':  The labels of the axis of the residuals plots where the mixed up. 
