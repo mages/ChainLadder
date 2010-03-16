@@ -4,10 +4,10 @@ Version 0.1.3-3
 ================
 NEW FEATURES
 
-  o New multivariate chain ladder functions 'MultiChainLadder' and 'GeneralMultiChainLadder' by Yanwei (Wayne) Zhang  <actuaryzhang@uchicago.edu>
+  o New multivariate chain ladder function 'MultiChainLadder' by Wayne (Yanwei) Zhang  <actuaryzhang@uchicago.edu>
   o New function 'getLatestCumulative' available. It returns for a given triangle the most recent values for each origin period.
   o New ChainLadder comes now with demo files! Type demo(package='ChainLadder') for more information.
-  o Demos exsist for the following topics: ChainLadder, MackChainLadder, DatabaseExamples, MSOffice
+  o Demos exsist for the following topics: ChainLadder, MackChainLadder, DatabaseExamples, MSOffice, MultiChainLadder
 
 USER-VISIBLE CHANGES
    o The examples in MackChainLadder and ChainLadder-package have been shortened and demo files have been created instead.

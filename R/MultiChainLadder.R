@@ -308,7 +308,8 @@ MultiChainLadder <- function(Triangles,
 		coefCov <- lapply(myModel, "[[", "coefCov")
 		residCov <- lapply(myModel, "[[", "residCov")
 						 
-		
+	# Transform the coefficients to a form with intercepts  
+	coefficients <- .coef(coefficients, int, p)	
 	# create an object of class "GMCLFit" 
 	output <- new("GMCLFit",
 			Triangles=Triangles,
@@ -838,11 +839,12 @@ Join2Fits <- function (object1, object2 ){
 	
 	if (any(model=="GMCL") && any(model=="MCL")) {
 		# assume the first is GMCL and the latter is MCL
+		coef2 <- lapply(object2@coefficients,diag,length(object1@Triangles))
+		coef2 <- .coef(coef2,int=NULL,length(object1@Triangles))
 		output <- new("GMCLFit", 
 			Triangles=.Join2Triangles(object1@Triangles,object2@Triangles),
 			models=c(object1@models,object2@models), 
-			coefficients=c(object1@coefficients,
-						lapply(object2@coefficients,diag,length(object1@Triangles))) , 
+			coefficients=c(object1@coefficients,coef2) , 
 			coefCov=c(object1@coefCov,lapply(object2@coefCov,.M2G.coefCov)),
 			residCov=c(object1@residCov,object2@residCov),
 			fit.method=c(object1@fit.method,object2@fit.method),
@@ -1186,7 +1188,7 @@ setMethod("fitted",
     signature(object = "MultiChainLadder"),
     function (object,...) 
     {
-	model=object@model
+	model <- object@model
 	Triangles <- object@Triangles
 	p <- dim(Triangles)[1]
 	m <- dim(Triangles)[2] 
@@ -1412,19 +1414,32 @@ setMethod("plot",
 	return(object2)
 }
 
-# function to augment coefficients to be used in prediction and mse estimation
-# change the coefficent matrix from to (p+1)* (p+1) since a vector (1,0, \cdots 0)' is added
-.B.aug <- function(object){
-		p <- length(object@Triangles)
-		n <- length(object@coefficients)
-		B <- rep(list(matrix(0,p+1,p+1)),n)   
-		B <- lapply(B, "[<-", 1, 1, 1)	
+
+# function used in .FitGMCL to transform the coefficients
+# to matrices with intercepts. 
+# if no intercept specified, then pad a columns of zero
+.coef <- function(coefficients, int, p){
+		n <- length(coefficients)
+		coeff <- rep(list(matrix(0,p,p+1)),n)   
 		for (i in 1:n){
-			if (!i %in% object@int) cols <- 2:(p+1) else cols <- 1:(p+1)
-			B[[i]][2:(p+1),cols] <- object@coefficients[[i]]
+			if (!i %in% int) cols <- 2:(p+1) else cols <- 1:(p+1)
+			coeff[[i]][,cols] <- coefficients[[i]]
 		}
+		return(coeff)
+}
+
+# function to augment coefficients to be used in prediction and mse estimation
+# change the coefficent matrix  to (p+1)* (p+1) since a vector (1,0, \cdots 0)' is added
+.B.aug <- function(object){
+
+		B <- lapply(object@coefficients, function(x){
+							a <-.add.zero(x)[,-1]
+							a[1,1] <- 1
+							return(a)
+			})
 		return(B)
 }
+
 
 # function to augment the coeffient covariance matrix to the format desired
 .Bcov.aug <- function(object){
