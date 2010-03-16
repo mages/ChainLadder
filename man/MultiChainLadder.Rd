@@ -160,7 +160,7 @@ plot(fit.int,which.plot=3:4)
 
 # To reproduce results in Zhang (2010) and see more examples, use:
 \dontrun{
- demo(MackChainLadder)
+ demo(MultiChainLadder)
 }
 
 }
