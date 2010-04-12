@@ -19,6 +19,7 @@
     \item{\code{fit.method}:}{Object of class \code{"character"}  }
     \item{\code{delta}:}{Object of class \code{"numeric"}  }
     \item{\code{int}:}{Object of class \code{"NullNum"}  }
+    \item{\code{restrict.regMat}:}{Object of class \code{"NullList"}  }
   }
 }
 
