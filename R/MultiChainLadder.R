@@ -26,6 +26,7 @@ setValidity("triangles", .valid.triangles )
 # virtual class for representation
 setClassUnion("NullNum",c("NULL","numeric"))
 setClassUnion("NullChar",c("NULL","character"))	
+setClassUnion("NullList",c("NULL","list"))	
 
 # class of "MultiChainLadderFit" as virtual class
 setClass("MultiChainLadderFit", 
@@ -37,7 +38,8 @@ setClass("MultiChainLadderFit",
 			residCov="list",
 			fit.method="character",
 			delta="numeric",
-			int="NullNum"),
+			int="NullNum",
+			restrict.regMat="NullList"),
 	prototype(
 			Triangles=new("triangles",list()),
 			models=list(),
@@ -46,7 +48,8 @@ setClass("MultiChainLadderFit",
 			residCov=list(),
 			fit.method=character(0),
 			delta=1,
-			int=NULL),
+			int=NULL,
+			restrict.regMat=NULL),
 	contains="VIRTUAL"	
 )
 
@@ -266,7 +269,8 @@ MultiChainLadder <- function(Triangles,
 			mse.total.proc=mse.models@mse.total.proc,
 			FullTriangles=mse.models@FullTriangles,
 			model=model,
-			int=models@int )   
+			int=models@int,
+			restrict.regMat=models@restrict.regMat )   
 			
 	return(output)
 }
@@ -288,25 +292,25 @@ MultiChainLadder <- function(Triangles,
 	myModel <- vector("list",n-1)  #this is a list with all the fitted regressions
 	system <- lapply(1:p, function(z) as.formula(paste("y[[",z,"]]~-1+x[[",z,"]]",sep="")))
 	
-		for (i in 1:(n-1)){   					
-			da <- Triangles[1:(m-i),i:(i+1)]
-			# x0 and y0 are not weighted
-			y0 <- da[,2]
-			x0 <- cbind(1,cbind2(da[,1]))			
-			# weighted values to be used in systemfit
-			y <- lapply(1:p, function(z) y0[[z]]*(x0[,z+1]^(-d)) )
-			if (i%in%int) x <- lapply(1:p, function(z) x0*(x0[,z+1]^(-d)) ) else
-						  x <- lapply(1:p, function(z) x0[,-1]*(x0[,z+1]^(-d)) )										
-			myModel[[i]] <- systemfit(system,fit.method,
+	for (i in 1:(n-1)){   					
+		da <- Triangles[1:(m-i),i:(i+1)]
+		# x0 and y0 are not weighted
+		y0 <- da[,2]
+		x0 <- cbind(1,cbind2(da[,1]))			
+		# weighted values to be used in systemfit
+		y <- lapply(1:p, function(z) y0[[z]]*(x0[,z+1]^(-d)) )
+		if (i%in%int) x <- lapply(1:p, function(z) x0*(x0[,z+1]^(-d)) ) else
+					  x <- lapply(1:p, function(z) x0[,-1]*(x0[,z+1]^(-d)) )										
+		myModel[[i]] <- systemfit(system,fit.method,
 								restrict.regMat=restrict.regMat[[i]],...)  
-		}
+	}
 		
-		# paramters returned by systemfit, not augmented	
-		coefficients <- lapply(1:length(myModel), function(x) 
+	# paramters returned by systemfit	
+	coefficients <- lapply(1:length(myModel), function(x) 
 							matrix(coef(myModel[[x]]),p,byrow=TRUE))
 												
-		coefCov <- lapply(myModel, "[[", "coefCov")
-		residCov <- lapply(myModel, "[[", "residCov")
+	coefCov <- lapply(myModel, "[[", "coefCov")
+	residCov <- lapply(myModel, "[[", "residCov")
 						 
 	# Transform the coefficients to a form with intercepts  
 	coefficients <- .coef(coefficients, int, p)	
@@ -319,7 +323,8 @@ MultiChainLadder <- function(Triangles,
 			residCov=residCov,
 			fit.method=fit.method,
 			delta=delta ,
-			int=int )			
+			int=int,
+			restrict.regMat=restrict.regMat )			
 	return(output)
 }
 
@@ -340,43 +345,41 @@ MultiChainLadder <- function(Triangles,
 	myModel <- vector("list",n-1)
 	system <- lapply(1:p, function(z) as.formula(paste("y[[",z,"]]~-1+x[[",z,"]]",sep="")))
 
-		for (i in 1:(n-1)){
-			da <- Triangles[1:(m-i),i:(i+1)]
-			da <- lapply(1:length(da), function(x) sweep(da[[x]],1,da[[x]][,1]^d,"/"))
-			da <- as(da,"triangles")
-			y <- da[,2]
-			x <- da[,1]													
-			if (!(i==n-1 && extrap )) myModel[[i]] <- systemfit(system,fit.method,...)
-		}				
+	for (i in 1:(n-1)){
+		da <- Triangles[1:(m-i),i:(i+1)]
+		da <- lapply(1:length(da), function(x) sweep(da[[x]],1,da[[x]][,1]^d,"/"))
+		da <- as(da,"triangles")
+		y <- da[,2]
+		x <- da[,1]													
+		if (!(i==n-1 && extrap )) myModel[[i]] <- systemfit(system,fit.method,...)
+	}				
 	
-		if (extrap) {
-			coef <- unlist(Triangles[1,n])/unlist(Triangles[1,n-1])
-			names(coef) <- names(myModel[[n-2]][["coefficients"]])
+	if (extrap) {
+		coef <- unlist(Triangles[1,n])/unlist(Triangles[1,n-1])
+		names(coef) <- names(myModel[[n-2]][["coefficients"]])
 			
-			r2 <- myModel[[n-3]]$residCov
-			r1 <- myModel[[n-2]]$residCov
-			r0 <- abs(r1^2/r2)
-			residcov <- as.matrix(pmin(abs(r2),abs(r1),replace(r0,is.na(r0),0)))
-			dimnames(residcov)<-dimnames(myModel[[n-2]][["residCov"]])
+		r2 <- myModel[[n-3]]$residCov
+		r1 <- myModel[[n-2]]$residCov
+		r0 <- abs(r1^2/r2)
+		residcov <- as.matrix(pmin(abs(r2),abs(r1),replace(r0,is.na(r0),0)))
+		dimnames(residcov)<-dimnames(myModel[[n-2]][["residCov"]])
 			
-			# extrapolate coefCov? should the off-diagonal components be set as zero?
-			x <- unlist(Triangles[1,n-1])^d
-			v <- solve(diag(x,nrow=p)%*%solve(residcov)%*%diag(x,nrow=p))
-			coefcov <- diag(diag(v),nrow=p)
-			dimnames(coefcov)<-dimnames(myModel[[n-2]][["coefCov"]])
+		# extrapolate coefCov? should the off-diagonal components be set as zero?
+		x <- unlist(Triangles[1,n-1])^d
+		v <- solve(diag(x,nrow=p)%*%solve(residcov)%*%diag(x,nrow=p))
+		coefcov <- diag(diag(v),nrow=p)
+		dimnames(coefcov)<-dimnames(myModel[[n-2]][["coefCov"]])
 			
-			myModel[[n-1]]<-list(coefficients=coef,coefCov=coefcov,residCov=residcov)
-			}
+		myModel[[n-1]]<-list(coefficients=coef,coefCov=coefcov,residCov=residcov)
+	}
 			
-		coefficients <- lapply(myModel,"[[","coefficients")
-		coefCov <- lapply(myModel, "[[", "coefCov")
-		residCov <- lapply(myModel, "[[", "residCov")
+	coefficients <- lapply(myModel,"[[","coefficients")
+	coefCov <- lapply(myModel, "[[", "coefCov")
+	residCov <- lapply(myModel, "[[", "residCov")
 		
-		# replace off-diagonal elements of residCov as 0
-		if (fit.method == "OLS") residCov <- lapply(1:(n-1),function(x) 
-									diag(diag(residCov[[x]]),nrow=p))		
-		
-
+	# replace off-diagonal elements of residCov as 0
+	if (fit.method == "OLS") residCov <- lapply(1:(n-1),function(x) 
+								diag(diag(residCov[[x]]),nrow=p))				
 	# create an object of class "MCLFit"
 	output <- new("MCLFit",
 			Triangles=Triangles,
@@ -393,9 +396,11 @@ MultiChainLadder <- function(Triangles,
 
 
 # method to predict the full triangles for "GMCLFit" object
+# the augmented procedure is used
 setMethod("predict", signature="GMCLFit",
 	function(object,...){
 		Triangles <- object@Triangles
+		# augment parameters, unique to GMCL
 		B <- .B.aug(object)
 		p <- dim(Triangles)[1]
 		m <- dim(Triangles)[2] 
@@ -403,8 +408,9 @@ setMethod("predict", signature="GMCLFit",
 		FullTriangles <- Triangles
     		for (i in 1:(n-1)){
     		x <- FullTriangles[(m-i+1):m,i]
+    		# add a column of 1's    		
     		x.a <- t(cbind(1,cbind2(x)))
-        	y<- (B[[i]] %*% x.a)[-1,,drop=FALSE]
+        	y <- (B[[i]] %*% x.a)[-1,,drop=FALSE]
 			FullTriangles[(m-i+1):m,(i+1)] <- split(y,1:nrow(y))
 		}
 		return(FullTriangles)
@@ -431,6 +437,7 @@ setMethod("predict", signature="MCLFit",
 
 
 # method to calculation mse for "GMCL" 
+# augmented approach is used
 setMethod("Mse",signature(ModelFit="GMCLFit",
 						FullTriangles="triangles"),
 	function(ModelFit, FullTriangles, ...){
@@ -441,6 +448,9 @@ setMethod("Mse",signature(ModelFit="GMCLFit",
 	n <- dim(Triangles)[3]
    	d <- ModelFit@delta/2
 	I <- diag(rep(1,p+1))
+	
+	# augment coefficients, residual covariance matrices 
+	# and covariance matrices for estimated coefficients
 	B <- .B.aug(ModelFit)
 	Bcov <- .Bcov.aug(ModelFit)
 	ecov <- .ecov.aug(ModelFit)
@@ -464,14 +474,12 @@ setMethod("Mse",signature(ModelFit="GMCLFit",
 			# process variance
 			proc.old <- mse.ay.proc[a1,b1]
 
-
 			# recursive calculation of augmented mse
 			proc.new.a <- B[[k]]%*%.add.zero(proc.old)%*%t(B[[k]])+
 					diag((yhat.a)^d,nrow=p+1)%*%ecov[[k]]%*%diag((yhat.a)^d,nrow=p+1)
 
 			# predicted mse on non-augmented vectors
 			mse.ay.proc[a2,b2] <- .rm.zero(proc.new.a)
-
 
 			# estimation variance	
 			est.old <- mse.ay.est[a1,b1]
@@ -500,8 +508,7 @@ setMethod("Mse",signature(ModelFit="GMCLFit",
 		# process variance
 		proc.sum.a <- lapply(1:nrow(yhat.a), function(x){							
 							dy <- diag(yhat.a[x,],nrow=p+1)^d 
-							 dy %*% ecov[[k]] %*% dy
-							})
+							 dy %*% ecov[[k]] %*% dy})
 		proc.sum.a <- Reduce("+",proc.sum.a)
 		
 		# augmented total process variance
@@ -547,10 +554,8 @@ setMethod("Mse",signature(ModelFit="MCLFit",
 	Bcov <- ModelFit@coefCov
 	ecov <- ModelFit@residCov
 
-
 	mse.ay <- mse.ay.est <- mse.ay.proc <- matrix(0,m*p,n*p)
 	mse.total <- mse.total.est <- mse.total.proc <- matrix(0,p,p*n)
-
 
 	# mse for single accident years
 	for ( k in 1:(n-1))
@@ -849,7 +854,8 @@ Join2Fits <- function (object1, object2 ){
 			residCov=c(object1@residCov,object2@residCov),
 			fit.method=c(object1@fit.method,object2@fit.method),
 			delta=object1@delta,
-			int=object1@int)
+			int=object1@int,
+			restrict.regMat=object1@restrict.regMat)
 	}
 
 	if (all(model=="GMCL")) {
@@ -862,7 +868,8 @@ Join2Fits <- function (object1, object2 ){
 			residCov=c(object1@residCov,object2@residCov),
 			fit.method=c(object1@fit.method,object2@fit.method),
 			delta=object1@delta,
-			int=c(object1@int,object2@int))
+			int=c(object1@int,object2@int),
+			restrict.regMat=c(object1@restrict.regMat,object2@restrict.regMat))
 	}
    
 	return(output)
@@ -899,7 +906,8 @@ JoinFitMse <- function(models,mse.models){
 			mse.total.proc=mse.models@mse.total.proc,
 			FullTriangles=mse.models@FullTriangles ,
 			model=model,
-			int=models@int) 
+			int=models@int,
+			restrict.regMat=models@restrict.regMat) 
 	return(output)
 
 }
@@ -1250,17 +1258,19 @@ setMethod("plot",
 		any(which.plot < 1) || 
 		any(which.plot > 5)) 		
 		stop("The value of which.plot must be in 1:5!\n")
-    	
-	if (!is.null(main) && (!is.list(main) || length(main)!=5))
-		stop("main must be a list of length 5!\n")	
+    
+    lw <-  length(which.plot)	
+	if (!is.null(main) && (!is.list(main) || length(main)!=lw))
+		stop("main must be a list of equal length with which.plot!\n")	
 	
 	.summary <- summary(x,portfolio=portfolio)
 
 	if (any(which.plot==1)){
 		.myResult <-  .summary@report.summary 
 		n <-  nrow(.myResult[[1]])
-		for (i in which.triangle){ 				
-			if (!is.null(main)) main2 <- main[[1]][i] else 
+		for (i in which.triangle){ 
+			mp <- match(1, which.plot)			
+			if (!is.null(main)) main2 <- main[[mp]][i] else 
 				main2 <- if (i <=p) paste("Barplot for Triangle",i) else 
 						"Portfolio"
 				
@@ -1298,7 +1308,8 @@ setMethod("plot",
 		}
 			
 		for (i in which.triangle){
-			if (!is.null(main)) main2 <- main[[2]][i] else{
+			mp <- match(2, which.plot)			
+			if (!is.null(main)) main2 <- main[[mp]][i] else {
 				main2 <- if (i <=p) paste("Development Pattern for Triangle",i) 
 					else "Portfolio"
 					 }
@@ -1323,7 +1334,8 @@ setMethod("plot",
 			
 		if (any(which.plot==3)){ 
 			for (i in which.triangle){
-				if (!is.null(main)) main2 <- main[[3]][i] else 
+			mp <- match(3, which.plot)			
+			if (!is.null(main)) main2 <- main[[mp]][i] else  
 					main2 <- paste("Residual Plot for Triangle", i)
 
 				plot(fitted[,i],r[,i],
@@ -1338,7 +1350,8 @@ setMethod("plot",
 			
 		if (any(which.plot==4)){ 
 			for (i in which.triangle){
-				if (!is.null(main)) main2 <- main[[4]][i] else 
+				mp <- match(4, which.plot)		
+				if (!is.null(main)) main2 <- main[[mp]][i] else  
 					main2 <- paste("QQ-Plot for Triangle", i)
 
 				qqnorm(r[,i],main=main2,cex=0.75,...)
@@ -1362,7 +1375,8 @@ setMethod("plot",
 						dev=1:ncol(.Triangles[[1]]))
 			
 		for (i in which.triangle){
-			if (!is.null(main)) main2 <- main[[5]][i] else{
+			mp <- match(5, which.plot)			
+			if (!is.null(main)) main2 <- main[[mp]][i] else {
 				main2 <- if (i <=p) paste("Development Pattern for Triangle",i) else 
 						"Portfolio"
 			}
@@ -1431,13 +1445,11 @@ setMethod("plot",
 # function to augment coefficients to be used in prediction and mse estimation
 # change the coefficent matrix  to (p+1)* (p+1) since a vector (1,0, \cdots 0)' is added
 .B.aug <- function(object){
-
-		B <- lapply(object@coefficients, function(x){
+	B <- lapply(object@coefficients, function(x){
 							a <-.add.zero(x)[,-1]
 							a[1,1] <- 1
-							return(a)
-			})
-		return(B)
+							return(a)})
+	return(B)
 }
 
 
@@ -1447,7 +1459,11 @@ setMethod("plot",
 		n <- length(object@coefCov)
 		Bcov <- rep(list(matrix(0,(p+1)^2, (p+1)^2)),n)
 		chngOrder <- as.vector(matrix(1:((p+1)^2),p+1,p+1,byrow=TRUE))
+		
 		for (i in 1:n){
+			
+			# positions of the returned covariance matrix in the 
+			# augmented matrix, depending on whether there's an intercept
 			if (!i %in% object@int) 
 				pos <- apply(expand.grid(2:(p+1),1:p*(p+1)),1,sum) else{
 				pos <- (p+2):(p+1)^2 
