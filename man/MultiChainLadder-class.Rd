@@ -38,6 +38,7 @@ Objects can be created by calls of the form \code{new("MultiChainLadder", ...)},
     \item{\code{mse.total.est}:}{Object of class \code{"matrix"}. Conditional estimation mse for aggregated accdient years.  }
     \item{\code{mse.total.proc}:}{Object of class \code{"matrix"}. Conditional process mse for aggregated accdient years.  }
     \item{\code{FullTriangles}:}{Object of class \code{"triangles"}. Completed triangles.  }
+    \item{\code{restrict.regMat}:}{Object of class \code{"NullList"}  }
   }
 }
 \section{Extends}{
