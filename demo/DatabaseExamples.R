@@ -14,7 +14,7 @@ testDataDir <- system.file("Database", package="ChainLadder")
 ## Check operating system
 ## If OS is Windows we read the data from an Access database:
 ## ChainLadderTestData.mdb, otherwise we use read.csv
-if(R.Version()$os == "mingw32"){
+if(.Platform$OS.type == "windows"){
     require(RODBC)
     fn.mdb <- paste(testDataDir,"/ChainLadderTestData.mdb", sep="")
     # Establish connection to the Access database
@@ -112,7 +112,7 @@ writeDatabaseExampleResults <- function(data,tablename=NULL){
     tablename <- paste('T_ChainLadderResults', format(Sys.time(), '%Y %B %d %H:%M:%S'))
   }
   testDataDir <- system.file("Database", package="ChainLadder")
-  if(R.Version()$os == "mingw32"){
+  if(.Platform$OS.type == "windows"){
     require(RODBC)
     fn.mdb <- paste(testDataDir,"/ChainLadderTestData.mdb", sep="")
     channel <- odbcConnectAccess(access.file=fn.mdb)

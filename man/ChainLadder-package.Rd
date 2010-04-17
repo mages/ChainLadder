@@ -18,7 +18,9 @@
   functions in Excel. The spreadsheet is located in the Excel folder of
   the package. The R command \code{system.file("Excel", package="ChainLadder")} will tell you the exact path to the directory.
   To use the spreadsheet you will need to have the RExcel-Addin, see
-  \url{http://sunsite.univie.ac.at/rcom/} for more details.
+  \url{http://sunsite.univie.ac.at/rcom/} for more details.  It also provides an example SWord file, 
+  demonstarting how the the functions of the package can be integrated into a MS Word file via SWord. 
+  Again you find the Word file via the command:\code{system.file("SWord", package="ChainLadder")}
    
   More information is available
   on the project web site \url{http://code.google.com/p/chainladder/}

@@ -1,4 +1,4 @@
-## Demo which shows how to use R and ChainLadder for auto reporting
+## Demo which shows how to use R and ChainLadder for auto reporting with MS Office
 ## Markus Gesmann, March 2010
 ## See also the R2PPT package
 ## Of course you need MS Office, and also the 'rcom' package
