@@ -3,7 +3,7 @@
 
 \title{ Multivariate Chain Ladder Models }
 \description{
-  The MultiChainLadder implements multivariate methods within the chain ladder framework to forecass reserves or IBNR (Incurred But Not Reported)
+  The MultiChainLadder implements multivariate methods within the chain ladder framework to forecast reserves or IBNR (Incurred But Not Reported)
   claims based on several cumulative claims development triangles simultaneously. It fits development models that reflect both contemporaneous correlations and structural relationship, and estimates the conditional Mean Square Errors (MSE). 
 }
 \usage{
@@ -24,14 +24,14 @@ MultiChainLadder(Triangles,
   \item{int}{indicator of which periods have intercepts. This only works for \code{GMCL}. Default \code{NULL} means no intercept. Otherwise, specify a numeric vector. }   
   \item{restrict.regMat}{a list of matrix specifying parameter restriction matrix for each period. This only works for \code{GMCL}. Default \code{NULL} means no restriction. See \code{systemfit} } 
   \item{extrap}{logical. Whether to use Mack's extrapolation method for the last period to get the variance component estimation. It only works for \code{model="MCL"}. If the data are  trapezoids, it is set to be \code{FALSE} automatically and a warning message is given.}
-  \item{mse.method}{method to estimate the mean square error. Could be either \code{Mack} or \code{Independence}, multivariate generalization of the Mack and Murphy&BBMW formulas respectively.}
+  \item{mse.method}{method to estimate the mean square error. Could be either \code{Mack} or \code{Independence}, multivariate generalization of the Mack formulas and the conditional resampling approach, respectively.}
   \item{model}{ structure of the model to be fitted. Either \code{MCL} or \code{GMCL}. See details. }
   \item{\dots}{arguments passed to \code{systemfit}.}
 
 }
 
 \details{
-This function fits the multivariate models within the chain ladder framework. Corresponding to the \code{model} argument, there are two major models that are incorporated into this function. One is the Multivariate Chain Ladder (MCL) model proposed by Prohl and Schmidt (2005), which is characterized by a diagonal development matrix, allowing multiple lines to be developed together while reflecting the correlations among lines. The other is a natural generalization of the MCL model, the General Multivariate Chain Ladder (GMCL) model proposed by Zhang (2009), which has a non-diagonal development matrix and  intercepts, and can be used to develop structurally related triangles, such as paid and incurred or paid and case reserve, as well as contemporaneously related ones. The MCL model is a sub-model of GMCL, but it is programmed separately because: a) its stand-alone importance; b) different MSE methods are only available for the MCL model; c) extrapolation is not allowed for GMCL. 
+This function fits the multivariate models within the chain ladder framework. Corresponding to the \code{model} argument, there are two major models that are incorporated into this function. One is the Multivariate Chain Ladder (MCL) model proposed by Prohl and Schmidt (2005), which is characterized by a diagonal development matrix, allowing multiple lines to be developed together while reflecting the correlations among lines. The other is a natural generalization of the MCL model, the General Multivariate Chain Ladder (GMCL) model proposed by Zhang (2010), which has a non-diagonal development matrix and  intercepts, and can be used to develop structurally related triangles, such as paid and incurred or paid and case reserve, as well as contemporaneously related ones. The MCL model is a sub-model of GMCL, but it is programmed separately because: a) its stand-alone importance; b) different MSE methods are only available for the MCL model; c) extrapolation is not allowed for GMCL. 
 
 Some technical details about the GMCL model. Assume N triangles are available. Denote \eqn{Y_{i,k}=(Y^{(1)}_{i,k}, \ldots ,Y^{(N)}_{i,k})} as an \eqn{N \times 1} vector of  cumulative losses at accident year i and development year k where (n) refers to the n-th triangle. The GMCL model in development period k is:
   \deqn{Y_{i,k+1}=A_k + B_k \cdot Y_{i,k}+\epsilon_{i,k},}
@@ -85,11 +85,9 @@ In using the multivariate method, one often specifies separate chain ladder for 
 
 \cite{ Merz M, Wuthrich M (2008). Prediction error of the multivariate chain ladder reserving method, \emph{North American Actuarial Journal}, 12, No.2, 175-197.}
 
-\cite{ Murphy D. M (1994). Unbiased loss development factors, \emph{Proceedings of the Casualty Actuarial Society}, LXXXI, 154-222.}
+\cite{Zhang Y (2010). A general multivariate chain ladder model.\emph{Insurance: Mathematics and Economics}, doi:10.1016/j.insmatheco.2010.03.002.}
 
-\cite{Zhang Y (2010). A general multivariate chain ladder model.}
-
-\cite{Zhang Y (2010). Prediction error of multivariate reserving models in the chain ladder framework.}
+\cite{Zhang Y (2010). Prediction error of the general multivariate chain ladder model.}
 
  }
 
@@ -119,7 +117,7 @@ plot(uni2,which.plot=5)
 }
 
 # This illustrates the use of the "Independence" assumption in 
-# calculating the Mse, which is equivalent to the result in BBMW
+# calculating the Mse, which is equivalent to the result in Buchwalder et al. (2006)
 
 fit.bbmw <- MultiChainLadder(list(GenIns),
 				fit.method="OLS", 

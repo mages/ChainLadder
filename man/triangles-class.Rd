@@ -13,7 +13,7 @@
 \alias{rbind2,triangles,missing-method}
 
 \title{S4 Class "triangles"  }
-\description{This is a S4 class that has "list" in the data part. This class is created to facilitate validation and extration of data. }
+\description{This is a S4 class that has "list" in the data part. This class is created to facilitate validation and extraction of data. }
 \section{Objects from the Class}{
 Objects can be created by calls of the form \code{new("triangles", ...)}, or use \code{as(...,"triangles")}, where \code{...} is a "list".
 }
