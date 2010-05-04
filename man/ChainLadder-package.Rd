@@ -6,8 +6,9 @@
   Various chain-ladder methods for claims reserving
 }
 \description{The ChainLadder-package grew out of presentations
-  the author gave at the Stochastic Reserving Seminar at the Institute
-  of Actuaries in November 2007 and 2008.
+  given at the Stochastic Reserving Seminar at the Institute
+  of Actuaries in 2007 and 2008 and followed by talks at CAS meetings in
+  2008 and 2010.
   This package has currently implementations for the Mack-, Munich- and
   Bootstrap-chain-ladder methods. The package offers also some utility
   functions to convert quickly tables into triangles, triangles into
@@ -29,8 +30,12 @@
   simulation of compound hierarchical models and credibility theory check out the \code{actuar} package 
   by C. Dutang, V. Goulet and M. Pigeon.
 
-  lossDev - A Bayesian time series loss development model. Features include skewed-t distribution with time-varying scale parameter, Reversible Jump MCMC for determining the functional form of the consumption path, and a structural break in this path; by Christopher W. Laws and Frank A. Schmid
-\url{http://lossdev.r-forge.r-project.org/}
+  Another package you might want to look into is \code{lossDev}. It
+  implements a Bayesian time series loss development model. 
+  Features include skewed-t distribution with time-varying scale
+  parameter, reversible jump MCMC for determining 
+  the functional form of the consumption path, and a structural break in this path; by Christopher W. Laws and Frank A. Schmid
+  see also \url{http://lossdev.r-forge.r-project.org/}
   
   For more financial packages see also CRAN Task View 'Emperical Finance'
   at \url{http://cran.r-project.org/web/views/Finance.html}.
@@ -41,7 +46,7 @@
 Package: \tab ChainLadder\cr
 Type: \tab Package\cr
 Version: \tab 0.1.3-3\cr
-Date: \tab 20010-03-13\cr
+Date: \tab 20010-05-04\cr
 License: \tab GPL version 2 or later\cr
 }
 }
