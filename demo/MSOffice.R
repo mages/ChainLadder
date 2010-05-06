@@ -17,3 +17,12 @@ mySlides<-comGetProperty(myPres,"Slides")
 mySlide<-comInvoke(mySlides,"Add",1,12)
 myShapes<-comGetProperty(mySlide,"Shapes")
 myPicture<-comInvoke(myShapes,"AddPicture",myfile,0,1,100,10)
+
+## See also the packages R2PPT and R2wd which provide wrapper functions dealing 
+## with PowerPoint and Word
+
+## Also see the SWord example file:
+# system(paste("open ", system.file("SWord", package="ChainLadder"),"/ChainLadder_SWord_Example.doc", sep=""))
+
+## RExcel example file:
+# system(paste("open ", system.file("Excel", package="ChainLadder"),"/ChainLadder_in_Excel.xls", sep=""))
