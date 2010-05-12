@@ -7,8 +7,8 @@ NEW FEATURES
   o New multivariate chain ladder function 'MultiChainLadder' by Wayne (Yanwei) Zhang  <actuaryzhang@uchicago.edu>
   o New function 'getLatestCumulative' available. It returns for a given triangle the most recent values for each origin period.
   o New ChainLadder comes now with demo files! Type demo(package='ChainLadder') for more information.
-  o Demos exsist for the following topics: ChainLadder, MackChainLadder, DatabaseExamples, MSOffice, MultiChainLadder
-  o Added the SWord example file ChainLadder_SWord_Example.doc, which demonstrates how R code snippets can be integrated into a Word file.
+  o Demos exist for the following topics: ChainLadder, MackChainLadder, DatabaseExamples, MSOffice, MultiChainLadder
+  o New SWord example file ChainLadder_SWord_Example.doc, which demonstrates how R code snippets can be integrated into a Word file.
     The following R command system.file("SWord", package="ChainLadder") will show the directory of the file.
 
 USER-VISIBLE CHANGES

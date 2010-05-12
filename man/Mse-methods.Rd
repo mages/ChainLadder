@@ -55,7 +55,7 @@ For the Mack approach in the MCL model, the cross-product term \eqn{\hat{\Sigma}
 
 }
 \references{
-\cite{Zhang Y (2010). A general multivariate chain ladder model.\emph{Insurance: Mathematics and Economics}, doi:10.1016/j.insmatheco.2010.03.002.}
+\cite{Zhang Y (2010). A general multivariate chain ladder model.\emph{Insurance: Mathematics and Economics}, 46, pp. 588-599.}
 
 \cite{Zhang Y (2010). Prediction error of the general multivariate chain ladder model.}
 }

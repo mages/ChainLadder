@@ -9,7 +9,7 @@
   A list of three matrices, paid Personal Auto, incurred Personal Auto and paid Commercial Auto respectively.
 }
 \source{
-	\cite{Zhang (2009). A general multivariate chain ladder model.}
+	\cite{Zhang (2010). A general multivariate chain ladder model. \emph{Insurance: Mathematics and Economics}, 46, pp. 588-599.}
 }
 \examples{
 data(auto)
