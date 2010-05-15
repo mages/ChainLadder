@@ -1,5 +1,3 @@
-=== ChainLadder: R package for insurance claims reserving ===
-
 Version 0.1.3-3
 ================
 NEW FEATURES
@@ -15,20 +13,12 @@ USER-VISIBLE CHANGES
    o The examples in MackChainLadder and ChainLadder-package have been shortened and demo files have been created instead.
      The examples focus on the syntax of the function calls, while the demos give more detailed information 
      on how you might want to use the functions in a business context.
-      
    
 BUG FIXES
 
   o 'plot.MunichChainLadder':  The labels of the axis of the residuals plots where the mixed up. 
     Thanks to Ben Escoto for reporting this issue.
   o 'estimate.sigma' didn't check for sigma>0 before applying a log-linear regression. Thanks to Dan Murphy reporting this bug.
-
-Version 0.1.2-14
-================
-CHANGES
-  o as.triangle.data.frame sort the data frame by origin and dev period before creating a triangle. 
-  o New test suits using RUnit
-
 
 Version 0.1.2-13
 ================
@@ -80,107 +70,139 @@ BUG FIXES
   o 'MunichChainLadder': tail factors were not accepted. Thanks to Stefan Pohl for reporting this issue.
 
 Version 0.1.2-11
-================
+===============
 BUG FIXES
 
   o 'MackChainLadder': 'F.se'[ultimate] was calculated of the ultimate column instead of the latest paid. 
 
 Version 0.1.2-10
-================
+===============
 USER-VISIBLE CHANGES
 
-  o 'MackChainLadder' has new arguments 'tail.sigma' and 'tail.se' to provide estimates for 
-    the variability of for a given tail factor
+  o 'MackChainLadder' has new arguments 'tail.sigma' and 'tail.se' to provide estimates
+     of the variability for a given tail factor.
  
 BUG FIXES
 
   o 'MackChainLadder': calculation of 'Mack.S.E' did not use an ultimate sigma factor to estimate 
-    'Mack.S.E' when a tail factor > 1 was provided (Thanks to Mark Hoffmann for reporting this issue).
+     'Mack.S.E' when a tail factor > 1 was provided (Thanks to Mark Hoffmann for reporting this issue).
 
 Version 0.1.2-9
 ===============
 USER-VISIBLE CHANGES
-
   o Updated documentation to work with new Rd-file parser (R version >= 2.9.0)
   o Updated documentation for 'ABC' data (Thanks to Glen Barnett)
 
 Version 0.1.2-8
 ===============
 USER-VISIBLE CHANGES
-
   o Updated documentation for 'MackChainLadder' (Thanks to Daniel Murphy)
 
 Version 0.1.2-7
 ===============
-USER-VISIBLE CHANGES
-  
+USER-VISIBLE CHANGES 
   o 'MackChainLadder' gives two more elements back: 'Mack.ProcessRisk' and 'Mack.ParameterRisk' 
-    for the process and parameter risk error (Thanks to Daniel Murphy)
-  o In the summary output of 'MackChainLadder' the label 'CV'  changed to 'CV(IBNR)' to clarify 
-    that we show the coefficient of variance of the IBNR.
-  o 'MackChainLadder' provides new example plots for CV(IBNR) vs. origin period and CV(Ultimate) 
-    vs. origin period  
+     for the process and parameter risk error (Thanks to Daniel Murphy)
+  o In the summary output of'MackChainLadder' the label 'CV'  changed to 'CV(IBNR)' to clarify 
+     that we show the coefficient of variance of the IBNR.
+  o 'MackChainLadder' provides new example plots for CV(IBNR) vs. origin period and CV(Ultimate) vs. origin period  
   o Updated documentation
 
 Version 0.1.2-6
 ===============
 USER-VISIBLE CHANGES
-
   o Updated documentation
 
-Version 0.1.2-5
+Version 0.1.2-5 
 ===============
-
 NEW FEATURES
-
   o New function 'BootChainLadder', based on papers by England and Verrall, 
     and Barnett and Zehnwirth
- 
   o 'MackChainLadder' and 'MunichChainLadder' allow for tail factors
-
-  o 'MackChainLadder' estimates the overall standard error for the total IBNR
-		
+  o 'MackChainLadder' estimates the overall standard error for the total IBNR		
   o New arguments 'tail' and 'est.sigma' for MackChainLadder, to control 
     the tail factor and the estimation of sigma_{n-1}
-
   o New arguments 'tailP', 'tailI' and 'est.sigmaP', 'est.sigmaI' for
     'MunichChainLadder', which are passed on to 'MackChainLadder' to control 
     the tail factor and the estimation of sigma_{n-1} for the Paid and 
     Incurred triangle
-
   o 'Mack-, 'Munich-, and 'BootChainLadder' accept (mxn) matrices with m>=n,
     e.g more accident years than development years
-
   o New example data sets: 'ABC' (annual run-off triangle of a worker's 
     compensation portfolio of a large company), 'qpaid', 'qincurred' ('made-up'
     data of a quarterly development triangle of annual origin period)
-	
   o Triangles with higher development period frequency (e.g quarterly) than 
     origin period frequency (e.g annual) can be used after being 'blown-up'
     to a common period frequency, see the help of 'qpaid'
-
   o 'Mack-, 'Munich- and 'BootChainLadder' accept 'blown-up' triangles of 
     higher development period frequency than origin period frequency filled 
     with 'NA', see the help of 'qpaid'
 
 USER-VISIBLE CHANGES
-
   o summary functions for 'Mack-, 'Munich-, 'BootChainLadder' give all a list 
     back with two elements: 'ByOrigin' and 'Totals'	
- 
   o Change of labels: origin years -> origin period and development years ->
     development origin
-
   o Coefficient of Variance is abbreviate with 'CV' instead of 'CoV'
-
   o The example spreadsheet 'ChainLadder_in_Excel.xls' has new examples, 
     including 'BootChainLadder'
-
   o New greeting message after the R-call 'library(ChainLadder)'
-
   o Improved documentation
-
 BUG FIXES
-
   o 'MunichChainLadder': calculation of 'lambdaP' and 'lambdI' was incorrect. 
     Thanks to Beat Huggler for reporting this issue.
+
+2008-09-23 Markus Gesmann <markus.gesmann@gmail>
+
+	* R/BootstrapReserve.R Included all the functions for the BootChainLadder
+	function. The BootChainLadder procedure	provides a predictive
+	distribution of reserves for a cumulative claims development
+	triangle.
+	* R/BootstrapReserve.R, MackChainLadder.R, MunichChainLadder The summary
+	methods for MackChainLadder, MunichChainLadder, BootChainLadder
+	give a list back with two elements "ByOrigin" and "Totals"
+	* R/zzz.R Included a .onLoad function to produce a little message
+	after the ChainLadder package is loaded.
+	* Excel/ChainLadder_in_Excel.xls Added new examples for
+	BootChainLadder and how to use Rapply to call functions from the
+	ChainLadder package.
+
+2008-09-18 Markus Gesmann <markus.gesmann@gmail.com>
+
+	* R/MackChainLadder.R Included tail factor estimation. The
+	function MackChainLadder has a new argument "tail" to either
+	estimate the tail factor via a log-linear regression or to set it manually.
+	* data/qpaid.RData, qincurred.RData Added examples of quarterly
+	development triangles 
+
+2008-09-08 Markus Gesmann  <markus.gesmann@gmail.com>
+
+         * R/MackChainLadder.R Prepared the functions Mack.S.E and 
+	   Total.Mack.S.E to accept triangles with rows full of NA values.
+	   This might be useful for non quadratic triangles
+
+2008-05-19  Markus Gesmann  <markus.gesmann@gmail.com>
+
+        * R/MackChainLadder.R Bug fix: Function Mack.S.E did not give F.se back, 
+          which is needed by TotalMack.S.E. 
+          Many thanks to Florian Leitenstorfer for reporting this issue.
+
+2008-05-11 Markus Gesmann  <markus.gesmann@gmail.com>
+
+	* inst/Excel/ChainLadder_in_Excel.xls uses now dynamic functions 
+	and shows how to call 'plot' from Excel 
+	* R/MackChainLadderFunctions.R: Changed labels Reserving to IBNR 
+	(=Incurred But Not Reported)
+
+2008-02-02  Markus Gesmann  <markus.gesmann@gmail.com>
+
+	* R/MackChainLadderFunctions.R: Mack.S.E checks now which sigma>0 before log
+	linear regression of sigma to estimate sigma[n-1]
+
+2008-02-11  Markus Gesmann  <markus.gesmann@gmail.com>
+
+	* R/MackChainLadderFunctions.R: added function
+	TotalMack.S.E function to estimate the overall standard error for
+	the reserve. MackChainLadder gives now also the
+	Total.Mack.S.E. back plus the estimate standard error for all
+	individual age-to-age factors F.se.
