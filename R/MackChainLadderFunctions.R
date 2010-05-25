@@ -4,7 +4,7 @@
 ## Date:10/11/2007
 ## Date:08/09/2008
 ## Date:22/03/2009
-## Date:25/05/2010
+## Date:25/05/2010 Dan
 
 MackChainLadder <- function(Triangle,
                             weights=1,
