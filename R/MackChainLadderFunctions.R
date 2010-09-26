@@ -456,7 +456,19 @@ residuals.MackChainLadder <- function(object,...){
     m <- nrow(object[["Triangle"]])
     n <- ncol(object[["Triangle"]])
     myresiduals <- unlist(lapply(object[["Models"]], resid,...))
-    standard.residuals <- unlist(lapply(object[["Models"]], rstandard,...))
+   
+    standard.residuals <- rep(NA, length(myresiduals))
+    
+    ## Identify if we have standardized residuals for all items, 
+    ## e.g. this is not the case if some weights have been set to zero
+    x=lapply(lapply(object$Model, resid), function(x) as.numeric(names(x)))
+	y=lapply(lapply(object$Model, rstandard), function(x) as.numeric(names(x)))
+	names(y)=1:length(y)
+	names(x)=1:length(x)		
+    rst <- unlist(lapply(names(x), function(z) x[[z]] %in% y[[z]]))
+    ## rst holds the indices with standardised residuals for weights > 0 
+    
+    standard.residuals[rst] <- unlist(lapply(object[["Models"]], rstandard,...))
     fitted.value <- unlist(lapply(object[["Models"]], fitted))
     origin.period <- as.numeric(unlist(lapply(lapply(object[["Models"]],residuals),names)))
     dev.period <-rep(1:(n-1), sapply(lapply(object[["Models"]],residuals),length))

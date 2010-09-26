@@ -1,18 +1,31 @@
+Version 0.1.3-4
+================
+NEW FEATURES
+  o NA
+  
+USER-VISIBLE CHANGES
+  o NA
+   
+BUG FIXES
+
+  o 'residuals.MackChainLadder': Zero weights applied to MackChainLadder caused an error. 
+  	Thanks to Ernesto Schirmacher for reporting this bug.  
+
 Version 0.1.3-3
 ================
 NEW FEATURES
 
   o New multivariate chain ladder function 'MultiChainLadder' by Wayne (Yanwei) Zhang  <actuaryzhang@uchicago.edu>
   o New function 'getLatestCumulative' available. It returns for a given triangle the most recent values for each origin period.
-  o New ChainLadder comes now with demo files! Type demo(package='ChainLadder') for more information.
+  o New demos! Type demo(package='ChainLadder') for more information.
   o Demos exist for the following topics: ChainLadder, MackChainLadder, DatabaseExamples, MSOffice, MultiChainLadder
   o New SWord example file ChainLadder_SWord_Example.doc, which demonstrates how R code snippets can be integrated into a Word file.
     The following R command system.file("SWord", package="ChainLadder") will show the directory of the file.
 
 USER-VISIBLE CHANGES
-   o The examples in MackChainLadder and ChainLadder-package have been shortened and demo files have been created instead.
-     The examples focus on the syntax of the function calls, while the demos give more detailed information 
-     on how you might want to use the functions in a business context.
+  o The examples in MackChainLadder and ChainLadder-package have been shortened and demo files have been created instead.
+    The examples focus on the syntax of the function calls, while the demos give more detailed information 
+    on how you might want to use the functions in a business context.
    
 BUG FIXES
 

@@ -7,4 +7,5 @@ Many thanks to all who provided ideas, suggestions, corrections and bug reports:
 	 Christophe Dutang for ideas and code on utility functions to deal with triangles,
 	 Stefan Pohl for comments on tail factors with MunichChainLadder,
 	 Ben Escoto for providing a patch to a bug on returning latest incomplete triangle positions,
-	 Przemyslaw Sloma for reporting a bug report on MackChainLadder.
+	 Przemyslaw Sloma for reporting a bug in MackChainLadder,
+	 Ernesto Schirmacher for reporting a bug in residuals.MackChainLadder
