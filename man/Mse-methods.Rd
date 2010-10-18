@@ -1,5 +1,5 @@
 \name{Mse-methods}
-\docType{genericFunction}
+%\docType{genericFunction}
 \alias{Mse}
 \alias{Mse-methods}
 \alias{Mse,GMCLFit,triangles-method}
@@ -32,7 +32,7 @@ Mse(ModelFit, FullTriangles, ...)
 
 \deqn{\hat{mse}(\sum^I_{i=a_k}\hat{Y}_{i,k+1}|D)=\hat{B}_k \hat{mse}(\sum^I_{i=a_k+1}\hat{Y}_{i,k}|D) \hat{B}_k + (\sum^I_{i=a_k}\hat{Y}_{i,k}' \otimes I) \hat{\Sigma}_{B_k} (\sum^I_{i=a_k}\hat{Y}_{i,k} \otimes I) +  \sum^I_{i=a_k}\hat{\Sigma}_{\epsilon_{i_k}} .}
 
-In the MCL model, the conditional  mean square error  from Merz and Wuthrich (2008) is also available, which can be shown to be equivalent as the following:
+In the MCL model, the conditional mean square error from Merz and Wuthrich (2008) is also available, which can be shown to be equivalent as the following:
 
 \deqn{\hat{mse}(\hat{Y}_{i,k+1}|D)=(\hat{\beta}_k \hat{\beta}_k') \odot \hat{mse}(\hat{Y}_{i,k}|D)  + \hat{\Sigma}_{\beta_k} \odot (\hat{Y}_{i,k} \hat{Y}_{i,k}') +  \hat{\Sigma}_{\epsilon_{i_k}} +\hat{\Sigma}_{\beta_k} \odot \hat{mse}^E(\hat{Y}_{i,k}|D) .}
 

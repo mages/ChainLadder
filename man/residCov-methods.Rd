@@ -1,5 +1,5 @@
 \name{residCov}
-\docType{genericFunction}
+%\docType{genericFunction}
 \alias{residCov}
 \alias{residCor}
 \alias{residCov-methods}
