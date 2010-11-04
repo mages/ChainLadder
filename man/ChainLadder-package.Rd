@@ -13,6 +13,10 @@
   Bootstrap-chain-ladder methods. The package offers also some utility
   functions to convert quickly tables into triangles, triangles into
   tables, cumulative into incremental and incremental into cumulative triangles.
+  
+  The package was recently programmed to implement the 
+  "LDF Curve Fitting" methods of David Clark's paper 
+  in the 2003 CAS \emph{Forum}.
    
   The ChainLadder-package comes with an example spreadsheet which
   demonstrates how to use the \code{ChainLadder} 
@@ -65,6 +69,9 @@ Maintainer: Markus Gesmann <markus.gesmann@gmail.com>
 \cite{England, PD and Verrall, RJ. Stochastic Claims Reserving in General Insurance (with discussion). \emph{British Actuarial Journal 8.} III. 2002 }
 
 \cite{B. Zehnwirth and G. Barnett. \emph{Best Estimates for Reserves}. \emph{Proceedings of the CAS.} Volume LXXXVII. Number 167.November 2000.}
+
+\cite{Clark, David R., "LDF Curve-Fitting and Stochastic Reserving: A Maximum Likelihood Approach," \emph{CAS Forum}, Fall 2003.}
+
 }
 
 \examples{

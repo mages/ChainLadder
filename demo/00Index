@@ -1,4 +1,5 @@
 ChainLadder  Overview of the ChainLadder package
+clarkDemo  Demo of David Clark's "LDF" and "Cape Cod" methods (functions 'clarkLDF' and 'clarkCapeCod', respectively)
 DatabaseExamples   Demo showing how the ChainLadder package can be used in connection with a database, e.g. Access
 MackChainLadder  Detailed demo of the MackChainLadder function
 MSOffice   Demo showing how R and ChainLadder can be used for auto reporting

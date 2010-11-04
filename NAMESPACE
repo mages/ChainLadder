@@ -4,6 +4,7 @@ export(chainladder)
 export(getLatestCumulative)
 export(incr2cum, cum2incr)
 export(Join2Fits, JoinFitMse, Mse, residCov, residCor)
+export(clarkLDF, clarkCapeCod)
 
 importFrom(stats, quantile, predict, coef, vcov,
               residuals, resid, fitted, fitted.values, rstandard)
@@ -21,11 +22,13 @@ S3method(plot, MackChainLadder)
 S3method(plot, MunichChainLadder)
 S3method(plot, BootChainLadder)
 S3method(plot, triangle)
+S3method(plot, clark)
 
 S3method(print, MackChainLadder)
 S3method(print, MunichChainLadder)
 S3method(print, BootChainLadder)
 S3method(print, triangle)
+S3method(print, clark)
 
 
 
