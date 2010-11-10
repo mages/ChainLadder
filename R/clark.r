@@ -35,9 +35,7 @@
 #           LDF Method
 #           Cape Cod Method
 
-#require(ChainLadder)
-
-clarkLDF <- function(data,
+ClarkLDF <- function(data,
         cumulative = TRUE,
         adol = TRUE,
         maxage = c(Inf, Inf),
@@ -57,13 +55,14 @@ clarkLDF <- function(data,
          stop(paste("Growth function '", G, "' unrecognized", sep=""))
          )
         
-    if (!is.matrix(data)) stop("clarkLDF expects data in matrix format")
+    if (!is.matrix(data)) stop("ClarkLDF expects data in matrix format")
     nr <- nrow(data)
     if (nr < 4L || ncol(data) < 4L) stop("matrix must be at least 4x4")
 
     dev <- as.numeric(colnames(data))
     if (any(is.na(dev))) stop("non-'age' column name(s)")
     if (any(dev[-1L]<=head(dev, -1L))) stop("ages must be strictly increasing")
+    if (tail(dev, 1L) > maxage[1L]) stop("'maxage' must not be less than last age in triangle")
     
     # 'workarea' stores intermediate calculations
     workarea <- new.env()
@@ -107,17 +106,29 @@ clarkLDF <- function(data,
         if (adol) {
             agediff <- (Age.to-Age.from)[-1L]
             meandiff <- mean(agediff)/2
-            if (!all(agediff==agediff[1L]))
+            if (!all(abs(agediff-agediff[1L])<sqrt(.Machine$double.eps))) 
                 warning("Varying age differences; check reasonability of maxage calculation")
             maxage <- maxage.traditional - meandiff
             }
         }
-    
 
-    # Before massaging 'data' below, calculate some values we'll need later
-
-    # Save current cumulative diagonal and its age
+################################################################################    
+    # Let's scale the data asap.
+    # Just as Clark uses sigma2 to scale to model with ODP, we will scale
+    #   losses by a large amount so that the scaled losses and the growth 
+    #   function  parameters are in a closer relative magnitude. Otherwise, 
+    #   the Fisher Information matrix may not invert.
     CurrentValue <- getLatestCumulative(if (cumulative) data else incr2cum(data))
+    Uinit <- if (is.logical(tryCatch(checkTriangle(data), error = function(e) FALSE))) CurrentValue
+        else 
+        if (cumulative) predict(chainladder(data))[,ncol(data)] 
+        else predict(chainladder(incr2cum(data)))[,ncol(data)]
+    magscale <- max(Uinit)
+    data <- data / magscale
+    CurrentValue <- CurrentValue / magscale
+    Uinit <- Uinit / magscale
+
+    # Save age from/to's of current diagonal
     CurrentAge <- getLatestCumulative({
         z <- col(data)
         z[is.na(data)]<-NA
@@ -126,13 +137,9 @@ clarkLDF <- function(data,
     CurrentAge.from <- getLatestCumulative(array(Age.from[z], dim(data)))
     CurrentAge.to <- getLatestCumulative(array(Age.to[z], dim(data)))
 
-    # We will use chainladder estimates as starting parameter values for U.
-    CLU <- if (cumulative) predict(chainladder(data))[,ncol(data)] else predict(chainladder(incr2cum(data)))[,ncol(data)]
-
-    # Massage 'data': make incremental triangle, first wide then long format
-    
     # Turn loss matrix into incremental losses, if not already
     if (cumulative) data <-cum2incr(data)
+#################################################################################
 
     # Create the "long format" data.frame as in Table 1.1 of paper.
     Table1.1 <- as.data.frame(as.triangle(data))
@@ -142,9 +149,9 @@ clarkLDF <- function(data,
     Table1.1$Age.to <- rep(Age.to, each=nr)
     Table1.1 <- Table1.1[!is.na(Table1.1[[3L]]),]
     
-    # "prime" workarea with initial data
+    # "prime" 'workarea' with initial data
     workarea$origin   <- Table1.1$origin
-    workarea$value    <- Table1.1[[3L]]
+    workarea$value    <- as.numeric(Table1.1$value)
     workarea$Age.from <- Table1.1$Age.from
     workarea$Age.to   <- Table1.1$Age.to
     workarea$dev      <- devs[Table1.1$dev]
@@ -153,7 +160,7 @@ clarkLDF <- function(data,
     rm(Table1.1)
 
     # Calc starting values for the parameters, call optim
-    theta <- c(structure(CLU, names=origins), G@initialGuess(workarea))
+    theta <- c(structure(Uinit, names=origins), G@initialGuess(workarea))
     S <- optim(
         par = theta,
         LL.ODP, # function to be maximized (fmscale=-1)
@@ -162,15 +169,14 @@ clarkLDF <- function(data,
         G,              
         workarea,
         method="L-BFGS-B",
-        lower=c(CurrentValue, .1, min(c(.5, workarea$Age.to))),
+        lower=c(min(data, na.rm=TRUE), .1, min(c(.5, workarea$Age.to))),
         control = list(
             fnscale=-1,
-            parscale=c(CLU, 1, 1),
+            parscale=c(Uinit, 1, 1),
             maxit=100000
             ),
         hessian=FALSE
         )
-
 
     if (S$convergence>0) {
         msg <- "Maximum likelihood solution not found."
@@ -194,7 +200,7 @@ clarkLDF <- function(data,
     # AY DETAIL LEVEL
 
     # Expected value of reserves
-    R <- R.LDF(theta, G, CurrentAge.to, maxage, workarea)
+    R <- R.LDF(theta, G, CurrentAge.to, maxage)#, workarea)
     # Alternatively, by developing current diagonal
     #   For LDF formula, see table at top of p. 64
     LDF <- G(maxage, thetaG) / G(CurrentAge.to, thetaG)
@@ -209,85 +215,155 @@ clarkLDF <- function(data,
     # Calculate the Fisher Information matrix = matrix of
     #   2nd partial derivatives of the LL fcn w.r.t. all parameters
     workarea$FI <- FI <- d2LL.ODPdt2(S$par, MU.LDF, G, workarea)
+    # FImult <- array(
+    #     c(rep(c(rep(1/magscale, K), rep(1, G@np)), K), 
+    #       rep(c(rep(1, K), rep(magscale, G@np)), G@np)),
+    #     c(np, np)
+    #     ) 
 
-    # Calculate the gradient matrix, dR = matrix of 1st partial derivatives
-    #   for every origin year w.r.t. every parameter
-    dR <- dfdx(R.LDF, theta, G, CurrentAge.to, maxage, workarea)
+    # Let's see if FI will invert
+    if (rcond(FI)<.Machine$double.eps) { # No
+        message("Fisher Information matrix is computationally singular (condition number = ",
+                format(1/rcond(FI), digits=3, scientific=TRUE), 
+                ")\nExpected values, process risk available; parameter risk not calculable"
+                )
+        # Calculate the gradient matrix, dR = matrix of 1st partial derivatives
+        #   for every origin year w.r.t. every parameter
+        dR <- NA
+        
+        # Delta Method => approx var/cov matrix of reserves
+        VCOV.R <- NA
     
-    # Delta Method => approx var/cov matrix of reserves
-    VCOV.R <- -workarea$sigma2*t(dR)%*%solve(FI,dR)
-
-    # Origin year parameter risk estimates come from diagonal entries
-    # Parameter risk for sum over all origin years = sum  over
-    #   entire matrix (see below).
-    deltar2 <- diag(VCOV.R)
-    deltar  <- sqrt(deltar2)
-
-    # Total Risk = process risk + parameter risk
-    totalr2 <- gammar2 + deltar2
-    totalr  <- sqrt(totalr2)
-
-    # AY Total row
-    CurrentValue.sum <- sum(CurrentValue)
-    R.sum <- sum(R)
-    R.alt.sum <- sum(R.alt)
-    gammar2.sum <- sum(gammar2)
-    gammar.sum = sqrt(gammar2.sum)
-    deltar2.sum <- sum(VCOV.R)
-    deltar.sum <- sqrt(deltar2.sum)
-    totalr2.sum <- gammar2.sum + deltar2.sum
-    totalr.sum = sqrt(totalr2.sum)
-
-    # Form "report table" as on p. 65 of paper
-    Table65 <- data.frame(
-        Origin = c(origins, "Total"),
-        CurrentValue = c(CurrentValue, CurrentValue.sum),
-        EstimatedReserves = c(R.alt, R.alt.sum),
-        ProcessSE = c(gammar, gammar.sum),
-        ProcessCV = 100*round(c(gammar, gammar.sum) / c(R.alt, R.alt.sum), 3),
-        ParameterSE = c(deltar, deltar.sum),
-        ParameterCV = 100*round(c(deltar, deltar.sum) / c(R.alt, R.alt.sum), 3),
-        TotalSE = c(totalr, totalr.sum),
-        TotalCV = 100*round(c(totalr, totalr.sum) / c(R.alt, R.alt.sum), 3),
-        stringsAsFactors = FALSE
-        )
-
-    g <- G(c(maxage, CurrentAge.to), thetaG)
-    Table64 <- data.frame(
-        Origin = c("", origins, "Total"),
-        CurrentValue = c(NA, CurrentValue, CurrentValue.sum),
-        CurrentAge = c(maxage.traditional, CurrentAge, NA),
-        AgeUsed = c(maxage, CurrentAge.to, NA),
-        GrowthFunction = c(g, NA),
-        LDF = c(1 / g, NA),
-        TruncatedLDF = c(G(maxage, thetaG) / g, NA),
-        LossesAtMaxage = c(NA, CurrentValue + R.alt, CurrentValue.sum + R.alt.sum),
-        EstimatedReserves = c(NA, R.alt, R.alt.sum),
-        stringsAsFactors = FALSE
-        )
+        # Origin year parameter risk estimates come from diagonal entries
+        # Parameter risk for sum over all origin years = sum  over
+        #   entire matrix (see below).
+        deltar2 <- rep(NA, nr)
+        deltar  <- rep(NA, nr)
+    
+        # Total Risk = process risk + parameter risk
+        totalr2 <- rep(NA, nr)
+        totalr  <- rep(NA, nr)
+    
+        # AY Total row
+        CurrentValue.sum <- sum(CurrentValue)
+        R.sum <- sum(R)
+        R.alt.sum <- sum(R.alt)
+        gammar2.sum <- sum(gammar2)
+        gammar.sum = sqrt(gammar2.sum)
+        deltar2.sum <- NA
+        deltar.sum <- NA
+        totalr2.sum <- NA
+        totalr.sum = NA
+    
+        # Form "report table" as on p. 65 of paper
+        Table65 <- data.frame(
+            Origin = c(origins, "Total"),
+            CurrentValue = c(CurrentValue, CurrentValue.sum) * magscale,
+            EstimatedReserves = c(R.alt, R.alt.sum) * magscale,
+            ProcessSE = c(gammar, gammar.sum) * magscale,
+            ProcessCV = 100*round(c(gammar, gammar.sum) / c(R.alt, R.alt.sum), 3),
+            ParameterSE = c(deltar, deltar.sum) * magscale,
+            ParameterCV = 100*round(c(deltar, deltar.sum) / c(R.alt, R.alt.sum), 3),
+            TotalSE = c(totalr, totalr.sum) * magscale,
+            TotalCV = 100*round(c(totalr, totalr.sum) / c(R.alt, R.alt.sum), 3),
+            stringsAsFactors = FALSE
+            )
+    
+        g <- G(c(maxage, CurrentAge.to), thetaG)
+        Table64 <- data.frame(
+            Origin = c("", origins, "Total"),
+            CurrentValue = c(NA, CurrentValue, CurrentValue.sum) * magscale,
+            CurrentAge = c(maxage.traditional, CurrentAge, NA),
+            AgeUsed = c(maxage, CurrentAge.to, NA),
+            GrowthFunction = c(g, NA),
+            LDF = c(1 / g, NA),
+            TruncatedLDF = c(G(maxage, thetaG) / g, NA),
+            LossesAtMaxage = c(NA, CurrentValue + R.alt, CurrentValue.sum + R.alt.sum) * magscale,
+            EstimatedReserves = c(NA, R.alt, R.alt.sum) * magscale,
+            stringsAsFactors = FALSE
+            )
+        
+        }
+    else {
+        # Calculate the gradient matrix, dR = matrix of 1st partial derivatives
+        #   for every origin year w.r.t. every parameter
+        dR <- dfdx(R.LDF, theta, G, CurrentAge.to, maxage)#, workarea)
+        
+        # Delta Method => approx var/cov matrix of reserves
+        VCOV.R <- -workarea$sigma2*t(dR)%*%solve(FI,dR)
+    
+        # Origin year parameter risk estimates come from diagonal entries
+        # Parameter risk for sum over all origin years = sum  over
+        #   entire matrix (see below).
+        deltar2 <- diag(VCOV.R)
+        deltar  <- sqrt(deltar2)
+    
+        # Total Risk = process risk + parameter risk
+        totalr2 <- gammar2 + deltar2
+        totalr  <- sqrt(totalr2)
+    
+        # AY Total row
+        CurrentValue.sum <- sum(CurrentValue)
+        R.sum <- sum(R)
+        R.alt.sum <- sum(R.alt)
+        gammar2.sum <- sum(gammar2)
+        gammar.sum = sqrt(gammar2.sum)
+        deltar2.sum <- sum(VCOV.R)
+        deltar.sum <- sqrt(deltar2.sum)
+        totalr2.sum <- gammar2.sum + deltar2.sum
+        totalr.sum = sqrt(totalr2.sum)
+    
+        # Form "report table" as on p. 65 of paper
+        Table65 <- data.frame(
+            Origin = c(origins, "Total"),
+            CurrentValue = c(CurrentValue, CurrentValue.sum) * magscale,
+            EstimatedReserves = c(R.alt, R.alt.sum) * magscale,
+            ProcessSE = c(gammar, gammar.sum) * magscale,
+            ProcessCV = 100*round(c(gammar, gammar.sum) / c(R.alt, R.alt.sum), 3),
+            ParameterSE = c(deltar, deltar.sum) * magscale,
+            ParameterCV = 100*round(c(deltar, deltar.sum) / c(R.alt, R.alt.sum), 3),
+            TotalSE = c(totalr, totalr.sum) * magscale,
+            TotalCV = 100*round(c(totalr, totalr.sum) / c(R.alt, R.alt.sum), 3),
+            stringsAsFactors = FALSE
+            )
+    
+        g <- G(c(maxage, CurrentAge.to), thetaG)
+        Table64 <- data.frame(
+            Origin = c("", origins, "Total"),
+            CurrentValue = c(NA, CurrentValue, CurrentValue.sum) * magscale,
+            CurrentAge = c(maxage.traditional, CurrentAge, NA),
+            AgeUsed = c(maxage, CurrentAge.to, NA),
+            GrowthFunction = c(g, NA),
+            LDF = c(1 / g, NA),
+            TruncatedLDF = c(G(maxage, thetaG) / g, NA),
+            LossesAtMaxage = c(NA, CurrentValue + R.alt, CurrentValue.sum + R.alt.sum) * magscale,
+            EstimatedReserves = c(NA, R.alt, R.alt.sum) * magscale,
+            stringsAsFactors = FALSE
+            )
+        }
 
     structure(
         list(
             method = "LDF",
             growthFunction = G@name,
-            Table65=Table65,
-            Table64=Table64,
-            par=c(unclass(S$par)),
-            sigma2=c(unclass(sigma2)),
+            Table65 = Table65,
+            Table64 = Table64,
+            par = c(unclass(S$par)),
+            sigma2 = c(unclass(sigma2)) * magscale,
             LDF = LDF,
-            dR=dR,
+            # dR = dR * c(rep(1, K), rep(magscale, G@np)),
             origin = workarea$origin,
             age = workarea$dev,
-            fitted = workarea$mu,
-            residuals = workarea$residuals,
-            stdresid = workarea$residuals/sqrt(sigma2*workarea$mu),
-            FI=FI
+            fitted = workarea$mu * magscale,
+            residuals = workarea$residuals * magscale,
+            stdresid = workarea$residuals/sqrt(sigma2*workarea$mu)#,
+            # FI=FI * FImult
             ),
         class=c("clark","list")
         )
     }
 
-clarkCapeCod <- function(data,
+ClarkCapeCod <- function(data,
         Premium,
         cumulative = TRUE,
         adol = TRUE,
@@ -308,13 +384,14 @@ clarkCapeCod <- function(data,
          stop(paste("Growth function '", G, "' unrecognized", sep=""))
          )
         
-    if (!is.matrix(data)) stop("clarkCapeCod expects data in matrix format")
+    if (!is.matrix(data)) stop("ClarkCapeCod expects data in matrix format")
     nr <- nrow(data)
     if (nr < 4L || ncol(data) < 4L) stop("matrix must be at least 4x4")
 
     dev <- as.numeric(colnames(data))
     if (any(is.na(dev))) stop("non-'age' column name(s)")
     if (any(dev[-1L]<=head(dev, -1L))) stop("ages must be strictly increasing")
+    if (tail(dev, 1L) > maxage[1L]) stop("'maxage' must not be less than last age in triangle")
     
     # 'workarea' stores intermediate calculations
     workarea <- new.env()
@@ -364,11 +441,24 @@ clarkCapeCod <- function(data,
             }
         }
     
-
-    # Before massaging 'data' below, calculate some values we'll need later
-
-    # Save current cumulative diagonal and its age
+################################################################################    
+    # Let's scale the data asap.
+    # Just as Clark uses sigma2 to scale to model with ODP, we will scale
+    #   losses by a large amount so that the scaled losses and the growth 
+    #   function  parameters are in a closer relative magnitude. Otherwise, 
+    #   the Fisher Information matrix may not invert.
     CurrentValue <- getLatestCumulative(if (cumulative) data else incr2cum(data))
+    Uinit <- if (is.logical(tryCatch(checkTriangle(data), error = function(e) FALSE))) CurrentValue
+        else 
+        if (cumulative) predict(chainladder(data))[,ncol(data)] 
+        else predict(chainladder(incr2cum(data)))[,ncol(data)]
+    magscale <- max(Uinit)
+    data <- data / magscale
+    CurrentValue <- CurrentValue / magscale
+    Uinit <- Uinit / magscale
+    Premium <- Premium/magscale
+
+    # Save age from/to's of current diagonal
     CurrentAge <- getLatestCumulative({
         z <- col(data)
         z[is.na(data)]<-NA
@@ -377,13 +467,9 @@ clarkCapeCod <- function(data,
     CurrentAge.from <- getLatestCumulative(array(Age.from[z], dim(data)))
     CurrentAge.to <- getLatestCumulative(array(Age.to[z], dim(data)))
 
-    # We will use chainladder estimates as starting parameter values for U.
-    CLU <- if (cumulative) predict(chainladder(data))[,ncol(data)] else predict(chainladder(incr2cum(data)))[,ncol(data)]
-
-    # Massage 'data': make incremental triangle, first wide then long format
-    
     # Turn loss matrix into incremental losses, if not already
     if (cumulative) data <-cum2incr(data)
+#################################################################################
 
     # Create the "long format" data.frame as in Table 1.1 of paper.
     Table1.1 <- as.data.frame(as.triangle(data))
@@ -406,7 +492,7 @@ clarkCapeCod <- function(data,
     rm(Table1.1)
 
     # Calc starting values for the parameters, call optim
-    theta <- c(ELR=ifelse(is.na(sum(CLU)), .5, sum(CLU)/sum(Premium)), G@initialGuess(workarea))
+    theta <- c(ELR=ifelse(is.na(sum(Uinit)), .5, sum(Uinit)/sum(Premium)), G@initialGuess(workarea))
 
     S <- optim(
         par = theta,
@@ -416,7 +502,8 @@ clarkCapeCod <- function(data,
         G,              
         workarea,
         method="L-BFGS-B",
-        lower=c(.01, .1, min(c(.5, workarea$Age.to))),
+#        lower=c(.01, .1, min(c(.5, workarea$Age.to))),
+        lower=c(.001, .1, min(c(.5, workarea$Age.to))),
         control = list(
             fnscale=-1,
             maxit=100000
@@ -444,7 +531,7 @@ clarkCapeCod <- function(data,
     # AY DETAIL LEVEL
 
     # Expected value of reserves
-    R <- R.CapeCod(theta, Premium, G, CurrentAge.to, maxage, workarea)
+    R <- R.CapeCod(theta, Premium, G, CurrentAge.to, maxage)#, workarea)
 
     # PROCESS RISK OF RESERVES
     gammar2 <- R * sigma2
@@ -456,84 +543,147 @@ clarkCapeCod <- function(data,
     #   2nd partial derivatives of the LL fcn w.r.t. all parameters
     workarea$FI <- FI <- d2LL.ODPdt2(S$par, MU.CapeCod, G, workarea)
 
-    # Calculate the gradient matrix, dR = matrix of 1st partial derivatives
-    #   for every origin year w.r.t. every parameter
-    dR <- dfdx(R.CapeCod, theta, Premium, G, CurrentAge.to, maxage, workarea)
+    # Let's see if FI will invert
+    if (rcond(FI)<.Machine$double.eps) { # No
+        message("Fisher Information matrix is computationally singular (condition number = ",
+                format(1/rcond(FI), digits=3, scientific=TRUE), 
+                ")\nExpected values, process risk available; parameter risk not calculable"
+                )
+        # Calculate the gradient matrix, dR = matrix of 1st partial derivatives
+        #   for every origin year w.r.t. every parameter
+        dR <- NA
+        
+        # Delta Method => approx var/cov matrix of reserves
+        VCOV.R <- NA
     
-    # Delta Method => approx var/cov matrix of reserves
-    VCOV.R <- -workarea$sigma2*t(dR)%*%solve(FI,dR)
-
-    # Origin year parameter risk estimates come from diagonal entries
-    # Parameter risk for sum over all origin years = sum  over
-    #   entire matrix (see below).
-    deltar2 <- diag(VCOV.R)
-    deltar  <- sqrt(deltar2)
-
-    # Total Risk = process risk + parameter risk
-    totalr2 <- gammar2 + deltar2
-    totalr  <- sqrt(totalr2)
-
-    # AY Total row
-    CurrentValue.sum <- sum(CurrentValue)
-    Premium.sum <- sum(Premium)
-    R.sum <- sum(R)
-    gammar2.sum <- sum(gammar2)
-    gammar.sum = sqrt(gammar2.sum)
-    deltar2.sum <- sum(VCOV.R)
-    deltar.sum <- sqrt(deltar2.sum)
-    totalr2.sum <- gammar2.sum + deltar2.sum
-    totalr.sum = sqrt(totalr2.sum)
-
-    # Form "report table" as on p. 65 of paper
-    Table65 <- data.frame(
-        Origin = c(origins, "Total"),
-        CurrentValue = c(CurrentValue, CurrentValue.sum),
-        EstimatedReserves = c(R, R.sum),
-        ProcessSE = c(gammar, gammar.sum),
-        ProcessCV = 100*round(c(gammar, gammar.sum) / c(R, R.sum), 3),
-        ParameterSE = c(deltar, deltar.sum),
-        ParameterCV = 100*round(c(deltar, deltar.sum) / c(R, R.sum), 3),
-        TotalSE = c(totalr, totalr.sum),
-        TotalCV = 100*round(c(totalr, totalr.sum) / c(R, R.sum), 3),
-        stringsAsFactors = FALSE
-        )
-
-    g <- G(c(maxage, CurrentAge.to), thetaG)
-    gInf <- G(c(Inf, CurrentAge.to), thetaG)
-    Table68 <- data.frame(
-        Origin = c("", origins, "Total"),
-        Premium = c(NA, Premium, Premium.sum),
-        CurrentAge = c(maxage.traditional, CurrentAge, NA),
-        AgeUsed = c(maxage, CurrentAge.to, NA),
-        GrowthFunction = c(g, NA),
-        TruncatedGrowth = G(maxage, thetaG) - c(g, NA),
-        PremiumxELR = ELR * c(NA, Premium, Premium.sum),
-        EstimatedReserves = c(NA, R, R.sum),
-        stringsAsFactors = FALSE
-        )
-
+        # Origin year parameter risk estimates come from diagonal entries
+        # Parameter risk for sum over all origin years = sum  over
+        #   entire matrix (see below).
+        deltar2 <- rep(NA, nr)
+        deltar  <- rep(NA, nr)
+    
+        # Total Risk = process risk + parameter risk
+        totalr2 <- rep(NA, nr)
+        totalr  <- rep(NA, nr)
+    
+        # AY Total row
+        CurrentValue.sum <- sum(CurrentValue)
+        Premium.sum <- sum(Premium)
+        R.sum <- sum(R)
+        gammar2.sum <- sum(gammar2)
+        gammar.sum = sqrt(gammar2.sum)
+        deltar2.sum <- NA
+        deltar.sum <- NA
+        totalr2.sum <- NA
+        totalr.sum = NA
+    
+        # Form "report table" as on p. 65 of paper
+        Table65 <- data.frame(
+            Origin = c(origins, "Total"),
+            CurrentValue = c(CurrentValue, CurrentValue.sum) * magscale,
+            EstimatedReserves = c(R, R.sum) * magscale,
+            ProcessSE = c(gammar, gammar.sum) * magscale,
+            ProcessCV = 100*round(c(gammar, gammar.sum) / c(R, R.sum), 3),
+            ParameterSE = c(deltar, deltar.sum) * magscale,
+            ParameterCV = 100*round(c(deltar, deltar.sum) / c(R, R.sum), 3),
+            TotalSE = c(totalr, totalr.sum) * magscale,
+            TotalCV = 100*round(c(totalr, totalr.sum) / c(R, R.sum), 3),
+            stringsAsFactors = FALSE
+            )
+    
+        g <- G(c(maxage, CurrentAge.to), thetaG)
+        gInf <- G(c(Inf, CurrentAge.to), thetaG)
+        Table68 <- data.frame(
+            Origin = c("", origins, "Total"),
+            Premium = c(NA, Premium, Premium.sum) * magscale,
+            CurrentAge = c(maxage.traditional, CurrentAge, NA),
+            AgeUsed = c(maxage, CurrentAge.to, NA),
+            GrowthFunction = c(g, NA),
+            TruncatedGrowth = G(maxage, thetaG) - c(g, NA),
+            PremiumxELR = ELR * c(NA, Premium, Premium.sum) * magscale,
+            EstimatedReserves = c(NA, R, R.sum) * magscale,
+            stringsAsFactors = FALSE
+            )
+        }
+    else {
+        # Calculate the gradient matrix, dR = matrix of 1st partial derivatives
+        #   for every origin year w.r.t. every parameter
+        dR <- dfdx(R.CapeCod, theta, Premium, G, CurrentAge.to, maxage)#, workarea)
+        
+        # Delta Method => approx var/cov matrix of reserves
+        VCOV.R <- -workarea$sigma2*t(dR)%*%solve(FI,dR)
+    
+        # Origin year parameter risk estimates come from diagonal entries
+        # Parameter risk for sum over all origin years = sum  over
+        #   entire matrix (see below).
+        deltar2 <- diag(VCOV.R)
+        deltar  <- sqrt(deltar2)
+    
+        # Total Risk = process risk + parameter risk
+        totalr2 <- gammar2 + deltar2
+        totalr  <- sqrt(totalr2)
+    
+        # AY Total row
+        CurrentValue.sum <- sum(CurrentValue)
+        Premium.sum <- sum(Premium)
+        R.sum <- sum(R)
+        gammar2.sum <- sum(gammar2)
+        gammar.sum = sqrt(gammar2.sum)
+        deltar2.sum <- sum(VCOV.R)
+        deltar.sum <- sqrt(deltar2.sum)
+        totalr2.sum <- gammar2.sum + deltar2.sum
+        totalr.sum = sqrt(totalr2.sum)
+    
+        # Form "report table" as on p. 65 of paper
+        Table65 <- data.frame(
+            Origin = c(origins, "Total"),
+            CurrentValue = c(CurrentValue, CurrentValue.sum) * magscale,
+            EstimatedReserves = c(R, R.sum) * magscale,
+            ProcessSE = c(gammar, gammar.sum) * magscale,
+            ProcessCV = 100*round(c(gammar, gammar.sum) / c(R, R.sum), 3),
+            ParameterSE = c(deltar, deltar.sum) * magscale,
+            ParameterCV = 100*round(c(deltar, deltar.sum) / c(R, R.sum), 3),
+            TotalSE = c(totalr, totalr.sum) * magscale,
+            TotalCV = 100*round(c(totalr, totalr.sum) / c(R, R.sum), 3),
+            stringsAsFactors = FALSE
+            )
+    
+        g <- G(c(maxage, CurrentAge.to), thetaG)
+        gInf <- G(c(Inf, CurrentAge.to), thetaG)
+        Table68 <- data.frame(
+            Origin = c("", origins, "Total"),
+            Premium = c(NA, Premium, Premium.sum) * magscale,
+            CurrentAge = c(maxage.traditional, CurrentAge, NA),
+            AgeUsed = c(maxage, CurrentAge.to, NA),
+            GrowthFunction = c(g, NA),
+            TruncatedGrowth = G(maxage, thetaG) - c(g, NA),
+            PremiumxELR = ELR * c(NA, Premium, Premium.sum) * magscale,
+            EstimatedReserves = c(NA, R, R.sum) * magscale,
+            stringsAsFactors = FALSE
+            )
+        }
     structure(
         list(
-            method = "Cape Cod",
+            method = "CapeCod",
             growthFunction = G@name,
             Table65=Table65,
             Table68=Table68,
             par=c(unclass(S$par)),
-            sigma2=c(unclass(sigma2)),
-            dR=dR,
+            sigma2=c(unclass(sigma2)) * magscale,
+#            dR=dR,
             origin = workarea$origin,
             age = workarea$dev,
-            fitted = workarea$mu,
-            residuals = workarea$residuals,
-            stdresid = workarea$residuals/sqrt(sigma2*workarea$mu),
-            FI=FI
+            fitted = workarea$mu * magscale,
+            residuals = workarea$residuals * magscale,
+            stdresid = workarea$residuals/sqrt(sigma2*workarea$mu)#,
+#            FI=FI
             ),
         class=c("clark","list")
         )
     }
 
 print.clark <- function(x, ...) 
-    print.data.frame(x$Table65, row.names=FALSE, ...)
+    print( format(x$Table65, big.mark = ",", digits = 3), row.names = FALSE, ...)
 
 plot.clark <- function(x, ...) {
     # We will plot the residuals as functions of
@@ -551,10 +701,10 @@ plot.clark <- function(x, ...) {
         main="By Origin")
     z <- lm(x$stdresid~x$origin)
     abline(z, col="blue")
-    origin <- x$origin
-    z <- loess(x$stdresid~origin)
-    y <- predict(z, data.frame(origin = (xseq<-seq(min(origin), max(origin), length.out=50))))
-    lines(xseq, y, col="red", lty="dashed")
+#    origin <- x$origin
+#    z <- loess(x$stdresid~origin)
+#    y <- predict(z, data.frame(origin = (xseq<-seq(min(origin), max(origin), length.out=50))))
+#    lines(xseq, y, col="red", lty="dashed")
     #
     plot(x$age,
         x$stdresid, 
@@ -564,9 +714,9 @@ plot.clark <- function(x, ...) {
     age <- as.numeric(x$age)
     z <- lm(x$stdresid~age)
     abline(z, col="blue")
-    z <- loess(x$stdresid~age)
-    y <- predict(z, data.frame(age = (xseq<-seq(min(age), max(age), length.out=50))))
-    lines(xseq,y, col="red", lty="dashed")
+#    z <- loess(x$stdresid~age)
+#    y <- predict(z, data.frame(age = (xseq<-seq(min(age), max(age), length.out=50))))
+#    lines(xseq,y, col="red", lty="dashed")
     #
     plot(x$fitted,
         x$stdresid,ylab="standardized residuals",
@@ -574,21 +724,25 @@ plot.clark <- function(x, ...) {
         main="By Fitted Value")
     z <- lm(x$stdresid~x$fitted)
     abline(z, col="blue")
-    fitted <- x$fitted
-    z <- loess(x$stdresid~fitted)
-    y <- predict(z, data.frame(fitted = (xseq<-seq(min(fitted), max(fitted), length.out=50))))
-    lines(xseq,y, col="red", lty="dashed")
+#    fitted <- x$fitted
+#    z <- loess(x$stdresid~fitted)
+#    y <- predict(z, data.frame(fitted = (xseq<-seq(min(fitted), max(fitted), length.out=50))))
+#    lines(xseq,y, col="red", lty="dashed")
     # Normality test
-    qqnorm(x$stdresid)
+    ymin <- min(x$stdresid)
+    ymax <- max(x$stdresid)
+    yrange <- ymax - ymin
+    sprd <- yrange/10
+    xmin<-min(qqnorm(x$stdresid)$x)
     qqline(x$stdresid, col="blue")
     N <- min(length(x$stdresid),5000) # 5000=shapiro.test max sample size
     shap.p <- shapiro.test(sample(x$stdresid,N))
     shap.p.value <- round(shap.p$p.value,5)
-    text(-2,2.0, paste("Shapiro-Wilk p.value = ", shap.p.value, ".", sep=""), cex=.7, adj=c(0,0))
-    text(-2,1.5, paste(ifelse(shap.p.value<.05,"Should reject",
+    text(xmin, ymax - sprd, paste("Shapiro-Wilk p.value = ", shap.p.value, ".", sep=""), cex=.7, adj=c(0,0))
+    text(xmin, ymax - 2*sprd, paste(ifelse(shap.p.value<.05,"Should reject",
                                               "Cannot reject"),
                       "ODP hypothesis"), cex=.7, adj=c(0,0))
-    text(-2,1.0,expression(paste("at ",alpha," = .05 level.",sep="")), cex=.7, adj=c(0,0))
+    text(xmin, ymax - 3*sprd,expression(paste("at ",alpha," = .05 level.",sep="")), cex=.7, adj=c(0,0))
 
     # Finally, the overall title of the page of plots    
     mtext(
@@ -981,14 +1135,14 @@ R.LDF <- new("dfunction",
     # theta    = vector of parameters: U followed by omega and theta
     # G        = growth function (eg, loglogistic or weibull)
     # workarea = environment where intermediate values are stored
-    function(theta, G, from, to, workarea) {
+    function(theta, G, from, to){#, workarea) {
         K      <- length(theta) - G@np
         K1     <- seq.int(K)
         thetaU <- theta[K1]
         thetaG <- theta[seq.int(length = G@np, to = length(theta))]
         thetaU * del(G, from, to, thetaG )
         },
-    dfdx = function(theta, G, from, to, workarea) {
+    dfdx = function(theta, G, from, to){#, workarea) {
         # R is a vector valued function (think "column matrix").
         # Taking the partials adds a new dimension ... put at beginning.
         # So dR is a matrix valued function where nrows=length(theta)
@@ -1024,12 +1178,12 @@ R.CapeCod <- new("dfunction",
     # theta    = vector of parameters: U followed by omega and theta
     # G        = growth function (eg, loglogistic or weibull)
     # workarea = environment where intermediate values are stored
-    function(theta, Premium, G, from, to, workarea) {
+    function(theta, Premium, G, from, to){#, workarea) {
         ELR    <- theta[1L]
         thetaG <- theta[seq.int(length = G@np, to = length(theta))]
         ELR * Premium * del(G, from, to, thetaG )
         },
-    dfdx = function(theta, Premium, G, from, to, workarea) {
+    dfdx = function(theta, Premium, G, from, to){#, workarea) {
         # R is a vector valued function (think "column matrix").
         # Taking the partials adds a new dimension ... put at beginning.
         # So dR is a matrix valued function where nrows=length(theta)

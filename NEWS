@@ -1,3 +1,13 @@
+Version 0.1.4-0
+================
+NEW FEATURES
+
+  o New implementation of the methods in David Clark's "LDF Curve Fitting" paper in the 2003 Forum by Daniel Murphy.
+	- Includes LDF and CapeCod methods (functions 'ClarkLDF' and 'ClarkCapeCod', respectively)
+	- Programmed to handle loglogistic and weibull growth functions
+	- Printing an object returned by the function results in a table similar to that on p. 65 of the paper
+	- Plotting such an object results in four residual plots, including a Q-Q plot with the results of the Shapiro-Wilk test
+
 Version 0.1.3-4
 ================
    

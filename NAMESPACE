@@ -4,7 +4,7 @@ export(chainladder)
 export(getLatestCumulative)
 export(incr2cum, cum2incr)
 export(Join2Fits, JoinFitMse, Mse, residCov, residCor)
-export(clarkLDF, clarkCapeCod)
+export(ClarkLDF, ClarkCapeCod)
 
 importFrom(stats, quantile, predict, coef, vcov,
               residuals, resid, fitted, fitted.values, rstandard)

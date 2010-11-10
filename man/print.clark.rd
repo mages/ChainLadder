@@ -39,6 +39,6 @@ clarkLDF, clarkCapeCod
 library(ChainLadder)
 X <- GenIns
 colnames(X) <- 12*as.numeric(colnames(X))
-CC.loglogistic  <- clarkCapeCod(X, Premium=10000000+400000*0:9, maxage=240)
+CC.loglogistic  <- ClarkCapeCod(X, Premium=10000000+400000*0:9, maxage=240)
 print(CC.loglogistic)
 }

@@ -16,6 +16,9 @@ not used.
 }
 }
 \details{
+If Clark's model is appropriate for the actual data,
+then the standardized residuals should appear as
+independent standard normal random variables.
 This function creates four plots of standardized residuals on a single page:
 \enumerate{
     \item By origin
@@ -23,8 +26,13 @@ This function creates four plots of standardized residuals on a single page:
     \item By fitted value
     \item Normal Q-Q plot with results of Shapiro-Wilk test
 }
-On the first three plots are also shown a linear fit in blue and 
-a lowess smoothed fit in red.
+If the model is appropriate then there should not appear to be any trend in the
+standardized residuals or any systematic differences in the spread 
+about the line y = 0. 
+The Shapiro-Wilk p-value shown in the fourth plot gives an indication 
+of how closely the standardized residuals can be considered "draws"
+from a standard normal random variable.
+
 }
 \references{
 Clark, David R., 
@@ -39,5 +47,10 @@ clarkLDF, clarkCapeCod
 }
 \examples{
 require(ChainLadder)
-plot(clarkLDF(GenIns, maxage=20, G="weibull"))
+X <- GenIns
+Y <- ClarkLDF(GenIns, maxage=Inf, G="weibull")
+plot(Y)  # One obvious outlier, shapiro test flunked
+X[4,4] <- NA  # remove the outlier
+Z <- ClarkLDF(GenIns, maxage=Inf, G="weibull")
+plot(Z)  # Q-Q plot looks good
 }

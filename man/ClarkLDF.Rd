@@ -1,5 +1,5 @@
-\name{clarkLDF}
-\alias{clarkLDF}
+\name{ClarkLDF}
+\alias{ClarkLDF}
 \title{
 Clark LDF method
 }
@@ -7,7 +7,7 @@ Clark LDF method
 Analyze loss triangle using Clark's LDF method.
 }
 \usage{
-clarkLDF(data, cumulative = TRUE, adol = TRUE, 
+ClarkLDF(data, cumulative = TRUE, adol = TRUE, 
         maxage = c(Inf, Inf), G = "loglogistic")
 }
 \arguments{
@@ -18,9 +18,6 @@ as the "age" of the losses in that column.
 The row names of the matrix should uniquely define the year of
 origin of the losses in that row.
 Losses may be inception-to-date or incremental.
-The triangle should be "regular" in the sense that the
-all-year weighted average chain ladder method can be run on the data
-(as an initial guess for the parameter vector of ultimate losses).
 }
   \item{cumulative}{
 If \code{TRUE} (the default), values in \code{data} are
@@ -56,18 +53,43 @@ and "weibull".
 }
 }
 \details{
-This function uses \code{optim} to perform maximum likelihood
-estimation on the parameters of Clark's model:
-\cr
-\bold{u} = a vector of \emph{a priori} ultimate losses
-\cr
-and
-\cr
-\bold{thetaG} = a vector of parameters of the growth function.
-}
+Clark's "Cape Cod" method assumes that the 
+incremental losses across development periods in a loss triangle
+are independent.
+He assumes that the expected value of an incremental loss is
+equal to the \emph{theoretical} expected ultimate loss (\bold{U})
+(by origin year)
+times the change in the \emph{theoretical}
+underlying growth function over the development period.
+Clark models the growth function, also called the percent of ultimate,
+by either the loglogistic function (a.k.a., "the inverse power curve") 
+curve or the weibull function.
+Clark completes his incremental loss model 
+by wrapping the expected values within an 
+overdispersed poisson (ODP) process where
+the "scale factor" 
+sigma^2
+is assumed to be a known constant for all 
+development periods.
+ 
+The parameters of Clark's "Cape Cod" method are therefore:
+U,
+and 
+omega
+and 
+theta
+(the parameters of the \bold{loglogistic} and \bold{weibull} growth functions).
+Finally, Clark uses maximum likelihood to parameterize his model,
+uses the ODP process to estimate process risk, and
+uses the Cramer-Rao theorem and the "delta method" to estimate parameter risk.
 
+Clark recommends inspecting the residuals to help assess the 
+reasonableness of the model relative to the actual data
+(see \code{plot.clark} below).
+
+}
 \value{
-A \code{list} with the following components:
+A \code{list} of class "clark" with the following components:
 \itemize{
     \item method: "LDF"
     \item growthFunction: name of the growth function
@@ -76,10 +98,9 @@ A \code{list} with the following components:
     \item Table64: the table of ages, growth function values, LDFs,
     truncated LDFs, "ultimate" losses, and "reserves" as shown on p. 64 
     of the paper
-    \item par: the parameter estimates returned by \code{optim}
-    \item sigma2: the sigma-squared "scaling parameter"
+    \item par: the estimated parameters
+    \item sigma2: the sigma-squared "scale parameter"
     \item LDF: the vector of to-ultimate loss development factors
-    \item dR: the gradient of the reserves
     \item origin: rownames(data) from the "long format" of \code{data}
     \item age: colnames(data) from the "long format" of \code{data}
     \item fitted: the expected values (the "mu's") of the incremental losses
@@ -87,13 +108,13 @@ A \code{list} with the following components:
     \item stdresid: the standardized residuals 
     = residuals/sqrt(sigma2*fitted)
     (referred to as "normalized residuals" in the paper; see p. 62)
-    \item FI: the Fisher Information matrix
 }
 }
 \references{
 Clark, David R., 
 "LDF Curve-Fitting and Stochastic Reserving: A Maximum Likelihood Approach",
 \emph{Casualty Actuarial Society Forum}, Fall, 2003
+\url{http://www.casact.org/pubs/forum/03fforum/03ff041.pdf} 
 }
 \author{
 Daniel Murphy
@@ -104,8 +125,8 @@ Daniel Murphy
 \examples{
 library(ChainLadder)
 X <- GenIns
-colnames(X) <- 12*as.numeric(colnames(X))
-LDF.loglogistic  <- clarkLDF(X, maxage=240)
-print(LDF.loglogistic)
-plot(LDF.loglogistic)
+ClarkLDF(X, maxage=20)
+# Clark's method also works with triangles that have  
+# more development periods than origin periods
+ClarkLDF(qincurred, G="weibull")
 }

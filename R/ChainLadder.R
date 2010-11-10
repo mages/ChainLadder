@@ -112,8 +112,9 @@ checkTriangle <- function(Triangle){
     m <- .dim[1]
 
     if(n>m){
-        print(.dim)
-        stop("Number of origin periods has to be equal or greater than the number of development periods.\n")
+#        print(.dim)
+#        stop("Number of origin periods has to be equal or greater than the number of development periods.\n")
+        stop("Number of origin periods, ", m, ", is less than the number of development periods, ", n, ".\n")
     }
 
 
