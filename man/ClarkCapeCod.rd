@@ -89,7 +89,7 @@ uses the Cramer-Rao theorem and the "delta method" to estimate parameter risk.
 
 Clark recommends inspecting the residuals to help assess the 
 reasonableness of the model relative to the actual data
-(see \code{plot.clark} below).
+(see \code{\link{plot.clark}} below).
 
 }
 \value{
@@ -123,12 +123,13 @@ Clark, David R.,
 Daniel Murphy
 }
 \seealso{
-\code{clarkLDF}
+\code{\link{ClarkLDF}}
 }
 \examples{
-library(ChainLadder)
+
 X <- GenIns
 colnames(X) <- 12*as.numeric(colnames(X))
 CC.loglogistic  <- ClarkCapeCod(X, Premium=10000000+400000*0:9, maxage=240)
 CC.loglogistic
 }
+\keyword{ models }

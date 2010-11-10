@@ -9,7 +9,7 @@ Function to plot the residuals of the Clark LDF and Cape Cod methods.
 }
 \arguments{
 \item{x}{
-object resulting from a run of the clarkLDF or clarkCapeCod functions.
+object resulting from a run of the ClarkLDF or ClarkCapeCod functions.
 }
 \item{\dots}{
 not used.
@@ -43,14 +43,18 @@ Clark, David R.,
 Daniel Murphy
 }
 \seealso{
-clarkLDF, clarkCapeCod
+\code{\link{ClarkLDF}}, \code{\link{ClarkCapeCod}}
 }
 \examples{
-require(ChainLadder)
+
 X <- GenIns
 Y <- ClarkLDF(GenIns, maxage=Inf, G="weibull")
 plot(Y)  # One obvious outlier, shapiro test flunked
 X[4,4] <- NA  # remove the outlier
 Z <- ClarkLDF(GenIns, maxage=Inf, G="weibull")
 plot(Z)  # Q-Q plot looks good
+
 }
+\keyword{ aplot }
+\keyword{ methods }
+

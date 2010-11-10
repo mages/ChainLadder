@@ -14,7 +14,7 @@
   functions to convert quickly tables into triangles, triangles into
   tables, cumulative into incremental and incremental into cumulative triangles.
   
-  The package was recently programmed to implement the 
+  Since version 0.1.4-0 the package also includes the 
   "LDF Curve Fitting" methods of David Clark's paper 
   in the 2003 CAS \emph{Forum}.
    
@@ -49,13 +49,13 @@
 \tabular{ll}{
 Package: \tab ChainLadder\cr
 Type: \tab Package\cr
-Version: \tab 0.1.3-3\cr
-Date: \tab 20010-05-04\cr
+Version: \tab 0.1.4-0\cr
+Date: \tab 20010-09-10\cr
 License: \tab GPL version 2 or later\cr
 }
 }
 \author{
-Markus Gesmann, Wayne (Yanwei) Zhang
+Markus Gesmann, Wayne (Yanwei) Zhang, Daniel Murphy
 
 Maintainer: Markus Gesmann <markus.gesmann@gmail.com>
 }

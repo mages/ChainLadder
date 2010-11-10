@@ -4,7 +4,7 @@
 Clark LDF method
 }
 \description{
-Analyze loss triangle using Clark's LDF method.
+Analyze loss triangle using Clark's loss development factor (LDF) method.
 }
 \usage{
 ClarkLDF(data, cumulative = TRUE, adol = TRUE, 
@@ -85,7 +85,7 @@ uses the Cramer-Rao theorem and the "delta method" to estimate parameter risk.
 
 Clark recommends inspecting the residuals to help assess the 
 reasonableness of the model relative to the actual data
-(see \code{plot.clark} below).
+(see \code{\link{plot.clark}} below).
 
 }
 \value{
@@ -120,13 +120,13 @@ Clark, David R.,
 Daniel Murphy
 }
 \seealso{
-\code{clarkCapeCod}
+\code{\link{ClarkCapeCod}}
 }
 \examples{
-library(ChainLadder)
 X <- GenIns
 ClarkLDF(X, maxage=20)
 # Clark's method also works with triangles that have  
 # more development periods than origin periods
 ClarkLDF(qincurred, G="weibull")
 }
+\keyword{ models }

@@ -2,7 +2,7 @@
 {
     require(utils)
     cat("\n",paste("ChainLadder version", packageDescription("ChainLadder")$Version,
-                   "by:\nMarkus Gesmann <markus.gesmann@gmail.com>,",
+                   "by:\nMarkus Gesmann <markus.gesmann@gmail.com>",
                    "\nWayne (Yanwei) Zhang <actuaryzhang@uchicago.edu>",
                    "\nDaniel Murphy <danielmarkmurphy@gmail.com>",
                    "\n\n"),

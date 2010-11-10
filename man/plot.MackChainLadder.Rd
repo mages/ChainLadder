@@ -48,4 +48,5 @@
 plot(MackChainLadder(RAA))
 }
 \keyword{ aplot }
+\keyword{ methods }
 
