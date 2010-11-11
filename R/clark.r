@@ -65,7 +65,8 @@ ClarkLDF <- function(data,
     if (tail(dev, 1L) > maxage[1L]) stop("'maxage' must not be less than last age in triangle")
     
     # 'workarea' stores intermediate calculations
-    workarea <- new.env()
+#    workarea <- new.env()
+    workarea <<- new.env()
 
     if (!inherits(data, "triangle")) data <- as.triangle(data)
 
@@ -112,7 +113,6 @@ ClarkLDF <- function(data,
             }
         }
 
-################################################################################    
     # Let's scale the data asap.
     # Just as Clark uses sigma2 to scale to model with ODP, we will scale
     #   losses by a large amount so that the scaled losses and the growth 
@@ -139,7 +139,6 @@ ClarkLDF <- function(data,
 
     # Turn loss matrix into incremental losses, if not already
     if (cumulative) data <-cum2incr(data)
-#################################################################################
 
     # Create the "long format" data.frame as in Table 1.1 of paper.
     Table1.1 <- as.data.frame(as.triangle(data))
@@ -291,11 +290,35 @@ ClarkLDF <- function(data,
         
         # Delta Method => approx var/cov matrix of reserves
         VCOV.R <- -workarea$sigma2*t(dR)%*%solve(FI,dR)
-    
+
         # Origin year parameter risk estimates come from diagonal entries
         # Parameter risk for sum over all origin years = sum  over
         #   entire matrix (see below).
         deltar2 <- diag(VCOV.R)
+        # Hessian only approximates the covariance matrix; no guarantee
+        #   that the matrix is positive (semi)definite.
+        # If find negative diagonal variances, set them to zero, 
+        #   issue a warning.
+        ndx <- deltar2<0
+        if (any(ndx)) {
+            if (sum(ndx)>1L) msg <- "The parameter risk approximation produced 'negative variances' for the following origin years (values set to zero):\n"
+            else msg <- "The parameter risk approximation produced a 'negative variance' for the following origin year (value set to zero):\n"
+            df2 <- data.frame(
+                Origin = origins[ndx], 
+                Reserve = R.alt[ndx] * magscale, 
+                ApproxVar = deltar2[ndx] * magscale^2, 
+                RelativeVar = deltar2[ndx] * magscale / R.alt[ndx]
+                )
+            df2 <- format(
+                rbind(
+                    data.frame(Origin="Origin",Reserve="Reserve", ApproxVar="ApproxVar", RelativeVar="RelativeVar"),
+                    format(df2, big.mark=",", digits=3)
+                    ),
+                justify="right")
+            msg <- c(msg, apply(df2, 1, function(x) paste(paste(x, collapse=" "), "\n")))
+            warning(msg)
+            deltar2[ndx] <- 0 
+            }
         deltar  <- sqrt(deltar2)
     
         # Total Risk = process risk + parameter risk
@@ -309,6 +332,23 @@ ClarkLDF <- function(data,
         gammar2.sum <- sum(gammar2)
         gammar.sum = sqrt(gammar2.sum)
         deltar2.sum <- sum(VCOV.R)
+        if (deltar2.sum<0) {
+            msg <- "The parameter risk approximation produced a 'negative variance' for the Total row (value set to zero):\n"
+            df2 <- data.frame(
+                Reserve = R.alt.sum * magscale, 
+                ApproxVar = deltar2.sum * magscale^2, 
+                RelativeVar = deltar2.sum * magscale / R.alt.sum
+                )
+            df2 <- format(
+                rbind(
+                    data.frame(Reserve="Reserve", ApproxVar="ApproxVar", RelativeVar="RelativeVar"),
+                    format(df2, big.mark=",", digits=3)
+                    ),
+                justify="right")
+            msg <- c(msg, apply(df2, 1, function(x) paste(paste(x, collapse=" "), "\n")))
+            warning(msg)
+            deltar2.sum <- 0 
+            }
         deltar.sum <- sqrt(deltar2.sum)
         totalr2.sum <- gammar2.sum + deltar2.sum
         totalr.sum = sqrt(totalr2.sum)
@@ -441,7 +481,6 @@ ClarkCapeCod <- function(data,
             }
         }
     
-################################################################################    
     # Let's scale the data asap.
     # Just as Clark uses sigma2 to scale to model with ODP, we will scale
     #   losses by a large amount so that the scaled losses and the growth 
@@ -469,7 +508,6 @@ ClarkCapeCod <- function(data,
 
     # Turn loss matrix into incremental losses, if not already
     if (cumulative) data <-cum2incr(data)
-#################################################################################
 
     # Create the "long format" data.frame as in Table 1.1 of paper.
     Table1.1 <- as.data.frame(as.triangle(data))
@@ -502,7 +540,6 @@ ClarkCapeCod <- function(data,
         G,              
         workarea,
         method="L-BFGS-B",
-#        lower=c(.01, .1, min(c(.5, workarea$Age.to))),
         lower=c(.001, .1, min(c(.5, workarea$Age.to))),
         control = list(
             fnscale=-1,
@@ -617,6 +654,30 @@ ClarkCapeCod <- function(data,
         # Parameter risk for sum over all origin years = sum  over
         #   entire matrix (see below).
         deltar2 <- diag(VCOV.R)
+        # Hessian only approximates the covariance matrix; no guarantee
+        #   that the matrix is positive (semi)definite.
+        # If find negative diagonal variances, set them to zero, 
+        #   issue a warning.
+        ndx <- deltar2<0
+        if (any(ndx)) {
+            if (sum(ndx)>1L) msg <- "The parameter risk approximation produced 'negative variances' for the following origin years (values set to zero):\n"
+            else msg <- "The parameter risk approximation produced a 'negative variance' for the following origin year (value set to zero):\n"
+            df2 <- data.frame(
+                Origin = origins[ndx], 
+                Reserve = R[ndx] * magscale, 
+                ApproxVar = deltar2[ndx] * magscale^2, 
+                RelativeVar = deltar2[ndx] * magscale / R[ndx]
+                )
+            df2 <- format(
+                rbind(
+                    data.frame(Origin="Origin",Reserve="Reserve", ApproxVar="ApproxVar", RelativeVar="RelativeVar"),
+                    format(df2, big.mark=",", digits=3)
+                    ),
+                justify="right")
+            msg <- c(msg, apply(df2, 1, function(x) paste(paste(x, collapse=" "), "\n")))
+            warning(msg)
+            deltar2[ndx] <- 0 
+            }
         deltar  <- sqrt(deltar2)
     
         # Total Risk = process risk + parameter risk
@@ -630,6 +691,23 @@ ClarkCapeCod <- function(data,
         gammar2.sum <- sum(gammar2)
         gammar.sum = sqrt(gammar2.sum)
         deltar2.sum <- sum(VCOV.R)
+        if (deltar2.sum<0) {
+            msg <- "The parameter risk approximation produced a 'negative variance' for the Total row (value set to zero):\n"
+            df2 <- data.frame(
+                Reserve = R.sum * magscale, 
+                ApproxVar = deltar2.sum * magscale^2, 
+                RelativeVar = deltar2.sum * magscale / R.sum
+                )
+            df2 <- format(
+                rbind(
+                    data.frame(Reserve="Reserve", ApproxVar="ApproxVar", RelativeVar="RelativeVar"),
+                    format(df2, big.mark=",", digits=3)
+                    ),
+                justify="right")
+            msg <- c(msg, apply(df2, 1, function(x) paste(paste(x, collapse=" "), "\n")))
+            warning(msg)
+            deltar2.sum <- 0 
+            }
         deltar.sum <- sqrt(deltar2.sum)
         totalr2.sum <- gammar2.sum + deltar2.sum
         totalr.sum = sqrt(totalr2.sum)
@@ -701,10 +779,6 @@ plot.clark <- function(x, ...) {
         main="By Origin")
     z <- lm(x$stdresid~x$origin)
     abline(z, col="blue")
-#    origin <- x$origin
-#    z <- loess(x$stdresid~origin)
-#    y <- predict(z, data.frame(origin = (xseq<-seq(min(origin), max(origin), length.out=50))))
-#    lines(xseq, y, col="red", lty="dashed")
     #
     plot(x$age,
         x$stdresid, 
@@ -714,9 +788,6 @@ plot.clark <- function(x, ...) {
     age <- as.numeric(x$age)
     z <- lm(x$stdresid~age)
     abline(z, col="blue")
-#    z <- loess(x$stdresid~age)
-#    y <- predict(z, data.frame(age = (xseq<-seq(min(age), max(age), length.out=50))))
-#    lines(xseq,y, col="red", lty="dashed")
     #
     plot(x$fitted,
         x$stdresid,ylab="standardized residuals",
@@ -724,10 +795,6 @@ plot.clark <- function(x, ...) {
         main="By Fitted Value")
     z <- lm(x$stdresid~x$fitted)
     abline(z, col="blue")
-#    fitted <- x$fitted
-#    z <- loess(x$stdresid~fitted)
-#    y <- predict(z, data.frame(fitted = (xseq<-seq(min(fitted), max(fitted), length.out=50))))
-#    lines(xseq,y, col="red", lty="dashed")
     # Normality test
     ymin <- min(x$stdresid)
     ymax <- max(x$stdresid)

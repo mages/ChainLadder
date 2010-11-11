@@ -62,12 +62,12 @@ incremental losses across development periods in a loss triangle
 are independent.
 He assumes that the expected value of an incremental loss is
 equal to the \emph{theoretical} expected loss ratio (\bold{ELR})
-times the onlevel premium for the origin year
+times the on-level premium for the origin year
 times the change in the \emph{theoretical}
 underlying growth function over the development period.
 Clark models the growth function, also called the percent of ultimate,
 by either the loglogistic function (a.k.a., "the inverse power curve") 
-curve or the weibull function.
+or the weibull function.
 Clark completes his incremental loss model 
 by wrapping the expected values within an 
 overdispersed poisson (ODP) process where
@@ -126,10 +126,36 @@ Daniel Murphy
 \code{\link{ClarkLDF}}
 }
 \examples{
-
 X <- GenIns
 colnames(X) <- 12*as.numeric(colnames(X))
 CC.loglogistic  <- ClarkCapeCod(X, Premium=10000000+400000*0:9, maxage=240)
 CC.loglogistic
+
+# Clark's "CapeCod method" also works with triangles that have  
+# more development periods than origin periods. The Premium
+# is a contrived match to the "made up" 'qincurred' data.
+ClarkCapeCod(qincurred, Premium=1250+150*0:11, G="loglogistic")
+
+# Use of the weibull function generates a warning that the parameter risk 
+# approximation results in some negative variances. This may be of small 
+# concern since it happens only for older years with near-zero 
+# estimated reserves, but the warning should not be disregarded 
+# if it occurs with real data.
+Y <- ClarkCapeCod(qincurred, Premium=1250+150*0:11, G="weibull")
+
+# The plot of the standardized residuals by age indicates that the more
+# mature observations are more loosely grouped than the less mature, just
+# the opposite of the behavior under the loglogistic curve.
+# This suggests that the model might be improved by analyzing the data 
+# in two different "blocks": less vs. more mature. 
+# The QQ-plot shows that the tails of the empirical distribution of
+# standardized residuals are "fatter" than a standard normal. 
+# The fact that the p-value is essentially zero says that there is 
+# virtually no chance that the standardized residuals could be 
+# considered draws from a standard normal random variable.
+# The overall conclusion is that Clark's ODP-based CapeCod model with 
+# the weibull growth function does not match up well with the qincurred 
+# triangle and these premiums.
+plot(Y) 
 }
 \keyword{ models }

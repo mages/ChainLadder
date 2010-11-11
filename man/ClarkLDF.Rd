@@ -4,7 +4,7 @@
 Clark LDF method
 }
 \description{
-Analyze loss triangle using Clark's loss development factor (LDF) method.
+Analyze loss triangle using Clark's LDF (loss development factor) method.
 }
 \usage{
 ClarkLDF(data, cumulative = TRUE, adol = TRUE, 
@@ -63,7 +63,7 @@ times the change in the \emph{theoretical}
 underlying growth function over the development period.
 Clark models the growth function, also called the percent of ultimate,
 by either the loglogistic function (a.k.a., "the inverse power curve") 
-curve or the weibull function.
+or the weibull function.
 Clark completes his incremental loss model 
 by wrapping the expected values within an 
 overdispersed poisson (ODP) process where
@@ -125,8 +125,8 @@ Daniel Murphy
 \examples{
 X <- GenIns
 ClarkLDF(X, maxage=20)
-# Clark's method also works with triangles that have  
+# Clark's "LDF method" also works with triangles that have  
 # more development periods than origin periods
-ClarkLDF(qincurred, G="weibull")
+ClarkLDF(qincurred, G="loglogistic")
 }
 \keyword{ models }
