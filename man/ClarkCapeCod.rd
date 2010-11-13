@@ -94,24 +94,22 @@ reasonableness of the model relative to the actual data
 }
 \value{
 A \code{list} of class "clark" with the following components:
-\itemize{
-    \item method: "Cape Cod"
-    \item growthFunction: name of the growth function
-    \item Table65: the table of losses, standard errors and CVs as shown
-    on p. 65 of the paper
-    \item Table68: the table of ages, growth function values, 
+    \item{method}{"Cape Cod"}
+    \item{growthFunction}{name of the growth function}
+    \item{Table65}{the table of losses, standard errors and CVs as shown
+    on p. 65 of the paper}
+    \item{Table68}{the table of ages, growth function values, 
     "ultimate" losses, and "reserves" as shown on p. 68 
-    of the paper
-    \item par: the estimated parameters
-    \item sigma2: the sigma-squared "scale parameter"
-    \item origin: rownames(data) from the "long format" of \code{data}
-    \item age: colnames(data) from the "long format" of \code{data}
-    \item fitted: the expected values (the "mu's") of the incremental losses
-    \item residuals: the difference between the actual and fitted values
-    \item stdresid: the standardized residuals 
+    of the paper}
+    \item{par}{the estimated parameters}
+    \item{sigma2}{the sigma-squared "scale parameter"}
+    \item{origin}{rownames(data) from the "long format" of \code{data}}
+    \item{age}{colnames(data) from the "long format" of \code{data}}
+    \item{fitted}{the expected values (the "mu's") of the incremental losses}
+    \item{residuals}{the difference between the actual and fitted values}
+    \item{stdresid}{the standardized residuals 
     = residuals/sqrt(sigma2*fitted)
-    (referred to as "normalized residuals" in the paper; see p. 62)
-}
+    (referred to as "normalized residuals" in the paper; see p. 62)}
 }
 \references{
 Clark, David R., 
