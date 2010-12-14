@@ -337,7 +337,6 @@ getLatestCumulative <- function(cumulative.tri) {
   return(cumulative.tri[cbind(1:nrow(cumulative.tri), latest.indicies)])
 }
 
-
 ##############################################################################
 ## print
 ##
