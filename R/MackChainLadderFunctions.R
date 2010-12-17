@@ -328,14 +328,8 @@ summary.MackChainLadder <- function(object,...){
     return(output)
 }
 
-getLatestCumulative <- function(cumulative.tri) {
-  # Return the latest diagonal as a vector from a cumulative triangle
-  available.indicies <- apply(!is.na(cumulative.tri), 1, which)
-  latest.indicies <- sapply(available.indicies, function(x) ifelse(length(x)>0, max(x), 1) )
-  if (any(latest.indicies < 1))
-    stop("Some year (row) has no available losses")
-  return(cumulative.tri[cbind(1:nrow(cumulative.tri), latest.indicies)])
-}
+getLatestCumulative <- function(cumulative.tri)
+  apply(cumulative.tri, 1L, function(x) ifelse(length(w <- which(!is.na(x))) > 0L, x[tail(w, 1L)], x[1L]))
 
 ##############################################################################
 ## print
