@@ -57,7 +57,7 @@ ClarkLDF <- function(data,
         
     if (!is.matrix(data)) stop("ClarkLDF expects data in matrix format")
     nr <- nrow(data)
-    if (nr < 4L || ncol(data) < 4L) stop("matrix must be at least 4x4")
+    if (ncol(data) < 4L) stop("matrix must have at least 4 columns")
 
     dev <- as.numeric(colnames(data))
     if (any(is.na(dev))) stop("non-'age' column name(s)")
@@ -426,7 +426,7 @@ ClarkCapeCod <- function(data,
         
     if (!is.matrix(data)) stop("ClarkCapeCod expects data in matrix format")
     nr <- nrow(data)
-    if (nr < 4L || ncol(data) < 4L) stop("matrix must be at least 4x4")
+    if (ncol(data) < 4L) stop("matrix must have at least 4 columns")
 
     dev <- as.numeric(colnames(data))
     if (any(is.na(dev))) stop("non-'age' column name(s)")
@@ -1233,7 +1233,7 @@ R.LDF <- new("dfunction",
         ##  thetaU is a vector of estimated ultimates corresponding to
         ##      each origin year being projected; it has length=nrow(Table65)
         rbind(
-            diag(del(G, from, to, thetaG)),
+            diag(delG<-del(G, from, to, thetaG), length(delG)),
             # c to remove dim
             (c(G@dGdt(to, thetaG)) - G@dGdt(from, thetaG)) * rep(thetaU, each=G@np)
             )
