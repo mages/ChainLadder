@@ -76,12 +76,12 @@ test.LDFMethod.incrementalTriangle <- function() {
     checkEquals(tail(x$Table65$TotalCV, 1), 16.8, tolerance=.1) ## should be same as base case
     }
 
-test.LDFMethod.WideOriginPeriod <- function() {
-    X <- GenIns
-    colnames(X) <- 4*(1:10)
-    x <- ClarkLDF(X, maxage=80, origin.width=4) ## e.g., 4 quarters
-    checkEquals(tail(x$Table65$TotalCV, 1), 16.8, tolerance=.1) ## should be same as base case
-    }
+#test.LDFMethod.WideOriginPeriod <- function() {
+#    X <- GenIns
+#    colnames(X) <- 4*(1:10)
+#    x <- ClarkLDF(X, maxage=80, origin.width=4) ## e.g., 4 quarters
+#    checkEquals(tail(x$Table65$TotalCV, 1), 16.8, tolerance=.1) ## should be same as base case
+#    }
 
 test.LDFMethod.quarterly_observations_of_annual_periods <- function() {
     X <- qincurred
@@ -109,22 +109,22 @@ test.CCMethod.PremiumRepeated <- function() {
     checkEquals(tail(x$Table65$TotalCV, 1), 12.0, tolerance=.1)
     }
 
-test.CCMethod.RecyclePremium <- function() {
-    x <- ClarkCapeCod(GenIns, Premium=1000000*1:3, maxage=20) ## warning issued
-    checkEquals(tail(x$Table65$TotalCV, 1), 23.0, tolerance=.1)
+#test.CCMethod.RecyclePremium <- function() {
+#    x <- ClarkCapeCod(GenIns, Premium=1000000*1:3, maxage=20) ## warning issued
+#    checkEquals(tail(x$Table65$TotalCV, 1), 23.0, tolerance=.1)
+#    }
+
+# ONE-ROW "TRIANGLES"
+
+test.LDFMethod.OneRowTriangle <- function() {
+    x <- ClarkLDF(GenIns[1,,drop=FALSE], maxage=20)
+    checkEquals(tail(x$Table65$TotalCV, 1), 48.4, tolerance=.1)
     }
 
-# ONE-ROW "TRIANGLES" -- wait until getLatestCumulative is changed to allow one-row triangles
-
-#test.LDFMethod.OneRowTriangle <- function() {
-#    x <- ClarkLDF(GenIns[1,,drop=FALSE], maxage=20)
-#    checkEquals(tail(x$Table65$TotalCV, 1), 48.4, tolerance=.1)
-#    }
-
-#test.CCMethod.OneRowTriangle <- function() {
-#    x <- ClarkCapeCod(GenIns[1,,drop=FALSE], Premium=1000000, maxage=20)
-#    checkEquals(tail(x$Table65$TotalCV, 1), 48.5, tolerance=.1)
-#    }
+test.CCMethod.OneRowTriangle <- function() {
+    x <- ClarkCapeCod(GenIns[1,,drop=FALSE], Premium=1000000, maxage=20)
+    checkEquals(tail(x$Table65$TotalCV, 1), 48.4, tolerance=.1)
+    }
 
 # TEST EXCEPTIONS = Catch-able errors
 
