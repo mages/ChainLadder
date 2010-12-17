@@ -23,7 +23,12 @@ Losses may be inception-to-date or incremental.
 }
   \item{Premium}{
 The vector of premium to use in the method.
-The length should be the same as the number of rows of \code{data}.
+If a scalar (vector of length 1) is given,
+that value will be used for all origin periods.
+(See "Examples" below.)
+If the length is greater than 1 but 
+does not equal the number of rows of \code{data}
+the \code{Premium} values will be "recycled" with a warning.
 }
   \item{cumulative}{
 If \code{TRUE} (the default), values in \code{data} are
@@ -139,6 +144,11 @@ ClarkCapeCod(qincurred, Premium=1250+150*0:11, G="loglogistic")
 # Method also works for a "triangle" with only one row:
 # 1st row of GenIns; need "drop=FALSE" to avoid becoming a vector.
 ClarkCapeCod(GenIns[1, , drop=FALSE], Premium=1000000, maxage=20)
+
+# If one value of Premium is appropriate for all origin years
+# (e.g., losses are on-level and adjusted for exposure)
+# then only a single value for Premium need be provided.
+ClarkCapeCod(GenIns, Premium=1000000, maxage=20)
 
 # Use of the weibull function generates a warning that the parameter risk 
 # approximation results in some negative variances. This may be of small 

@@ -107,12 +107,22 @@ test.CCMethod.qincurred <- function() {
 test.CCMethod.PremiumRepeated <- function() {
     x <- ClarkCapeCod(GenIns, Premium=1000000, maxage=20)
     checkEquals(tail(x$Table65$TotalCV, 1), 12.0, tolerance=.1)
+    checkEquals(any(is.na(x$Table68$Premium[-1L])), FALSE)
     }
 
-#test.CCMethod.RecyclePremium <- function() {
-#    x <- ClarkCapeCod(GenIns, Premium=1000000*1:3, maxage=20) ## warning issued
-#    checkEquals(tail(x$Table65$TotalCV, 1), 23.0, tolerance=.1)
-#    }
+test.CCMethod.RecyclePremium <- function() {
+    x <- ClarkCapeCod(GenIns, Premium=1000000*1:3, maxage=20) ## warning issued
+    checkEquals(tail(x$Table65$TotalCV, 1), 22.9, tolerance=.1)
+    # Table68$Premium should be 1:3 recycled 3 times, then 1:
+    checkEquals(x$Table68$Premium[2:11], c(rep(1000000*1:3, 3), 1000000))
+    }
+
+test.CCMethod.RepeatPremium <- function() {
+    x <- ClarkCapeCod(GenIns, Premium=1000000, maxage=20) ## warning issued
+    checkEquals(tail(x$Table65$TotalCV, 1), 11.9, tolerance=.1)
+    # Prior to fix, Premium column contained NAs
+    checkEquals(any(is.na(x$Table68$Premium[-1L])), FALSE)
+    }
 
 # ONE-ROW "TRIANGLES"
 

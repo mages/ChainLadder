@@ -428,6 +428,16 @@ ClarkCapeCod <- function(data,
     nr <- nrow(data)
     if (ncol(data) < 4L) stop("matrix must have at least 4 columns")
 
+    # Recycle Premium, limit length, as necessary
+    Premium <- c(Premium)
+    if (length(Premium) == 1L) Premium <- rep(Premium, nr)
+    else
+    if (length(Premium)!=nr) {
+        warning('Mismatch between length(Premium)=', length(Premium), ' and nrow(data)=', nrow(data), '. Check results!')
+        if (length(Premium) < nr) Premium <- rep(Premium, nr)
+        if (length(Premium) > nr) Premium <- Premium[seq.int(nr)]
+        }
+
     dev <- as.numeric(colnames(data))
     if (any(is.na(dev))) stop("non-'age' column name(s)")
     if (any(dev[-1L]<=head(dev, -1L))) stop("ages must be strictly increasing")
