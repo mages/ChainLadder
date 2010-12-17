@@ -13,6 +13,8 @@ ClarkLDF(data, cumulative = TRUE, adol = TRUE,
 \arguments{
   \item{data}{
 A loss triangle in the form of a matrix.
+The number of columns must be at least four;
+the number of rows may be as few as 1.
 The column names of the matrix should be able to be interpreted
 as the "age" of the losses in that column.
 The row names of the matrix should uniquely define the year of
@@ -53,7 +55,7 @@ and "weibull".
 }
 }
 \details{
-Clark's "Cape Cod" method assumes that the 
+Clark's "LDF method" assumes that the 
 incremental losses across development periods in a loss triangle
 are independent.
 He assumes that the expected value of an incremental loss is
@@ -72,7 +74,7 @@ sigma^2
 is assumed to be a known constant for all 
 development periods.
  
-The parameters of Clark's "Cape Cod" method are therefore:
+The parameters of Clark's "LDF method" are therefore:
 U,
 and 
 omega
@@ -126,5 +128,8 @@ ClarkLDF(X, maxage=20)
 # Clark's "LDF method" also works with triangles that have  
 # more development periods than origin periods
 ClarkLDF(qincurred, G="loglogistic")
+# Method also works for a "triangle" with only one row:
+# 1st row of GenIns; need "drop=FALSE" to avoid becoming a vector.
+ClarkLDF(GenIns[1, , drop=FALSE], maxage=20)
 }
 \keyword{ models }
