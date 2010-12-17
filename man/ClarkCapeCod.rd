@@ -13,6 +13,8 @@ ClarkCapeCod(data, Premium, cumulative = TRUE, adol = TRUE,
 \arguments{
   \item{data}{
 A loss triangle in the form of a matrix.
+The number of columns must be at least four;
+the number of rows may be as few as 1.
 The column names of the matrix should be able to be interpreted
 as the "age" of the losses in that column.
 The row names of the matrix should uniquely define the year of
@@ -133,6 +135,10 @@ CC.loglogistic
 # more development periods than origin periods. The Premium
 # is a contrived match to the "made up" 'qincurred' data.
 ClarkCapeCod(qincurred, Premium=1250+150*0:11, G="loglogistic")
+
+# Method also works for a "triangle" with only one row:
+# 1st row of GenIns; need "drop=FALSE" to avoid becoming a vector.
+ClarkCapeCod(GenIns[1, , drop=FALSE], Premium=1000000, maxage=20)
 
 # Use of the weibull function generates a warning that the parameter risk 
 # approximation results in some negative variances. This may be of small 
