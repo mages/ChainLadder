@@ -7,8 +7,9 @@ Clark LDF method
 Analyze loss triangle using Clark's LDF (loss development factor) method.
 }
 \usage{
-ClarkLDF(data, cumulative = TRUE, adol = TRUE, 
-        maxage = c(Inf, Inf), G = "loglogistic")
+ClarkLDF(data, cumulative = TRUE, maxage = Inf, 
+        adol = TRUE, adol.age = NULL, origin.width = NULL,
+        G = "loglogistic")
 }
 \arguments{
   \item{data}{
@@ -20,11 +21,21 @@ as the "age" of the losses in that column.
 The row names of the matrix should uniquely define the year of
 origin of the losses in that row.
 Losses may be inception-to-date or incremental.
+
+The "ages" of the triangle can be "phase shifted" --
+i.e., the first age need not be as at the end of the origin period.
+(See the Examples section.)
+Nor need the "ages" be uniformly spaced.
+However, when the ages are not uniformly spaced, 
+it would be prudent to specify the \code{origin.width} argument.
 }
   \item{cumulative}{
 If \code{TRUE} (the default), values in \code{data} are
 inception to date.
 If \code{FALSE}, \code{data} holds incremental losses.
+}
+  \item{maxage}{
+The "ultimate" age to which losses should be projected.
 }
   \item{adol}{
 If \code{TRUE} (the default), the growth function should be applied
@@ -33,19 +44,21 @@ of losses in the origin year.
 If \code{FALSE}, the growth function should be applied
 to the length of time since the beginning of the origin year.
 }
-  \item{maxage}{
-The "ultimate" age to which losses should be projected.
-This can be a vector of length 1 or 2.
-The first element holds the ultimate age as traditionally defined, 
-namely the length of time since the beginning of the origin year.
-If the second element exists --
-which is pertinent only in the case that \code{adol} is \code{TRUE} --
-it holds the length of time from the
-average date of loss of the origin year.
-If the second element does not exist and \code{adol} is \code{TRUE},
-its value will be derived as \code{maxage[1]} minus 
-the average difference between the ages in \code{colnames(data)},
-with a warning if not all differences are the same.
+  \item{adol.age}{
+Only pertinent if \code{adol} is \code{TRUE}.
+The age of the average date of losses within an origin period
+in the same units as the "ages" of the \code{data} matrix.
+If \code{NULL} (the default) it will be assumed to be half the width
+of an origin period (which would be the case if losses can be assumed
+to occur uniformly over an origin period).
+}
+  \item{origin.width}{
+Only pertinent if \code{adol} is \code{TRUE}.
+The width of an origin period
+in the same units as the "ages" of the \code{data} matrix.
+If \code{NULL} (the default) it will be assumed to be the mean difference
+in the "ages" of the triangle, 
+with a warning if not all differences are equal.
 }
   \item{G}{
 A \code{character} scalar identifying the "growth function."
@@ -125,11 +138,29 @@ Daniel Murphy
 \examples{
 X <- GenIns
 ClarkLDF(X, maxage=20)
+
 # Clark's "LDF method" also works with triangles that have  
 # more development periods than origin periods
 ClarkLDF(qincurred, G="loglogistic")
+
 # Method also works for a "triangle" with only one row:
 # 1st row of GenIns; need "drop=FALSE" to avoid becoming a vector.
 ClarkLDF(GenIns[1, , drop=FALSE], maxage=20)
+
+# The age of the first evaluation may be prior to the end of the origin period.
+# Here the ages are in units of "months" and the first evaluation 
+# is at the end of the third quarter.
+X <- GenIns
+colnames(X) <- 12 * as.numeric(colnames(X)) - 3
+# The indicated liability increases from 1st example above, 
+# but not significantly.
+ClarkLDF(X, maxage=240)
+# When maxage is infinite, the phase shift has a more noticeable impact:
+# a 4-5% increase of the overall CV.
+x <- ClarkLDF(GenIns, maxage=Inf)
+y <- ClarkLDF(X, maxage=Inf)
+# Percent change in the bottom line CV:
+(tail(y$Table65$TotalCV, 1) - tail(x$Table65$TotalCV, 1)) / tail(x$Table65$TotalCV, 1)
+
 }
 \keyword{ models }

@@ -37,18 +37,21 @@
 
 ClarkLDF <- function(data,
         cumulative = TRUE,
+        maxage = Inf,
         adol = TRUE,
-        maxage = c(Inf, Inf),
+        adol.age = NULL,
+        origin.width = NULL,
         G = "loglogistic"
         ) {
-    # maxage can be a vector of length 1 or 2 and represents the age
-    #   to which losses are projected at Ultimate
-    # 1st element is the "traditional" age measured from the beginning 
-    #   of the origin year
-    # If second element exists, then it is the length of time from the
-    #   average date of loss (adol.age) of the origin year, which is
-    #   only relevant if adol=TRUE
+    # maxage represents the age to which losses are projected at Ultimate
+    # adol.age is the age within an origin period of the 
+    #   average date of loss (adol.age); only relevant if adol=TRUE
+    # origin.width is the width of an origin period; only relevant if adol=TRUE
     
+    if (!is.character(G))
+        stop("Growth function G must be the character name of a growth function")
+    if (length(G)>1L)
+        stop("Only one growth function can be specified")
     G <- switch(G,
          loglogistic = loglogistic,
          weibull = weibull,
@@ -79,39 +82,39 @@ ClarkLDF <- function(data,
         # If only one name specified by user, other will be NA
         dimnms[!is.na(nm)] <- nm[!is.na(nm)]
 
-    # Calculate the age.from/to's.
+    # Calculate the age.from/to's and maxage based on adol setting.
     Age.to <- dev
-    Age.from <- c(0, head(Age.to, -1L))
     if (adol) {
-        Age.to <- (Age.from + Age.to)/2
-        Age.from <- c(0, head(Age.to, -1L))
-        colnames(data) <- Age.to
-        }
-
-    # maxage can be a vector of length 1 or 2
-    # 1st element is the "traditional" age measured from the beginning 
-    #   of the origin year
-    # If second element exists, then it is the length of time from the
-    #   average date of loss (adol.age) of the origin year, which is
-    #   only relevant if adol=TRUE
-    # If the second element does not exist, we'll guess its value.
-    maxage.traditional <- maxage[1L]
-    if (length(maxage)>1L) {
-        if (adol) maxage <- maxage[2L]
-        else {
-            warning("Length(maxage)>2 but !adol -- maxage[2] ignored")
-            maxage <- maxage[1L]
+        if (is.null(origin.width)) {
+            agediff <- diff(Age.to)
+            if (!all(abs(agediff-agediff[1L])<sqrt(.Machine$double.eps))) 
+                warning("origin.width unspecified, but varying age differences; check reasonableness of 'Table64$AgeUsed'")
+            origin.width <-  mean(agediff)
             }
+        if (is.null(adol.age)) # default is half width of origin period
+            adol.age <- origin.width / 2
+        # rudimentary reasonableness checks of adol.age
+        if (adol.age < 0) 
+            stop("age of average date of loss cannot be negative")
+        if (adol.age >= origin.width) 
+            stop("age of average date of loss must be < origin.width (ie, within origin period)")
+        ## For all those ages that are before the end of the origin period,
+        ## we will assume that the average date of loss of the
+        ## partial period is proportional to the age
+        early.age <- Age.to < origin.width
+        Age.to[!early.age] <- Age.to[!early.age] - adol.age
+        Age.to[early.age] <- Age.to[early.age] * (1 - adol.age / origin.width)
+        colnames(data) <- Age.to
+        maxage.used <- maxage - adol.age
         }
     else {
-        if (adol) {
-            agediff <- (Age.to-Age.from)[-1L]
-            meandiff <- mean(agediff)/2
-            if (!all(abs(agediff-agediff[1L])<sqrt(.Machine$double.eps))) 
-                warning("Varying age differences; check reasonability of maxage calculation")
-            maxage <- maxage.traditional - meandiff
-            }
+        if (!is.null(adol.age))
+            stop("adol.age is specified but adol is FALSE")
+        if (!is.null(origin.width))
+            stop("origin.width is specified but adol is FALSE")
+        maxage.used <- maxage
         }
+    Age.from <- c(0, head(Age.to, -1L))
 
     # Let's scale the data asap.
     # Just as Clark uses sigma2 to scale to model with ODP, we will scale
@@ -190,7 +193,7 @@ ClarkLDF <- function(data,
     theta <- S$par
     K  <- np - G@np
     K1 <- seq.int(K)
-    U<-thetaU <- theta[K1]
+    U <- thetaU <- theta[K1]
     thetaG <- theta[seq.int(length = G@np, to = np)]
     
     # Calculate the sigma2 "scaling parameter"
@@ -272,11 +275,11 @@ ClarkLDF <- function(data,
         Table64 <- data.frame(
             Origin = c("", origins, "Total"),
             CurrentValue = c(NA, CurrentValue, CurrentValue.sum) * magscale,
-            CurrentAge = c(maxage.traditional, CurrentAge, NA),
-            AgeUsed = c(maxage, CurrentAge.to, NA),
+            CurrentAge = c(maxage, CurrentAge, NA),
+            AgeUsed = c(maxage.used, CurrentAge.to, NA),
             GrowthFunction = c(g, NA),
             LDF = c(1 / g, NA),
-            TruncatedLDF = c(G(maxage, thetaG) / g, NA),
+            TruncatedLDF = c(G(maxage.used, thetaG) / g, NA),
             LossesAtMaxage = c(NA, CurrentValue + R.alt, CurrentValue.sum + R.alt.sum) * magscale,
             EstimatedReserves = c(NA, R.alt, R.alt.sum) * magscale,
             stringsAsFactors = FALSE
@@ -371,11 +374,11 @@ ClarkLDF <- function(data,
         Table64 <- data.frame(
             Origin = c("", origins, "Total"),
             CurrentValue = c(NA, CurrentValue, CurrentValue.sum) * magscale,
-            CurrentAge = c(maxage.traditional, CurrentAge, NA),
-            AgeUsed = c(maxage, CurrentAge.to, NA),
+            CurrentAge = c(maxage, CurrentAge, NA),
+            AgeUsed = c(maxage.used, CurrentAge.to, NA),
             GrowthFunction = c(g, NA),
             LDF = c(1 / g, NA),
-            TruncatedLDF = c(G(maxage, thetaG) / g, NA),
+            TruncatedLDF = c(G(maxage.used, thetaG) / g, NA),
             LossesAtMaxage = c(NA, CurrentValue + R.alt, CurrentValue.sum + R.alt.sum) * magscale,
             EstimatedReserves = c(NA, R.alt, R.alt.sum) * magscale,
             stringsAsFactors = FALSE
@@ -406,18 +409,21 @@ ClarkLDF <- function(data,
 ClarkCapeCod <- function(data,
         Premium,
         cumulative = TRUE,
+        maxage = Inf,
         adol = TRUE,
-        maxage = c(Inf, Inf),
+        adol.age = NULL,
+        origin.width = NULL,
         G = "loglogistic"
         ) {
-    # maxage can be a vector of length 1 or 2 and represents the age
-    #   to which losses are projected at Ultimate
-    # 1st element is the "traditional" age measured from the beginning 
-    #   of the origin year
-    # If second element exists, then it is the length of time from the
-    #   average date of loss (adol.age) of the origin year, which is
-    #   only relevant if adol=TRUE
+    # maxage represents the age to which losses are projected at Ultimate
+    # adol.age is the age within an origin period of the 
+    #   average date of loss (adol.age); only relevant if adol=TRUE
+    # origin.width is the width of an origin period; only relevant if adol=TRUE
         
+    if (!is.character(G))
+        stop("Growth function G must be the character name of a growth function")
+    if (length(G)>1L)
+        stop("Only one growth function can be specified")
     G <- switch(G,
          loglogistic = loglogistic,
          weibull = weibull,
@@ -444,7 +450,8 @@ ClarkCapeCod <- function(data,
     if (tail(dev, 1L) > maxage[1L]) stop("'maxage' must not be less than last age in triangle")
     
     # 'workarea' stores intermediate calculations
-    workarea <- new.env()
+#    workarea <- new.env()
+    workarea <<- new.env()
 
     if (!inherits(data, "triangle")) data <- as.triangle(data)
 
@@ -457,40 +464,40 @@ ClarkCapeCod <- function(data,
         # If only one name specified by user, other will be NA
         dimnms[!is.na(nm)] <- nm[!is.na(nm)]
 
-    # Calculate the age.from/to's.
+    # Calculate the age.from/to's and maxage based on adol setting.
     Age.to <- dev
-    Age.from <- c(0, head(Age.to, -1L))
     if (adol) {
-        Age.to <- (Age.from + Age.to)/2
-        Age.from <- c(0, head(Age.to, -1L))
-        colnames(data) <- Age.to
-        }
-
-    # maxage can be a vector of length 1 or 2
-    # 1st element is the "traditional" age measured from the beginning 
-    #   of the origin year
-    # If second element exists, then it is the length of time from the
-    #   average date of loss (adol.age) of the origin year, which is
-    #   only relevant if adol=TRUE
-    # If the second element does not exist, we'll guess its value.
-    maxage.traditional <- maxage[1L]
-    if (length(maxage)>1L) {
-        if (adol) maxage <- maxage[2L]
-        else {
-            warning("Length(maxage)>2 but !adol -- maxage[2] ignored")
-            maxage <- maxage[1L]
+        if (is.null(origin.width)) {
+            agediff <- diff(Age.to)
+            if (!all(abs(agediff-agediff[1L])<sqrt(.Machine$double.eps))) 
+                warning("origin.width unspecified, but varying age differences; check reasonableness of 'Table64$AgeUsed'")
+            origin.width <-  mean(agediff)
             }
+        if (is.null(adol.age)) # default is half width of origin period
+            adol.age <- origin.width / 2
+        # rudimentary reasonableness checks of adol.age
+        if (adol.age < 0) 
+            stop("age of average date of loss cannot be negative")
+        if (adol.age >= origin.width) 
+            stop("age of average date of loss must be < origin.width (ie, within origin period)")
+        ## For all those ages that are before the end of the origin period,
+        ## we will assume that the average date of loss of the
+        ## partial period is proportional to the age
+        early.age <- Age.to < origin.width
+        Age.to[!early.age] <- Age.to[!early.age] - adol.age
+        Age.to[early.age] <- Age.to[early.age] * (1 - adol.age / origin.width)
+        colnames(data) <- Age.to
+        maxage.used <- maxage - adol.age
         }
     else {
-        if (adol) {
-            agediff <- (Age.to-Age.from)[-1L]
-            meandiff <- mean(agediff)/2
-            if (!all(agediff==agediff[1L]))
-                warning("Varying age differences; check reasonability of maxage calculation")
-            maxage <- maxage.traditional - meandiff
-            }
+        if (!is.null(adol.age))
+            stop("adol.age is specified but adol is FALSE")
+        if (!is.null(origin.width))
+            stop("origin.width is specified but adol is FALSE")
+        maxage.used <- maxage
         }
-    
+    Age.from <- c(0, head(Age.to, -1L))
+
     # Let's scale the data asap.
     # Just as Clark uses sigma2 to scale to model with ODP, we will scale
     #   losses by a large amount so that the scaled losses and the growth 
@@ -569,6 +576,8 @@ ClarkCapeCod <- function(data,
 
     # Pull the parameters out of the solution list
     theta <- S$par
+    K  <- np - G@np
+    K1 <- seq.int(K)
     ELR <- theta[1L]
     thetaG <- theta[seq.int(length = G@np, to = np)]
     
@@ -589,6 +598,11 @@ ClarkCapeCod <- function(data,
     # Calculate the Fisher Information matrix = matrix of
     #   2nd partial derivatives of the LL fcn w.r.t. all parameters
     workarea$FI <- FI <- d2LL.ODPdt2(S$par, MU.CapeCod, G, workarea)
+#    FImult <- array(
+#        c(rep(c(rep(1/magscale, K), rep(1, G@np)), K), 
+#          rep(c(rep(1, K), rep(magscale, G@np)), G@np)),
+#        c(np, np)
+#        ) 
 
     # Let's see if FI will invert
     if (rcond(FI)<.Machine$double.eps) { # No
@@ -643,10 +657,10 @@ ClarkCapeCod <- function(data,
         Table68 <- data.frame(
             Origin = c("", origins, "Total"),
             Premium = c(NA, Premium, Premium.sum) * magscale,
-            CurrentAge = c(maxage.traditional, CurrentAge, NA),
-            AgeUsed = c(maxage, CurrentAge.to, NA),
+            CurrentAge = c(maxage, CurrentAge, NA),
+            AgeUsed = c(maxage.used, CurrentAge.to, NA),
             GrowthFunction = c(g, NA),
-            TruncatedGrowth = G(maxage, thetaG) - c(g, NA),
+            TruncatedGrowth = G(maxage.used, thetaG) - c(g, NA),
             PremiumxELR = ELR * c(NA, Premium, Premium.sum) * magscale,
             EstimatedReserves = c(NA, R, R.sum) * magscale,
             stringsAsFactors = FALSE
@@ -741,10 +755,10 @@ ClarkCapeCod <- function(data,
         Table68 <- data.frame(
             Origin = c("", origins, "Total"),
             Premium = c(NA, Premium, Premium.sum) * magscale,
-            CurrentAge = c(maxage.traditional, CurrentAge, NA),
-            AgeUsed = c(maxage, CurrentAge.to, NA),
+            CurrentAge = c(maxage, CurrentAge, NA),
+            AgeUsed = c(maxage.used, CurrentAge.to, NA),
             GrowthFunction = c(g, NA),
-            TruncatedGrowth = G(maxage, thetaG) - c(g, NA),
+            TruncatedGrowth = G(maxage.used, thetaG) - c(g, NA),
             PremiumxELR = ELR * c(NA, Premium, Premium.sum) * magscale,
             EstimatedReserves = c(NA, R, R.sum) * magscale,
             stringsAsFactors = FALSE
