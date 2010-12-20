@@ -7,12 +7,12 @@ Clark LDF method
 Analyze loss triangle using Clark's LDF (loss development factor) method.
 }
 \usage{
-ClarkLDF(data, cumulative = TRUE, maxage = Inf, 
+ClarkLDF(Triangle, cumulative = TRUE, maxage = Inf, 
         adol = TRUE, adol.age = NULL, origin.width = NULL,
         G = "loglogistic")
 }
 \arguments{
-  \item{data}{
+  \item{Triangle}{
 A loss triangle in the form of a matrix.
 The number of columns must be at least four;
 the number of rows may be as few as 1.
@@ -30,9 +30,9 @@ However, when the ages are not uniformly spaced,
 it would be prudent to specify the \code{origin.width} argument.
 }
   \item{cumulative}{
-If \code{TRUE} (the default), values in \code{data} are
+If \code{TRUE} (the default), values in \code{Triangle} are
 inception to date.
-If \code{FALSE}, \code{data} holds incremental losses.
+If \code{FALSE}, \code{Triangle} holds incremental losses.
 }
   \item{maxage}{
 The "ultimate" age to which losses should be projected.
@@ -47,7 +47,7 @@ to the length of time since the beginning of the origin year.
   \item{adol.age}{
 Only pertinent if \code{adol} is \code{TRUE}.
 The age of the average date of losses within an origin period
-in the same units as the "ages" of the \code{data} matrix.
+in the same units as the "ages" of the \code{Triangle} matrix.
 If \code{NULL} (the default) it will be assumed to be half the width
 of an origin period (which would be the case if losses can be assumed
 to occur uniformly over an origin period).
@@ -55,7 +55,7 @@ to occur uniformly over an origin period).
   \item{origin.width}{
 Only pertinent if \code{adol} is \code{TRUE}.
 The width of an origin period
-in the same units as the "ages" of the \code{data} matrix.
+in the same units as the "ages" of the \code{Triangle} matrix.
 If \code{NULL} (the default) it will be assumed to be the mean difference
 in the "ages" of the triangle, 
 with a warning if not all differences are equal.
@@ -115,8 +115,8 @@ A \code{list} of class "clark" with the following components:
     \item{par}{ the estimated parameters}
     \item{sigma2}{ the sigma-squared "scale parameter"}
     \item{LDF}{ the vector of to-ultimate loss development factors}
-    \item{origin}{ rownames(data) from the "long format" of \code{data}}
-    \item{age}{ colnames(data) from the "long format" of \code{data}}
+    \item{origin}{ rownames(Triangle) from the "long format" of \code{Triangle}}
+    \item{age}{ colnames(Triangle) from the "long format" of \code{Triangle}}
     \item{fitted}{ the expected values (the "mu's") of the incremental losses}
     \item{residuals}{ the difference between the actual and fitted values}
     \item{stdresid}{ the standardized residuals 

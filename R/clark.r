@@ -35,7 +35,7 @@
 #           LDF Method
 #           Cape Cod Method
 
-ClarkLDF <- function(data,
+ClarkLDF <- function(Triangle,
         cumulative = TRUE,
         maxage = Inf,
         adol = TRUE,
@@ -58,11 +58,11 @@ ClarkLDF <- function(data,
          stop(paste("Growth function '", G, "' unrecognized", sep=""))
          )
         
-    if (!is.matrix(data)) stop("ClarkLDF expects data in matrix format")
-    nr <- nrow(data)
-    if (ncol(data) < 4L) stop("matrix must have at least 4 columns")
+    if (!is.matrix(Triangle)) stop("ClarkLDF expects Triangle in matrix format")
+    nr <- nrow(Triangle)
+    if (ncol(Triangle) < 4L) stop("matrix must have at least 4 columns")
 
-    dev <- as.numeric(colnames(data))
+    dev <- as.numeric(colnames(Triangle))
     if (any(is.na(dev))) stop("non-'age' column name(s)")
     if (any(dev[-1L]<=head(dev, -1L))) stop("ages must be strictly increasing")
     if (tail(dev, 1L) > maxage[1L]) stop("'maxage' must not be less than last age in triangle")
@@ -71,14 +71,14 @@ ClarkLDF <- function(data,
 #    workarea <- new.env()
     workarea <<- new.env()
 
-    if (!inherits(data, "triangle")) data <- as.triangle(data)
+    if (!inherits(Triangle, "triangle")) Triangle <- as.triangle(Triangle)
 
     # Save the origin, dev names
-    origins <- rownames(data)
-    devs <- colnames(data)
+    origins <- rownames(Triangle)
+    devs <- colnames(Triangle)
     # Save user's names for 'origin' (row) and 'dev' (column), if any
     dimnms <- c("origin", "dev")
-    if (!is.null(nm<-names(dimnames(data)))) 
+    if (!is.null(nm<-names(dimnames(Triangle)))) 
         # If only one name specified by user, other will be NA
         dimnms[!is.na(nm)] <- nm[!is.na(nm)]
 
@@ -104,7 +104,7 @@ ClarkLDF <- function(data,
         early.age <- Age.to < origin.width
         Age.to[!early.age] <- Age.to[!early.age] - adol.age
         Age.to[early.age] <- Age.to[early.age] * (1 - adol.age / origin.width)
-        colnames(data) <- Age.to
+        colnames(Triangle) <- Age.to
         maxage.used <- maxage - adol.age
         }
     else {
@@ -116,37 +116,37 @@ ClarkLDF <- function(data,
         }
     Age.from <- c(0, head(Age.to, -1L))
 
-    # Let's scale the data asap.
+    # Let's scale the Triangle asap.
     # Just as Clark uses sigma2 to scale to model with ODP, we will scale
     #   losses by a large amount so that the scaled losses and the growth 
     #   function  parameters are in a closer relative magnitude. Otherwise, 
     #   the Fisher Information matrix may not invert.
-    CurrentValue <- getLatestCumulative(if (cumulative) data else incr2cum(data))
-    Uinit <- if (is.logical(tryCatch(checkTriangle(data), error = function(e) FALSE))) CurrentValue
+    CurrentValue <- getLatestCumulative(if (cumulative) Triangle else incr2cum(Triangle))
+    Uinit <- if (is.logical(tryCatch(checkTriangle(Triangle), error = function(e) FALSE))) CurrentValue
         else 
-        if (cumulative) predict(chainladder(data))[,ncol(data)] 
-        else predict(chainladder(incr2cum(data)))[,ncol(data)]
+        if (cumulative) predict(chainladder(Triangle))[,ncol(Triangle)] 
+        else predict(chainladder(incr2cum(Triangle)))[,ncol(Triangle)]
     magscale <- max(Uinit)
-    data <- data / magscale
+    Triangle <- Triangle / magscale
     CurrentValue <- CurrentValue / magscale
     Uinit <- Uinit / magscale
 
     # Save age from/to's of current diagonal
     CurrentAge <- getLatestCumulative({
-        z <- col(data)
-        z[is.na(data)]<-NA
-        array(dev[z], dim(data))
+        z <- col(Triangle)
+        z[is.na(Triangle)]<-NA
+        array(dev[z], dim(Triangle))
         })
-    CurrentAge.from <- getLatestCumulative(array(Age.from[z], dim(data)))
-    CurrentAge.to <- getLatestCumulative(array(Age.to[z], dim(data)))
+    CurrentAge.from <- getLatestCumulative(array(Age.from[z], dim(Triangle)))
+    CurrentAge.to <- getLatestCumulative(array(Age.to[z], dim(Triangle)))
 
     # Turn loss matrix into incremental losses, if not already
-    if (cumulative) data <-cum2incr(data)
+    if (cumulative) Triangle <-cum2incr(Triangle)
 
     # Create the "long format" data.frame as in Table 1.1 of paper.
-    Table1.1 <- as.data.frame(as.triangle(data))
+    Table1.1 <- as.data.frame(as.triangle(Triangle))
     Table1.1$origin <- seq.int(nr)
-    Table1.1$dev <- rep(seq.int(ncol(data)), each=nr)
+    Table1.1$dev <- rep(seq.int(ncol(Triangle)), each=nr)
     Table1.1$Age.from <- rep(Age.from, each=nr)
     Table1.1$Age.to <- rep(Age.to, each=nr)
     Table1.1 <- Table1.1[!is.na(Table1.1[[3L]]),]
@@ -171,10 +171,11 @@ ClarkLDF <- function(data,
         G,              
         workarea,
         method="L-BFGS-B",
-        lower=c(min(data, na.rm=TRUE), .1, min(c(.5, workarea$Age.to))),
+        lower=c(rep(sqrt(.Machine$double.eps), nr), .1, min(c(.5, workarea$Age.to))),
         control = list(
             fnscale=-1,
             parscale=c(Uinit, 1, 1),
+            factr=.Machine$double.eps^-.5,
             maxit=100000
             ),
         hessian=FALSE
@@ -188,6 +189,7 @@ ClarkLDF <- function(data,
         warning(msg)
         return(NULL)
         }
+#cat("counts = ", paste(S$counts, collapse=", "), "; value = ", S$value, "\n")      # system.time(for (i in 1:10) ClarkLDF(X, maxage=Inf))
 
     # Pull the parameters out of the solution list
     theta <- S$par
@@ -406,7 +408,7 @@ ClarkLDF <- function(data,
         )
     }
 
-ClarkCapeCod <- function(data,
+ClarkCapeCod <- function(Triangle,
         Premium,
         cumulative = TRUE,
         maxage = Inf,
@@ -430,21 +432,21 @@ ClarkCapeCod <- function(data,
          stop(paste("Growth function '", G, "' unrecognized", sep=""))
          )
         
-    if (!is.matrix(data)) stop("ClarkCapeCod expects data in matrix format")
-    nr <- nrow(data)
-    if (ncol(data) < 4L) stop("matrix must have at least 4 columns")
+    if (!is.matrix(Triangle)) stop("ClarkCapeCod expects Triangle in matrix format")
+    nr <- nrow(Triangle)
+    if (ncol(Triangle) < 4L) stop("matrix must have at least 4 columns")
 
     # Recycle Premium, limit length, as necessary
     Premium <- c(Premium)
     if (length(Premium) == 1L) Premium <- rep(Premium, nr)
     else
     if (length(Premium)!=nr) {
-        warning('Mismatch between length(Premium)=', length(Premium), ' and nrow(data)=', nrow(data), '. Check results!')
+        warning('Mismatch between length(Premium)=', length(Premium), ' and nrow(Triangle)=', nrow(Triangle), '. Check results!')
         if (length(Premium) < nr) Premium <- rep(Premium, nr)
         if (length(Premium) > nr) Premium <- Premium[seq.int(nr)]
         }
 
-    dev <- as.numeric(colnames(data))
+    dev <- as.numeric(colnames(Triangle))
     if (any(is.na(dev))) stop("non-'age' column name(s)")
     if (any(dev[-1L]<=head(dev, -1L))) stop("ages must be strictly increasing")
     if (tail(dev, 1L) > maxage[1L]) stop("'maxage' must not be less than last age in triangle")
@@ -453,14 +455,14 @@ ClarkCapeCod <- function(data,
 #    workarea <- new.env()
     workarea <<- new.env()
 
-    if (!inherits(data, "triangle")) data <- as.triangle(data)
+    if (!inherits(Triangle, "triangle")) Triangle <- as.triangle(Triangle)
 
     # Save the origin, dev names
-    origins <- rownames(data)
-    devs <- colnames(data)
+    origins <- rownames(Triangle)
+    devs <- colnames(Triangle)
     # Save user's names for 'origin' (row) and 'dev' (column), if any
     dimnms <- c("origin", "dev")
-    if (!is.null(nm<-names(dimnames(data)))) 
+    if (!is.null(nm<-names(dimnames(Triangle)))) 
         # If only one name specified by user, other will be NA
         dimnms[!is.na(nm)] <- nm[!is.na(nm)]
 
@@ -486,7 +488,7 @@ ClarkCapeCod <- function(data,
         early.age <- Age.to < origin.width
         Age.to[!early.age] <- Age.to[!early.age] - adol.age
         Age.to[early.age] <- Age.to[early.age] * (1 - adol.age / origin.width)
-        colnames(data) <- Age.to
+        colnames(Triangle) <- Age.to
         maxage.used <- maxage - adol.age
         }
     else {
@@ -498,39 +500,39 @@ ClarkCapeCod <- function(data,
         }
     Age.from <- c(0, head(Age.to, -1L))
 
-    # Let's scale the data asap.
+    # Let's scale the Triangle asap.
     # Just as Clark uses sigma2 to scale to model with ODP, we will scale
     #   losses by a large amount so that the scaled losses and the growth 
     #   function  parameters are in a closer relative magnitude. Otherwise, 
     #   the Fisher Information matrix may not invert.
-    CurrentValue <- getLatestCumulative(if (cumulative) data else incr2cum(data))
-    Uinit <- if (is.logical(tryCatch(checkTriangle(data), error = function(e) FALSE))) CurrentValue
+    CurrentValue <- getLatestCumulative(if (cumulative) Triangle else incr2cum(Triangle))
+    Uinit <- if (is.logical(tryCatch(checkTriangle(Triangle), error = function(e) FALSE))) CurrentValue
         else 
-        if (cumulative) predict(chainladder(data))[,ncol(data)] 
-        else predict(chainladder(incr2cum(data)))[,ncol(data)]
+        if (cumulative) predict(chainladder(Triangle))[,ncol(Triangle)] 
+        else predict(chainladder(incr2cum(Triangle)))[,ncol(Triangle)]
     magscale <- max(Uinit)
-    data <- data / magscale
+    Triangle <- Triangle / magscale
     CurrentValue <- CurrentValue / magscale
     Uinit <- Uinit / magscale
     Premium <- Premium/magscale
 
     # Save age from/to's of current diagonal
     CurrentAge <- getLatestCumulative({
-        z <- col(data)
-        z[is.na(data)]<-NA
-        array(dev[z], dim(data))
+        z <- col(Triangle)
+        z[is.na(Triangle)]<-NA
+        array(dev[z], dim(Triangle))
         })
-    CurrentAge.from <- getLatestCumulative(array(Age.from[z], dim(data)))
-    CurrentAge.to <- getLatestCumulative(array(Age.to[z], dim(data)))
+    CurrentAge.from <- getLatestCumulative(array(Age.from[z], dim(Triangle)))
+    CurrentAge.to <- getLatestCumulative(array(Age.to[z], dim(Triangle)))
 
     # Turn loss matrix into incremental losses, if not already
-    if (cumulative) data <-cum2incr(data)
+    if (cumulative) Triangle <-cum2incr(Triangle)
 
     # Create the "long format" data.frame as in Table 1.1 of paper.
-    Table1.1 <- as.data.frame(as.triangle(data))
+    Table1.1 <- as.data.frame(as.triangle(Triangle))
     Table1.1$origin <- seq.int(nr)
-    Table1.1$P   <- rep(Premium, ncol(data))
-    Table1.1$dev <- rep(seq.int(ncol(data)), each=nr)
+    Table1.1$P   <- rep(Premium, ncol(Triangle))
+    Table1.1$dev <- rep(seq.int(ncol(Triangle)), each=nr)
     Table1.1$Age.from <- rep(Age.from, each=nr)
     Table1.1$Age.to <- rep(Age.to, each=nr)
     Table1.1 <- Table1.1[!is.na(Table1.1[[3L]]),]
@@ -557,9 +559,10 @@ ClarkCapeCod <- function(data,
         G,              
         workarea,
         method="L-BFGS-B",
-        lower=c(.001, .1, min(c(.5, workarea$Age.to))),
+        lower=c(sqrt(.Machine$double.eps), .1, min(c(.5, workarea$Age.to))),
         control = list(
             fnscale=-1,
+            factr=.Machine$double.eps^-.5,
             maxit=100000
             ),
         hessian=FALSE

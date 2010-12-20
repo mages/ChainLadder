@@ -2,6 +2,15 @@ Version 0.1.4-0
 ================
 NEW FEATURES
 
+  o ClarkLDF and ClarkCapeCod functions were modified to allow for additional functionality
+	- Clark's methods now work for "one-row triangles"; i.e., triangle matrices with only one row
+	- Methods also now work for "phase-shifted" triangles; i.e., triangles whose first age does not necessarily coincide with the end of the origin period (e.g., when the first evaluation date is as of the end of the third quarter)
+	- Maximum likelihood numerical method's control parameters were tweaked to enable more consistent convergence properties between R's 32-bit and 64-bit environments
+
+Version 0.1.4-0
+================
+NEW FEATURES
+
   o New implementation of the methods in David Clark's "LDF Curve Fitting" paper in the 2003 Forum by Daniel Murphy.
 	- Includes LDF and CapeCod methods (functions 'ClarkLDF' and 'ClarkCapeCod', respectively)
 	- Programmed to handle loglogistic and weibull growth functions

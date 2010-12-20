@@ -89,7 +89,7 @@ test.LDFMethod.WideOriginPeriod <- function() {
 test.LDFMethod.quarterly_observations_of_annual_periods <- function() {
     X <- qincurred
     x <- ClarkLDF(X)
-    checkEquals(tail(x$Table65$TotalCV, 1), 28.1, tolerance=.1)
+    checkEquals(tail(x$Table65$TotalCV, 1), 133.1, tolerance=.1)
     }
 
 # CAPE COD
