@@ -17,7 +17,7 @@ test.LDFMethod.GenIns <- function() {
     x6 <- ClarkLDF(GenIns, maxage=20, adol.age=0.5) ## average dol at midyear -- s/b same as default
     checkEquals(tail(x6$Table65$TotalCV, 1), 16.8, tolerance=.1)
     x7 <- ClarkLDF(GenIns, maxage=20, adol.age=0.75) ## average dol at end of Q3
-    checkEquals(tail(x7$Table65$TotalCV, 1), 19.6, tolerance=.1)
+    checkEquals(tail(x7$Table65$TotalCV, 1), 19.8, tolerance=.1)
     x8 <- ClarkLDF(GenIns, maxage=20, adol.age=0.25) ## average dol at end of Q1
     checkEquals(tail(x8$Table65$TotalCV, 1), 15.9, tolerance=.1)
     x9 <- ClarkLDF(GenIns, maxage=20, adol.age=0)
@@ -29,9 +29,9 @@ test.LDFMethod.GenIns.Months <- function() {
     X <- GenIns
     colnames(X) <- 12 * as.numeric(colnames(X))
     x <- ClarkLDF(X, maxage=240)
-    checkEquals(tail(x$Table65$TotalCV, 1), 16.7, tolerance=.1)
+    checkEquals(tail(x$Table65$TotalCV, 1), 16.8, tolerance=.1)
     x <- ClarkLDF(X, maxage=Inf)
-    checkEquals(tail(x$Table65$TotalCV, 1), 18.9, tolerance=.1)
+    checkEquals(tail(x$Table65$TotalCV, 1), 19.0, tolerance=.1)
     x <- ClarkLDF(X, maxage=240, adol=FALSE)
     checkEquals(tail(x$Table65$TotalCV, 1), 15.6, tolerance=.1)
     x <- ClarkLDF(X, maxage=Inf, G="weibull")
@@ -40,11 +40,11 @@ test.LDFMethod.GenIns.Months <- function() {
     checkEquals(tail(x$Table65$TotalCV, 1), 18.2, tolerance=.1)
     ## Test adol.age option. 
     x <- ClarkLDF(X, maxage=240, adol.age=6) ## average dol at midyear -- same as default
-    checkEquals(tail(x$Table65$TotalCV, 1), 16.7, tolerance=.1)
+    checkEquals(tail(x$Table65$TotalCV, 1), 16.8, tolerance=.1)
     x <- ClarkLDF(X, maxage=240, adol.age=9) ## average dol at end of Q3
-    checkEquals(tail(x$Table65$TotalCV, 1), 19.7, tolerance=.1)
+    checkEquals(tail(x$Table65$TotalCV, 1), 19.8, tolerance=.1)
     x <- ClarkLDF(X, maxage=240, adol.age=3) ## average dol at end of Q1
-    checkEquals(tail(x$Table65$TotalCV, 1), 15.9, tolerance=.1)
+    checkEquals(tail(x$Table65$TotalCV, 1), 15.8, tolerance=.1)
     x <- ClarkLDF(X, maxage=240, adol.age=0)
     checkEquals(tail(x$Table65$TotalCV, 1), 15.6, tolerance=.1) ## should be same as when adol=FALSE
     }
@@ -57,16 +57,16 @@ test.LDFMethod.GenIns.1stEvalMidYear <- function() {
     checkEquals(tail(x$Table65$TotalCV, 1), 18.1, tolerance=.1)
     checkEquals(x$Table64$AgeUsed[1], 234) # was 234.25
     x <- ClarkLDF(X, maxage=Inf)
-    checkEquals(tail(x$Table65$TotalCV, 1), 30.9, tolerance=.1)
+    checkEquals(tail(x$Table65$TotalCV, 1), 30.8, tolerance=.1)
     x <- ClarkLDF(X, maxage=240, adol=FALSE)
     checkEquals(tail(x$Table65$TotalCV, 1), 19.8, tolerance=.1)
     x <- ClarkLDF(X, maxage=Inf, G="weibull")
-    checkEquals(tail(x$Table65$TotalCV, 1), 26.7, tolerance=.1)
+    checkEquals(tail(x$Table65$TotalCV, 1), 22.3, tolerance=.1)
     x <- ClarkLDF(X, maxage=240, G="weibull")
-    checkEquals(tail(x$Table65$TotalCV, 1), 21.5, tolerance=.1)
+    checkEquals(tail(x$Table65$TotalCV, 1), 19.9, tolerance=.1)
     ## Test adol.age option. 
     x <- ClarkLDF(X, maxage=240, adol.age=9) ## average dol at end of Q3
-    checkEquals(tail(x$Table65$TotalCV, 1), 18.4, tolerance=.1)
+    checkEquals(tail(x$Table65$TotalCV, 1), 18.7, tolerance=.1)
     x <- ClarkLDF(X, maxage=240, adol.age=3) ## average dol at end of Q1
     checkEquals(tail(x$Table65$TotalCV, 1), 18.7, tolerance=.1)
     x <- ClarkLDF(X, maxage=240, adol.age=0)
@@ -115,7 +115,7 @@ test.CCMethod.PremiumRepeated <- function() {
 
 test.CCMethod.RecyclePremium <- function() {
     x <- ClarkCapeCod(GenIns, Premium=1000000*1:3, maxage=20) ## warning issued
-    checkEquals(tail(x$Table65$TotalCV, 1), 23.0, tolerance=.1)
+    checkEquals(tail(x$Table65$TotalCV, 1), 23.1, tolerance=.1)
     # Table68$Premium should be 1:3 recycled 3 times, then 1:
     checkEquals(x$Table68$Premium[2:11], c(rep(1000000*1:3, 3), 1000000))
     }
