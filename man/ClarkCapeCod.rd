@@ -116,6 +116,11 @@ A \code{list} of class "clark" with the following components:
     of the paper}
     \item{par}{the estimated parameters}
     \item{sigma2}{the sigma-squared "scale parameter"}
+    \item{LDF}{the "to-ultimate" loss development factor
+    (sometimes called the "cumulative development factor")
+    as defined in Clark's paper}
+    \item{dR}{the gradient of the reserves function evaluated at the 
+    parameter solution point}
     \item{origin}{rownames(Triangle) from the "long format" of \code{Triangle}}
     \item{age}{colnames(Triangle) from the "long format" of \code{Triangle}}
     \item{fitted}{the expected values (the "mu's") of the incremental losses}
@@ -123,6 +128,11 @@ A \code{list} of class "clark" with the following components:
     \item{stdresid}{the standardized residuals 
     = residuals/sqrt(sigma2*fitted)
     (referred to as "normalized residuals" in the paper; see p. 62)}
+    \item{FI}{the "Fisher Information" matrix as defined in Clark's paper
+    (i.e., without the sigma^2 value)}
+    \item{value}{the value of the loglikelihood function at the solution}
+    \item{counts}{the number of calls to the loglikelihood function
+    and its gradient function to achieve numerical convergence}
 }
 \references{
 Clark, David R., 
