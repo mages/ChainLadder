@@ -30,8 +30,6 @@ S3method(print, BootChainLadder)
 S3method(print, triangle)
 S3method(print, clark)
 
-
-
 S3method(as.triangle, matrix)
 S3method(as.triangle, data.frame)
 S3method(as.data.frame, triangle)
@@ -40,7 +38,6 @@ S3method(summary, MackChainLadder)
 S3method(summary, MunichChainLadder)
 S3method(summary, BootChainLadder)
 
-
 S3method(predict, TriangleModel)
 S3method(predict, ChainLadder)
 S3method(residuals, MackChainLadder)
@@ -48,6 +45,7 @@ S3method(quantile, BootChainLadder)
 S3method(residuals, BootChainLadder)
 S3method(mean, BootChainLadder)
 
+S3method(vcov, clark)
 
 exportMethods(predict, Mse, summary, show, coerce,
               "[", "$", "[[", "[<-", names, coef, vcov, residCov, residCor,
