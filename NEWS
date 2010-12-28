@@ -1,11 +1,31 @@
-Version 0.1.4-0
+Version 0.1.4-1
 ================
 NEW FEATURES
 
-  o ClarkLDF and ClarkCapeCod functions were modified to allow for additional functionality
-	- Clark's methods now work for "one-row triangles"; i.e., triangle matrices with only one row
-	- Methods also now work for "phase-shifted" triangles; i.e., triangles whose first age does not necessarily coincide with the end of the origin period (e.g., when the first evaluation date is as of the end of the third quarter)
-	- Maximum likelihood numerical method's control parameters were tweaked to enable more consistent convergence properties between R's 32-bit and 64-bit environments
+  o ClarkLDF and ClarkCapeCod functions: additional functionality
+	- Clark's methods now work for "one-row triangles" -- i.e., loss experience from only one origin period
+	- Clark's methods work for "phase-shifted" triangles -- i.e., triangles whose first age does not coincide with the end of the origin period. Example: accident year origin periods with September 30th evaluation dates.
+
+  o A 'vcov' method now exists to produce the covariance matrix of the estimated parameters using the approach in Clark's paper
+
+  o Additional values (in lists) returned by Clark's methods:
+	- FI = Fisher Information matrix as Clark defines it in his paper (i.e., without the sigma^2 value)
+	- dR = the gradient of the reserves function evaluated at the optimal parameter values
+	- value = value of the loglikelihood function at the solution
+	- counts = number of evaluations of the loglikelihood and its derivative before convergence
+
+  o Fine-tuning of maximum likelihood numerical algorithm's control parameters
+	- Enable more consistent convergence properties between R's 32-bit and 64-bit environments
+  	- Initial starting values for the weibull function were adjusted for successful convergence across a wider set of triangles
+  	- Upper bounds introduced for "L-BFGS-B" maximum likelihood method to bound weibull away from unity at too early an age
+
+  o If the solution is found at the boundary of the parameter region, it is conceivable that a "more optimal" solution might exist if the boundary constraints were not as conservative, so a warning is given
+
+BUG FIXES
+
+  o The parameters returned by the methods were the scaled versions; they now at their original scales.
+
+  o The loss development factor (LDF) being returned by ClarkCapeCod was not documented
 
 Version 0.1.4-0
 ================
