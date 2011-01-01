@@ -511,10 +511,6 @@ ClarkCapeCod <- function(Triangle,
 
     # Triangle does not need to be scaled for Cape Cod method.
     CurrentValue <- getLatestCumulative(if (cumulative) Triangle else incr2cum(Triangle))
-#    ELRinit <- tryCatch(
-#        sum(if (cumulative) predict(chainladder(Triangle))[,ncol(Triangle)] 
-#            else predict(chainladder(incr2cum(Triangle)))[,ncol(Triangle)]) / sum(Premium),
-#        error = function(e) 1.000)
 
     ELRinit <- if (is.logical(tryCatch(checkTriangle(Triangle), error = function(e) FALSE))) 1.000
         else sum(if (cumulative) predict(chainladder(Triangle))[,ncol(Triangle)] 
@@ -611,8 +607,6 @@ ClarkCapeCod <- function(Triangle,
         d2LL.ODPdt2(S$par, MU.CapeCod, G, workarea),
         dimnames = list(names(S$par), names(S$par))
         )
-prn(dimnames(FI))
-prn(names(S$par))
 
     # Let's see if FI will invert
     if (rcond(FI)<.Machine$double.eps) { # No
@@ -662,7 +656,7 @@ prn(names(S$par))
             stringsAsFactors = FALSE
             )
     
-        g <- G(c(maxage, CurrentAge.to), thetaG)
+        g <- G(c(maxage.used, CurrentAge.to), thetaG)
         gInf <- G(c(Inf, CurrentAge.to), thetaG)
         Table68 <- data.frame(
             Origin = c("", origins, "Total"),
@@ -760,7 +754,7 @@ prn(names(S$par))
             stringsAsFactors = FALSE
             )
     
-        g <- G(c(maxage, CurrentAge.to), thetaG)
+        g <- G(c(maxage.used, CurrentAge.to), thetaG)
         gInf <- G(c(Inf, CurrentAge.to), thetaG)
         Table68 <- data.frame(
             Origin = c("", origins, "Total"),

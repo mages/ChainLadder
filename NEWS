@@ -1,3 +1,10 @@
+Version 0.1.4-2
+================
+
+BUG FIXES
+
+  o The TruncatedGrowth function value under the Clark Cape Cod method was incorrectly printed in the Table68 data.frame when the calculations were to be based on the average date of loss (argument adol=TRUE). The underlying calculations used the correct adol adjustment, only the printed output was incorrect.
+
 Version 0.1.4-1
 ================
 NEW FEATURES
