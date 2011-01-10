@@ -152,7 +152,9 @@ ClarkLDF <- function(Triangle,
     Table1.1 <- Table1.1[!is.na(Table1.1[[3L]]),]
     
     # "prime" 'workarea' with initial data
-    workarea$origin   <- Table1.1$origin
+    workarea$origin   <- Table1.1$origin # origin year (index) of the observation
+#    workarea$io <- outer(1:nr, workarea$origin, `==`) # T/F flag: is obs in origin year=column #?
+    workarea$io <- outer(workarea$origin, 1:nr, `==`) # T/F flag: is obs in origin year=column #?
     workarea$value    <- as.numeric(Table1.1$value)
     workarea$Age.from <- Table1.1$Age.from
     workarea$Age.to   <- Table1.1$Age.to
@@ -205,8 +207,8 @@ ClarkLDF <- function(Triangle,
 
     # AY DETAIL LEVEL
 
-    # Expected value of reserves
-    R <- R.LDF(theta, G, CurrentAge.to, maxage)#, workarea)
+    # Expected value of reserves, all origin years
+    R <- R.LDF(theta, G, CurrentAge.to, maxage, oy=1:nr)
     # Alternatively, by developing current diagonal
     #   For LDF formula, see table at top of p. 64
     LDF <- G(maxage, thetaG) / G(CurrentAge.to, thetaG)
@@ -233,7 +235,7 @@ ClarkLDF <- function(Triangle,
         ) 
 
     # Let's see if FI will invert
-    if (rcond(FI)<.Machine$double.eps) { # No
+    if (rcond(FI) < .Machine$double.eps) { # No
         message("Fisher Information matrix is computationally singular (condition number = ",
                 format(1/rcond(FI), digits=3, scientific=TRUE), 
                 ")\nParameter risk estimates not available"
@@ -298,10 +300,10 @@ ClarkLDF <- function(Triangle,
     else {
         # Calculate the gradient matrix, dR = matrix of 1st partial derivatives
         #   for every origin year w.r.t. every parameter
-        dR <- dfdx(R.LDF, theta, G, CurrentAge.to, maxage)#, workarea)
+        dR <- dfdx(R.LDF, theta, G, CurrentAge.to, maxage.used, oy=1:nr)
         
         # Delta Method => approx var/cov matrix of reserves
-        VCOV.R <- -workarea$sigma2*t(dR)%*%solve(FI,dR)
+        VCOV.R <- -workarea$sigma2 * t(dR) %*% solve(FI, dR)
 
         # Origin year parameter risk estimates come from diagonal entries
         # Parameter risk for sum over all origin years = sum  over
@@ -540,7 +542,8 @@ ClarkCapeCod <- function(Triangle,
     Table1.1 <- Table1.1[!is.na(Table1.1[[3L]]),]
     
     # "prime" workarea with initial data
-    workarea$origin   <- Table1.1$origin
+    workarea$origin   <- Table1.1$origin # origin year (index) of the observation
+    workarea$io <- outer(1:nr, workarea$origin, `==`) # T/F flag: is obs in origin year=column #?
     workarea$value    <- as.numeric(Table1.1$value)
     workarea$P        <- Table1.1$P
     workarea$Age.from <- Table1.1$Age.from
@@ -609,7 +612,7 @@ ClarkCapeCod <- function(Triangle,
         )
 
     # Let's see if FI will invert
-    if (rcond(FI)<.Machine$double.eps) { # No
+    if (rcond(FI) < .Machine$double.eps) { # No
         message("Fisher Information matrix is computationally singular (condition number = ",
                 format(1/rcond(FI), digits=3, scientific=TRUE), 
                 ")\nParameter risk estimates not available"
@@ -673,10 +676,10 @@ ClarkCapeCod <- function(Triangle,
     else {
         # Calculate the gradient matrix, dR = matrix of 1st partial derivatives
         #   for every origin year w.r.t. every parameter
-        dR <- dfdx(R.CapeCod, theta, Premium, G, CurrentAge.to, maxage)#, workarea)
+        dR <- dfdx(R.CapeCod, theta, Premium, G, CurrentAge.to, maxage.used)#, workarea)
         
         # Delta Method => approx var/cov matrix of reserves
-        VCOV.R <- -workarea$sigma2*t(dR)%*%solve(FI,dR)
+        VCOV.R <- -workarea$sigma2 * t(dR) %*% solve(FI, dR)
     
         # Origin year parameter risk estimates come from diagonal entries
         # Parameter risk for sum over all origin years = sum  over
@@ -950,17 +953,16 @@ dG.loglogisticdtheta <- function(x, theta) {
     dydom <- y / (xth^om + 1) * log(xth)
     tom <- th^om
     dydth <- y * tom / (x^om + tom) * (-om / th)
-    # Pancake adds new dimension in row direction. Can create column matrix.
-    dtheta <- rbind(dydom, dydth)
+    # Sandwich columns together.
+    dtheta <- cbind(dydom, dydth)
     # If x <= 0, Inf, derivative = 0 by definition  (log returns NA)
     dtheta[is.na(dtheta)] <- 0
-    rownames(dtheta) <- names(theta)
     dtheta
     }
 
 d2G.loglogisticdtheta2 <- function(x, theta) {
     if (any(theta <= 0)) return(
-        array(0, dim = if (length(x) > 1L) c(4L, length(x)) else c(2L, 2L))
+        array(0, dim = if (length(x) > 1L) c(length(x), 4L) else c(2L, 2L))
         )
     om <- theta[1L]
     th <- theta[2L]
@@ -981,13 +983,10 @@ d2G.loglogisticdtheta2 <- function(x, theta) {
     d2ydth2[ndx] <- 0
     d2ydomdth[ndx] <- 0
     
-    if (length(x)>1L) structure(
+    if (length(x)>1L)
         # Create a matrix where each column holds an observation's
         #   d2 matrix "stretched out" into a vector of length 4
-        rbind(d2ydom2, d2ydomdth, d2ydomdth, d2ydth2),
-        dim = c(4L, length=length(x)),
-        dimnames = list(c(names(theta), rep(NA, 2L)), names(x))
-        )
+        cbind(d2ydom2, d2ydomdth, d2ydomdth, d2ydth2)
     else array(
         c(d2ydom2, d2ydomdth, d2ydomdth, d2ydth2),
         dim = c(2L, 2L),
@@ -1040,17 +1039,16 @@ dG.weibulldtheta <- function(x, theta) {
     v <- exp(-u) * u
     dydom <- v * log(xth)
     dydth <- -v * om / th
-    # Pancake adds new dimension in row direction. Can create column matrix.
-    dtheta <- rbind(dydom, dydth)
+    # Sandwich columns together.
+    dtheta <- cbind(dydom, dydth)
     # If x <= 0, Inf, derivative = 0 by definition  (log returns NA)
     dtheta[is.na(dtheta)] <- 0
-    rownames(dtheta) <- names(theta)
     dtheta
     }
 
 d2G.weibulldtheta2 <- function(x, theta) {
     if (any(theta <= 0)) return(
-        array(0, dim = if (length(x) > 1L) c(4L, length(x)) else c(2L, 2L))
+        array(0, dim = if (length(x) > 1L) c(length(x), 4L) else c(2L, 2L))
         )
     om <- theta[1L]
     th <- theta[2L]
@@ -1071,13 +1069,10 @@ d2G.weibulldtheta2 <- function(x, theta) {
     d2ydth2[ndx] <- 0
     d2ydomdth[ndx] <- 0
     
-    if (length(x)>1L) structure(
+    if (length(x)>1L)
         # Create a matrix where each column holds an observation's
         #   d2 matrix "stretched out" into a vector of length 4
-        rbind(d2ydom2, d2ydomdth, d2ydomdth, d2ydth2),
-        dim = c(4L, length=length(x)),
-        dimnames = list(c(names(theta), rep(NA, 2L)), names(x))
-        )
+        cbind(d2ydom2, d2ydomdth, d2ydomdth, d2ydth2)
     else array(
         c(d2ydom2, d2ydomdth, d2ydomdth, d2ydth2),
         dim = c(2L, 2L),
@@ -1135,17 +1130,25 @@ LL.ODP <- function(theta, MU, G, workarea) {
 
 dLL.ODPdt <- function(theta, MU, G, workarea) {
     # Calculate the gradient for all observations, store in workarea.
-    #   Creates workarea$dmudt
+    # Create workarea$dmudt
     dfdx(MU, theta, G, workarea)
-    # Must return a vector for optim, I believe, rt a column matrix
-    c(workarea$dmudt %*% (workarea$value/workarea$mu-1))
+    # ... and an intermediate value used in second derivative
+    workarea$cmuminus1 <- workarea$value/workarea$mu-1
+    # Return a vector of column sums
+    .Internal(colSums(
+                workarea$cmuminus1 * workarea$dmudt,
+                (dm <- dim(workarea$dmudt))[1L], 
+                dm[2L], 
+                FALSE
+                ))  
+#    c(workarea$dmudt %*% (workarea$value/workarea$mu-1))
     }
 
 d2LL.ODPdt2 <- function(theta, MU, G, workarea) {
     # Calculate all the 2nd derivatives of MU
     d2fdx2(MU, theta, G, workarea)
     # Calculate the hessian matrix for every observation, store as a 
-    #   column in a matrix with # cols = # obs, add up all the 
+    #   row in a matrix with # rows = # obs, add up all the 
     #   matrices, and reshape.
     # For each obs, the hessian matrix is the matrix of second partial 
     #   derivatives of LL. The first term is the product of the 
@@ -1154,18 +1157,31 @@ d2LL.ODPdt2 <- function(theta, MU, G, workarea) {
     #   The second term is the outer product of (not the square of --
     #   we need a matrix not a vector) two first partial derivatives
     #   of the MU function times the quantity cit/mu^2.
-    structure(
-        rowSums(
-            sapply(
-                seq.int(length=workarea$nobs), 
-                function(i)
-                    workarea$d2mudt2[,i] * rep(workarea$value[i]/unname(workarea$mu[i]) - 1, each=length(theta)^2) -
-                    workarea$value[i] / (workarea$mu[i]*workarea$mu[i]) *
-                    c(outer(workarea$dmudt[,i], workarea$dmudt[,i], "*"))
-                )
-            ),
-        dim=c(length(theta), length(theta))
-        )
+    y <- .Internal(colSums(
+                workarea$cmuminus1 * workarea$d2mudt2 -
+                (workarea$value/(workarea$mu^2)) *
+                    t(vapply(1:workarea$nobs, function(i)
+                        c(outer(workarea$dmudt[i, ], workarea$dmudt[i, ])),
+                        vector("double", length(theta)^2)
+                        )),
+                (dm <- dim(workarea$d2mudt2))[1L], # 55
+                dm[2L],                            # 144
+                FALSE
+                ))  
+    dim(y) <- rep(length(theta), 2)
+    y
+#    structure(
+#        rowSums(
+#            sapply(
+#                seq.int(length=workarea$nobs), 
+#                function(i)
+#                    workarea$d2mudt2[,i] * rep(workarea$value[i]/unname(workarea$mu[i]) - 1, each=length(theta)^2) -
+#                    workarea$value[i] / (workarea$mu[i]*workarea$mu[i]) *
+#                    c(outer(workarea$dmudt[,i], workarea$dmudt[,i], "*"))
+#                )
+#            ),
+#        dim=c(length(theta), length(theta))
+#        )
     }
 
 LL.ODP.sigma2 <- function(workarea) {
@@ -1184,47 +1200,50 @@ MU.LDF <- new("dfunction",
     # G        = growth function (eg, loglogistic or weibull)
     # workarea = environment where intermediate values are stored
     function(theta, G, workarea) {
-        Useq        <- seq.int(length=length(theta)-G@np)
-        thetaU      <- theta[Useq]
-        thetaG      <- theta[seq.int(length=G@np, to=length(theta))]
-        workarea$io <- outer(Useq, workarea$origin, `==`)
-        workarea$u  <- thetaU[workarea$origin] ## or thetaU %*% workarea$io
-        workarea$delG <- del(G, workarea$Age.from, workarea$Age.to, thetaG)
+        lent <- length(theta)
+        workarea$thetaU      <- theta[1L:(lenu<-lent-G@np)]
+        workarea$thetaG      <- theta[(lenu+1):lent]
+#        workarea$io <- outer(Useq, workarea$origin, `==`)
+        workarea$u  <- workarea$thetaU[workarea$origin] ## or thetaU %*% workarea$io
+        workarea$delG <- del(G, workarea$Age.from, workarea$Age.to, workarea$thetaG)
         workarea$mu <- workarea$u * workarea$delG
         },
     dfdx = function(theta, G, workarea) {
-        thetaU      <- theta[seq.int(length=length(theta)-G@np)]
-        thetaG      <- theta[seq.int(length=G@np, to=length(theta))]
-        workarea$deldG <- del(G@dGdt, workarea$Age.from, workarea$Age.to, thetaG)
-        # Pancake
-        workarea$dmudt <- rbind(
-            workarea$io * rep(workarea$delG, each=length(thetaU)),
-            workarea$deldG * rep(workarea$u, each=G@np)
+#        thetaU      <- theta[seq.int(length=length(theta)-G@np)]
+#        thetaG      <- theta[seq.int(length=G@np, to=length(theta))]
+        workarea$deldG <- del(G@dGdt, workarea$Age.from, workarea$Age.to, workarea$thetaG)
+#        # Pancake
+#        workarea$dmudt <- rbind(
+#            workarea$io * rep(workarea$delG, each=length(workarea$thetaU)),
+#            workarea$deldG * rep(workarea$u, each=G@np)
+        # Sandwich
+        workarea$dmudt <- cbind(
+            workarea$delG * workarea$io,
+            workarea$u * workarea$deldG
             )
         },
     d2fdx2 = function(theta, G, workarea) {
-        # Separately calculate the three matrices for each obs:
-        #   d2MUdthetaU2, d2MUdthetaUdthetaG, dtMUdthetaG2
+        # Separately calculate the four submatrices for each obs:
+        #   d2MUdthetaU2, d2MUdthetaUdthetaG, t(d2MUdthetaUdthetaG), and dtMUdthetaG2
         # Bind them into one hessian matrix for each obs.
         if (!exists("deldG", env=workarea)) stop("gr=NULL? Must run the derivatives.")
-        K <- length(theta) - G@np
-        K1 <- seq.int(K)
-        thetaU      <- theta[K1]
-        thetaG      <- theta[seq.int(length = G@np, to = length(theta))]
+#        K <- length(theta) - G@np
+#        K1 <- seq.int(K)
+#        thetaU      <- theta[K1]
+#        thetaG      <- theta[seq.int(length = G@np, to = length(theta))]
         
-        # The result of the following will be a matrix with a column for 
-        #   every observation. Each column is the hessian matrix for
-        #   that observation, automatically "stretched out" into a 
-        #   column vector, the default behavior of the sapply function.
-        U2 <- array(0, c(K, K))
-        workarea$d2mudt2 <- sapply(seq.int(workarea$nobs), function(i) {
-            # Cross partials of thetaU and thetaG
-            crossPartials.UG <- structure(workarea$deldG[,i], dim = c(1L, G@np)) %x% workarea$io[K1, i]
+        # The result of the following will be a matrix with a row for 
+        #   every observation. Each row is the hessian matrix for
+        #   that observation, "stretched out" into a row vector.
+        U2 <- array(0, rep(length(workarea$thetaU), 2))
+        workarea$d2mudt2 <- t(vapply(1L:workarea$nobs, function(i) {
+            # Cross partials of thetaU and thetaG: 10x1 %*% 1x2 = 10x2
+            crossPartials.UG <- workarea$io[i, ] %*% t(workarea$deldG[i, ])
             # Cross partials of thetaG and thetaG
-            crossPartials.GG <- workarea$u[i] * del(G@d2Gdt2, workarea$Age.from[i], workarea$Age.to[i], thetaG)
-            rbind(cbind(U2, crossPartials.UG),
-                  cbind(t(crossPartials.UG), crossPartials.GG))
-            })
+            crossPartials.GG <- workarea$u[i] * del(G@d2Gdt2, workarea$Age.from[i], workarea$Age.to[i], workarea$thetaG)
+            c(rbind(cbind(U2, crossPartials.UG),
+                  cbind(t(crossPartials.UG), crossPartials.GG)))
+            }, vector("double", length(theta)^2)))
         }
     )
 
@@ -1235,41 +1254,41 @@ MU.CapeCod <- new("dfunction",
     # G        = growth function (eg, loglogistic or weibull)
     # workarea = environment where intermediate values are stored
     function(theta, G, workarea) {
-        ELR         <- theta[1L]
-        thetaG      <- theta[seq.int(length=G@np, to=length(theta))]
-        workarea$u  <- ELR * workarea$P
-        workarea$delG <- del(G, workarea$Age.from, workarea$Age.to, thetaG)
+        workarea$ELR         <- theta[1L]
+        workarea$thetaG      <- theta[2L:length(theta)]
+        workarea$u  <- workarea$ELR * workarea$P
+        workarea$delG <- del(G, workarea$Age.from, workarea$Age.to, workarea$thetaG)
         workarea$mu <- workarea$u * workarea$delG
         },
     dfdx = function(theta, G, workarea) {
-        ELR         <- theta[1L]
-        thetaG      <- theta[seq.int(length=G@np, to=length(theta))]
-        workarea$deldG <- del(G@dGdt, workarea$Age.from, workarea$Age.to, thetaG)
-        # Pancake
-        workarea$dmudt <- rbind(
+#        ELR         <- theta[1L]
+#        thetaG      <- theta[2L:length(theta)]
+        workarea$deldG <- del(G@dGdt, workarea$Age.from, workarea$Age.to, workarea$thetaG)
+        # Sandwich
+        workarea$dmudt <- cbind(
             workarea$P * workarea$delG,
-            workarea$deldG * rep(workarea$u, each=G@np)
+            workarea$u * workarea$deldG
             )
         },
     d2fdx2 = function(theta, G, workarea) {
-        # Separately calculate the three matrices for each obs:
-        #   d2MUdthetaU2, d2MUdthetaUdthetaG, dtMUdthetaG2
+        # Separately calculate the four submatrices for each obs:
+        #   d2MUdELR2, d2MUdELRdthetaG, t(d2MUdELRdthetaG), and dtMUdthetaG2
         # Bind them into one hessian matrix for each obs.
         if (!exists("deldG", env=workarea)) stop("gr=NULL? Must run the derivatives.")
-        thetaG      <- theta[seq.int(length = G@np, to = length(theta))]
-        # The result of the following will be a matrix with a column for 
-        #   every observation. Each column is the hessian matrix for
-        #   that observation, automatically "stretched out" into a 
-        #   column vector, the default behavior of the sapply function.
-        workarea$d2mudt2 <- sapply(seq.int(workarea$nobs), function(i) {
-            # Cross partials of thetaU and thetaG
-            crossPartials.UG <- structure(workarea$deldG[,i], dim = c(1L, G@np)) * workarea$P[i]
+        # The result of the following will be a matrix with a row for 
+        #   every observation. Each row is the hessian matrix for
+        #   that observation, "stretched out" into a column vector.
+        ELR2 <- 0.0
+        workarea$d2mudt2 <- t(vapply(seq.int(workarea$nobs), function(i) {
+            # Cross partials of thetaU and thetaG: 10x1 %*% 1x2 = 10x2
+            crossPartials.ELRG <- t(workarea$deldG[i, ])
             # Cross partials of thetaG and thetaG
-            crossPartials.GG <- workarea$u[i] * 
-                                del(G@d2Gdt2, workarea$Age.from[i], workarea$Age.to[i], thetaG)
-            rbind(c(0, crossPartials.UG),
-                  cbind(t(crossPartials.UG), crossPartials.GG))
-            })
+            crossPartials.GG <- workarea$u[i] * del(G@d2Gdt2, workarea$Age.from[i], workarea$Age.to[i], workarea$thetaG)
+            c(rbind(c(ELR2, crossPartials.ELRG),
+                    cbind(t(crossPartials.ELRG), crossPartials.GG)))
+            }, vector("double", length(theta)^2)))
+
+
         }
     )
 
@@ -1280,41 +1299,39 @@ MU.CapeCod <- new("dfunction",
 R.LDF <- new("dfunction",
     # theta    = vector of parameters: U followed by omega and theta
     # G        = growth function (eg, loglogistic or weibull)
-    # workarea = environment where intermediate values are stored
-    function(theta, G, from, to){#, workarea) {
-        K      <- length(theta) - G@np
-        K1     <- seq.int(K)
-        thetaU <- theta[K1]
-        thetaG <- theta[seq.int(length = G@np, to = length(theta))]
-        thetaU * del(G, from, to, thetaG )
+    # from = age from after which losses are unpaid
+    # to   = "ultimate" age. Could be a scalar
+    # oy       = vector of origin years indices for selecting entries in thetaU
+    function(theta, G, from, to, oy){
+        lent   <- length(theta)
+        thetaU <- theta[1L:(K <- lent - G@np)]
+        thetaG <- theta[(K+1):lent]
+        thetaU[oy] * del(G, from, to, thetaG)
         },
-    dfdx = function(theta, G, from, to){#, workarea) {
+    dfdx = function(theta, G, from, to, oy){
         # R is a vector valued function (think "column matrix").
-        # Taking the partials adds a new dimension ... put at beginning.
-        # So dR is a matrix valued function where nrows=length(theta)
-        #   and ncol = nrow(R)
-        K      <- length(theta) - G@np
-        K1     <- seq.int(K)
-        thetaU <- theta[K1]
-        thetaG <- theta[seq.int(length = G@np, to = length(theta))]
+        # Taking the partials adds a new dimension ... put at beginning
+        #   with rows corresponding to the parameters.
+        # So dR is a matrix valued function where ncols=length(from)
+        #   and nrow = length(theta)
+        # 'to' can be a scalar (e.g., maxage)
+        if (length(to)<2L) to <- rep(to, length.out=length(from))
+        if (length(to)!=length(from)) stop("Unequal 'from', 'to'")
+        lent   <- length(theta)
+        thetaU <- theta[1L:(K <- lent - G@np)]
+        thetaG <- theta[(K+1):lent]
         # dR
         # |A 0 0 . 0 | A: partial of R_ay wrt thetaU
         # |0 A 0 . . | B: partial of R_ay wrt thetaG
         # |0 0 .   . |
         # |. . . A 0 |
         # |0 0 . 0 A |
-        # |B . . . B |
-        ##A <- diag(del(G, from, to, thetaG))
-        ##B <- del(G@dGdt, from, to, thetaG) %*% thetaU
-        ##  del(G@dGdt, from, to, thetaG) is a nrow(Table65) x G@np matrix --
-        ##      a row for each origin year in Table65, a column for each
-        ##      parameter in the new derivative dimension
-        ##  thetaU is a vector of estimated ultimates corresponding to
-        ##      each origin year being projected; it has length=nrow(Table65)
+        # |B B ... B |
+        ##  Number of rows (~ parameters) is fixed
+        ##  Number of columns (~ origin years) can vary
         rbind(
-            diag(delG<-del(G, from, to, thetaG), length(delG)),
-            # c to remove dim
-            (c(G@dGdt(to, thetaG)) - G@dGdt(from, thetaG)) * rep(thetaU, each=G@np)
+            del(G, from, to, thetaG) * outer(oy, 1L:K, `==`),
+            t(thetaU[oy] * del(G@dGdt, from, to, thetaG))
             )
         },
     d2fdx2 = NULL # not needed at this point
@@ -1323,27 +1340,32 @@ R.LDF <- new("dfunction",
 R.CapeCod <- new("dfunction",
     # theta    = vector of parameters: U followed by omega and theta
     # G        = growth function (eg, loglogistic or weibull)
-    # workarea = environment where intermediate values are stored
-    function(theta, Premium, G, from, to){#, workarea) {
-        ELR    <- theta[1L]
-        thetaG <- theta[seq.int(length = G@np, to = length(theta))]
+    # from = age from after which losses are unpaid
+    # to   = "ultimate" age. Could be a scalar
+    # oy       = vector of origin years indices for selecting entries in thetaU
+    function(theta, Premium, G, from, to){
+        ELR         <- theta[1L]
+        thetaG      <- theta[2L:length(theta)]
         ELR * Premium * del(G, from, to, thetaG )
         },
-    dfdx = function(theta, Premium, G, from, to){#, workarea) {
+    dfdx = function(theta, Premium, G, from, to){
         # R is a vector valued function (think "column matrix").
-        # Taking the partials adds a new dimension ... put at beginning.
-        # So dR is a matrix valued function where nrows=length(theta)
-        #   and ncol = nrow(R)
-        ELR    <- theta[1L]
-        thetaG <- theta[seq.int(length = G@np, to = length(theta))]
+        # Taking the partials adds a new dimension ... put at beginning
+        #   with rows corresponding to the parameters.
+        # So dR is a matrix valued function where ncols=length(from)
+        #   and nrow = length(theta)
+        # 'to' can be a scalar (e.g., maxage)
+        if (length(to)<2L) to <- rep(to, length.out=length(from))
+        if (length(to)!=length(from)) stop("Unequal 'from', 'to'")
+        ELR         <- theta[1L]
+        thetaG      <- theta[2L:length(theta)]
         # dR
-        # |A A A . A | A: partial of R_ay wrt ELR
-        # |B . . . B | B: partial of R_ay wrt thetaG
-        # |B . . . B | 
-        ##  Columns ~ origin years, Rows ~ parameters
+        # |A| A: partial of R_ay wrt ELR
+        # |B| B: partial of R_ay wrt thetaG
+        ##  Rows ~ origin years (variable), columns ~ parameters (fixed)
         rbind(
-            ELR=Premium * del(G, from, to, thetaG),
-            del(G@dGdt, from, rep(to, length(from)), thetaG) * rep(ELR * Premium, each=G@np)
+            ELR = Premium * del(G, from, to, thetaG),
+            t(ELR * Premium * del(G@dGdt, from, to, thetaG))
             )
         },
     d2fdx2 = NULL # not needed at this point

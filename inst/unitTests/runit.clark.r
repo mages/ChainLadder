@@ -201,4 +201,18 @@ test.LDFMethod.adol_FALSE_ageSpecified <- function() {
 test.LDFMethod.adol_FALSE_origin.widthSpecified <- function() {
     checkException(ClarkLDF(GenIns, adol=FALSE, origin.width=1))
     }
+    
+test.dR_works_as_designed_LDF <- function() {
+    y <- ClarkLDF(GenIns, maxage=20)
+    # Make sure vcov works, dim(dR) is conformable, and matrix multiplication
+    #   yields the correct result
+    checkEquals(sqrt(diag(t(y$dR) %*% vcov(y) %*% y$dR)), y$Table65$ParameterSE[1:10])
+    }
+    
+test.dR_works_as_designed_CapeCod <- function() {
+    y <- ClarkCapeCod(GenIns, Premium=1000000, maxage=20)
+    # Make sure vcov works, dim(dR) is conformable, and matrix multiplication
+    #   yields the correct result
+    checkEquals(sqrt(diag(t(y$dR) %*% vcov(y) %*% y$dR)), y$Table65$ParameterSE[1:10])
+    }
 
