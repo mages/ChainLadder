@@ -82,9 +82,10 @@ plot.triangle <- function(x,t="b",xlab="dev. period",ylab=NULL, lattice=FALSE,..
     }
 }
 
-print.triangle <- function(x,...){
-    print.simple.list(x,...)
-}
+print.triangle <- function(x, ...) {
+    class(x) <- tail(class(x), -1)
+    NextMethod(x, ...)
+    }
 
 .as.MatrixTriangle <- function(x, origin="origin", dev="dev", value="value"){
     ## x has to be a data.frame with columns: origin, dev and value
