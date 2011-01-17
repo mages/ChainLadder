@@ -43,7 +43,7 @@ Y <- ClarkCapeCod(x, Premium=10000000+400000*0:9, maxage=240)
 round(vcov(Y),6) ## Compare to matrix on p. 69 of Clark's paper
 
 # The estimates of the loglogistic parameters
-tail(Y$par, 2)
+Y$THETAG
 # The standard errors of the estimated parameters
 sqrt(tail(diag(vcov(Y)), 2))
 
@@ -51,14 +51,15 @@ sqrt(tail(diag(vcov(Y)), 2))
 # according to the formula on p. 54 of Clark's paper. For example, for
 # the 5th accident year, pre- and post-multiply the covariance matrix
 # by a matrix consisting of the gradient entries for just that accident year
-dR5 <- matrix(Y$dR[, 5], ncol=1)
-sqrt(t(dR5) \%*\% vcov(Y) \%*\% dR5) ## compares to 314,829 in Clark's paper
+FVgrad5 <- matrix(Y$FutureValueGradient[, 5], ncol=1)
+sqrt(t(FVgrad5) \%*\% vcov(Y) \%*\% FVgrad5) ## compares to 314,829 in Clark's paper
 
 # The estimated reserves for accident year 5:
-Y$Table65$EstimatedReserves[5]   ## compares to 2,046,646 in the paper
+Y$FutureValue[5]   ## compares to 2,046,646 in the paper
 
-# The parameter risk CV for all accident years in total (10.6% in paper):
-sqrt(sum(t(Y$dR) \%*\% vcov(Y) \%*\% Y$dR)) / Y$Table65$EstimatedReserves[11]
+# Recalculate the parameter risk CV for all accident years in total (10.6% in paper):
+sqrt(sum(t(Y$FutureValueGradient) \%*\% vcov(Y) \%*\% Y$FutureValueGradient)) / 
+    Y$Total$FutureValue
 
 }
 
