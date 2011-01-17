@@ -104,33 +104,64 @@ reasonableness of the model relative to the actual data
 
 }
 \value{
-A \code{list} of class "clark" with the following components:
+A \code{list} of class "ClarkLDF" with the components listed below.
+("Key" to naming convention: all caps represent parameters;
+mixed case represent origin-level amounts;
+all-lower-case represent observation-level (origin, development age) results.)
+
     \item{method}{"LDF"}
     \item{growthFunction}{name of the growth function}
-    \item{Table65}{ the table of losses, standard errors and CVs as shown
-    on p. 65 of the paper}
-    \item{Table64}{ the table of ages, growth function values, LDFs,
-    truncated LDFs, "ultimate" losses, and "reserves" as shown on p. 64 
-    of the paper}
-    \item{par}{ the estimated parameters}
-    \item{sigma2}{ the sigma-squared "scale parameter"}
-    \item{LDF}{the "to-ultimate" loss development factor
-    (sometimes called the "cumulative development factor")
-    as defined in Clark's paper}
-    \item{dR}{the gradient of the reserves function evaluated at the 
-    parameter solution point}
-    \item{origin}{ rownames(Triangle) from the "long format" of \code{Triangle}}
-    \item{age}{ colnames(Triangle) from the "long format" of \code{Triangle}}
-    \item{fitted}{ the expected values (the "mu's") of the incremental losses}
-    \item{residuals}{ the difference between the actual and fitted values}
-    \item{stdresid}{ the standardized residuals 
-    = residuals/sqrt(sigma2*fitted)
-    (referred to as "normalized residuals" in the paper; see p. 62)}
+    \item{Origin}{names of the rows of the triangle}
+    \item{CurrentValue}{the most mature value for each row}
+    \item{CurrentAge}{the most mature "age" for each row}
+    \item{CurrentAge.used}{the most mature age used; differs from "CurrentAge"
+        when adol=TRUE}
+    \item{MAXAGE}{same as 'maxage' argument}
+    \item{MAXAGE.USED}{the maximum age for development 
+        from the average date of loss; 
+        differs from MAXAGE when adol=TRUE}
+    \item{FutureValue}{the projected loss amounts ("Reserves" in Clark's paper)}
+    \item{ProcessSE}{the process standard error of the FutureValue}
+    \item{ParameterSE}{the parameter standard error of the FutureValue}
+    \item{StdError}{the total standard error (process + parameter) 
+        of the FutureValue}
+    \item{Total}{a \code{list} with amounts that appear on the "Total" row
+        for components "Origin" (="Total"), "CurrentValue", "FutureValue",
+        "ProcessSE", "ParameterSE", and "StdError"}
+    \item{PAR}{the estimated parameters}
+    \item{THETAU}{the estimated parameters for the "ultimate loss" by 
+        origin year ("U" in Clark's notation)}
+    \item{THETAG}{the estimated parameters of the growth function}
+    \item{GrowthFunction}{value of the growth function as of the 
+        CurrentAge.used}
+    \item{GrowthFunctionMAXAGE}{value of the growth function as of the
+        MAXAGE.used}
+    \item{SIGMA2}{the estimate of the sigma^2 parameter}
+    \item{Ldf}{the "to-ultimate" loss development factor
+        (sometimes called the "cumulative development factor")
+        as defined in Clark's paper for each origin year}
+    \item{LdfMAXAGE}{the "to-ultimate" loss development factor as of 
+        the maximum age used in the model}
+    \item{TruncatedLdf}{the "truncated" loss development factor for developing
+        the current diagonal to
+        the maximum age used in the model}
+    \item{FutureValueGradient}{the gradient of the FutureValue function}
+    \item{origin}{the origin year corresponding to each observed value of incremental loss}
+    \item{age}{the age of each observed value of incremental loss}
+    \item{fitted}{the expected value of each observed value of incremental loss 
+        (the "mu's" of Clark's paper)}
+    \item{residuals}{the actual minus fitted value for 
+        each observed incremental loss}
+    \item{stdresid}{ the standardized residuals for 
+        each observed incremental loss
+        (= residuals/sqrt(sigma2*fitted), 
+        referred to as "normalized residuals" in Clark's paper; see p. 62)}
     \item{FI}{the "Fisher Information" matrix as defined in Clark's paper
     (i.e., without the sigma^2 value)}
-    \item{value}{the value of the loglikelihood function at the solution}
+    \item{value}{the value of the loglikelihood function at the solution point}
     \item{counts}{the number of calls to the loglikelihood function
-    and its gradient function to achieve numerical convergence}
+        and its gradient function when numerical convergence was achieved}
+
 }
 \references{
 Clark, David R., 
