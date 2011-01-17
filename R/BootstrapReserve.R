@@ -4,6 +4,7 @@
 
 BootChainLadder <- function(Triangle, R = 999, process.distr=c("gamma", "od.pois")){
 
+  
   if(!'matrix' %in% class(Triangle))
     Triangle <- as.matrix(Triangle)
   
