@@ -4,121 +4,124 @@
 
 BootChainLadder <- function(Triangle, R = 999, process.distr=c("gamma", "od.pois")){
 
-    process.distr <- match.arg(process.distr)
-    weights <- 1/Triangle
+  if(!'matrix' %in% class(Triangle))
+    Triangle <- as.matrix(Triangle)
+  
+  process.distr <- match.arg(process.distr)
+  weights <- 1/Triangle
+  
+  triangle <- Triangle
+  if(nrow(triangle) < ncol(triangle))
+    stop("Number of origin periods has to be equal or greater then the number of development periods.\n")
+  
+  triangle <- checkTriangle(Triangle)
+  output.triangle <- triangle
+  
+  m <- dim(triangle)[1]
+  n <- dim(triangle)[2]
+  origins <- c((m-n+1):m)
+  
+  ## Obtain the standard chain-ladder development factors from cumulative data.
 
-    triangle <- Triangle
-    if(nrow(triangle) < ncol(triangle))
- 	stop("Number of origin periods has to be equal or greater then the number of development periods.\n")
+  triangle <- array(triangle, dim=c(m,n,1))
+  weights <-  array(weights, dim=c(m,n,1))
+  inc.triangle <- getIncremental(triangle)
+  Latest <- getLatest(inc.triangle)[origins]
+  
+  ## Obtain cumulative fitted values for the past triangle by backwards
+  ## recursion, starting with the observed cumulative paid to date in the latest
+  ## diagonal
+  
+  dfs <- getIndivDFs(triangle)
+  avDFs <- getAvDFs(dfs, 1/weights)
+  ultDFs <- getUltDFs(avDFs)
+  ults <- getUltimates(Latest, ultDFs)
+  ## Obtain incremental fitted values, m^ ij, for the past triangle by differencing.
+  exp.inc.triangle <- getIncremental(getExpected(ults, 1/ultDFs))
+  ## exp.inc.triangle[is.na(inc.triangle[,,1])] <- NA
+  exp.inc.triangle[is.na(inc.triangle[origins,,1])] <- NA
+  ## Calculate the unscaled Pearson residuals for the past triangle using:
+  inc.triangle <- inc.triangle[origins,,]
+  dim(inc.triangle) <- c(n,n,1)
+  unscaled.residuals  <- (inc.triangle - exp.inc.triangle)/sqrt(abs(exp.inc.triangle))
+  
+  ## Calculate the Pearson scale parameter
+  nobs  <- sum(1:n)
+  scale.factor <- (0.5*n*(n+1)-2*n+1)
+  scale.phi <- sum(unscaled.residuals^2,na.rm=TRUE)/scale.factor
+  ## Adjust the Pearson residuals using
+  adj.resids <- unscaled.residuals * sqrt(nobs/scale.factor)
+  
+  
+  ## Sample incremental claims
+  ## Resample the adjusted residuals with replacement, creating a new
+  ## past triangle of residuals.
+  
+  simClaims <- randomClaims(exp.inc.triangle, adj.resids, R)
+  
+  ## Fit the standard chain-ladder model to the pseudo-cumulative data.
+  ## Project to form a future triangle of cumulative payments.
 
-    triangle <- checkTriangle(Triangle)
-    output.triangle <- triangle
-
-    m <- dim(triangle)[1]
-    n <- dim(triangle)[2]
-    origins <- c((m-n+1):m)
-
-    ## Obtain the standard chain-ladder development factors from cumulative data.
-
-    triangle <- array(triangle, dim=c(m,n,1))
-    weights <-  array(weights, dim=c(m,n,1))
-    inc.triangle <- getIncremental(triangle)
-    Latest <- getLatest(inc.triangle)[origins]
-
-    ## Obtain cumulative fitted values for the past triangle by backwards
-    ## recursion, starting with the observed cumulative paid to date in the latest
-    ## diagonal
-
-    dfs <- getIndivDFs(triangle)
-    avDFs <- getAvDFs(dfs, 1/weights)
-    ultDFs <- getUltDFs(avDFs)
-    ults <- getUltimates(Latest, ultDFs)
-    ## Obtain incremental fitted values, m^ ij, for the past triangle by differencing.
-    exp.inc.triangle <- getIncremental(getExpected(ults, 1/ultDFs))
-    ## exp.inc.triangle[is.na(inc.triangle[,,1])] <- NA
-    exp.inc.triangle[is.na(inc.triangle[origins,,1])] <- NA
-    ## Calculate the unscaled Pearson residuals for the past triangle using:
-    inc.triangle <- inc.triangle[origins,,]
-    dim(inc.triangle) <- c(n,n,1)
-    unscaled.residuals  <- (inc.triangle - exp.inc.triangle)/sqrt(abs(exp.inc.triangle))
-
-    ## Calculate the Pearson scale parameter
-    nobs  <- sum(1:n)
-    scale.factor <- (0.5*n*(n+1)-2*n+1)
-    scale.phi <- sum(unscaled.residuals^2,na.rm=TRUE)/scale.factor
-    ## Adjust the Pearson residuals using
-    adj.resids <- unscaled.residuals * sqrt(nobs/scale.factor)
-
-
-    ## Sample incremental claims
-    ## Resample the adjusted residuals with replacement, creating a new
-    ## past triangle of residuals.
-
-    simClaims <- randomClaims(exp.inc.triangle, adj.resids, R)
-
-    ## Fit the standard chain-ladder model to the pseudo-cumulative data.
-    ## Project to form a future triangle of cumulative payments.
-
-    ## Perform chain ladder projection
-    simLatest <- getLatest(simClaims)
-    simCum <- makeCumulative(simClaims)
-    simDFs <- getIndivDFs(simCum)
-    simWghts <- simCum
-    simAvDFs <- getAvDFs(simDFs, simWghts)
-    simUltDFs <- getUltDFs(simAvDFs)
-    simUlts <- getUltimates(simLatest, simUltDFs)
-    ## Get expected future claims
-    ## Obtain the corresponding future triangle of incremental payments by
-    ## differencing, to be used as the mean when simulating from the process
-    ## distribution.
-
-    simExp <- getIncremental(getExpected(simUlts, 1/simUltDFs))
-    simExp[!is.na(simClaims)] <- NA
-
-    if(process.distr=="gamma")
-        processTriangle <-  apply(simExp,c(1,2,3), function(x)
-                                  ifelse(is.na(x), NA, sign(x)*rgamma(1, shape=abs(x/scale.phi), scale=scale.phi)))
-    if(process.distr=="od.pois")
-        processTriangle <-  apply(simExp,c(1,2,3), function(x)
-                                  ifelse(is.na(x), NA, sign(x)*rpois.od(1, abs(x), scale.phi)))
-    ##if(process.distr=="od.nbionm")
-    ##  processTriangle <-  apply(simExp,c(1,2,3), function(x)
-    ##          ifelse(is.na(x), NA, sign(x)*rnbinom.od(1, mu=abs(x), size=sqrt(1+abs(x)),d=scale.phi)))
-
-
-    processTriangle[is.na(processTriangle)] <- 0
-
-
-    IBNR.Triangles <- processTriangle
-    IBNR <- getLatest(IBNR.Triangles)
-    if(m>n){
-        IBNR <- apply(IBNR, 3, function(x) c(rep(0, m-n),x))
-        dim(IBNR) <- c(m,1,R)
-        IBNR.Triangles <- apply(IBNR.Triangles,3, function(x) rbind(matrix(0,m-n,n),x))
-        dim(IBNR.Triangles) <- c(m,n,R)
-
-        simClaims <- apply(simClaims,3, function(x) rbind(matrix(0,m-n,n),x))
-        dim(simClaims) <- c(m,n,R)
-    }
-
-    IBNR.Totals <- apply(IBNR.Triangles,3,sum)
-
-    residuals <- adj.resids
-
-    output <- list( call=match.call(expand.dots = FALSE),
-                   Triangle=output.triangle,
-                   f=as.vector(avDFs),
-                   simClaims=simClaims,
-                   IBNR.ByOrigin=IBNR,
-                   IBNR.Triangles=IBNR.Triangles,
-                   IBNR.Totals = IBNR.Totals,
-                   ChainLadder.Residuals=residuals,
-                   process.distr=process.distr,
-                   R=R)
-
-    class(output) <- c("BootChainLadder", class(output))
-    return(output)
-
+  ## Perform chain ladder projection
+  simLatest <- getLatest(simClaims)
+  simCum <- makeCumulative(simClaims)
+  simDFs <- getIndivDFs(simCum)
+  simWghts <- simCum
+  simAvDFs <- getAvDFs(simDFs, simWghts)
+  simUltDFs <- getUltDFs(simAvDFs)
+  simUlts <- getUltimates(simLatest, simUltDFs)
+  ## Get expected future claims
+  ## Obtain the corresponding future triangle of incremental payments by
+  ## differencing, to be used as the mean when simulating from the process
+  ## distribution.
+  
+  simExp <- getIncremental(getExpected(simUlts, 1/simUltDFs))
+  simExp[!is.na(simClaims)] <- NA
+  
+  if(process.distr=="gamma")
+    processTriangle <-  apply(simExp,c(1,2,3), function(x)
+                              ifelse(is.na(x), NA, sign(x)*rgamma(1, shape=abs(x/scale.phi), scale=scale.phi)))
+  if(process.distr=="od.pois")
+    processTriangle <-  apply(simExp,c(1,2,3), function(x)
+                              ifelse(is.na(x), NA, sign(x)*rpois.od(1, abs(x), scale.phi)))
+  ##if(process.distr=="od.nbionm")
+  ##  processTriangle <-  apply(simExp,c(1,2,3), function(x)
+  ##          ifelse(is.na(x), NA, sign(x)*rnbinom.od(1, mu=abs(x), size=sqrt(1+abs(x)),d=scale.phi)))
+  
+  
+  processTriangle[is.na(processTriangle)] <- 0
+  
+  
+  IBNR.Triangles <- processTriangle
+  IBNR <- getLatest(IBNR.Triangles)
+  if(m>n){
+    IBNR <- apply(IBNR, 3, function(x) c(rep(0, m-n),x))
+    dim(IBNR) <- c(m,1,R)
+    IBNR.Triangles <- apply(IBNR.Triangles,3, function(x) rbind(matrix(0,m-n,n),x))
+    dim(IBNR.Triangles) <- c(m,n,R)
+    
+    simClaims <- apply(simClaims,3, function(x) rbind(matrix(0,m-n,n),x))
+    dim(simClaims) <- c(m,n,R)
+  }
+  
+  IBNR.Totals <- apply(IBNR.Triangles,3,sum)
+  
+  residuals <- adj.resids
+  
+  output <- list( call=match.call(expand.dots = FALSE),
+                 Triangle=output.triangle,
+                 f=as.vector(avDFs),
+                 simClaims=simClaims,
+                 IBNR.ByOrigin=IBNR,
+                 IBNR.Triangles=IBNR.Triangles,
+                 IBNR.Totals = IBNR.Totals,
+                 ChainLadder.Residuals=residuals,
+                 process.distr=process.distr,
+                 R=R)
+  
+  class(output) <- c("BootChainLadder", class(output))
+  return(output)
+  
 }
 
 ############################################################################

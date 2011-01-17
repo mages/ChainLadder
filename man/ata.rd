@@ -39,7 +39,8 @@ A \code{matrix} with "smpl" and "vwtd" attributes.
 Daniel Murphy
 }
 \seealso{
-\code{\link{summary.ata}} and \code{\link{print.ata}}}
+  \code{\link{summary.ata}}, \code{\link{print.ata}} and \code{\link{chainladder}}
+}
 \examples{
 ata(GenIns)
 

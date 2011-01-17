@@ -71,6 +71,7 @@ chainladder(Triangle, weights = 1, delta = 1)
 %% ~Make other sections like Warning with \section{Warning }{....} ~
 
 \seealso{See also
+\code{\link{ata}},	
  \code{\link{predict.ChainLadder}}
  \code{\link{MackChainLadder}},  
 }
