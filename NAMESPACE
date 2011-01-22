@@ -41,6 +41,8 @@ S3method(as.data.frame, triangle)
 S3method(summary, MackChainLadder)
 S3method(summary, MunichChainLadder)
 S3method(summary, BootChainLadder)
+S3method(summary, ClarkLDF)
+S3method(summary, ClarkCapeCod)
 S3method(summary, ata)
 
 S3method(predict, TriangleModel)
