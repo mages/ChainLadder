@@ -1,5 +1,11 @@
-# LDF METHOD
+# runit.clark unit tests
 ## by Daniel Murphy
+##
+##  NOTE: For some reason which I can't understand, running Clark methods
+##  from the source 'clark.r' yields different results -- par, value, 
+##  counts, etc. -- than when the package has already been built.
+##  Therefore, the test values below are set after the ChainLadder
+##  package was successfully built.
 
 test.LDFMethod.GenIns <- function() {
     ## Check function's various options
@@ -17,9 +23,9 @@ test.LDFMethod.GenIns <- function() {
     x6 <- ClarkLDF(GenIns, maxage=20, adol.age=0.5) ## average dol at midyear -- s/b same as default
     checkEquals(tail(Table65(x6)$TotalCV, 1), 16.8, tolerance=.1)
     x7 <- ClarkLDF(GenIns, maxage=20, adol.age=0.75) ## average dol at end of Q3
-    checkEquals(tail(Table65(x7)$TotalCV, 1), 19.8, tolerance=.1)
+    checkEquals(tail(Table65(x7)$TotalCV, 1), 19.7, tolerance=.1)
     x8 <- ClarkLDF(GenIns, maxage=20, adol.age=0.25) ## average dol at end of Q1
-    checkEquals(tail(Table65(x8)$TotalCV, 1), 15.9, tolerance=.1)
+    checkEquals(tail(Table65(x8)$TotalCV, 1), 15.8, tolerance=.1)
     x9 <- ClarkLDF(GenIns, maxage=20, adol.age=0)
     checkEquals(tail(Table65(x9)$TotalCV, 1), 15.6, tolerance=.1) ## should be same as when adol=FALSE
     }
@@ -42,7 +48,7 @@ test.LDFMethod.GenIns.Months <- function() {
     x <- ClarkLDF(X, maxage=240, adol.age=6) ## average dol at midyear -- same as default
     checkEquals(tail(Table65(x)$TotalCV, 1), 16.8, tolerance=.1)
     x <- ClarkLDF(X, maxage=240, adol.age=9) ## average dol at end of Q3
-    checkEquals(tail(Table65(x)$TotalCV, 1), 19.8, tolerance=.1)
+    checkEquals(tail(Table65(x)$TotalCV, 1), 19.6, tolerance=.1)
     x <- ClarkLDF(X, maxage=240, adol.age=3) ## average dol at end of Q1
     checkEquals(tail(Table65(x)$TotalCV, 1), 15.8, tolerance=.1)
     x <- ClarkLDF(X, maxage=240, adol.age=0)
@@ -57,18 +63,18 @@ test.LDFMethod.GenIns.1stEvalMidYear <- function() {
     checkEquals(tail(Table65(x)$TotalCV, 1), 18.1, tolerance=.1)
     checkEquals(Table64(x)$AgeUsed[1], 234) # was 234.25
     x <- ClarkLDF(X, maxage=Inf)
-    checkEquals(tail(Table65(x)$TotalCV, 1), 30.8, tolerance=.1)
+    checkEquals(tail(Table65(x)$TotalCV, 1), 31.4, tolerance=.1)
     x <- ClarkLDF(X, maxage=240, adol=FALSE)
     checkEquals(tail(Table65(x)$TotalCV, 1), 19.8, tolerance=.1)
     x <- ClarkLDF(X, maxage=Inf, G="weibull")
-    checkEquals(tail(Table65(x)$TotalCV, 1), 22.3, tolerance=.1)
+    checkEquals(tail(Table65(x)$TotalCV, 1), 26.7, tolerance=.1)
     x <- ClarkLDF(X, maxage=240, G="weibull")
-    checkEquals(tail(Table65(x)$TotalCV, 1), 19.9, tolerance=.1)
+    checkEquals(tail(Table65(x)$TotalCV, 1), 21.3, tolerance=.1)
     ## Test adol.age option. 
     x <- ClarkLDF(X, maxage=240, adol.age=9) ## average dol at end of Q3
-    checkEquals(tail(Table65(x)$TotalCV, 1), 18.7, tolerance=.1)
+    checkEquals(tail(Table65(x)$TotalCV, 1), 18.9, tolerance=.1)
     x <- ClarkLDF(X, maxage=240, adol.age=3) ## average dol at end of Q1
-    checkEquals(tail(Table65(x)$TotalCV, 1), 18.7, tolerance=.1)
+    checkEquals(tail(Table65(x)$TotalCV, 1), 18.6, tolerance=.1)
     x <- ClarkLDF(X, maxage=240, adol.age=0)
     checkEquals(tail(Table65(x)$TotalCV, 1), 19.8, tolerance=.1) ## should be same as when adol=FALSE
     }
@@ -89,7 +95,7 @@ test.LDFMethod.WideOriginPeriod <- function() {
 test.LDFMethod.quarterly_observations_of_annual_periods <- function() {
     X <- qincurred
     x <- ClarkLDF(X)
-    checkEquals(tail(Table65(x)$TotalCV, 1), 133.1, tolerance=.1)
+    checkEquals(tail(Table65(x)$TotalCV, 1), 131.9, tolerance=.1)
     }
 
 # CAPE COD
@@ -99,7 +105,7 @@ test.CCMethod.GenIns <- function() {
     X <- GenIns
     colnames(X) <- 12*as.numeric(colnames(X))
     x  <- ClarkCapeCod(X, Premium=10000000+400000*0:9, maxage=240)
-    checkEquals(tail(Table65(x)$TotalCV, 1), 11.6, tolerance=.1)
+    checkEquals(tail(Table65(x)$TotalCV, 1), 11.4, tolerance=.1)
     }
 
 test.CCMethod.qincurred <- function() {
@@ -109,20 +115,20 @@ test.CCMethod.qincurred <- function() {
 
 test.CCMethod.PremiumRepeated <- function() {
     x <- ClarkCapeCod(GenIns, Premium=1000000, maxage=20)
-    checkEquals(tail(Table65(x)$TotalCV, 1), 12.0, tolerance=.1)
+    checkEquals(tail(Table65(x)$TotalCV, 1), 11.8, tolerance=.1)
     checkEquals(any(is.na(Table68(x)$Premium[-1L])), FALSE)
     }
 
 test.CCMethod.RecyclePremium <- function() {
     x <- ClarkCapeCod(GenIns, Premium=1000000*1:3, maxage=20) ## warning issued
-    checkEquals(tail(Table65(x)$TotalCV, 1), 23.1, tolerance=.1)
+    checkEquals(tail(Table65(x)$TotalCV, 1), 22.7, tolerance=.1)
     # Table68$Premium should be 1:3 recycled 3 times, then 1:
     checkEquals(Table68(x)$Premium[2:11], c(rep(1000000*1:3, 3), 1000000))
     }
 
 test.CCMethod.RepeatPremium <- function() {
     x <- ClarkCapeCod(GenIns, Premium=1000000, maxage=20)
-    checkEquals(tail(Table65(x)$TotalCV, 1), 12.0, tolerance=.1)
+    checkEquals(tail(Table65(x)$TotalCV, 1), 11.8, tolerance=.1)
     # Prior to fix, Premium column contained NAs
     checkEquals(any(is.na(Table68(x)$Premium[-1L])), FALSE)
     }
@@ -131,12 +137,12 @@ test.CCMethod.RepeatPremium <- function() {
 
 test.LDFMethod.OneRowTriangle <- function() {
     x <- ClarkLDF(GenIns[1,,drop=FALSE], maxage=20)
-    checkEquals(tail(Table65(x)$TotalCV, 1), 48.5, tolerance=.1)
+    checkEquals(tail(Table65(x)$TotalCV, 1), 48.6, tolerance=.1)
     }
 
 test.CCMethod.OneRowTriangle <- function() {
     x <- ClarkCapeCod(GenIns[1,,drop=FALSE], Premium=1000000, maxage=20)
-    checkEquals(tail(Table65(x)$TotalCV, 1), 48.5, tolerance=.1)
+    checkEquals(tail(Table65(x)$TotalCV, 1), 47.4, tolerance=.1)
     }
 
 # TEST EXCEPTIONS = Catch-able errors
@@ -202,18 +208,18 @@ test.LDFMethod.adol_FALSE_origin.widthSpecified <- function() {
     checkException(ClarkLDF(GenIns, adol=FALSE, origin.width=1))
     }
     
-test.dR_works_as_designed_LDF <- function() {
+test.FutureValueGradient_works_as_designed_LDF <- function() {
     y <- ClarkLDF(GenIns, maxage=20)
-    # Make sure vcov works, dim(dR) is conformable, and matrix multiplication
+    # Make sure vcov works, dim(FutureValueGradient) is conformable, and matrix multiplication
     #   yields the correct result
-    checkEquals(sqrt(diag(t(y$dR) %*% vcov(y) %*% y$dR)), Table65(y)$ParameterSE[1:10])
+    checkEquals(sqrt(diag(t(y$FutureValueGradient) %*% vcov(y) %*% y$FutureValueGradient)), Table65(y)$ParameterSE[1:10])
     }
     
-test.dR_works_as_designed_CapeCod <- function() {
+test.FutureValueGradient_works_as_designed_CapeCod <- function() {
     y <- ClarkCapeCod(GenIns, Premium=1000000, maxage=20)
     # Make sure vcov works, dim(dR) is conformable, and matrix multiplication
     #   yields the correct result
-    checkEquals(sqrt(diag(t(y$dR) %*% vcov(y) %*% y$dR)), Table65(y)$ParameterSE[1:10])
+    checkEquals(sqrt(diag(t(y$FutureValueGradient) %*% vcov(y) %*% y$FutureValueGradient)), Table65(y)$ParameterSE[1:10])
     }
 
 test.correct_SummaryLDF_comparison <- function() {
@@ -222,7 +228,7 @@ test.correct_SummaryLDF_comparison <- function() {
     yinf<-ClarkLDF(RAA)
     zinf <- summary(yinf)
     #   yields the correct result
-    checkTrue(all((zinf[["LDF"]] > z20[["LDF"]])[1:10]))
+    checkTrue(all((zinf[["Ldf"]] > z20[["Ldf"]])[1:10]))
     }
 
 test.correct_SummaryCapeCod_comparison <- function() {
@@ -233,4 +239,32 @@ test.correct_SummaryCapeCod_comparison <- function() {
     yInf <- ClarkCapeCod(X, Premium=10000000+400000*0:9, maxage=Inf)
     zInf <- summary(yInf)
     checkTrue(all((zInf[["FutureGrowthFactor"]] > z240[["FutureGrowthFactor"]])[1:10]))
+    }
+
+test.class_returned_by_print.ClarkLDF <- function() {
+    x <- ClarkLDF(RAA)
+    z <- print(x)
+    y <- sapply(z, class)
+    checkTrue(all(y == "character"))
+    }
+
+test.class_returned_by_print.ClarkCapeCod <- function() {
+    x <- ClarkCapeCod(RAA, Premium=25000)
+    z <- print(x)
+    y <- sapply(z, class)
+    checkTrue(all(y == "character"))
+    }
+
+test.zero_expected_value <- function() {
+    # Create a new environment, store ages we know will 
+    #   evaluate to 100% under a weibull growth function
+    #   with parameters THETAG=(1,1).
+    env <- new.env()
+    env$Age.from <- 108
+    env$Age.to <- 120
+    # pretend there's one origin year
+    env$origin <- 1
+    env$value <- 1
+    x <- ChainLadder:::LL.ODP(c(1,1,1), ChainLadder:::MU.LDF, ChainLadder:::weibull, env) # should not blow up
+    checkTrue(x < 0)
     }
