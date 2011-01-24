@@ -379,7 +379,7 @@ ClarkLDF <- function(Triangle,
                 StdError = totalr.sum * magscale
                 ),
             PAR = c(unclass(S$par)) * c(rep(magscale, K), rep(1, G@np)),
-            THETAU = thetaU,
+            THETAU = thetaU * magscale,
             THETAG = thetaG,
             GrowthFunction = g,
             GrowthFunctionMAXAGE = g.maxage,
