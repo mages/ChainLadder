@@ -756,14 +756,16 @@ ClarkCapeCod <- function(Triangle,
     }
 
 summary.ClarkLDF <- function(object, ...) {
+    origin <- c(object$Origin, object$Total$Origin)
     data.frame(
-        Origin = c(object$Origin, object$Total$Origin),
+        Origin = origin,
         CurrentValue = c(object$CurrentValue, object$Total$CurrentValue),
         Ldf = c(object$TruncatedLdf, NA),
         UltimateValue = c(object$UltimateValue, object$Total$UltimateValue),
         FutureValue = c(object$FutureValue, object$Total$FutureValue),
         StdError = c(object$StdError, object$Total$StdError),
         CV = c(object$StdError, object$Total$StdError) / c(object$FutureValue, object$Total$FutureValue),
+        row.names = origin,
         stringsAsFactors = FALSE
         )
     }
@@ -784,8 +786,9 @@ print.ClarkLDF <- function(x, Amountdigits=0, LDFdigits=3, CVdigits=3, row.names
     }
 
 summary.ClarkCapeCod <- function(object, ...) {
+    origin <- c(object$Origin, object$Total$Origin)
     data.frame(
-        Origin = c(object$Origin, object$Total$Origin),
+        Origin = origin,
         CurrentValue = c(object$CurrentValue, object$Total$CurrentValue),
         Premium = c(object$Premium, object$Total$Premium),
         ELR = c(rep(object$ELR, length(object$Premium)), NA),
@@ -794,6 +797,7 @@ summary.ClarkCapeCod <- function(object, ...) {
         UltimateValue = c(object$UltimateValue, object$Total$UltimateValue),
         StdError = c(object$StdError, object$Total$StdError),
         CV = c(object$StdError, object$Total$StdError) / c(object$FutureValue, object$Total$FutureValue),
+        row.names = origin,
         stringsAsFactors = FALSE
         )
     }
