@@ -63,7 +63,7 @@ ClarkLDF <- function(Triangle,
     if (ncol(Triangle) < 4L) stop("matrix must have at least 4 columns")
 
     dev <- as.numeric(colnames(Triangle))
-    if (any(is.na(dev))) stop("non-'age' column name(s)")
+    if (length(dev)<1 | any(is.na(dev))) stop("non-'age' column name(s)")
     if (any(dev[-1L]<=head(dev, -1L))) stop("ages must be strictly increasing")
     if (tail(dev, 1L) > maxage[1L]) stop("'maxage' must not be less than last age in triangle")
     
@@ -440,7 +440,7 @@ ClarkCapeCod <- function(Triangle,
         }
 
     dev <- as.numeric(colnames(Triangle))
-    if (any(is.na(dev))) stop("non-'age' column name(s)")
+    if (length(dev)<1 | any(is.na(dev))) stop("non-'age' column name(s)")
     if (any(dev[-1L]<=head(dev, -1L))) stop("ages must be strictly increasing")
     if (tail(dev, 1L) > maxage[1L]) stop("'maxage' must not be less than last age in triangle")
     
@@ -578,7 +578,7 @@ ClarkCapeCod <- function(Triangle,
     # AY DETAIL LEVEL
 
     # Expected value of reserves
-    R <- R.CapeCod(theta, Premium, G, CurrentAge.to, maxage)#, workarea)
+    R <- R.CapeCod(theta, Premium, G, CurrentAge.used, maxage.used)#, workarea)
     g <- G(CurrentAge.used, thetaG)
     g.maxage <- G(maxage.used, thetaG)
     ldf <- 1 / g
@@ -802,7 +802,7 @@ summary.ClarkCapeCod <- function(object, ...) {
         )
     }
 
-print.ClarkCapeCod <- function(x, Amountdigits=0, ELRdigits=3, Gdigits=3, CVdigits=3, row.names=FALSE, ...) {
+print.ClarkCapeCod <- function(x, Amountdigits=0, ELRdigits=3, Gdigits=4, CVdigits=3, row.names=FALSE, ...) {
     y <- summary(x)
     z <- structure(data.frame(y[1], 
         format(round(y[[2]], Amountdigits), big.mark=",", scientific=FALSE), 
