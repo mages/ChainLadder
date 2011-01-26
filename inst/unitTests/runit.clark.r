@@ -105,7 +105,7 @@ test.CCMethod.GenIns <- function() {
     X <- GenIns
     colnames(X) <- 12*as.numeric(colnames(X))
     x  <- ClarkCapeCod(X, Premium=10000000+400000*0:9, maxage=240)
-    checkEquals(tail(Table65(x)$TotalCV, 1), 11.4, tolerance=.1)
+    checkEquals(tail(Table65(x)$TotalCV, 1), 11.5, tolerance=.005) # tightened tolerance 2011/1/25 DMM
     }
 
 test.CCMethod.qincurred <- function() {
@@ -131,6 +131,13 @@ test.CCMethod.RepeatPremium <- function() {
     checkEquals(tail(Table65(x)$TotalCV, 1), 11.8, tolerance=.1)
     # Prior to fix, Premium column contained NAs
     checkEquals(any(is.na(Table68(x)$Premium[-1L])), FALSE)
+    }
+
+test.Table68_FutureValue_Equal <- function() {
+    X <- GenIns
+    colnames(X) <- 12*as.numeric(colnames(X))
+    x  <- ClarkCapeCod(X, Premium=10000000+400000*0:9, maxage=240)
+    checkTrue(all(x$FutureValue==Table68(x)$FutureValue[2:11]))
     }
 
 # ONE-ROW "TRIANGLES"
