@@ -153,7 +153,7 @@ ClarkLDF <- function(Triangle,
     
     # "prime" 'workarea' with initial data
     workarea$origin   <- Table1.1$origin # origin year (index) of the observation
-    workarea$io <- outer(workarea$origin, 1:nr, `==`) # T/F flag: is obs in origin year=column #?
+    workarea$io <- outer(workarea$origin, 1:nr, `==`) # T/F flag: is obs in origin year=column
     workarea$value    <- as.numeric(Table1.1$value)
     workarea$Age.from <- Table1.1$Age.from
     workarea$Age.to   <- Table1.1$Age.to
@@ -525,7 +525,7 @@ ClarkCapeCod <- function(Triangle,
     
     # "prime" workarea with initial data
     workarea$origin   <- Table1.1$origin # origin year (index) of the observation
-    workarea$io <- outer(1:nr, workarea$origin, `==`) # T/F flag: is obs in origin year=column #?
+    workarea$io <- outer(workarea$origin, 1:nr, `==`) # not used for CC, but leave in anyway
     workarea$value    <- as.numeric(Table1.1$value)
     workarea$P        <- Table1.1$P
     workarea$Age.from <- Table1.1$Age.from
