@@ -1,6 +1,6 @@
 # Clark method from 2003 eForum paper
 # Author: Daniel Murphy
-# Date: October 31, 2010
+# Date: October 31, 2010 - 2011
 # Includes:
 #   LDF and Cape Cod methods
 #   Two growth functions -- loglogistic and weibull
@@ -34,6 +34,7 @@
 #       Reserve Functions
 #           LDF Method
 #           Cape Cod Method
+require(actuar) # for its fast loglogistic function!
 
 ClarkLDF <- function(Triangle,
         cumulative = TRUE,
@@ -1009,11 +1010,7 @@ setClass("GrowthFunction",
 
 G.loglogistic <- function(x, theta) {
     if (any(theta <= 0)) return(rep(0, length(x)))
-    om <- unname(theta[1L])
-    th <- unname(theta[2L])
-    y <- 1/(1+(th/x)^om)
-    y[is.na(y)] <- 0
-    y
+    pllogis(x, shape = theta[1], scale = theta[2])
     }
 
 dG.loglogisticdtheta <- function(x, theta) {
@@ -1021,53 +1018,39 @@ dG.loglogisticdtheta <- function(x, theta) {
         if (length(x) > 1L) array(0, dim = c(2L, length(x)))
         else numeric(2L)
         )
-    om <- theta[1L]
-    th <- theta[2L]
-    thx <- th/x
-    y <- 1/(1+(thx)^om)
-    xth <- 1/thx
-    dydom <- y / (xth^om + 1) * log(xth)
-    tom <- th^om
-    dydth <- y * tom / (x^om + tom) * (-om / th)
-    # Sandwich columns together.
-    dtheta <- cbind(dydom, dydth)
-    # If x <= 0, Inf, derivative = 0 by definition  (log returns NA)
-    dtheta[is.na(dtheta)] <- 0
-    dtheta
+    y <- pllogis(x, shape = theta[1], scale = theta[2])
+    y1y <- y * (1-y)
+    logxtheta <- log(x/theta[2])
+    dy <- structure(
+        cbind(
+            y1y * logxtheta,
+            -y1y * theta[1] / theta[2]
+            ),
+        dimnames = list(names(x), names(theta))
+        )
+    dy[is.na(dy)] <- 0
+    dy
     }
 
 d2G.loglogisticdtheta2 <- function(x, theta) {
     if (any(theta <= 0)) return(
         array(0, dim = if (length(x) > 1L) c(length(x), 4L) else c(2L, 2L))
         )
-    om <- theta[1L]
-    th <- theta[2L]
-    thx <- th/x
-    y <- 1/(1+(thx)^om)
-    tom <- th^om
-    xth <- 1/thx
-
-    dydom <- y / (xth^om + 1) * log(xth)
-    dydth <- y * tom / (x^om + tom) * (-om / th)
-
-    d2ydom2 <- dydom * log(xth) * (1 - 2 * y)
-    d2ydth2 <- -dydth / th * (1 + om * (1 - 2 * y))
-    d2ydomdth <- 1/om * dydth * (1 + om * log(xth) * (1 - 2*y))
-
-    ndx <- x<=0 | is.infinite(x)
-    d2ydom2[ndx] <- 0
-    d2ydth2[ndx] <- 0
-    d2ydomdth[ndx] <- 0
-    
-    if (length(x)>1L)
-        # Create a matrix where each column holds an observation's
-        #   d2 matrix "stretched out" into a vector of length 4
-        cbind(d2ydom2, d2ydomdth, d2ydomdth, d2ydth2)
-    else array(
-        c(d2ydom2, d2ydomdth, d2ydomdth, d2ydth2),
-        dim = c(2L, 2L),
-        dimnames=list(names(theta), names(theta))
-        )
+    y <- pllogis(x, shape = theta[1], scale = theta[2])
+    y1y <- y * (1-y)
+    oneMinus2y <- 1 - 2 * y
+    logxtheta <- log(x/theta[2])
+    dyomega <- y1y * logxtheta
+    A <- dyomega * logxtheta * oneMinus2y
+    B <- -y1y / theta[2] * (1 + theta[1] * logxtheta * oneMinus2y)
+    C <- y1y * theta[1] / theta[2]^2 * (1 + theta[1] * oneMinus2y)
+    d2y <- if (length(x)>1L) structure(cbind(A, B, B, C), dimnames = list(
+                names(x),
+                outer(names(theta), names(theta), paste, sep=":")))
+           else array(c(A, B, B, C), dim = c(2L, 2L), dimnames = list(
+                names(theta), names(theta)))
+    d2y[is.na(d2y)] <- 0
+    d2y
     }
 
 loglogistic <- new("GrowthFunction", 
