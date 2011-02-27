@@ -47,7 +47,7 @@ MunichChainLadder <- function(Paid, Incurred,
 
     for(s in c(1:n)){
  	myQModel[[s]] <- lm(Paid[1:(n-s+1),s] ~ Incurred[1:(n-s+1),s] + 0,
-                            weight=1/Incurred[1:(n-s+1),s])
+                            weights=1/Incurred[1:(n-s+1),s])
 
         q.f[s] <- summary(myQModel[[s]])$coef[1]
 	rhoI.sigma[s] <- summary(myQModel[[s]])$sigma
@@ -60,7 +60,7 @@ MunichChainLadder <- function(Paid, Incurred,
 
     for(s in c(1:n)){
         myQinverseModel[[s]] <- lm(Incurred[1:(n-s+1),s] ~ Paid[1:(n-s+1),s] + 0,
-                                   weight=1/Paid[1:(n-s+1),s])
+                                   weights=1/Paid[1:(n-s+1),s])
 
 	qinverse.f[s] = summary(myQinverseModel[[s]])$coef[1]
 	rhoP.sigma[s] = summary(myQinverseModel[[s]])$sigma
