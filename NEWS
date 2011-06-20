@@ -1,24 +1,26 @@
 Version 0.1.4-4
 ================
 Changes
-  o Updates to the internal MunichChainLadder function to reflect more
-    rigours checks by R for function arguments (introduced by R 2.13.0)
+  o Minor changes to reflect a more rigours package build process for
+    R >= 2.14.0
+  o Start up message uses now packageStartupMessage rather than cat to
+    allow the message to be suppressed.
 
 Version 0.1.4-3
 ================
 NEW FEATURES
 
   o ClarkLDF and ClarkCapeCod functions were reorganized to clarify
-  the delivery and presentation of the methods' results
+    the delivery and presentation of the methods' results
 	- Individual components now contain distinct values within
-	  Clark's methodologies
+	  Clark's methodologies 
 	- 'summary' methods produce "reports" that display results in
-	  the form of typical loss development and Bornhuetter-Ferguson
-	  exhibits
+   	  the form of typical loss development and Bornhuetter-Ferguson
+    	  exhibits
 	- "Table" functions now produce the results as shown in the
-  	  tables on pp. 64, 65 and 68 of Clark's paper
+	  tables on pp. 64, 65 and 68 of Clark's paper
 	- A 'vcov' method produces the covariance matrix of the
-	  estimated parameters
+    	  estimated parameters
   o An 'ata' function exists to calculate the "age-to-age" development
     factors of a loss "triangle", as well as the simple and volume
     weighted averages
@@ -34,6 +36,7 @@ BUG FIXES
     calculations were to be based on the average date of loss (argument
     adol=TRUE). The underlying calculations used the correct adol
     adjustment, only the printed output was incorrect.
+
 
 Version 0.1.4-1
 ================
@@ -53,12 +56,11 @@ NEW FEATURES
   o Additional values (in lists) returned by Clark's methods:
 	- FI = Fisher Information matrix as Clark defines it in his
 	  paper (i.e., without the sigma^2 value)
-
 	- dR = the gradient of the reserves function evaluated at the
-          optimal parameter values
+	  optimal parameter values
 	- value = value of the loglikelihood function at the solution
 	- counts = number of evaluations of the loglikelihood and its
-          derivative before convergence
+	  derivative before convergence
 
   o Fine-tuning of maximum likelihood numerical algorithm's control
     parameters

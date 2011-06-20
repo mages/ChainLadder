@@ -398,7 +398,7 @@ if(getRversion() < "2.9.0") { ## work around missing feature
                cap=0.05,
                add=TRUE)
 
-        matplot(t(.FullTriangle), t="l",
+        matplot(t(.FullTriangle), type="l",
                 main="Chain ladder developments by origin period",
                 xlab="Development period",
                 ylab="Amount", #paste(Currency, myUnit)
