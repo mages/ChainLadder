@@ -11,6 +11,9 @@ incr2cum <- function(Triangle, na.rm=FALSE){
     }
     cum <- t(apply(Triangle,1, cumsum))
     dimnames(cum) <- dimnames(Triangle)
+    expos <- attr(Triangle,"exposure")
+    if (!is.null(expos))
+      attr(cum,"exposure") <- expos
     class(cum) <- c("triangle", "matrix")
     cum
 }
@@ -19,6 +22,9 @@ incr2cum <- function(Triangle, na.rm=FALSE){
 cum2incr <- function(Triangle){
     incr <- cbind(Triangle[,1], t(apply(Triangle,1,diff)))
     dimnames(incr) <- dimnames(Triangle)
+    expos <- attr(Triangle,"exposure")
+    if (!is.null(expos))
+      attr(incr,"exposure") <- expos    
     class(incr) <- c("triangle", "matrix")
     incr
 }

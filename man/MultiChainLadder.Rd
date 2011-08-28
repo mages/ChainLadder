@@ -91,7 +91,7 @@ In using the multivariate method, one often specifies separate chain ladder for 
 
  }
 
-\author{ Wayne (Yanwei) Zhang \email{actuaryzhang@uchicago.edu}} 
+\author{ Wayne Zhang \email{actuary_zhang@hotmail.com}} 
 
 \seealso{See also \code{\link{MackChainLadder}}, \code{\link{MunichChainLadder}}, \code{\linkS4class{triangles}}, \code{\linkS4class{MultiChainLadder}}, \code{\link{summary,MultiChainLadder-method}} and  \code{\link{plot,MultiChainLadder,missing-method}}.
 }

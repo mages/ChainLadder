@@ -22,7 +22,7 @@ Objects can be created by calls of the form \code{new("MultiChainLadderMse", ...
 No methods defined with class "MultiChainLadderMse" in the signature.
 }
 
-\author{ Wayne (Yanwei) Zhang \email{actuaryzhang@uchicago.edu} }
+\author{ Wayne Zhang \email{actuary_zhang@hotmail.com} }
 \seealso{
 See Also  \code{\linkS4class{MultiChainLadder}} and \code{\link{Mse}}. 
 }

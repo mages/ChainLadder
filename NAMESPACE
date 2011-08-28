@@ -7,6 +7,7 @@ export(Join2Fits, JoinFitMse, Mse, residCov, residCor)
 export(ClarkLDF, ClarkCapeCod)
 export(Table64, Table65, Table68)
 export(ata)
+export(glmReserve)
 
 importFrom(stats, quantile, predict, coef, vcov,
               residuals, resid, fitted, fitted.values, rstandard)

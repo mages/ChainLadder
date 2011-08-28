@@ -25,7 +25,7 @@ residCor(object,...)
   \item{\dots}{ Currently not used. }
   }
 
-\author{ Wayne (Yanwei) Zhang \email{actuaryzhang@uchicago.edu} }
+\author{ Wayne Zhang \email{actuary_zhang@hotmail.com} }
 
 \seealso{See also  \code{\linkS4class{MultiChainLadder}}. }
 \keyword{methods}

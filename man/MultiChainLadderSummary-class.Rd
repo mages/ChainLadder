@@ -45,7 +45,7 @@ Objects can be created by calls of the form \code{new("MultiChainLadderSummary",
 	 }
 }
 
-\author{ Wayne (Yanwei) Zhang \email{actuaryzhang@uchicago.edu} }
+\author{ Wayne Zhang \email{actuary_zhang@hotmail.com} }
 
 
 
