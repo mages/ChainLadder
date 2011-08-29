@@ -1,6 +1,6 @@
 Package: ChainLadder
 Type: Package
-Title: Mack, Bootstrap, Munich, Multivariate-chain-ladder and Clark methods for insurance claims reserving
+Title: Mack, Bootstrap, Munich, Multivariate-chain-ladder, Clark methods and generalized linear models for insurance claims reserving
 Version: 0.1.4-4
 Date: 2011-06-20
 Author: Markus Gesmann, Wayne Zhang, Daniel Murphy

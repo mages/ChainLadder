@@ -16,7 +16,7 @@
   
   Since version 0.1.4-0 the package also includes the 
   "LDF Curve Fitting" methods of David Clark's paper 
-  in the 2003 CAS \emph{Forum}.
+  in the 2003 CAS \emph{Forum}. 
    
   The ChainLadder-package comes with an example spreadsheet which
   demonstrates how to use the \code{ChainLadder} 
