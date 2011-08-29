@@ -1,6 +1,5 @@
 .onLoad<- function(lib, pkg, ...)
 {
-    require(utils)
     packageStartupMessage(chainladderWelcomeMessage())
 
     invisible()

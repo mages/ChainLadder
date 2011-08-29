@@ -14,7 +14,7 @@ JoinFitMse(models, mse.models)
   \item{mse.models}{ output from a call to \code{Mse}, which is of class "MultiChainLadderMse". }
 }
 	
-\author{Wayne (Yanwei) Zhang \email{actuaryzhang@uchicago.edu}}
+\author{Wayne Zhang \email{actuary_zhang@hotmail.com}}
 
 \seealso{ See also \code{\link{MultiChainLadder}.}
 }

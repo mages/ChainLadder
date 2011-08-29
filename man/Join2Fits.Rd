@@ -17,7 +17,7 @@ Join2Fits(object1, object2)
   The inputs must be of class  "MultiChainLadder" because this function depends on the \code{model} slot to determine what kind of object is to be created and returned. If both objects have \code{"MCL"}, then an object of class "MCLFit" is created; if one has \code{"GMCL"} and one has \code{"MCL"}, then an object of class "GMCLFit" is created, where the one with \code{"GMCL"} is assumed to come from the first development periods; if both have \code{"GMCL"}, then an object of class "GMCLFit" is created. 
 
 }
-\author{Wayne (Yanwei) Zhang \email{actuaryzhang@uchicago.edu}}
+\author{Wayne Zhang \email{actuary_zhang@hotmail.com}}
 
 \seealso{ See also \code{\link{MultiChainLadder}}
 }

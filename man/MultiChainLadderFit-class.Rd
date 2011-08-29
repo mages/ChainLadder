@@ -43,7 +43,7 @@ For "GMCLFit", the following methods are defined:
 	 }
 }
 
-\author{ Wayne (Yanwei) Zhang \email{actuaryzhang@uchicago.edu} }
+\author{ Wayne Zhang \email{actuary_zhang@hotmail.com} }
 
 \seealso{See also \code{\link{Mse}}. }
 

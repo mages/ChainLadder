@@ -59,7 +59,7 @@ For the Mack approach in the MCL model, the cross-product term \eqn{\hat{\Sigma}
 
 \cite{Zhang Y (2010). Prediction error of the general multivariate chain ladder model.}
 }
-\author{Wayne (Yanwei) Zhang \email{actuaryzhang@uchicago.edu}}
+\author{Wayne Zhang \email{actuary_zhang@hotmail.com}}
 
 \seealso{ See also \code{\link{MultiChainLadder}.}
 }

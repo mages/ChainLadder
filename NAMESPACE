@@ -14,7 +14,7 @@ importFrom(stats, quantile, predict, coef, vcov,
 importFrom(methods, show, coerce, cbind2, rbind2 )
 importFrom(graphics, plot)
 importFrom(Matrix, summary)
-
+importFrom(utils, packageDescription)
 #Classes
 exportClasses(triangles, MultiChainLadder, MultiChainLadderFit,
               MCLFit, GMCLFit, MultiChainLadderMse, MultiChainLadderSummary,

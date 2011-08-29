@@ -43,7 +43,7 @@ Class \code{"\linkS4class{vector}"}, by class "list", distance 2.
 }
 }
 
-\author{ Wayne (Yanwei) Zhang \email{actuaryzhang@uchicago.edu}}
+\author{ Wayne Zhang \email{actuary_zhang@hotmail.com}}
 
 
 

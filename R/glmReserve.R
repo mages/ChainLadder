@@ -25,8 +25,8 @@ glmReserve <- function(triangle, var.power=1,link.power=0,
                 rep(0,nrow(lda)) else 
                 family$linkfun(rep(attr(tr.incr,"exposure"),
                                    as.numeric(table(lda$origin))))
-  ldaFit <- subset(lda,!is.na(value))
-  ldaOut <- subset(lda,is.na(value))
+  ldaFit <- subset(lda,!is.na(lda$value)) ## MG added lda$. Was this expected?
+  ldaOut <- subset(lda,is.na(lda$value)) ## MG added lda$. Was this expected?
    
   # fit the model
   glmFit <- glm(value~factor(origin)+factor(dev),

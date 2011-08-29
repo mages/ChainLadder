@@ -66,7 +66,7 @@ Class \code{"\linkS4class{MultiChainLadderMse}"}, directly.
 	 }
 }
 
-\author{ Wayne (Yanwei) Zhang \email{actuaryzhang@uchicago.edu} }
+\author{ Wayne Zhang \email{actuary_zhang@hotmail.com} }
 \seealso{
 	See also \code{\link{MultiChainLadder}},\code{\link{summary,MultiChainLadder-method}} and  \code{\link{plot,MultiChainLadder,missing-method}}.   
 }

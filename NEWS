@@ -1,10 +1,21 @@
+Version 0.1.5-0
+================
+NEW FEATURES
+
+   o New function glmReserve, which implements loss reserving models
+     within the generalized linear model framework following a paper by
+     England P. and Verrall R. (1999) 
+
+
 Version 0.1.4-4
 ================
 Changes
+
   o Minor changes to reflect a more rigours package build process for
     R >= 2.14.0
   o Start up message uses now packageStartupMessage rather than cat to
     allow the message to be suppressed.
+
 
 Version 0.1.4-3
 ================
@@ -28,7 +39,6 @@ NEW FEATURES
 
 Version 0.1.4-2
 ================
-
 BUG FIXES
 
   o The TruncatedGrowth function value under the Clark Cape Cod method
