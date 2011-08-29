@@ -77,21 +77,24 @@ glmReserve <- function(triangle, var.power=1,link.power=0,
                        
   if (mse.method %in% "bootstrap"){
     resMeanAyB <- matrix(0,length(resMeanAy),nsim)
-    resMeanTotB <- rep(0,length(resMeanAy))
+    resMeanTotB <- rep(0,nsim)
+    # loop nsim times 
     for (i in 1:nsim){      
       mu <- fitted(glmFit)
+      # while loop to avoid negative generated incremental loss
       ybad <- 1 
       while (ybad){
         rn <- sample(resid(glmFit,type="pearson"),nrow(ldaFit),replace=TRUE)
         yB <- rn * sqrt(family$variance(mu)) + mu
-        if (all(yB>0))  ybad <- 0 
+        if (all(yB>=0))  ybad <- 0 
       }
       glmFitB <-  glm(yB~factor(origin)+factor(dev),
               family=family,data=ldaFit,offset=offset,...)
       ypB <- predict(glmFitB,newdata=ldaOut,type="response")
       resMeanAyB[,i] <- as.numeric(tapply(ypB,ldaOut$origin, sum))
-      resMeanTotB[i] <- sum(resMeanAyB[i])
+      resMeanTotB[i] <- sum(resMeanAyB[,i])
     }
+    # compute estimation variance, adjusted by df 
     mseEstAy <- nrow(ldaFit)/df.residual(glmFit) * apply(resMeanAyB,1,var)
     mseEstTot <- nrow(ldaFit)/df.residual(glmFit) * var(resMeanTotB)
   }
@@ -106,11 +109,13 @@ glmReserve <- function(triangle, var.power=1,link.power=0,
                       Ultimate=Ultimate, IBNR=IBNR,
                       S.E=S.E, CV=CV)
 	row.names(resDf) <- c(as.character(sort(unique(ldaOut$origin))),"total")
-                      
+  
+  # produce fullly projected triangle
   ldaOut$value <- round(yp)
   FullTriangle <- as.triangle(rbind(ldaFit,ldaOut))
   if (cum)
     FullTriangle <- incr2cum(FullTriangle)
+  
   # output
   out <- c(list(call=call,summary=resDf,
                 Triangle=triangle,
