@@ -7,8 +7,8 @@
 
 chainladderWelcomeMessage <- function(){
 
-  paste("\nChainLadder version", packageDescription("ChainLadder")$Version,
-                   "by:\nMarkus Gesmann <markus.gesmann@gmail.com>",
+  paste("\nChainLadder version ", packageDescription("ChainLadder")$Version,
+                   " by:\nMarkus Gesmann <markus.gesmann@gmail.com>",
                    "\nWayne Zhang <actuary_zhang@hotmail.com>",
                    "\nDaniel Murphy <danielmarkmurphy@gmail.com>",
                    "\n\n",
