@@ -1,6 +1,13 @@
 Version 0.1.5-1
 ================
+Changes
 
+   o Internal changes to plot.MackChainLadder to pass new checks
+     introduced by R 2.14.0.
+   o Commented out unnecessary creation of 'io' matrix in ClarkCapeCod
+     function. Allows for analysis of very large matrices for CapeCod
+     without running out of RAM. 'io' matrix is an integral part of
+     ClarkLDF, and so remains in that function.   
 
 Version 0.1.5-0
 ================
