@@ -827,8 +827,8 @@ plot.clark <- function(x, ...) {
     #   3. fitted value (observe heteroscedasticity)
     # The y-values of the plots are the x$stdresid's
     # 4th plot shows results of normality test
-    par(mfrow=c(2,2),         # 4 plots on one page
-        oma = c(0, 0, 5, 0))  # outer margins necessary for page title
+    op <- par(mfrow=c(2,2),         # 4 plots on one page
+              oma = c(0, 0, 5, 0))  # outer margins necessary for page title
     #
     plot(x$origin,
         x$stdresid,ylab="standardized residuals",
@@ -863,23 +863,23 @@ plot.clark <- function(x, ...) {
     shap.p <- shapiro.test(sample(x$stdresid,N))
     shap.p.value <- round(shap.p$p.value,5)
     text(xmin, ymax - sprd, paste("Shapiro-Wilk p.value = ", shap.p.value, ".", sep=""), cex=.7, adj=c(0,0))
-    text(xmin, ymax - 2*sprd, paste(ifelse(shap.p.value<.05,"Should reject",
-                                              "Cannot reject"),
-                      "ODP hypothesis"), cex=.7, adj=c(0,0))
-    text(xmin, ymax - 3*sprd,expression(paste("at ",alpha," = .05 level.",sep="")), cex=.7, adj=c(0,0))
+#    text(xmin, ymax - 2*sprd, paste(ifelse(shap.p.value<.05,"Should reject",
+#                                              "Cannot reject"),
+#                      "ODP hypothesis"), cex=.7, adj=c(0,0))
+#    text(xmin, ymax - 3*sprd,expression(paste("at ",alpha," = .05 level.",sep="")), cex=.7, adj=c(0,0))
 
     # Finally, the overall title of the page of plots    
     mtext(
         paste(
-            "Clark Standardized Residuals\nMethod: ", 
-            x$method, 
+            "Standardized Residuals\nMethod: ", 
+            paste("Clark", x$method, sep=""), 
             "; Growth function: ", 
             x$growthFunction,
             sep=""), 
         outer = TRUE, 
         cex = 1.5
         )
-    par(mfrow=c(1,1))
+    par(op)
     }
 
 vcov.clark <- function(object, ...) {
@@ -1148,11 +1148,11 @@ weibull <- new("GrowthFunction",
         theta = max(env$Age.to, na.rm=TRUE) * (log(1/.05))^(-1/om) # 95% developed at current max age
         ),
     LBFGSB.lower = function(env) c(
-        omega = .01,
-        theta = min(env$Age.to) / ((-log(.Machine$double.eps))^(1/2)) # 2 = omega upper
+        omega = .01,                     # a small number -- must be positive
+        theta = sqrt(.Machine$double.eps)# a small number -- must be positive
         ),
     LBFGSB.upper = function(env) c(
-        omega = 2,#8,
+        omega = 2,# 8 -- too high an exponent can lead to overflows
         theta = 2 * max(env$Age.to)
         ),
     dGdt = dG.weibulldtheta,
