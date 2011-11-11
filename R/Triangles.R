@@ -116,7 +116,13 @@ print.triangle <- function(x, ...) {
 
 .as.LongTriangle <- function(Triangle, na.rm=FALSE){
     x <- Triangle
-    lx <- expand.grid(origin=as.numeric(dimnames(x)$origin), dev=as.numeric(dimnames(x)$dev))
+    .origin <- try(as.numeric(dimnames(x)$origin))
+    .dev <- try(as.numeric(dimnames(x)$dev))
+    if(any(is.na(c(.origin, .dev)))){
+      stop(paste("The origin and dev. period columns have to be of type numeric or a character",
+                 "which can be converted into numeric.\n"))
+    }
+    lx <- expand.grid(origin=.origin, dev=.dev)
     ##    lx <- expand.grid(origin=dimnames(x)$origin, dev=dimnames(x)$dev)
     lx$value <- as.vector(x)
     if(na.rm){

@@ -69,9 +69,11 @@ as.triangle(Triangle, origin="origin", dev="dev", value="value",...)
 \author{
   Markus Gesmann
 }
-%\note{
-%%  ~~further notes~~
-%}
+\section{Warning}{
+Please note that for the function \code{as.triangle} the origin and
+dev. period columns have to be of type numeric or a character which can be
+converted into numeric.
+}
 
 %% ~Make other sections like Warning with \section{Warning }{....} ~
 
