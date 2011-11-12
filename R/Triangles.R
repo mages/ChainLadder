@@ -79,7 +79,7 @@ plot.triangle <- function(x,t="b",xlab="dev. period",ylab=NULL, lattice=FALSE,..
     .x <- x
     class(.x) <- "matrix"
     if(!lattice){
-        matplot(t(.x),t=t,
+        matplot(t(.x),type=t,
                 xlab=xlab,
                 ylab=ifelse(is.null(ylab), deparse(substitute(x)), ylab),...)
     }else{

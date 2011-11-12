@@ -13,6 +13,7 @@ Changes
       - Restore 'par' settings upon exit
       - Slight change to the title
    o Reduced the minimum 'theta' boundary for weibull growth function
+   o Added warnings to as.triangle if origin dev. period are not numeric
    
 
 Version 0.1.5-0
