@@ -49,6 +49,7 @@ summary.ata <- function(object, digits=3, ...) {
 
     # Retain dimnames. Rownames appended with the two averages.
     dms <- dimnames(object)
+    if (is.null(dms[[1]])) dms[[1]] <- paste("[", 1:nrow(object), ",]", sep="")
     dms[[1]] <- c(dms[[1]] , "smpl", "vwtd")
         
     smpl <- attr(object, "smpl")
