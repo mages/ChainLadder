@@ -41,11 +41,11 @@ as.triangle.matrix <- function(Triangle, origin="origin", dev="dev", value="valu
  }
  names(dimnames(Triangle)) <- c(origin, dev)
 
- if(is.null(dimnames(Triangle)$origin)){
-     dimnames(Triangle)$origin <- 1:nrow(Triangle)
+ if(is.null(dimnames(Triangle)[[origin]])){
+     dimnames(Triangle)[[origin]] <- 1:nrow(Triangle)
  }
- if(is.null(dimnames(Triangle)$dev)){
-     dimnames(Triangle)$dev <- 1:col(Triangle)
+ if(is.null(dimnames(Triangle)[[dev]])){
+     dimnames(Triangle)[[dev]] <- 1:ncol(Triangle)
  }
 
 
