@@ -1,3 +1,11 @@
+Version 0.1.5-2
+================
+Bug Fixes
+   o as.triangle() gave triangles back, with development periods not 
+   	 ordered, when the input data frame had unordered development 
+   	 periods in different units, e.g. dev=c(1,100,10)
+     Thanks to Ben Escoto for reporting this issue.
+
 Version 0.1.5-1
 ================
 Changes

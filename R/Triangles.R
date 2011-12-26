@@ -96,22 +96,23 @@ print.triangle <- function(x, ...) {
 .as.MatrixTriangle <- function(x, origin="origin", dev="dev", value="value"){
     ## x has to be a data.frame with columns: origin, dev and value
     x <- x[,c(origin, dev, value)]
-    x <- x[order(x[origin], x[dev]),]
     names(x) <- c("origin", "dev", "value")
-    .names <- apply(x[,c("origin", "dev", "value")], 2, unique)
-    if(class(.names) != "list"){
-        .names <- as.list(as.data.frame(.names))
-    }
-    .namesOD <- .names[c("origin", "dev")]
-    ## Expand to include entire array, in case don't have complete data
-    .id <- paste(x$origin, x$dev,  sep='.')
-    .grid <- expand.grid(.namesOD)
-    .grid$id <- paste(.grid$origin, .grid$dev, sep='.')
-    .grid$data <- x$value[match(.grid$id, .id)]
-    ## Create data array
-    .data <- array(.grid$data, dim=unlist(lapply(.namesOD, length)),
-                   dimnames=.namesOD)
-    return(.data)
+    
+    z <- reshape(x, timevar="dev", v.names="value", idvar="origin", direction="wide")
+    
+    z <- z[order(z$origin), ]
+    
+    .origin.names <- z$origin
+     z <- z[,-1]
+    
+    names(z) <- gsub("value.", "",names(z))
+	.dev.names <- as.numeric(as.character(names(z)))	
+    z <- z[,order(.dev.names)]
+    
+    z<- as.matrix(z)
+    dimnames(z) <- list(origin=.origin.names, dev=sort(.dev.names))
+
+	return(z)
 }
 
 .as.LongTriangle <- function(Triangle, na.rm=FALSE){

@@ -34,3 +34,16 @@ test.tailfactor <- function () {
     tf <- ChainLadder:::tailfactor(clratios)$tail.factor
     checkEquals(tf, 1.050839, tolerance=1e-4)
 }
+
+
+test.asTriangles <- function () {
+	## Following a bug report by Ben Escoto
+	## In the old version as.triangle didn't work when development periods
+	## were in different units, e.g. 10's and 100's and not ordered
+	data(RAA)
+	dimnames(RAA)$dev <- c(1,1e1,1e2,1e3,1e4,1e5,1e6,1e7,1e8,1e9)
+	reverseRAA <- RAA[,10:1]
+	zRAA <- as.triangle(as.data.frame(reverseRAA,na.rm=TRUE))
+	any(dimnames(RAA)$dev==dimnames(zRAA)$dev)	
+	
+}

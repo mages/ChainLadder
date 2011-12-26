@@ -1,5 +1,5 @@
 Many thanks to all who provided ideas, suggestions, corrections and bug reports:
-     	 Nigel de Silva for all the ideas on how to use arrays effiecently,
+     Nigel de Silva for all the ideas on how to use arrays effiecently,
 	 Florian Leitenstorfer for a bug report on MackChainLadder,
 	 Beat Huggler for comments on MunichChainLadder,
 	 Daniel Murphy for comments on MackChainLadder,
@@ -9,3 +9,4 @@ Many thanks to all who provided ideas, suggestions, corrections and bug reports:
 	 Ben Escoto for providing a patch to a bug on returning latest incomplete triangle positions,
 	 Przemyslaw Sloma for reporting a bug in MackChainLadder,
 	 Ernesto Schirmacher for reporting a bug in residuals.MackChainLadder
+	 Ben Escoto for reporting a bug in as.triangle
