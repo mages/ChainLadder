@@ -342,7 +342,7 @@ print.MackChainLadder <- function(x,...){
     print(format(summary.x$ByOrigin, big.mark = ",", digits = 3),...)
 
     Totals <- summary.x$Totals
-    Totals[1:5,] <- formatC(Totals[1:5,], big.mark=",",digits=2,format="f")
+    Totals[1:6,] <- formatC(Totals[1:6,], big.mark=",",digits=2,format="f")
     cat("\n")
     print(Totals, quote=FALSE)
     #invisible(x)
