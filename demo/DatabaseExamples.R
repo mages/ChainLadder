@@ -133,4 +133,4 @@ writeDatabaseExampleResults <- function(data,tablename=NULL){
 writeDatabaseExampleResults(MackResultsByOrigin,
                             tablename=paste('T_ChainLadderResults', format(Sys.time(), "%Y %B %d %H:%M:%S")))
 
-## Now open the database where you will find the MackChainLadder output 
+## Now open the database where you will find the MackChainLadder output

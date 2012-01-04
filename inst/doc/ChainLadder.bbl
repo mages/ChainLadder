@@ -1,0 +1,174 @@
+\newcommand{\etalchar}[1]{$^{#1}$}
+\begin{thebibliography}{MDMMV10b}
+
+\bibitem[BN07]{BaierNeuwirth2007}
+Thomas Baier and Erich Neuwirth.
+\newblock Excel :: Com :: R.
+\newblock {\em Computational Statistics}, 22(1), April 2007.
+\newblock Physica Verlag.
+
+\bibitem[BN11]{rexcel}
+Thomas Baier and Erich Neuwirth.
+\newblock {\em RExcel and R(D)-COM server}.
+\newblock statconn, Vienna, Austria, version 3.2.2 edition, 2011.
+
+\bibitem[Cla03]{Clark2003}
+David~R. Clark.
+\newblock {\em {LDF} Curve-Fitting and Stochastic Reserving: A Maximum
+  Likelihood Approach}.
+\newblock Casualty Actuarial Society, 2003.
+\newblock CAS Fall Forum.
+
+\bibitem[DGP08]{DutangGouletPigeon2008}
+C~Dutang, V.~Goulet, and M.~Pigeon.
+\newblock actuar: An {R} package for actuarial science.
+\newblock {\em Journal of Statistical Software}, 25(7), 2008.
+
+\bibitem[DMPDD10]{Delignette-MullerPouillotDenisDutang2011}
+Marie~Laure Delignette-Muller, Regis Pouillot, Jean-Baptiste Denis, and
+  Christophe Dutang.
+\newblock {\em fitdistrplus: help to fit of a parametric distribution to
+  non-censored or censored data}, 2010.
+\newblock R package version 0.1-3.
+
+\bibitem[DS06]{DeSilva2006}
+Nigel De~Silva.
+\newblock An introduction to r: Examples for actuaries.
+\newblock \url{http://toolkit.pbwiki.com/RToolkit}, 2006.
+
+\bibitem[Esc11]{Escoto2011}
+Benedict Escoto.
+\newblock {\em favir: Formatted Actuarial Vignettes in R}, 0.5-1 edition,
+  January 2011.
+
+\bibitem[EV99]{EnglandVerrall1999}
+Peter England and Richard Verrall.
+\newblock Analytic and bootstrap estimates of prediction errors in claims
+  reserving.
+\newblock {\em Mathematics and Economics}, Vol. 25:281 -- 293, 1999.
+
+\bibitem[GBB{\etalchar{+}}09]{Gravelsons2009}
+Brian Gravelsons, Matthew Ball, Dan Beard, Robert Brooks, Naomi Couchman, Brian
+  Gravelsons, Charlie Kefford, Darren Michaels, Patrick Nolan, Gregory Overton,
+  Stephen Robertson-Dunn, Emiliano Ruffini, Graham Sandhouse, Jerome Schilling,
+  Dan Sykes, Peter Taylor, Andy Whiting, Matthew Wilde, and John Wilson.
+\newblock B12: Uk asbestos working party update 2009.
+\newblock
+  \url{http://www.actuaries.org.uk/research-and-resources/documents/b12-uk-asbestos-working-party-update-2009-5mb},
+  October 2009.
+\newblock Presented at the General Insurance Convention.
+
+\bibitem[GMZ12]{chainladder}
+Markus Gesmann, Dan Murphy, and Wayne Zhang.
+\newblock {\em ChainLadder: Mack-, Bootstrap and Munich-chain-ladder methods
+  for insurance claims reserving}, 2012.
+\newblock R package version 0.1.5-2.
+
+\bibitem[LS11]{LawsSchmid2011}
+Christopher~W. Laws and Frank~A. Schmid.
+\newblock {\em lossDev: Robust Loss Development Using MCMC}, 2011.
+\newblock R package version 3.0.0-1.
+
+\bibitem[Mac93]{Mack1993}
+Thomas Mack.
+\newblock Distribution-free calculation of the standard error of chain ladder
+  reserve estimates.
+\newblock {\em Astin Bulletin}, Vol. 23:213 -- 25, 1993.
+
+\bibitem[Mac99]{Mack1999}
+Thomas Mack.
+\newblock The standard error of chain ladder reserve estimates: Recursive
+  calculation and inclusion of a tail factor.
+\newblock {\em Astin Bulletin}, Vol. 29(2):361 -- 266, 1999.
+
+\bibitem[MDMMV10a]{MariaDoloresMartinezMiranda2011}
+Jens Perch~Nielsen Maria Dolores Martinez~Miranda and Richard Verrall.
+\newblock {\em Double Chain Ladder}.
+\newblock ASTIN, {C}olloqiua {M}adrid edition, 2010.
+
+\bibitem[MDMMV10b]{MariaDoloresMartinezMiranda2010}
+Jens Perch~Nielsen Maria Dolores Martinez~Miranda, Bent~Nielsen and Richard
+  Verrall.
+\newblock {\em Cash flow simulation for a model of outstanding liabilities
+  based on claim amounts and claim numbers}.
+\newblock CASS, September 2010.
+
+\bibitem[Mic02]{Michaels2002}
+Darren Michaels.
+\newblock {APH}: how the love carnal and silicone implants nearly destroyed
+  {L}loyd's (slides).
+\newblock
+  \url{http://www.actuaries.org.uk/research-and-resources/documents/aph-how-love-carnal-and-silicone-implants-nearly-destroyed-lloyds-s},
+  December 2002.
+\newblock Presented at the Younger Members' Convention.
+
+\bibitem[MSH{\etalchar{+}}06]{MaynardDeSilvaHollowayGesmannLauHarnett2006}
+Trevor Maynard, Nigel~De Silva, Richard Holloway, Markus Gesmann, Sie Lau, and
+  John Harnett.
+\newblock An actuarial toolkit. introducing {T}he {T}oolkit {M}anifesto.
+\newblock
+  \url{http://www.actuaries.org.uk/sites/all/files/documents/pdf/actuarial-toolkit.pdf},
+  2006.
+\newblock General Insurance Convention.
+
+\bibitem[Mur11]{Murphy2011}
+Dan Murphy.
+\newblock {\em mondate: Keep track of dates in terms of months}, 2011.
+\newblock R package version 0.9.8.24.
+
+\bibitem[Nic09]{Nichols2009}
+Luke Nichols.
+\newblock {\em Multimodel Inference for Reserving}.
+\newblock Australian Prudential Regulation Authority (APRA), December 2009.
+
+\bibitem[Orr07]{Orr2007}
+James Orr.
+\newblock {\em A Simple Multi-State Reserving Model}.
+\newblock ASTIN, {C}olloqiua {O}rlando edition, 2007.
+
+\bibitem[PR02]{EnglandVerrall2002}
+P.D.England and R.J.Verrall.
+\newblock Stochastic claims reserving in general insurance.
+\newblock {\em British Actuarial Journal}, 8:443--544, 2002.
+
+\bibitem[QM04]{Quarg2004}
+Gerhard Quarg and Thomas Mack.
+\newblock Munich chain ladder.
+\newblock Munich Re Group, 2004.
+
+\bibitem[Sch10]{Schirmacher2010}
+Ernesto Schirmacher.
+\newblock Reserve variability calculations, chain ladder, {R}, and {E}xcel.
+\newblock \url{http://www.casact.org/affiliates/cane/0910/schirmacher.pdf},
+  September 2010.
+\newblock Presentation at the Casualty Actuaries of {N}ew {E}ngland (CANE)
+  meeting.
+
+\bibitem[Sch11]{Schmidt2011}
+Klaus~D. Schmidt.
+\newblock A bibliography on loss reserving.
+\newblock \url{http://www.math.tu-dresden.de/sto/schmidt/dsvm/reserve.pdf},
+  2011.
+
+\bibitem[Spe11]{Spedicato2011}
+Giorgio~Alfredo Spedicato.
+\newblock {\em Introduction to lifecontingencies Package}.
+\newblock StatisticalAdvisor Inc, 0.0.4 edition, November 2011.
+
+\bibitem[Tea11]{Rdata}
+R~Development~Core Team.
+\newblock {\em R Data Import/Export}.
+\newblock R Foundation for Statistical Computing, 2011.
+\newblock ISBN 3-900051-10-0.
+
+\bibitem[Zha10]{Zhang2010a}
+Y.~Zhang.
+\newblock A general multivariate chain ladder model.
+\newblock {\em Insurance: Mathematics and Economics}, 46:588 -- 599, 2010.
+
+\bibitem[Zha11]{Zhang2011}
+Wayne Zhang.
+\newblock {\em cplm: Tweedie compound Poisson linear models}, 2011.
+\newblock R package version 0.4-1.
+
+\end{thebibliography}

@@ -1,0 +1,46 @@
+This is BibTeX, Version 0.99d (TeX Live 2011)
+Capacity: max_strings=35307, hash_size=35307, hash_prime=30011
+The top-level auxiliary file: ChainLadder.aux
+The style file: alpha.bst
+Database file #1: ChainLadder.bib
+You've used 28 entries,
+            2543 wiz_defined-function locations,
+            751 strings with 10261 characters,
+and the built_in function-call counts, 9555 in all, are:
+= -- 946
+> -- 498
+< -- 15
++ -- 171
+- -- 164
+* -- 643
+:= -- 1630
+add.period$ -- 90
+call.type$ -- 28
+change.case$ -- 169
+chr.to.int$ -- 27
+cite$ -- 28
+duplicate$ -- 350
+empty$ -- 658
+format.name$ -- 204
+if$ -- 1888
+int.to.chr$ -- 2
+int.to.str$ -- 0
+missing$ -- 7
+newline$ -- 150
+num.names$ -- 84
+pop$ -- 173
+preamble$ -- 1
+purify$ -- 206
+quote$ -- 0
+skip$ -- 304
+stack$ -- 0
+substring$ -- 348
+swap$ -- 42
+text.length$ -- 15
+text.prefix$ -- 14
+top$ -- 0
+type$ -- 224
+warning$ -- 0
+while$ -- 79
+width$ -- 33
+write$ -- 364

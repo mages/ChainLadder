@@ -1,0 +1,27 @@
+\BOOKMARK [1][-]{section.1}{Introduction}{}% 1
+\BOOKMARK [2][-]{subsection.1.1}{Claims reserving in insurance}{section.1}% 2
+\BOOKMARK [1][-]{section.2}{The ChainLadder package}{}% 3
+\BOOKMARK [2][-]{subsection.2.1}{Motivation}{section.2}% 4
+\BOOKMARK [2][-]{subsection.2.2}{Brief package overview}{section.2}% 5
+\BOOKMARK [2][-]{subsection.2.3}{Installation}{section.2}% 6
+\BOOKMARK [1][-]{section.3}{Using the ChainLadder package}{}% 7
+\BOOKMARK [2][-]{subsection.3.1}{Working with triangles}{section.3}% 8
+\BOOKMARK [3][-]{subsubsection.3.1.1}{Plotting triangles}{subsection.3.1}% 9
+\BOOKMARK [3][-]{subsubsection.3.1.2}{Transforming triangles between cumulative and incremental representation}{subsection.3.1}% 10
+\BOOKMARK [3][-]{subsubsection.3.1.3}{Importing triangles from external data sources}{subsection.3.1}% 11
+\BOOKMARK [3][-]{subsubsection.3.1.4}{Coping and pasting from MS Excel}{subsection.3.1}% 12
+\BOOKMARK [2][-]{subsection.3.2}{Chain-ladder methods}{section.3}% 13
+\BOOKMARK [3][-]{subsubsection.3.2.1}{Mack chain-ladder}{subsection.3.2}% 14
+\BOOKMARK [3][-]{subsubsection.3.2.2}{Bootstrap chain-ladder}{subsection.3.2}% 15
+\BOOKMARK [3][-]{subsubsection.3.2.3}{Munich chain-ladder}{subsection.3.2}% 16
+\BOOKMARK [2][-]{subsection.3.3}{Multivariate chain-ladder}{section.3}% 17
+\BOOKMARK [2][-]{subsection.3.4}{Clark's methods}{section.3}% 18
+\BOOKMARK [3][-]{subsubsection.3.4.1}{Clark's Cap Cod method}{subsection.3.4}% 19
+\BOOKMARK [3][-]{subsubsection.3.4.2}{Clark's LDF method}{subsection.3.4}% 20
+\BOOKMARK [2][-]{subsection.3.5}{Generalised linear model methods}{section.3}% 21
+\BOOKMARK [1][-]{section.4}{Further resources}{}% 22
+\BOOKMARK [2][-]{subsection.4.1}{Other insurance related R packages}{section.4}% 23
+\BOOKMARK [2][-]{subsection.4.2}{Presentations}{section.4}% 24
+\BOOKMARK [2][-]{subsection.4.3}{Further reading}{section.4}% 25
+\BOOKMARK [1][-]{section.5}{Training and consultancy}{}% 26
+\BOOKMARK [1][-]{section*.4}{References}{}% 27

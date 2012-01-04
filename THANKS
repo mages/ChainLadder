@@ -1,12 +1,11 @@
 Many thanks to all who provided ideas, suggestions, corrections and bug reports:
-     Nigel de Silva for all the ideas on how to use arrays effiecently,
-	 Florian Leitenstorfer for a bug report on MackChainLadder,
-	 Beat Huggler for comments on MunichChainLadder,
-	 Daniel Murphy for comments on MackChainLadder,
-	 Mark Hoffmann for a bug report on MackChainLadder,
-	 Christophe Dutang for ideas and code on utility functions to deal with triangles,
-	 Stefan Pohl for comments on tail factors with MunichChainLadder,
-	 Ben Escoto for providing a patch to a bug on returning latest incomplete triangle positions,
-	 Przemyslaw Sloma for reporting a bug in MackChainLadder,
-	 Ernesto Schirmacher for reporting a bug in residuals.MackChainLadder
-	 Ben Escoto for reporting a bug in as.triangle
+     Nigel de Silva for all the ideas on how to use arrays effiecently
+     Florian Leitenstorfer for a bug report on MackChainLadder
+     Beat Huggler for comments on MunichChainLadder
+     Daniel Murphy for comments on MackChainLadder
+     Mark Hoffmann for a bug report on MackChainLadder
+     Christophe Dutang for ideas and code on utility functions to deal with triangles
+     Stefan Pohl for comments on tail factors with MunichChainLadder
+     Ben Escoto for providing a patch to a bug on returning latest incomplete triangle positions
+     Przemyslaw Sloma for reporting a bug in MackChainLadder
+     Ernesto Schirmacher for reporting a bug in residuals.MackChainLadder
