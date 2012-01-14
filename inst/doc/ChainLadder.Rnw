@@ -14,21 +14,19 @@
 \usepackage{hyperref}
 
 \hypersetup{
-  colorlinks=true,
+  colorlinks=true, pagebackref=true,
   pdftitle={ChainLadder: Claims reserving with R},%
   pdfauthor={Markus Gesmann}%, Dan Murphy, Wayne Zhang},%
 }
-
 %\VignetteIndexEntry{ChainLadder: Claims reserving with R}
+% \VignetteDepends{ChainLadder}
+%\VignetteKeywords{Claims, reserving, IBNR, chain ladder, stochastic reserving, statistical software}
+%\VignettePackage{ChainLadder}
 
 \SweaveOpts{engine=R, eps=FALSE, keep.source = TRUE}
 <<options, echo=FALSE>>=
 options(prompt = "R> ", digits = 4, show.signif.stars = FALSE)
 @
-
-
-%\keywords{Claims, reserving, IBNR, chain ladder, 
-%stochastic reserving, statistical software, \proglang{R}}
 
 \setlength{\parindent}{0.0in}
 \setlength{\parskip}{2mm}
@@ -117,44 +115,44 @@ Reserving Seminar at the Institute of Actuaries in 2007 and 2008,
 followed by talks at Casualty Actuarial Society (CAS)  meetings joined
 by Dan Murphy in 2008 and Wayne Zhang in 2010.  
 
-Implementing reserving methods in R has several advantages, as it provides:
+ Implementing reserving methods in R has several advantages, as it provides:
 
-\begin{itemize}
+ \begin{itemize}
 
-\item Rich language for statistical modelling and data manipulations
-  allowing fast prototyping  
+ \item Rich language for statistical modelling and data manipulations
+   allowing fast prototyping  
   
-\item Very active user base, which publishes many extension
- 
-\item Many interfaces to data bases and other applications, such as MS
-  Excel
+ \item Very active user base, which publishes many extension
+
+ \item Many interfaces to data bases and other applications, such as MS
+   Excel
   
-\item Established framework for documentation and testing 
+ \item Established framework for documentation and testing 
 
-\item Works well with existing tools for version control 
+ \item Works well with version control tools 
 
-\item Code is written in plain text files, allowing effective knowledge
-  transfer 
+ \item Code is written in plain text files, allowing effective knowledge
+   transfer 
 
-\item Easy to collaborate over the internet
+ \item Easy to collaborate over the internet
 
-\item Built in functions to create reproducible research
-  reports\footnote{For an example see the project: Formatted Actuarial Vignettes in
-    R, \url{http://www.favir.net/}}
+ \item Built in functions to create reproducible research
+   reports\footnote{For an example see the project: Formatted Actuarial Vignettes in
+     R, \url{http://www.favir.net/}}
 
-\item In combination with other tools such as  {\LaTeX} and Sweave
-  easy to set up automated reporting
+ \item In combination with other tools such as  {\LaTeX} and Sweave
+   easy to set up automated reporting
 
-\item Academic research often first available in R  
+ \item Academic research is often first implemented in R  
     
-\end{itemize}
+ \end{itemize}
 
 
 \subsection{Brief package overview}
 This vignette will give the reader a brief overview of the functionallity of 
 the \chainladder package. The functions are discussed and explained in 
 more detail in the repective help files and examples. The help files contain 
-also the reference to the research papers on which the methods are based. 
+the references to the research papers on which the methods are based. 
 
 The \chainladder package has implementations of the Mack-, Munich- and 
 Boot\-strap chain-ladder methods~\cite{Mack1993}, \cite{Mack1999}, 
@@ -173,27 +171,22 @@ The package offers also some utility functions to convert quickly
 tables into triangles, triangles into tables, cumulative into
 incremental and incremental into cumulative triangles. 
 
-Further, the \chainladder package comes with an example spreadsheet which
-demonstrates how to use the \chainladder functions in Excel with
-RExcel~\cite{rexcel}. The  spreadsheet is located in the Excel folder
-of the package. The R command 
-<<eval=FALSE>>=
-system.file("Excel", package="ChainLadder") 
-@ 
-will tell you the exact path to the directory. To use the spreadsheet you will need the
-RExcel-Add-in~\cite{BaierNeuwirth2007}. The package also provides an
-example SWord~\cite{BaierNeuwirth2007} file,  demonstrating how the
-the functions of the package can be integrated into a MS Word file via
-SWord. Again you find the Word file via the command: 
-<<eval=FALSE>>=
-system.file("SWord", package="ChainLadder") 
-@ 
-
-The package comes with several demos to provide you with an overview
-of the package functionality, see
+A set of demos is shipped with the packages and the list of demos
+names is available via: 
 <<eval=FALSE>>=
 demo(package="ChainLadder")
 @ 
+and can be executed via
+<<eval=FALSE>>=
+library(ChainLadder)
+demo("demo name")
+@
+
+Further, the \chainladder package comes with example files, which
+demonstrates how to the \chainladder functions can be embedded in
+Excel and Word using the \href{http://rcom.univie.ac.at/}{statconn}
+interface\cite{BaierNeuwirth2007}. 
+
 For more information and examples see the project web site:
 \url{http://code.google.com/p/chainladder/}
 
@@ -218,11 +211,13 @@ cat(ChainLadder:::chainladderWelcomeMessage())
 
 \subsection{Working with triangles}
 
-Historical insurance data is often presented in form of a triangle structure.
-Most reserving methods of the \chainladder package expect triangles as 
-input data sets with development periods along the columns and the origin 
-period in rows. The package comes with several example triangles. 
-The following R command will list them all:
+Historical insurance data is often presented in form of a triangle
+structure, showing the development of claims over time for each origin
+period. An origin period could be the year the policy was sold, or
+the accident year. Most reserving methods of the \chainladder package
+expect triangles as  input data sets with development periods along
+the columns and the origin  period in rows. The package comes with
+several example triangles.  The following R command will list them all:
 <<eval=FALSE>>=
 require(ChainLadder)
 data(package="ChainLadder")
@@ -234,15 +229,23 @@ data from the Reinsurance Association of America (RAA):
 ## Sample triangle
 RAA
 @ 
+The objective of a reserving exercise is to forecast the future claims
+development in the bottom right corner of the triangle and potential
+further developments. Eventually all claims for a given origin period
+wil be settled, but it is not always obvious to judge how many years
+or even decades it will take. We speak of long and short tail business
+depending on the time it takes to finalise all claims reporting.
 
 \subsubsection{Plotting triangles}
-For data set of class \texttt{triangle} \chainladder provides
-default plotting methods to give a graphical overview of the data:
+The first thing you often want to do is to plot the data to get an
+overview. For data set of class \texttt{triangle} \chainladder
+provides default plotting methods to give a graphical overview of the
+data: 
 <<eval=FALSE>>=
 plot(RAA)
 @ 
 
-\begin{figure}
+\begin{figure}[h]
   \centering
 <<fig=TRUE, label=TrianglePlot1, echo=FALSE>>=
 plot(RAA)
@@ -261,7 +264,7 @@ plots for each origin period\footnote{\chainladder uses the
 plot(RAA, lattice=TRUE)
 @ 
 
-\begin{figure}
+\begin{figure}[h]
   \centering
 <<fig=TRUE, label=TrianglePlot2, echo=FALSE>>=
 plot(RAA, lattice=TRUE)
@@ -273,8 +276,8 @@ plot(RAA, lattice=TRUE)
 \label{RAAplot2}
 \end{figure}
 
-You will notice from the plots in Figures~\ref{RAAplot},
-\ref{RAAplot2}  that the triangle \texttt{RAA} present claims
+You will notice from the plots in Figures~\ref{RAAplot} and
+\ref{RAAplot2}  that the triangle \texttt{RAA} presents claims
 developments for  the origin years 1981 to 1990 in a cumulative form.
 For more information on the triangle plotting functions see the help
 pages of \texttt{plot.triangle}, e.g. via
@@ -313,8 +316,8 @@ In this section we use data stored in a CSV-file\footnote{Please
   separate units of thousands, as columns with those kind of
   formatting would be read as characters.} to demonstrate some
 typical operations you will want to carry out with data stored in data bases.
-In most cases your triangles will be stored in tables without the
-classical triangle shape. The \chainladder packages contains a
+In most cases your triangles will be stored in tables and not in a
+classical triangle shape. The \chainladder package contains a
 CSV-file with some sample data in a long table format. We can read the
 data into R's memory with the \texttt{read.csv} command and look at
 the first couple of rows and summarise it:
@@ -337,7 +340,10 @@ function \texttt{as.triangle}. The arguments we have to specify are
 the column names of the origin and development period and further the
 column which contains the values:
 <<>>=
-raa.tri <- as.triangle(raa, origin="origin", dev="dev", value="value")
+raa.tri <- as.triangle(raa, 
+                       origin="origin", 
+                       dev="dev", 
+                       value="value")
 raa.tri
 @ 
 We note that the data has been stored as an incremental data set. As
@@ -349,9 +355,17 @@ We can transform a triangle back into a data frame structure:
 raa.df <- as.data.frame(raa.tri, na.rm=TRUE)
 head(raa.df)
 @ 
-
+This is particular helpful when you would like to store your results
+back into data base. Figure~\ref{fig:database} gives you an idea of a
+potential data flow between R and data bases.
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=0.5\textwidth]{RandDatabases}
+  \caption{Flow chart of data between R and data bases.}
+  \label{fig:database}
+\end{figure}
 \subsubsection{Coping and pasting from MS Excel}
-Small datas set in Excel can be transfered to R backwards and forwards
+Small data sets in Excel can be transfered to R backwards and forwards
 with via the clipboard under MS Windows.
 \paragraph{Copying from Excel to R}
 Select a data set in Excel and copy it into the clipboard, then go to
@@ -365,7 +379,7 @@ then the following statement would copy the data into the clipboard:
 <<eval=FALSE>>=
 write.table(RAA, file="clipboard", sep="\t", na="")
 @ 
-Now you can paste the content into Excel. Please note that you can not
+Now you can paste the content into Excel. Please note that you can't
 copy lists structures from R to Excel. 
 
 \subsection{Chain-ladder methods}
@@ -437,7 +451,28 @@ plot(MCL)
 
 \subsection{Generalised linear model methods}
 
-%% \section{Using \chainladder with RExcel and SWord}
+\section{Using \chainladder with RExcel and SWord}
+
+
+The  spreadsheet is located in the Excel folder
+of the package. The R command 
+<<eval=FALSE>>=
+system.file("Excel", package="ChainLadder") 
+@ 
+will tell you the exact path to the directory. To use the spreadsheet you will need the
+RExcel-Add-in~\cite{BaierNeuwirth2007}. The package also provides an
+example SWord file,  demonstrating how the
+the functions of the package can be integrated into a MS Word file via
+SWord~\cite{BaierNeuwirth2007}. Again you find the Word file via the command: 
+<<eval=FALSE>>=
+system.file("SWord", package="ChainLadder") 
+@ 
+
+The package comes with several demos to provide you with an overview
+of the package functionality, see
+<<eval=FALSE>>=
+demo(package="ChainLadder")
+@ 
 
 \section{Further resources}
 

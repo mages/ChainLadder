@@ -16,7 +16,7 @@ chainladderWelcomeMessage <- function(){
         "to see overall documentation.\n\n",
         "Type demo(ChainLadder) to get an idea of the functionality of this package.\n\n",
         "See demo(package='ChainLadder') for a list of more demos.\n\n",
-        "Feel free to send us an email if you would like to keep ",
+        "Feel free to send us an email if you would like to be kept ",
         "informed of\nnew versions or if you have any feedback, ",
         "ideas, suggestions or ",
         "would\nlike to collaborate.\n\n",
