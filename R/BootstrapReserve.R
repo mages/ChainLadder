@@ -414,7 +414,7 @@ rnbinom.od<-function (n, size, prob, mu, d=1) {
     }
     size2 <- mu/(d-1+(d*mu/size))
     prob2 <- size2/(size2 + mu)
-    .Internal(rnbinom(n, size2, prob2))
+    rnbinom(n, size2, prob2)
 }
 
 

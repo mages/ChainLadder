@@ -5,6 +5,7 @@ Bug Fixes
    	 ordered, when the input data frame had unordered development 
    	 periods in different units, e.g. dev=c(1,100,10)
      Thanks to Ben Escoto for reporting this issue.
+   o removed .Internal call to make ChainLadder compliant with R 2.15.0 
 
 Version 0.1.5-1
 ================

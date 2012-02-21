@@ -1200,12 +1200,7 @@ dLL.ODPdt <- function(theta, MU, G, workarea) {
     # ... and an intermediate value used in second derivative
     workarea$cmuminus1 <- workarea$value/workarea$mu-1
     # Return a vector of column sums
-    .Internal(colSums(
-                workarea$cmuminus1 * workarea$dmudt,
-                (dm <- dim(workarea$dmudt))[1L], 
-                dm[2L], 
-                FALSE
-                ))  
+    colSums(workarea$cmuminus1 * workarea$dmudt)  
     }
 
 d2LL.ODPdt2 <- function(theta, MU, G, workarea) {

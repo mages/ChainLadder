@@ -77,7 +77,8 @@ service, but rely on data analysis and judgement to derive a
 sustainable price for their offering. In General Insurance (or Non-Life
 Insurance) most policies run for a period of 12 months, e.g. motor,
 property and casualty insurance. However, the claims payment process
-can take years or even decades. 
+can take years or even decades. Therefore not even the delivery date
+of their product is know to insurers. 
 
 In particular claims arising from casualty insurance can take a long
 time to settle, as claims can take years to materialise. A complex and
@@ -98,7 +99,7 @@ reported (IBNR) claims.
 
 Over the years several methods have been developed to estimate
 reserves for insurance claims, see~\cite{Schmidt2011},
-\cite{EnglandVerrall2002} for an overview. Changes in the regulatory
+\cite{EnglandVerrall2002} for an overview. Changes in regulatory
 requirements, e.g. Solvency II\footnote{See
   \url{http://ec.europa.eu/internal_market/insurance/solvency/index_en.htm}}
 in Europe, have fostered further research into this topic, with a

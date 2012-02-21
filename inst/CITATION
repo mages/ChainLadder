@@ -1,19 +1,20 @@
 citHeader("To cite package 'ChainLadder' in publications use:")
 
 desc <- packageDescription("ChainLadder")
-year <- sub(".*(2[[:digit:]]{3})-.*", "\\1", desc$Date)
+year <- format(as.Date(desc$Date), format="%Y")
 vers <- paste("R package version", desc$Version)
 
 citEntry(entry="Manual",
-         title = "ChainLadder: Mack, Bootstrap, Munich and Multivariate-chain-ladder Methods",
+         title = desc$Title,
          author = personList(as.person("Markus Gesmann"),
-                             as.person("Yanwei Zhang")),
+	 	             as.person("Daniel Murphy"),			         			       
+                             as.person("Wayne Zhang")),
          year = year,
          note = vers,
 
          textVersion =
-         paste("Markus Gesmann and Yanwei Zhang (",
+         paste(desc$Author, " (",
                year,
-               "). ChainLadder: Mack, Bootstrap, Munich and Multivariate-chain-ladder Methods. ",
+               "). ChainLadder: ", desc$Title,". ",
                vers, ".", sep=""))
 
