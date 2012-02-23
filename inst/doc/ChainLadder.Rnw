@@ -602,14 +602,14 @@ like to discuss tailored training or consultancy.
 
 \clearpage
 
-\section*{Thanks}
-\addcontentsline{toc}{section}{Thanks} 
-Many thanks to all who provided ideas, suggestions, 
-corrections and bug reports:
-\begin{itemize}
-<<echo=FALSE, results=tex>>=
-x <- readLines("~/Dropbox/chainladder/THANKS")
-cat(gsub("    ", "\\\\item", x[-1]), sep="\n")
-@ 
-\end{itemize}
+%\section*{Thanks}
+%\addcontentsline{toc}{section}{Thanks} 
+%Many thanks to all who provided ideas, suggestions, 
+%corrections and bug reports:
+%\begin{itemize}
+%<<echo=FALSE, results=tex>>=
+%x <- readLines("../../THANKS")
+%cat(gsub("    ", "\\\\item", x[-1]), sep="\n")
+%@ 
+%\end{itemize}
 \end{document}
