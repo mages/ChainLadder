@@ -12,7 +12,7 @@
 \usepackage{url}
 \usepackage{wrapfig}
 \usepackage{hyperref}
-
+\usepackage{draftwatermark}
 \hypersetup{
   colorlinks=true, pagebackref=true,
   pdftitle={ChainLadder: Claims reserving with R},%
@@ -46,7 +46,7 @@ options(prompt = "R> ", digits = 4, show.signif.stars = FALSE)
 
 \title{Claims reserving with R:\\
   ChainLadder-\Sexpr{packageDescription("ChainLadder")[['Version']]}
-  Package Vignette 
+  Package Vignette   
 }
 \maketitle
 \begin{abstract}
@@ -58,6 +58,8 @@ options(prompt = "R> ", digits = 4, show.signif.stars = FALSE)
   multi-variate chain-ladder methods, as well as the loss development
   factor curve fitting methods of Dave Clark and generalised linear
   model based reserving models. 
+
+  
 \end{abstract}
 
 \clearpage
@@ -142,9 +144,9 @@ by Dan Murphy in 2008 and Wayne Zhang in 2010.
      R, \url{http://www.favir.net/}}
 
  \item In combination with other tools such as  {\LaTeX} and Sweave
-   easy to set up automated reporting
+   easy to set up automated reporting facilities
 
- \item Academic research is often first implemented in R  
+ \item Access to academic research, which is often first implemented in R  
     
  \end{itemize}
 
@@ -152,28 +154,28 @@ by Dan Murphy in 2008 and Wayne Zhang in 2010.
 \subsection{Brief package overview}
 This vignette will give the reader a brief overview of the functionallity of 
 the \chainladder package. The functions are discussed and explained in 
-more detail in the repective help files and examples. The help files contain 
-the references to the research papers on which the methods are based. 
+more detail in the respective help files and examples. 
+%% The help files contain the references to the research papers on
+%% which the methods are based.  
 
 The \chainladder package has implementations of the Mack-, Munich- and 
 Boot\-strap chain-ladder methods~\cite{Mack1993}, \cite{Mack1999}, 
 \cite{Quarg2004}, \cite{EnglandVerrall1999}. 
 Since version 0.1.3-3 it provides general multivariate 
 chain ladder models by Wayne Zhang~\cite{Zhang2010a}. 
-
 Version 0.1.4-0 introduced new functions on loss development factor
-(LDF) fitting and Cape Cod by Daniel Murphy following a paper by David
-Clark~\cite{Clark2003}.  Version 0.1.5-0 has added loss reserving
-models within the generalized linear model framework following a paper by
-England and Verrall~\cite{EnglandVerrall1999} implemented by Wayne
-Zhang.  
+(LDF) fitting methods and Cape Cod by Daniel Murphy following a paper
+by David Clark~\cite{Clark2003}.  Version 0.1.5-0 has added loss
+reserving models within the generalized linear model framework
+following a paper by England and Verrall~\cite{EnglandVerrall1999}
+implemented by Wayne Zhang.  
 
-The package offers also some utility functions to convert quickly
+The package also offers utility functions to convert quickly
 tables into triangles, triangles into tables, cumulative into
 incremental and incremental into cumulative triangles. 
 
 A set of demos is shipped with the packages and the list of demos
-names is available via: 
+is available via: 
 <<eval=FALSE>>=
 demo(package="ChainLadder")
 @ 
@@ -183,7 +185,7 @@ library(ChainLadder)
 demo("demo name")
 @
 
-Further, the \chainladder package comes with example files, which
+Further the \chainladder package comes with example files which
 demonstrates how to the \chainladder functions can be embedded in
 Excel and Word using the \href{http://rcom.univie.ac.at/}{statconn}
 interface\cite{BaierNeuwirth2007}. 
@@ -235,11 +237,11 @@ development in the bottom right corner of the triangle and potential
 further developments. Eventually all claims for a given origin period
 wil be settled, but it is not always obvious to judge how many years
 or even decades it will take. We speak of long and short tail business
-depending on the time it takes to finalise all claims reporting.
+depending on the time it takes to pay all claims.
 
 \subsubsection{Plotting triangles}
 The first thing you often want to do is to plot the data to get an
-overview. For data set of class \texttt{triangle} \chainladder
+overview. For a data set of class \texttt{triangle} the \chainladder package
 provides default plotting methods to give a graphical overview of the
 data: 
 <<eval=FALSE>>=
@@ -260,7 +262,8 @@ plot(RAA)
 Setting the argument \texttt{lattice=TRUE} will produce individual
 plots for each origin period\footnote{\chainladder uses the
   \href{http://cran.r-project.org/package=lattice}{\texttt{lattice}}
-  package}, see Figure~\ref{RAAplot2}. 
+  package for plotting the development of the origin years in separate
+panels.}, see Figure~\ref{RAAplot2}. 
 <<eval=FALSE>>=
 plot(RAA, lattice=TRUE)
 @ 
@@ -314,12 +317,12 @@ For more details see~\cite{Rdata}.
 
 In this section we use data stored in a CSV-file\footnote{Please
   ensure that your CSV-file is free from formatting, e.g. characters to
-  separate units of thousands, as columns with those kind of
-  formatting would be read as characters.} to demonstrate some
+  separate units of thousands, as those columns will be read as
+  characters or factors rather than numerical values.} to demonstrate some
 typical operations you will want to carry out with data stored in data bases.
 In most cases your triangles will be stored in tables and not in a
 classical triangle shape. The \chainladder package contains a
-CSV-file with some sample data in a long table format. We can read the
+CSV-file with sample data in a long table format. We read the
 data into R's memory with the \texttt{read.csv} command and look at
 the first couple of rows and summarise it:
 
@@ -384,6 +387,12 @@ Now you can paste the content into Excel. Please note that you can't
 copy lists structures from R to Excel. 
 
 \subsection{Chain-ladder methods}
+
+\subsubsection{Basic idea}
+<<>>=
+lr <- sapply(1:9, function(i) sum(RAA[c(1:(10-i)),i+1])/sum(RAA[c(1:(10-i)),i]))
+@ 
+
 <<eval=FALSE>>=
 demo(ChainLadder)
 @ 
@@ -391,6 +400,11 @@ demo(ChainLadder)
 <<>>=
 mack <- MackChainLadder(RAA, est.sigma="Mack")
 mack
+@ 
+Access the loss development factors and the full triangle
+<<>>=
+mack$f
+mack$FullTriangle
 @ 
 
 \begin{center}
@@ -462,9 +476,10 @@ system.file("Excel", package="ChainLadder")
 @ 
 will tell you the exact path to the directory. To use the spreadsheet you will need the
 RExcel-Add-in~\cite{BaierNeuwirth2007}. The package also provides an
-example SWord file,  demonstrating how the
-the functions of the package can be integrated into a MS Word file via
-SWord~\cite{BaierNeuwirth2007}. Again you find the Word file via the command: 
+example SWord file,  demonstrating how the functions of the package
+can be integrated into a MS Word file via
+SWord~\cite{BaierNeuwirth2007}. Again you find the Word file via the
+command:  
 <<eval=FALSE>>=
 system.file("SWord", package="ChainLadder") 
 @ 
