@@ -21,13 +21,12 @@ chainladder <- function(Triangle, weights=1,
     weights <- checkWeights(weights, Triangle)
     delta <- rep(delta,(n-1))[1:(n-1)]
 
-    myModel <- vector("list", (n-1))
-    for(i in c(1:(n-1))){
-        ## weighted linear regression through origin
-        dev.data <- data.frame(x=Triangle[,i], y=Triangle[,i+1])
-  	myModel[[i]] <- lm(y~x+0, weights=weights[,i]/Triangle[,i]^delta[i], data=dev.data)
-    }
-
+    lmCL <- function(i, Triangle){
+      lm(y~x+0, weights=weights[,i]/Triangle[,i]^delta[i],
+         data=data.frame(x=Triangle[,i], y=Triangle[,i+1]))
+    } 
+    myModel <- lapply(c(1:(n-1)), lmCL, Triangle)
+    
     output <- list(Models=myModel, Triangle=Triangle, delta=delta, weights=weights)
     class(output) <- c("ChainLadder", "TriangleModel", class(output))
     return(output)
