@@ -12,6 +12,8 @@
 \usepackage{url}
 \usepackage{wrapfig}
 \usepackage{hyperref}
+\usepackage{amsmath}
+
 \usepackage{draftwatermark}
 \hypersetup{
   colorlinks=true, pagebackref=true,
@@ -46,12 +48,13 @@ options(prompt = "R> ", digits = 4, show.signif.stars = FALSE)
 
 \title{Claims reserving with R:\\
   ChainLadder-\Sexpr{packageDescription("ChainLadder")[['Version']]}
-  Package Vignette   
+  Package Vignette  \\ DRAFT 
 }
 \maketitle
 \begin{abstract}
+
   The \chainladder package provides various statistical methods which
-  are typically used for the calculation of outstanding claims reserves
+  are typically used for the estimation of outstanding claims reserves
   in general insurance.  
   
   The package has implementations of the Mack-, Munich-, Bootstrap, and
@@ -59,7 +62,9 @@ options(prompt = "R> ", digits = 4, show.signif.stars = FALSE)
   factor curve fitting methods of Dave Clark and generalised linear
   model based reserving models. 
 
-  
+  This document is still in a draft stage. Any pointers which will
+  help to iron out errors, clarify and make this document more helpful
+  will be much appreciated.
 \end{abstract}
 
 \clearpage
@@ -75,20 +80,20 @@ to the policyholder to pay for future claims for an upfront received
 premium. 
 
 As a result insurers don't know the upfront cost of their
-service, but rely on data analysis and judgement to derive a
+service, but rely on historical data analysis and judgement to derive a
 sustainable price for their offering. In General Insurance (or Non-Life
-Insurance) most policies run for a period of 12 months, e.g. motor,
-property and casualty insurance. However, the claims payment process
-can take years or even decades. Therefore not even the delivery date
-of their product is know to insurers. 
+Insurance, e.g. motor, property and casualty insurance) most policies
+run for a period of 12 months. However, the claims payment process 
+can take years or even decades. Therefore often not even the delivery
+date of their product is known to insurers. 
 
 In particular claims arising from casualty insurance can take a long
-time to settle, as claims can take years to materialise. A complex and
+time to settle. Claims can take years to materialise. A complex and
 costly example are the claims from asbestos liabilities. 
-A research report by a  Working Party of the  Institute of Actuaries
+A research report by a  working party of the  Institute of Actuaries
 has estimated that the undiscounted cost of UK mesothelioma-related
 claims to the UK Insurance Market for the period 2009 to 2050 could be
-around $\pounds$10bn~\cite{Gravelsons2009}. The cost for Asbestos
+around $\pounds$10bn~\cite{Gravelsons2009}. The cost for aAsbestos
 related claims in the US for the worldwide insurance industry was
 estimate to be around \$120bn in 2002~\cite{Michaels2002}.  
 
@@ -111,42 +116,42 @@ focus on stochastic and statistical techniques.
 
 \subsection{Motivation}
 The \chainladder~\cite{chainladder} package provides various
-statistical methods which are typically used for the calculation of
+statistical methods which are typically used for the estimation of
 outstanding claims reserves in general insurance.  The package started
 out of presentations given by Markus Gesmann at the Stochastic
 Reserving Seminar at the Institute of Actuaries in 2007 and 2008,
 followed by talks at Casualty Actuarial Society (CAS)  meetings joined
 by Dan Murphy in 2008 and Wayne Zhang in 2010.  
 
- Implementing reserving methods in R has several advantages, as it provides:
+ Implementing reserving methods in R has several advantages. R provides:
 
  \begin{itemize}
 
- \item Rich language for statistical modelling and data manipulations
+ \item a rich language for statistical modelling and data manipulations
    allowing fast prototyping  
   
- \item Very active user base, which publishes many extension
+ \item a very active user base, which publishes many extension
 
- \item Many interfaces to data bases and other applications, such as MS
+ \item many interfaces to data bases and other applications, such as MS
    Excel
   
- \item Established framework for documentation and testing 
+ \item an established framework for documentation and testing 
 
- \item Works well with version control tools 
+ \item workflows with version control systems
 
- \item Code is written in plain text files, allowing effective knowledge
+ \item code written in plain text files, allowing effective knowledge
    transfer 
 
- \item Easy to collaborate over the internet
+ \item an effective way to collaborate over the internet
 
- \item Built in functions to create reproducible research
+ \item built in functions to create reproducible research
    reports\footnote{For an example see the project: Formatted Actuarial Vignettes in
      R, \url{http://www.favir.net/}}
 
- \item In combination with other tools such as  {\LaTeX} and Sweave
+ \item in combination with other tools such as  {\LaTeX} and Sweave
    easy to set up automated reporting facilities
 
- \item Access to academic research, which is often first implemented in R  
+ \item access to academic research, which is often first implemented in R  
     
  \end{itemize}
 
@@ -185,7 +190,7 @@ library(ChainLadder)
 demo("demo name")
 @
 
-Further the \chainladder package comes with example files which
+Additionally the \chainladder package comes with example files which
 demonstrates how to the \chainladder functions can be embedded in
 Excel and Word using the \href{http://rcom.univie.ac.at/}{statconn}
 interface\cite{BaierNeuwirth2007}. 
@@ -198,8 +203,9 @@ We can install \chainladder in the usual way from CRAN, e.g.:
 <<eval=FALSE>>=
 install.packages('ChainLadder') 
 @
-The installation was successful if the
-command \texttt{library(ChainLadder)} gives you the following message:
+For more details about installing packages see~\cite{Radmin}. The
+installation was successful if the  command
+\texttt{library(ChainLadder)} gives you the following message: 
 <<echo=FALSE, quite=TRUE>>=
 library(ChainLadder)
 @ 
@@ -217,10 +223,12 @@ cat(ChainLadder:::chainladderWelcomeMessage())
 Historical insurance data is often presented in form of a triangle
 structure, showing the development of claims over time for each origin
 period. An origin period could be the year the policy was sold, or
-the accident year. Most reserving methods of the \chainladder package
-expect triangles as  input data sets with development periods along
-the columns and the origin  period in rows. The package comes with
-several example triangles.  The following R command will list them all:
+the accident year. Of course the frequency doesn't have to be yearly, e.g.
+quarterly of monthly origin periods are also often used. Most
+reserving methods of the \chainladder package expect triangles as
+input data sets with development periods along the columns and the
+origin  period in rows. The package comes with several example
+triangles.  The following R command will list them all: 
 <<eval=FALSE>>=
 require(ChainLadder)
 data(package="ChainLadder")
@@ -293,7 +301,7 @@ pages of \texttt{plot.triangle}, e.g. via
   incremental representation}
 The \chainladder packages comes with two helper functions,
 \texttt{cum2incr} and \texttt{incr2cum} to transform
-cumulative triangles into incremental triangles and vis versa:
+cumulative triangles into incremental triangles and vice versa:
 <<>>=
 raa.inc <- cum2incr(RAA)
 ## Show first origin period and its incremental development
@@ -334,7 +342,7 @@ myData <- read.csv(filename)
 head(myData)
 summary(myData)
 @ 
-Let us focus on one subset of the data set. We select the RAA data again:
+Let's focus on one subset of the data. We select the RAA data again:
 <<>>=
 raa <- subset(myData, lob %in% "RAA")
 head(raa)
@@ -388,15 +396,111 @@ copy lists structures from R to Excel.
 
 \subsection{Chain-ladder methods}
 
+The classical chain-ladder is a  deterministic algorithm 
+to forecast claims based on historical data. It assumes that the
+proportional developments of claims from one development period to the
+next are the same for all origin years.
+
 \subsubsection{Basic idea}
+The age-to-age link ratios are calculated as the volume weighted
+average development ratios of a cumulative loss development triangle
+from one development period to the next $C_{ik}, i,k =1, \dots, n$. 
+\begin{align}
+  f_{k} &= \frac{\sum_{i=1}^{n-k} C_{i,k+1}}{\sum_{i=1}^{n-k}C_{i,k}}
+\end{align}
 <<>>=
-lr <- sapply(1:9, function(i) sum(RAA[c(1:(10-i)),i+1])/sum(RAA[c(1:(10-i)),i]))
+n <- 10
+f <- sapply(1:(n-1), 
+             function(i){
+               sum(RAA[c(1:(n-i)),i+1])/sum(RAA[c(1:(n-i)),i])
+             }
+             )
+f
+@
+
+Often it is not suitable to assume that the oldest origin year is
+fully developed. A typical approach is to extrapolate the development
+ratios, e.g. assuming a log-linear model.
+<<fig=TRUE>>=
+dev.period <- 1:(n-1)
+plot(log(f-1) ~ dev.period, main="Log-linear extrapolation of age-to-age factors")
+tail.model <- lm(log(f-1) ~ dev.period) 
+abline(tail.model)
+co <- coef(tail.model)
+## extrapolate another 100 dev. period
+tail <- exp(co[1] + c((n + 1):(n + 100)) * co[2]) + 1
+f.tail <- prod(tail)
+f.tail      
 @ 
 
-<<eval=FALSE>>=
-demo(ChainLadder)
+The age-to-age factors allow us to plot the expected claims development
+patterns.
+<<fig=TRUE>>=
+plot(100*(rev(1/cumprod(rev(c(f, tail[tail>1.0001]))))), t="b",
+     main="Expected claims development pattern",
+     xlab="Dev. period", ylab="Development % of ultimate loss") 
+@ 
+
+The link ratios are then applied to the latest know cumulative
+claims amount to forecast the next development period. 
+<<>>=
+f <- c(f, f.tail)
+fullRAA <- RAA
+for(k in 1:(n-1)){ 
+  fullRAA[(n-k+1):n, k+1] <- fullRAA[(n-k+1):n,k]*f[k]
+}
+fullRAA[,n] <- fullRAA[,n]*f[n] 
+round(fullRAA)
+@ 
+
+This approach is also called Loss Development Factor (LDF) method.
+
+
+Since the early 1990s several papers have been published to embed the
+simple chain-ladder method into a statistical framework. Ben Zehnwirth
+and Glenn Branett point out in~\cite{ZehnwirthBarnettProceedings} that
+the age-to-age link ratios can be regarded as the coefficients of a
+weighted linear regression through the origin, see
+also~\cite{DanielMurphy1994}. 
+<<>>=
+lmCL <- function(i, Triangle){
+  lm(y~x+0, weights=1/Triangle[,i],
+     data=data.frame(x=Triangle[,i], y=Triangle[,i+1]))
+} 
+sapply(lapply(c(1:(n-1)), lmCL, RAA), coef)
 @ 
 \subsubsection{Mack chain-ladder}
+Thomas Mack published in 1993 ~\cite{Mack_distributionfree1993} an
+article which allows to estimate the standard errors of the
+chain-ladder forecast without assuming a distribution under certain
+constrain to the data.
+
+Following Mack~\cite{Mack1999}  let $C_{ik}$ denote the cumulative loss
+amounts of origin period (e.g. accident year) $i=1,\ldots,m$, with
+losses known for development period  (e.g. development year) $k \le n+1-i$.
+
+In order to forecast the amounts $C_{ik}$ for $k > n+1-i$ the Mack
+chain-ladder-model assumes: 
+\begin{align}
+  \mbox{CL1: }  & E[ F_{ik}| C_{i1},C_{i2},\ldots,C_{ik} ] = f_k
+  \mbox{ with } F_{ik}=\frac{C_{i,k+1}}{C_{ik}}\\
+    \mbox{CL2: } &  Var( \frac{C_{i,k+1}}{C_{ik}} | C_{i1},C_{i2},
+    \ldots,C_{ik} ) = \frac{\sigma_k^2}{w_{ik} C^\alpha_{ik}}\\
+  \mbox{CL3: } & \{C_{i1},\ldots,C_{in}\}, \{
+    C_{j1},\ldots,C_{jn}\},\mbox{ are independent for origin period } i
+    \neq j 
+\end{align}
+with $w_{ik} \in [0;1], \alpha \in \{0,1,2\}$.  If these
+assumptions are hold, the Mack-chain-ladder-model gives an 
+unbiased estimator for IBNR (Incurred But Not Reported) claims.
+
+The Mack-chain-ladder model can be regarded as a weighted linear regression
+through the origin for each development period:
+\verb|lm(y ~ x  + 0, weights=w/x^(2-alpha))|, 
+where \texttt{y} is the vector of claims at development period
+$k+1$ and \texttt{x} is  the vector of claims at development period
+$k$. 
+
 <<>>=
 mack <- MackChainLadder(RAA, est.sigma="Mack")
 mack
@@ -436,8 +540,8 @@ plot(ecdf(B$IBNR.Totals))
 # fit a log-normal distribution 
 fit <- fitdistr(B$IBNR.Totals[B$IBNR.Totals>0], "lognormal")
 fit
-curve(plnorm(x,fit$estimate["meanlog"], fit$estimate["sdlog"]), col="red", add=TRUE)
-
+curve(plnorm(x,fit$estimate["meanlog"], fit$estimate["sdlog"]),
+      col="red", add=TRUE)  
 @ 
 \subsubsection{Munich chain-ladder}
 <<fig=TRUE>>=
@@ -496,11 +600,13 @@ Other useful documents and resources to get started with R in the
 context of actuarial work:
 \begin{itemize}
 \item  Introduction to R for Actuaries~\cite{DeSilva2006}.
-
+  
 \item An Actuarial Toolkit~\cite{MaynardDeSilvaHollowayGesmannLauHarnett2006}.  
+  
+\item The book \emph{Modern Actuarial Risk Theory -- Using R}~\cite{KaassGoovaertsDhaeneDenuit2001}
 
 \item Actuar package vignettes: \url{http://cran.r-project.org/web/packages/actuar/index.html}
-  
+
 \item
   Mailing list
   \href{https://stat.ethz.ch/mailman/listinfo/r-sig-insurance}{R-SIG-insurance\footnote{\url{https://stat.ethz.ch/mailman/listinfo/r-sig-insurance}}}:

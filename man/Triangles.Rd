@@ -24,7 +24,7 @@
 \method{as.triangle}{data.frame}(Triangle, origin="origin", dev="dev", value="value",...)
 \method{as.data.frame}{triangle}(x, row.names=NULL, optional, lob=NULL, na.rm=FALSE, ...)
 as.triangle(Triangle, origin="origin", dev="dev", value="value",...)
-\method{plot}{triangle}(x, t = "b", xlab = "dev. period", ylab = NULL, lattice=FALSE, ...)
+\method{plot}{triangle}(x, type = "b", xlab = "dev. period", ylab = NULL, lattice=FALSE, ...)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -50,7 +50,7 @@ as.triangle(Triangle, origin="origin", dev="dev", value="value",...)
     triangle in one graph, otherwise the \code{\link{xyplot}} function
     of the lattice package is used, to plot developments of each origin
     period in a different panel.}
-  \item{t}{type, see \code{\link{plot.default}}}
+  \item{type}{type, see \code{\link{plot.default}}}
   \item{\dots}{arguments to be passed to other methods}
 }
 %\details{

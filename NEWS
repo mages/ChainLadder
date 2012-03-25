@@ -8,6 +8,8 @@ NEW FEATURES
 Changes
 
    o Removed .Internal call to make ChainLadder compliant with R 2.15.0 
+   o Changed argument "t" in plot.triangle to "type" in order to be
+     consistent with plot.default
 
 Bug Fixes
    o as.triangle() gave triangles back, with development periods not 
