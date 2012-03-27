@@ -9,16 +9,19 @@ export(Table64, Table65, Table68)
 export(ata)
 export(glmReserve)
 
-importFrom(stats, quantile, predict, coef, vcov,
-              residuals, resid, fitted, fitted.values, rstandard)
+importFrom(stats, quantile, rstandard)
 importFrom(methods, show, coerce, cbind2, rbind2 )
 importFrom(graphics, plot)
 importFrom(Matrix, summary)
 importFrom(utils, packageDescription)
+importFrom(cplm, cpglm)
+importClassesFrom(cplm, NullNum, NullList)
+importMethodsFrom(cplm, predict, vcov, residuals, resid, coef, fitted)
+
 #Classes
 exportClasses(triangles, MultiChainLadder, MultiChainLadderFit,
               MCLFit, GMCLFit, MultiChainLadderMse, MultiChainLadderSummary,
-			NullNum, NullChar)
+		  NullNum, NullChar)
            
 #Methods
 S3method(plot, MackChainLadder)
@@ -34,6 +37,7 @@ S3method(print, triangle)
 S3method(print, ClarkLDF)
 S3method(print, ClarkCapeCod)
 S3method(print, ata)
+S3method(print, glmReserve)
 
 S3method(as.triangle, matrix)
 S3method(as.triangle, data.frame)
@@ -45,6 +49,7 @@ S3method(summary, BootChainLadder)
 S3method(summary, ClarkLDF)
 S3method(summary, ClarkCapeCod)
 S3method(summary, ata)
+S3method(summary, glmReserve)
 
 S3method(predict, TriangleModel)
 S3method(predict, ChainLadder)
@@ -57,4 +62,4 @@ S3method(vcov, clark)
 
 exportMethods(predict, Mse, summary, show, coerce,
               "[", "$", "[[", "[<-", names, coef, vcov, residCov, residCor,
-              residuals, resid, rstandard, fitted, fitted.values, plot, cbind2, rbind2, dim )
+              residuals, resid, rstandard, fitted, plot, cbind2, rbind2, dim )

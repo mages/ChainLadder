@@ -24,7 +24,7 @@ MultiChainLadder(Triangles,
   \item{int}{indicator of which periods have intercepts. This only works for \code{GMCL}. Default \code{NULL} means no intercept. Otherwise, specify a numeric vector. }   
   \item{restrict.regMat}{a list of matrix specifying parameter restriction matrix for each period. This only works for \code{GMCL}. Default \code{NULL} means no restriction. See \code{systemfit} } 
   \item{extrap}{logical. Whether to use Mack's extrapolation method for the last period to get the variance component estimation. It only works for \code{model="MCL"}. If the data are  trapezoids, it is set to be \code{FALSE} automatically and a warning message is given.}
-  \item{mse.method}{method to estimate the mean square error. Could be either \code{Mack} or \code{Independence}, multivariate generalization of the Mack formulas and the conditional resampling approach, respectively.}
+  \item{mse.method}{method to estimate the mean square error. Could be either \code{Mack} or \code{Independence}, multivariate generalization of the Mack formulas and the conditional re-sampling approach, respectively.}
   \item{model}{ structure of the model to be fitted. Either \code{MCL} or \code{GMCL}. See details. }
   \item{\dots}{arguments passed to \code{systemfit}.}
 
@@ -49,7 +49,7 @@ Currently the  model \code{GMCL} can only work for trapezoid data, and it only a
 \code{GMCL} allows different model structures to be specified across the development periods. This is usually achieved through the combination of the \code{int} and \code{restrict.regMat} arguments. \code{int} indicates which periods will have intercepts, and \code{restrict.regMat} allows different parameter restrictions to be specified in a list. 
 
 
-In using the multivariate method, one often specifies separate chain ladder for later periods to stabilize the estimation. In this case, one can use \code{"["}, defined for class \code{triangles} to split the input data, and use the \code{MultiChainLadder} to fit two models, either \code{MCL} or \code{GMCL}, and join them together using \code{Join2Fits}, which creates an object of class \code{MCLFit} or \code{GMCLFit}. Then methods of \code{predict} and \code{Mse} can be called to produce predictions and mean square errors. The function \code{JoinFitMse} is written to make it easy to construct an object of class \code{MultiChainLadder}, for which a couple of methods are defined to produce statistical results and diagonostic plots. 
+In using the multivariate method, one often specifies separate chain ladder for later periods to stabilize the estimation. In this case, one can use \code{"["}, defined for class \code{triangles} to split the input data, and use the \code{MultiChainLadder} to fit two models, either \code{MCL} or \code{GMCL}, and join them together using \code{Join2Fits}, which creates an object of class \code{MCLFit} or \code{GMCLFit}. Then methods of \code{predict} and \code{Mse} can be called to produce predictions and mean square errors. The function \code{JoinFitMse} is written to make it easy to construct an object of class \code{MultiChainLadder}, for which a couple of methods are defined to produce statistical results and diagnostic plots. 
 
 
 
