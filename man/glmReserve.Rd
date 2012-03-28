@@ -105,7 +105,7 @@ attr(GenIns2, "exposure") <- expos
 # use bootstrapping to compute prediction error
 \dontrun{
 set.seed(11)
-(fit5 <- glmReserve(GenIns, mse.method = "bootstrap"))
+(fit5 <- glmReserve(GenIns, mse.method = "boot"))
 }
 
 }
