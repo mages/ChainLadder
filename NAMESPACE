@@ -11,12 +11,10 @@ export(glmReserve)
 
 importFrom(stats, quantile, rstandard)
 importFrom(methods, show, coerce, cbind2, rbind2 )
-importFrom(graphics, plot)
-importFrom(Matrix, summary)
 importFrom(utils, packageDescription)
 importFrom(cplm, cpglm)
 importClassesFrom(cplm, NullNum, NullList)
-importMethodsFrom(cplm, predict, vcov, residuals, resid, coef, fitted)
+importMethodsFrom(cplm, predict, vcov, residuals, resid, coef, fitted, plot, summary)
 
 #Classes
 exportClasses(triangles, MultiChainLadder, MultiChainLadderFit,

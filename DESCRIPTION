@@ -14,7 +14,8 @@ Description: The ChainLadder package provides various statistical
 	     well as the loss development factor curve fitting
 	     methods of Dave Clark and generalised linear model
 	     based reserving models.  
-Depends: Hmisc, lattice, methods, stats, systemfit, MASS, RUnit, actuar, utils, cplm, tweedie
+Depends: Hmisc, lattice, methods, stats, systemfit, MASS, RUnit, 
+		actuar, utils, cplm, tweedie
 Suggests: RODBC
 License: GPL (>= 2)
 URL: http://code.google.com/p/chainladder/
