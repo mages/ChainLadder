@@ -42,8 +42,8 @@ options(prompt = "R> ", digits = 4, show.signif.stars = FALSE)
 \author{Markus
   Gesmann\footnote{\href{mailto:markus.gesmann@gmail.com}{markus.gesmann@gmail.com}}
   %, Dan  Murphy\footnote{\href{mailto:danielmarkmurphy@gmail.com}{danielmarkmurphy@gmail.com}} 
-  % and 
-  % Wayne Zhang\footnote{\href{mailto:actuary\_zhang@hotmail.com}{actuary\_zhang@hotmail.com}} 
+  and 
+  Wayne Zhang\footnote{\href{mailto:actuary\_zhang@hotmail.com}{actuary\_zhang@hotmail.com}} 
 }
 
 \title{Claims reserving with R:\\
@@ -560,6 +560,90 @@ plot(MCL)
 
 
 \subsection{Multivariate chain-ladder}
+The Mack chain ladder technique can be generalized to the multivariate situation where multiple reserving triangles are modeled simultaneuously. The advantage of the multivariate modeling is that correlations among different triangles can be modeled, which will lead to more accurate uncertainty assessment. There has been considerable development in this area, but most of the chain-ladder-based models can be summarized as sequential seemingly unrelated regressions (see Zhang 2010). 
+
+Denote $Y_{i,k}=(Y^{(1)}_{i,k}, \cdots ,Y^{(N)}_{i,k})$ as an $N \times 1$ vector of cumulative losses at accident year $i$ and development year $k$ where $(n)$ refers to the n-th triangle. Zhang (2010) specifies the  model in development period $k$ as:
+\begin{equation}
+Y_{i,k+1} = A_k + B_k \cdot Y_{i,k} + \epsilon_{i,k},
+\end{equation}
+where $A_k$ is a column of intercepts and $B_k$ is the a development matrix. Assumptions for this model are:
+\begin{align}
+&E(\epsilon_{i,k}|Y_{i,1}, \cdots,Y_{i,I+1-k}) =0. \\
+&cov(\epsilon_{i,k}|Y_{i,1}, \cdots, Y_{i,I+1-k})=D(Y_{i,k}^{-\delta/2}) \Sigma_k D(Y_{i,k}^{-\delta/2}). \\
+&\mbox{losses of different accident years are independent}. \\
+&\epsilon_{i,k} \, \mbox{are symmetrically distributed}.
+\end{align}
+In the above, $D$ is the diagonal opterator, and $\delta$ is a known positive value that controls how the variance depends on the mean (as weights).
+
+The simplest case where $A_k=0$ and $B_k$ are diagonal is a naive generalizatio of the chain ladder, often referred to as the multivariate chain ladder (see Pr\"{o}hl and Schmidt 2005). 
+The following shows an application of this case. The following is a data set used in Merz and W\"{u}thrich (2008):
+<<>>=
+data(liab)
+# this is a list of two triangles 
+length(liab)
+dim(liab[[1]])
+@
+If we specify \texttt{fit.method = "OLS"}, the ordinary lease squares will be used in estimating the development factors. As a result, the multivariate model is equivalent to running two Mack chain ladders separately. 
+<<>>=
+fit1 <- MultiChainLadder(liab, fit.method = "OLS")
+(s1 <- summary(fit1))
+@
+By default, the \texttt{summary} produces reserve statistics for all individual triangles, as well as for the portfolio that is assumed to be the sum of the two triangles. This behavior can be changed by supplying the \texttt{portfolio} argument. See the documentation for details. 
+
+We can verify if this is indeed the same as the univariate Mack chain ladder:
+<<>>=
+MackChainLadder(liab[[1]], est.sigma = "Mack")
+@
+
+The \texttt{model.summary} slot in the summary stores the fitted parameters in the regression fit for each development period: 
+<<>>=
+names(s1)
+head(s1$model.summary)
+@
+
+To allow correlations to be incorporated, we employ the seemingly unrelated regressions that simultaneously model the two triangles. We now specify \texttt{fit.method = "SUR"}:
+<<>>=
+fit2 <- MultiChainLadder(liab, fit.method = "SUR")
+(s2 <- summary(fit2))
+@
+
+We see that the portfolio prediction error is inflated to $500,607$ from $457,278$ due to the positive correlations between the two triangles. The estimated correlation for each development period can be retrieved through the \texttt{residCor} function: 
+<<>>=
+unlist(residCor(fit2))
+@
+Similarly, most methods that work for linear models such as \texttt{coef}, \texttt{fitted}, \texttt{resid} and so on will also work. For example, we can retrieve the estimated development factors for the first two periods as 
+<<>>=
+coef(fit2)[1:2]
+@
+
+The plot function can also be used to generate various summary and diagonostic figures:
+
+\begin{figure}[h]
+\centering
+<<fig = TRUE, label = MultiPlot, width = 6, height = 11>>=
+parold <- par(mfrow = c(4, 2), mar = c(4, 4, 2, 1), 
+    mgp = c(1.3, 0.3, 0), tck = -0.02)
+plot(fit2, which.triangle = 1:2, which.plot = c(1, 3, 4))
+par(parold)
+@
+\end{figure}
+We use the \texttt{which.triangle} to suppress the plot for the portfolios, and use the \texttt{which.plot} to select the desired types of plots. See the documentation for possible values for these two arguments. 
+
+
+<<>>=
+#FIXME:
+liab <- as(liab,"triangles")  # transform "list" to be "triangles"
+liab1 <- liab[, 1:10]   # special "[" is defined for class "triangles"
+liab2 <- liab[, 10:14]
+
+fs1 <- MultiChainLadder(liab1, extrap = FALSE, int = 1:9, model = "GMCL")
+fs2 <- MultiChainLadder(liab2, fit.method = "OLS")
+fs <- Join2Fits(fs1, fs2)
+ffs <- predict(fs)               
+mse.mack  <-  Mse(fs, ffs, "Mack")
+fit3 <- JoinFitMse(fs, mse.mack)
+plot(fit3, which.triangle = 1:2, which.plot = 3)
+@ 
 
 \subsection{Clark's methods}
 
@@ -569,6 +653,77 @@ plot(MCL)
 
 
 \subsection{Generalised linear model methods}
+
+Recent years have also seen growing interest in using generalised linear models [GLM] for insurance loss reserving. The use of GLM in insurance loss reserving has many compelling aspects, e.g.,
+\begin{itemize}
+\item when over-dispersed Poisson model is used, it reproduces the estimates from Chain Ladder;
+\item it provides a more coherent modeling framework than the Mack method;
+\item all the relevant established statistical theory can be directly applied to perform hypothesis testing and diagnostic checking;
+\end{itemize}
+
+The \texttt{glmReserve} function takes an insurance loss triangle, converts it to incremental losses internally if necessary, transforms it to the long format (see as.data.frame) and fits the resulting loss data with a generalised linear model where the mean structure includes both the accident year and the development lag effects. The function also provides both analytical and bootstrapping method to compute the associated prediction errors. The bootstrapping approach also simulates the full predictive distribution, based on which the user can compute other uncertainty measures such as predictive intervals. 
+
+Only the Tweedie family of distributions are allowed, that is,  the exponential family that admits a power variance function $V(\mu)=\mu^p$. The variance power $p$ is specified in the \texttt{var.power} argument, and controls the type of the distribution.  When the Tweedie compound Poisson distribution $1 < p < 2$ is to be used, the user has the option to specify \texttt{var.power = NULL}, where the variance power $p$ will be estimated from the data using the \texttt{cplm} package. 
+
+
+For example, the following fits the over-dispersed Poisson model and spells out the estimated reserve information:
+<<>>=
+# load data 
+data(GenIns)
+GenIns <- GenIns / 1000
+# fit Poisson GLM
+(fit1 <- glmReserve(GenIns))
+@
+We can also extract the underlying GLM model by specify \texttt{type = "model"} in the \texttt{summary} function:
+<<>>=
+summary(fit1, type = "model")
+@
+
+Similarly, we can fit the Gamma and a compound Poisson GLM reserving model by changing the \texttt{var.power} argument:
+<<>>=
+# Gamma GLM
+(fit2 <- glmReserve(GenIns, var.power = 2))
+# compound Poisson GLM (variance function estimated from the data):
+(fit3 <- glmReserve(GenIns, var.power = NULL))
+@
+
+
+By default, the formulaic approach is used to compute the prediction errors. We can also carry out bootstrapping simulations by specifying \texttt{mse.method = "bootstrap"} (note that this argument supports partial match):
+
+<<>>=
+set.seed(11)
+(fit5 <- glmReserve(GenIns, mse.method = "boot"))
+@
+
+When bootstrapping is used, the resulting object has three additional components - ``sims.par'', ``sims.reserve.mean'', and  ``sims.reserve.pred'' that store the simulated parameters, mean values and predicted values of the reserves for each year, respectively. 
+<<>>=
+names(fit5)
+@
+
+We can thus compute the quantiles of the predictions based on the simulated samples in the ``sims.reserve.pred'' element as:
+<<>>=
+pr <- as.data.frame(fit5$sims.reserve.pred)
+qv <- c(0.025, 0.25, 0.5, 0.75, 0.975)
+res.q <- t(apply(pr, 2, quantile, qv))
+print(format(round(res.q), big.mark = ","), quote = FALSE)
+@
+
+The full predictive distribution of the simulated reserves for each year can be visualized easily:
+\begin{center}
+<<fig = TRUE, label = ReservePlot,  width = 5, height = 4>>=
+library(ggplot2)
+library(reshape2)
+prm <- melt(pr)
+names(prm) <- c("year", "reserve")
+gg <- ggplot(prm, aes(reserve))
+gg <- gg + geom_density(aes(fill = year), alpha = 0.3) + 
+        facet_wrap(~year, nrow = 2, scales = "free") + 
+        opts(axis.text.x = theme_blank(),
+             axis.text.y = theme_blank(), 
+             legend.position = "none")
+print(gg)
+@
+\end{center}
 
 \section{Using \chainladder with RExcel and SWord}
 
