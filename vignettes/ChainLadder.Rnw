@@ -565,7 +565,7 @@ plot(MCL)
 
 \subsection{Multivariate chain-ladder}
 
-The Mack chain ladder technique can be generalized to the multivariate situation where multiple reserving triangles are modeled simultaneuously. The advantage of the multivariate modeling is that correlations among different triangles can be modeled, which will lead to more accurate uncertainty assessment. There has been considerable development in this area, but most of the chain-ladder-based models can be summarized as sequential seemingly unrelated regressions (see Zhang 2010). 
+The Mack chain ladder technique can be generalized to the multivariate setting where multiple reserving triangles are modeled and developed simultaneuously. The advantage of the multivariate modeling is that correlations among different triangles can be modeled, which will lead to more accurate uncertainty assessment. Reserving methods that explicitly model the between-triangle contemporaneous correlations can be found in Braun (2002), Pr\"{o}hl and Schmidt (2005) and Merz and Wuthrich (2008). Another benifit of multivariate loss reserving is that structural relationships in which the development of one triangle depends on past losses from other triangles can also be reflected, e.g., the joint development of the paid and the incurred losses used in Quarg and Mack (2004). There has been considerable development in both areas, but most of the chain-ladder-based models can be summarized as sequential seemingly unrelated regressions (see Zhang 2010). 
 
 Denote $Y_{i,k}=(Y^{(1)}_{i,k}, \cdots ,Y^{(N)}_{i,k})$ as an $N \times 1$ vector of cumulative losses at accident year $i$ and development year $k$ where $(n)$ refers to the n-th triangle. Zhang (2010) specifies the  model in development period $k$ as:
 \begin{equation}
@@ -578,10 +578,7 @@ where $A_k$ is a column of intercepts and $B_k$ is the  development matrix for d
 &\mbox{losses of different accident years are independent}. \\
 &\epsilon_{i,k} \, \mbox{are symmetrically distributed}.
 \end{align}
-In the above, $D$ is the diagonal opterator, and $\delta$ is a known positive value that controls how the variance depends on the mean (as weights).
-
-
-The simplest case where $A_k=0$ and $B_k$'s are diagonal is a naive generalization of the chain ladder, often referred to as the multivariate chain ladder (see Pr\"{o}hl and Schmidt 2005). 
+In the above, $D$ is the diagonal opterator, and $\delta$ is a known positive value that controls how the variance depends on the mean (as weights). This model is referred to as the general multivariate chain ladder [GMCL] in Zhang (2010). A importaint special case where $A_k=0$ and $B_k$'s are diagonal is a naive generalization of the chain ladder, and often referred to as the multivariate chain ladder [MCL] (see Pr\"{o}hl and Schmidt 2005). 
 The following shows an application of this case using the data set from Merz and W\"{u}thrich (2008):
 <<>>=
 data(liab)
