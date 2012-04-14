@@ -27,7 +27,7 @@ MultiChainLadder2(Triangles, mse.method = "Mack", last = 3,
   
   \item{last}{an integer. The \code{MultiChainLadder2} function splits the triangles into 2 parts internally (see details below), and the \code{last} argument indicates how many of the development periods in the tail go into the second part of the split. The default is \code{3}.}
   
-  \item{type}{the typde of the model structure to be specified for the first part of the split model in \code{MultiChainLadder2}. \code{"MCL"}- the multivariate chain ladder with diagonal development matrix; \code{"MCL+int"}- the multivariate chain ladder with additional intercepts; \code{"GMCL-int"}- the general multivariate chain ladder without intercepts; and \code{"GMCL"} - the full general multivariate chain ladder with intercepts and non-diagonal development matrix. }
+  \item{type}{the type of the model structure to be specified for the first part of the split model in \code{MultiChainLadder2}. \code{"MCL"}- the multivariate chain ladder with diagonal development matrix; \code{"MCL+int"}- the multivariate chain ladder with additional intercepts; \code{"GMCL-int"}- the general multivariate chain ladder without intercepts; and \code{"GMCL"} - the full general multivariate chain ladder with intercepts and non-diagonal development matrix. }
   \item{\dots}{arguments passed to \code{systemfit}.}
 
 }

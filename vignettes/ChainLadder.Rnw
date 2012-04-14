@@ -579,23 +579,40 @@ where $A_k$ is a column of intercepts and $B_k$ is the  development matrix for d
 &\epsilon_{i,k} \, \mbox{are symmetrically distributed}.
 \end{align}
 In the above, $D$ is the diagonal opterator, and $\delta$ is a known positive value that controls how the variance depends on the mean (as weights). This model is referred to as the general multivariate chain ladder [GMCL] in Zhang (2010). A importaint special case where $A_k=0$ and $B_k$'s are diagonal is a naive generalization of the chain ladder, and often referred to as the multivariate chain ladder [MCL] (see Pr\"{o}hl and Schmidt 2005). 
-The following shows an application of this case using the data set from Merz and W\"{u}thrich (2008):
-<<>>=
-data(liab)
-# this is a list of two triangles 
-length(liab)
-dim(liab[[1]])
-@
 
+In the following, we first introduce the class \texttt{"triangles"}, for which we have defined several utility functions. Any input triangles to the \texttt{MultiChainLadder} function will be converted to \texttt{"triangles"} internally. We then present loss reserving motheds based on the MCL and GMCL models in turn.
+
+\subsubsection{The \texttt{"triangles"} class}
+Consider the two liability loss triangles from Merz and Wuthrich (2008). It comes as a list of two matrices :
+<<>>=
+str(liab)
+@
+We can convert a list to a \texttt{"triangles"} object using
+<<>>=
+liab2 <- as(liab, "triangles")
+class(liab2)
+@
+We can find out what methods are available for this class:
+<<eval = FALSE>>=
+showMethods(classes = "triangles")
+@
+For exmaple, if we want to extract the last three columns of each triangle, we can use the \texttt{"["} operator as follows: 
+<<>>=
+liab2[, 12:14, drop =TRUE]
+@
+The following combines two columns of the triangles to form a new matrix:
+<<>>=
+cbind2(liab2[1:3, 12])
+@
 
 \subsubsection{Separate chain ladder ignoring correlations}
 
-If we specify \texttt{fit.method = "OLS"}, the ordinary least squares will be used in estimating the development factors for each triangle independent of the others. In this case, the covariance matrix $\Sigma$ is diagonal. As a result, the multivariate model is equivalent to running two Mack chain ladders separately. 
+The form of regression techniques used in estimating the development parameters is controled by the \texttt{fit.method} argument. If we specify \texttt{fit.method = "OLS"}, the ordinary least squares will be used and the estimation of development factors for each triangle is independent of the others. In this case, the residual covariance matrix $\Sigma_k$ is diagonal. As a result, the multivariate model is equivalent to running separate Mack chain ladders separately. 
 <<>>=
 fit1 <- MultiChainLadder(liab, fit.method = "OLS")
-(s1 <- summary(fit1))
+lapply(summary(fit1)$report.summary, "[", 15, )
 @
-By default, the \texttt{summary} produces reserve statistics for all individual triangles, as well as for the portfolio that is assumed to be the sum of the two triangles. This behavior can be changed by supplying the \texttt{portfolio} argument. See the documentation for details. 
+In the above, we only show the total reserve estimate for each triangle to reduce the output. The full summary including the estimate for each year can be retrieved using the usual \texttt{summary} function. By default, the \texttt{summary} produces reserve statistics for all individual triangles, as well as for the portfolio that is assumed to be the sum of the two triangles. This behavior can be changed by supplying the \texttt{portfolio} argument. See the documentation for details. 
 
 We can verify if this is indeed the same as the univariate Mack chain ladder. For example, we can apply the \texttt{MackChainLadder} function on the first triangle:
 <<>>=
@@ -605,15 +622,20 @@ t(summary(fit0)$Totals) # the same as the first triangle above
 @
 
 
+The argument \texttt{mse.method} controls how the mean square errors are computed. By default, it implements the Mack method. An alternative method is the conditional re-sampling approach in Buchwalder et al. (2006), which assumes the estimated parameters are independent. This is used when \texttt{mse.method = "Independence"}. For example, the following reproduces the result in Buchwalder et al. (2006). Note that the first argument must be a list, even though only one triangle is used.
+<<>>=
+(B1 <- MultiChainLadder(list(GenIns), fit.method = "OLS", 
+    mse.method = "Independence"))
+@
+
 \subsubsection{Multivariate chain ladder using seemingly unrelated regressions}
 
 To allow correlations to be incorporated, we employ the seemingly unrelated regressions (see the package \texttt{systemfit}) that simultaneously model the two triangles in each development period. This is invoked when we specify \texttt{fit.method = "SUR"}:
 <<>>=
 fit2 <- MultiChainLadder(liab, fit.method = "SUR")
-s2 <- summary(fit2)
-print(format(s2$report.summary[[3]], digits = 4, big.mark = ","))
+lapply(summary(fit2)$report.summary, "[", 15, )
 @
-To reduce the output, only the portfolio summary is printed out. We see that the portfolio prediction error is inflated to $500,607$ from $457,278$ in the separate development model ("OLS"). This is because of the positive correlation between the two triangles. The estimated correlation for each development period can be retrieved through the \texttt{residCor} function: 
+We see that the portfolio prediction error is inflated to $500,607$ from $457,278$ in the separate development model ("OLS"). This is because of the positive correlation between the two triangles. The estimated correlation for each development period can be retrieved through the \texttt{residCor} function: 
 <<>>=
 round(unlist(residCor(fit2)), 3)
 @
@@ -621,7 +643,7 @@ Similarly, most methods that work for linear models such as \texttt{coef}, \text
 <<>>=
 do.call("rbind", coef(fit2))
 @
-The smaller-than-one developmemt factors from the 10-th period for the second triangle result in the negative IBNR estimates for the first several accident years in the previous output. 
+The smaller-than-one developmemt factors after the 10-th period for the second triangle indeed result in negative IBNR estimates for the first several accident years in that triangle. 
 
 The package also offers the \texttt{plot} method that produces various summary and diagonostic figures:
 <<eval = FALSE>>=
@@ -639,19 +661,36 @@ parold <- par(mfrow = c(4, 2), mar = c(4, 4, 2, 1),
 plot(fit2, which.triangle = 1:2, which.plot = 1:4)
 par(parold)
 @
+\caption{Summary and diagnostic plots from a \texttt{MultiChainLadder} object.}
+\label{fig:multi}
 \end{figure}
 
-We use the \texttt{which.triangle} to suppress the plot for the portfolios, and use the \texttt{which.plot} to select the desired types of plots. See the documentation for possible values for these two arguments. 
+The resulting plots are shown in Figure \ref{fig:multi}. We use the \texttt{which.triangle} to suppress the plot for the portfolios, and use the \texttt{which.plot} to select the desired types of plots. See the documentation for possible values for these two arguments. 
 
 
 
 \subsubsection{Other covariance estimation methods}
-Internally, the \texttt{MultiChainLadder} calls the \texttt{systemfit} function to fit the regression models period by period. When SUR models are specified, there are several ways to estimate the covariance matrix $\Sigma$. Available methods are \texttt{"noDfCor"}, \texttt{"geomean"}, \texttt{"max"}, and \texttt{"Theil"} with the default as \texttt{"geomean"}. The method \texttt{"Theil"} will produce unbiased covariance estimate, but the resulting estimate may not be positive semi-definite. This is also the estimator used by Merz and W\"{u}thrich (2008). However, this method does not work out of the box for the \texttt{liab} data, and is perhaps why Merz and W\"{u}thrich (2008) used extrapolation to get the estimate for the last several periods. Here, we simply split the data into two parts: on the first part we apply the multivariate chain ladder with the unbiased covariance estimate, and on the second part, we simply run a separate chain ladder approach.  
+Internally, the \texttt{MultiChainLadder} calls the \texttt{systemfit} function to fit the regression models period by period. When SUR models are specified, there are several ways to estimate the covariance matrix $\Sigma$. Available methods are \texttt{"noDfCor"}, \texttt{"geomean"}, \texttt{"max"}, and \texttt{"Theil"} with the default as \texttt{"geomean"}. The method \texttt{"Theil"} will produce unbiased covariance estimate, but the resulting estimate may not be positive semi-definite. This is also the estimator used by Merz and W\"{u}thrich (2008). However, this method does not work out of the box for the \texttt{liab} data, and is perhaps why Merz and W\"{u}thrich (2008) used extrapolation to get the estimate for the last several periods. 
 
-#impose parameter restriction in GMCL so that development matrix is diagonal
+Indeed, for most applications, we recommend the use of separate chain ladders for the tail periods to stabilize the estimation - there are few data points in the tail and running a multivariate model often produces extremely volatile estimates or even fails. The \texttt{MultiChainLadder2} function implents a split-and-join procedure, in which we split the input data into two parts, can specify a multivariate model with rich structures on the first part to reflect the multivariate dependencies, apply separate univariate chain ladders on the second part, and then join the two models together to produce the final predictions. The splitting is determined by the \textt{last} argument which indicates how many of the development periods in the tail go into the second part of the split. The type of the model structure to be specified for the first part of the split model in \code{MultiChainLadder2}. \code{"MCL"}- the multivariate chain ladder with diagonal development matrix; \code{"MCL+int"}- the multivariate chain ladder with additional intercepts; \code{"GMCL-int"}- the general multivariate chain ladder without intercepts; and \code{"GMCL"} - the full general multivariate chain ladder with intercepts and non-diagonal development matrix.
 
+For example, the following fits the SUR method to the first part (the first 11 columns) using the unbiased residual covariance estimator in Merz and Wuthrich (2008) and separate chain ladder for the rest:
+<<>>=
 W1 <- MultiChainLadder2(liab, mse.method = "Independence", 
-							control = systemfit.control(methodResidCov = "Theil")) 
+      	control = systemfit.control(methodResidCov = "Theil"))
+lapply(summary(W1)$report.summary, "[", 15, )
+@
+Similary, the iterative residual covariance estimator in Merz and Wuthrich (2008) can also be used, in which we use the control paramter  \texttt{maxiter} to determine the number of iterations:
+<<>>=
+for (i in 1:5){
+  W2 <- MultiChainLadder2(liab, mse.method = "Independence", 
+      control = systemfit.control(methodResidCov = "Theil", maxiter = i))
+  print(format(summary(W2)@report.summary[[3]][15, 4:5], 
+          digits = 6, big.mark = ","))    
+}
+lapply(summary(W2)$report.summary, "[", 15, )
+@
+We see that the covariance estimate converges in three steps. There are very similar to the results in Merz and Wuthrich (2008), the small difference being a result of the different approaches used in the last three periods. 
 
 \subsection{Clark's methods}
 
