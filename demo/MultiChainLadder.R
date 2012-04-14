@@ -1,80 +1,1 @@
-## MultiChainLadder demos## Author: Wayne (Yanwei) Zhang, March 2010# This shows that MCL under "OLS" applied to one triangle # is equivalent to MackChainLadder using the Mack extrapolationdata(GenIns)uni1 <- MackChainLadder(GenIns,est.sigma="Mack")uni2 <- MultiChainLadder(list(GenIns),					fit.method="OLS",					extrap=TRUE,					model="MCL")					summary(uni1)					summary(uni2)# This illustrates the use of the "Independence" assumption in # calculating the Mse, which is equivalent to the result in BBMWfit.bbmw <- MultiChainLadder(list(GenIns),				fit.method="OLS", 				delta=1, 				extrap=TRUE, 				mse.method="Independence",				model="MCL")fit.bbmw# MCL and GMCL will be equivalent if appropriate parameter restrictions# are applied in GMCL and "SUR" method is used# This is also a test of different programs to calculate Mse# Notice that GMCL does not work for triangles that need to be extrapolateddata(liab)liab <- as(liab,"triangles")  # transform "list" to be "triangles"liab1 <- liab[,1:10]   # special "[" is defined for class "triangles"liab2 <- liab[,10:14]#impose parameter restriction in GMCL so that development matrix is diagonalcoefr <- matrix(0,4,2)     coefr[1,1] <- coefr[4,2] <- 1coefr <- rep(list(coefr),9)fit1 <- MultiChainLadder(liab1,extrap = FALSE,model="MCL")fit2 <- MultiChainLadder(liab1,restrict.regMat=coefr,model="GMCL")summary(fit1)summary(fit2)# Illustrate the Merz and W\"{u}thrich estimator. The unbiased estimator can be specified as# "Theil" in the systemfit package. This estimator may not be positive semi-definite and # is not recommended. fit.mw=MultiChainLadder(liab1,mse.method="Independence",				extrap=FALSE,                control=systemfit.control(methodResidCov="Theil"))summary(fit.mw)# Iterative estimation can also be used to improve the estimation of the MCL. # This can be specified using the "maxiter" option in systemfit. # We use the above liab example, and see the result converges in the third step. for (iter in 1:5){		models1 <- MultiChainLadder(Triangles = liab1, 							extrap = FALSE, 							control=systemfit.control(maxiter=iter))        models2 <- MultiChainLadder(Triangles = liab2, 							fit.method = "OLS",							control=systemfit.control(maxiter=iter))        models <- Join2Fits(models1,models2)        FullTriangles  <-  predict(models)                       mse.mack  <-  Mse(ModelFit = models,                				FullTriangles = FullTriangles,		   					mse.method = "Mack")		fit.iter <- JoinFitMse(models,mse.mack)        print(summary(fit.iter)@report.summary[[3]][15,4:5])        }# Reproduce results in Zhang (2010a)# Data auto consists of three triangles, paid personal auto, incurred personal auto# and paid commercial auto. The paid and incurred triangles from personal auto will# result in divergent Paid-to-incurred ratios under SCL. MCL is inadequate since the# residual plots have clear downward pattern. GMCL provides a nice solution here to # resolve several problems with SCL and MCL. The following illustrates the use of # different models step by step.   auto <- as(auto,"triangles")# split data so that SCL is used for years 7:10 in MCL and GMCLda1 <- auto[,1:7]da2 <- auto[,7:10]# MCL actually fails without using SCL in years 8:9fit.mcl8 <- MultiChainLadder(auto[,8:9],model="MCL",extrap=FALSE)coef(fit.mcl8)residCov(fit.mcl8)	# This is because the input residual covariance is almost singularif (FALSE){	inputCov <- fit.mcl8$models[[1]]$residCovEst	solve(inputCov)}#1. fit with SCL fit.scl <- MultiChainLadder(auto,"OLS")## 2. fit with MCL fit1<-MultiChainLadder(da1,"SUR",model="MCL",extrap=FALSE)fit2<-MultiChainLadder(da2,"OLS")fit <- Join2Fits(fit1,fit2)pred <- predict(fit)mse <- Mse(fit,pred)fit.mcl<- JoinFitMse(fit,mse)# 3. GMCL with only interceptscoefr <- matrix(0,12,6)pos=cbind(c(1,2,5,7,9,12),1:6)coefr[pos] <- 1		#coefficient restriction matrixint=1:6				# specify which periods need interceptsrestrict.regMat <- c(rep(list(coefr),6),rep(list(NULL),3))fit1<-MultiChainLadder(da1,"SUR",			int=int,			restrict.regMat=restrict.regMat,			model="GMCL")fit2<-MultiChainLadder(da2,"OLS")fit <- Join2Fits(fit1,fit2)pred <- predict(fit)mse <- Mse(fit,pred)fit.int <- JoinFitMse(fit,mse)#1. fit with SCL fit.scl <- MultiChainLadder(auto,"OLS")## 2. fit with MCL fit1<-MultiChainLadder(da1,"SUR",model="MCL",extrap=FALSE)fit2<-MultiChainLadder(da2,"OLS")fit <- Join2Fits(fit1,fit2)pred <- predict(fit)mse <- Mse(fit,pred)fit.mcl<- JoinFitMse(fit,mse)# 3. GMCL with only interceptscoefr <- matrix(0,12,6)pos=cbind(c(1,2,5,7,9,12),1:6)coefr[pos] <- 1		#coefficient restriction matrixint=1:6				# specify which periods need interceptsrestrict.regMat <- c(rep(list(coefr),6),rep(list(NULL),3))fit1<-MultiChainLadder(da1,"SUR",			int=int,			restrict.regMat=restrict.regMat,			model="GMCL")fit2<-MultiChainLadder(da2,"OLS")fit <- Join2Fits(fit1,fit2)pred <- predict(fit)mse <- Mse(fit,pred)fit.int <- JoinFitMse(fit,mse)### 4. GMCL fit with full modelscoefr <- matrix(0,12,8)pos=cbind(c(1:3,5:7,9,12),1:8)coefr[pos] <- 1int=1:6restrict.regMat <- c(rep(list(coefr),6),rep(list(NULL),3))fit1<-MultiChainLadder(da1,"SUR",			int=int,			restrict.regMat=restrict.regMat,			model="GMCL")fit2<-MultiChainLadder(da2,"OLS")fit <- Join2Fits(fit1,fit2)pred <- predict(fit)mse <- Mse(fit,pred)fit.full <- JoinFitMse(fit,mse)# 5. GMCL with parameter selection# we leave out the detail of the stepwise process # and only show the final selected model# specify differnt restriction matrix for each periodcoefr1 <- matrix(0,12,6)pos1 <- cbind(c(2,3,5,7,9,12),1:6)coefr2 <- matrix(0,12,5)pos2 <- cbind(c(2,5:7,12),1:5)coefr3 <- matrix(0,12,7)pos3  <- cbind(c(1:2,5:7,9,12),1:7)coefr4 <- matrix(0,12,7)pos4 <- cbind(c(1:2,5,6,7,9,12),1:7)coefr5 <- matrix(0,12,5)pos5 <- cbind(c(1,2,5,7,12),1:5)coefr6 <- matrix(0,12,5)pos6 <- cbind(c(1,2,7,9,12),1:5)coefr1[pos1] <- 1coefr2[pos2] <- 1coefr3[pos3] <- 1coefr4[pos4] <- 1coefr5[pos5] <- 1coefr6[pos6] <- 1int=1:6restrict.regMat <- c(list(coefr1,coefr2,coefr3,coefr4,coefr5,coefr6,rep(list(NULL),3)))fit1<-MultiChainLadder(da1,"SUR",			int=int,			restrict.regMat=restrict.regMat,			model="GMCL")fit2<-MultiChainLadder(da2,"OLS")fit <- Join2Fits(fit1,fit2)pred <- predict(fit)mse <- Mse(fit,pred)fit.sel <- JoinFitMse(fit,mse)# 6. Munich Chain Ladderfit.mucl=MunichChainLadder(auto[[1]],auto[[2]])### combine all the paid-to-incurred ratiosu1 <- summary(fit.scl)@Ultimater1 <- u1[,1]/u1[,2]u2 <- summary(fit.mcl)@Ultimater2 <- u2[,1]/u2[,2]u3 <- summary(fit.int)@Ultimater3 <- u3[,1]/u3[,2]u4 <- summary(fit.full)@Ultimater4 <- u4[,1]/u4[,2]u5 <- summary(fit.sel)@Ultimater5 <- u5[,1]/u5[,2]r6=summary(fit.mucl)[[1]][,6]r6 <- c(r6,summary(fit.mucl)[[2]][2,3])ratios <- cbind(r1,r2,r3,r6,r4,r5)dimnames(ratios)[[2]] <- c("SCL","MCL","GMCL1","MuCL","GMCL2","GMCL3" )ratios=format(round(ratios*100,2), big.mark=",", scientific=FALSE) print(ratios,quote = FALSE)### Estimated parametersfit.sel@coefficientsfit.sel@residCovsummary(fit.sel)@residCor## summary statisticssummary(fit.sel,portfolio="1+3")@report.summary[[4]]### residual plotspar(mfrow=c(2,3))plot(fit.scl,which.plot=3:4)plot(fit.mcl,which.plot=3:4)plot(fit.int,which.plot=3:4)plot(fit.full,which.plot=3:4)plot(fit.sel,which.plot=3:4)	# histogram plotsr <- summary(fit.sel)@rstandardpar(mfrow=c(1,3))for (i in 1:3){	hist(r[,i],20,freq=FALSE,xlim=c(-2,2),			 xlab="Standardized Residuals",			 main=paste("Histogram for Triangle",i))	lines(density(r[,i]))}
-
-
-
-# Reproduce results in Zhang (2010b)
-# Analysis is based on the two paid triangles in the auto data
-
-da <- list(auto[[1]],auto[[3]])
-da <- as(da,"triangles")
-
-da1 <- da[,1:7]
-da2 <- da[,7:10]
-
-# OLS
-fit.scl <-  MultiChainLadder(da,"OLS")
-
-# fit MCL with Mack method to estimate MSE
-
-fit1 <- MultiChainLadder(da1,extrap=FALSE)
-fit2 <- MultiChainLadder(da2,"OLS")
-fit <- Join2Fits(fit1,fit2)
-pred <- predict(fit)
-mse <- Mse(fit,pred)
-fit.mcl <- JoinFitMse(fit,mse)
-
-
-# fit GMCL, that is MCL with intercepts
-coefr <- matrix(0,6,4)
-pos=cbind(c(1,2,4,6),1:4)
-coefr[pos] <- 1 
-
-int=1:6        # specify which periods need intercepts
-restrict.regMat <- rep(list(coefr),6)
-
-fit1<-MultiChainLadder(da1,"SUR",
-                        int=int,
-                        restrict.regMat=restrict.regMat,
-                        model="GMCL")
-fit2<-MultiChainLadder(da2,"OLS")
-fit <- Join2Fits(fit1,fit2)
-pred <- predict(fit)
-mse <- Mse(fit,pred)
-fit.int <- JoinFitMse(fit,mse)
-
-# show reidual plots
-par(mfrow=c(2,2))
-plot(fit.mcl,which.plot=3)
-plot(fit.int,which.plot=3)
-
-# use mse estimators from Merz and W\"{u}uthrich
-
-fit1 <- MultiChainLadder(da1,extrap=FALSE,mse.method="Independence")
-fit2 <- MultiChainLadder(da2,"OLS")
-fit <- Join2Fits(fit1,fit2)
-pred <- predict(fit)
-mse <- Mse(fit,pred,mse.method="Independence")
-fit.mcl2 <- JoinFitMse(fit,mse)
-
-## get summary stat for prediction error
-s1 <- summary(fit.scl)
-se.scl <- cbind(s1$S.E.Est.Ult[11,],s1$S.E.Proc.Ult[11,],s1$S.E.Ult[11,])
-s2 <- summary(fit.mcl)
-se.mcl <- cbind(s2$S.E.Est.Ult[11,],s2$S.E.Proc.Ult[11,],s2$S.E.Ult[11,])
-s3 <- summary(fit.mcl2)
-se.mcl2 <- cbind(s3$S.E.Est.Ult[11,],s3$S.E.Proc.Ult[11,],s3$S.E.Ult[11,])
-s4 <- summary(fit.int)
-se.int <- cbind(s4$S.E.Est.Ult[11,],s4$S.E.Proc.Ult[11,],s4$S.E.Ult[11,])
-
-se.all <- cbind(se.scl,se.mcl,se.mcl2,se.int)
-n1 <- rep(c("Est","Proc","S.E"),4)
-n2 <- rep(c("(OLS)","(MCL1)","(MCL2)","(GMCL)"),rep(3,4))
-nm <- paste(n1,n2,sep="")
-dimnames(se.all)[[2]] <- nm
-se.all
-
-m.all <- cbind(s1$IBNR[11,],s2$IBNR[11,],s3$IBNR[11,],s4$IBNR[11,])
-dimnames(m.all)[[2]] <- rep("IBNR",4)
-
-
-
+## MultiChainLadder demos## Author: Wayne (Yanwei) Zhang, March 2010# Reproduce results in Zhang (2010)# Data auto consists of three triangles, paid personal auto, incurred personal auto# and paid commercial auto. The paid and incurred triangles from personal auto will# result in divergent Paid-to-incurred ratios under SCL. MCL is inadequate since the# residual plots have clear downward pattern. GMCL provides a nice solution here to # resolve several problems with SCL and MCL. The following illustrates the use of # different models step by step.   auto <- as(auto, "triangles")# split data so that SCL is used for years 7:10 in MCL and GMCLda1 <- auto[, 1:7]da2 <- auto[, 7:10]# MCL actually fails without using SCL in years 8:9fit.mcl8 <- MultiChainLadder(auto[, 8:9], model = "MCL", extrap = FALSE)coef(fit.mcl8)residCov(fit.mcl8)	# This is because the input residual covariance is almost singularif (FALSE){	inputCov <- fit.mcl8$models[[1]]$residCovEst	solve(inputCov)}#1. fit with SCL fit.scl <- MultiChainLadder(auto, "OLS")## 2. fit with MCL fit.mcl <- MultiChainLadder2(auto)# 3. GMCL with only interceptsfit.int <- MultiChainLadder2(auto, type = "MCL+int")### 4. GMCL fit with full modelscoefr <- matrix(0, 12, 8)pos <- cbind(c(1:3, 5:7, 9, 12), 1:8)coefr[pos] <- 1int <- 1:6restrict.regMat <- c(rep(list(coefr), 6),rep(list(NULL), 3))fit1 <- MultiChainLadder(da1, "SUR", int = int,			restrict.regMat = restrict.regMat, model = "GMCL")fit2 <- MultiChainLadder(da2, "OLS")fit <- Join2Fits(fit1, fit2)pred <- predict(fit)mse <- Mse(fit, pred)fit.full <- JoinFitMse(fit, mse)# 5. GMCL with parameter selection# we leave out the detail of the stepwise process # and only show the final selected model# specify differnt restriction matrix for each periodcoefr1 <- matrix(0, 12, 6)pos1 <- cbind(c(2, 3, 5, 7, 9, 12), 1:6)coefr2 <- matrix(0, 12, 5)pos2 <- cbind(c(2, 5:7, 12), 1:5)coefr3 <- matrix(0, 12, 7)pos3  <- cbind(c(1:2, 5:7, 9, 12), 1:7)coefr4 <- matrix(0, 12, 7)pos4 <- cbind(c(1:2, 5, 6, 7, 9, 12), 1:7)coefr5 <- matrix(0, 12, 5)pos5 <- cbind(c(1, 2, 5, 7, 12), 1:5)coefr6 <- matrix(0, 12, 5)pos6 <- cbind(c(1, 2, 7, 9, 12), 1:5)coefr1[pos1] <- 1coefr2[pos2] <- 1coefr3[pos3] <- 1coefr4[pos4] <- 1coefr5[pos5] <- 1coefr6[pos6] <- 1int <- 1:6restrict.regMat <- c(list(coefr1, coefr2, coefr3, coefr4,                          coefr5, coefr6, rep(list(NULL), 3)))fit1 <- MultiChainLadder(da1, "SUR", int = int,			restrict.regMat = restrict.regMat, model = "GMCL")fit2 <- MultiChainLadder(da2, "OLS")fit <- Join2Fits(fit1, fit2)pred <- predict(fit)mse <- Mse(fit, pred)fit.sel <- JoinFitMse(fit, mse)# 6. Munich Chain Ladderfit.mucl <- MunichChainLadder(auto[[1]], auto[[2]])### combine all the paid-to-incurred ratiosu1 <- summary(fit.scl)@Ultimater1 <- u1[, 1]/u1[, 2]u2 <- summary(fit.mcl)@Ultimater2 <- u2[, 1]/u2[, 2]u3 <- summary(fit.int)@Ultimater3 <- u3[, 1]/u3[, 2]u4 <- summary(fit.full)@Ultimater4 <- u4[, 1]/u4[, 2]u5 <- summary(fit.sel)@Ultimater5 <- u5[, 1]/u5[, 2]r6 <- summary(fit.mucl)[[1]][, 6]r6 <- c(r6, summary(fit.mucl)[[2]][2, 3])ratios <- cbind(r1, r2, r3, r6, r4, r5)dimnames(ratios)[[2]] <- c("SCL", "MCL", "GMCL1", "MuCL", "GMCL2", "GMCL3" )ratios <- format(round(ratios*100 ,2), big.mark=",", scientific = FALSE) print(ratios, quote = FALSE)### Estimated parametersfit.sel@coefficientsfit.sel@residCovsummary(fit.sel)@residCor## summary statisticssummary(fit.sel, portfolio = "1+3")@report.summary[[4]]### residual plotspar(mfrow = c(2, 3))plot(fit.scl, which.plot = 3:4)plot(fit.mcl, which.plot = 3:4)plot(fit.int, which.plot = 3:4)plot(fit.full, which.plot = 3:4)plot(fit.sel, which.plot = 3:4)	# histogram plotsr <- summary(fit.sel)@rstandardpar(mfrow = c(1,3))for (i in 1:3){	hist(r[, i], 20, freq = FALSE, xlim = c(-2, 2),			 xlab = "Standardized Residuals",			 main = paste("Histogram for Triangle", i))	lines(density(r[, i]))}

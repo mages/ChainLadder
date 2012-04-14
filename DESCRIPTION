@@ -1,22 +1,33 @@
 Package: ChainLadder
 Type: Package
 Title: Statistical methods for the calculation of outstanding claims
-       reserves in general insurance 
+    reserves in general insurance
 Version: 0.1.5-3
 Date: 2012-03-25
 Author: Markus Gesmann, Daniel Murphy and Wayne Zhang
 Maintainer: Markus Gesmann <markus.gesmann@gmail.com>
 Description: The ChainLadder package provides various statistical
-	     methods which are typically used for the estimation of
-	     outstanding claims reserves in general insurance. The
-	     package has implementations of the Mack-, Munich-,
-	     Bootstrap, and multi-variate chain-ladder methods, as
-	     well as the loss development factor curve fitting
-	     methods of Dave Clark and generalised linear model
-	     based reserving models.  
-Depends: Hmisc, lattice, methods, stats, systemfit, MASS, RUnit, 
-		actuar, utils, cplm, tweedie
-Suggests: RODBC
+    methods which are typically used for the estimation of
+    outstanding claims reserves in general insurance. The
+    package has implementations of the Mack-, Munich-,
+    Bootstrap, and multi-variate chain-ladder methods, as
+    well as the loss development factor curve fitting
+    methods of Dave Clark and generalised linear model
+    based reserving models.
+Depends:
+    Hmisc,
+    lattice,
+    methods,
+    stats,
+    systemfit,
+    MASS,
+    RUnit,
+    actuar,
+    utils,
+    cplm,
+    tweedie
+Suggests:
+    RODBC
 License: GPL (>= 2)
 URL: http://code.google.com/p/chainladder/
 LazyLoad: yes

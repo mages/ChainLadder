@@ -1,4 +1,4 @@
-export(MackChainLadder, MunichChainLadder, BootChainLadder, MultiChainLadder)
+export(MackChainLadder, MunichChainLadder, BootChainLadder, MultiChainLadder, MultiChainLadder2)
 export(as.triangle)
 export(chainladder)
 export(getLatestCumulative)

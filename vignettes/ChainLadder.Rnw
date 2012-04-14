@@ -12,14 +12,16 @@
 \usepackage{url}
 \usepackage{wrapfig}
 \usepackage{hyperref}
-\usepackage{amsmath}
-
+\usepackage{mathrsfs, amsmath, amsfonts, amssymb, amsthm}
+\usepackage[left=2.5cm,right=2.5cm]{geometry}
+\usepackage{graphicx}
 \usepackage{draftwatermark}
 \hypersetup{
   colorlinks=true, pagebackref=true,
   pdftitle={ChainLadder: Claims reserving with R},%
   pdfauthor={Markus Gesmann}%, Dan Murphy, Wayne Zhang},%
 }
+
 %\VignetteIndexEntry{ChainLadder: Claims reserving with R}
 % \VignetteDepends{ChainLadder}
 %\VignetteKeywords{Claims, reserving, IBNR, chain ladder, stochastic reserving, statistical software}
@@ -32,6 +34,8 @@ options(prompt = "R> ", digits = 4, show.signif.stars = FALSE)
 
 \setlength{\parindent}{0.0in}
 \setlength{\parskip}{2mm}
+\setlength{\headsep}{0.05in}
+\setlength{\tabcolsep}{1.5pt}
 
 \newcommand{\chainladder}{\textbf{\texttt{ChainLadder}} }
 % Change default font to a sans serifs
@@ -256,7 +260,7 @@ data:
 plot(RAA)
 @ 
 
-\begin{figure}[h]
+\begin{figure}[!h]
   \centering
 <<fig=TRUE, label=TrianglePlot1, echo=FALSE>>=
 plot(RAA)
@@ -276,7 +280,7 @@ panels.}, see Figure~\ref{RAAplot2}.
 plot(RAA, lattice=TRUE)
 @ 
 
-\begin{figure}[h]
+\begin{figure}[!h]
   \centering
 <<fig=TRUE, label=TrianglePlot2, echo=FALSE>>=
 plot(RAA, lattice=TRUE)
@@ -370,7 +374,7 @@ head(raa.df)
 This is particular helpful when you would like to store your results
 back into data base. Figure~\ref{fig:database} gives you an idea of a
 potential data flow between R and data bases.
-\begin{figure}[h]
+\begin{figure}[!h]
   \centering
   \includegraphics[width=0.5\textwidth]{RandDatabases}
   \caption{Flow chart of data between R and data bases.}
@@ -544,7 +548,7 @@ curve(plnorm(x,fit$estimate["meanlog"], fit$estimate["sdlog"]),
       col="red", add=TRUE)  
 @ 
 \subsubsection{Munich chain-ladder}
-<<fig=TRUE>>=
+<<fig=TRUE, width = 5, height = 4>>=
 MCLpaid
 MCLincurred
 op <- par(mfrow=c(1,2))
@@ -560,13 +564,14 @@ plot(MCL)
 
 
 \subsection{Multivariate chain-ladder}
+
 The Mack chain ladder technique can be generalized to the multivariate situation where multiple reserving triangles are modeled simultaneuously. The advantage of the multivariate modeling is that correlations among different triangles can be modeled, which will lead to more accurate uncertainty assessment. There has been considerable development in this area, but most of the chain-ladder-based models can be summarized as sequential seemingly unrelated regressions (see Zhang 2010). 
 
 Denote $Y_{i,k}=(Y^{(1)}_{i,k}, \cdots ,Y^{(N)}_{i,k})$ as an $N \times 1$ vector of cumulative losses at accident year $i$ and development year $k$ where $(n)$ refers to the n-th triangle. Zhang (2010) specifies the  model in development period $k$ as:
 \begin{equation}
 Y_{i,k+1} = A_k + B_k \cdot Y_{i,k} + \epsilon_{i,k},
 \end{equation}
-where $A_k$ is a column of intercepts and $B_k$ is the a development matrix. Assumptions for this model are:
+where $A_k$ is a column of intercepts and $B_k$ is the  development matrix for development period $k$. Assumptions for this model are:
 \begin{align}
 &E(\epsilon_{i,k}|Y_{i,1}, \cdots,Y_{i,I+1-k}) =0. \\
 &cov(\epsilon_{i,k}|Y_{i,1}, \cdots, Y_{i,I+1-k})=D(Y_{i,k}^{-\delta/2}) \Sigma_k D(Y_{i,k}^{-\delta/2}). \\
@@ -575,75 +580,81 @@ where $A_k$ is a column of intercepts and $B_k$ is the a development matrix. Ass
 \end{align}
 In the above, $D$ is the diagonal opterator, and $\delta$ is a known positive value that controls how the variance depends on the mean (as weights).
 
-The simplest case where $A_k=0$ and $B_k$ are diagonal is a naive generalizatio of the chain ladder, often referred to as the multivariate chain ladder (see Pr\"{o}hl and Schmidt 2005). 
-The following shows an application of this case. The following is a data set used in Merz and W\"{u}thrich (2008):
+
+The simplest case where $A_k=0$ and $B_k$'s are diagonal is a naive generalization of the chain ladder, often referred to as the multivariate chain ladder (see Pr\"{o}hl and Schmidt 2005). 
+The following shows an application of this case using the data set from Merz and W\"{u}thrich (2008):
 <<>>=
 data(liab)
 # this is a list of two triangles 
 length(liab)
 dim(liab[[1]])
 @
-If we specify \texttt{fit.method = "OLS"}, the ordinary lease squares will be used in estimating the development factors. As a result, the multivariate model is equivalent to running two Mack chain ladders separately. 
+
+
+\subsubsection{Separate chain ladder ignoring correlations}
+
+If we specify \texttt{fit.method = "OLS"}, the ordinary least squares will be used in estimating the development factors for each triangle independent of the others. In this case, the covariance matrix $\Sigma$ is diagonal. As a result, the multivariate model is equivalent to running two Mack chain ladders separately. 
 <<>>=
 fit1 <- MultiChainLadder(liab, fit.method = "OLS")
 (s1 <- summary(fit1))
 @
 By default, the \texttt{summary} produces reserve statistics for all individual triangles, as well as for the portfolio that is assumed to be the sum of the two triangles. This behavior can be changed by supplying the \texttt{portfolio} argument. See the documentation for details. 
 
-We can verify if this is indeed the same as the univariate Mack chain ladder:
+We can verify if this is indeed the same as the univariate Mack chain ladder. For example, we can apply the \texttt{MackChainLadder} function on the first triangle:
 <<>>=
-MackChainLadder(liab[[1]], est.sigma = "Mack")
+fit0 <- MackChainLadder(liab[[1]], est.sigma = "Mack")
+# just show the total estimates for minimize output
+t(summary(fit0)$Totals) # the same as the first triangle above
 @
 
-The \texttt{model.summary} slot in the summary stores the fitted parameters in the regression fit for each development period: 
-<<>>=
-names(s1)
-head(s1$model.summary)
-@
 
-To allow correlations to be incorporated, we employ the seemingly unrelated regressions that simultaneously model the two triangles. We now specify \texttt{fit.method = "SUR"}:
+\subsubsection{Multivariate chain ladder using seemingly unrelated regressions}
+
+To allow correlations to be incorporated, we employ the seemingly unrelated regressions (see the package \texttt{systemfit}) that simultaneously model the two triangles in each development period. This is invoked when we specify \texttt{fit.method = "SUR"}:
 <<>>=
 fit2 <- MultiChainLadder(liab, fit.method = "SUR")
-(s2 <- summary(fit2))
+s2 <- summary(fit2)
+print(format(s2$report.summary[[3]], digits = 4, big.mark = ","))
 @
-
-We see that the portfolio prediction error is inflated to $500,607$ from $457,278$ due to the positive correlations between the two triangles. The estimated correlation for each development period can be retrieved through the \texttt{residCor} function: 
+To reduce the output, only the portfolio summary is printed out. We see that the portfolio prediction error is inflated to $500,607$ from $457,278$ in the separate development model ("OLS"). This is because of the positive correlation between the two triangles. The estimated correlation for each development period can be retrieved through the \texttt{residCor} function: 
 <<>>=
-unlist(residCor(fit2))
+round(unlist(residCor(fit2)), 3)
 @
-Similarly, most methods that work for linear models such as \texttt{coef}, \texttt{fitted}, \texttt{resid} and so on will also work. For example, we can retrieve the estimated development factors for the first two periods as 
+Similarly, most methods that work for linear models such as \texttt{coef}, \texttt{fitted}, \texttt{resid} and so on will also work. Since we have a sequence of models, the retrieved results from these methods are stored in a list. For example, we can retrieve the estimated development factors for each period as 
 <<>>=
-coef(fit2)[1:2]
+do.call("rbind", coef(fit2))
 @
+The smaller-than-one developmemt factors from the 10-th period for the second triangle result in the negative IBNR estimates for the first several accident years in the previous output. 
 
-The plot function can also be used to generate various summary and diagonostic figures:
-
-\begin{figure}[h]
-\centering
-<<fig = TRUE, label = MultiPlot, width = 6, height = 11>>=
+The package also offers the \texttt{plot} method that produces various summary and diagonostic figures:
+<<eval = FALSE>>=
 parold <- par(mfrow = c(4, 2), mar = c(4, 4, 2, 1), 
     mgp = c(1.3, 0.3, 0), tck = -0.02)
-plot(fit2, which.triangle = 1:2, which.plot = c(1, 3, 4))
+plot(fit2, which.triangle = 1:2, which.plot = 1:4)
+par(parold)
+@
+
+\begin{figure}[!p]
+\centering
+<<fig = TRUE, echo = FALSE, label = MultiPlot, width = 6, height = 10>>=
+parold <- par(mfrow = c(4, 2), mar = c(4, 4, 2, 1), 
+    mgp = c(1.3, 0.3, 0), tck = -0.02)
+plot(fit2, which.triangle = 1:2, which.plot = 1:4)
 par(parold)
 @
 \end{figure}
+
 We use the \texttt{which.triangle} to suppress the plot for the portfolios, and use the \texttt{which.plot} to select the desired types of plots. See the documentation for possible values for these two arguments. 
 
 
-<<>>=
-#FIXME:
-liab <- as(liab,"triangles")  # transform "list" to be "triangles"
-liab1 <- liab[, 1:10]   # special "[" is defined for class "triangles"
-liab2 <- liab[, 10:14]
 
-fs1 <- MultiChainLadder(liab1, extrap = FALSE, int = 1:9, model = "GMCL")
-fs2 <- MultiChainLadder(liab2, fit.method = "OLS")
-fs <- Join2Fits(fs1, fs2)
-ffs <- predict(fs)               
-mse.mack  <-  Mse(fs, ffs, "Mack")
-fit3 <- JoinFitMse(fs, mse.mack)
-plot(fit3, which.triangle = 1:2, which.plot = 3)
-@ 
+\subsubsection{Other covariance estimation methods}
+Internally, the \texttt{MultiChainLadder} calls the \texttt{systemfit} function to fit the regression models period by period. When SUR models are specified, there are several ways to estimate the covariance matrix $\Sigma$. Available methods are \texttt{"noDfCor"}, \texttt{"geomean"}, \texttt{"max"}, and \texttt{"Theil"} with the default as \texttt{"geomean"}. The method \texttt{"Theil"} will produce unbiased covariance estimate, but the resulting estimate may not be positive semi-definite. This is also the estimator used by Merz and W\"{u}thrich (2008). However, this method does not work out of the box for the \texttt{liab} data, and is perhaps why Merz and W\"{u}thrich (2008) used extrapolation to get the estimate for the last several periods. Here, we simply split the data into two parts: on the first part we apply the multivariate chain ladder with the unbiased covariance estimate, and on the second part, we simply run a separate chain ladder approach.  
+
+#impose parameter restriction in GMCL so that development matrix is diagonal
+
+W1 <- MultiChainLadder2(liab, mse.method = "Independence", 
+							control = systemfit.control(methodResidCov = "Theil")) 
 
 \subsection{Clark's methods}
 

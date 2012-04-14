@@ -275,6 +275,57 @@ MultiChainLadder <- function(Triangles,
 }
 
 
+# a two-part multivariate chain ladder method
+# split the triangles into 2 parts- fit MCL/GMCL on the first part 
+# and SCL on the second part
+# return the union of the two models
+MultiChainLadder2 <- function(Triangles, mse.method = "Mack", last = 3, 
+                      type = c("MCL", "MCL+int", "GMCL-int", "GMCL"), ...){
+  type <- match.arg(type)
+  Triangles <- as(Triangles, "triangles")
+  m <- ncol(Triangles[[1]])
+  first <- m - last
+  # split the data into two parts
+  T1 <- Triangles[, 1:first]
+  T2 <- Triangles[, first:m]
+  
+  if (type == "MCL") {               # the MCL model
+    # fit SUR MCL on the first part
+    f1 <- MultiChainLadder(T1, extrap = FALSE, ...)
+  } else if (type == "MCL+int") {    # the MCL plus intercept 
+    p <- length(Triangles)
+    dm <- matrix(1:(p * (p + 1)), p, p + 1, byrow = TRUE)
+    dm2 <- dm[, -1]
+    dm2 <- diag(diag(dm2), nrow = p)
+    dm <- cbind(dm[, 1], dm2) 
+    pp <- t(dm)[t(dm) > 0]
+    coefr <- matrix(0, p * (p + 1), 2 * p)
+    pos <-  cbind(pp, 1:(2 * p))
+    coefr[pos] <- 1         #coefficient restriction matrix
+    restrict.regMat <- c(rep(list(coefr), first), rep(list(NULL), last))
+    
+    # fit SUR GMCL on the first part
+    f1 <- MultiChainLadder(T1, int = 1:(first - 1), model = "GMCL",
+                          restrict.regMat = restrict.regMat, ...)
+    
+  } else if (type == "GMCL-int") {    # the GMCL without intercepts 
+    f1 <- MultiChainLadder(T1, model = "GMCL",  ...)
+    
+  } else if (type == "GMCL") {        # the full GMCL model 
+    f1 <- MultiChainLadder(T1, int = 1:(first - 1), model = "GMCL", ...)
+  }
+  
+  # fit separate chain ladder on the second part
+  f2 <- MultiChainLadder(T2, fit.method = "OLS")
+  # join the two models
+  ff <- Join2Fits(f1, f2)
+  ffT  <-  predict(ff) 
+  # compute mse
+  mse  <-  Mse(ff, ffT, mse.method)
+  # create a new MultiChainLadder object
+  fit <- JoinFitMse(ff, mse)
+  return(fit)
+}
 
 # fit the GMCL model 
 .FitGMCL <- function(Triangles,
