@@ -84,7 +84,7 @@ to the policyholder to pay for future claims for an upfront received
 premium. 
 
 As a result insurers don't know the upfront cost of their
-service, but rely on historical data analysis and judgement to derive a
+service, but rely on historical data analysis and judgment to derive a
 sustainable price for their offering. In General Insurance (or Non-Life
 Insurance, e.g. motor, property and casualty insurance) most policies
 run for a period of 12 months. However, the claims payment process 
@@ -97,7 +97,7 @@ costly example are the claims from asbestos liabilities.
 A research report by a  working party of the  Institute of Actuaries
 has estimated that the undiscounted cost of UK mesothelioma-related
 claims to the UK Insurance Market for the period 2009 to 2050 could be
-around $\pounds$10bn~\cite{Gravelsons2009}. The cost for aAsbestos
+around $\pounds$10bn~\cite{Gravelsons2009}. The cost for asbestos
 related claims in the US for the worldwide insurance industry was
 estimate to be around \$120bn in 2002~\cite{Michaels2002}.  
 
@@ -161,7 +161,7 @@ by Dan Murphy in 2008 and Wayne Zhang in 2010.
 
 
 \subsection{Brief package overview}
-This vignette will give the reader a brief overview of the functionallity of 
+This vignette will give the reader a brief overview of the functionality of 
 the \chainladder package. The functions are discussed and explained in 
 more detail in the respective help files and examples. 
 %% The help files contain the references to the research papers on
@@ -247,7 +247,7 @@ RAA
 The objective of a reserving exercise is to forecast the future claims
 development in the bottom right corner of the triangle and potential
 further developments. Eventually all claims for a given origin period
-wil be settled, but it is not always obvious to judge how many years
+will be settled, but it is not always obvious to judge how many years
 or even decades it will take. We speak of long and short tail business
 depending on the time it takes to pay all claims.
 
@@ -462,7 +462,7 @@ This approach is also called Loss Development Factor (LDF) method.
 
 Since the early 1990s several papers have been published to embed the
 simple chain-ladder method into a statistical framework. Ben Zehnwirth
-and Glenn Branett point out in~\cite{ZehnwirthBarnettProceedings} that
+and Glenn Barnett point out in~\cite{ZehnwirthBarnettProceedings} that
 the age-to-age link ratios can be regarded as the coefficients of a
 weighted linear regression through the origin, see
 also~\cite{DanielMurphy1994}. 
@@ -565,7 +565,7 @@ plot(MCL)
 
 \subsection{Multivariate chain-ladder}
 
-The Mack chain ladder technique can be generalized to the multivariate setting where multiple reserving triangles are modeled and developed simultaneuously. The advantage of the multivariate modeling is that correlations among different triangles can be modeled, which will lead to more accurate uncertainty assessment. Reserving methods that explicitly model the between-triangle contemporaneous correlations can be found in Braun (2002), Pr\"{o}hl and Schmidt (2005) and Merz and Wuthrich (2008). Another benifit of multivariate loss reserving is that structural relationships in which the development of one triangle depends on past losses from other triangles can also be reflected, e.g., the joint development of the paid and the incurred losses used in Quarg and Mack (2004). There has been considerable development in both areas, but most of the chain-ladder-based models can be summarized as sequential seemingly unrelated regressions (see Zhang 2010). 
+The Mack chain ladder technique can be generalized to the multivariate setting where multiple reserving triangles are modeled and developed simultaneously. The advantage of the multivariate modeling is that correlations among different triangles can be modeled, which will lead to more accurate uncertainty assessment. Reserving methods that explicitly model the between-triangle contemporaneous correlations can be found in Braun (2002), Pr\"{o}hl and Schmidt (2005) and Merz and W\"{u}thrich (2008). Another benefit of multivariate loss reserving is that structural relationships between triangles can also be reflected, where  the development of one triangle depends on past losses from other triangles. For example, there is generally need for the joint development of the paid and incurred losses (see Quarg and Mack 2004).  Most of the chain-ladder-based multivariate reserving models can be summarized as sequential seemingly unrelated regressions (see Zhang 2010). 
 
 Denote $Y_{i,k}=(Y^{(1)}_{i,k}, \cdots ,Y^{(N)}_{i,k})$ as an $N \times 1$ vector of cumulative losses at accident year $i$ and development year $k$ where $(n)$ refers to the n-th triangle. Zhang (2010) specifies the  model in development period $k$ as:
 \begin{equation}
@@ -578,12 +578,12 @@ where $A_k$ is a column of intercepts and $B_k$ is the  development matrix for d
 &\mbox{losses of different accident years are independent}. \\
 &\epsilon_{i,k} \, \mbox{are symmetrically distributed}.
 \end{align}
-In the above, $D$ is the diagonal opterator, and $\delta$ is a known positive value that controls how the variance depends on the mean (as weights). This model is referred to as the general multivariate chain ladder [GMCL] in Zhang (2010). A importaint special case where $A_k=0$ and $B_k$'s are diagonal is a naive generalization of the chain ladder, and often referred to as the multivariate chain ladder [MCL] (see Pr\"{o}hl and Schmidt 2005). 
+In the above, $D$ is the diagonal operator, and $\delta$ is a known positive value that controls how the variance depends on the mean (as weights). This model is referred to as the general multivariate chain ladder [GMCL] in Zhang (2010). A important special case where $A_k=0$ and $B_k$'s are diagonal is a naive generalization of the chain ladder, often referred to as the multivariate chain ladder [MCL] (see Pr\"{o}hl and Schmidt 2005). 
 
-In the following, we first introduce the class \texttt{"triangles"}, for which we have defined several utility functions. Any input triangles to the \texttt{MultiChainLadder} function will be converted to \texttt{"triangles"} internally. We then present loss reserving motheds based on the MCL and GMCL models in turn.
+In the following, we first introduce the class \texttt{"triangles"}, for which we have defined several utility functions. Indeed, any input triangles to the \texttt{MultiChainLadder} function will be converted to \texttt{"triangles"} internally. We then present loss reserving methods based on the MCL and GMCL models in turn.
 
 \subsubsection{The \texttt{"triangles"} class}
-Consider the two liability loss triangles from Merz and Wuthrich (2008). It comes as a list of two matrices :
+Consider the two liability loss triangles from Merz and W\"{u}thrich (2008). It comes as a list of two matrices :
 <<>>=
 str(liab)
 @
@@ -598,7 +598,8 @@ showMethods(classes = "triangles")
 @
 For exmaple, if we want to extract the last three columns of each triangle, we can use the \texttt{"["} operator as follows: 
 <<>>=
-liab2[, 12:14, drop =TRUE]
+# use drop = TRUE to remove rows that are all NA's
+liab2[, 12:14, drop = TRUE]
 @
 The following combines two columns of the triangles to form a new matrix:
 <<>>=
@@ -607,18 +608,19 @@ cbind2(liab2[1:3, 12])
 
 \subsubsection{Separate chain ladder ignoring correlations}
 
-The form of regression techniques used in estimating the development parameters is controled by the \texttt{fit.method} argument. If we specify \texttt{fit.method = "OLS"}, the ordinary least squares will be used and the estimation of development factors for each triangle is independent of the others. In this case, the residual covariance matrix $\Sigma_k$ is diagonal. As a result, the multivariate model is equivalent to running separate Mack chain ladders separately. 
+The form of regression models used in estimating the development parameters is controlled by the \texttt{fit.method} argument. If we specify \texttt{fit.method = "OLS"}, the ordinary least squares will be used and the estimation of development factors for each triangle is independent of the others. In this case, the residual covariance matrix $\Sigma_k$ is diagonal. As a result, the multivariate model is equivalent to running multiple Mack chain ladders separately. 
+
 <<>>=
 fit1 <- MultiChainLadder(liab, fit.method = "OLS")
 lapply(summary(fit1)$report.summary, "[", 15, )
 @
-In the above, we only show the total reserve estimate for each triangle to reduce the output. The full summary including the estimate for each year can be retrieved using the usual \texttt{summary} function. By default, the \texttt{summary} produces reserve statistics for all individual triangles, as well as for the portfolio that is assumed to be the sum of the two triangles. This behavior can be changed by supplying the \texttt{portfolio} argument. See the documentation for details. 
+In the above, we only show the total reserve estimate for each triangle to reduce the output. The full summary including the estimate for each year can be retrieved using the usual \texttt{summary} function. By default, the \texttt{summary} function produces reserve statistics for all individual triangles, as well as for the portfolio that is assumed to be the sum of the two triangles. This behavior can be changed by supplying the \texttt{portfolio} argument. See the documentation for details. 
 
-We can verify if this is indeed the same as the univariate Mack chain ladder. For example, we can apply the \texttt{MackChainLadder} function on the first triangle:
+We can verify if this is indeed the same as the univariate Mack chain ladder. For example, we can apply the \texttt{MackChainLadder} function to each triangle:
 <<>>=
-fit0 <- MackChainLadder(liab[[1]], est.sigma = "Mack")
-# just show the total estimates for minimize output
-t(summary(fit0)$Totals) # the same as the first triangle above
+fit <- lapply(liab, MackChainLadder, est.sigma = "Mack")
+# the same as the first triangle above
+lapply(fit, function(x) t(summary(x)$Totals)) 
 @
 
 
@@ -643,9 +645,9 @@ Similarly, most methods that work for linear models such as \texttt{coef}, \text
 <<>>=
 do.call("rbind", coef(fit2))
 @
-The smaller-than-one developmemt factors after the 10-th period for the second triangle indeed result in negative IBNR estimates for the first several accident years in that triangle. 
+The smaller-than-one development factors after the 10-th period for the second triangle indeed result in negative IBNR estimates for the first several accident years in that triangle. 
 
-The package also offers the \texttt{plot} method that produces various summary and diagonostic figures:
+The package also offers the \texttt{plot} method that produces various summary and diagnostic figures:
 <<eval = FALSE>>=
 parold <- par(mfrow = c(4, 2), mar = c(4, 4, 2, 1), 
     mgp = c(1.3, 0.3, 0), tck = -0.02)
@@ -665,22 +667,22 @@ par(parold)
 \label{fig:multi}
 \end{figure}
 
-The resulting plots are shown in Figure \ref{fig:multi}. We use the \texttt{which.triangle} to suppress the plot for the portfolios, and use the \texttt{which.plot} to select the desired types of plots. See the documentation for possible values for these two arguments. 
+The resulting plots are shown in Figure \ref{fig:multi}. We use \texttt{which.triangle} to suppress the plot for the portfolio, and use the \texttt{which.plot} to select the desired types of plots. See the documentation for possible values of these two arguments. 
 
 
 
-\subsubsection{Other covariance estimation methods}
-Internally, the \texttt{MultiChainLadder} calls the \texttt{systemfit} function to fit the regression models period by period. When SUR models are specified, there are several ways to estimate the covariance matrix $\Sigma$. Available methods are \texttt{"noDfCor"}, \texttt{"geomean"}, \texttt{"max"}, and \texttt{"Theil"} with the default as \texttt{"geomean"}. The method \texttt{"Theil"} will produce unbiased covariance estimate, but the resulting estimate may not be positive semi-definite. This is also the estimator used by Merz and W\"{u}thrich (2008). However, this method does not work out of the box for the \texttt{liab} data, and is perhaps why Merz and W\"{u}thrich (2008) used extrapolation to get the estimate for the last several periods. 
+\subsubsection{Other residual covariance estimation methods}
+Internally, the \texttt{MultiChainLadder} calls the \texttt{systemfit} function to fit the regression models period by period. When SUR models are specified, there are several ways to estimate the residual covariance matrix $\Sigma_k$. Available methods are \texttt{"noDfCor"}, \texttt{"geomean"}, \texttt{"max"}, and \texttt{"Theil"} with the default as \texttt{"geomean"}. The method \texttt{"Theil"} will produce unbiased covariance estimate, but the resulting estimate may not be positive semi-definite. This is also the estimator used by Merz and W\"{u}thrich (2008). However, this method does not work out of the box for the \texttt{liab} data, and is perhaps one of the reasons Merz and W\"{u}thrich (2008) used extrapolation to get the estimate for the last several periods. 
 
-Indeed, for most applications, we recommend the use of separate chain ladders for the tail periods to stabilize the estimation - there are few data points in the tail and running a multivariate model often produces extremely volatile estimates or even fails. The \texttt{MultiChainLadder2} function implents a split-and-join procedure, in which we split the input data into two parts, can specify a multivariate model with rich structures on the first part to reflect the multivariate dependencies, apply separate univariate chain ladders on the second part, and then join the two models together to produce the final predictions. The splitting is determined by the \textt{last} argument which indicates how many of the development periods in the tail go into the second part of the split. The type of the model structure to be specified for the first part of the split model in \code{MultiChainLadder2}. \code{"MCL"}- the multivariate chain ladder with diagonal development matrix; \code{"MCL+int"}- the multivariate chain ladder with additional intercepts; \code{"GMCL-int"}- the general multivariate chain ladder without intercepts; and \code{"GMCL"} - the full general multivariate chain ladder with intercepts and non-diagonal development matrix.
+Indeed, for most applications, we recommend the use of separate chain ladders for the tail periods to stabilize the estimation - there are few data points in the tail and running a multivariate model often produces extremely volatile estimates or even fails. To facilitate such an approach, the package offers the \texttt{MultiChainLadder2} function, which implements a split-and-join procedure: we split the input data into two parts, specify a multivariate model with rich structures on the first part (with enough data) to reflect the multivariate dependencies, apply separate univariate chain ladders on the second part, and then join the two models together to produce the final predictions. The splitting is determined by the \texttt{"last"} argument, which specifies how many of the development periods in the tail go into the second part of the split. The type of the model structure to be specified for the first part of the split model in \texttt{MultiChainLadder2} is controlled by the \texttt{type} argument. It takes one of the following values: \texttt{"MCL"}- the multivariate chain ladder with diagonal development matrix; \texttt{"MCL+int"}- the multivariate chain ladder with additional intercepts; \texttt{"GMCL-int"}- the general multivariate chain ladder without intercepts; and \texttt{"GMCL"} - the full general multivariate chain ladder with intercepts and non-diagonal development matrix.
 
-For example, the following fits the SUR method to the first part (the first 11 columns) using the unbiased residual covariance estimator in Merz and Wuthrich (2008) and separate chain ladder for the rest:
+For example, the following fits the SUR method to the first part (the first 11 columns) using the unbiased residual covariance estimator in Merz and W\"{u}thrich (2008), and separate chain ladders for the rest:
 <<>>=
 W1 <- MultiChainLadder2(liab, mse.method = "Independence", 
       	control = systemfit.control(methodResidCov = "Theil"))
 lapply(summary(W1)$report.summary, "[", 15, )
 @
-Similary, the iterative residual covariance estimator in Merz and Wuthrich (2008) can also be used, in which we use the control paramter  \texttt{maxiter} to determine the number of iterations:
+Similary, the iterative residual covariance estimator in Merz and W\"{u}thrich (2008) can also be used, in which we use the control parameter  \texttt{maxiter} to determine the number of iterations:
 <<>>=
 for (i in 1:5){
   W2 <- MultiChainLadder2(liab, mse.method = "Independence", 
@@ -690,7 +692,77 @@ for (i in 1:5){
 }
 lapply(summary(W2)$report.summary, "[", 15, )
 @
-We see that the covariance estimate converges in three steps. There are very similar to the results in Merz and Wuthrich (2008), the small difference being a result of the different approaches used in the last three periods. 
+We see that the covariance estimate converges in three steps. These are very similar to the results in Merz and W\"{u}thrich (2008), the small difference being a result of the different approaches used in the last three periods. 
+
+Also note that in the above two examples, the argument \texttt{control} is not defined in the proptotype of the \texttt{MultiChainLadder}. It is an argument that is passed to the \texttt{systemfit} function through the \texttt{...} mechanism. The users are encouraged to explore how other options available in  \texttt{systemfit} can be applied. 
+
+\subsubsection{Model with intercepts}
+
+Consider the \texttt{auto} triangles from Zhang (2010). It includes three automobile insurance triangles: personal auto paid, personal auto incurred, and commercial auto paid. 
+<<>>=
+str(auto)
+@
+It is a reasonable expectation that these triangles will be correlated. So we run a MCL model on them:
+<<>>=
+f0 <- MultiChainLadder2(auto, type = "MCL")
+# show correlation- the last three columns have zero correlation
+# because separate chain ladders are used
+print(do.call(cbind, residCor(f0)), digits = 3)
+@
+However, from the residual plot, the first row in Figure \ref{fig:multi_resid}, it is evident that the default mean structure in the MCL model is not adequate. Barnett and Zehnwirth (2000) point out that this is a common problem with the chain ladder based models, owing to the missing of intercepts. 
+
+We can improve the above model by including intercepts in the SUR fit as follows: 
+<<>>=
+f1 <- MultiChainLadder2(auto, type = "MCL+int")
+@
+The corresponding residual plot is shown in the second row in Figure \ref{fig:multi_resid}. We see that these residuals are randomly scattered around zero and there is no clear pattern compared to the plot from the MCL model.
+
+\begin{figure}[t]
+\centering
+<<fig = TRUE, echo = FALSE, width = 7, height = 5>>=
+parold <- par(mfrow = c(2, 3), mar = c(3, 3, 2, 1))
+mt <- list(c("Personal Paid", "Personal Incured", "Commercial Paid"))
+plot(f0, which.plot = 3, main = mt)
+plot(f1, which.plot = 3, main = mt)
+par(parold)
+@
+\caption{Residual plots for the MCL model (first row) and the GMCL (MCL+int) model (second row) for the \texttt{auto} data.}
+\label{fig:multi_resid}
+\end{figure}
+
+The default summary computes the portfolio estimates as the sum of all the triangles. This is not desirable because the first two triangles are both from the personal auto line. We can overwrite this via the \texttt{portfolio} argument. For example, the following uses the two paid triangles as the portfolio estimate:
+<<>>=
+lapply(summary(f1, portfolio = "1+3")@report.summary, "[", 11, )
+@ 
+
+\subsubsection{Joint modeling of the paid and incurred losses}
+
+Although the model with intercepts proved to be an improvement over the MCL model, it still fails to account for the structural relationship between triangles. In particular, it produces divergent paid-to-incurred loss ratios for the personal auto line:
+<<>>=
+ult <- summary(f1)$Ultimate
+print(ult[, 1] /ult[, 2], 3)
+@
+We see that for accident years 9-10, the paid-to-incurred loss ratios are more than 110\%. This can be fixed by allowing the development of the paid/incurred triangles to depend on each other. That is, we include the past values from the paid triangle as predictors when developing the incurred triangle, and vice versa. 
+
+We illustrate this ignoring the commercial auto triangle. See the demo for a model that uses all three triangles. We also include the MCL model and the Munich chain ladder as a comparison:
+<<>>=
+da <- auto[1:2]
+# MCL with diagonal development
+M0 <- MultiChainLadder(da)
+# non-diagonal development matrix with no intercepts
+M1 <- MultiChainLadder2(da, type = "GMCL-int")
+# Munich Chain Ladder
+M2 <- MunichChainLadder(da[[1]], da[[2]])
+# compile results and compare projected paid to incured ratios
+r1 <- lapply(list(M0, M1), function(x){
+          ult <- summary(x)@Ultimate
+          ult[, 1] / ult[, 2]
+      })
+names(r1) <- c("MCL", "GMCL")
+r2 <- summary(M2)[[1]][, 6]
+r2 <- c(r2, summary(M2)[[2]][2, 3])
+print(do.call(cbind, c(r1, list(MuCl = r2))) * 100, digits = 4)
+@
 
 \subsection{Clark's methods}
 
@@ -708,7 +780,7 @@ Recent years have also seen growing interest in using generalised linear models 
 \item all the relevant established statistical theory can be directly applied to perform hypothesis testing and diagnostic checking;
 \end{itemize}
 
-The \texttt{glmReserve} function takes an insurance loss triangle, converts it to incremental losses internally if necessary, transforms it to the long format (see as.data.frame) and fits the resulting loss data with a generalised linear model where the mean structure includes both the accident year and the development lag effects. The function also provides both analytical and bootstrapping method to compute the associated prediction errors. The bootstrapping approach also simulates the full predictive distribution, based on which the user can compute other uncertainty measures such as predictive intervals. 
+The \texttt{glmReserve} function takes an insurance loss triangle, converts it to incremental losses internally if necessary, transforms it to the long format (see \texttt{as.data.frame}) and fits the resulting loss data with a generalised linear model where the mean structure includes both the accident year and the development lag effects. The function also provides both analytical and bootstrapping methods to compute the associated prediction errors. The bootstrapping approach also simulates the full predictive distribution, based on which the user can compute other uncertainty measures such as predictive intervals. 
 
 Only the Tweedie family of distributions are allowed, that is,  the exponential family that admits a power variance function $V(\mu)=\mu^p$. The variance power $p$ is specified in the \texttt{var.power} argument, and controls the type of the distribution.  When the Tweedie compound Poisson distribution $1 < p < 2$ is to be used, the user has the option to specify \texttt{var.power = NULL}, where the variance power $p$ will be estimated from the data using the \texttt{cplm} package. 
 
@@ -756,8 +828,9 @@ print(format(round(res.q), big.mark = ","), quote = FALSE)
 @
 
 The full predictive distribution of the simulated reserves for each year can be visualized easily:
-\begin{center}
-<<fig = TRUE, label = ReservePlot,  width = 5, height = 4>>=
+\begin{figure}[!h]
+\centering
+<<fig = TRUE, label = ReservePlot,  width = 6, height = 4>>=
 library(ggplot2)
 library(reshape2)
 prm <- melt(pr)
@@ -770,7 +843,8 @@ gg <- gg + geom_density(aes(fill = year), alpha = 0.3) +
              legend.position = "none")
 print(gg)
 @
-\end{center}
+\caption{The predictive distribution of loss reserves for each year based on bootstrapping. }
+\end{figure}
 
 \section{Using \chainladder with RExcel and SWord}
 
@@ -909,7 +983,7 @@ numerous presentations and most of those are still available online:
 \end{itemize}
 
 \subsection{Further reading}
-Other papers and presentation which cited \chainladder:
+Other papers and presentations which cited \chainladder:
 \cite{Orr2007}, \cite{Nichols2009}, \cite{Zhang2010a},
 \cite{MariaDoloresMartinezMiranda2010}, \cite{Schirmacher2010},
 \cite{MariaDoloresMartinezMiranda2011}, \cite{Escoto2011},

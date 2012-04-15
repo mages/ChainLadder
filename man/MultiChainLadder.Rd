@@ -142,8 +142,9 @@ f1 <- MultiChainLadder2(auto, type = "MCL+int")
 f0 <- MultiChainLadder2(auto, type = "MCL")
 
 parold <- par(mfrow = c(2, 3), mar = c(3, 3, 2, 1))
-plot(f0, which.plot = 3, main = list("1"))
-plot(f1, which.plot = 3, main = list(""))
+mt <- list(c("Personal Paid", "Personal Incured", "Commercial Paid"))
+plot(f0, which.plot = 3, main = mt)
+plot(f1, which.plot = 3, main = mt)
 par(parold)
 
 ## summary statistics
@@ -151,8 +152,8 @@ summary(f1, portfolio = "1+3")@report.summary[[4]]
 
 # model for joint development of paid and incurred triangles 
 da <- auto[1:2]
-# separate development
-M0 <- MultiChainLadder(da, "OLS")
+# MCL with diagonal development
+M0 <- MultiChainLadder(da)
 # non-diagonal development matrix with no intercepts
 M1 <- MultiChainLadder2(da, type = "GMCL-int")
 # Munich Chain Ladder
@@ -162,11 +163,10 @@ r1 <- lapply(list(M0, M1), function(x){
           ult <- summary(x)@Ultimate
           ult[, 1] / ult[, 2]
       })
-names(r1) <- c("SCL", "GMCL")
+names(r1) <- c("MCL", "GMCL")
 r2 <- summary(M2)[[1]][, 6]
 r2 <- c(r2, summary(M2)[[2]][2, 3])
 print(do.call(cbind, c(r1, list(MuCl = r2))) * 100, digits = 4)
-
 # To reproduce results in Zhang (2010) and see more examples, use:
 \dontrun{
  demo(MultiChainLadder)
