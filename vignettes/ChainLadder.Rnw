@@ -667,7 +667,7 @@ par(parold)
 \label{fig:multi}
 \end{figure}
 
-The resulting plots are shown in Figure \ref{fig:multi}. We use \texttt{which.triangle} to suppress the plot for the portfolio, and use the \texttt{which.plot} to select the desired types of plots. See the documentation for possible values of these two arguments. 
+The resulting plots are shown in Figure \ref{fig:multi}. We use \texttt{which.triangle} to suppress the plot for the portfolio, and use \texttt{which.plot} to select the desired types of plots. See the documentation for possible values of these two arguments. 
 
 
 
@@ -719,7 +719,7 @@ The corresponding residual plot is shown in the second row in Figure \ref{fig:mu
 
 \begin{figure}[t]
 \centering
-<<fig = TRUE, echo = FALSE, width = 7, height = 5>>=
+<<fig = TRUE, label = Multi_resid, echo = FALSE, width = 7, height = 5>>=
 parold <- par(mfrow = c(2, 3), mar = c(3, 3, 2, 1))
 mt <- list(c("Personal Paid", "Personal Incured", "Commercial Paid"))
 plot(f0, which.plot = 3, main = mt)
