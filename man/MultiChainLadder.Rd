@@ -60,7 +60,7 @@ To facilitate such a split-and-join process for most applications, we have creat
 }
 
 \note{
-When \code{MultiChainLadder} or \code{MultiChainLadder2} fails, the most possible reason is that there is little or no development in the tail periods. That is, the development factor is \code{1} or almost equal to \code{1}. In this case, the \text{systemfit} function may fail even for \code{fit.method = "OLS"}, because the residual covariance matrix \eqn{\Sigma_k} is singular. The simplest solution is to remove these columns using the \code{"["} operator and fit the model on the remaining part. 
+When \code{MultiChainLadder} or \code{MultiChainLadder2} fails, the most possible reason is that there is little or no development in the tail periods. That is, the development factor is \code{1} or almost equal to \code{1}. In this case, the \code{systemfit} function may fail even for \code{fit.method = "OLS"}, because the residual covariance matrix \eqn{\Sigma_k} is singular. The simplest solution is to remove these columns using the \code{"["} operator and fit the model on the remaining part. 
 
 Also, we recommend the use of \code{MultiChainLadder2} over \code{MultiChainLadder}. The function \code{MultiChainLadder2} meets the need for most applications, is relatively easy to use and produces more stable but very similar results to \code{MultiChainLadder}. Use \code{MultiChainLadder} only when non-standard situation arises, e.g., when different parameter restrictions are needed for different periods. See the demo for such examples.   
 }
