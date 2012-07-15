@@ -15,7 +15,7 @@ Run off triangle of simulated incremental claims data
 %%\details{
 %%  ~~ If necessary, more details than the __description__ above ~~
 %%}
-\source{Appendix A8 in 
+\source{Appendix A7 in 
 	\cite{ B. Zehnwirth. Probabilistic Development Factor Models
 	  with Applications to Loss Reserve Variability, Prediction
 	  Intervals, and Risk Based Capital. \emph{Casualty Actuarial
