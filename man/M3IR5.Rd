@@ -15,10 +15,11 @@ Run off triangle of simulated incremental claims data
 %%\details{
 %%  ~~ If necessary, more details than the __description__ above ~~
 %%}
-\source{
-	\cite{ G. Barnett and B. Zehnwirth. Best Estimates for
-	  Reserves. \emph{Proceedings of the CAS.} Volume
-	  LXXXVII. Number 167. November 2000.}
+\source{Appendix A8 in 
+	\cite{ B. Zehnwirth. Probabilistic Development Factor Models
+	  with Applications to Loss Reserve Variability, Prediction
+	  Intervals, and Risk Based Capital. \emph{Casualty Actuarial
+	    Science Forum.} Spring 1994. Vol. 2.}
 }
 %%\references{
 %%  ~~ possibly secondary sources and usages ~~
