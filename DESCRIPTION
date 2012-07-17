@@ -3,7 +3,7 @@ Type: Package
 Title: Statistical methods for the calculation of outstanding claims
     reserves in general insurance
 Version: 0.1.5-3
-Date: 2012-03-25
+Date: 2012-07-17
 Author: Markus Gesmann, Daniel Murphy and Wayne Zhang
 Maintainer: Markus Gesmann <markus.gesmann@gmail.com>
 Description: The ChainLadder package provides various statistical
@@ -24,7 +24,7 @@ Depends:
     RUnit,
     actuar,
     utils,
-    cplm,
+    cplm (>= 0.6.1),
     tweedie
 Suggests:
     RODBC

@@ -32,8 +32,7 @@ glmReserve <- function(triangle, var.power = 1, link.power = 0,
   if (is.null(attr(tr.incr, "exposure"))) {
     lda$offset <-  rep(0, nrow(lda))
   } else {
-    lda$offset <- fam$linkfun(rep(attr(tr.incr, "exposure"), 
-                                  as.numeric(table(lda$origin))))
+    lda$offset <- fam$linkfun(attr(tr.incr, "exposure")[lda$origin - min (lda$origin) + 1])
   }
   
   # divide data 
