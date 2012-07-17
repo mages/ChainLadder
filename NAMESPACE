@@ -14,8 +14,8 @@ importFrom(methods, coerce, cbind2, rbind2 )
 importFrom(utils, packageDescription)
 importFrom(cplm, cpglm)
 importClassesFrom(cplm, NullNum, NullList)
-importMethodsFrom(cplm, show, predict, vcov, residuals, resid, coef, fitted, plot, summary)
-
+importMethodsFrom(cplm, show, predict, vcov, residuals, resid, coef, fitted, plot)
+importMethodsFrom(Matrix, summary)
 #Classes
 exportClasses(triangles, MultiChainLadder, MultiChainLadderFit,
               MCLFit, GMCLFit, MultiChainLadderMse, MultiChainLadderSummary,

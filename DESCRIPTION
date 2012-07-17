@@ -25,7 +25,8 @@ Depends:
     actuar,
     utils,
     cplm (>= 0.6.1),
-    tweedie
+    tweedie,
+    Matrix
 Suggests:
     RODBC
 License: GPL (>= 2)

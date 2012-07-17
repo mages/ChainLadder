@@ -73,7 +73,10 @@ To solve these potential problems, many variants of the current basic GLM model 
 }
 
 \references{
-England P. and Verrall R. (1999). Analytic and bootstrap estimates of prediction errors in claims reserving. \emph{Insurance: Mathematics and Economics}, 25, 281-293.
+\cite{England P. and Verrall R. (1999). Analytic and bootstrap estimates of prediction errors in claims reserving. \emph{Insurance: Mathematics and Economics}, 25, 281-293.}
+
+\cite{ Zhang, Y. Likelihood-based and Bayesian Methods for Tweedie Compound Poisson Linear Mixed Models, \emph{Statistics and Computing}, forthcoming. 
+\url{http://www.actuaryzhang.com/publication/MixedTweedie.pdf}}
 }
 
 \author{

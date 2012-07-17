@@ -782,7 +782,7 @@ Recent years have also seen growing interest in using generalised linear models 
 
 The \texttt{glmReserve} function takes an insurance loss triangle, converts it to incremental losses internally if necessary, transforms it to the long format (see \texttt{as.data.frame}) and fits the resulting loss data with a generalised linear model where the mean structure includes both the accident year and the development lag effects. The function also provides both analytical and bootstrapping methods to compute the associated prediction errors. The bootstrapping approach also simulates the full predictive distribution, based on which the user can compute other uncertainty measures such as predictive intervals. 
 
-Only the Tweedie family of distributions are allowed, that is,  the exponential family that admits a power variance function $V(\mu)=\mu^p$. The variance power $p$ is specified in the \texttt{var.power} argument, and controls the type of the distribution.  When the Tweedie compound Poisson distribution $1 < p < 2$ is to be used, the user has the option to specify \texttt{var.power = NULL}, where the variance power $p$ will be estimated from the data using the \texttt{cplm} package. 
+Only the Tweedie family of distributions are allowed, that is,  the exponential family that admits a power variance function $V(\mu)=\mu^p$. The variance power $p$ is specified in the \texttt{var.power} argument, and controls the type of the distribution.  When the Tweedie compound Poisson distribution $1 < p < 2$ is to be used, the user has the option to specify \texttt{var.power = NULL}, where the variance power $p$ will be estimated from the data using the \texttt{cplm} package \citep{Zhang:2012}. 
 
 
 For example, the following fits the over-dispersed Poisson model and spells out the estimated reserve information:
@@ -828,9 +828,7 @@ print(format(round(res.q), big.mark = ","), quote = FALSE)
 @
 
 The full predictive distribution of the simulated reserves for each year can be visualized easily:
-\begin{figure}[!h]
-\centering
-<<fig = TRUE, label = ReservePlot,  width = 6, height = 4>>=
+<<eval = FALSE>>= 
 library(ggplot2)
 library(reshape2)
 prm <- melt(pr)
@@ -843,6 +841,11 @@ gg <- gg + geom_density(aes(fill = year), alpha = 0.3) +
              legend.position = "none")
 print(gg)
 @
+
+
+\begin{figure}[!h]
+\centering
+\includegraphics{ReservePlot}
 \caption{The predictive distribution of loss reserves for each year based on bootstrapping. }
 \end{figure}
 
