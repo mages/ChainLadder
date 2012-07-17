@@ -19,7 +19,7 @@
 \hypersetup{
   colorlinks=true, pagebackref=true,
   pdftitle={ChainLadder: Claims reserving with R},%
-  pdfauthor={Markus Gesmann}%, Dan Murphy, Wayne Zhang},%
+  pdfauthor={Markus Gesmann, Wayne Zhang}%, Dan Murphy, Wayne Zhang},%
 }
 
 %\VignetteIndexEntry{ChainLadder: Claims reserving with R}
@@ -908,7 +908,7 @@ feel free to contact \href{mailto:markus.gesmann@gmail.com}{us} with
 items to be added to the list.
 
 \begin{itemize}
-\item \textbf{\texttt{cplm}}:  Monte Carlo EM algorithms and Bayesian methods for
+\item \textbf{\texttt{cplm}}:  Likelihood-based and Bayesian methods for
   fitting Tweedie compound Poisson linear models~\cite{Zhang:2012}.  
   
 \item \textbf{\texttt{lossDev}}:  A Bayesian time series loss development
