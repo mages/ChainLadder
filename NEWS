@@ -2,21 +2,23 @@ Version 0.1.5-3
 ================
 NEW FEATURES
 
-   o The function "glmReserve" now simulates the predictive distribution
+   o The function "glmReserve" now simulates predictive distributions
 	of the loss reserves when bootstrapping is used.
    o "glmReserve" allows the variance function of the compound Poisson 
 	distribution to be estimated from the data, using the estimation 
-	method provided in the "cplm" package. 
+	method provided by the "cplm" package. 
    o We offer a new function "MultiChainLadder2" to fit several commonly 
 	used multivariate chain ladder models, which is much easier to use. 
 
 Changes
 
-   o The output from "glmReserve" is made to be class "glmReserve", instead 
-	of the "glm" class used in previous versions.  
+   o The output from "glmReserve" is made to be of class "glmReserve", instead 
+	of class "glm" used in previous versions. 
+   o Fix bugs when exposure is included in "glmReserve". Thanks to Alessandro Carrato
+	for reporting this bug. 
    o The "mse.method" argument in "glmReserve" supports partial match.
-   o Dramatic improvement on the documentation for "MultiChainLadder".
-   o Complete the "MultiChainLadder" and "glmReserve" sections in the vignettes. 
+   o Dramatic improvement on the documentation of "MultiChainLadder".
+   o Complete the sections of "MultiChainLadder" and "glmReserve" in the vignettes. 
 
 Version 0.1.5-2
 ================
