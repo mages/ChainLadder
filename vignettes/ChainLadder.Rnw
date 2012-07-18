@@ -794,7 +794,7 @@ GenIns <- GenIns / 1000
 # fit Poisson GLM
 (fit1 <- glmReserve(GenIns))
 @
-We can also extract the underlying GLM model by specify \texttt{type = "model"} in the \texttt{summary} function:
+We can also extract the underlying GLM model by specifying \texttt{type = "model"} in the \texttt{summary} function:
 <<>>=
 summary(fit1, type = "model")
 @
