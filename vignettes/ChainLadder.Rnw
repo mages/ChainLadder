@@ -13,7 +13,7 @@
 \usepackage{wrapfig}
 \usepackage{hyperref}
 \usepackage{mathrsfs, amsmath, amsfonts, amssymb, amsthm}
-\usepackage[left=2.5cm,right=2.5cm]{geometry}
+%\usepackage[left=2.5cm,right=2.5cm]{geometry}
 \usepackage{graphicx}
 \usepackage{draftwatermark}
 \hypersetup{

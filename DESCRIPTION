@@ -4,6 +4,12 @@ Title: Statistical methods for the calculation of outstanding claims
     reserves in general insurance
 Version: 0.1.5-3
 Date: 2012-07-17
+Authors@R: c(person("Markus", "Gesmann", role = c("aut", "cre"),
+             email = "markus.gesmann@gmail.com"),
+             person("Daniel", "Murphy", role = "aut", 
+	     email="danielmarkmurphy@gmail.com"),
+             person("Wayne", "Zhang", role = "aut", 
+	     email="actuary_zhang@hotmail.com"))
 Author: Markus Gesmann, Daniel Murphy and Wayne Zhang
 Maintainer: Markus Gesmann <markus.gesmann@gmail.com>
 Description: The ChainLadder package provides various statistical
