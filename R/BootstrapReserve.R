@@ -27,7 +27,7 @@ BootChainLadder <- function(Triangle, R = 999, process.distr=c("gamma", "od.pois
   triangle <- array(triangle, dim=c(m,n,1))
   weights <-  array(weights, dim=c(m,n,1))
   inc.triangle <- getIncremental(triangle)
-  Latest <- getLatest(inc.triangle)[origins]
+  Latest <- getDiagonal(triangle,m)[origins]
   
   ## Obtain cumulative fitted values for the past triangle by backwards
   ## recursion, starting with the observed cumulative paid to date in the latest
@@ -47,8 +47,8 @@ BootChainLadder <- function(Triangle, R = 999, process.distr=c("gamma", "od.pois
   unscaled.residuals  <- (inc.triangle - exp.inc.triangle)/sqrt(abs(exp.inc.triangle))
   
   ## Calculate the Pearson scale parameter
-  nobs  <- sum(1:n)
-  scale.factor <- (0.5*n*(n+1)-2*n+1)
+  nobs  <- 0.5 * n * (n - 1)
+  scale.factor <- (nobs - 2*n+1)
   scale.phi <- sum(unscaled.residuals^2,na.rm=TRUE)/scale.factor
   ## Adjust the Pearson residuals using
   adj.resids <- unscaled.residuals * sqrt(nobs/scale.factor)
@@ -64,8 +64,8 @@ BootChainLadder <- function(Triangle, R = 999, process.distr=c("gamma", "od.pois
   ## Project to form a future triangle of cumulative payments.
 
   ## Perform chain ladder projection
-  simLatest <- getLatest(simClaims)
   simCum <- makeCumulative(simClaims)
+  simLatest <- getDiagonal(simCum,m)
   simDFs <- getIndivDFs(simCum)
   simWghts <- simCum
   simAvDFs <- getAvDFs(simDFs, simWghts)
@@ -78,10 +78,11 @@ BootChainLadder <- function(Triangle, R = 999, process.distr=c("gamma", "od.pois
   
   simExp <- getIncremental(getExpected(simUlts, 1/simUltDFs))
   simExp[!is.na(simClaims)] <- NA
+  processTriangle <-array(NA,c(m,n,R))
   
   if(process.distr=="gamma")
-    processTriangle <-  apply(simExp,c(1,2,3), function(x)
-                              ifelse(is.na(x), NA, sign(x)*rgamma(1, shape=abs(x/scale.phi), scale=scale.phi)))
+    processTriangle[!is.na(simExp)] <- sign(simExp[!is.na(simExp)])*rgamma(length(simExp[!is.na(simExp)]), shape=abs(simExp[!is.na(simExp)]/scale.phi), scale=scale.phi)
+
   if(process.distr=="od.pois")
     processTriangle <-  apply(simExp,c(1,2,3), function(x)
                               ifelse(is.na(x), NA, sign(x)*rpois.od(1, abs(x), scale.phi)))
@@ -94,7 +95,9 @@ BootChainLadder <- function(Triangle, R = 999, process.distr=c("gamma", "od.pois
   
   
   IBNR.Triangles <- processTriangle
-  IBNR <- getLatest(IBNR.Triangles)
+  IBNR <- makeCumulative(IBNR.Triangles)[,n,]
+  dim(IBNR)<-c(m,1,R)
+
   if(m>n){
     IBNR <- apply(IBNR, 3, function(x) c(rep(0, m-n),x))
     dim(IBNR) <- c(m,1,R)
@@ -108,6 +111,32 @@ BootChainLadder <- function(Triangle, R = 999, process.distr=c("gamma", "od.pois
   IBNR.Totals <- apply(IBNR.Triangles,3,sum)
   
   residuals <- adj.resids
+
+  # Giuseppe Crupi
+  # Generate and process Next Year triangle for one year re-reserving approach (Solvency 2 purpose)
+ 
+  triangleNY<-getTriangleNextYear(triangle,IBNR.Triangles)
+  
+  NYLatest <- getDiagonal(triangleNY,m+1)
+  NYPayments <- getDiagonal(IBNR.Triangles,m+1)
+
+  NYDFs <- getIndivDFs(triangleNY)
+
+  NYWghts <- triangleNY
+
+  NYAvDFs <- getAvDFs(NYDFs, NYWghts)
+
+  NYUltDFs <- getUltDFs(NYAvDFs)[,2:n,]
+  dim(NYUltDFs)<-c(1,n-1,R)
+
+  NYUlts <- getUltimates(NYLatest, NYUltDFs)
+  
+  NYIBNR <- NYUlts - NYLatest
+
+  NYCost <- array(0,c(m,1,R))
+  
+  NYCost[2:m,,] <- NYIBNR+NYPayments
+
   
   output <- list( call=match.call(expand.dots = FALSE),
                  Triangle=output.triangle,
@@ -116,6 +145,7 @@ BootChainLadder <- function(Triangle, R = 999, process.distr=c("gamma", "od.pois
                  IBNR.ByOrigin=IBNR,
                  IBNR.Triangles=IBNR.Triangles,
                  IBNR.Totals = IBNR.Totals,
+                 NYCost.ByOrigin = NYCost,
                  ChainLadder.Residuals=residuals,
                  process.distr=process.distr,
                  R=R)
@@ -209,7 +239,7 @@ summary.BootChainLadder <- function(object,probs=c(0.75,0.95),...){
     n <- dim(.Triangle)[2]
 
     dim(.Triangle) <- c(dim(.Triangle),1)
-    Latest <- as.vector(getLatest(getIncremental(.Triangle)))
+    Latest <- as.vector(getDiagonal(.Triangle,m))
 
 
     IBNR <- object$IBNR.ByOrigin
@@ -271,21 +301,18 @@ print.BootChainLadder <- function(x,probs=c(0.75,0.95),...){
 
 
 makeCumulative <- function(tri){
-    ## Author: Nigel de Silva
-    tri <- apply(tri, c(1,3), cumsum)
-    tri <- aperm(tri, c(2,1,3))
+    ## Author: Nigel de Silva - Giuseppe Crupi
+    for (i in 2:dim(tri)[2])
+    tri[,i,]<-tri[,i-1,]+tri[,i,]
     return(tri)
 }
 
 getIncremental <- function(tri){
-    ## Author: Nigel de Silva
-    .incr <- function(x){
-        return(c(x[1], diff(x)))
-    }
-
-    out <- apply(tri, c(1,3), .incr)
-    out <- aperm(out, c(2,1,3))
-    return(out)
+    ## Author: Nigel de Silva - Giuseppe Crupi
+    n<-dim(tri)[2]
+    tri[,2:n,]<-tri[,2:n,]-tri[,1:(n-1),]
+    
+    return(tri)
 }
 
 getLatest <- function(incr.tri){
@@ -306,37 +333,41 @@ getIndivDFs <- function(tri){
 }
 
 getAvDFs <- function(dfs, wghts){
-    ## Author: Nigel de Silva
+    ## Author: Nigel de Silva - Giuseppe Crupi
     .include <- dfs
     .include[!is.na(.include)] <- 1
     .include[is.na(wghts)] <- NA
+    .include[is.na(.include)] <- 0    
+    dfs[is.na(dfs)]<-0
+    wghts[is.na(wghts)]<-0
 
-    out <- apply(dfs * wghts * .include, c(2,3), sum, na.rm=T) /
-      apply(wghts * .include, c(2,3), sum, na.rm=T)
-
+    out<-colSums(dfs * wghts * .include)/colSums(wghts * .include)
     out[is.nan(out)] <- 1
-
-
+       
   out <- array(out, c(1,dim(out)))
   return(out)
+
 }
 
 getUltDFs <- function(avDFs){
-    ## Author: Nigel de Silva
-    .ultDF<- function(x){
-        return(rev(cumprod(rev(x))))
-    }
+    ## Author: Nigel de Silva - Giuseppe Crupi
+    for (i in seq.int(dim(avDFs)[2]-1,1,-1))
+      avDFs[,i,]<-avDFs[,i+1,]*avDFs[,i,]
+    return(avDFs)
 
-    ult <- apply(avDFs, c(1,3), .ultDF)
-    ult <- aperm(ult, c(2,1,3))
-    return(ult)
 }
 
 getUltimates <- function(latest, ultDFs){
-    ## Author: Nigel de Silva
-    ultDFs <- apply(ultDFs, c(1,3), rev)
+    ## Author: Nigel de Silva - Giuseppe Crupi
+    n<-dim(ultDFs)[2]
+    r<-dim(ultDFs)[3]    
+
+    ultDFs <- ultDFs[,(dim(ultDFs)[2]):1,]
+    dim(ultDFs)<-c(n,1,r)
     out <- latest * ultDFs
+    
     return(out)
+
 }
 
 expandArray <- function(x, d, new.size){
@@ -518,5 +549,65 @@ plotBootstrapUltimates <- function(x, xlab="origin period", ylab="ultimate claim
 
     points(y=simUlt$meanUltimate, x=simUlt$origin,col=2, pch=19)
     legend("topleft","Mean ultimate claim", pch=19, col=2)
+
+}
+
+getTriangleNextYear <- function(t.orig,t.ibnr){
+    ## Author: Giuseppe Crupi
+
+    m<-dim(t.orig)[1]
+    n<-dim(t.orig)[2]
+    r<-dim(t.ibnr)[3]
+
+    out<-array(NA,c(m,n,r))  
+    out[,,]<-getIncremental(t.orig)[,,]
+    IBNRIndexes<-getDiagonalIndexes(t.ibnr,m+1)
+    out[IBNRIndexes]<-t.ibnr[IBNRIndexes]
+    out<-makeCumulative(out)
+  
+    return(out)
+
+}
+
+getDiagonalIndexes <-function(tri,d){
+    ## Author: Giuseppe Crupi
+
+    n<-dim(tri)[1]
+    m<-dim(tri)[2]
+    r<-dim(tri)[3]
+    if (is.na(r)) r<-1
+
+    endRow<-min(d,n)
+    startRow<-max(1,d-m+1)
+
+    startCol<-min(d,m)
+    endCol<-max(1,d-n+1)
+
+    i<-startRow:endRow
+    j<-startCol:endCol
+    out<-array(0,c(length(i)*r,3))
+
+    out[,1]<-rep(i,r)
+    out[,2]<-rep(j,r)
+    out[,3]<-rep(1:r,each=length(i))
+
+return(out)
+
+}
+
+
+getDiagonal <-function(tri,d){
+    ## Author: Giuseppe Crupi
+
+    n<-dim(tri)[1]
+    m<-dim(tri)[2]
+    r<-dim(tri)[3]
+    if (is.na(r)) r<-1
+
+    i<-getDiagonalIndexes(tri,d)
+    out<-tri[i]
+    dim(out)<-c(dim(i)[1]/r,1,r)
+
+    return(out)
 
 }

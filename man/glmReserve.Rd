@@ -23,7 +23,10 @@ glmReserve(triangle, var.power = 1, link.power = 0, cum = TRUE,
   The index of power link function. The default \code{link.power = 0} produces a log link. See \code{\link[statmod]{tweedie}}.
 }
   \item{cum}{
-  A logical value indicating whether the input triangle is on the cumulative or the incremental scale. If \code{TRUE}, then \code{triangle} is assumed to be on the cumulative scale, and it will be converted to incremental losses internally before a GLM is fitted. 
+  A logical value indicating whether the input triangle is on the
+  cumulative or the incremental scale. If \code{TRUE}, then
+  \code{triangle} is assumed to be on the cumulative scale, and it will
+  be converted to incremental losses internally before a GLM is fitted. 
 }
   \item{mse.method}{
   A character indicating whether the prediction error should be computed analytically (\code{mse.method = "formula"}) or via bootstrapping (\code{mse.method = "bootstrap"}). Partial match is supported. 
@@ -32,11 +35,11 @@ glmReserve(triangle, var.power = 1, link.power = 0, cum = TRUE,
   Number of simulations to be performed in the bootstrapping, with a default value of 1000.
 }
   \item{\dots}{
-  Arguments to be passed onto the function \code{\link[stats]{glm}} or \code{\link[cplm]{cpglm}} such as \code{contrasts} or \code{control}. It is important that \code{offset} and \code{weight} should not be specified. Otherwise, an error will be reported and the program will quit. 
+  Arguments to be passed onto the function \code{\link[stats]{glm}} or \code{\link{cpglm}} such as \code{contrasts} or \code{control}. It is important that \code{offset} and \code{weight} should not be specified. Otherwise, an error will be reported and the program will quit. 
 }
 }
 \details{
- This function takes an insurance loss triangle, converts it to incremental losses internally if necessary, transforms it to the long format (see \code{as.data.frame}) and fits the resulting loss data with a generalized linear model where the mean structure includes both the accident year and the development lag effects. The distributions allowed are the exponential family that admits a power variance function, that is, \eqn{V(\mu)=\mu^p}. This subclass of distributions is usually called the Tweedie distribution and includes many commonly used distributions as special cases. This function does not allow the user to specify the GLM options through the usual \code{\link[stats]{family}} argument, but instead, it uses the \code{\link[statmod]{tweedie}} family internally and takes two arguments \code{var.power} and \code{link.power} through which the user still has full control of the distribution forms and link functions. The argument \code{var.power} determines which specific distribution is to be used, and \code{link.power} determines the form of the link function. When the Tweedie compound Poisson distribution \code{1 < p < 2} is to be used, the user has the option to specify \code{var.power = NULL}, where the variance power \code{p} will be estimated from the data using the \code{cplm} package. The \code{\link[cplm]{bcplm}} function in the \code{cplm} package also has an example for the Bayesian compound Poisson loss reserving model. See details in \code{\link[statmod]{tweedie}}, \code{\link[cplm]{cpglm}} and  \code{\link[cplm]{bcplm}}. 
+ This function takes an insurance loss triangle, converts it to incremental losses internally if necessary, transforms it to the long format (see \code{as.data.frame}) and fits the resulting loss data with a generalized linear model where the mean structure includes both the accident year and the development lag effects. The distributions allowed are the exponential family that admits a power variance function, that is, \eqn{V(\mu)=\mu^p}. This subclass of distributions is usually called the Tweedie distribution and includes many commonly used distributions as special cases. This function does not allow the user to specify the GLM options through the usual \code{\link[stats]{family}} argument, but instead, it uses the \code{\link[statmod]{tweedie}} family internally and takes two arguments \code{var.power} and \code{link.power} through which the user still has full control of the distribution forms and link functions. The argument \code{var.power} determines which specific distribution is to be used, and \code{link.power} determines the form of the link function. When the Tweedie compound Poisson distribution \code{1 < p < 2} is to be used, the user has the option to specify \code{var.power = NULL}, where the variance power \code{p} will be estimated from the data using the \code{cplm} package. The \code{\link[cplm]{bcpglm}} function in the \code{cplm} package also has an example for the Bayesian compound Poisson loss reserving model. See details in \code{\link[statmod]{tweedie}}, \code{\link[cplm]{cpglm}} and  \code{\link[cplm]{bcpglm}}. 
  
 Also, the function allows certain measures of exposures to be used in an offset term in the underlying GLM. To do this, the user should not use the usual \code{offset} argument in \code{glm}. Instead, one specifies the exposure measure for each accident year through the \code{exposure} attribute of \code{triangle}. Make sure that these exposures are in the original scale (no log transformations for example), and they are in the order consistent with the accident years. If the \code{exposure} attribute is not \code{NULL}, the \code{glmReserve} function will use these exposures, link-function-transformed, in the offset term of the GLM. For example, if the link function is \code{log}, then the log of the exposure is used as the offset, not the original exposure. See the examples below. Moreover, the user MUST NOT supply the typical \code{offset} or \code{weight} as arguments in the list of additional arguments \code{\dots}. \code{offset} should be specified as above, while \code{weight} is not implemented (due to prediction reasons). 
 
@@ -73,10 +76,7 @@ To solve these potential problems, many variants of the current basic GLM model 
 }
 
 \references{
-\cite{England P. and Verrall R. (1999). Analytic and bootstrap estimates of prediction errors in claims reserving. \emph{Insurance: Mathematics and Economics}, 25, 281-293.}
-
-\cite{ Zhang, Y. Likelihood-based and Bayesian Methods for Tweedie Compound Poisson Linear Mixed Models, \emph{Statistics and Computing}, forthcoming. 
-\url{http://www.actuaryzhang.com/publication/MixedTweedie.pdf}}
+England P. and Verrall R. (1999). Analytic and bootstrap estimates of prediction errors in claims reserving. \emph{Insurance: Mathematics and Economics}, 25, 281-293.
 }
 
 \author{
