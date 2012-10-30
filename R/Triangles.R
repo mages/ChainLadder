@@ -112,6 +112,7 @@ print.triangle <- function(x, ...) {
     z<- as.matrix(z)
     dimnames(z) <- list(origin=.origin.names, dev=sort(.dev.names))
 
+  names(dimnames(z)) <- c(origin, dev)
 	return(z)
 }
 
