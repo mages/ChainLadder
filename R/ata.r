@@ -20,7 +20,9 @@ ata <- function(Triangle, NArow.rm = TRUE, colname.sep = "-",
 
 
     ## Simple averages
-    smpl <- colMeans(atamat, na.rm = TRUE)
+    #smpl <- colMeans(atamat, na.rm = TRUE)
+    # Ignore link ratios with zeroes in the denominator
+    smpl <- apply(atamat, 2, function(x) mean(x[is.finite(x)]))
 
     ## Volume weighted averages
     vwtd <- colSums(to, na.rm=TRUE) / colSums(from, na.rm=TRUE)
