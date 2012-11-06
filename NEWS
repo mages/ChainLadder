@@ -1,3 +1,20 @@
+Version 0.1.5-4
+================
+NEW FEATURES
+
+   o The function "getLatestCumulative" adds attributes to 
+	the result
+	-	names = origin (rownames) from the Triangle
+	-	rowsname = name of row dimension of Triangle
+	-	colnames = dev (colnames) from Triangle
+	- 	colsname = name of the column dimension of Triangle
+	The function has an additional argument, na.values, a 
+	vector of values (e.g., zero) that are synonymous with NA 
+	when searching for the rightmost non-NA value
+   o as.triangle.data.frame now aggregates multiple data.frame
+	records when more than one (origin, dev) observation is
+	found (the	previous version took the first observation).
+
 Version 0.1.5-3
 ================
 NEW FEATURES
