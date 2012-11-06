@@ -67,12 +67,16 @@ as.triangle(Triangle, origin="origin", dev="dev", value="value",...)
 %% ~put references to the literature/web site here ~
 %}
 \author{
-  Markus Gesmann
+  Markus Gesmann, Dan Murphy
 }
 \section{Warning}{
 Please note that for the function \code{as.triangle} the origin and
 dev. period columns have to be of type numeric or a character which can be
 converted into numeric.
+
+Also note that when converting from a data.frame to a matrix with 
+\code{as.triangle}, multiple records with the same \code{origin} and 
+\code{dev} will be aggregated.
 }
 
 %% ~Make other sections like Warning with \section{Warning }{....} ~
