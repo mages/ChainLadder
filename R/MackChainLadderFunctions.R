@@ -328,8 +328,8 @@ summary.MackChainLadder <- function(object,...){
     return(output)
 }
 
-getLatestCumulative <- function(cumulative.tri)
-  apply(cumulative.tri, 1L, function(x) ifelse(length(w <- which(!is.na(x))) > 0L, x[tail(w, 1L)], x[1L]))
+#getLatestCumulative <- function(cumulative.tri)
+#  apply(cumulative.tri, 1L, function(x) ifelse(length(w <- which(!is.na(x))) > 0L, x[tail(w, 1L)], x[1L]))
 
 ##############################################################################
 ## print
