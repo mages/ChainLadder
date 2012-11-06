@@ -115,24 +115,32 @@ Mack.S.E <- function(MackModel, FullTriangle, est.sigma="log-linear", weights, a
     isna <- is.na(sigma)
     ## Think about weights!!!
 
-    if(est.sigma %in% "log-linear"){
-        ## estimate sigma[n-1] via log-linear regression
-        sig.model <- estimate.sigma(sigma)
-        sigma <- sig.model$sigma
-
-        p.value.of.model <- summary(sig.model$model)$coefficient[2,4]
-        if(p.value.of.model > 0.05){
-            warning(paste("'loglinear' model to estimate sigma_n doesn't appear appropriate.",
-                          "\np-value > 5.\n",
-                          "est.sigma will be overwritten to 'Mack'.\n",
-                          "Mack's estimation method will be used instead."))
-
+    if(est.sigma[1] %in% "log-linear"){
+        if (sum(!isna) == 1) {
+            warning(paste("Too few (1) link ratios for fitting 'loglinear' model to estimate sigma_n.",
+                              "est.sigma will be overwritten to 'Mack'.\n",
+                              "Mack's estimation method will be used instead."))
             est.sigma <- "Mack"
-        }else{
-            f.se[isna] <- sigma[isna]/sqrt(weights[1,isna]*FullTriangle[1,isna]^alpha[isna])
+            }
+        else {
+            ## estimate sigma[n-1] via log-linear regression
+            sig.model <- estimate.sigma(sigma)
+            sigma <- sig.model$sigma
+    
+            p.value.of.model <- summary(sig.model$model)$coefficient[2,4]
+            if(p.value.of.model > 0.05){
+                warning(paste("'loglinear' model to estimate sigma_n doesn't appear appropriate.",
+                              "\np-value > 5.\n",
+                              "est.sigma will be overwritten to 'Mack'.\n",
+                              "Mack's estimation method will be used instead."))
+    
+                est.sigma <- "Mack"
+            }else{
+                f.se[isna] <- sigma[isna]/sqrt(weights[1,isna]*FullTriangle[1,isna]^alpha[isna])
+            }
         }
     }
-    if(est.sigma %in% "Mack"){
+    if(est.sigma[1] %in% "Mack"){
         for(i in which(isna)){   # usually i = n - 1
             sigma[i] <- sqrt(abs(min((sigma[i - 1]^4/sigma[i - 2]^2),
                                      min(sigma[i - 2]^2, sigma[i - 1]^2))))
@@ -140,8 +148,10 @@ Mack.S.E <- function(MackModel, FullTriangle, est.sigma="log-linear", weights, a
         }
     }
     if(is.numeric(est.sigma)){
+# Markus, I'm not sure what your intention is in this next loop when the lengths of est.sigma and sigma differ
         for(i in seq(along=est.sigma)){
             l <- length(est.sigma)
+# BUG?! If length(est.sigma) > n, then n-i could be negative
             sigma[n-i] <- est.sigma[l-i+1]
             f.se[n-i] <- sigma[n-i]/sqrt(weights[1,n-i]*FullTriangle[1,n-i]^alpha[n-i])
         }
