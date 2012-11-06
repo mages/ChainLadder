@@ -36,7 +36,12 @@ tail=FALSE, tail.se=NULL, tail.sigma=NULL)
     Mack's approximation from his 1999 paper. Alternatively the user can
     provide a numeric value. If the log-linear model appears to be
     inappropriate (p-value > 0.05) the 'Mack' method will be used
-    instead and a warning message printed.}  
+    instead and a warning message printed.
+    Similarly, if Triangle is so small that log-linear regression is being
+    attempted on a vector of only one non-NA average link ratio,
+    the 'Mack' method will be used
+    instead and a warning message printed.
+    }  
   \item{tail}{can be logical or a numeric value.
     If \code{tail=FALSE} no tail factor will be applied, if \code{tail=TRUE} 
     a tail factor will be estimated via a linear extrapolation of
