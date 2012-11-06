@@ -16,15 +16,17 @@ test.getLatestCumulative.RAA <- function() {
 test.getLatestCumulative.simple <- function() {
     ## by Ben Escoto
     ## Test the getLatestCumulative function on simple toy data set
+    ## 11/2/2012 remove attributes of new version of getLatestCumulative
+    ##           before comparing -- Dan Murphy
     ## First, a traditional triangle
     simple.tri1 <- rbind(c(1,2), c(3, NA))
     latest <- ChainLadder:::getLatestCumulative(simple.tri1)
-    checkEquals(latest, c(2,3), checkNames=FALSE)
+    checkEquals(c(latest), c(2,3), checkNames=FALSE)
 
     ## Now check very simple "trapezoidal" triangle
     simple.tri2 <- rbind(c(NA ,2), c(3, NA))
     latest2 <- ChainLadder:::getLatestCumulative(simple.tri2)
-    checkEquals(latest2, c(2,3), checkNames=FALSE)
+    checkEquals(c(latest2), c(2,3), checkNames=FALSE)
 }
 
 test.tailfactor <- function () {
