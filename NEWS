@@ -1,22 +1,30 @@
 Version 0.1.5-4
-================
+----------------
+
 NEW FEATURES
 
    o The function "getLatestCumulative" adds attributes to 
 	the result
-	-	names = origin (rownames) from the Triangle
-	-	rowsname = name of row dimension of Triangle
-	-	colnames = dev (colnames) from Triangle
-	- 	colsname = name of the column dimension of Triangle
+	- names = origin (rownames) from the Triangle
+	- rowsname = name of row dimension of Triangle
+	- colnames = dev (colnames) from Triangle
+	- colsname = name of the column dimension of Triangle
 	The function has an additional argument, na.values, a 
 	vector of values (e.g., zero) that are synonymous with NA 
 	when searching for the rightmost non-NA value
    o as.triangle.data.frame now aggregates multiple data.frame
 	records when more than one (origin, dev) observation is
-	found (the	previous version took the first observation).
+	found (the previous version took the first observation).
+
+Changes
+
+   o The vignette has been updated with sections on Multivariate
+     chain-ladder, Clark's method and Generalised linear model methods 
+
 
 Version 0.1.5-3
-================
+----------------
+
 NEW FEATURES
 
    o The function "glmReserve" now simulates predictive distributions
@@ -37,11 +45,13 @@ Changes
    o Dramatic improvement on the documentation of "MultiChainLadder".
    o Complete the sections of "MultiChainLadder" and "glmReserve" in the vignettes. 
 
+
 Version 0.1.5-2
-================
+----------------
+
 NEW FEATURES
 
-   o Started writing a vignette. The current version is still draft
+   o We started writing a vignette. The current version is still draft
      and far from complete. Feedback will be much appreciated.
 
 Changes
@@ -56,8 +66,10 @@ Bug Fixes
    	 periods in different units, e.g. dev=c(1,100,10)
      Thanks to Ben Escoto for reporting this issue.
 
+
 Version 0.1.5-1
-================
+----------------
+
 Changes
 
    o Internal changes to plot.MackChainLadder to pass new checks
@@ -75,7 +87,8 @@ Changes
    
 
 Version 0.1.5-0
-================
+----------------
+
 NEW FEATURES
 
    o New function glmReserve, which implements loss reserving models
@@ -84,7 +97,8 @@ NEW FEATURES
 
 
 Version 0.1.4-4
-================
+----------------
+
 Changes
 
   o Minor changes to reflect a more rigours package build process for
@@ -94,7 +108,8 @@ Changes
 
 
 Version 0.1.4-3
-================
+----------------
+
 NEW FEATURES
 
   o ClarkLDF and ClarkCapeCod functions were reorganized to clarify
@@ -114,7 +129,8 @@ NEW FEATURES
 
 
 Version 0.1.4-2
-================
+----------------
+
 BUG FIXES
 
   o The TruncatedGrowth function value under the Clark Cape Cod method
@@ -125,7 +141,8 @@ BUG FIXES
 
 
 Version 0.1.4-1
-================
+----------------
+
 NEW FEATURES
 
   o ClarkLDF and ClarkCapeCod functions: additional functionality
@@ -171,8 +188,10 @@ BUG FIXES
   o The loss development factor (LDF) being returned by ClarkCapeCod
     was not documented
 
+
 Version 0.1.4-0
-================
+----------------
+
 NEW FEATURES
 
   o New implementation of the methods in David Clark's "LDF Curve
@@ -187,8 +206,9 @@ NEW FEATURES
           including a Q-Q plot with the results of the Shapiro-Wilk
           test
 
+
 Version 0.1.3-4
-================
+----------------
    
 BUG FIXES
 
@@ -196,8 +216,10 @@ BUG FIXES
     MackChainLadder caused an error. Thanks to Ernesto Schirmacher for
     reporting this bug.  
 
+
 Version 0.1.3-3
-================
+----------------
+
 NEW FEATURES
 
   o New multivariate chain ladder function 'MultiChainLadder' by Wayne
@@ -215,6 +237,7 @@ NEW FEATURES
 
 
 USER-VISIBLE CHANGES
+
   o The examples in MackChainLadder and ChainLadder-package have been
     shortened and demo files have been created instead.
     The examples focus on the syntax of the function calls, while the
@@ -229,8 +252,10 @@ BUG FIXES
   o 'estimate.sigma' didn't check for sigma>0 before applying a
     log-linear regression. Thanks to Dan Murphy reporting this bug.
 
+
 Version 0.1.2-13
-================
+----------------
+
 USER-VISIBLE CHANGES
 
   o 'MackChainLadder' has new argument 'alpha' as an additional
@@ -270,8 +295,9 @@ BUG FIXES
       triangle could exist. Many thanks to Przemyslaw Sloma for
       reporting those issues. 
   
+
 Version 0.1.2-12
-================
+----------------
 
 NEW FEATURES
 
@@ -290,15 +316,19 @@ BUG FIXES
   o 'MunichChainLadder': tail factors were not accepted. Thanks to
     Stefan Pohl for reporting this issue.
 
+
 Version 0.1.2-11
-===============
+----------------
+
 BUG FIXES
 
   o 'MackChainLadder': 'F.se'[ultimate] was calculated of the ultimate
     column instead of the latest paid. 
 
+
 Version 0.1.2-10
-===============
+----------------
+
 USER-VISIBLE CHANGES
 
   o 'MackChainLadder' has new arguments 'tail.sigma' and 'tail.se' to
@@ -310,20 +340,29 @@ BUG FIXES
     ultimate sigma factor to estimate 'Mack.S.E' when a tail factor >
     1 was provided (Thanks to Mark Hoffmann for reporting this issue).
 
+
 Version 0.1.2-9
-===============
+----------------
+
 USER-VISIBLE CHANGES
+
   o Updated documentation to work with new Rd-file parser (R version >= 2.9.0)
   o Updated documentation for 'ABC' data (Thanks to Glen Barnett)
 
+
 Version 0.1.2-8
-===============
+----------------
+
 USER-VISIBLE CHANGES
+
   o Updated documentation for 'MackChainLadder' (Thanks to Daniel Murphy)
 
+
 Version 0.1.2-7
-===============
+----------------
+
 USER-VISIBLE CHANGES 
+
   o 'MackChainLadder' gives two more elements back: 'Mack.ProcessRisk'
     and 'Mack.ParameterRisk' for the process and parameter risk error
     (Thanks to Daniel Murphy)
@@ -334,14 +373,20 @@ USER-VISIBLE CHANGES
     vs. origin period and CV(Ultimate) vs. origin period  
   o Updated documentation
 
+
 Version 0.1.2-6
-===============
+----------------
+
 USER-VISIBLE CHANGES
+
   o Updated documentation
 
+
 Version 0.1.2-5 
-===============
+----------------
+
 NEW FEATURES
+
   o New function 'BootChainLadder', based on papers by England and Verrall, 
     and Barnett and Zehnwirth
   o 'MackChainLadder' and 'MunichChainLadder' allow for tail factors
@@ -365,6 +410,7 @@ NEW FEATURES
     with 'NA', see the help of 'qpaid'
 
 USER-VISIBLE CHANGES
+
   o summary functions for 'Mack-, 'Munich-, 'BootChainLadder' give all a list 
     back with two elements: 'ByOrigin' and 'Totals'	
   o Change of labels: origin years -> origin period and development years ->
@@ -376,8 +422,11 @@ USER-VISIBLE CHANGES
   o Improved documentation
 
 BUG FIXES
+
   o 'MunichChainLadder': calculation of 'lambdaP' and 'lambdI' was incorrect. 
     Thanks to Beat Huggler for reporting this issue.
+
+Changes prior to Version 0.1.2-5
 
 2008-09-23 Markus Gesmann <markus.gesmann@gmail>
 
@@ -433,3 +482,4 @@ BUG FIXES
 	the reserve. MackChainLadder gives now also the
 	Total.Mack.S.E. back plus the estimate standard error for all
 	individual age-to-age factors F.se.
+  

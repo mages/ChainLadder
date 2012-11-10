@@ -35,12 +35,16 @@ MunichChainLadder <- function(Paid, Incurred,
     if(!all(dim(Paid) == dim(Incurred)))
  	stop("Paid and Incurred triangle must have same dimension.\n")
 
+    n <- ncol(Paid)
+    m <- nrow(Paid)
+    
+    if(m > n)
+      stop("MunichChainLadder does not support triangles with fewer development periods than origin periods.\n")
+       
     MackPaid = MackChainLadder(Paid, tail=tailP, est.sigma=est.sigmaP)
     MackIncurred = MackChainLadder(Incurred, tail=tailI, est.sigma=est.sigmaI)
 
-    n <- ncol(Paid)
-    m <- nrow(Paid)
-
+       
     myQModel <- vector("list", n)
     q.f <- rep(1,n)
     rhoI.sigma <- rep(0,n)
@@ -107,24 +111,25 @@ MunichChainLadder <- function(Paid, Incurred,
     FullIncurred <- cbind(Incurred, rep(NA,m))
 
     for(j in c(1:(n))){
-        for(i in c((n-j+1):m) ){
+        for(i in c((n-j+1):m) ){# 3:4, 2:4, 1:4
+          ## Check for triangles with n<m
+##          if(m < n | (i > (m+1-j))){
+           
             ## Paid
             mclcorrection <- lambdaP*MackPaid$sigma[j]/rhoP.sigma[j]*(
                                                                       FullIncurred[i,j]/FullPaid[i,j]-qinverse.f[j]
                                                                       )
             mclcorrection <- ifelse(!is.na(mclcorrection),mclcorrection,0)
-            FullPaid[i,j+1] = FullPaid[i,j] * (MackPaid$f[j] + mclcorrection)
+              FullPaid[i,j+1] = FullPaid[i,j] * (MackPaid$f[j] + mclcorrection)
             ## Incurred
             mclcorrection <- lambdaI*MackIncurred$sigma[j]/rhoI.sigma[j]*(
                                                                           FullPaid[i,j]/FullIncurred[i,j]-q.f[j]
                                                                           )
             mclcorrection <- ifelse(!is.na(mclcorrection),mclcorrection,0)
-
-            FullIncurred[i,j+1] = FullIncurred[i,j] * (MackIncurred$f[j] + mclcorrection)
-
-        }
-    }
-
+              FullIncurred[i,j+1] = FullIncurred[i,j] * (MackIncurred$f[j] + mclcorrection)
+    ##        }
+          }
+      }
 
     output <- list()
     output[["call"]] <-  match.call(expand.dots = FALSE)

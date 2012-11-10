@@ -15,9 +15,9 @@
 \usepackage{mathrsfs, amsmath, amsfonts, amssymb, amsthm}
 %\usepackage[left=2.5cm,right=2.5cm]{geometry}
 \usepackage{graphicx}
-\usepackage{draftwatermark}
+%\usepackage{draftwatermark}
 \hypersetup{
-  colorlinks=true, pagebackref=true,
+  colorlinks=true,
   pdftitle={ChainLadder: Claims reserving with R},%
   pdfauthor={Markus Gesmann, Dan Murphy, Wayne Zhang},%
 }
@@ -53,7 +53,7 @@ options(prompt = "R> ", digits = 4, show.signif.stars = FALSE)
 
 \title{Claims reserving with R:\\
   ChainLadder-\Sexpr{packageDescription("ChainLadder")[['Version']]}
-  Package Vignette  \\ DRAFT 
+  Package Vignette 
 }
 \maketitle
 \begin{abstract}
@@ -195,11 +195,6 @@ library(ChainLadder)
 demo("demo name")
 @
 
-Additionally the \chainladder package comes with example files which
-demonstrates how to the \chainladder functions can be embedded in
-Excel and Word using the \href{http://rcom.univie.ac.at/}{statconn}
-interface\cite{BaierNeuwirth2007}. 
-
 For more information and examples see the project web site:
 \url{http://code.google.com/p/chainladder/}
 
@@ -259,7 +254,7 @@ evaluated as of 1988-12-31, is three years.
 
 The objective of a reserving exercise is to forecast the future claims
 development in the bottom right corner of the triangle and potential
-further developments beyond development age 10.. Eventually all claims
+further developments beyond development age 10. Eventually all claims
 for a given origin period will be settled, but it is not always
 obvious to judge how many years or even decades it will take. We speak
 of long and short tail business depending on the time it takes to pay
@@ -274,7 +269,7 @@ data:
 plot(RAA)
 @ 
 
-\begin{figure}[!h]
+\begin{figure}[!ht]
   \centering
 <<fig=TRUE, label=TrianglePlot1, echo=FALSE>>=
 plot(RAA)
@@ -294,7 +289,7 @@ panels.}, see Figure~\ref{RAAplot2}.
 plot(RAA, lattice=TRUE)
 @ 
 
-\begin{figure}[!h]
+\begin{figure}[!ht]
   \centering
 <<fig=TRUE, label=TrianglePlot2, echo=FALSE>>=
 plot(RAA, lattice=TRUE)
@@ -388,7 +383,7 @@ head(raa.df)
 This is particularly helpful when you would like to store your results
 back into a data base. Figure~\ref{fig:database} gives you an idea of a
 potential data flow between R and data bases.
-\begin{figure}[!h]
+\begin{figure}[!ht]
   \centering
   \includegraphics[width=0.5\textwidth]{RandDatabases}
   \caption{Flow chart of data between R and data bases.}
@@ -462,7 +457,7 @@ plot(100*(rev(1/cumprod(rev(c(f, tail[tail>1.0001]))))), t="b",
      xlab="Dev. period", ylab="Development % of ultimate loss") 
 @ 
 
-The link ratios are then applied to the latest know cumulative
+The link ratios are then applied to the latest known cumulative
 claims amount to forecast the next development period. The
 \emph{squaring} of the RAA triangle is calculated below, where an
 \emph{ultimate} column is appended to the right to accommodate the
@@ -535,12 +530,12 @@ lmCL <- function(i, Triangle){
 sapply(lapply(c(1:(n-1)), lmCL, RAA), coef)
 @ 
 \subsubsection{Mack chain-ladder}
-Thomas Mack published in 1993 ~\cite{Mack_distributionfree1993} an
-article which allows to estimate the standard errors of the
-chain-ladder forecast without assuming a distribution under certain
-constraints to the data.
+Thomas Mack published in 1993 ~\cite{Mack_distributionfree1993} a
+method which estimates the standard errors of the 
+chain-ladder forecast without assuming a distribution under three 
+conditions.
 
-Following Mack~\cite{Mack1999}  let $C_{ik}$ denote the cumulative loss
+Following the notation of Mack~\cite{Mack1999}  let $C_{ik}$ denote the cumulative loss
 amounts of origin period (e.g. accident year) $i=1,\ldots,m$, with
 losses known for development period  (e.g. development year) $k \le n+1-i$.
 
@@ -566,21 +561,33 @@ where \texttt{y} is the vector of claims at development period
 $k+1$ and \texttt{x} is  the vector of claims at development period
 $k$. 
 
+The Mack method is implemented in the \chainladder package via the
+function \texttt{MackChainLadder}. 
+
+As an example we apply the \texttt{MackChainLadder} function to our
+triangle \texttt{RAA}:
+
 <<>>=
 mack <- MackChainLadder(RAA, est.sigma="Mack")
 mack
 @ 
-Access the loss development factors and the full triangle
+We can access the loss development factors and the full triangle via
 <<>>=
 mack$f
 mack$FullTriangle
 @ 
+
+To check that Mack's assumption are valid review the residual plots,
+you should see no trends in either of them.
 
 \begin{center}
 <<fig=TRUE, label=MackPlot1>>=
 plot(mack)
 @ 
 \end{center}
+
+We can plot the development, including the forecast and estimated
+standard errors by origin period by setting the argument \texttt{lattice=TRUE}.
 
 \begin{center}
 <<fig=TRUE, label=MackPlot2>>=
@@ -589,26 +596,54 @@ plot(mack, lattice=TRUE)
 \end{center}
 
 \subsubsection{Bootstrap chain-ladder}
-<<fig=TRUE>>=
-# See also the example in section 8 of England & Verrall (2002) on page 55.
 
+ The \texttt{BootChainLadder} function uses a two-stage
+ bootstrapping/simulation approach following the paper by England and
+ Verrall~\cite{EnglandVerrall2002}. In the first stage an ordinary 
+ chain-ladder methods is applied to the cumulative claims triangle.
+ From this we calculate the scaled Pearson residuals which we
+ bootstrap R times to forecast future incremental claims payments via
+ the standard chain-ladder method.  In the second stage we simulate
+ the process error with the bootstrap  value as the mean and using the
+ process distribution assumed.  The set of reserves obtained in this
+ way forms the predictive distribution,  from which summary statistics
+ such as mean, prediction error or  quantiles can be derived.
+
+<<>>=
+## See also the example in section 8 of England & Verrall (2002) 
+## on page 55.
 B <- BootChainLadder(RAA, R=999, process.distr="gamma")
 B
-plot(B)
-# Compare to MackChainLadder
-MackChainLadder(RAA)
-quantile(B, c(0.75,0.95,0.99, 0.995))
+@ 
 
-# fit a distribution to the IBNR
+\begin{center}
+<<fig=TRUE>>=
+plot(B)
+@ 
+\end{center}
+
+Quantiles of the bootstrap IBNR can be calculated via the
+\texttt{quantile} function:
+<<>>=
+quantile(B, c(0.75,0.95,0.99, 0.995))
+@ 
+The distribution of the IBNR appears to follow a log-normal
+distribution, so let's fit it:
+<<fig=TRUE>>=
+## fit a distribution to the IBNR
 library(MASS)
 plot(ecdf(B$IBNR.Totals))
-# fit a log-normal distribution 
+## fit a log-normal distribution 
 fit <- fitdistr(B$IBNR.Totals[B$IBNR.Totals>0], "lognormal")
 fit
 curve(plnorm(x,fit$estimate["meanlog"], fit$estimate["sdlog"]),
       col="red", add=TRUE)  
 @ 
+
 \subsubsection{Munich chain-ladder}
+ The Mack-chain-ladder model forecasts future claims developments
+ based on a historical cumulative claims development triangle and estimates
+ the standard error around those~\cite{Quarg2004}.
 <<fig=TRUE, width = 5, height = 4>>=
 MCLpaid
 MCLincurred
@@ -1170,29 +1205,30 @@ print(format(round(res.q), big.mark = ","), quote = FALSE)
 
 The full predictive distribution of the simulated reserves for each
 year can be visualized easily: 
-<<eval = FALSE>>= 
+
+<<eval=FALSE>>=
 library(ggplot2)
 library(reshape2)
 prm <- melt(pr)
 names(prm) <- c("year", "reserve")
 gg <- ggplot(prm, aes(reserve))
 gg <- gg + geom_density(aes(fill = year), alpha = 0.3) + 
-        facet_wrap(~year, nrow = 2, scales = "free") + 
-        opts(axis.text.x = theme_blank(),
-             axis.text.y = theme_blank(), 
-             legend.position = "none")
+        facet_wrap(~year, nrow = 2, scales = "free")  + 
+         theme(legend.position="none") 
 print(gg)
-@
-
-
-\begin{figure}[!h]
-\centering
-\includegraphics{ReservePlot}
-\caption{The predictive distribution of loss reserves for each year based on bootstrapping. }
-\end{figure}
+@ 
+%\begin{figure}[!ht]
+%\centering
+% the above code doesn't seem to be stable
+%\caption{The predictive distribution of loss reserves for each year based on bootstrapping. }
+%\end{figure}
 
 \section{Using \chainladder with RExcel and SWord}
 
+The \chainladder package comes with example files which
+demonstrate how its functions can be embedded in
+Excel and Word using the \href{http://rcom.univie.ac.at/}{statconn}
+interface\cite{BaierNeuwirth2007}. 
 
 The  spreadsheet is located in the Excel folder
 of the package. The R command 
