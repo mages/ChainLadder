@@ -23,6 +23,7 @@ Description: The ChainLadder package provides various statistical
 Depends:
     Hmisc,
     lattice,
+    grid,
     methods,
     stats,
     systemfit,

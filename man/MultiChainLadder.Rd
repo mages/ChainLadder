@@ -118,8 +118,9 @@ data(GenIns)
 # show plots 
 parold <- par(mfrow = c(2, 2))
 plot(U2, which.plot = 1:4)
-plot(U2, which.plot = 5)
+plot(U1, which.plot = 5)
 par(parold)
+
 
 # For mse.method = "Independence", the model is equivalent 
 # to that in Buchwalder et al. (2006)

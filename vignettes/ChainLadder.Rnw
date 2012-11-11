@@ -53,7 +53,8 @@ options(prompt = "R> ", digits = 4, show.signif.stars = FALSE)
 
 \title{Claims reserving with R:\\
   ChainLadder-\Sexpr{packageDescription("ChainLadder")[['Version']]}
-  Package Vignette 
+  Package Vignette\\
+  DRAFT
 }
 \maketitle
 \begin{abstract}
