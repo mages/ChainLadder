@@ -21,8 +21,8 @@ chainladder(Triangle, weights = 1, delta = 1)
     dimension as \code{Triangle} with all weight entries in [0; 1]}
   \item{delta}{'weighting' parameters, either 0,1 or 2. Default: 1;
     delta=1 gives the historical chain
-    ladder age-to-age factors, delta=0 gives the straight average of the
-    observed individual development factors and delta=2 is the result of
+    ladder age-to-age factors, delta=2 gives the straight average of the
+    observed individual development factors and delta=0 is the result of
     an ordinary regression of \eqn{C_{i,k+1}} against \eqn{C_{i,k}} with
     intercept 0, see Barnett & Zehnwirth (2000);.
     Please note that Mack (1999) used the notation of alphas, with alpha=2-delta.
@@ -32,7 +32,7 @@ chainladder(Triangle, weights = 1, delta = 1)
 \details{
  
   The key idea is to see the chain ladder algorithm as a weighted linear regression
-  through the origin applied for each development period.
+  through the origin applied to each development period.
 
   Suppose \code{y} is the vector of cumulative claims at development period
   \code{i+1}, and \code{x} at development period \code{i}, \code{w} are
