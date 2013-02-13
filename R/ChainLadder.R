@@ -53,21 +53,28 @@ return(weights)
 ## predict
 ##
 predict.TriangleModel <- function(object,...){
-    n <- ncol(object[["Triangle"]])
-    m <- nrow(object[["Triangle"]])
-    FullTriangle <- object[["Triangle"]]
 
-    for(j in c(1:(n-1))){
-        i <- which(is.na(FullTriangle[, j+1]))
-        FullTriangle[i, j+1] <- predict(object[["Models"]][[j]],
-                                                   newdata=data.frame(x=FullTriangle[i, j]),...)
-
-    }
-    return(FullTriangle)
+  n <- ncol(object[["Triangle"]])
+  
+  FullTriangle <- object[["Triangle"]]
+  MF <- lapply(c(2:n), 
+               function(j){
+                 ii <- is.na(FullTriangle[,j])
+                 FF <- predict(object[["Models"]][[j-1]], se.fit=TRUE,                    
+                               newdata=data.frame(x=FullTriangle[ii, j-1]))
+                 FullTriangle[ii,j] <<- FF$fit
+                 return(FF)
+               }             
+               )
+  
+    return(list(FullTriangle=FullTriangle, Prediction=MF))
 }
 
+
+
 predict.ChainLadder <- function(object,...){
-    predict.TriangleModel(object,...)
+  res <- predict.TriangleModel(object,...)
+  res[["FullTriangle"]]
 }
 
 ################################################################################

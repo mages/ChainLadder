@@ -47,7 +47,7 @@ BootChainLadder <- function(Triangle, R = 999, process.distr=c("gamma", "od.pois
   unscaled.residuals  <- (inc.triangle - exp.inc.triangle)/sqrt(abs(exp.inc.triangle))
   
   ## Calculate the Pearson scale parameter
-  nobs  <- 0.5 * n * (n - 1)
+  nobs  <- 0.5 * n * (n + 1)
   scale.factor <- (nobs - 2*n+1)
   scale.phi <- sum(unscaled.residuals^2,na.rm=TRUE)/scale.factor
   ## Adjust the Pearson residuals using

@@ -1,3 +1,14 @@
+Version 0.1.5-5 [2013-02-13]
+----------------------------
+
+Bug Fixes
+
+  o The phi-scaling factor in BootChainLadder was incorrect. 
+    Instead of calculating the number of data items in the upper left
+    triangle as n*(n+1)/2, n*(n-1)/2 was used. Thanks to Thomas
+    Girodot for reporting this bug.
+
+
 Version 0.1.5-4 [2012-11-10]
 ----------------------------
 

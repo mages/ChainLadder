@@ -36,7 +36,7 @@ MackChainLadder <- function(Triangle,
     alpha <- 2 - CL$delta
 
     ## Predict the chain ladder model
-    FullTriangle <- predict.TriangleModel(list(Models=CL[["Models"]], Triangle=Triangle))
+    FullTriangle <- predict.ChainLadder(list(Models=CL[["Models"]], Triangle=Triangle))
     ## Estimate the standard error for f and F
     StdErr <- Mack.S.E(CL[["Models"]], FullTriangle, est.sigma=est.sigma,
                        weights=CL[["weights"]], alpha=alpha)
