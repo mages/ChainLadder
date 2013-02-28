@@ -1,9 +1,8 @@
-.onLoad<- function(lib, pkg, ...)
-{
-    packageStartupMessage(chainladderWelcomeMessage())
 
-    invisible()
+.onAttach <- function(lib, pkg,...){
+  packageStartupMessage(chainladderWelcomeMessage())
 }
+
 
 chainladderWelcomeMessage <- function(){
 
