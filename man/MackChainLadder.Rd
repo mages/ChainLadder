@@ -9,7 +9,7 @@
 }
 \usage{
 MackChainLadder(Triangle, weights = 1, alpha=1, est.sigma="log-linear",
-tail=FALSE, tail.se=NULL, tail.sigma=NULL)
+tail=FALSE, tail.se=NULL, tail.sigma=NULL, mse.method="Mack")
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -58,6 +58,14 @@ tail=FALSE, tail.se=NULL, tail.sigma=NULL)
     \code{tail.sigma} 
     is estimated via "log-linear" regression, if \code{tail.sigma} is a numeric
     value than this value will be used instead}  
+  \item{mse.method}{
+    method used for the recursive estimate of the parameter risk component 
+    of the mean square error.
+    Value "Mack" (default) coincides with Mack's formula;
+    "Independence" includes the additional cross-product term
+    as in Murphy and BBMW. 
+    Refer to References below.
+    }  
 }
 \details{
   Following Mack's 1999 paper let \eqn{C_{ik}} denote the cumulative loss amounts of origin period
@@ -116,6 +124,10 @@ tail=FALSE, tail.se=NULL, tail.sigma=NULL)
   Mack.ParameterRisk^2}}
   \item{Total.Mack.S.E}{total variability of projected loss for all
     origin years combined}
+  \item{Total.ProcessRisk}{vector of process risk estimate of the total 
+    of projected loss for all origin years combined by development period}
+  \item{Total.ParameterRisk}{vector of parameter risk estimate of the total 
+    of projected loss for all origin years combined by development period}
   \item{weights}{weights used.}
   \item{alpha}{alphas used.}
   \item{tail}{tail factor used. If tail was set to TRUE the output will
@@ -125,6 +137,17 @@ tail=FALSE, tail.se=NULL, tail.sigma=NULL)
 \cite{Thomas Mack. Distribution-free calculation of the standard error of chain ladder reserve estimates. \emph{Astin Bulletin}. Vol. 23. No 2. 1993. pp.213:225}
 
 \cite{Thomas Mack. The standard error of chain ladder reserve estimates: Recursive calculation and inclusion of a tail factor. \emph{Astin Bulletin}. Vol. 29. No 2. 1999. pp.361:366}
+
+\cite{Murphy, Daniel M. Unbiased Loss Development
+Factors. \emph{Proceedings of the Casualty Actuarial Society Casualty
+Actuarial Society} - Arlington, Virginia 1994: LXXXI 154-222}
+
+\cite{Buchwalder, Buhlmann, Merz, and Wuthrich.
+  The Mean Square Error of Prediction in the Chain Ladder Reserving Method
+  (Mack and Murphy Revisited).
+  \emph{Astin Bulletin} Vol. 36. 2006. pp.521:542
+  }
+
 }
 \author{Markus Gesmann \email{markus.gesmann@gmail.com}}
 \note{
@@ -134,10 +157,6 @@ tail=FALSE, tail.se=NULL, tail.sigma=NULL)
   General Insurance (with discussion), \emph{British Actuarial Journal}
   8, III. 2002}
 
-  \cite{Murphy, Daniel M. Unbiased Loss Development
-  Factors. \emph{Proceedings of the Casualty Actuarial Society Casualty
-    Actuarial Society} - Arlington, Virginia 1994: LXXXI 154-222.}
-  
   \cite{Barnett and Zehnwirth. Best estimates for reserves. Proceedings
     of the CAS, LXXXVI I(167), November 2000.}  
   
@@ -171,12 +190,38 @@ MackChainLadder(GenIns, alpha=0)$f
 # You get the same result via:
 apply(GenIns[,-1]/GenIns[,-10],2, mean, na.rm=TRUE)
 
+## Tail
 ## See the example in Mack's 1999 paper
 Mortgage
+m <- MackChainLadder(Mortgage)
+round(summary(m)$Totals["CV(IBNR)",], 2) ## 26% in Table 6 of paper
 plot(Mortgage)
+# Specifying the tail and its associated uncertainty parameters
 MRT <- MackChainLadder(Mortgage, tail=1.05, tail.sigma=71, tail.se=0.02, est.sigma="Mack")
 MRT
 plot(MRT, lattice=TRUE)
+# Specify just the tail and the uncertainty parameters will be estimated
+MRT <- MackChainLadder(Mortgage, tail=1.05)
+MRT$f.se[9] # close to the 0.02 specified above
+MRT$sigma[9] # less than the 71 specified above
+# Note that the overall CV dropped slightly
+round(summary(MRT)$Totals["CV(IBNR)",], 2) ## 24%
+# tail parameter uncertainty equal to expected value 
+MRT <- MackChainLadder(Mortgage, tail=1.05, tail.se = .05)
+round(summary(MRT)$Totals["CV(IBNR)",], 2) ## 27%
+
+## Parameter-risk (only) estimate of the total reserve = 3142387
+tail(MRT$Total.ParameterRisk, 1) # located in last (ultimate) element
+#  Parameter-risk (only) CV is about 19%
+tail(MRT$Total.ParameterRisk, 1) / summary(MRT)$Totals["IBNR", ]
+
+## Three terms in the parameter risk estimate
+## First, the default (Mack) without the tail
+m <- MackChainLadder(RAA, mse.method = "Mack")
+summary(m)$Totals["Mack S.E.",]
+## Then, with the third term
+m <- MackChainLadder(RAA, mse.method = "Independence")
+summary(m)$Totals["Mack S.E.",] ## Not significantly greater
 
 ## For more examples see:
 \dontrun{

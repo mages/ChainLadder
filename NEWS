@@ -1,3 +1,18 @@
+Version 0.1.5-6 [2013-02-26]
+----------------------------
+
+NEW FEATURES
+
+  o The list output of the MackChainLadder function now includes
+    the parameter risk and process risk breakdowns of the total risk
+    estimate for the sum of projected losses across all origin years
+    by development age.
+  o The Mack Method's recursive parameter risk calculation now enables 
+    Dr. Mack's original two-term formula (the default) and optionally
+    the three-term formula found in Murphy's 1994 paper and in the 
+    2006 paper by Buchwalder, Buhlmann, Merz, and Wuthrich.
+  o A few more Mack Method examples.
+
 Version 0.1.5-5 [2013-02-13]
 ----------------------------
 

@@ -109,6 +109,10 @@ MunichChainLadder <- function(Paid, Incurred,
     ## Recursive Munich Chain Ladder Forumla
     FullPaid <- cbind(Paid, rep(NA,m))
     FullIncurred <- cbind(Incurred, rep(NA,m))
+#prn(n)
+#prn(FullPaid)
+#    FullPaid <- Paid
+#    FullIncurred <- Incurred
 
     for(j in c(1:(n))){
         for(i in c((n-j+1):m) ){# 3:4, 2:4, 1:4

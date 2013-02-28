@@ -2,7 +2,7 @@ Package: ChainLadder
 Type: Package
 Title: Statistical methods for the calculation of outstanding claims
     reserves in general insurance
-Version: 0.1.5-5
+Version: 0.1.5-6
 Date: 2013-02-13
 Authors@R: c(person("Markus", "Gesmann", role = c("aut", "cre"),
              email = "markus.gesmann@gmail.com"),
