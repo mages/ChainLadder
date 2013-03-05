@@ -107,7 +107,7 @@ Also, we recommend the use of \code{MultiChainLadder2} over \code{MultiChainLadd
 }
 
 \examples{
-
+\dontrun{
 # This shows that the MCL model using "OLS" is equivalent to 
 # the MackChainLadder when applied to one triangle 
 
@@ -157,6 +157,7 @@ par(parold)
 ## summary statistics
 summary(f1, portfolio = "1+3")@report.summary[[4]]
 
+
 # model for joint development of paid and incurred triangles 
 da <- auto[1:2]
 # MCL with diagonal development
@@ -174,6 +175,9 @@ names(r1) <- c("MCL", "GMCL")
 r2 <- summary(M2)[[1]][, 6]
 r2 <- c(r2, summary(M2)[[2]][2, 3])
 print(do.call(cbind, c(r1, list(MuCl = r2))) * 100, digits = 4)
+
+}
+
 # To reproduce results in Zhang (2010) and see more examples, use:
 \dontrun{
  demo(MultiChainLadder)

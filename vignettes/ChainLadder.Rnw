@@ -1215,7 +1215,7 @@ names(prm) <- c("year", "reserve")
 gg <- ggplot(prm, aes(reserve))
 gg <- gg + geom_density(aes(fill = year), alpha = 0.3) + 
         facet_wrap(~year, nrow = 2, scales = "free")  + 
-         theme(legend.position="none") 
+         theme(legend.position = "none") 
 print(gg)
 @ 
 %\begin{figure}[!ht]
