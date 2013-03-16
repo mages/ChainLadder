@@ -1,4 +1,22 @@
-export(MackChainLadder, MunichChainLadder, BootChainLadder, MultiChainLadder, MultiChainLadder2)
+importFrom(stats, quantile, rstandard)
+importFrom(methods, coerce, cbind2, rbind2 )
+importFrom(utils, packageDescription)
+importFrom(cplm, cpglm)
+importFrom(Hmisc, errbar, prn)
+importFrom(systemfit, systemfit, systemfit.control)
+importFrom(statmod, tweedie)
+importFrom(actuar, pllogis)
+importFrom(tweedie, rtweedie)
+
+importFrom(reshape2, acast)
+
+importClassesFrom(cplm, NullNum, NullList)
+importMethodsFrom(cplm, show, predict, vcov, residuals, resid, coef,
+                  fitted, plot) 
+importMethodsFrom(Matrix, summary)
+
+export(MackChainLadder, MunichChainLadder, BootChainLadder,
+       MultiChainLadder, MultiChainLadder2) 
 export(as.triangle)
 export(chainladder)
 export(getLatestCumulative)
@@ -9,23 +27,18 @@ export(Table64, Table65, Table68)
 export(ata)
 export(glmReserve)
 
-importFrom(stats, quantile, rstandard)
-importFrom(methods, coerce, cbind2, rbind2 )
-importFrom(utils, packageDescription)
-importFrom(cplm, cpglm)
-importClassesFrom(cplm, NullNum, NullList)
-importMethodsFrom(cplm, show, predict, vcov, residuals, resid, coef, fitted, plot)
-importMethodsFrom(Matrix, summary)
 #Classes
 exportClasses(triangles, MultiChainLadder, MultiChainLadderFit,
-              MCLFit, GMCLFit, MultiChainLadderMse, MultiChainLadderSummary,
-		  NullNum, NullChar)
+              MCLFit, GMCLFit, MultiChainLadderMse,
+              MultiChainLadderSummary, 
+              NullNum, NullChar)
            
 #Methods
 S3method(plot, MackChainLadder)
 S3method(plot, MunichChainLadder)
 S3method(plot, BootChainLadder)
 S3method(plot, triangle)
+
 S3method(plot, clark)
 
 S3method(print, MackChainLadder)

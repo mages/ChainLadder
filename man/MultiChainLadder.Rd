@@ -107,7 +107,6 @@ Also, we recommend the use of \code{MultiChainLadder2} over \code{MultiChainLadd
 }
 
 \examples{
-\dontrun{
 # This shows that the MCL model using "OLS" is equivalent to 
 # the MackChainLadder when applied to one triangle 
 
@@ -133,6 +132,7 @@ par(parold)
 (W1 <- MultiChainLadder2(liab, mse.method = "Independence", 
     		control = systemfit.control(methodResidCov = "Theil"))) 
 
+\dontrun{
 # use the iterative residual covariance estimator
 for (i in 1:5){
   W2 <- MultiChainLadder2(liab, mse.method = "Independence", 

@@ -58,7 +58,7 @@
     Package: \tab ChainLadder\cr
     Type: \tab Package\cr
     Version: \tab 0.1.5-6\cr
-    Date: \tab 2013-02-28\cr
+    Date: \tab 2013-03-16\cr
     License: \tab GPL version 2 or later\cr
   }
 }

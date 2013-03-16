@@ -198,4 +198,3 @@ summary.glmReserve <- function(object, type = c("triangle", "model"), ...){
 print.glmReserve <- function(x, ...)
   summary(x)
 
-

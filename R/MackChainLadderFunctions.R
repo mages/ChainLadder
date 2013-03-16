@@ -444,8 +444,8 @@ plot.MackChainLadder <- function(x, mfrow=c(3,2), title=NULL,lattice=FALSE,...){
                       ylab="Value",#paste(Currency,myUnit),
                       ylim=c(0, max(apply(.myResult[c("Ultimate", "Mack.S.E")],1,sum),na.rm=TRUE)))
       }
-        ## add error ticks
-      require("Hmisc")
+      ## add error ticks
+      ## require("Hmisc")
       errbar(x=bp, y=.myResult$Ultimate,
              yplus=(.myResult$Ultimate + .myResult$Mack.S.E),
              yminus=(.myResult$Ultimate - .myResult$Mack.S.E),
