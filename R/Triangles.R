@@ -120,9 +120,13 @@ print.triangle <- function(x, ...) {
 }
 
 .as.LongTriangle <- function(Triangle, na.rm=FALSE){
+  # 3/20/2013
+  # Difference from old version: preserves names(dimnames) to be column names
+  # in the date.frame rather than forcing 'origin' and 'dev'
     x <- Triangle
-    .origin <- try(as.numeric(dimnames(x)$origin))
-    .dev <- try(as.numeric(dimnames(x)$dev))
+    nms <- names(dimnames(x))
+    .origin <- try(as.numeric(dimnames(x)[[nms[1L]]]))
+    .dev <- try(as.numeric(dimnames(x)[[nms[2L]]]))
     if(any(is.na(c(.origin, .dev)))){
       stop(paste("The origin and dev. period columns have to be of type numeric or a character",
                  "which can be converted into numeric.\n"))
@@ -133,7 +137,18 @@ print.triangle <- function(x, ...) {
     if(na.rm){
         lx <- na.omit(lx)
     }
+    if (!is.null(nms)) {
+        if (!is.na(nms[1L])) names(lx)[1L] <- nms[1L]
+        if (!is.na(nms[2L])) names(lx)[2L] <- nms[2L]
+    }
     return(lx)
 }
+
+# A coefficients method to quickly pull out the factors from a ChainLadder model
+coef.ChainLadder <- function(object, ...) {
+  structure(sapply(object$Models, coefficients)
+  , names = head(colnames(object$Triangle), -1)
+  , ...)
+  }
 
 # Idea: think about a class triangles, which stores an array of triangles, e.g. for several lines of business

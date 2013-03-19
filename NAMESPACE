@@ -25,6 +25,7 @@ export(Join2Fits, JoinFitMse, Mse, residCov, residCor)
 export(ClarkLDF, ClarkCapeCod)
 export(Table64, Table65, Table68)
 export(ata)
+export(CLFMdelta, LRfunction)
 export(glmReserve)
 
 #Classes
@@ -64,6 +65,7 @@ S3method(summary, glmReserve)
 
 S3method(predict, TriangleModel)
 S3method(predict, ChainLadder)
+S3method(coef, ChainLadder)
 S3method(residuals, MackChainLadder)
 S3method(quantile, BootChainLadder)
 S3method(residuals, BootChainLadder)
