@@ -139,7 +139,11 @@ checkTriangle <- function(Triangle){
     }else{
         .origin <- tri.dimnames[[1]]
     }
-    .dev <- 1:n
+    if(is.null(tri.dimnames[[2]])){
+        .dev <- 1:n
+    }else{
+        .dev <- tri.dimnames[[2]]
+    }
 
     dimnames(Triangle) <- list(origin=.origin, dev=.dev)
 

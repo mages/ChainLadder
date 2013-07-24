@@ -7,7 +7,7 @@
 LRfcnPair <- function(a, B, E) sum(B ^ (1 - a) * E) / sum(B ^ (2 - a))
 LRfcnPairD <- function(a, B, E, s) LRfcnPair(a, B, E) - s
 LRdist <- function(a, B, E, s) abs(LRfcnPair(a, B, E) - s)
-approxeq <- function (x, y, tolerance = .Machine$double.eps^0.5) abs(x - y) < tolerance
+.approxeq <- function (x, y, tolerance = .Machine$double.eps^0.5) abs(x - y) < tolerance
 
 CLFMdelta <- function(Triangle, selected, tolerance = .0005, ...){ #step.d = 1, ...){
   step.d <- 1
@@ -67,9 +67,9 @@ CLFMdelta <- function(Triangle, selected, tolerance = .0005, ...){ #step.d = 1, 
   RAata.Triangle <- function(Triangle) coefficients(chainladder(Triangle, delta=0))
   VWata.Triangle <- function(Triangle) coefficients(chainladder(Triangle, delta=1))
   SAata.Triangle <- function(Triangle) coefficients(chainladder(Triangle, delta=2))
-  oavec[names(tata <- RAata.Triangle(Triangle))][approxeq(tata, selected, tolerance = tolerance)] <- 0
-  oavec[names(tata <- SAata.Triangle(Triangle))][approxeq(tata, selected, tolerance = tolerance)] <- 2
-  oavec[names(tata <- VWata.Triangle(Triangle))][approxeq(tata, selected, tolerance = tolerance)] <- 1
+  oavec[names(tata <- RAata.Triangle(Triangle))][.approxeq(tata, selected, tolerance = tolerance)] <- 0
+  oavec[names(tata <- SAata.Triangle(Triangle))][.approxeq(tata, selected, tolerance = tolerance)] <- 2
+  oavec[names(tata <- VWata.Triangle(Triangle))][.approxeq(tata, selected, tolerance = tolerance)] <- 1
   
   # Original algorithm works on "long triangles" with value.next in same row as value, where
   #   value.next is the value in the same row and age = next age in "selected".

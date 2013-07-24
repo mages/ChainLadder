@@ -49,3 +49,13 @@ test.asTriangles <- function () {
 	any(dimnames(RAA)$dev==dimnames(zRAA)$dev)	
 	
 }
+
+test.names_of_chainladder_Triangle <- function () {
+  # Prior to April 2013 the column names of the triangle returned by
+  # chainladder() were integers 1:n. Now they should be the same as 
+  # the column names of the argument triangle.
+	x <- chainladder(RAA)
+  colnames(x) <- 12*(as.numeric(colnames(x)))
+  y <- chainladder(x)
+	checkEquals(colnames(y$Triangle), colnames(x))
+}
