@@ -103,7 +103,7 @@ R2[["Models"]][[1]] <- newModel
 predict(R2) # predict the full triangle with the new model
 #(only the last origin year will be affected)
 
-R2[["FullTriangle"]] <-  predict(R2)
+R2[["FullTriangle"]] <-  predict(R2)$FullTriangle
 R2[["FullTriangle"]]
 R2   # Std. Errors have not been re-estimated!
 # Plot the result

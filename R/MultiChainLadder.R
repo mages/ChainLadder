@@ -334,6 +334,7 @@ MultiChainLadder2 <- function(Triangles, mse.method = "Mack", last = 3,
 				int=NULL,
 				restrict.regMat=NULL, ...){
 
+  
 	p <- dim(Triangles)[1]
 	m <- dim(Triangles)[2] 
 	n <- dim(Triangles)[3]
@@ -386,7 +387,7 @@ MultiChainLadder2 <- function(Triangles, mse.method = "Mack", last = 3,
 				delta=1,
 				extrap=TRUE,...)
 	{
-		
+  
 	p <- dim(Triangles)[1]
 	m <- dim(Triangles)[2] 
 	n <- dim(Triangles)[3]

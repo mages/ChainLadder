@@ -2,8 +2,8 @@ Package: ChainLadder
 Type: Package
 Title: Statistical methods for the calculation of outstanding claims
     reserves in general insurance
-Version: 0.1.5-7
-Date: 2013-03-20
+Version: 0.1.6
+Date: 2013-08-03
 Authors@R: c(person("Markus", "Gesmann", role = c("aut", "cre"),
              email = "markus.gesmann@gmail.com"),
              person("Daniel", "Murphy", role = "aut", 
@@ -15,9 +15,9 @@ Maintainer: Markus Gesmann <markus.gesmann@gmail.com>
 Description: The ChainLadder package provides various statistical
     methods which are typically used for the estimation of
     outstanding claims reserves in general insurance. The
-    package has implementations of the Mack, Munich,
-    Bootstrap, multi-variate, and CLFM chain-ladder methods, as
-    well as the loss development factor curve fitting
+    package has implementations of the Mack, Munich, Bootstrap, 
+    multi-variate, and chain-ladder factor models (CLFM), 
+    as well as the loss development factor curve fitting
     methods of Dave Clark and generalised linear model
     based reserving models.
 Imports:
@@ -28,14 +28,15 @@ Imports:
     stats,
     statmod,
     reshape2,
-    tweedie
-Depends:
-    cplm (>= 0.6.1),
+    MASS,
     lattice,
     grid,
-    systemfit,
-    MASS,
+    tweedie,
+    cplm (>= 0.6.1),
+    systemfit,    
     utils
+Depends:
+    systemfit
 Suggests:
     RODBC, RUnit
 License: GPL (>= 2)

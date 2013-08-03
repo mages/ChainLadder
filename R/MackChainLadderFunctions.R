@@ -482,7 +482,7 @@ plot.MackChainLadder <- function(x, mfrow=c(3,2), title=NULL,lattice=FALSE,...){
       
     }else{
       
-      require(grid)
+      ## require(grid)
       ## Set legend 
       fl <-
         grid.layout(nrow = 2, ncol = 4,
