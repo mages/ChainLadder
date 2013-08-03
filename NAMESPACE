@@ -9,15 +9,13 @@ importFrom(actuar, pllogis)
 importFrom(tweedie, rtweedie)
 importFrom(reshape2, acast)
 import(systemfit)
-importFrom(systemfit, systemfit, "systemfit.control")
 import(grid)
-import(cplm)
 
 importClassesFrom(cplm, NullNum, NullList)
 importMethodsFrom(cplm, show, predict, vcov, residuals, resid, coef,
                   fitted, plot, terms) 
 importMethodsFrom(Matrix, summary)
-importMethodsFrom(systemfit, vcov, coef, fitted, resdiuals, summary)
+
 
 export(MackChainLadder, MunichChainLadder, BootChainLadder,
        MultiChainLadder, MultiChainLadder2) 
