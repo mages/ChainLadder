@@ -58,7 +58,7 @@
     Package: \tab ChainLadder\cr
     Type: \tab Package\cr
     Version: \tab 0.1.6\cr
-    Date: \tab 2013-08-03\cr
+    Date: \tab 2013-08-09\cr
     License: \tab GPL version 2 or later\cr
   }
 }
@@ -84,6 +84,8 @@
 
 \cite{ Zhang, Y. Likelihood-based and Bayesian Methods for Tweedie Compound Poisson Linear Mixed Models, \emph{Statistics and Computing}, forthcoming. 
 \url{http://www.actuaryzhang.com/publication/MixedTweedie.pdf}}
+
+\cite{Bardis, Majidi, Murphy. A Family of Chain-Ladder Factor Models for Selected Link Ratios. \emph{Variance}. Pending. Variance 6:2, 2012, pp. 143-160. \url{http://www.variancejournal.org/issues/06-02/143.pdf}}
 
 }
 
