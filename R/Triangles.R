@@ -70,7 +70,7 @@ as.triangle.data.frame <- function(Triangle, origin="origin", dev="dev", value="
 as.data.frame.triangle <- function(x, row.names=NULL, optional, lob=NULL, na.rm=FALSE,...){
     longTriangle <- .as.LongTriangle(x, na.rm)
     if(is.null(row.names))
-        rownames(longTriangle) <- paste(longTriangle$origin, longTriangle$dev, sep="-")
+        rownames(longTriangle) <- paste(longTriangle[,1], longTriangle[,2], sep="-")
     if(!is.null(lob))
         longTriangle$lob=lob
 

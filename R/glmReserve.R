@@ -25,7 +25,9 @@ glmReserve <- function(triangle, var.power = 1, link.power = 0,
   fam <- tweedie(ifelse(!is.null(var.power), var.power, 1.5), link.power)
   
   # convert to long format
-  lda <-  as.data.frame(tr.incr)
+  lda <-  as.data.frame(tr.incr, origin=names(dimnames(tr.incr))[1], 
+                        dev=names(dimnames(tr.incr))[2])
+  names(lda)[1:3] <- c("origin", "dev", "value")
   
   # create offset
   if (is.null(attr(tr.incr, "exposure"))) {
