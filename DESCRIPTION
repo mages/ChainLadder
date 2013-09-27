@@ -32,7 +32,6 @@ Imports:
     lattice,
     grid,
     tweedie,
-    cplm (>= 0.6.1),
     systemfit,    
     utils
 Depends:

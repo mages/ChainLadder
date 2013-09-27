@@ -1173,7 +1173,7 @@ model by changing the \texttt{var.power} argument:
 # Gamma GLM
 (fit2 <- glmReserve(GenIns, var.power = 2))
 # compound Poisson GLM (variance function estimated from the data):
-(fit3 <- glmReserve(GenIns, var.power = NULL))
+#(fit3 <- glmReserve(GenIns, var.power = NULL))
 @
 
 By default, the formulaic approach is used to compute the prediction

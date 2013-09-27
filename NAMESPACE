@@ -2,7 +2,7 @@ importFrom(stats, quantile, rstandard)
 importFrom(methods, coerce, cbind2, rbind2 )
 importFrom(utils, packageDescription)
 importFrom(lattice, xyplot, barchart)
-importFrom(cplm, cpglm)
+#importFrom(cplm, cpglm)
 importFrom(Hmisc, errbar, prn)
 importFrom(statmod, tweedie)
 importFrom(actuar, pllogis)
@@ -11,9 +11,10 @@ importFrom(reshape2, acast)
 import(systemfit)
 import(grid)
 
-importClassesFrom(cplm, NullNum, NullList)
-importMethodsFrom(cplm, show, predict, vcov, residuals, resid, coef,
-                  fitted, plot, terms) 
+importFrom(stats, quantile, predict, coef, vcov, 
+	residuals, resid, fitted, fitted.values, rstandard, terms)	
+importFrom(methods, show, coerce, cbind2, rbind2 )
+importFrom(graphics, plot)
 importMethodsFrom(Matrix, summary)
 
 
