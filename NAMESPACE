@@ -1,4 +1,3 @@
-importFrom(stats, quantile, rstandard)
 importFrom(methods, coerce, cbind2, rbind2 )
 importFrom(utils, packageDescription)
 importFrom(lattice, xyplot, barchart)
@@ -10,9 +9,8 @@ importFrom(tweedie, rtweedie)
 importFrom(reshape2, acast)
 import(systemfit)
 import(grid)
-
-importFrom(stats, quantile, predict, coef, vcov, 
-	residuals, resid, fitted, fitted.values, rstandard, terms)	
+import(MASS)
+import(stats)
 importFrom(methods, show, coerce, cbind2, rbind2 )
 importFrom(graphics, plot)
 importMethodsFrom(Matrix, summary)

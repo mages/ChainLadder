@@ -1,6 +1,12 @@
-Version 0.1.7 [2013-09-15]
+Version 0.1.7 [2013-09-28]
 --------------------------
 
+Changes
+  
+  o The glmReserve function currently doesn't allow the parameter var.power
+    to be set to NULL, which would have called the cpglm function of the 
+    cplm package. The cplm package is due to dependency issues with lme4 
+    no longer available via CRAN.
 
 Version 0.1.6 [2013-08-09]
 --------------------------
