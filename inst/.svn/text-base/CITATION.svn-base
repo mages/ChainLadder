@@ -1,0 +1,20 @@
+citHeader("To cite package 'ChainLadder' in publications use:")
+
+desc <- packageDescription("ChainLadder")
+year <- format(as.Date(desc$Date), format="%Y")
+vers <- paste("R package version", desc$Version)
+
+citEntry(entry="Manual",
+         title = desc$Title,
+         author = personList(as.person("Markus Gesmann"),
+	 	             as.person("Daniel Murphy"),			         			       
+                             as.person("Wayne Zhang")),
+         year = year,
+         note = vers,
+
+         textVersion =
+         paste(desc$Author, " (",
+               year,
+               "). ChainLadder: ", desc$Title,". ",
+               vers, ".", sep=""))
+

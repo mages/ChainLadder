@@ -1,0 +1,317 @@
+K 25
+svn:wc:ra_dav:version-url
+V 27
+/svn/!svn/ver/406/trunk/man
+END
+ClarkCapeCod.rd
+K 25
+svn:wc:ra_dav:version-url
+V 43
+/svn/!svn/ver/292/trunk/man/ClarkCapeCod.rd
+END
+glmReserve.Rd
+K 25
+svn:wc:ra_dav:version-url
+V 41
+/svn/!svn/ver/381/trunk/man/glmReserve.Rd
+END
+MultiChainLadder-class.Rd
+K 25
+svn:wc:ra_dav:version-url
+V 53
+/svn/!svn/ver/343/trunk/man/MultiChainLadder-class.Rd
+END
+plot.MunichChainLadder.Rd
+K 25
+svn:wc:ra_dav:version-url
+V 53
+/svn/!svn/ver/203/trunk/man/plot.MunichChainLadder.Rd
+END
+residCov-methods.Rd
+K 25
+svn:wc:ra_dav:version-url
+V 47
+/svn/!svn/ver/318/trunk/man/residCov-methods.Rd
+END
+GenIns.Rd
+K 25
+svn:wc:ra_dav:version-url
+V 37
+/svn/!svn/ver/203/trunk/man/GenIns.Rd
+END
+residuals.MackChainLadder.Rd
+K 25
+svn:wc:ra_dav:version-url
+V 56
+/svn/!svn/ver/203/trunk/man/residuals.MackChainLadder.Rd
+END
+Mse-methods.Rd
+K 25
+svn:wc:ra_dav:version-url
+V 42
+/svn/!svn/ver/321/trunk/man/Mse-methods.Rd
+END
+ChainLadder-package.Rd
+K 25
+svn:wc:ra_dav:version-url
+V 50
+/svn/!svn/ver/409/trunk/man/ChainLadder-package.Rd
+END
+Triangles.Rd
+K 25
+svn:wc:ra_dav:version-url
+V 40
+/svn/!svn/ver/387/trunk/man/Triangles.Rd
+END
+triangles-class.Rd
+K 25
+svn:wc:ra_dav:version-url
+V 46
+/svn/!svn/ver/321/trunk/man/triangles-class.Rd
+END
+utilityfunctions.Rd
+K 25
+svn:wc:ra_dav:version-url
+V 47
+/svn/!svn/ver/203/trunk/man/utilityfunctions.Rd
+END
+qpaid.rd
+K 25
+svn:wc:ra_dav:version-url
+V 36
+/svn/!svn/ver/404/trunk/man/qpaid.rd
+END
+summary.MunichChainLadder.Rd
+K 25
+svn:wc:ra_dav:version-url
+V 56
+/svn/!svn/ver/193/trunk/man/summary.MunichChainLadder.Rd
+END
+M3IR5.Rd
+K 25
+svn:wc:ra_dav:version-url
+V 36
+/svn/!svn/ver/355/trunk/man/M3IR5.Rd
+END
+plot.BootChainLadder.Rd
+K 25
+svn:wc:ra_dav:version-url
+V 51
+/svn/!svn/ver/203/trunk/man/plot.BootChainLadder.Rd
+END
+Table65.rd
+K 25
+svn:wc:ra_dav:version-url
+V 38
+/svn/!svn/ver/297/trunk/man/Table65.rd
+END
+MunichChainLadder.Rd
+K 25
+svn:wc:ra_dav:version-url
+V 48
+/svn/!svn/ver/203/trunk/man/MunichChainLadder.Rd
+END
+RAA.Rd
+K 25
+svn:wc:ra_dav:version-url
+V 34
+/svn/!svn/ver/203/trunk/man/RAA.Rd
+END
+plot.MackChainLadder.Rd
+K 25
+svn:wc:ra_dav:version-url
+V 51
+/svn/!svn/ver/256/trunk/man/plot.MackChainLadder.Rd
+END
+Join2Fits.Rd
+K 25
+svn:wc:ra_dav:version-url
+V 40
+/svn/!svn/ver/321/trunk/man/Join2Fits.Rd
+END
+liab.Rd
+K 25
+svn:wc:ra_dav:version-url
+V 35
+/svn/!svn/ver/253/trunk/man/liab.Rd
+END
+auto.Rd
+K 25
+svn:wc:ra_dav:version-url
+V 35
+/svn/!svn/ver/248/trunk/man/auto.Rd
+END
+plot.clark.rd
+K 25
+svn:wc:ra_dav:version-url
+V 41
+/svn/!svn/ver/256/trunk/man/plot.clark.rd
+END
+MultiChainLadder.Rd
+K 25
+svn:wc:ra_dav:version-url
+V 47
+/svn/!svn/ver/401/trunk/man/MultiChainLadder.Rd
+END
+MCLpaid.Rd
+K 25
+svn:wc:ra_dav:version-url
+V 38
+/svn/!svn/ver/203/trunk/man/MCLpaid.Rd
+END
+summary.BootChainLadder.Rd
+K 25
+svn:wc:ra_dav:version-url
+V 54
+/svn/!svn/ver/193/trunk/man/summary.BootChainLadder.Rd
+END
+MultiChainLadderFit-class.Rd
+K 25
+svn:wc:ra_dav:version-url
+V 56
+/svn/!svn/ver/321/trunk/man/MultiChainLadderFit-class.Rd
+END
+plot-methods.Rd
+K 25
+svn:wc:ra_dav:version-url
+V 43
+/svn/!svn/ver/231/trunk/man/plot-methods.Rd
+END
+predict.TriangleModel.Rd
+K 25
+svn:wc:ra_dav:version-url
+V 52
+/svn/!svn/ver/192/trunk/man/predict.TriangleModel.Rd
+END
+MultiChainLadderMse-class.Rd
+K 25
+svn:wc:ra_dav:version-url
+V 56
+/svn/!svn/ver/318/trunk/man/MultiChainLadderMse-class.Rd
+END
+BootChainLadder.Rd
+K 25
+svn:wc:ra_dav:version-url
+V 46
+/svn/!svn/ver/203/trunk/man/BootChainLadder.Rd
+END
+ClarkLDF.Rd
+K 25
+svn:wc:ra_dav:version-url
+V 39
+/svn/!svn/ver/291/trunk/man/ClarkLDF.Rd
+END
+LRfunction.rd
+K 25
+svn:wc:ra_dav:version-url
+V 41
+/svn/!svn/ver/402/trunk/man/LRfunction.rd
+END
+ABC.Rd
+K 25
+svn:wc:ra_dav:version-url
+V 34
+/svn/!svn/ver/203/trunk/man/ABC.Rd
+END
+summary.MackChainLadder.Rd
+K 25
+svn:wc:ra_dav:version-url
+V 54
+/svn/!svn/ver/203/trunk/man/summary.MackChainLadder.Rd
+END
+print.clark.rd
+K 25
+svn:wc:ra_dav:version-url
+V 42
+/svn/!svn/ver/311/trunk/man/print.clark.rd
+END
+summary.clark.rd
+K 25
+svn:wc:ra_dav:version-url
+V 44
+/svn/!svn/ver/296/trunk/man/summary.clark.rd
+END
+MackChainLadder.Rd
+K 25
+svn:wc:ra_dav:version-url
+V 46
+/svn/!svn/ver/398/trunk/man/MackChainLadder.Rd
+END
+MultiChainLadderSummary-class.Rd
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/svn/!svn/ver/318/trunk/man/MultiChainLadderSummary-class.Rd
+END
+CLFMdelta.rd
+K 25
+svn:wc:ra_dav:version-url
+V 40
+/svn/!svn/ver/404/trunk/man/CLFMdelta.rd
+END
+getLatestCumulative.Rd
+K 25
+svn:wc:ra_dav:version-url
+V 50
+/svn/!svn/ver/388/trunk/man/getLatestCumulative.Rd
+END
+NullNum-class.Rd
+K 25
+svn:wc:ra_dav:version-url
+V 44
+/svn/!svn/ver/243/trunk/man/NullNum-class.Rd
+END
+chainladder.Rd
+K 25
+svn:wc:ra_dav:version-url
+V 42
+/svn/!svn/ver/396/trunk/man/chainladder.Rd
+END
+summary-methods.Rd
+K 25
+svn:wc:ra_dav:version-url
+V 46
+/svn/!svn/ver/318/trunk/man/summary-methods.Rd
+END
+print.ata.rd
+K 25
+svn:wc:ra_dav:version-url
+V 40
+/svn/!svn/ver/294/trunk/man/print.ata.rd
+END
+summary.ata.rd
+K 25
+svn:wc:ra_dav:version-url
+V 42
+/svn/!svn/ver/293/trunk/man/summary.ata.rd
+END
+Mortgage.Rd
+K 25
+svn:wc:ra_dav:version-url
+V 39
+/svn/!svn/ver/203/trunk/man/Mortgage.Rd
+END
+ata.rd
+K 25
+svn:wc:ra_dav:version-url
+V 34
+/svn/!svn/ver/300/trunk/man/ata.rd
+END
+JoinFitMse.Rd
+K 25
+svn:wc:ra_dav:version-url
+V 41
+/svn/!svn/ver/321/trunk/man/JoinFitMse.Rd
+END
+vcov.clark.rd
+K 25
+svn:wc:ra_dav:version-url
+V 41
+/svn/!svn/ver/289/trunk/man/vcov.clark.rd
+END
+coef.ChainLadder.rd
+K 25
+svn:wc:ra_dav:version-url
+V 47
+/svn/!svn/ver/402/trunk/man/coef.ChainLadder.rd
+END

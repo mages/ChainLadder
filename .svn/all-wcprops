@@ -1,0 +1,33 @@
+K 26
+svn:wc:ra_dav:activity-url
+V 14
+/svn/!svn/act/
+K 25
+svn:wc:ra_dav:version-url
+V 23
+/svn/!svn/ver/406/trunk
+END
+DESCRIPTION
+K 25
+svn:wc:ra_dav:version-url
+V 35
+/svn/!svn/ver/409/trunk/DESCRIPTION
+END
+THANKS
+K 25
+svn:wc:ra_dav:version-url
+V 30
+/svn/!svn/ver/397/trunk/THANKS
+END
+NAMESPACE
+K 25
+svn:wc:ra_dav:version-url
+V 33
+/svn/!svn/ver/405/trunk/NAMESPACE
+END
+NEWS
+K 25
+svn:wc:ra_dav:version-url
+V 28
+/svn/!svn/ver/409/trunk/NEWS
+END
