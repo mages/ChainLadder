@@ -1,9 +1,0 @@
-K 10
-svn:ignore
-V 47
-.Rproj.user
-.Rhistory
-.RData
-chainladder.Rproj
-
-END
