@@ -10,7 +10,8 @@ importFrom(tweedie, rtweedie)
 importFrom(reshape2, acast)
 import(systemfit)
 import(grid)
-
+import(MASS)
+import(stats)
 importClassesFrom(cplm, NullNum, NullList)
 importMethodsFrom(cplm, show, predict, vcov, residuals, resid, coef,
                   fitted, plot, terms) 
@@ -78,3 +79,5 @@ S3method(vcov, clark)
 exportMethods(predict, Mse, summary, show, coerce,
               "[", "$", "[[", "[<-", names, coef, vcov, residCov, residCor,
               residuals, resid, rstandard, fitted, plot, cbind2, rbind2, dim )
+
+export(stochasticReserving, RC_report)
