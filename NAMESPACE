@@ -1,4 +1,4 @@
-importFrom(stats, quantile, rstandard)
+#importFrom(stats, quantile, rstandard)
 importFrom(methods, coerce, cbind2, rbind2 )
 importFrom(utils, packageDescription)
 importFrom(lattice, xyplot, barchart)

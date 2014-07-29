@@ -1,6 +1,9 @@
-Version 0.1.8 [2014-07-27]
+Version 0.1.8 [2014-07-29]
 --------------------------
 
+Bug Fixes
+  
+  o as.triangle.data.frame didn't work for a data.frame less than three rows
 
 Version 0.1.7 [2013-09-15]
 --------------------------

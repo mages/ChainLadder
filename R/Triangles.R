@@ -53,16 +53,16 @@ as.triangle.matrix <- function(Triangle, origin="origin", dev="dev", value="valu
 }
 
 as.triangle.data.frame <- function(Triangle, origin="origin", dev="dev", value="value", ...){
-    d <- dim(Triangle)
-    if(length(d) == 2 & d[1]==d[2]){
-        matrixTriangle <- as.matrix(Triangle)
-        matrixTriangle <- as.triangle(matrixTriangle)
-    }else{
+  #  d <- dim(Triangle)
+  #  if(length(d) == 2 & d[1]==d[2]){
+  #      matrixTriangle <- as.matrix(Triangle)
+  #      matrixTriangle <- as.triangle(matrixTriangle)
+  #  }else{
         fmla <- as.formula(paste(origin, "~", dev))
         matrixTriangle <- acast(Triangle, fmla, fun.aggregate = sum, value.var = value, fill = as.numeric(NA))
         names(dimnames(matrixTriangle)) <- c(origin, dev)
-#        matrixTriangle <- .as.MatrixTriangle(Triangle, origin, dev, value)
-    }
+  #      matrixTriangle <- .as.MatrixTriangle(Triangle, origin, dev, value)
+  #  }
     class(matrixTriangle) <- c("triangle", "matrix")
     return(matrixTriangle)
 }
