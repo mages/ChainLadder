@@ -431,7 +431,7 @@ randomClaims <- function(exp.clms, resids, n.sims){
 # ratio at the given value of the mean.
 
 rpois.od<-function (n, lambda,d=1) {
-    if (d==1)
+    if (d==1 | lambda<=0)
        rpois(n, lambda)
     else
        rnbinom(n, size=(lambda/(d-1)), mu=lambda)

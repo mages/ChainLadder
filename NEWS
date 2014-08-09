@@ -1,8 +1,10 @@
-Version 0.1.8 [2014-07-29]
+Version 0.1.8 [2014-08-09]
 --------------------------
 
 Bug Fixes
   
+  o BootChainLadder produced warnings for triangles that had static 
+    developments when the argument process.distr was set to "od.pois".
   o as.triangle.data.frame didn't work for a data.frame less than three rows
 
 Version 0.1.7 [2013-09-15]
