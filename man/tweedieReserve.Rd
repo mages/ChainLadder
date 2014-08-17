@@ -56,7 +56,8 @@ glmStochasticReserving(triangle, var.power = 1,
 }
   \item{\dots}{
   Arguments to be passed onto the function \code{\link[stats]{glm}} or \code{\link{cpglm}} such as \code{contrasts} or \code{control}. It is important that \code{offset} and \code{weight} should not be specified. Otherwise, an error will be reported and the program will quit.
-
+}
+}
 \details{
  If necessary, more details than the description above 
 }
