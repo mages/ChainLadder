@@ -52,19 +52,11 @@ glmStochasticReserving(triangle, var.power = 1,
   Boolean, if \code{TRUE} a process error (coherent with the specified model) is added to the forecasted distribution. Default to \code{TRUE}.
 }
   \item{p.optim}{
-<<<<<<< HEAD
   Boolean, if \code{TRUE} the model estimates the MLE for the Tweedie's \code{p} parameter. Default to \code{FALSE}. Recommended to use at the beginning of the Stochastic Reserving Analysis.
 }
   \item{\dots}{
   Arguments to be passed onto the function \code{\link[stats]{glm}} or \code{\link{cpglm}} such as \code{contrasts} or \code{control}. It is important that \code{offset} and \code{weight} should not be specified. Otherwise, an error will be reported and the program will quit.
-=======
-  Boolean, if \code{TRUE} the model performs a 
-}
-  \item{\dots}{
-     Describe \code{\dots} here
->>>>>>> d74f9f13dcb9630bbb64d064ce911944c83e585e
-}
-}
+
 \details{
  If necessary, more details than the description above 
 }
