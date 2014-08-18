@@ -1,7 +1,8 @@
 #################################################
 ###                                           ###
-###     Ultimate Reserve Risk Calculation     ###
-###   by Alessandro Carrato and Luigi Lotti   ###
+###     Tweedie Stochastic Reserving Model    ###
+###             (glmReserve mod)              ###
+###           by Alessandro Carrato           ###
 ###       alessandro.carrato@gmail.com        ###
 ###                                           ###
 #################################################
@@ -88,7 +89,9 @@ tweedieReserve <- function(triangle, var.power=1, link.power=0,
   #parameter fix for better intrepretation of results
   base.year=min(lda$origin)
   lda$origin<-lda$origin-base.year+1 # ORIGIN MUST START FROM 1
-  lda$dev<-lda$dev-1 # DEVELOPMENT YEAR FROM 0
+  
+  base.dev=min(lda$dev)
+  lda$dev<-lda$dev-base.dev  # DEV MUST START FROM 1
   lda$cy <- lda$origin + lda$dev
   
   ######################################
@@ -436,25 +439,26 @@ tweedieReserve <- function(triangle, var.power=1, link.power=0,
                           Prediction.Error=S.E,
                           CoV=CoV,
                           Expected.Ultimate=Latest+Expected.Reserve,
-                          GLMReserve=Reserve,
+                          Det.Reserve=Reserve,
                           Expected.Reserve_1yr=Expected.Reserve_1yr,
                           Prediction.Error_1yr=S.E_1yr,
-                          Emergence.Pattern = Emergence.Pattern)                     
+                          Emergence.Pattern = Emergence.Pattern,
+                          Dev.To.Date=Latest/Ultimate)                     
     } else {
       resDf <- data.frame(Latest=Latest, 
                           Expected.Reserve=Expected.Reserve,
                           Prediction.Error=S.E,
                           CoV=CoV,
                           Expected.Ultimate=Latest+Expected.Reserve,
-                          GLMReserve=Reserve,
+                          Det.Reserve=Reserve,
                           Dev.To.Date=Latest/Ultimate)
     }
     
   } else {
     resDf <- data.frame(Latest=Latest, 
-                        Reserve=Reserve,
-                        Dev.To.Date=Latest/Ultimate,
-                        Ultimate=Ultimate)
+                        Det.Reserve=Reserve,
+                        Ultimate=Ultimate,
+                        Dev.To.Date=Latest/Ultimate)
   }
   
   row.names(resDf) <- c(as.character(sort(unique(ldaOut$origin))),"total")

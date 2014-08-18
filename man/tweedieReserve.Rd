@@ -61,13 +61,56 @@ glmStochasticReserving(triangle, var.power = 1,
 \details{
  If necessary, more details than the description above 
 }
-\value{
- Describe the value returned
-  If it is a LIST, use
-  \item{comp1 }{Description of 'comp1'}
-  \item{comp2 }{Description of 'comp2'}
-
+\value{The output is an object of class \code{"glm"} that has the following components:
+  \item{call}{the matched call.}
+  \item{summary}{A data frame containing the predicted loss reserve statistics. The following items are displayed: 
+    \itemize{
+      \item \code{Latest}: Latest paid
+      \item \code{Det.Reserve}: Deterministic reserve, i.e. the MLE GLM estimate of the Reserve
+      \item \code{Ultimate}: Ultimate cost, defined as \code{Latest+Det.Reserve}
+      \item \code{Dev.To.Date}: Development to date, defined as \code{Latest/Ultimate}
+    }
+    [AVAILABLE ONLY IF \code{bootstrap>0}]
+    \itemize{
+      \item \code{Expected.Reserve}: The expected reserve, defined as the average of the reserve       simulations. Should be roughly as \code{Det.Reserve}.
+      \item \code{Prediction.Error}: The prediction error of the reserve, defined as sqrt of the simulations. Please note that if \code{proc.err=FALSE}, this field contains only the parameter error given by the bootstrap.
+      \item \code{CoV}: Coefficient of Variation, defined as \code{Prediction.Error/Expected.Reserve}.
+      \item \code{Expected Ultimate}: The expected ultimate, defined as \code{Expected.Reserve+Latest}.
+    }
+    [AVAILABLE ONLY IF \code{bootstrap>0 & reserving=TRUE}]
+    \itemize{
+      \item \code{Expected.Reserve_1yr}: The reserve derived as sum of next year payment and the expected value of the re-reserve at the end of the year. It should be similar to both \code{Expected.Reserve} and \code{Det.Reserve}. If it isn't, it's recommended to change regression structure and parameters.
+      \item \code{Prediction.Error_1yr}: The prediction error of the prospective Claims Development Result (CDR), as defined by Wuthrich (CDR=R(0)-X-R(1)). 
+      \item \code{Emergence.Pattern}: It's the emergence pattern defined as \code{Prediction.Error_1yr/Prediction.Error}.
+    }
+  }
+  \item{Triangle}{The input triangle.}
+  \item{FullTriangle}{The completed triangle, where empty cells in the original triangle are filled with model predictions.}
+  \item{model}{The fitted GLM, a class of \code{"glm"} or \code{"cpglm"}. It is most convenient to work with this component when model fit information is wanted. }
+  
+  \item{scale}{The dispersion parameter phi}
+  \item{bias}{The model bias, defined as \code{bias<-sqrt(n/d.f)}}
+  \item{GLMReserve}{Deterministic reserve, i.e. the MLE GLM estimate of the Reserve}
+  \item{gamma_y}{When the calendar year is used, it displays the observed and fitted calendar year (usually called "gamma"") factors.}
+  \item{res.diag}{It's a dataframe for residual diagnostics. It contains:
+    \itemize{
+      \item \code{unscaled}: The GLM Pearson residuals.
+      \item \code{unscaled.biasadj}: The GLM Person residuals adjusted by the bias, i.e. \code{unscaled.biasadj=unscaled*bias}. 
+      \item \code{scaled}: The GLM Person scaled residuals, i.e. \code{scaled=unscaled/sqrt(phi)}.
+      \item \code{scaled, biasadj}: The GLM Person scaled residuals adjusted by the bias, i.e. \code{scaled.biasadj=scaled*bias}. 
+      \item \code{dev}: Development year.
+      \item \code{origin}: Origin year.
+      \item \code{cy}: Calendar year.
+      
+    }
+  }
+[IF \code{boostrap>1}]
+  \item{distr.res_ult}{The full distribution "Ultimate View"}
+[IF \code{rereserve=TRUE}] 
+  \item{distr.res_1yr}{The full distribution "1yr View"}
+  }
 }
+
 \references{
  Put references to the literature/web site here
 }
