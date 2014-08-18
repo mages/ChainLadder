@@ -1,11 +1,17 @@
-Version 0.1.8 [2014-08-09]
+Version 0.1.8 [2014-08-18]
 --------------------------
 
+Changes
+
+  o plot.MackChainLadder gained arguments xlab and ylab.
+  
 Bug Fixes
   
   o BootChainLadder produced warnings for triangles that had static 
     developments when the argument process.distr was set to "od.pois".
   o as.triangle.data.frame didn't work for a data.frame less than three rows
+  o Arguments xlab and ylab were not passed through in plot.triangle, when
+    lattice=TRUE
 
 Version 0.1.7 [2013-09-15]
 --------------------------

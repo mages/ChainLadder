@@ -407,7 +407,9 @@ print.MackChainLadder <- function(x,...){
 ################################################################################
 ## plot
 ##
-plot.MackChainLadder <- function(x, mfrow=c(3,2), title=NULL,lattice=FALSE,...){
+plot.MackChainLadder <- function(x, mfrow=c(3,2), title=NULL,lattice=FALSE,
+                                 xlab="Development period",
+                                 ylab="Amount",...){
 
 
     .myResult <-  summary(x)$ByOrigin
@@ -430,8 +432,8 @@ plot.MackChainLadder <- function(x, mfrow=c(3,2), title=NULL,lattice=FALSE,...){
                       ##    args.legend=list(x="topleft"), only avilable from R version >= 2.9.0
                       names.arg=rownames(.myResult),
                       main="Mack Chain Ladder Results",
-                      xlab="Origin period",
-                      ylab="Value",#paste(Currency,myUnit),
+                      xlab=xlab,#"Origin period",
+                      ylab=ylab,#"Value",#paste(Currency,myUnit),
                       ylim=c(0, max(apply(.myResult[c("Ultimate", "Mack.S.E")],1,sum),na.rm=TRUE)))
         
       }else{
@@ -440,8 +442,8 @@ plot.MackChainLadder <- function(x, mfrow=c(3,2), title=NULL,lattice=FALSE,...){
                       args.legend=list(x="topleft"),
                       names.arg=rownames(.myResult),
                       main="Mack Chain Ladder Results",
-                      xlab="Origin period",
-                      ylab="Value",#paste(Currency,myUnit),
+                      xlab=xlab,#"Origin period",
+                      ylab=ylab,#"Value",#paste(Currency,myUnit),
                       ylim=c(0, max(apply(.myResult[c("Ultimate", "Mack.S.E")],1,sum),na.rm=TRUE)))
       }
       ## add error ticks
@@ -454,8 +456,7 @@ plot.MackChainLadder <- function(x, mfrow=c(3,2), title=NULL,lattice=FALSE,...){
       
       matplot(t(.FullTriangle), type="l",
               main="Chain ladder developments by origin period",
-              xlab="Development period",
-              ylab="Amount", #paste(Currency, myUnit)
+              xlab=xlab, ylab=ylab #paste(Currency, myUnit)
               )
       matplot(t(.Triangle), add=TRUE)
       
