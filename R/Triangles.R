@@ -78,7 +78,9 @@ as.data.frame.triangle <- function(x, row.names=NULL, optional, lob=NULL, na.rm=
     return(longTriangle)
 }
 
-plot.triangle <- function(x,type="b",xlab="dev. period",ylab=NULL, lattice=FALSE,...){
+plot.triangle <- function(x,type="b",
+                          xlab="dev. period",
+                          ylab=NULL, lattice=FALSE,...){
     .x <- x
     class(.x) <- "matrix"
     if(!lattice){
@@ -87,7 +89,8 @@ plot.triangle <- function(x,type="b",xlab="dev. period",ylab=NULL, lattice=FALSE
                 ylab=ifelse(is.null(ylab), deparse(substitute(x)), ylab),...)
     }else{
         df <- as.data.frame(as.triangle(.x))
-        xyplot(value ~ dev | factor(origin), data=df, type=type, as.table=TRUE,...)
+        xyplot(value ~ dev | factor(origin), data=df, type=type, 
+               as.table=TRUE, xlab=xlab, ylab=ylab, ...)
     }
 }
 
