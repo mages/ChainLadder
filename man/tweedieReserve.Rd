@@ -108,7 +108,6 @@ tweedieReserve(triangle, var.power = 1,
   \item{distr.res_ult}{The full distribution "Ultimate View"}
 [IF \code{rereserve=TRUE}] 
   \item{distr.res_1yr}{The full distribution "1yr View"}
-  }
 }
 
 \references{
