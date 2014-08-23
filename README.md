@@ -1,6 +1,7 @@
 # ChainLadder 
 
-ChainLadder is an R package providing methods which are typically used in insurance claims reserving, including:
+ChainLadder is an R package providing methods and models which are typically 
+used in insurance claims reserving, including:
 
 - Mack-, Munich- and Bootstrap-chain-ladder models
 - General multivariate chain ladder models 
@@ -28,12 +29,6 @@ install.packages(c("systemfit", "actuar", "Hmisc", "statmod", "tweedie", "cplm")
 ```
 
 To install ChainLadder run:
-<!--
-Fix my broken path to pdflatex on R
-```s
-Sys.setenv(PATH=paste(Sys.getenv("PATH"),"/usr/texbin",sep=":"))
-```
--->
 ```s
 library(devtools)
 install_github("mages/ChainLadder")
@@ -53,9 +48,14 @@ See the ChainLadder package [vignettes](http://cran.r-project.org/web/packages/C
 
 To cite package 'ChainLadder' in publications use:
 
-  Markus Gesmann, Daniel Murphy and Wayne Zhang (2013). ChainLadder:
-  Statistical methods for the calculation of outstanding claims reserves
-  in general insurance. R package version 0.1.7.
+  Markus Gesmann, Daniel Murphy and Wayne Zhang (2014). ChainLadder:
+  Statistical methods and models for the calculation of outstanding claims
+  reserves in general insurance. R package version 0.1.8.
+  
+See also:
+
+  Markus Gesmann. Claims Reserving and IBNR. Computational Actuarial Science
+  with R. 2014. Chapman and Hall/CRC
 
 ## License
 
