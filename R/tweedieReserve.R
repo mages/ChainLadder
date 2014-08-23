@@ -64,6 +64,13 @@ tweedieReserve <- function(triangle, var.power=1, link.power=0,
                                 cum=TRUE, exposure=FALSE, bootstrap=1, 
                                 boot.adj=0, nsim=1000, proc.err=TRUE, p.optim=F,...){
   
+  ## The following variable will be generated later 'on the fly'
+  ## To avoid NOTE from R CMD CHECK let's set them to NULL first.
+  glmFit <- NULL
+  glmFitB <- NULL
+  glmFit1yr <- NULL
+  tweedie.profile <- NULL
+  
   call <- match.call()
   if (!("triangle") %in% class(triangle))
     stop("triangle must be of class 'triangle'")

@@ -1,5 +1,5 @@
-\name{tweddieReserve}
-\alias{tweddieReserve}
+\name{tweedieReserve}
+\alias{tweedieReserve}
 \title{
 Tweedie Stochastic Reserving Model
 }
@@ -7,7 +7,7 @@ Tweedie Stochastic Reserving Model
 This function implements loss reserving models within the generalized linear model framework in order to generate the full predictive distribution for loss reserves. Besides, it generates also the "1-yr Risk View" useful to derive the Reserve Risk Capital in a Solvency 2 framework. Finally, it gives to the user the opportunity to properly assess the Model Error changing different model parameters.
 }
 \usage{
-glmStochasticReserving(triangle, var.power = 1, 
+tweedieReserve(triangle, var.power = 1, 
                     link.power = 0, design.type = c(1, 1, 0), 
                     rereserving = FALSE, cum = TRUE, exposure = FALSE, 
                     bootstrap = 1, boot.adj = 0, nsim = 1000, 
@@ -55,7 +55,7 @@ glmStochasticReserving(triangle, var.power = 1,
   Boolean, if \code{TRUE} the model estimates the MLE for the Tweedie's \code{p} parameter. Default to \code{FALSE}. Recommended to use at the beginning of the Stochastic Reserving Analysis.
 }
   \item{\dots}{
-  Arguments to be passed onto the function \code{\link[stats]{glm}} or \code{\link{cpglm}} such as \code{contrasts} or \code{control}. It is important that \code{offset} and \code{weight} should not be specified. Otherwise, an error will be reported and the program will quit.
+  Arguments to be passed onto the function \code{\link[stats]{glm}} or \code{cpglm} such as \code{contrasts} or \code{control}. It is important that \code{offset} and \code{weight} should not be specified. Otherwise, an error will be reported and the program will quit.
 }
 }
 \details{
@@ -86,7 +86,7 @@ Further notes
 \examples{
 ## R code of your examples
 ## R code of your examples
-res <- stochasticReserving(UKMotor, rereserving=TRUE)
+res <- tweedieReserve(UKMotor, rereserving=TRUE)
 RC_report(res)
 ## One year reserving risk 
 RC_report(res)$RC_1yr
