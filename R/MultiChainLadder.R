@@ -25,7 +25,9 @@ setValidity("triangles", .valid.triangles )
 
 # virtual class for representation
 setClassUnion("NullChar",c("NULL","character"))	
-	
+
+setClassUnion("NullNum",c("NULL","numeric"))		
+setClassUnion("NullList",c("NULL","list"))	
 
 # class of "MultiChainLadderFit" as virtual class
 setClass("MultiChainLadderFit", 

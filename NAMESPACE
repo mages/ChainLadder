@@ -1,8 +1,7 @@
-#importFrom(stats, quantile, rstandard)
 importFrom(methods, coerce, cbind2, rbind2 )
 importFrom(utils, packageDescription)
 importFrom(lattice, xyplot, barchart)
-importFrom(cplm, cpglm)
+#importFrom(cplm, cpglm)
 importFrom(Hmisc, errbar, prn)
 importFrom(statmod, tweedie)
 importFrom(actuar, pllogis)
@@ -12,9 +11,8 @@ import(systemfit)
 import(grid)
 import(MASS)
 import(stats)
-importClassesFrom(cplm, NullNum, NullList)
-importMethodsFrom(cplm, show, predict, vcov, residuals, resid, coef,
-                  fitted, plot, terms) 
+importFrom(methods, show, coerce, cbind2, rbind2 )
+importFrom(graphics, plot)
 importMethodsFrom(Matrix, summary)
 
 
@@ -79,5 +77,4 @@ S3method(vcov, clark)
 exportMethods(predict, Mse, summary, show, coerce,
               "[", "$", "[[", "[<-", names, coef, vcov, residCov, residCor,
               residuals, resid, rstandard, fitted, plot, cbind2, rbind2, dim )
-
 export(tweedieReserve, RC_report)
