@@ -3,7 +3,7 @@
 \alias{ChainLadder}
 \docType{package}
 \title{
-  Various chain-ladder methods for claims reserving
+  Methods and models for claims reserving
 }
 \description{
   The ChainLadder-package grew out of presentations
@@ -41,6 +41,10 @@
   and credibility theory check out the \code{actuar} package by
   C. Dutang, V. Goulet and M. Pigeon. 
 
+  Brian Fannin's package \code{MRMR} provides tools to analyze 
+  non-life loss reserves. It uses a set of S3 and S4 objects to store data, 
+  models and predictions.
+  
   Another package you might want to look into is \code{lossDev}. It
   implements a Bayesian time series loss development model. 
   Features include skewed-t distribution with time-varying scale
@@ -52,15 +56,6 @@
   For more financial packages see also CRAN Task View 'Emperical Finance'
   at \url{http://cran.r-project.org/web/views/Finance.html}.
   
-} 
-\details{
-  \tabular{ll}{
-    Package: \tab ChainLadder\cr
-    Type: \tab Package\cr
-    Version: \tab 0.1.7\cr
-    Date: \tab 2013-09-15\cr
-    License: \tab GPL version 2 or later\cr
-  }
 }
 \author{
   Markus Gesmann, Wayne Zhang, Daniel Murphy
@@ -86,6 +81,10 @@
 \url{http://www.actuaryzhang.com/publication/MixedTweedie.pdf}}
 
 \cite{Bardis, Majidi, Murphy. A Family of Chain-Ladder Factor Models for Selected Link Ratios. \emph{Variance}. Pending. Variance 6:2, 2012, pp. 143-160. \url{http://www.variancejournal.org/issues/06-02/143.pdf}}
+
+\cite{Markus Gesmann. Claims Reserving and IBNR. 
+  \emph{Computational Actuarial Science with R}. 2014. Chapman and Hall/CRC
+}
 
 }
 

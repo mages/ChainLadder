@@ -1,10 +1,6 @@
-Version 0.1.8 [2014-08-18]
+Version 0.1.8 [2014-08-22]
 --------------------------
 
-Changes
-
-  o plot.MackChainLadder gained arguments xlab and ylab.
-  
 Bug Fixes
   
   o BootChainLadder produced warnings for triangles that had static 

@@ -69,7 +69,8 @@ options(prompt = "R> ", digits = 4, show.signif.stars = FALSE)
 
   This document is still in a draft stage. Any pointers which will
   help to iron out errors, clarify and make this document more helpful
-  will be much appreciated.
+  will be much appreciated. 
+  
 \end{abstract}
 
 \clearpage
@@ -164,7 +165,9 @@ Implementing reserving methods in R has several advantages. R provides:
 \subsection{Brief package overview}
 This vignette will give the reader a brief overview of the functionality of 
 the \chainladder package. The functions are discussed and explained in 
-more detail in the respective help files and examples. 
+more detail in the respective help files and examples, see also 
+\cite{gesmann2014claims}. 
+
 %% The help files contain the references to the research papers on
 %% which the methods are based.  
 
@@ -197,6 +200,7 @@ demo("demo name")
 
 For more information and examples see the project web site:
 \url{http://code.google.com/p/chainladder/}
+
 
 \subsection{Installation}
 We can install \chainladder in the usual way from CRAN, e.g.:
@@ -1173,7 +1177,7 @@ model by changing the \texttt{var.power} argument:
 # Gamma GLM
 (fit2 <- glmReserve(GenIns, var.power = 2))
 # compound Poisson GLM (variance function estimated from the data):
-(fit3 <- glmReserve(GenIns, var.power = NULL))
+#(fit3 <- glmReserve(GenIns, var.power = NULL))
 @
 
 By default, the formulaic approach is used to compute the prediction
