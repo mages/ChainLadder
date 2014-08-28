@@ -43,9 +43,14 @@ RC_report(res, q = c(0.4, 0.5, 0.7, 0.9, 0.95, 0.995, 0.9993), RC.var = 0.995)
 Further notes
 }
 
+<<<<<<< HEAD
 \section{Warning}{
   [tbd]
 }
+=======
+\section{Warning}
+{Make other sections like Warning}
+>>>>>>> 52f1263e8d78e8bec2ed8be0db303bcc0d8866c7
 
 \seealso{
  See also \code{\link{tweedieReserve}}.
