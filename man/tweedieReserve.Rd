@@ -16,7 +16,7 @@ tweedieReserve(triangle, var.power = 1,
 %- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{triangle}{
-     An object of  class \code{\link{triangle}}.
+     An object of class \code{\link{triangle}}.
 }
   \item{var.power}{
     The index (p) of the power variance function \eqn{V(\mu)=\mu^p}. Default to \code{p = 1}, which is the over-dispersed Poisson model. If \code{NULL}, it will be assumed to be in \code{(1, 2)} and estimated using the \code{cplm} package.  See \code{\link[statmod]{tweedie}}.
@@ -59,7 +59,7 @@ tweedieReserve(triangle, var.power = 1,
 }
 }
 \details{
- If necessary, more details than the description above 
+ [tbd]
 }
 \value{The output is an object of class \code{"glm"} that has the following components:
   \item{call}{the matched call.}
@@ -111,16 +111,27 @@ tweedieReserve(triangle, var.power = 1,
 }
 
 \references{
- Put references to the literature/web site here
+
+[GS05]  Gigante, Sigalotti (2005), "Model risk in claims reserving with generalized linear models", \emph{Giornale dell'Istituto Italiano degli Attuari, Volume LXVIII}, 55-87
+
+[EV02]		England, Verrall (2002), "Stochastic claims reserving in general insurance", \emph{B.A.J. 8, III}, 443-544
+
+[EV06]		England, Verrall (2006), "Predictive distributions of outstanding liabilities in general insurance", \emph{A.A.S. 1, II}, 221-270	
+
+[PSW09]	Peters, Shevchenko, Wüthrich (2009), "Model uncertainty in claims reserving within Tweedie's compound poisson models", \emph{Astin Bulletin 39(1)}, 1-33
+
+[RV98]		Renshaw, Verrall (1998), "A stochastic model underlying the chain-ladder technique", \emph{B.A.J. 4, IV}, 903-923
 }
 \author{
- Who to complain to
+ Alessandro Carrato MSc FIA OA \email{alessandro.carrato@gmail.com}
 }
 \note{
-Further notes
+ [tbd]
 }
 
-\section{Warning }{Make other sections like Warning}
+\section{Warning}{
+  [tbd]
+}
 
 \seealso{
  See Also as \code{\link{help}}
