@@ -1,10 +1,10 @@
 \name{RC_report}
 \alias{RC_report}
 \title{
-Ale please provide a title here
+Reserve Risk Capital Report
 }
 \description{
-A concise (1-5 lines) description of what the function does.
+Main purpose of this function is to create a report to assess the Reserve Risk capital given an object of the \code{\link{tweedieReserve}} class. It displays both the "Ultimate" and "1-yr" risk views at given percentiles.
 }
 \usage{
 RC_report(res, q = c(0.4, 0.5, 0.7, 0.9, 0.95, 0.995, 0.9993), RC.var = 0.995)
@@ -12,41 +12,44 @@ RC_report(res, q = c(0.4, 0.5, 0.7, 0.9, 0.95, 0.995, 0.9993), RC.var = 0.995)
 %- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{res}{
-    Describe \code{res} here
+    An object of class \code{\link{tweedieReserve}}.
 }
   \item{q}{
-     Describe \code{q} here
+    Array of percentiles to be displayed. Default to \code{c(0.4, 0.5, 0.7, 0.9, 0.95, 0.995, 0.9993)}
 }
   \item{RC.var}{
-     Describe \code{RC.var} here
+    Risk Capital percentile (using the Value at Risk - VaR - as volume measure)
 }
 }
 \details{
- If necessary, more details than the description above 
+ [tbd]
 }
 \value{
  Describe the value returned
   If it is a LIST, use
-  \item{comp1 }{Description of 'comp1'}
-  \item{comp2 }{Description of 'comp2'}
-
+  \item{Ultimate_View}{Array of "Ultimate View" Reserve Risk Capital at the given percentiles.}
+  \item{1yr_View}{Array of "1yr View" Reserve Risk Capital at the given percentiles.}
+  \item{RC_Ultimate}{Value of Ultimate View Reserve Risk capital at \code{RC.var} level.}
+  \item{RC_1yr}{Value of Ultimate View Reserve Risk capital at \code{RC.var} level.}
+  \item{Diagnostic}{Quick diagnostic to show the deterministic reserve vs Ultimate View and 1yr View best estimate. If the model is working properly, these three value shouldn't be much different.}
 }
 \references{
- Put references to the literature/web site here
+ n/a
 }
 \author{
- Who to complain to
+ Alessandro Carrato MSc FIA OA \email{alessandro.carrato@gmail.com}
 }
 \note{
 Further notes
 }
 
-\section{Warning }{Make other sections like Warning}
+\section{Warning}
+{Make other sections like Warning}
 
 \seealso{
- See Also as \code{\link{help}}
+ See also \code{\link{tweedieReserve}}.
 }
 \examples{
-## Example code here
+[tbd]
 }
 \keyword{ print }
