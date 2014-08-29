@@ -58,9 +58,9 @@ tweedieReserve(triangle, var.power = 1,
   Arguments to be passed onto the function \code{\link[stats]{glm}} or \code{cpglm} such as \code{contrasts} or \code{control}. It is important that \code{offset} and \code{weight} should not be specified. Otherwise, an error will be reported and the program will quit.
 }
 }
-\details{
- [tbd]
-}
+%\details{
+% [tbd]
+%}
 \value{The output is an object of class \code{"glm"} that has the following components:
   \item{call}{the matched call.}
   \item{summary}{A data frame containing the predicted loss reserve statistics. The following items are displayed: 
@@ -118,7 +118,7 @@ tweedieReserve(triangle, var.power = 1,
 
 [EV06]		England, Verrall (2006), "Predictive distributions of outstanding liabilities in general insurance", \emph{A.A.S. 1, II}, 221-270	
 
-[PSW09]	Peters, Shevchenko, Wüthrich (2009), "Model uncertainty in claims reserving within Tweedie's compound poisson models", \emph{Astin Bulletin 39(1)}, 1-33
+[PSW09]	Peters, Shevchenko, Wuethrich (2009), "Model uncertainty in claims reserving within Tweedie's compound poisson models", \emph{Astin Bulletin 39(1)}, 1-33
 
 [RV98]		Renshaw, Verrall (1998), "A stochastic model underlying the chain-ladder technique", \emph{B.A.J. 4, IV}, 903-923
 }

@@ -33,24 +33,24 @@ RC_report(res, q = c(0.4, 0.5, 0.7, 0.9, 0.95, 0.995, 0.9993), RC.var = 0.995)
   \item{RC_1yr}{Value of '1yr View' Reserve Risk capital at \code{RC.var} level.}
   \item{Diagnostic}{Quick diagnostic to show the deterministic reserve vs Ultimate View and 1yr View best estimate. If the model is working properly, these three value shouldn't be much different.}
 }
-\references{
- n/a
-}
+%\references{
+% n/a
+%}
 \author{
  Alessandro Carrato MSc FIA OA \email{alessandro.carrato@gmail.com}
 }
-\note{
- [tbd]
-}
+%\note{
+% [tbd]
+%}
 
-\section{Warning}{
-  [tbd]
-}
+%\section{Warning}{
+%  [tbd]
+%}
 
 \seealso{
  See also \code{\link{tweedieReserve}}.
 }
 \examples{
-[tbd]
+1+1
 }
 \keyword{ print }
