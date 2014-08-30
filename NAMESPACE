@@ -78,3 +78,5 @@ exportMethods(predict, Mse, summary, show, coerce,
               "[", "$", "[[", "[<-", names, coef, vcov, residCov, residCor,
               residuals, resid, rstandard, fitted, plot, cbind2, rbind2, dim )
 export(tweedieReserve, RC_report)
+
+export(MWChainLadder)
