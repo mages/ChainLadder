@@ -41,7 +41,7 @@ claims development result.
 Michael Merz, Mario V. Wuethrich. Casualty Actuarial Society E-Forum, Fall 2008.}
 }
 \author{
-Arthur Charpentier
+Arthur Charpentier, Arnaud Lacoume
 }
 %\note{
 %%  ~~further notes~~
