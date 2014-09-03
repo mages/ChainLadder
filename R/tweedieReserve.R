@@ -535,14 +535,15 @@ RC_report <- function(res,q=c(0.4,0.5,0.7,0.9,0.95,0.995,0.9993),RC.var=0.995){
   #if (class(res) != "stochasticReserving")
   #  stop("res must be of class 'stochasticReserving'")
   
-  out<-list("Ultimate_View"=round(c(mean(res$distr.res_ult),sd(res$distr.res_ult)/mean(res$distr.res_ult),quantile(res$distr.res_ult,q)),4),
-            "1yr_View"=round(c(mean(res$distr.res_1yr),sd(res$distr.res_1yr)/mean(res$distr.res_1yr),quantile(res$distr.res_1yr,q)),4),
+  out<-list("Ultimate_View"=round(c(mean(res$distr.res_ult),sd(res$distr.res_ult),sd(res$distr.res_ult)/mean(res$distr.res_ult),quantile(res$distr.res_ult,q)),4),
+            "1yr_View"=round(c(mean(res$distr.res_1yr),sd(res$distr.res_1yr),sd(res$distr.res_1yr)/mean(res$distr.res_1yr),quantile(res$distr.res_1yr,q)),4),
             "RC_Ultimate"=round(quantile(res$distr.res_ult,RC.var)-mean(res$distr.res_ult),2),
             "RC_1yr"=round(quantile(res$distr.res_1yr,RC.var)-mean(res$distr.res_1yr),2),
             "Diagnostic"=round(c(res$GLMReserve,mean(res$distr.res_ult),mean(res$distr.res_1yr)),2))
   for (i in 1:2){
     attr(out[[i]],"names")[1]="mean"
-    attr(out[[i]],"names")[2]="CoV"
+    attr(out[[i]],"names")[2]="st.dev"
+    attr(out[[i]],"names")[3]="CoV"
   }
   names(out[[5]])=c("GLMReserve","mean(Ultimate View)","mean(1yr View)") 
   return(out)
