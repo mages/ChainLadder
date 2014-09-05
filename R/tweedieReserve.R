@@ -208,7 +208,9 @@ tweedieReserve <- function(triangle, var.power=1, link.power=0,
   }
   
   design.matrix<-cbind(ay,dy,cy)
-  design.matrix<-cbind(temp,subset(design.matrix, select=-c(1,length(ay[1,])+1,(length(ay[1,])+length(dy[1,])+1))))
+  design.matrix<-cbind(temp,subset(design.matrix, 
+                                   select=-c(1,length(ay[1,])+1,
+                                             (length(ay[1,])+length(dy[1,])+1))))
   
   ######################################
   ####END DESIGN MATRIX CALCULATION#####
@@ -493,7 +495,8 @@ tweedieReserve <- function(triangle, var.power=1, link.power=0,
             bias=bias,
             GLMReserve=resMeanTot,
             gamma_y=temp_y$gamma_y,
-            res.diag=res.diag)
+            res.diag=res.diag,
+            rereserving=rereserving)
   
   if (bootstrap!=0) {
     if (rereserving) {
@@ -526,25 +529,57 @@ tweedieReserve <- function(triangle, var.power=1, link.power=0,
     
   }
   
-  class(out) <- "glm"                     
+  class(out) <- c("tweedieReserve", "glm")
   return(out)  
 }
 
+print.tweedieReserve <- function(x){
+  print(x$call)
+  print(x$summary)
+}
 
-RC_report <- function(res,q=c(0.4,0.5,0.7,0.9,0.95,0.995,0.9993),RC.var=0.995){
+summary.tweedieReserve <- function(x,
+                                   q=c(0.5,0.75,0.9,0.95,0.995),
+                                   RC.var=0.995){
   #if (class(res) != "stochasticReserving")
   #  stop("res must be of class 'stochasticReserving'")
-  
-  out<-list("Ultimate_View"=round(c(mean(res$distr.res_ult),sd(res$distr.res_ult),sd(res$distr.res_ult)/mean(res$distr.res_ult),quantile(res$distr.res_ult,q)),4),
-            "1yr_View"=round(c(mean(res$distr.res_1yr),sd(res$distr.res_1yr),sd(res$distr.res_1yr)/mean(res$distr.res_1yr),quantile(res$distr.res_1yr,q)),4),
-            "RC_Ultimate"=round(quantile(res$distr.res_ult,RC.var)-mean(res$distr.res_ult),2),
-            "RC_1yr"=round(quantile(res$distr.res_1yr,RC.var)-mean(res$distr.res_1yr),2),
-            "Diagnostic"=round(c(res$GLMReserve,mean(res$distr.res_ult),mean(res$distr.res_1yr)),2))
-  for (i in 1:2){
-    attr(out[[i]],"names")[1]="mean"
-    attr(out[[i]],"names")[2]="st.dev"
-    attr(out[[i]],"names")[3]="CoV"
+  res <- x
+  if(res$rereserving){
+    out<- list(    
+      Statistics=data.frame(
+        Ultimate_View=c(mean(res$distr.res_ult),
+                        sd(res$distr.res_ult),
+                        #sd(res$distr.res_ult)/mean(res$distr.res_ult),
+                        quantile(res$distr.res_ult,q),
+                        RC=quantile(res$distr.res_ult,RC.var)-mean(res$distr.res_ult)
+        ),
+        '1yr_View'=c(mean(res$distr.res_1yr),
+                     sd(res$distr.res_1yr),
+                     #sd(res$distr.res_1yr)/mean(res$distr.res_1yr),
+                     quantile(res$distr.res_1yr,q),
+                     RC=quantile(res$distr.res_1yr,RC.var)-mean(res$distr.res_1yr)
+        )
+      ),
+      Diagnostic=c(GLMReserve=res$GLMReserve,
+                   "mean(Ultimate View)"=mean(res$distr.res_ult),
+                   "mean(1yr View)"=mean(res$distr.res_1yr))
+    )
+    names(out$Statistics)[2]="1yr_View"
+  }else{
+    out<- list(    
+      Statistics=data.frame(
+        Ultimate_View=c(mean(res$distr.res_ult),
+                        sd(res$distr.res_ult),
+                        #sd(res$distr.res_ult)/mean(res$distr.res_ult),
+                        quantile(res$distr.res_ult,q),
+                        RC=quantile(res$distr.res_ult,RC.var)-mean(res$distr.res_ult)
+        )
+      ),
+      Diagnostic=c(GLMReserve=res$GLMReserve,
+                   "mean(Ultimate View)"=mean(res$distr.res_ult))
+    )
   }
-  names(out[[5]])=c("GLMReserve","mean(Ultimate View)","mean(1yr View)") 
-  return(out)
+  
+  rownames(out$Statistics) <- c("mean", "sd", paste0(q*100, "%"), "Risk_Capital")          
+  print(out)
 }
