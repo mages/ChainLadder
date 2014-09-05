@@ -138,51 +138,10 @@ tweedieReserve(triangle, var.power = 1,
 }
 \examples{
 ## R code of your examples
-## R code of your examples
-res <- tweedieReserve(UKMotor, rereserving=TRUE)
-RC_report(res)
-## One year reserving risk 
-RC_report(res)$RC_1yr
 
-## Alternative apporach using bootstrap chain ladder
-## Use bootstrap and chainladder to estimate one year reserve risk
-M <- MackChainLadder(UKMotor, est.sigma="Mack")
-# Chain ladder link ratios
-f <- M$f
-# Latest triangle
-latest <- summary(M)$ByOrigin$Latest
-# Bootstrap chain ladder
-set.seed(1) # set seed to have a replicatable example
-B <- BootChainLadder(UKMotor, R=1000, process.distr="od.pois")
-
-
-# Get next year indices
-n <- ncol(UKMotor)
-ny <- (col(UKMotor) == (nrow(UKMotor) - row(UKMotor) + 2))
-# Extract the 1 in 200 triangle
-triangle.ny <- apply(B$IBNR.Triangles, 3, 
-                 function(x){
-                   next.year <- x[col(x) == (nrow(x) - row(x) + 2)]
-                   sum(next.year)
-                 })
-triangle.ny.995 <- B$IBNR.Triangles[,,order(triangle.ny)[round(B$R*0.995)]]
-# Create a triangle with additional 1 in 200 diagonal from the Bootstrap
-UKMotor.ny <- cum2incr(UKMotor)
-UKMotor.ny[ny] <- triangle.ny.995[ny]
-# Apply chain ladder again
-(UKMotor.ny <- t(apply(UKMotor.ny,1,cumsum)))
-f.ny <- sapply((n-1):1, function(i){
-  sum(UKMotor.ny[1:(i+1), n-i+1])/sum(UKMotor.ny[1:(i+1), n-i])
-})
-(f.ny <- c(f.ny[-(n-1)],1))
-full.triangle.ny <- UKMotor.ny
-for(k in 2:(n-1)){ 
-  full.triangle.ny[(n-k+2):n, k+1] <- full.triangle.ny[(n-k+2):n,k]*f[k]
-}
-## Re-reserving 1 in 200 IBNR
-(sum(re.reserve.995 <- full.triangle.ny[,n] - rev(latest)))
-# Compare to the glm approach
-RC_report(res)$RC_1yr
+re_res <- tweedieReserve(MWR, rereserving=TRUE)
+re_res
+summary(re_res)
  
 }
 \keyword{ models }

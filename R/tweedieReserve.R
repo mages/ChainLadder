@@ -533,17 +533,17 @@ tweedieReserve <- function(triangle, var.power=1, link.power=0,
   return(out)  
 }
 
-print.tweedieReserve <- function(x){
+print.tweedieReserve <- function(x,...){
   print(x$call)
-  print(x$summary)
+  print(x$summary,...)
 }
 
-summary.tweedieReserve <- function(x,
+summary.tweedieReserve <- function(object,
                                    q=c(0.5,0.75,0.9,0.95,0.995),
-                                   RC.var=0.995){
+                                   RC.var=0.995,...){
   #if (class(res) != "stochasticReserving")
   #  stop("res must be of class 'stochasticReserving'")
-  res <- x
+  res <- object
   if(res$rereserving){
     out<- list(    
       Statistics=data.frame(
