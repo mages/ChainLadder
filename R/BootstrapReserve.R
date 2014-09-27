@@ -117,8 +117,8 @@ BootChainLadder <- function(Triangle, R = 999, process.distr=c("gamma", "od.pois
  
   triangleNY<-getTriangleNextYear(triangle,IBNR.Triangles)
   
-  NYLatest <- getDiagonal(triangleNY,m+1)
-  NYPayments <- getDiagonal(IBNR.Triangles,m+1)
+  NYLatest <- getDiagonal(triangleNY,m+1) ## Cumulative 
+  NYPayments <- getDiagonal(IBNR.Triangles,m+1) # Incremental
 
   NYDFs <- getIndivDFs(triangleNY)
 
@@ -135,7 +135,7 @@ BootChainLadder <- function(Triangle, R = 999, process.distr=c("gamma", "od.pois
 
   NYCost <- array(0,c(m,1,R))
   
-  NYCost[2:m,,] <- NYIBNR+NYPayments
+  NYCost[2:m,,] <- NYIBNR+NYPayments ## New rereserved ultimate
 
   
   output <- list( call=match.call(expand.dots = FALSE),
@@ -146,6 +146,7 @@ BootChainLadder <- function(Triangle, R = 999, process.distr=c("gamma", "od.pois
                  IBNR.Triangles=IBNR.Triangles,
                  IBNR.Totals = IBNR.Totals,
                  NYCost.ByOrigin = NYCost,
+                 #NYIBNR.ByOrigin = NYIBNR,
                  ChainLadder.Residuals=residuals,
                  process.distr=process.distr,
                  R=R)
@@ -610,4 +611,31 @@ getDiagonal <-function(tri,d){
 
     return(out)
 
+}
+
+CDR.BootChainLadder <- function(B,probs=0.995,...){
+  
+  if(!"BootChainLadder" %in% class(B))
+    stop("The input to CDR.BootChainLadder has to be output of BootChainLadder.")
+  
+  IBNR <-  c(summary(B)$ByOrigin[,3], summary(B)$Totals[3,1])
+  CDR <- apply(B[["NYCost.ByOrigin"]],1, mean)
+  CDR.SD <- apply(B[["NYCost.ByOrigin"]],1, sd)
+  CDR.Totals <- apply(B[["NYCost.ByOrigin"]],3,sum)
+
+  CDR <- c(CDR, mean(CDR.Totals))
+  CDR.SD <- c(CDR.SD, sd(CDR.Totals ))
+    
+  if(length(probs)>1){
+    CDR.Q <- t(cbind(apply(B[["NYCost.ByOrigin"]],1,quantile, probs),
+                   quantile(CDR.Totals, probs)))
+  }else{
+    CDR.Q <- c(apply(B[["NYCost.ByOrigin"]],1,quantile, probs),
+               quantile(CDR.Totals, probs))
+  }
+  
+  res <- data.frame(IBNR, CDR, CDR.SD, CDR.Q)
+  names(res)[-c(1:3)] <- paste0("CDR ", 100*probs,"%")
+  rownames(res) <- c(rownames(B$Triangle), "Total")
+  return(res)
 }
