@@ -1,9 +1,9 @@
-MWChainLadder <- function(Mack){  
+CDR.MackChainLadder <- function(Mack){  
   if(!"MackChainLadder" %in% class(Mack))
-    stop("The input to MWChainLadder has to be output of MackChainLadder.")
+    stop("The input to CDR.MackChainLadder has to be output of MackChainLadder.")
   
   Trian <- Mack$Triangle
-  bool <- TRUE
+  bool <- "MWpaper"
   ##  variables
   I <- nrow(Trian)
   J <- ncol(Trian)
@@ -120,7 +120,7 @@ MWChainLadder <- function(Mack){
   for (i in 2:(I-1)){ 
     for (k in (i+1):I){
       cov_obs_exact[i,k] <- Mack$FullTriangle[i,J]*Mack$FullTriangle[k,J]*(Upsilon_exact[i] + Lambda[i])
-      cov_reel_exact[i,k] <- Mack$FullTriangle[i,J]*Mack$FullTriangle[k,J]*(Psi_exact[i] + Lambda[i])    
+      cov_reel_exact[i,k] <- Mack$FullTriangle[i,J]*Mack$FullTriangle[k,J]*(Psi_exact[i] + Lambda[i])   
     }
   }
   
@@ -134,6 +134,8 @@ MWChainLadder <- function(Mack){
   msep_Mack <- array(0,c(1,I+1))
   msep_Mack[1:I] <- Mack$Mack.S.E[,I]
   msep_Mack[I+1] <- Mack$Total.Mack.S.E
+  
+  
   Vari <- array(0,c(1,I+1))
   for (i in 1:I){
     Vari[i] <- Mack$FullTriangle[i,J]^2 * Psi[i]
@@ -154,9 +156,33 @@ MWChainLadder <- function(Mack){
   if(bool==0){
     result <- cbind(t(msep_Mack), t(sqrt(msep_obs)), t(sqrt(msep_obs_exact)))
     result <- as.data.frame(result)
-    l <- list("MSEP Mack","MSEP obs. approx","MSEP obs. exact")
+    l <- list("MSEP Mack","MSEP CDR approx","MSEP CDR exact")
     names(result) <- l
   }
+  
+  if(bool=="MWpaper"){
+  ## Follow output of table 4 on page 562 in the 2008 MW paper 
+    reserve_Mack <- array(0,c(1,I+1))
+    reserve_Mack[1:I] <- summary(Mack)$ByOrigin$IBNR
+    reserve_Mack[I+1] <- summary(Mack)$Total[4,1]
+    
+    result <- cbind(t(reserve_Mack),
+                    t(sqrt(Vari)), 
+                    t(sqrt(msep_reel)),
+                    t(sqrt(msep_obs)),                   
+                    ## t(sqrt(msep_obs_exact)), 
+                    ## t(sqrt(msep_reel_exact)),
+                    t(msep_Mack))
+    
+    result <- as.data.frame(result)
+    names(result) <- c("IBNR",
+                       "CDR.Process", 
+                       "CDR.Parameter",
+                       "CDR.MSEP",
+                       "Mack.MESP")    
+  }
+  
   rownames(result) <- c(rownames(Trian), "Total")
   return(result)
+  
 }
