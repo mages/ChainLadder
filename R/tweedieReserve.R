@@ -61,9 +61,9 @@ fit_gamma <- function(coeffs,design.type,n){
 
 
 tweedieReserve <- function(triangle, var.power=1, link.power=0, 
-                                design.type=c(1,1,0), rereserving=FALSE,##link.power=0 is the log link ...
-                                cum=TRUE, exposure=FALSE, bootstrap=1, 
-                                boot.adj=0, nsim=1000, proc.err=TRUE, p.optim=F,...){
+                           design.type=c(1,1,0), rereserving=FALSE,##link.power=0 is the log link ...
+                           cum=TRUE, exposure=FALSE, bootstrap=1, 
+                           boot.adj=0, nsim=1000, proc.err=TRUE, p.optim=F,...){
   
   ## The following variable will be generated later 'on the fly'
   ## To avoid NOTE from R CMD CHECK let's set them to NULL first.
@@ -546,7 +546,7 @@ summary.tweedieReserve <- function(object,
   res <- object
   if(res$rereserving){
     out<- list(    
-      Statistics=data.frame(
+      Reserves=data.frame(
         Ultimate_View=c(mean(res$distr.res_ult),
                         sd(res$distr.res_ult),
                         #sd(res$distr.res_ult)/mean(res$distr.res_ult),
@@ -564,10 +564,10 @@ summary.tweedieReserve <- function(object,
                    "mean(Ultimate View)"=mean(res$distr.res_ult),
                    "mean(1yr View)"=mean(res$distr.res_1yr))
     )
-    names(out$Statistics)[2]="1yr_View"
+    names(out$Reserves)[2]="1yr_View"
   }else{
     out<- list(    
-      Statistics=data.frame(
+      Reserves=data.frame(
         Ultimate_View=c(mean(res$distr.res_ult),
                         sd(res$distr.res_ult),
                         #sd(res$distr.res_ult)/mean(res$distr.res_ult),
@@ -580,6 +580,6 @@ summary.tweedieReserve <- function(object,
     )
   }
   
-  rownames(out$Statistics) <- c("mean", "sd", paste0(q*100, "%"), "Risk_Capital")          
+  rownames(out$Reserves) <- c("mean", "sd", paste0(q*100, "%"), "Risk_Capital")          
   print(out)
 }
