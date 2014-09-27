@@ -1,11 +1,15 @@
-Version 0.1.9 [2014-08-23]
+Version 0.1.9 [2014-09-26]
 --------------------------
 
 NEW FEATURES
 
-  o New function MWChainLadder by Arthur Charpentier, 
-    which based on a paper by Merz & Wuetherich estimates
+  o New function CDR.MackChainLadder which estimates
     the claims development result of the Mack model.
+    Based on a paper by Merz & Wuetherich (2008)
+
+  o New function CDR.BootChainLadder which estimates
+    the claims development result of the bootstrap
+    chain-ladder model.
 
 Version 0.1.8 [2014-08-22]
 --------------------------
