@@ -403,9 +403,7 @@ tweedieReserve <- function(triangle, var.power=1, link.power=0,
       }
       ##setWinProgressBar(pb, b, title=paste(round(b/nsim*100, 0),"% Done"))
       
-    }
-    #close(pb)
-    # compute estimation variance, adjusted by df 
+    } ## end nsim look
     
     ##the adjustment for DF is included directly in residuals (see England(2002) Addendum) or in parametric bootstrap
     mseEstAy <- apply(resMeanAyB,1,var)
@@ -433,7 +431,7 @@ tweedieReserve <- function(triangle, var.power=1, link.power=0,
       
       Emergence.Pattern <- S.E_1yr/S.E
     }
-  }
+  }## end bootstrap
   
   # percentage of negative values modified
   
@@ -535,7 +533,10 @@ tweedieReserve <- function(triangle, var.power=1, link.power=0,
 
 print.tweedieReserve <- function(x,...){
   print(x$call)
-  print(x$summary,...)
+  out <- x$summary[c("Latest", "Expected.Reserve", 
+                     "Prediction.Error", "Prediction.Error_1yr")]
+  names(out) <- c("Latest", "Reserve", "MSEP.Ult", "MSEP.CDR")
+  print(out,...)
 }
 
 summary.tweedieReserve <- function(object,

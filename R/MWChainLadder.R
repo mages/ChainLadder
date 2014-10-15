@@ -176,10 +176,10 @@ CDR.MackChainLadder <- function(Mack){
     
     result <- as.data.frame(result)
     names(result) <- c("IBNR",
-                       "CDR.Process", 
-                       "CDR.Parameter",
-                       "CDR.MSEP",
-                       "Mack.MESP")    
+                       "MSEP.CDR.Process", 
+                       "MSEP.CDR.Parameter",
+                       "MSEP.CDR",
+                       "MSEP.Mack")    
   }
   
   rownames(result) <- c(rownames(Trian), "Total")

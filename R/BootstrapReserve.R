@@ -624,7 +624,7 @@ CDR.BootChainLadder <- function(B,probs=0.995,...){
   CDR.Totals <- apply(B[["NYCost.ByOrigin"]],3,sum)
 
   CDR <- c(CDR, mean(CDR.Totals))
-  CDR.SD <- c(CDR.SD, sd(CDR.Totals ))
+  MSEP.CDR <- c(CDR.SD, sd(CDR.Totals ))
     
   if(length(probs)>1){
     CDR.Q <- t(cbind(apply(B[["NYCost.ByOrigin"]],1,quantile, probs),
@@ -634,7 +634,7 @@ CDR.BootChainLadder <- function(B,probs=0.995,...){
                quantile(CDR.Totals, probs))
   }
   
-  res <- data.frame(IBNR, CDR, CDR.SD, CDR.Q)
+  res <- data.frame(IBNR, CDR, MSEP.CDR, CDR.Q)
   names(res)[-c(1:3)] <- paste0("CDR ", 100*probs,"%")
   rownames(res) <- c(rownames(B$Triangle), "Total")
   return(res)
