@@ -126,7 +126,7 @@ tweedieReserve(triangle, var.power = 1,
  Alessandro Carrato MSc FIA OA \email{alessandro.carrato@gmail.com}
 }
 \note{
- [tbd]
+ This function was born initially as an extension of the glmReserve by Wayne Zhang \email{actuary_zhang@hotmail.com}. I would like to thank him for the big chunk of code he initially wrote that permitted me to speed up my coding.
 }
 
 \section{Warning}{
