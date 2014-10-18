@@ -279,6 +279,7 @@ tweedieReserve <- function(triangle, var.power=1, link.power=0,
   if (bootstrap!=0){
     ## This only works on Windows
     ## pb <- winProgressBar(title = "progress bar", min = 1, max = nsim, width = 300)
+    pb <- txtProgressBar(min = 1, max = nsim, style=3)
     resMeanAyB <- matrix(0,length(resMeanAy),nsim)
     resMeanTotB <- rep(0,nsim)
     
@@ -402,6 +403,7 @@ tweedieReserve <- function(triangle, var.power=1, link.power=0,
         resMeanTotB_1yr[b] <- sum(resMeanAyB_1yr[,b])        
       }
       ##setWinProgressBar(pb, b, title=paste(round(b/nsim*100, 0),"% Done"))
+      setTxtProgressBar(pb, b)
       
     } ## end nsim look
     
