@@ -11,7 +11,8 @@ tweedieReserve(triangle, var.power = 1,
                     link.power = 0, design.type = c(1, 1, 0), 
                     rereserving = FALSE, cum = TRUE, exposure = FALSE, 
                     bootstrap = 1, boot.adj = 0, nsim = 1000, 
-                    proc.err = TRUE, p.optim = F, ...)
+                    proc.err = TRUE, p.optim = FALSE,
+                    progressBar = TRUE, ...)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -53,6 +54,10 @@ tweedieReserve(triangle, var.power = 1,
 }
   \item{p.optim}{
   Boolean, if \code{TRUE} the model estimates the MLE for the Tweedie's \code{p} parameter. Default to \code{FALSE}. Recommended to use at the beginning of the Stochastic Reserving Analysis.
+}
+\item{progressBar}{
+  Boolean, if \code{TRUE} a progress bar will be shown in the console to give
+  an indication of bootstrap progress.
 }
   \item{\dots}{
   Arguments to be passed onto the function \code{\link[stats]{glm}} or \code{cpglm} such as \code{contrasts} or \code{control}. It is important that \code{offset} and \code{weight} should not be specified. Otherwise, an error will be reported and the program will quit.
