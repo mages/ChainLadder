@@ -1,7 +1,6 @@
 # ChainLadder 
 
-ChainLadder is an R package providing methods and models which are typically 
-used in insurance claims reserving, including:
+ChainLadder is an R package providing methods and models which are typically used in insurance claims reserving, including:
 
 - Mack-, Munich- and Bootstrap-chain-ladder models
 - General multivariate chain ladder models 

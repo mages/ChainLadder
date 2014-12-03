@@ -1,4 +1,4 @@
-Version 0.1.9 [2014-09-26]
+Version 0.1.9 [2014-12-03]
 --------------------------
 
 NEW FEATURES
@@ -10,6 +10,11 @@ NEW FEATURES
   o New function CDR.BootChainLadder which estimates
     the claims development result of the bootstrap
     chain-ladder model.
+
+Changes
+
+  o Updated DESCRPITION file to comply with new CRAN policy
+
 
 Version 0.1.8 [2014-08-22]
 --------------------------
