@@ -1,4 +1,4 @@
-Version 0.1.9 [2014-12-03]
+Version 0.2.0 [2014-12-20]
 --------------------------
 
 NEW FEATURES
@@ -11,9 +11,14 @@ NEW FEATURES
     the claims development result of the bootstrap
     chain-ladder model.
 
+
+Version 0.1.9 [2014-12-20]
+--------------------------
+
 Changes
 
-  o Updated DESCRPITION file to comply with new CRAN policy
+  o Updated README and DESCRIPTION file to comply with changes of 
+    CRAN policy.
 
 
 Version 0.1.8 [2014-08-22]

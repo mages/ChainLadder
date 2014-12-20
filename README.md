@@ -47,9 +47,9 @@ See the ChainLadder package [vignettes](http://cran.r-project.org/web/packages/C
 
 To cite package 'ChainLadder' in publications use:
 
-  Markus Gesmann, Daniel Murphy and Wayne Zhang (2014). ChainLadder:
-  Statistical methods and models for the calculation of outstanding claims
-  reserves in general insurance. R package version 0.1.8.
+  Markus Gesmann, Daniel Murphy, Wayne Zhang and Alessandro Carrato (2015). 
+  ChainLadder: Statistical methods and models for the calculation of 
+  outstanding claims reserves in general insurance. R package version 0.1.9.
   
 See also:
 
@@ -60,4 +60,5 @@ See also:
 
 This package is free and open source software, licensed under [GPL](https://www.gnu.org/copyleft/gpl.html).
 
-<a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/deed.en_GB"><img alt="Creative Commons Licence" style="border-width:0" src="http://i.creativecommons.org/l/by-sa/4.0/80x15.png" /></a><br /><span xmlns:dct="http://purl.org/dc/terms/" property="dct:title">ChainLadder documentation</span> by <a xmlns:cc="http://creativecommons.org/ns#" href="https://github.com/mages/ChainLadder" property="cc:attributionName" rel="cc:attributionURL">Markus Gesmann, Dan Murphy and Wayne Zhang</a> is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/deed.en_GB">Creative Commons Attribution-ShareAlike 4.0 International License</a>. 
+<a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/deed.en_GB"><img alt="Creative Commons Licence" class="c1" src="http://i.creativecommons.org/l/by-sa/4.0/80x15.png" /></a><br />
+<span>ChainLadder documentation</span> by Markus Gesmann, Dan Murphy and Wayne Zhang is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/deed.en_GB">Creative Commons Attribution-ShareAlike 4.0 International License</a>. 

@@ -2,8 +2,8 @@ Package: ChainLadder
 Type: Package
 Title: Statistical Methods and Models for Claims Reserving in 
        General Insurance
-Version: 0.1.9
-Date: 2014-12-03
+Version: 0.2.0
+Date: 2014-12-20
 Authors@R: c(person("Markus", "Gesmann", role = c("aut", "cre"),
              email = "markus.gesmann@googlemail.com"),
              person("Daniel", "Murphy", role = "aut", 
