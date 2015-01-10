@@ -12,6 +12,8 @@ Authors@R: c(person("Markus", "Gesmann", role = c("aut", "cre"),
 	           email="actuary_zhang@hotmail.com"),
              person("Alesandro", "Carrato", role = "ctb", 
              email="alessandro.carrato@gmail.com"),
+             person("Giuseppe", "Crupi", role="ctb"),
+             person("Christophe", "Dutang", role="ctb"),
              person("Arthur", "Charpentier", role = "ctb",
              email="arthur.charpentier@gmail.com"))
 Description: Various statistical methods and models which are
