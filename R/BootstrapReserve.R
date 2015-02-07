@@ -613,28 +613,29 @@ getDiagonal <-function(tri,d){
 
 }
 
-CDR.BootChainLadder <- function(B,probs=0.995,...){
+CDR.BootChainLadder <- function(B,probs=c(0.75, 0.95),...){
   
   if(!"BootChainLadder" %in% class(B))
     stop("The input to CDR.BootChainLadder has to be output of BootChainLadder.")
   
   IBNR <-  c(summary(B)$ByOrigin[,3], summary(B)$Totals[3,1])
+  IBNR.S.E <-  c(summary(B)$ByOrigin[,4], summary(B)$Totals[4,1])
   CDR <- apply(B[["NYCost.ByOrigin"]],1, mean)
   CDR.SD <- apply(B[["NYCost.ByOrigin"]],1, sd)
   CDR.Totals <- apply(B[["NYCost.ByOrigin"]],3,sum)
 
-  CDR <- c(CDR, mean(CDR.Totals))
-  MSEP.CDR <- c(CDR.SD, sd(CDR.Totals ))
+  #CDR <- IBNR - c(CDR, mean(CDR.Totals))
+  CDR.S.E <- c(CDR.SD, sd(CDR.Totals ))
     
   if(length(probs)>1){
-    CDR.Q <- t(cbind(apply(B[["NYCost.ByOrigin"]],1,quantile, probs),
-                   quantile(CDR.Totals, probs)))
+    CDR.Q <-  t(cbind(apply(B[["NYCost.ByOrigin"]],1,quantile, probs),
+                      quantile(CDR.Totals, probs))) #- IBNR
   }else{
-    CDR.Q <- c(apply(B[["NYCost.ByOrigin"]],1,quantile, probs),
-               quantile(CDR.Totals, probs))
+    CDR.Q <-  c(apply(B[["NYCost.ByOrigin"]],1,quantile, probs),
+               quantile(CDR.Totals, probs)) #- IBNR
   }
   
-  res <- data.frame(IBNR, CDR, MSEP.CDR, CDR.Q)
+  res <- data.frame(IBNR, IBNR.S.E, CDR.S.E, CDR.Q)
   names(res)[-c(1:3)] <- paste0("CDR ", 100*probs,"%")
   rownames(res) <- c(rownames(B$Triangle), "Total")
   return(res)

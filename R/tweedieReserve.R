@@ -542,13 +542,12 @@ print.tweedieReserve <- function(x,...){
   print(x$call)
   out <- x$summary[c("Latest", "Expected.Reserve", 
                      "Prediction.Error", "Prediction.Error_1yr")]
-  names(out) <- c("Latest", "Reserve", "MSEP.Ult", "MSEP.CDR")
+  names(out) <- c("Latest", "IBNR", "Ult.S.E", "CDR.S.E")
   print(out,...)
 }
 
 summary.tweedieReserve <- function(object,
-                                   q=c(0.5,0.75,0.9,0.95,0.995),
-                                   RC.var=0.995,...){
+                                   q=c(0.5,0.75,0.9,0.95,0.995),...){
   #if (class(res) != "stochasticReserving")
   #  stop("res must be of class 'stochasticReserving'")
   res <- object
@@ -558,14 +557,12 @@ summary.tweedieReserve <- function(object,
         Ultimate_View=c(mean(res$distr.res_ult),
                         sd(res$distr.res_ult),
                         #sd(res$distr.res_ult)/mean(res$distr.res_ult),
-                        quantile(res$distr.res_ult,q),
-                        RC=quantile(res$distr.res_ult,RC.var)-mean(res$distr.res_ult)
+                        quantile(res$distr.res_ult,q)
         ),
         '1yr_View'=c(mean(res$distr.res_1yr),
                      sd(res$distr.res_1yr),
                      #sd(res$distr.res_1yr)/mean(res$distr.res_1yr),
-                     quantile(res$distr.res_1yr,q),
-                     RC=quantile(res$distr.res_1yr,RC.var)-mean(res$distr.res_1yr)
+                     quantile(res$distr.res_1yr,q)
         )
       ),
       Diagnostic=c(GLMReserve=res$GLMReserve,
@@ -579,8 +576,7 @@ summary.tweedieReserve <- function(object,
         Ultimate_View=c(mean(res$distr.res_ult),
                         sd(res$distr.res_ult),
                         #sd(res$distr.res_ult)/mean(res$distr.res_ult),
-                        quantile(res$distr.res_ult,q),
-                        RC=quantile(res$distr.res_ult,RC.var)-mean(res$distr.res_ult)
+                        quantile(res$distr.res_ult,q)
         )
       ),
       Diagnostic=c(GLMReserve=res$GLMReserve,
@@ -588,6 +584,6 @@ summary.tweedieReserve <- function(object,
     )
   }
   
-  rownames(out$Reserves) <- c("mean", "sd", paste0(q*100, "%"), "Risk_Capital")          
+  rownames(out$Reserves) <- c("mean", "sd", paste0(q*100, "%"))          
   print(out)
 }

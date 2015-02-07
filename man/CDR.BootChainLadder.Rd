@@ -9,7 +9,7 @@ Estimate the Claims Development Result for BootChainLadder
 output.
 }
 \usage{
-CDR.BootChainLadder(B, probs = 0.995, ...)
+CDR.BootChainLadder(B, probs = c(0.75, 0.95), ...)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{

@@ -7,10 +7,7 @@
 chainladderWelcomeMessage <- function(){
 
   paste("\nChainLadder version ", packageDescription("ChainLadder")$Version,
-                   " by:\nMarkus Gesmann <markus.gesmann@gmail.com>",
-                   "\nWayne Zhang <actuary_zhang@hotmail.com>",
-                   "\nDaniel Murphy <danielmarkmurphy@gmail.com>",
-                   "\n\n",
+        "\n\n",
         "Type ?ChainLadder to access overall documentation and\n",
         "vignette('ChainLadder') for the package vignette.\n\n",
         "Type demo(ChainLadder) to get an idea of the functionality of this package.\n",

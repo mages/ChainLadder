@@ -4,6 +4,9 @@
 \title{
 Claims development result
 }
+
+\encoding{UTF-8}
+
 \description{
 Standard deviation of the claims development result after one year for the distribution-free chain-ladder model (Mack).
 }
@@ -38,7 +41,10 @@ claims development result.
 }
 \references{
 \cite{Modelling the claims development result for solvency purposes.
-Michael Merz, Mario V. Wuethrich. Casualty Actuarial Society E-Forum, Fall 2008.}
+Michael Merz, Mario V. Wüthrich. Casualty Actuarial Society E-Forum, Fall 2008.}
+
+\cite{Claims Run-Off Uncertainty: The Full Picture. Michael Merz, 
+Mario V. Wüthrich. Swiss Finance Institute Research Paper No. 14-69. http://ssrn.com/abstract=2524352. 2014}
 }
 \author{
 Arthur Charpentier, Arnaud Lacoume

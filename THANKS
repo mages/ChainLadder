@@ -11,4 +11,5 @@ Many thanks to all who provided ideas, suggestions, corrections and bug reports:
      Ernesto Schirmacher for reporting a bug in residuals.MackChainLadder
      Alessandro Carrato for reporting a bug in specifying offsets in glmReserve
      Thomas Girodot for reporting a bug in BootChainLadder
+     Mario Wüthrich for guidance on the 1 year CDR functions
 

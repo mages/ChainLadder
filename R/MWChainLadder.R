@@ -168,18 +168,18 @@ CDR.MackChainLadder <- function(Mack){
     
     result <- cbind(t(reserve_Mack),
                     t(sqrt(Vari)), 
-                    t(sqrt(msep_reel)),
-                    t(sqrt(msep_obs)),                   
+                    #t(sqrt(msep_reel)),
+                    #t(sqrt(msep_obs)),                   
                     ## t(sqrt(msep_obs_exact)), 
                     ## t(sqrt(msep_reel_exact)),
                     t(msep_Mack))
     
     result <- as.data.frame(result)
     names(result) <- c("IBNR",
-                       "MSEP.CDR.Process", 
-                       "MSEP.CDR.Parameter",
-                       "MSEP.CDR",
-                       "MSEP.Mack")    
+                       #"MSEP.CDR.Process", 
+                       #"MSEP.CDR.Parameter",
+                       "CDR.S.E",
+                       "Mack.S.E")    
   }
   
   rownames(result) <- c(rownames(Trian), "Total")

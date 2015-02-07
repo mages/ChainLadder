@@ -9,8 +9,7 @@ Main purpose of this function is to create a report to assess the Reserve Risk c
 }
 \usage{
 \method{print}{tweedieReserve}(x, ...)
-\method{summary}{tweedieReserve}(object, q = c(0.5, 0.75, 0.9, 0.95, 0.995), 
-                                RC.var = 0.995,...)
+\method{summary}{tweedieReserve}(object, q = c(0.5, 0.75, 0.9, 0.95, 0.995),...)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -21,10 +20,7 @@ Main purpose of this function is to create a report to assess the Reserve Risk c
     An object of class \code{\link{tweedieReserve}}.
 }
   \item{q}{
-    Array of percentiles to be displayed. Default to \code{c(0.4, 0.5, 0.7, 0.9, 0.95, 0.995, 0.9993)}
-}
-  \item{RC.var}{
-    Risk Capital percentile (using the Value at Risk - VaR - as volume measure)
+    Array of percentiles to be displayed.
     }
  \item{...}{Not used}
 }
@@ -37,7 +33,6 @@ Main purpose of this function is to create a report to assess the Reserve Risk c
   \item{Ultimate_View}{Array of 'Ultimate View' Reserve Risk capital at the given percentiles.}
   \item{1yr_View}{Array of '1yr View' Reserve Risk capital at the given percentiles.}
   \item{RC_Ultimate}{Value of 'Ultimate View' Reserve Risk capital at \code{RC.var} level.}
-  \item{RC_1yr}{Value of '1yr View' Reserve Risk capital at \code{RC.var} level.}
   \item{Diagnostic}{Quick diagnostic to show the deterministic reserve vs Ultimate View and 1yr View best estimate. If the model is working properly, these three value shouldn't be much different.}
 }
 %\references{
