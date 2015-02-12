@@ -292,10 +292,12 @@ print.BootChainLadder <- function(x,probs=c(0.75,0.95),...){
     cat("\n")
     summary.x <- summary(x,probs=probs)
 
+    names(summary.x$ByOrigin)[4] <- "IBNR.S.E"
     print(format(summary.x$ByOrigin, big.mark = ",", digits = 3),...)
 
     cat("\n")
     Totals <- summary.x$Totals
+    rownames(Totals)[4] <- "IBNR.S.E"
     print(format(Totals, big.mark=",",digits=3), quote=FALSE)
 
   }

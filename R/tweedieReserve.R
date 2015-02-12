@@ -540,10 +540,17 @@ tweedieReserve <- function(triangle, var.power=1, link.power=0,
 
 print.tweedieReserve <- function(x,...){
   print(x$call)
-  out <- x$summary[c("Latest", "Expected.Reserve", 
-                     "Prediction.Error", "Prediction.Error_1yr")]
-  names(out) <- c("Latest", "IBNR", "Ult.S.E", "CDR.S.E")
-  print(out,...)
+  if(x$rereserving){      
+    out <- x$summary[c("Latest", "Expected.Reserve", 
+                       "Prediction.Error", "Prediction.Error_1yr")]
+    names(out) <- c("Latest", "IBNR", "IBNR.S.E", "CDR.S.E")
+  }else{    
+    out <- x$summary[c("Latest", "Expected.Reserve", 
+                       "Prediction.Error")]
+    names(out) <- c("Latest", "IBNR", "IBNR.S.E")
+  }
+  print(out)
+  
 }
 
 summary.tweedieReserve <- function(object,

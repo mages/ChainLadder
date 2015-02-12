@@ -39,7 +39,7 @@ Giuseppe Crupi and Markus Gesmann
 See also \code{\link{BootChainLadder}}
 }
 \examples{
-B <- BootChainLadder(MWR)
+B <- BootChainLadder(MW2008)
 B
 CDR.BootChainLadder(B)
 }

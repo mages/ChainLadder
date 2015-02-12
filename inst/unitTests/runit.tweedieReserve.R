@@ -1,7 +1,7 @@
 test.tweedieReserve <- function() {
   set.seed(123)
   #ODP, PARAMETRIC BOOTSTRAP
-  TR_1 <- tweedieReserve(MWR,nsims=10000,rereserving=TRUE)
+  TR_1 <- tweedieReserve(MW2008,nsims=10000,rereserving=TRUE)
   rep_1<-RC_report(TR_1)
   
   ult_1 <- c(2238807.8134,127632.394,0.0585,2206318.0016,2238345.1984,2309516.7468,2402395.6175,2458976.9985,2590679.9489,2611995.8277)
@@ -14,7 +14,7 @@ test.tweedieReserve <- function() {
   
   #Arithmetic separation method, PARAMETRIC BOOTSTRAP
   set.seed(123)
-  TR_2 <- tweedieReserve(MWR,nsims=10000,rereserving=TRUE,design.type=c(0,1,1))
+  TR_2 <- tweedieReserve(MW2008,nsims=10000,rereserving=TRUE,design.type=c(0,1,1))
   rep_2<-RC_report(TR_2)
   
   ult_2 <- c(2210254.6134,120120.2424,0.0543,2180409.7893,2206455.6401,2269709.8490,2366451.5802,2415008.4877,2504159.7139,2614654.7706)

@@ -1,5 +1,6 @@
-\name{MWR}
-\alias{MWR}
+\name{MW2008}
+\alias{MW2008}
+\encoding{UTF-8}
 \docType{data}
 \title{Run-off claims triangle}
 \description{
@@ -10,10 +11,10 @@ Cumulative claims development triangle
 }
 \source{
 \cite{Modelling the claims development result for solvency purposes.
-Michael Merz, Mario V. Wuethrich. Casualty Actuarial Society E-Forum, Fall 2008.}
+Michael Merz, Mario V. Wüthrich. Casualty Actuarial Society E-Forum, Fall 2008.}
 }
 \examples{
-MWR
-plot(MWR, lattice=TRUE)
+MW2008
+plot(MW2008, lattice=TRUE)
 }
 \keyword{datasets}

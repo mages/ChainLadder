@@ -19,7 +19,8 @@ CDR.MackChainLadder(Mack)
 }
 }
 \details{
-Merz & Wuethrich (2008) derived analytic formulae for the standard deviation of the claims development result after one year assuming:
+Merz & Wüthrich (2008) derived analytic formulae for the mean square error
+of prediction of the claims development result after one year assuming:
 \itemize{
   \item{
     The opening reserves were set using the pure chain ladder model 
@@ -59,11 +60,18 @@ Arthur Charpentier, Arnaud Lacoume
 See also \code{\link{MackChainLadder}}
 }
 \examples{
-# Example from Merz Wuethrich paper mentioned above
-MWR 
-M <- MackChainLadder(MWR, est.sigma="Mack")
+# Example from the 2008 Merz Wuthrich paper mentioned above
+MW2008
+M <- MackChainLadder(MW2008, est.sigma="Mack")
 plot(M)
 CDR.MackChainLadder(M)
+
+# Example from the 2014 Merz Wuthrich paper mentioned above
+MW2014
+W <- MackChainLadder(MW2014, est.sigma="Mack")
+plot(W)
+CDR.MackChainLadder(W)
+
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.
