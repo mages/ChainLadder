@@ -105,8 +105,7 @@ tweedieReserve(triangle, var.power = 1,
       \item \code{scaled, biasadj}: The GLM Person scaled residuals adjusted by the bias, i.e. \code{scaled.biasadj=scaled*bias}. 
       \item \code{dev}: Development year.
       \item \code{origin}: Origin year.
-      \item \code{cy}: Calendar year.
-      
+      \item \code{cy}: Calendar year.      
     }
   }
 [IF \code{boostrap>1}]
