@@ -1,6 +1,8 @@
 CDR.MackChainLadder <- function(Mack){  
   if(!"MackChainLadder" %in% class(Mack))
     stop("The input to CDR.MackChainLadder has to be output of MackChainLadder.")
+  if(!all(Mack$alpha==1))
+    stop("The Merz & Wuthrich forumlae hold only for alpha=1.")
   
   Trian <- Mack$Triangle
   bool <- "MWpaper"
@@ -73,9 +75,11 @@ CDR.MackChainLadder <- function(Mack){
     }
   }
   
-  #MSEP aggregated
+  #MSEP aggregated  
   msep_obs[I+1] = sum(msep_obs[2:I]) + 2*sum(cov_obs)
-  msep_reel[I+1] = sum(msep_reel[2:I]) + 2*sum(cov_reel)
+  # Something is not quite right here
+  # It should be msep_reel = msep_ops - vari
+  msep_reel[I+1] = sum(msep_reel[2:I]) + 2*sum(cov_obs)
   
   
   
@@ -124,9 +128,13 @@ CDR.MackChainLadder <- function(Mack){
     }
   }
   
-  #MSEP ag.
+  #MSEP ag.  
   msep_obs_exact[I+1] <- sum(msep_obs_exact[2:I]) + 2*sum(cov_obs_exact)
-  msep_reel_exact[I+1] <- sum(msep_reel_exact[2:I]) + 2*sum(cov_reel_exact)
+  
+  ## Something is not quite right here  
+  msep_reel_exact[I+1] <- sum(msep_reel_exact[2:I]) + 2*sum(cov_obs_exact)
+
+  
   
   ##################################################################################################################
   ##Outputs Function 
@@ -134,7 +142,6 @@ CDR.MackChainLadder <- function(Mack){
   msep_Mack <- array(0,c(1,I+1))
   msep_Mack[1:I] <- Mack$Mack.S.E[,I]
   msep_Mack[I+1] <- Mack$Total.Mack.S.E
-  
   
   Vari <- array(0,c(1,I+1))
   for (i in 1:I){
@@ -167,20 +174,20 @@ CDR.MackChainLadder <- function(Mack){
     reserve_Mack[I+1] <- summary(Mack)$Total[4,1]
     
     result <- cbind(t(reserve_Mack),
-                    t(sqrt(Vari)), 
-                    #t(sqrt(msep_reel)),
-                    #t(sqrt(msep_obs)),                   
-                    ## t(sqrt(msep_obs_exact)), 
-                    ## t(sqrt(msep_reel_exact)),
+                    #t(sqrt(Vari)), # Process
+                    #t(sqrt(msep_reel)), # Parameter 
+                    t(sqrt(msep_obs)),                   
+                    #t(sqrt(msep_obs_exact)), 
+                    #t(sqrt(msep_reel_exact)),
                     t(msep_Mack))
     
     result <- as.data.frame(result)
-    names(result) <- c("IBNR",
-                       #"MSEP.CDR.Process", 
-                       #"MSEP.CDR.Parameter",
-                       "CDR.S.E",
-                       "Mack.S.E")    
-  }
+     names(result) <- c("IBNR",
+                        #"MSEP.CDR.Process",                         
+                        #"MSEP.CDR.Parameter",                        
+                        "CDR.S.E",
+                        "Mack.S.E")    
+   }
   
   rownames(result) <- c(rownames(Trian), "Total")
   return(result)

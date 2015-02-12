@@ -143,10 +143,10 @@ tweedieReserve(triangle, var.power = 1,
 }
 \examples{
 ## R code of your examples
-
-re_res <- tweedieReserve(MWR, rereserving=TRUE)
+\dontrun{
+re_res <- tweedieReserve(MW2008, rereserving=TRUE)
 re_res
 summary(re_res)
- 
+}
 }
 \keyword{ models }

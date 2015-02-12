@@ -396,6 +396,7 @@ print.MackChainLadder <- function(x,...){
     print(format(summary.x$ByOrigin, big.mark = ",", digits = 3),...)
 
     Totals <- summary.x$Totals
+    rownames(Totals)[5] <- "Mack.S.E"
     Totals[1:6,] <- formatC(Totals[1:6,], big.mark=",",digits=2,format="f")
     cat("\n")
     print(Totals, quote=FALSE)
