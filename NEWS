@@ -3,12 +3,15 @@ Version 0.2.0 [2015-02-12]
 
 NEW FEATURES
 
+  o New function tweedieReserve to estimate reserve in GLM framework,
+    including the one year claims development result.
+
   o New function CDR.MackChainLadder which estimates
-    the claims development result of the Mack model.
+    the one year claims development result of the Mack model.
     Based on a paper by Merz & Wuthrich (2008)
 
   o New function CDR.BootChainLadder which estimates
-    the claims development result of the bootstrap
+    the one year claims development result of the bootstrap
     chain-ladder model.
 
 
