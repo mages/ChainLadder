@@ -1,64 +1,37 @@
 \name{ChainLadder-package}
 \alias{ChainLadder-package}
 \alias{ChainLadder}
+\encoding{UTF-8}
 \docType{package}
 \title{
-  Methods and models for claims reserving
+  Methods and Models for Claims Reserving
 }
 \description{
-  The ChainLadder-package grew out of presentations
-  given at the Stochastic Reserving Seminar at the Institute
-  of Actuaries in 2007 and 2008 and followed by talks at CAS meetings in
-  2008 and 2010.
-  This package has currently implementations for the Mack-, Munich- and
-  Bootstrap-chain-ladder methods. The package offers also some utility
-  functions to convert quickly tables into triangles, triangles into
-  tables, cumulative into incremental and incremental into cumulative
-  triangles. 
-  
-  Since version 0.1.4-0 the package also includes the 
-  "LDF Curve Fitting" methods of David Clark's paper 
-  in the 2003 CAS \emph{Forum}. 
-   
-  The ChainLadder-package comes with an example spreadsheet which
-  demonstrates how to use the \code{ChainLadder} 
-  functions in Excel. The spreadsheet is located in the Excel folder of  
-  the package. The R command \code{system.file("Excel",
-  package="ChainLadder")} will tell you the exact path to the
-  directory. 
-  To use the spreadsheet you will need to have the RExcel-Addin, see 
-  \url{http://sunsite.univie.ac.at/rcom/} for more details.  It also
-  provides an example SWord file, demonstrating how the the functions of
-  the package can be integrated into a MS Word file via SWord.  
-  Again you find the Word file via the
-  command:\code{system.file("SWord", package="ChainLadder")} 
+  The ChainLadder-package grew out of presentations given at the Stochastic 
+  Reserving Seminar at the Institute of Actuaries in 2007 and 2008 and 
+  followed by talks at CAS meetings in 2008 and 2010.
    
   More information is available on the project web site
   \url{http://code.google.com/p/chainladder/} 
     
+  Brian Fannin's package \code{MRMR} provides tools to analyze 
+  non-life loss reserves. It uses a set of S3 and S4 objects to store data, 
+  models and predictions.
+  
+  Another package you may want to look into is \code{lossDev}. It
+  implements a Bayesian time series loss development model, see 
+  \url{http://lossdev.r-forge.r-project.org/}
+
   If you are also interested in loss distributions modeling, risk theory 
   (including ruin theory), simulation of compound hierarchical models
   and credibility theory check out the \code{actuar} package by
   C. Dutang, V. Goulet and M. Pigeon. 
 
-  Brian Fannin's package \code{MRMR} provides tools to analyze 
-  non-life loss reserves. It uses a set of S3 and S4 objects to store data, 
-  models and predictions.
-  
-  Another package you might want to look into is \code{lossDev}. It
-  implements a Bayesian time series loss development model. 
-  Features include skewed-t distribution with time-varying scale
-  parameter, reversible jump MCMC for determining 
-  the functional form of the consumption path, and a structural break in
-  this path; by Christopher W. Laws and Frank A. Schmid 
-  see also \url{http://lossdev.r-forge.r-project.org/}
-  
   For more financial packages see also CRAN Task View 'Emperical Finance'
   at \url{http://cran.r-project.org/web/views/Finance.html}.
-  
 }
 \author{
-  Markus Gesmann, Wayne Zhang, Daniel Murphy
+  Markus Gesmann, Wayne Zhang, Daniel Murphy, Alessandro Carrato
   
   Maintainer: Markus Gesmann <markus.gesmann@gmail.com>
 }
@@ -82,10 +55,14 @@
 
 \cite{Bardis, Majidi, Murphy. A Family of Chain-Ladder Factor Models for Selected Link Ratios. \emph{Variance}. Pending. Variance 6:2, 2012, pp. 143-160. \url{http://www.variancejournal.org/issues/06-02/143.pdf}}
 
-\cite{Markus Gesmann. Claims Reserving and IBNR. 
-  \emph{Computational Actuarial Science with R}. 2014. Chapman and Hall/CRC
-}
+\cite{Modelling the claims development result for solvency purposes.
+Michael Merz, Mario V. Wüthrich. Casualty Actuarial Society E-Forum, Fall 2008.}
 
+\cite{Claims Run-Off Uncertainty: The Full Picture. Michael Merz, 
+Mario V. Wüthrich. Swiss Finance Institute Research Paper No. 14-69. \url{http://ssrn.com/abstract=2524352}. 2014}
+
+\cite{Markus Gesmann. Claims Reserving and IBNR. 
+  \emph{Computational Actuarial Science with R}. Chapman and Hall/CRC. 2014}
 }
 
 \examples{
@@ -94,5 +71,3 @@
   }
 }
 \keyword{ package }
-
-
