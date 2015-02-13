@@ -10,12 +10,7 @@ years over time (development years).
 }
 \usage{data("UKMotor")}
 \format{
-  The format is:
- triangle [1:7, 1:7] 3511 4001 4355 4295 4150 ...
- - attr(*, "dimnames")=List of 2
-  ..$ origin: chr [1:7] "2007" "2008" "2009" "2010" ...
-  ..$ dev   : chr [1:7] "1" "2" "3" "4" ...
- - attr(*, "class")= chr [1:2] "triangle" "matrix"
+  A matrix with 7 accident years and 7 development years.
 }
 
 \source{

@@ -5,7 +5,7 @@
 Claims Development Result for BootChainLadder
 }
 \description{
-Estimate the Claims Development Result for BootChainLadder 
+Estimate the claims development result for BootChainLadder 
 output.
 }
 \usage{
@@ -36,7 +36,7 @@ Giuseppe Crupi and Markus Gesmann
 %% ~Make other sections like Warning with \section{Warning }{....} ~
 
 \seealso{
-See also \code{\link{BootChainLadder}}
+See also \code{\link{BootChainLadder}}  \code{\link{tweedieReserve}}
 }
 \examples{
 B <- BootChainLadder(MW2008)
