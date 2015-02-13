@@ -11,7 +11,8 @@ Cumulative claims development triangle
 }
 \source{
 \cite{Claims Run-Off Uncertainty: The Full Picture. Michael Merz, 
-Mario V. Wüthrich. Swiss Finance Institute Research Paper No. 14-69. http://ssrn.com/abstract=2524352. 2014}
+Mario V. Wüthrich. Swiss Finance Institute Research Paper No. 14-69. 
+\url{http://ssrn.com/abstract=2524352}. 2014}
 }
 \examples{
 MW2014
