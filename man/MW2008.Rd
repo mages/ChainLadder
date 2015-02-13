@@ -13,6 +13,7 @@ Cumulative claims development triangle
 \cite{Modelling the claims development result for solvency purposes.
 Michael Merz, Mario V. Wüthrich. Casualty Actuarial Society E-Forum, Fall 2008.}
 }
+
 \examples{
 MW2008
 plot(MW2008, lattice=TRUE)
