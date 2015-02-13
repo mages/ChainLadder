@@ -86,7 +86,7 @@ to the policyholder to pay for future claims for an upfront received
 premium. 
 
 As a result insurers don't know the upfront cost of their
-service, but rely on historical data analysis and judgment to derive a
+service, but rely on historical data analysis and judgement to derive a
 sustainable price for their offering. In General Insurance (or Non-Life
 Insurance, e.g. motor, property and casualty insurance) most policies
 run for a period of 12 months. However, the claims payment process 
