@@ -10,20 +10,18 @@ Authors@R: c(person("Markus", "Gesmann", role = c("aut", "cre"),
              email="danielmarkmurphy@gmail.com"),
              person("Wayne", "Zhang", role = "aut", 
 	           email="actuary_zhang@hotmail.com"),
-             person("Alesandro", "Carrato", role = "ctb", 
+             person("Alessandro", "Carrato", role = "aut", 
              email="alessandro.carrato@gmail.com"),
              person("Giuseppe", "Crupi", role="ctb"),
              person("Christophe", "Dutang", role="ctb"),
-             person("Arthur", "Charpentier", role = "ctb",
-             email="arthur.charpentier@gmail.com"),
+             person("Arnaud", "Lacoume", role="ctb"),               
+             person("Arthur", "Charpentier", role = "ctb"),
              person("Mario", "Wuthrich", role = "ctb")
              )
 Description: Various statistical methods and models which are
     typically used for the estimation of outstanding claims reserves
-    in general insurance. The package has implementations of the Mack-,
-    Munich-, Bootstrap-, and multivariate-chain-ladder models,
-    as well as generalised linear models and the loss-development-factor
-    curve fitting methods of Dave Clark.
+    in general insurance, including those to estimate the claims
+    development results as required under Solvency II.
 Imports:
     Matrix,
     actuar,
