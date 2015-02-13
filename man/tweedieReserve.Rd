@@ -7,10 +7,10 @@ Tweedie Stochastic Reserving Model
 \description{
 This function implements loss reserving models within the generalized
 linear model framework in order to generate the full predictive 
-distribution for loss reserves. Besides, it generates also the 1-year 
-risk view" useful to derive the reserve risk capital in a Solvency 2 
-framework. Finally, it gives to the user the opportunity to properly 
-assess the model error while changing different model parameters.
+distribution for loss reserves. Besides, it generates also the one year 
+risk view useful to derive the reserve risk capital in a Solvency II 
+framework. Finally, it allows the user to properly assess the model error while 
+changing different model parameters.
 }
 \usage{
 tweedieReserve(triangle, var.power = 1, 
@@ -180,23 +180,28 @@ tweedieReserve(triangle, var.power = 1,
 
 \references{
 
-[GS05]  Gigante, Sigalotti (2005), "Model risk in claims reserving with generalized linear models", \emph{Giornale dell'Istituto Italiano degli Attuari, Volume LXVIII}, 55-87
+Gigante, Sigalotti. \emph{Model risk in claims reserving with generalized linear models}. 
+Giornale dell'Istituto Italiano degli Attuari, Volume LXVIII. 55-87. 2005
 
-[EV02] England, Verrall (2002), "Stochastic claims reserving in general insurance", \emph{B.A.J. 8, III}, 443-544
+England, Verrall. \emph{Stochastic claims reserving in general insurance}. 
+B.A.J. 8, III. 443-544. 2002
 
-[EV06] England, Verrall (2006), "Predictive distributions of outstanding liabilities in general insurance", \emph{A.A.S. 1, II}, 221-270	
+England, Verrall. \emp{Predictive distributions of outstanding liabilities in general insurance}.
+A.A.S. 1, II. 221-270. 2006
 
-[PSW09]	Peters, Shevchenko, Wüthrich (2009), "Model uncertainty in claims reserving within Tweedie's compound poisson models", \emph{Astin Bulletin 39(1)}, 1-33
+Peters, Shevchenko, Wüthrich, \emph{Model uncertainty in claims reserving within 
+Tweedie's compound poisson models}. Astin Bulletin 39(1). 1-33. 2009
 
-[RV98] Renshaw, Verrall (1998), "A stochastic model underlying the chain-ladder technique", \emph{B.A.J. 4, IV}, 903-923
+Renshaw, Verrall. \emph{A stochastic model underlying the chain-ladder technique}.
+B.A.J. 4, IV. 903-923. 1998
 }
 \author{
  Alessandro Carrato MSc FIA OA \email{alessandro.carrato@gmail.com}
 }
 \note{
- This function was born initially as an extension of the glmReserve by 
- Wayne Zhang. I would like to thank him for the big chunk of code he 
- initially wrote that permitted me to speed up my coding.
+ This function was born initially as a fork of the \code{glmReserve} by 
+ Wayne Zhang. I would like to thank him for his work that permitted me to 
+ speed up my coding.
 }
 
 \section{Warning}{
