@@ -48,7 +48,7 @@ Michael Merz, Mario V. Wüthrich. Casualty Actuarial Society E-Forum, Fall 2008.
 Mario V. Wüthrich. Swiss Finance Institute Research Paper No. 14-69. http://ssrn.com/abstract=2524352. 2014}
 }
 \author{
-Arthur Charpentier, Arnaud Lacoume
+Arthur Charpentier and Arnaud Lacoume with contributions from Mario Wüthrich
 }
 %\note{
 %%  ~~further notes~~
