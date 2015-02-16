@@ -14,8 +14,8 @@
 # stochasticReserving: no visible binding for global variable ‘glmFit1yr’
 
 ##IMPORT TWEEDIE LIBRARY
-library(tweedie)
-library(statmod)
+#library(tweedie) included in NAMESPACE
+#library(statmod) included in NAMESPACE
 
 
 ####ONLY FOR DEBUG####
