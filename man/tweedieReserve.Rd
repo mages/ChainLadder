@@ -42,7 +42,7 @@ tweedieReserve(triangle, var.power = 1,
   modelled), \code{1} (modelled as factor) and \code{2} (modelled as 
   variable). Default to \code{c(1,1,0)}, which is the common 
   specification in actuarial literature (origin and development period 
-  as factors, calendar period not modelled). If a parameter for the calendar period is specified,       a linear regression on the log CY parameter is fitted to estimate future values, thus is recommended to validate them running a plot of the gamma values (see output \item{gamma_y}) . 
+  as factors, calendar period not modelled). If a parameter for the calendar period is specified,       a linear regression on the log CY parameter is fitted to estimate future values, thus is recommended to validate them running a plot of the gamma values (see output \code{gamma_y}) . 
 }
   \item{rereserving}{
   Boolean, if \code{TRUE} the one year risk view loss reserve 
