@@ -238,7 +238,9 @@ res2
 ## In order to consider an inflation parameter across the origin period, it may 
 ## be interesting to change the regression structure to c(0,1,1) to get the
 ## same estimates of the Arithmetic Separation Method, as referred in 
-## Gigante/Sigalotti.
+## Gigante/Sigalotti. Note: an ERROR (i.e. missing value where TRUE/FALSE needed) may be displayed,
+## it shouldn't affect the validity of the output plot so it could be ignored 
+## for the time being.
 res3 <- tweedieReserve(MW2008, var.power=1, link.power=0, 
                            design.type=c(0,1,1), rereserving=TRUE,
                            progressBar=TRUE)
