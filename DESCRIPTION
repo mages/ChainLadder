@@ -27,8 +27,7 @@ Imports:
     actuar,
     Hmisc,
     methods,
-    stats,
-    statmod,
+    stats,   
     reshape2,
     MASS,
     lattice,
@@ -36,7 +35,7 @@ Imports:
     tweedie,
     utils
 Depends:
-    systemfit
+    systemfit, statmod
 Suggests:
     RUnit
 License: GPL (>= 2)
