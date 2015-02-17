@@ -186,7 +186,7 @@ Giornale dell'Istituto Italiano degli Attuari, Volume LXVIII. 55-87. 2005
 England, Verrall. \emph{Stochastic claims reserving in general insurance}. 
 B.A.J. 8, III. 443-544. 2002
 
-England, Verrall. \emp{Predictive distributions of outstanding liabilities in general insurance}.
+England, Verrall. \emph{Predictive distributions of outstanding liabilities in general insurance}.
 A.A.S. 1, II. 221-270. 2006
 
 Peters, Shevchenko, Wüthrich, \emph{Model uncertainty in claims reserving within 
