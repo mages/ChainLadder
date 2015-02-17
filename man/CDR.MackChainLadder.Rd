@@ -64,13 +64,13 @@ See also \code{\link{MackChainLadder}}
 MW2008
 M <- MackChainLadder(MW2008, est.sigma="Mack")
 plot(M)
-CDR.MackChainLadder(M)
+CDR(M)
 
 # Example from the 2014 Merz Wuthrich paper mentioned above
 MW2014
 W <- MackChainLadder(MW2014, est.sigma="Mack")
 plot(W)
-CDR.MackChainLadder(W)
+CDR(W)
 
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the

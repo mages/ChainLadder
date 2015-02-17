@@ -41,7 +41,7 @@ See also \code{\link{BootChainLadder}}  \code{\link{tweedieReserve}}
 \examples{
 B <- BootChainLadder(MW2008)
 B
-CDR.BootChainLadder(B)
+CDR(B)
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.
