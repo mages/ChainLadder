@@ -78,9 +78,15 @@ exportMethods(predict, Mse, summary, show, coerce,
               "[", "$", "[[", "[<-", names, coef, vcov, residCov, residCor,
               residuals, resid, rstandard, fitted, plot, cbind2, rbind2, dim )
 
+#exportMethods(CDR, MackChainLadder, BootChainLadder)
+export(CDR)
 export(CDR.MackChainLadder)
 export(CDR.BootChainLadder)
 
 export(tweedieReserve)
 S3method(print, tweedieReserve)
 S3method(summary, tweedieReserve)
+
+
+S3method(CDR, MackChainLadder)
+S3method(CDR, BootChainLadder)
