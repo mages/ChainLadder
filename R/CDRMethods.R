@@ -1,3 +1,7 @@
-CDR <- function(x,...) UseMethod("CDR")
+CDR <- function(x,...){
+  UseMethod("CDR")
+}
 
-CDR.default <- function(x,...) "No default function defined"
+CDR.default <- function(x,...) {
+  "No default claims development result function defined."
+}

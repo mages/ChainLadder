@@ -1,4 +1,5 @@
-CDR.MackChainLadder <- function(Mack){  
+CDR.MackChainLadder <- function(x,...){  
+  Mack <- x
   if(!"MackChainLadder" %in% class(Mack))
     stop("The input to CDR.MackChainLadder has to be output of MackChainLadder.")
   if(!all(Mack$alpha==1))

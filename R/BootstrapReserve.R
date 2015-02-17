@@ -615,8 +615,8 @@ getDiagonal <-function(tri,d){
 
 }
 
-CDR.BootChainLadder <- function(B,probs=c(0.75, 0.95),...){
-  
+CDR.BootChainLadder <- function(x, probs=c(0.75, 0.95), ...){
+  B <- x
   if(!"BootChainLadder" %in% class(B))
     stop("The input to CDR.BootChainLadder has to be output of BootChainLadder.")
   
@@ -630,7 +630,7 @@ CDR.BootChainLadder <- function(B,probs=c(0.75, 0.95),...){
   CDR.S.E <- c(CDR.SD, sd(CDR.Totals ))
     
   if(length(probs)>1){
-    CDR.Q <-  t(cbind(apply(B[["NYCost.ByOrigin"]],1,quantile, probs),
+    CDR.Q <-  t(cbind(apply(B[["NYCost.ByOrigin"]],1, quantile, probs),
                       quantile(CDR.Totals, probs))) #- IBNR
   }else{
     CDR.Q <-  c(apply(B[["NYCost.ByOrigin"]],1,quantile, probs),
