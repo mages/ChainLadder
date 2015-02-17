@@ -12,8 +12,10 @@
 # stochasticReserving: no visible binding for global variable ‘glmFit’
 # stochasticReserving: no visible binding for global variable ‘glmFitB’
 # stochasticReserving: no visible binding for global variable ‘glmFit1yr’
-# stochasticReserving: no visible global function definition for
-# ‘tweedie.profile’
+
+##IMPORT TWEEDIE LIBRARY
+#library(tweedie) included in NAMESPACE
+#library(statmod) included in NAMESPACE
 
 
 ####ONLY FOR DEBUG####
@@ -67,12 +69,12 @@ tweedieReserve <- function(triangle, var.power=1, link.power=0,
                            p.optim=FALSE,
                            progressBar=TRUE,...){
   
+  
   ## The following variable will be generated later 'on the fly'
   ## To avoid NOTE from R CMD CHECK let's set them to NULL first.
   glmFit <- NULL
   glmFitB <- NULL
   glmFit1yr <- NULL
-  tweedie.profile <- NULL
   
   call <- match.call()
   if (!("triangle") %in% class(triangle))

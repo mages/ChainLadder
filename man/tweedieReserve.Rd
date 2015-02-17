@@ -9,8 +9,7 @@ This function implements loss reserving models within the generalized
 linear model framework in order to generate the full predictive 
 distribution for loss reserves. Besides, it generates also the one year 
 risk view useful to derive the reserve risk capital in a Solvency II 
-framework. Finally, it allows the user to properly assess the model error while 
-changing different model parameters.
+framework. Finally, it allows the user to validate the model error while changing different model parameters, as the regression structure and diagnostics on the Tweedie p parameter.
 }
 \usage{
 tweedieReserve(triangle, var.power = 1, 
@@ -43,12 +42,12 @@ tweedieReserve(triangle, var.power = 1,
   modelled), \code{1} (modelled as factor) and \code{2} (modelled as 
   variable). Default to \code{c(1,1,0)}, which is the common 
   specification in actuarial literature (origin and development period 
-  as factors, calendar period not modelled).
+  as factors, calendar period not modelled). If a parameter for the calendar period is specified,       a linear regression on the log CY parameter is fitted to estimate future values, thus is recommended to validate them running a plot of the gamma values (see output \code{gamma_y}) . 
 }
   \item{rereserving}{
   Boolean, if \code{TRUE} the one year risk view loss reserve 
   distribution is derived. Default to \code{FALSE}. Note, the runtime 
-  can martially increase if set to true.
+  can materially increase if set to \code{TRUE}.
 }
   \item{cum}{
   Boolean, indicating whether the input triangle is
@@ -72,7 +71,7 @@ tweedieReserve(triangle, var.power = 1,
   bootstrapping. Accepted values are: \code{0} (cycles until all the 
   values of the pseudo-triangle are >= 0), \code{1} (overwrite negative 
   values to 0.01). Default to \code{0}. Note, runtime can materially 
-  increase when semi-parametric bootstrap is used)
+  increase when set to  \code{0}, as it could struggle to find pseudo-triangles >= 0)
 }
   \item{nsim}{
   Integer, number of simulations to derive the loss reserve distribution.   
@@ -86,8 +85,7 @@ tweedieReserve(triangle, var.power = 1,
 }
   \item{p.optim}{
   Boolean, if \code{TRUE} the model estimates the MLE for the Tweedie's 
-  \code{p} parameter. Default to \code{FALSE}. Recommended to use at the 
-  beginning of the Stochastic Reserving Analysis.
+  \code{p} parameter. Default to \code{FALSE}. Recommended to use to validate the Tweedie's     \code{p} parameter.
 }
 \item{progressBar}{
   Boolean, if \code{TRUE} a progress bar will be shown in the console to 
@@ -213,13 +211,34 @@ B.A.J. 4, IV. 903-923. 1998
  See also \code{\link{summary.tweedieReserve}}.
 }
 \examples{
-\dontrun{
-res <- tweedieReserve(MW2008, rereserving=FALSE)
-res
-summary(res)
-re_res <- tweedieReserve(MW2008, rereserving=TRUE)
-re_res
-summary(re_res)
-}
+#Verrall's ODP Model is a Tweedie with p=1, log link and origin/development years as factors, thus c(1,1,0)
+res <- tweedieReserve(MW2008, var.power=1, link.power=0, 
+                           design.type=c(1,1,0), rereserving=TRUE,
+                           progressBar=TRUE)
+
+#To get directly ultimate view and respective one year view at selected percentiles
+summary(res) 
+
+#To get other interesting statistics
+res$summary
+
+#In order to validate the Tweedie p parameter, it's interesting to view the Tweedie's p parameter loglikelihood profile. RERESERVING and BOOTSTRAP can be set to 0 to speed up the process, as they aren't needed.
+res <- tweedieReserve(MW2008, p.optim=T, link.power=0, design.type=c(1,1,0), rereserving=FALSE, bootstrap=0, progressBar=TRUE)
+
+#As it's possible to see in the result plot, p=1 fits well the Tweedie model, thus the ODP is a good choice.
+
+#In order to consider an inflation parameter across the AY, it may interesting to change the regression structure to c(0,1,1) to get the same estimates of the Arithmetic Separation Method, as referred in Gigante/Sigalotti.
+res <- tweedieReserve(MW2008, var.power=1, link.power=0, 
+                           design.type=c(0,1,1), rereserving=TRUE,
+                           progressBar=TRUE)
+
+#An assessment on future fitted calendar year values (usually defined as "gamma") is recommended
+plot(res$gamma_y)
+
+#Model residuals can be get using the res.diag output
+plot(scaled.biasadj~dev,data=res$res.diag) #Development year
+plot(scaled.biasadj~cy,data=res$res.diag) #Calendar year
+plot(scaled.biasadj~origin,data=res$res.diag) #Origin year
+
 }
 \keyword{ models }
