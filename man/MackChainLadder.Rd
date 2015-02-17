@@ -39,8 +39,7 @@ tail=FALSE, tail.se=NULL, tail.sigma=NULL, mse.method="Mack")
     instead and a warning message printed.
     Similarly, if Triangle is so small that log-linear regression is being
     attempted on a vector of only one non-NA average link ratio,
-    the 'Mack' method will be used
-    instead and a warning message printed.
+    the 'Mack' method will be used instead and a warning message printed.
     }  
   \item{tail}{can be logical or a numeric value.
     If \code{tail=FALSE} no tail factor will be applied, if \code{tail=TRUE} 
@@ -68,8 +67,8 @@ tail=FALSE, tail.se=NULL, tail.sigma=NULL, mse.method="Mack")
     }  
 }
 \details{
-  Following Mack's 1999 paper let \eqn{C_{ik}} denote the cumulative loss amounts of origin period
-  (e.g. accident year) 
+  Following Mack's 1999 paper let \eqn{C_{ik}} denote the cumulative loss 
+  amounts of origin period (e.g. accident year) 
   \eqn{i=1,\ldots,m}, with losses known for development period
   (e.g. development year) \eqn{k \le n+1-i}.
   In order to forecast the amounts \eqn{C_{ik}} for
@@ -162,17 +161,15 @@ Actuarial Society} - Arlington, Virginia 1994: LXXXI 154-222}
   
 % ~Make other sections like Warning with \section{Warning }{....} ~
 }
-\seealso{ See also \code{\link{qpaid}},  
-  \code{\link{chainladder}},  
+\seealso{ See also \code{\link{qpaid}} for dealing with non-square triangles,  
+  \code{\link{chainladder}} for the underlying chain-ladder method,    
   \code{\link{summary.MackChainLadder}},  
-  \code{\link{plot.MackChainLadder}},  
-  \code{\link{residuals.MackChainLadder}}, 
-  \code{\link{MunichChainLadder}},
-  \code{\link{BootChainLadder}},
+  \code{\link{plot.MackChainLadder}} and 
+  \code{\link{residuals.MackChainLadder}} displaying results and finally 
+  \code{\link{CDR.MackChainLadder}} for the one year claims development result.
 }
 
 \examples{
-
 ## See the Taylor/Ashe example in Mack's 1993 paper
 GenIns
 plot(GenIns)
@@ -222,6 +219,10 @@ summary(m)$Totals["Mack S.E.",]
 ## Then, with the third term
 m <- MackChainLadder(RAA, mse.method = "Independence")
 summary(m)$Totals["Mack S.E.",] ## Not significantly greater
+
+## One year claims development results
+M <- MackChainLadder(MW2014, est.sigma="Mack")
+CDR(M)
 
 ## For more examples see:
 \dontrun{
