@@ -63,7 +63,12 @@ BootChainLadder(Triangle, R = 999, process.distr=c("gamma", "od.pois"))
   discussion of the bootstrap model in section 8 and appendix 3 of the
   paper by England and Verrall (2002).
 }
-\seealso{ See also   \code{\link{summary.BootChainLadder}}, \code{\link{plot.BootChainLadder}} }
+\seealso{ See also  
+\code{\link{summary.BootChainLadder}}, 
+\code{\link{plot.BootChainLadder}} displaying results and finally 
+  \code{\link{CDR.BootChainLadder}} for the one year claims development result. 
+}
+
 \examples{
 # See also the example in section 8 of England & Verrall (2002) on page 55.
 
@@ -87,7 +92,9 @@ A <- BootChainLadder(ABC, R=999, process.distr="gamma")
 A
 plot(A, log=TRUE)
 
-
+## One year claims development result
+M <- BootChainLadder(MW2014)
+CDR(B)
 
 }
 \keyword{ models }
