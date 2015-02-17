@@ -228,12 +228,22 @@ res1$summary
 ## In order to validate the Tweedie parameter 'p', it's interesting to 
 ## review its loglikelihood profile. 
 ## The parameters rereserving and bootstrap can be set to 0 to speed up 
+<<<<<<< HEAD
 ## the process, as they aren't needed. Note: an ERROR (i.e. missing value where 
 ## TRUE/FALSE needed) may be displayed, it shouldn't affect the validity of the 
 ## output plot so it could be ignored for the time being.
 res2 <- tweedieReserve(MW2008, p.optim=TRUE, link.power=0, design.type=c(1,1,0), 
                       rereserving=FALSE, bootstrap=0, progressBar=FALSE)
 res2
+=======
+## the process, as they aren't needed.
+## Note: an ERROR (i.e. missing value where TRUE/FALSE needed) may be displayed,
+## it shouldn't affect the validity of the output plot so it could be ignored 
+## for the time being.
+res2 <- tweedieReserve(MW2008, p.optim=TRUE, link.power=0, design.type=c(1,1,0), 
+                       rereserving=FALSE, bootstrap=0, progressBar=TRUE)
+
+>>>>>>> f9adf1d4e559801b02b8ba65de828fd2327e88d1
 ## As it's possible to see in the result plot, p=1 fits well the Tweedie model,
 ## thus the ODP is a good choice.
 
