@@ -228,9 +228,11 @@ res1$summary
 ## In order to validate the Tweedie parameter 'p', it's interesting to 
 ## review its loglikelihood profile. 
 ## The parameters rereserving and bootstrap can be set to 0 to speed up 
-## the process, as they aren't needed.
+## the process, as they aren't needed. Note: an ERROR (i.e. missing value where 
+## TRUE/FALSE needed) may be displayed, it shouldn't affect the validity of the 
+## output plot so it could be ignored for the time being.
 res2 <- tweedieReserve(MW2008, p.optim=TRUE, link.power=0, design.type=c(1,1,0), 
-                      rereserving=FALSE, bootstrap=0, progressBar=TRUE)
+                      rereserving=FALSE, bootstrap=0, progressBar=FALSE)
 res2
 ## As it's possible to see in the result plot, p=1 fits well the Tweedie model,
 ## thus the ODP is a good choice.
@@ -238,9 +240,7 @@ res2
 ## In order to consider an inflation parameter across the origin period, it may 
 ## be interesting to change the regression structure to c(0,1,1) to get the
 ## same estimates of the Arithmetic Separation Method, as referred in 
-## Gigante/Sigalotti. Note: an ERROR (i.e. missing value where TRUE/FALSE needed) may be displayed,
-## it shouldn't affect the validity of the output plot so it could be ignored 
-## for the time being.
+## Gigante/Sigalotti. 
 res3 <- tweedieReserve(MW2008, var.power=1, link.power=0, 
                            design.type=c(0,1,1), rereserving=TRUE,
                            progressBar=TRUE)
