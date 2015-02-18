@@ -537,13 +537,7 @@ tweedieReserve <- function(triangle, var.power=1, link.power=0,
   out<-c(out,glmFit[!(names(glmFit) %in% c("call"))])
   
   if (p.optim){
-    #library(tweedie)
-    #p <- tweedie.profile(value ~ as.factor(dev)+cy,
-    #                     p.vec = c(0, seq(1, 2, by=0.1),3),
-    #                     data = ldaFit, 
-    #                     offset = offset,
-    #                     do.plot = TRUE)
-    
+  
     if (exposure){
       glmstring<-paste(design.string,", p.vec=p.check, data=ldaFit, do.plot=TRUE, offset=offset")
     } else {
