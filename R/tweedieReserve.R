@@ -66,7 +66,7 @@ tweedieReserve <- function(triangle, var.power=1, link.power=0,
                            design.type=c(1,1,0), rereserving=FALSE,##link.power=0 is the log link ...
                            cum=TRUE, exposure=FALSE, bootstrap=1, 
                            boot.adj=0, nsim=1000, proc.err=TRUE, 
-                           p.optim=FALSE,
+                           p.optim=FALSE, p.check=c(c(0,seq(1.1,2.1,by=0.1),3)),
                            progressBar=TRUE,...){
   
   
@@ -89,7 +89,7 @@ tweedieReserve <- function(triangle, var.power=1, link.power=0,
   tr.incr <- if (cum) cum2incr(triangle) else triangle
   
   # create family                            
-  family <- statmod::tweedie(var.power=var.power, link.power=link.power)
+  family <- tweedie(var.power=var.power, link.power=link.power)
   
   # convert to long format
   lda <-  as.data.frame(tr.incr)
@@ -538,16 +538,16 @@ tweedieReserve <- function(triangle, var.power=1, link.power=0,
   
   if (p.optim){
     #library(tweedie)
-    p <- tweedie.profile(value ~ as.factor(dev)+cy,
-                         p.vec = c(seq(0, 2, by=0.1),3),
-                         data = ldaFit, 
-                         offset = offset,
-                         do.plot = TRUE)
+    #p <- tweedie.profile(value ~ as.factor(dev)+cy,
+    #                     p.vec = c(0, seq(1, 2, by=0.1),3),
+    #                     data = ldaFit, 
+    #                     offset = offset,
+    #                     do.plot = TRUE)
     
     if (exposure){
-      glmstring<-paste(design.string,", family = family, data=ldaFit,p.vec=c(seq(0, 2, by=0.1),3), do.plot=TRUE, offset=offset")
+      glmstring<-paste(design.string,", p.vec=p.check, data=ldaFit, do.plot=TRUE, offset=offset")
     } else {
-      glmstring<-paste(design.string,", family = family, data=ldaFit,p.vec=c(seq(0, 2, by=0.1),3), do.plot=TRUE")
+      glmstring<-paste(design.string,", p.vec=p.check, data=ldaFit, do.plot=TRUE")
     }
     eval(parse(text=
                  c(
