@@ -230,9 +230,9 @@ summary(res1)
 #To get other interesting statistics
 res1$summary
 
-## In order to validate the Tweedie parameter 'p', it's interesting to 
+## In order to validate the Tweedie parameter 'p', it is interesting to 
 ## review its loglikelihood profile. Please note that, given the nature 
-## of our data, it's expected that we may have some fitting issues for 
+## of our data, it is expected that we may have some fitting issues for 
 ## given 'p' parameters, thus any results/errors should be considered 
 ## only indicatively. Considering different regression structures is anyway 
 ## recommended. Different 'p' values can be defined via the p.check array 
@@ -249,26 +249,26 @@ res2 <- tweedieReserve(MW2008, p.optim=TRUE,
                         rereserving=FALSE, bootstrap=0, 
                         progressBar=FALSE)
 
-## As it's possible to see in this example, the MLE of p (or xi) results 
-## between 0 and 1, which it's not possible as Tweedie models aren't 
-## defined for 0<p<1, thus the Error message. 
+## As it is possible to see in this example, the MLE of p (or xi) results 
+## between 0 and 1, which is not possible as Tweedie models aren't 
+## defined for 0 < p < 1, thus the Error message. 
 ## But, despite this, we can conclude that overall the value p=1 could be 
 ## reasonable for this dataset, as anyway it seems to be near the MLE. 
 
 ## In order to consider an inflation parameter across the origin period, 
 ## it may be interesting to change the regression structure to c(0,1,1) 
 ## to get the same estimates of the Arithmetic Separation Method, as 
-##referred in Gigante/Sigalotti. 
+## referred in Gigante/Sigalotti. 
 res3 <- tweedieReserve(MW2008, var.power=1, link.power=0, 
                            design.type=c(0,1,1), rereserving=TRUE,
                            progressBar=TRUE)
 res3
 
-## An assessment on future fitted calendar year values 
-## (usually defined as "gamma") is recommended
+## An assessment on future fitted calendar year values (usually defined 
+## as "gamma") is recommended
 plot(res3$gamma_y)
 
-## Model residuals can be get using the res.diag output
+## Model residuals can be plotted using the res.diag output
 plot(scaled.biasadj ~ dev, data=res3$res.diag) # Development year
 plot(scaled.biasadj ~ cy, data=res3$res.diag) # Calendar year
 plot(scaled.biasadj ~ origin, data=res3$res.diag) # Origin year

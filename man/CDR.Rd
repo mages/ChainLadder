@@ -5,15 +5,14 @@
 \alias{CDR.default}
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{
-Claims development result
+One year claims development result
 }
 
 \encoding{UTF-8}
 
 \description{
 Standard deviation of the claims development result after one year 
-for the distribution-free chain-ladder model (Mack) and 
-overdispersed Bootstrap model.
+for the distribution-free chain-ladder model (Mack) and Bootstrap model.
 }
 
 \usage{
@@ -26,17 +25,17 @@ CDR(x, ...)
 %- maybe also 'usage' for other objects documented here.
 \arguments{
 
-  \item{x}{Output of either \code{\link{MackChainLadder}} or \code{\link{BootChainLadder}}}
+  \item{x}{otput of either \code{\link{MackChainLadder}} or \code{\link{BootChainLadder}}}
   \item{probs}{only applicable for \code{BootChainLadder} output}
   \item{...}{other arguments}
 }
 \details{
 Merz & Wüthrich (2008) derived analytic formulae for the mean square error
 of prediction of the claims development result for the 
-Mack Chain Ladder model after one year assuming:
+Mack chain-ladder model after one year assuming:
 \itemize{
   \item{
-    The opening reserves were set using the pure chain ladder model 
+    The opening reserves were set using the pure chain-ladder model 
     (no tail)
     }
   \item{
@@ -44,13 +43,13 @@ Mack Chain Ladder model after one year assuming:
     Mack's model
     }
   \item{
-    Reserves are set after one year using the pure chain ladder model 
+    Reserves are set after one year using the pure chain-ladder model 
     (no tail) 
     }
   }
 }
 \value{
-A \code{data.frame} with various ultimate and one-year statistics of the 
+A \code{data.frame} with various IBNR/reserves and one-year statistics of the 
 claims development result.
 }
 \references{
@@ -75,13 +74,13 @@ Markus Gesmann for \code{CDR.BootChainLadder}.
 See also \code{\link{MackChainLadder}} and \code{\link{BootChainLadder}}
 }
 \examples{
-# Example from the 2008 Merz Wuthrich paper mentioned above
+# Example from the 2008 Merz, Wuthrich paper mentioned above
 MW2008
 M <- MackChainLadder(MW2008, est.sigma="Mack")
 plot(M)
 CDR(M)
 
-# Example from the 2014 Merz Wuthrich paper mentioned above
+# Example from the 2014 Merz, Wuthrich paper mentioned above
 MW2014
 W <- MackChainLadder(MW2014, est.sigma="Mack")
 plot(W)
