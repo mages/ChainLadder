@@ -232,7 +232,8 @@ res1$summary
 ## In order to validate the Tweedie parameter 'p', it's interesting to 
 ## review its loglikelihood profile. Please note that, given the nature of our data, 
 ## it's expected that we may have some fitting issues for given 'p' parameters, 
-## thus any results/errors should be considered only indicatively. 
+## thus any results/errors should be considered only indicatively. Considering different
+## regression structures is anyway recommended.
 ## Different 'p' values can be defined via the p.check array as input of the function. 
 ## See help(tweedie.profile), p.vec parameter, for further information.
 ## Note: The parameters rereserving and bootstrap can be set to 0 to speed up 
@@ -245,7 +246,7 @@ res2 <- tweedieReserve(MW2008, p.optim=TRUE, p.check=c(0,1.1,1.2,1.3,1.4,1.5,2,3
 ## As it's possible to see in this example, the MLE of p (or xi) results between 0 and 1, which it's 
 ## not possible as Tweedie models aren't defined for 0<p<1, thus the Error message. 
 ## But, despite this, we can conclude that overall the value p=1 could be reasonable for this dataset,
-## as anyway it seems to be near the MLE.
+## as anyway it seems to be near the MLE. 
 
 ## In order to consider an inflation parameter across the origin period, it may 
 ## be interesting to change the regression structure to c(0,1,1) to get the
