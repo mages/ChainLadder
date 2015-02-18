@@ -88,7 +88,7 @@ tweedieReserve(triangle, var.power = 1,
   \code{p} parameter. Default to \code{FALSE}. Recommended to use to validate the Tweedie's     \code{p} parameter.
 }
   \item{p.check}{
-  If \code{p.optim=TRUE}, a vector of \code{p} values for consideration. The values must all be larger than one (if the response variable has exact zeros, the values must all be between one and two). Default to \code{c(c(0,seq(1.1,2.1,by=0.1),3)}. As fitting the Tweedie p-value isn't a straightforward process, please refer to \code{\link{tweedie.profile}}
+  If \code{p.optim=TRUE}, a vector of \code{p} values for consideration. The values must all be larger than one (if the response variable has exact zeros, the values must all be between one and two). Default to \code{c(0,seq(1.1,2.1,by=0.1),3)}. As fitting the Tweedie p-value isn't a straightforward process, please refer to \code{\link{tweedie.profile}}, \code{p.vec} argument.
 }
 
 \item{progressBar}{
