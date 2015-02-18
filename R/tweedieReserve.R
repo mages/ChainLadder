@@ -66,7 +66,7 @@ tweedieReserve <- function(triangle, var.power=1, link.power=0,
                            design.type=c(1,1,0), rereserving=FALSE,##link.power=0 is the log link ...
                            cum=TRUE, exposure=FALSE, bootstrap=1, 
                            boot.adj=0, nsim=1000, proc.err=TRUE, 
-                           p.optim=FALSE, p.check=c(c(0,seq(1.1,2.1,by=0.1),3)),
+                           p.optim=FALSE, p.check=c(0,seq(1.1,2.1,by=0.1),3),
                            progressBar=TRUE,...){
   
   
