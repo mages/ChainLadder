@@ -11,10 +11,15 @@ NEW FEATURES
     added already:
       - CDR.MackChainLadder which estimates the one year claims 
         development result of the Mack model. Based on a paper by 
-        Merz & Wuthrich (2008)
+        Merz & Wuthrich (2008, 2014)
       - CDR.BootChainLadder which estimates the one year claims 
         development result of the bootstrap model, using ideas by
         Giuseppe Crupi.
+
+Changes
+
+  o Source code developement move from Google Code to GitHub:
+    https://github.com/mages/ChainLadder
 
 
 Version 0.1.9 [2014-12-20]
