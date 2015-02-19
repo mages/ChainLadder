@@ -9,10 +9,10 @@ NEW FEATURES
   o New generic function CDR to estimate the one year claims development
     result. S3 methods for the Mack and bootstrap model have been 
     added already:
-      - CDR.MackChainLadder which estimates the one year claims 
+      - CDR.MackChainLadder to estimate the one year claims 
         development result of the Mack model. Based on a paper by 
         Merz & Wuthrich (2008, 2014)
-      - CDR.BootChainLadder which estimates the one year claims 
+      - CDR.BootChainLadder to estimate the one year claims 
         development result of the bootstrap model, using ideas by
         Giuseppe Crupi.
 
