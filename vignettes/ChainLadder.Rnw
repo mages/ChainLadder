@@ -28,7 +28,10 @@
 
 \SweaveOpts{engine=R, eps=FALSE, keep.source = TRUE}
 <<options, echo=FALSE>>=
-options(prompt = "R> ", digits = 4, show.signif.stars = FALSE)
+library(lattice)
+options(prompt = "R> ", digits = 4, show.signif.stars = TRUE)
+options(continue="   ")
+lattice.options(default.theme = standard.theme(color = FALSE))
 @
 
 \setlength{\parindent}{0.0in}
@@ -52,24 +55,15 @@ options(prompt = "R> ", digits = 4, show.signif.stars = FALSE)
 
 \title{Claims reserving with R:\\
   ChainLadder-\Sexpr{packageDescription("ChainLadder")[['Version']]}
-  Package Vignette\\
-  DRAFT
+  Package Vignette
 }
 \maketitle
 \begin{abstract}
 
   The \chainladder package provides various statistical methods which
   are typically used for the estimation of outstanding claims reserves
-  in general insurance.  
-  
-  The package has implementations of the Mack-, Munich-, Bootstrap, and
-  multi-variate chain-ladder methods, as well as the loss development
-  factor curve fitting methods of Dave Clark and generalised linear
-  model based reserving models. 
-
-  This document is still in a draft stage. Any pointers which will
-  help to iron out errors, clarify and make this document more helpful
-  will be much appreciated. 
+  in general insurance, including those to estimate the claims
+  development results as required under Solvency II. 
   
 \end{abstract}
 
@@ -80,43 +74,61 @@ options(prompt = "R> ", digits = 4, show.signif.stars = FALSE)
 \section{Introduction}
 
 \subsection{Claims reserving in insurance}
-Unlike other industries the insurance industry does not sell products
-as such, but promises. An insurance policy is a promise by the insurer
+The insurance industry, unlike other industries, does not sell products
+as such but promises. An insurance policy is a promise by the insurer
 to the policyholder to pay for future claims for an upfront received
 premium. 
 
-As a result insurers don't know the upfront cost of their
-service, but rely on historical data analysis and judgement to derive a
+As a result insurers don't know the upfront cost for their
+service, but rely on historical data analysis and judgement to predict a
 sustainable price for their offering. In General Insurance (or Non-Life
 Insurance, e.g. motor, property and casualty insurance) most policies
 run for a period of 12 months. However, the claims payment process 
 can take years or even decades. Therefore often not even the delivery
 date of their product is known to insurers. 
 
-In particular claims arising from casualty insurance can take a long
-time to settle. Claims can take years to materialise. A complex and
-costly example are the claims from asbestos liabilities. 
-A research report by a  working party of the  Institute of Actuaries
-has estimated that the undiscounted cost of UK mesothelioma-related
+In particular losses arising from casualty insurance can take a long
+time to settle and even when the claims are acknowledged it may take 
+time to establish the extent of the claims settlement cost. 
+Claims can take years to materialize. A complex and
+costly example are the claims from asbestos liabilities, 
+particularly those in connection with mesothelioma and lung damage 
+arising from prolonged exposure to asbestos. 
+A research report by a  working party of the Institute and Faculty of Actuaries
+estimated that the un-discounted cost of UK mesothelioma-related
 claims to the UK Insurance Market for the period 2009 to 2050 could be
-around $\pounds$10bn~\cite{Gravelsons2009}. The cost for asbestos
+around $\pounds$10bn, see \cite{Gravelsons2009}. The cost for asbestos
 related claims in the US for the worldwide insurance industry was
-estimate to be around \$120bn in 2002~\cite{Michaels2002}.  
+estimate to be around \$120bn in 2002, see \cite{Michaels2002}.  
 
-Thus, it should come to no surprise that the biggest item on the
-liability side of an insurer's balance sheet is often the provision or
+Thus, it should come as no surprise that the biggest item on the
+liabilities side of an insurer's balance sheet is often the provision or
 reserves for future claims payments. Those reserves can be broken
-down in case reserves (or out-standings claims), which are losses
-already reported to the insurance company and incurred but not
-reported (IBNR) claims.
+down in case reserves (or outstanding claims), which are losses
+already reported to the insurance company and losses that are incurred 
+but not reported (IBNR) yet.
 
-Over the years several methods have been developed to estimate
-reserves for insurance claims, see~\cite{Schmidt2011},
-\cite{EnglandVerrall2002} for an overview. Changes in regulatory
-requirements, e.g. Solvency II\footnote{See
+Historically, reserving was based on deterministic
+calculations with pen and paper, combined with expert
+judgement. Since the 1980's, with the arrival of personal computer,
+spreadsheet software became very popular for reserving. 
+Spreadsheets not only reduced the calculation time, but allowed actuaries
+to test different scenarios and the sensitivity of their
+forecasts.
+
+As the computer became more powerful, ideas of more sophisticated models 
+started to evolve. Changes in regulatory requirements, e.g. 
+Solvency II\footnote{See
   \url{http://ec.europa.eu/internal_market/insurance/solvency/index_en.htm}}
-in Europe, have fostered further research into this topic, with a
-focus on stochastic and statistical techniques.   
+in Europe, have fostered further research and promoted the use of stochastic and
+statistical techniques. In particular, for many countries extreme 
+percentiles of reserve deterioration over a fixed time period have to be 
+estimated for the purpose of capital setting.  
+
+Over the years several methods and models have been developed to
+estimate both the level and variability of reserves for insurance claims, 
+see~\cite{Schmidt2011} or
+\cite{EnglandVerrall2002} for an overview. 
 
 \section{The \chainladder package}
 
@@ -154,7 +166,7 @@ Implementing reserving methods in R has several advantages. R provides:
    reports\footnote{For an example see the project: Formatted Actuarial Vignettes in
      R, \url{http://www.favir.net/}}
 
- \item in combination with other tools such as  {\LaTeX} and Sweave
+ \item in combination with other tools such as  {\LaTeX} and Sweave or Markdown
    easy to set up automated reporting facilities
 
  \item access to academic research, which is often first implemented in R  
@@ -170,22 +182,30 @@ more detail in the respective help files and examples, see also
 
 %% The help files contain the references to the research papers on
 %% which the methods are based.  
+% 
+% The \chainladder package has implementations of the Mack-, Munich- and 
+% Boot\-strap chain-ladder methods~\cite{Mack1993}, \cite{Mack1999}, 
+% \cite{Quarg2004}, \cite{EnglandVerrall1999}. 
+% Since version 0.1.3-3 it provides general multivariate 
+% chain ladder models by Wayne Zhang~\cite{Zhang2010a}. 
+% Version 0.1.4-0 introduced new functions on loss development factor
+% (LDF) fitting methods and Cape Cod by Daniel Murphy following a paper
+% by David Clark~\cite{Clark2003}.  Version 0.1.5-0 has added loss
+% reserving models within the generalized linear model framework
+% following a paper by England and Verrall~\cite{EnglandVerrall1999}
+% implemented by Wayne Zhang.  
+% 
+% Version 0.1.6 added a new function, CLFMdelta, that finds the value of delta 
+% such that the model coefficients resulting from the 'chainladder' function with 
+% that value for argument delta are consistent with an input vector of 'selected' 
+% age-to-age factors, subject to restrictions on the 'selected' factors relative 
+% to the input 'Triangle'. See the paper A Family of Chain-Ladder Factor Models 
+% for Selected Link Ratios by Bardis, Majidi, Murphy. See the news section for 
+% further details.
 
-The \chainladder package has implementations of the Mack-, Munich- and 
-Boot\-strap chain-ladder methods~\cite{Mack1993}, \cite{Mack1999}, 
-\cite{Quarg2004}, \cite{EnglandVerrall1999}. 
-Since version 0.1.3-3 it provides general multivariate 
-chain ladder models by Wayne Zhang~\cite{Zhang2010a}. 
-Version 0.1.4-0 introduced new functions on loss development factor
-(LDF) fitting methods and Cape Cod by Daniel Murphy following a paper
-by David Clark~\cite{Clark2003}.  Version 0.1.5-0 has added loss
-reserving models within the generalized linear model framework
-following a paper by England and Verrall~\cite{EnglandVerrall1999}
-implemented by Wayne Zhang.  
-
-The package also offers utility functions to convert quickly
-tables into triangles, triangles into tables, cumulative into
-incremental and incremental into cumulative triangles. 
+% The package also offers utility functions to convert quickly
+% tables into triangles, triangles into tables, cumulative into
+% incremental and incremental into cumulative triangles. 
 
 A set of demos is shipped with the packages and the list of demos
 is available via: 
@@ -203,7 +223,7 @@ For more information and examples see the project web site:
 
 
 \subsection{Installation}
-We can install \chainladder in the usual way from CRAN, e.g.:
+You can install \chainladder in the usual way from CRAN, e.g.:
 <<eval=FALSE>>=
 install.packages('ChainLadder') 
 @
@@ -220,16 +240,24 @@ library(ChainLadder)
 cat(ChainLadder:::chainladderWelcomeMessage())
 @ 
 
+The development version of \chainladder is available via GitHub:\url{https://github.com/mages/ChainLadder}
+
 \section{Using the  \chainladder package}
 
 \subsection{Working with triangles}
 
 Historical insurance data is often presented in form of a triangle
 structure, showing the development of claims over time for each
-exposure (origin) period. An origin period could be the year the policy was sold, or
-the accident year. Of course the exposure period doesn't have to be yearly, e.g.
-quarterly or monthly origin periods are also often used. Most
-reserving methods of the \chainladder package expect triangles as
+exposure (origin) period. An origin period could be the year the
+policy was written or earned, or the loss occurrence period. Of course the
+origin period doesn't have to be yearly, e.g. 
+quarterly or monthly origin periods are also often used. 
+The development period of an origin period is also called age or lag.
+Data on the diagonals present payments in the same calendar period.
+Note, data of individual policies is usually aggregated to homogeneous 
+lines of business, division levels or perils.
+
+Most reserving methods of the \chainladder package expect triangles as
 input data sets with development periods along the columns and the
 origin  period in rows. The package comes with several example
 triangles.  The following R command will list them all: 
@@ -244,8 +272,8 @@ data from the Reinsurance Association of America (RAA):
 ## Sample triangle
 RAA
 @ 
-This matrix shows the known values of loss from each origin year as of
-the end of the origin year as as of annual evaluations thereafter. For
+This triangle shows the known values of loss from each origin year and of 
+annual evaluations thereafter. For
 example, the known values of loss originating from the 1988 exposure
 period are 1351, 6947, and 13112 as of year ends 1988, 1989, and 1990,
 respectively. The \emph{latest diagonal} -- i.e., the vector 18834,
@@ -411,7 +439,7 @@ then the following statement would copy the data into the clipboard:
 write.table(RAA, file="clipboard", sep="\t", na="")
 @ 
 Now you can paste the content into Excel. Please note that you can't
-copy lists structures from R to Excel. 
+copy lists structures from R to Excel easily. 
 
 \subsection{Chain-ladder methods}
 
@@ -666,9 +694,9 @@ plot(MCL)
 \subsection{Multivariate chain-ladder}
 
 The Mack chain ladder technique can be generalized to the multivariate
-setting where multiple reserving triangles are modeled and developed
-simultaneously. The advantage of the multivariate modeling is that
-correlations among different triangles can be modeled, which will lead
+setting where multiple reserving triangles are modelled and developed
+simultaneously. The advantage of the multivariate modelling is that
+correlations among different triangles can be modelled, which will lead
 to more accurate uncertainty assessments. Reserving methods that
 explicitly model the between-triangle contemporaneous correlations can
 be found in   \cite{Prohl;Schmidt:2005, Merz;Wuthrich:2008}. Another
@@ -759,7 +787,7 @@ triangle to reduce the output. The full summary including the estimate
 for each year can be retrieved using the usual \texttt{summary}
 function. By default, the \texttt{summary} function produces reserve
 statistics for all individual triangles, as well as for the portfolio
-that is assumed to be the sum of the two triangles. This behavior can
+that is assumed to be the sum of the two triangles. This behaviour can
 be changed by supplying the \texttt{portfolio} argument. See the
 documentation for details.  
 
@@ -889,7 +917,7 @@ W1 <- MultiChainLadder2(liab, mse.method = "Independence",
       	control = systemfit.control(methodResidCov = "Theil"))
 lapply(summary(W1)$report.summary, "[", 15, )
 @
-Similary, the iterative residual covariance estimator in
+Similarly, the iterative residual covariance estimator in
 \cite{Merz;Wuthrich:2008} can also be used, in which we use the
 control parameter  \texttt{maxiter} to determine the number of
 iterations: 
@@ -908,7 +936,7 @@ small difference being a result of the different approaches used in
 the last three periods.  
 
 Also note that in the above two examples, the argument
-\texttt{control} is not defined in the proptotype of the
+\texttt{control} is not defined in the prototype of the
 \texttt{MultiChainLadder}. It is an argument that is passed to the
 \texttt{systemfit} function through the \texttt{...} mechanism. Users
 are encouraged to explore how other options available in 
@@ -968,7 +996,7 @@ paid triangles as the portfolio estimate:
 lapply(summary(f1, portfolio = "1+3")@report.summary, "[", 11, )
 @ 
 
-\subsubsection{Joint modeling of the paid and incurred losses}
+\subsubsection{Joint modelling of the paid and incurred losses}
 
 Although the model with intercepts proved to be an improvement over
 the MCL model, it still fails to account for the structural
@@ -1040,7 +1068,7 @@ according to the \emph{Delta method}, which is essentially a linearisation
 of the problem based on a Taylor series expansion. 
 
 The two functional forms for growth curves considered in Clark's paper
-are the loglogistic function (a.k.a., the inverse power curve) and
+are the log-logistic function (a.k.a., the inverse power curve) and
 the Weibull function, both being two-parameter functions. Clark uses
 the parameters $\omega$ and $\theta$ in his paper. 
 Clark's methods work on incremental losses. His likelihood function is
@@ -1129,7 +1157,7 @@ insurance loss reserving has many compelling aspects, e.g.,
 \begin{itemize}
 \item when over-dispersed Poisson model is used, it reproduces the
   estimates from Chain Ladder; 
-\item it provides a more coherent modeling framework than the Mack
+\item it provides a more coherent modelling framework than the Mack
   method; 
 \item all the relevant established statistical theory can be directly
   applied to perform hypothesis testing and diagnostic checking; 
@@ -1226,6 +1254,26 @@ print(gg)
 % the above code doesn't seem to be stable
 %\caption{The predictive distribution of loss reserves for each year based on bootstrapping. }
 %\end{figure}
+\section{One year claims development result}
+
+The one year claims development result (CDR)
+can be estimate via the \texttt{CDR} function for objects of
+\texttt{MackChainLadder} and \texttt{BootChainLadder}.
+For example, to reproduce the results of~\cite{MW2014} we call
+<<>>=
+M <- MackChainLadder(MW2014, est.sigma="Mack")
+cdrM <- CDR(M)
+round(cdrM, 1)
+@
+Or, using the \texttt{BootChainLadder} function.
+<<>>=
+B <- BootChainLadder(MW2014)
+cdrB <- CDR(B)
+round(cdrB, 1)
+@
+
+The \texttt{tweedieReserve} function offers also the option to estimate the
+one year CDR, by setting the argument \texttt{rereserving=TRUE}.
 
 \section{Using \chainladder with RExcel and SWord}
 
@@ -1262,6 +1310,7 @@ context of actuarial work:
 \begin{itemize}
 \item  Introduction to R for Actuaries~\cite{DeSilva2006}.
   
+\item Computational Actuarial Science with R~\cite{CASwR2014}  
 \item An Actuarial Toolkit~\cite{MaynardDeSilvaHollowayGesmannLauHarnett2006}.  
   
 \item The book \emph{Modern Actuarial Risk Theory -- Using R}~\cite{KaassGoovaertsDhaeneDenuit2001}
@@ -1279,7 +1328,7 @@ context of actuarial work:
 
 Below is a list of further R packages in the context of insurance. 
 The list is by no-means complete, and the CRAN Task Views
-\href{http://cran.r-project.org/web/views/Finance.html}{\emph{'Emperical
+\href{http://cran.r-project.org/web/views/Finance.html}{\emph{'Empirical
     Finance'}} and
 \href{http://cran.r-project.org/web/views/Distributions.html}{\emph{Probability
     Distributions}} will provide links to additional resources. Please
@@ -1308,24 +1357,25 @@ items to be added to the list.
   non-censored or censored
   data~\cite{Delignette-MullerPouillotDenisDutang2011}.  
 
-\item \textbf{\texttt{mondate}}: R packackge to keep track of dates in terms of
+\item \textbf{\texttt{mondate}}: R package to keep track of dates in terms of
   months~\cite{Murphy2011}. 
 
 \item \textbf{\texttt{lifecontingencies}}: Package to perform actuarial evaluation of
   life contingencies~\cite{Spedicato2011}. 
+  
+\item \textbf{\texttt{MRMR}}: Multivariate Regression Models for 
+  Reserving~\cite{MRMR}. 
   
 \end{itemize} 
 
 
 \subsection{Presentations}
 Over the years the contributors of the \chainladder package have given
-numerous presentations and most of those are still available online:
+numerous presentations and most of those are still available on-line:
 
 \begin{itemize}
 
-\item 
-  \href{http://www.actuaryzhang.com/seminar/seminar.html}{Bayesian
-    Hierarchical Models in Property-Casualty Insurance}, Wayne Zhang, 2011
+\item Bayesian Hierarchical Models in Property-Casualty Insurance, Wayne Zhang, 2011
 
 \item
   \href{http://chainladder.googlecode.com/files/ChainLadder_Markus_20010Nov10.pdf}{ChainLadder
