@@ -7,26 +7,16 @@
   Methods and Models for Claims Reserving
 }
 \description{
-  The ChainLadder-package grew out of presentations given at the Stochastic 
+  ChainLadder provides methods and models which are typically 
+  used in insurance claims reserving.
+  
+  The package grew out of presentations given at the Stochastic 
   Reserving Seminar at the Institute of Actuaries in 2007 and 2008 and 
   followed by talks at CAS meetings in 2008 and 2010.
    
   More information is available on the project web site
   \url{http://code.google.com/p/chainladder/} 
     
-  Brian Fannin's package \code{MRMR} provides tools to analyze 
-  non-life loss reserves. It uses a set of S3 and S4 objects to store data, 
-  models and predictions.
-  
-  Another package you may want to look into is \code{lossDev}. It
-  implements a Bayesian time series loss development model, see 
-  \url{http://lossdev.r-forge.r-project.org/}
-
-  If you are also interested in loss distributions modeling, risk theory 
-  (including ruin theory), simulation of compound hierarchical models
-  and credibility theory check out the \code{actuar} package by
-  C. Dutang, V. Goulet and M. Pigeon. 
-
   For more financial packages see also CRAN Task View 'Emperical Finance'
   at \url{http://cran.r-project.org/web/views/Finance.html}.
 }
