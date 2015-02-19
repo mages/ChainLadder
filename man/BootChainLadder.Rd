@@ -93,8 +93,7 @@ A
 plot(A, log=TRUE)
 
 ## One year claims development result
-M <- BootChainLadder(MW2014)
-CDR(B)
+CDR(A)
 
 }
 \keyword{ models }
