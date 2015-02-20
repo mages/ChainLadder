@@ -7,17 +7,6 @@
 ###                                           ###
 #################################################
 
-## Current warnings from R CMD Check which need to be resolved:
-
-# stochasticReserving: no visible binding for global variable ‘glmFit’
-# stochasticReserving: no visible binding for global variable ‘glmFitB’
-# stochasticReserving: no visible binding for global variable ‘glmFit1yr’
-
-##IMPORT TWEEDIE LIBRARY
-#library(tweedie) included in NAMESPACE
-#library(statmod) included in NAMESPACE
-
-
 ####ONLY FOR DEBUG####
 ########START#########
 
@@ -263,8 +252,8 @@ tweedieReserve <- function(triangle, var.power=1, link.power=0,
     temp_y <- fit_gamma(coeffs, design.type, n=m_dev) ## NOTE: 0 included!!! so actually we have (n+1) values!!
     coeffs <- temp_y$coeffs
   }
-  n <- nrow(ldaFit) ## nÂ° of data points (n)
-  d.f <- df.residual(glmFit) ## nÂ° of data points - parameters (n-p)
+  n <- nrow(ldaFit) ## number of data points (n)
+  d.f <- df.residual(glmFit) ## number of data points - parameters (n-p)
   bias <- sqrt(n/d.f)
   
   # dispersion
