@@ -56,8 +56,7 @@ claims development result.
 \cite{Michael Merz, Mario V. Wüthrich. \emph{Modelling the claims development result for solvency purposes.} Casualty Actuarial Society E-Forum, Fall 2008.}
 
 \cite{Michael Merz, Mario V. Wüthrich. \emph{Claims Run-Off Uncertainty: The Full Picture.}  
- Swiss Finance Institute Research Paper No. 14-69. \url{http://ssrn.com/abstract=2524352. 2014}
-}
+ Swiss Finance Institute Research Paper No. 14-69. \url{http://ssrn.com/abstract=2524352}. 2014}
 }
 \author{
 Arthur Charpentier and Arnaud Lacoume with contributions from Mario Wüthrich
