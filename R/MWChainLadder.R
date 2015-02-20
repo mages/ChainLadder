@@ -87,7 +87,7 @@ CDR.MackChainLadder <- function(x,...){
   ##################################################################################################################
   ## EXACTES
   ##################################################################################################################
-  #DÈclaration des variables
+  #Declaration des variables
   facteur <- matrix(1,I,1)
   Phi_exact <- matrix(NA,I,1)
   Psi_exact <- matrix(NA,I,1)
