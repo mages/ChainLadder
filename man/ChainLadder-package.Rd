@@ -41,7 +41,7 @@
 \cite{Zhang Y. A general multivariate chain ladder model.\emph{Insurance: Mathematics and Economics}, 46, pp. 588:599, 2010.}
 
 \cite{ Zhang, Y. Likelihood-based and Bayesian Methods for Tweedie Compound Poisson Linear Mixed Models, \emph{Statistics and Computing}, forthcoming. 
-\url{http://www.actuaryzhang.com/publication/MixedTweedie.pdf}}
+}
 
 \cite{Bardis, Majidi, Murphy. A Family of Chain-Ladder Factor Models for Selected Link Ratios. \emph{Variance}. Pending. Variance 6:2, 2012, pp. 143-160. \url{http://www.variancejournal.org/issues/06-02/143.pdf}}
 
