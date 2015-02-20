@@ -1259,13 +1259,13 @@ print(gg)
 The one year claims development result (CDR)
 can be estimate via the \texttt{CDR} function for objects of
 \texttt{MackChainLadder} and \texttt{BootChainLadder}.
-For example, to reproduce the results of~\cite{MW2014} we call
+For example, to reproduce the results of~\cite{MW2014} use:
 <<>>=
 M <- MackChainLadder(MW2014, est.sigma="Mack")
 cdrM <- CDR(M)
 round(cdrM, 1)
 @
-Or, using the \texttt{BootChainLadder} function.
+Or, using the \texttt{BootChainLadder} function:
 <<>>=
 B <- BootChainLadder(MW2014)
 cdrB <- CDR(B)
