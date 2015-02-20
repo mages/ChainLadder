@@ -16,6 +16,8 @@ NEW FEATURES
         development result of the bootstrap model, using ideas by
         Giuseppe Crupi.
 
+  o New example data sets MW2008 and MW2014
+  
 Changes
 
   o Source code developement moved from Google Code to GitHub:
