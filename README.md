@@ -3,16 +3,15 @@
 ChainLadder is an R package providing methods and models which are typically 
 used in insurance claims reserving, including:
 
-- Mack chain-ladder and Munich chain-ladder and Bootstrap models
+- Mack chain-ladder, Munich chain-ladder and Bootstrap models
 - General multivariate chain ladder-models 
 - Loss development factor fitting and Cape Cod models 
 - Generalized linear models 
-- One year reserving risk functions
+- One year claims development results functions
 - Utility functions to:
-  - convert quickly tables into triangles
-  - triangles into tables 
-  - cumulative into incremental 
-  - incremental into cumulative triangles
+  - convert tables into triangles and triangles into tables 
+  - convert cumulative into incremental and incremental into cumulative triangles
+  - visualise triangles
 
 ## Installation
 
