@@ -3,7 +3,7 @@ CDR.MackChainLadder <- function(x,...){
   if(!"MackChainLadder" %in% class(Mack))
     stop("The input to CDR.MackChainLadder has to be output of MackChainLadder.")
   if(!all(Mack$alpha==1))
-    stop("The Merz & Wuthrich forumlae hold only for alpha=1.")
+    warning("The Merz & Wuthrich forumlae hold only for alpha=1.")
   
   Trian <- Mack$Triangle
   bool <- "MWpaper"
