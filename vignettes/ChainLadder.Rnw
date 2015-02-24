@@ -18,7 +18,7 @@
 \hypersetup{
   colorlinks=true,
   pdftitle={ChainLadder: Claims reserving with R},%
-  pdfauthor={Markus Gesmann, Dan Murphy, Wayne Zhang},%
+  pdfauthor={Markus Gesmann, Dan Murphy, Mario W\"{u}thrich, Wayne Zhang, Alessandro Carrato},%
 }
 
 %\VignetteIndexEntry{ChainLadder: Claims reserving with R}
@@ -48,8 +48,9 @@ lattice.options(default.theme = standard.theme(color = FALSE))
 
 \author{Markus Gesmann,
   Dan  Murphy,
-  Mario W\"{u}thrich and
-  Wayne Zhang  
+  Mario W\"{u}thrich,
+  Wayne Zhang and
+  Alessandro Carrato
 }
 
 \title{Claims reserving with R:\\
@@ -1323,17 +1324,67 @@ Model validation is one of the key activities when an insurance company goes thr
 Internal Model Approval Process with the regulator. Next we will show you some examples 
 on how you can use the arguments of the \texttt{tweedieReserve} function to
 help validating your stochastic reserving model. 
-The argument \texttt{design.type} allows you to test different regression structures. The classic ODP model uses the following structure: 
-\begin{equation}
-Y ~ as.factor(OY) + as.factor(DY),
-\end{equation}
-(i.e. \texttt{design.type=c(1,1,0)}). This allows, together with the log link, to achieve the same results of the (Volume All) Chain Ladder model, thus the same model implied assumptions. A common model shortcome is when the residuals plotted by Calendar Year start to show a pattern, which the Chain Ladder isn't capable to model. In order to overcome this, the user could be then interested to change the regression structure in order to try to strip out these patterns. For example, a \texttt{design.type=c(0,1,1)} could be considered instead, which returns the same results of the Arithmetic Separation Method.
-
-<<>>=
-B <- BootChainLadder(MW2014)
-cdrB <- CDR(B)
-round(cdrB, 1)
-@
+The argument \texttt{design.type} allows you to test different regression structures. 
+The classic ODP model uses the following structure: 
+\begin{equation*}
+Y \backsim as.factor(OY) + as.factor(DY),
+\end{equation*}
+(i.e. \texttt{design.type=c(1,1,0)}). This allows, together with the log link, 
+to achieve the same results of the (Volume All) Chain Ladder model, 
+thus the same model implied assumptions. 
+A common model shortcome is when the residuals plotted by Calendar Year start 
+to show a pattern, which the Chain Ladder isn't capable to model. 
+In order to overcome this, the user could be then interested to change the 
+regression structure in order to try to strip out these patterns. 
+For example, a regression structure like:
+\begin{equation*}
+Y \backsim as.factor(DY) + as.factor(CY),
+\end{equation*}
+i.e. \texttt{design.type=c(0,1,1)} could be considered instead, 
+which returns the same results of the Arithmetic Separation Method 
+modelling explicitly inflation parameters between consequent CY.
+Another interesting assumption is the assumed underlying distribution. 
+The ODP model assumes the following:
+\begin{equation*}
+P_{i,j} \backsim ODP(m_{i,j},\phi \cdot m_{i,j}),
+\end{equation*}
+Which is a particular case of a Tweedie distribution, 
+with \texttt{p} parameter equals to 1. Generally speaking, 
+for any random variable Y that obeys a Tweedie distribution, 
+the variance VAR(Y) relates to the mean E(Y) by the following law:
+\begin{equation*}
+VAR[Y] = a \cdot E[Y]^p,
+\end{equation*}
+where \texttt{a} and \texttt{p} are positive constants. 
+The user is able to test different \texttt{p} values through the \texttt{var.power}
+function argument. Besides, in order to validate the Tweedie's \texttt{p} parameter,
+it could be interesting to plot the likelihood profile at defined \texttt{p}
+values (through the \texttt{p.check} argument) for a given a dataset
+and a regression structure. This could be achieved setting the \texttt{p.optim=TRUE}
+argument, as follows: 
+% ### TO BE INCLUDED AS SOON AS tweedieReserve published ###
+% <<>>=
+% p_profile <- tweedieReserve(MW2008, p.optim=TRUE, 
+%   p.check=c(0,1.1,1.2,1.3,1.4,1.5,2,3),
+%   design.type=c(0,1,1), 
+%   rereserving=FALSE, 
+%   bootstrap=0, 
+%   progressBar=FALSE)
+% @
+As it is possible to see in this example, the MLE of p seems to be 
+between 0 and 1, which is not possible as Tweedie models aren't 
+defined for 0 < p < 1, thus the Error message. 
+But, despite this, we can conclude that overall a value \texttt{p=1} could be 
+reasonable for this dataset and the chosen regression function, 
+as anyway it seems to be near the MLE.  
+Other sensitivities could be run on:
+\begin{itemize}
+  \item Bootstrap type (parametric / semi-parametric), 
+  via the \texttt{bootstrap} argument
+  \item Bias adjustment (if using semi-parametric bootstrap), 
+  via the \texttt{boot.adj} argument
+\end{itemize}
+Please refer to \texttt{help(tweedieReserve)} for additional information.
 
 \section{Using \chainladder with RExcel and SWord}
 
