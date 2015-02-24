@@ -1273,7 +1273,26 @@ round(cdrB, 1)
 @
 
 The \texttt{tweedieReserve} function offers also the option to estimate the
-one year CDR, by setting the argument \texttt{rereserving=TRUE}.
+one year CDR, by setting the argument \texttt{rereserving=TRUE}. The main advantage
+of using this function is that the user can test different regression structures, with the
+one year CDR derived coherently.
+
+\section{Model Validation}
+Model validation is one of the key activities when an insurance company goes through the 
+Internal Model Approval Process with the regulator. Next we will show you some examples 
+on how you can use the arguments of the \texttt{tweedieReserve} function to
+help validating your stochastic reserving model. 
+The argument \texttt{design.type} allows you to test different regression structures. The classic ODP model uses the following structure: 
+\begin{equation}
+Y ~ as.factor(OY) + as.factor(DY),
+\end{equation}
+(i.e. \texttt{design.type=c(1,1,0)}). This allows, together with the log link, to achieve the same results of the (Volume All) Chain Ladder model, thus the same model implied assumptions. A common model shortcome is when the residuals plotted by Calendar Year start to show a pattern, which the Chain Ladder isn't capable to model. In order to overcome this, the user could be then interested to change the regression structure in order to try to strip out these patterns. For example, a \texttt{design.type=c(0,1,1)} could be considered instead, which returns the same results of the Arithmetic Separation Method.
+
+<<>>=
+B <- BootChainLadder(MW2014)
+cdrB <- CDR(B)
+round(cdrB, 1)
+@
 
 \section{Using \chainladder with RExcel and SWord}
 
