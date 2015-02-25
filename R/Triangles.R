@@ -48,7 +48,7 @@ as.triangle.matrix <- function(Triangle, origin="origin", dev="dev", value="valu
      dimnames(Triangle)[[dev]] <- 1:ncol(Triangle)
  }
 
-
+ storage.mode(Triangle) <- "double"
  return(Triangle)
 }
 

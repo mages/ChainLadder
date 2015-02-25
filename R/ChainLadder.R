@@ -131,6 +131,7 @@ checkTriangle <- function(Triangle){
     if("data.frame" %in% class(Triangle)){
         Triangle <- as.matrix(Triangle)
         Triangle <- as.triangle(Triangle)
+        storage.mode(Triangle) <- "double"
     }
 
     tri.dimnames <- dimnames(Triangle)
