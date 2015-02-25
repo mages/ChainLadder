@@ -15,6 +15,9 @@ NEW FEATURES
       - CDR.BootChainLadder to estimate the one year claims 
         development result of the bootstrap model, using ideas by
         Giuseppe Crupi.
+        
+  o BootChainLadder works now also for triangles with few development
+    periods than origin periods.
 
   o New example data sets MW2008 and MW2014
   
