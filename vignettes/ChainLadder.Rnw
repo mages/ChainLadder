@@ -18,7 +18,7 @@
 \hypersetup{
   colorlinks=true,
   pdftitle={ChainLadder: Claims reserving with R},%
-  pdfauthor={Markus Gesmann, Dan Murphy, Mario W\"{u}thrich, Wayne Zhang, Alessandro Carrato},%
+  pdfauthor={Alessandro Carrato, Markus Gesmann, Dan Murphy, Mario W\"{u}thrich, and Wayne Zhang}%
 }
 
 %\VignetteIndexEntry{ChainLadder: Claims reserving with R}
@@ -46,11 +46,11 @@ lattice.options(default.theme = standard.theme(color = FALSE))
 \begin{document}
 \SweaveOpts{concordance=TRUE}
 
-\author{Markus Gesmann,
+\author{Alessandro Carrato, 
+  Markus Gesmann,
   Dan  Murphy,
-  Mario W\"{u}thrich,
-  Wayne Zhang and
-  Alessandro Carrato
+  Mario W\"{u}thrich and
+  Wayne Zhang 
 }
 
 \title{Claims reserving with R:\\
@@ -1334,7 +1334,8 @@ thus the same model implied assumptions.
 A common model shortcoming is when the residuals plotted by calendar period start 
 to show a pattern, which chain-ladder isn't capable to model. 
 In order to overcome this, the user could be then interested to change the 
-regression structure in order to try to strip out these patterns. 
+regression structure in order to try to strip out these 
+patterns~\cite{GiganteSigalotti2005}. 
 For example, a regression structure like:
 \begin{equation*}
 Y \backsim as.factor(DY) + as.factor(CY),
@@ -1499,6 +1500,9 @@ Over the years the contributors of the \chainladder package have given
 numerous presentations and most of those are still available on-line:
 
 \begin{itemize}
+
+\item A re-reserving algorithm to derive the one-year reserve risk view,
+R in Insurance, London, Alessandro Carrato, 2013.
 
 \item Bayesian Hierarchical Models in Property-Casualty Insurance, Wayne Zhang, 2011
 
