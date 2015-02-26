@@ -58,16 +58,20 @@ as.triangle.data.frame <- function(Triangle, origin="origin", dev="dev", value="
   #      matrixTriangle <- as.matrix(Triangle)
   #      matrixTriangle <- as.triangle(matrixTriangle)
   #  }else{
-        fmla <- as.formula(paste(origin, "~", dev))
-        matrixTriangle <- acast(Triangle, fmla, fun.aggregate = sum, value.var = value, fill = as.numeric(NA))
-        names(dimnames(matrixTriangle)) <- c(origin, dev)
+  
+  fmla <- as.formula(paste(origin, "~", dev))
+  matrixTriangle <- acast(Triangle, fmla, fun.aggregate = sum, 
+                          value.var = value, fill = as.numeric(NA))
+  names(dimnames(matrixTriangle)) <- c(origin, dev)
   #      matrixTriangle <- .as.MatrixTriangle(Triangle, origin, dev, value)
   #  }
-    class(matrixTriangle) <- c("triangle", "matrix")
-    return(matrixTriangle)
+  class(matrixTriangle) <- c("triangle", "matrix")
+  return(matrixTriangle)
 }
 
 as.data.frame.triangle <- function(x, row.names=NULL, optional, lob=NULL, na.rm=FALSE,...){
+  
+  
     longTriangle <- .as.LongTriangle(x, na.rm)
     if(is.null(row.names))
         rownames(longTriangle) <- paste(longTriangle[,1], longTriangle[,2], sep="-")
@@ -129,7 +133,14 @@ print.triangle <- function(x, ...) {
     x <- Triangle
     nms <- names(dimnames(x))
     .origin <- try(as.numeric(dimnames(x)[[nms[1L]]]))
-    .dev <- try(as.numeric(dimnames(x)[[nms[2L]]]))
+    if(class(dimnames(x)[['dev']]) %in% "character"){
+      .dev <- seq(along=(dimnames(x)[['dev']]))
+      warning(paste(
+        c("Development period was a character and has been set to:\n",.dev), 
+        collapse = " "))
+    }else{
+      .dev <- try(as.numeric(dimnames(x)[[nms[2L]]]))
+    }
     if(any(is.na(c(.origin, .dev)))){
       stop(paste("The origin and dev. period columns have to be of type numeric or a character",
                  "which can be converted into numeric.\n"))
@@ -152,6 +163,6 @@ coef.ChainLadder <- function(object, ...) {
   structure(sapply(object$Models, coefficients)
   , names = head(colnames(object$Triangle), -1)
   , ...)
-  }
+}
 
 # Idea: think about a class triangles, which stores an array of triangles, e.g. for several lines of business
