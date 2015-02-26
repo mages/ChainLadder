@@ -25,6 +25,9 @@ Changes
 
   o Source code developement moved from Google Code to GitHub:
     https://github.com/mages/ChainLadder
+  
+  o as.data.frame.triangle now gives warning message when dev. period 
+    is a character  
 
 
 Version 0.1.9 [2014-12-20]
