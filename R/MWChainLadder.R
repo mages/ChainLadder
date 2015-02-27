@@ -77,6 +77,10 @@ CDR.MackChainLadder <- function(x, dev=1, ...){
     stop("The input to CDR.MackChainLadder has to be output of MackChainLadder.")
   if(!all(x$alpha==1))
     warning("The Merz & Wuthrich forumlae hold only for alpha=1.")
+  if((x$tail != FALSE))
+    stop("Tail factors are currently not been considered.")
+  
+  
   
   I0 <- nrow(x$Triangle)
   J0 <- ncol(x$Triangle)
