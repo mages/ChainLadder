@@ -1,7 +1,7 @@
 \name{ChainLadder-package}
 \alias{ChainLadder-package}
 \alias{ChainLadder}
-\encoding{latin1}
+\encoding{UTF-8}
 \docType{package}
 \title{
   Methods and Models for Claims Reserving

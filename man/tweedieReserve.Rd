@@ -3,7 +3,7 @@
 \title{
 Tweedie Stochastic Reserving Model
 }
-\encoding{latin1}
+\encoding{UTF-8}
 \description{
 This function implements loss reserving models within the generalized
 linear model framework in order to generate the full predictive 
