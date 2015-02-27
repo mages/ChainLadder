@@ -548,9 +548,11 @@ tweedieReserve <- function(triangle, var.power=1, link.power=0,
 
 print.tweedieReserve <- function(x,...){
   print(x$call)
+  cat("\n")
   if (x$bootstrap != 0) {
     if (x$rereserving) {     
       out <- x$summary[c("Latest", "IBNR", "IBNR.S.E", "CDR.S.E")]
+      names(out)[4] <- "CDR(1)S.E"
     }
     else{    
       out <- x$summary[c("Latest", "IBNR", "IBNR.S.E")]
@@ -569,37 +571,37 @@ summary.tweedieReserve <- function(object,
   res <- object
   if(res$rereserving){
     out<- list(    
-      Reserves=data.frame(
-        Ultimate_View=c(mean(res$distr.res_ult),
+      Prediction=data.frame(
+        IBNR=c(mean(res$distr.res_ult),
                         sd(res$distr.res_ult),
                         #sd(res$distr.res_ult)/mean(res$distr.res_ult),
                         quantile(res$distr.res_ult,q)
         ),
-        '1yr_View'=c(mean(res$distr.res_1yr),
+        'CDR(1)'=c(mean(res$distr.res_1yr),
                      sd(res$distr.res_1yr),
                      #sd(res$distr.res_1yr)/mean(res$distr.res_1yr),
                      quantile(res$distr.res_1yr,q)
         )
       ),
       Diagnostic=c(GLMReserve=res$GLMReserve,
-                   "mean(Ultimate View)"=mean(res$distr.res_ult),
-                   "mean(1yr View)"=mean(res$distr.res_1yr))
+                   "mean(IBNR)"=mean(res$distr.res_ult),
+                   "mean(CDR(1))"=mean(res$distr.res_1yr))
     )
-    names(out$Reserves)[2]="1yr_View"
+    names(out$Prediction)[2]="CDR(1)"
   }else{
     out<- list(    
       Reserves=data.frame(
-        Ultimate_View=c(mean(res$distr.res_ult),
+        IBNR=c(mean(res$distr.res_ult),
                         sd(res$distr.res_ult),
                         #sd(res$distr.res_ult)/mean(res$distr.res_ult),
                         quantile(res$distr.res_ult,q)
         )
       ),
       Diagnostic=c(GLMReserve=res$GLMReserve,
-                   "mean(Ultimate View)"=mean(res$distr.res_ult))
+                   "mean(IBNR)"=mean(res$distr.res_ult))
     )
   }
   
-  rownames(out$Reserves) <- c("mean", "sd", paste0(q*100, "%"))          
+  rownames(out$Prediction) <- c("mean", "sd", paste0(q*100, "%"))          
   print(out)
 }
