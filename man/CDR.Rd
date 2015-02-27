@@ -17,7 +17,7 @@ for the distribution-free chain-ladder model (Mack) and Bootstrap model.
 
 \usage{
 CDR(x, ...)
-\method{CDR}{MackChainLadder}(x, year=1, ...)
+\method{CDR}{MackChainLadder}(x, dev=1, ...)
 \method{CDR}{BootChainLadder}(x, probs=c(0.75, 0.95), ...)
 \method{CDR}{default}(x, ...)
 
@@ -26,7 +26,7 @@ CDR(x, ...)
 \arguments{
 
   \item{x}{otput of either \code{\link{MackChainLadder}} or \code{\link{BootChainLadder}}}
-  \item{year}{vector of development periods or \code{"all"}. 
+  \item{dev}{vector of development periods or \code{"all"}. 
   Currently only applicable for \code{MackChainLadder} output. 
   Defines the years for which the run off claims development result should be returned.
   }
@@ -84,7 +84,7 @@ M <- MackChainLadder(MW2008, est.sigma="Mack")
 plot(M)
 CDR(M)
 # Return all run-off result developments
-CDR(M, year="all")
+CDR(M, dev="all")
 
 # Example from the 2014 Merz, Wuthrich paper mentioned above
 MW2014

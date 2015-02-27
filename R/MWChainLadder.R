@@ -71,7 +71,7 @@ CL_MSEPs <- function(x, I0, J0, param) {
 }
 
 
-CDR.MackChainLadder <- function(x, year=1, ...){  
+CDR.MackChainLadder <- function(x, dev=1, ...){  
   # Author: Markus Gesmann
   if(!"MackChainLadder" %in% class(x))
     stop("The input to CDR.MackChainLadder has to be output of MackChainLadder.")
@@ -89,9 +89,7 @@ CDR.MackChainLadder <- function(x, year=1, ...){
     apply(x$Triangle, 2, sum, na.rm=TRUE)[-J0]
   
   CL_param <- data.frame(f, sigma2, ratio, alpha)
-  
   CL_results <- CL_MSEPs(C_ij, I0, J0, CL_param) # Calculation MSEP's 
-  
   CL_results[, 2:(J0+2)] <- CL_results[, 2:(J0+2)]^(1/2)
   
   CL_results <- data.frame(CL_results)
@@ -101,10 +99,10 @@ CDR.MackChainLadder <- function(x, year=1, ...){
   
   ###################
   ### reserves, Mack S.E. and CDR S.E.
-  if(("all" %in% year) | (max(year) > J0)){
-    years <- 1:J0
+  if(("all" %in% dev) | (max(dev) > J0)){
+    devs <- 1:J0
   }else{
-    years <- year
+    devs <- dev
   }
-  CL_results[, c(1,1+years,J0+2)] 
+  CL_results[, c(1, 1 + devs, J0 + 2)] 
 } 
