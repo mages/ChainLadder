@@ -82,11 +82,12 @@ CDR.MackChainLadder <- function(x, dev=1, ...){
   J0 <- ncol(x$Triangle)
   
   C_ij <- x$FullTriangle
-  f <- x$f[-J0]
   sigma2 <- x$sigma^2
+  ind <- seq(along=sigma2)
+  f <- x$f[ind]
   ratio <- sigma2/f^2
-  alpha <- rev(summary(x)[["ByOrigin"]][["Latest"]])[1:(J0-1)] / 
-    apply(x$Triangle, 2, sum, na.rm=TRUE)[-J0]
+  Latest <- rev(summary(x)[["ByOrigin"]][["Latest"]])[ind]
+  alpha <-  Latest / apply(x$Triangle, 2, sum, na.rm=TRUE)[ind]
   
   CL_param <- data.frame(f, sigma2, ratio, alpha)
   CL_results <- CL_MSEPs(C_ij, I0, J0, CL_param) # Calculation MSEP's 
