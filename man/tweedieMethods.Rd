@@ -30,9 +30,9 @@ It displays both the ultimate and one year risk views at given percentiles.
 % [tbd]
 %}
 \value{
-
-  \item{Ultimate_View}{Array of ultimate view reserve risk at the given percentiles.}
-  \item{1yr_View}{Array of one year view reserve risk at the given percentiles.}
+A list with two items 
+\item{Predicton}{a data.frame with ultimate view reserve risk 
+  and the one year view reserve risk at the given percentiles.}
   \item{Diagnostic}{Quick diagnostic to show the deterministic reserve vs ultimate
         view and one year view best estimate. If the model is working properly, 
         then these three value shouldn't be much different.}
