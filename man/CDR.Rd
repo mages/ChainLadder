@@ -63,9 +63,9 @@ claims development result.
 \cite{Michael Merz, Mario V. Wüthrich. \emph{Claims Run-Off Uncertainty: The Full Picture.}  
  Swiss Finance Institute Research Paper No. 14-69. \url{http://ssrn.com/abstract=2524352}. 2014}
 }
-\author{
-Arthur Charpentier and Arnaud Lacoume with contributions from Mario Wüthrich
-and Markus Gesmann for \code{CDR.MackChainLadder} and Giuseppe Crupi and 
+\author{Mario Wüthrich and Markus Gesmann 
+with contributions from Arthur Charpentier and Arnaud Lacoume 
+for \code{CDR.MackChainLadder} and Giuseppe Crupi and 
 Markus Gesmann for \code{CDR.BootChainLadder}.
 }
 %\note{
