@@ -1,213 +1,106 @@
+##########################################################################
+########  calculation of CL reserves and MSEPs
+########  ****************************
+########  CL_MSEPs[1:(I0+1), 1:(J0+2)]
+########  i=1:I0 single accident years, I0+1 aggregated accident years
+########  j=1: CL reserves
+########  j=2:J0+1 (expected future) CDR MSEPs
+########  j=J0+2 Mack MSEP
+##########################################################################
+
+CL_MSEPs <- function(x, I0, J0, param) {
+  # Author: Mario Wuthrich
+  result <- array(0, dim=c(I0+1, J0+2))       
+  res <- array(0, dim=c(I0+1, 5, J0))                                                     
+  for (i in (I0-J0+2):I0){
+    ###### reserves and CDR MSEP formulas #########
+    j <- I0-i+1
+    j1 <- 1
+    res[i,1,j1] <- x[i,J0]- x[i,j]                    # CL reserves of accident year i
+    res[i,3,j1] <- x[i,J0]^2 * param[j,3]/x[i,j]      # CDR process variance of accident year i
+    res[i,5,j1] <- param[j,3]/sum(x[(1:(I0-j)),j])  
+    if ( j < (J0-1)){                               
+      for (j2 in (j+1):(J0-1)){res[i,5,j1] <- res[i,5,j1] + param[j2,4]*param[j2,3]/sum(x[(1:(I0-j2)),j2])}
+    }            
+    res[i,4,j1] <- res[i,5,j1] * x[i,J0]^2             # CDR parameter uncertainty of accident year i                 
+    res[i,2,j1] <- res[i,3,j1] + res[i,4,j1]           # CDR MSEP of accident year i
+    for (i1 in (I0-J0+2):I0){                          # is needed later for aggregation
+      i2 <- min(i, i1)
+      res[I0+1,2,j1] <- res[I0+1,2,j1] + res[i2,5,j1] * x[i,J0] * x[i1,J0]        
+    }
+    
+    ###### expected future reserves and future CDR MSEP formulas #########
+    if ((I0-i+1)<(J0-1)) {    
+      for (j in (I0-i+2):(J0-1)){
+        j1 <- j-(I0-i+1)+1
+        res[i,1,j1] <- x[i,J0]- x[i,j]                # expected future CL reserves of accident year i
+        res[i,3,j1] <- x[i,J0]^2 * param[j,3]/x[i,j]  # expected future CDR process variance of accident year i
+        y <- 1
+        for (k in (1:(j1-1))){ y <- y *(1-param[j-(k-1),4])}
+        res[i,5,j1] <- y * param[j,3]/sum(x[(1:(I0-j)),j])
+        if ( j <(J0-1)){
+          for (j2 in (j+1):(J0-1)){
+            y <- 1
+            for (k in (1:(j1-1))){ y <- y *(1-param[j2-(k-1),4])}
+            y <- y * param[j2-(j1-1),4]
+            res[i,5,j1] <- res[i,5,j1] + y * param[j2,3]/sum(x[(1:(I0-j2)),j2])
+          }}            
+        res[i,4,j1] <- res[i,5,j1] * x[i,J0]^2         # expected future CDR parameter uncertainty of accident year i               
+        res[i,2,j1] <- res[i,3,j1]+res[i,4,j1]         # expected future CDR MSEP of accident year i
+        for (i1 in (I0-J0+2):I0){                      # is needed later for aggregation
+          i2 <- min(i, i1)
+          res[I0+1,2,j1] <- res[I0+1,2,j1] + res[i2,5,j1] * x[i,J0] * x[i1,J0]
+        }
+      }
+    }        
+  }
+  
+  for (j1  in (1:J0)){                                  # aggregation over accident years
+    res[I0+1,1,j1] <- sum(res[1:I0,1,j1])              # total reserves
+    res[I0+1,3,j1] <- sum(res[1:I0,3,j1])              # CDR process variance aggregated accident years
+    res[I0+1,4,j1] <- res[I0+1,2,j1]                   # CDR parameter uncertainty of aggregated accident years    
+    res[I0+1,2,j1] <- res[I0+1,2,j1] + res[I0+1,3,j1]  # CDR MSEP aggegated accident years
+  }
+  ######## return results: here we could also return the whole variable "res"
+  result[,1] <- res[,1,1]                                 # reserves
+  for (j in (1:J0)){                                       
+    result[,j+1] <- res[,2,j]                        # (expected future) CDR MSEP's
+    result[,J0+2] <- result[,J0+2]+res[,2,j]         # Mack MSEP
+  }
+  result                 
+}
+
+
 CDR.MackChainLadder <- function(x,...){  
-  Mack <- x
-  if(!"MackChainLadder" %in% class(Mack))
+  # Author: Markus Gesmann
+  if(!"MackChainLadder" %in% class(x))
     stop("The input to CDR.MackChainLadder has to be output of MackChainLadder.")
-  if(!all(Mack$alpha==1))
+  if(!all(x$alpha==1))
     warning("The Merz & Wuthrich forumlae hold only for alpha=1.")
   
-  Trian <- Mack$Triangle
-  # bool <- "MWpaper"
-  ##  variables
-  I <- nrow(Trian)
-  J <- ncol(Trian)
-  diag <- matrix(NA,I,1)
-  diag_inv <- matrix(NA,I,1)
-  S_I <- matrix(NA,1,J)
-  S_II <- matrix(NA,1,J)
-  Phi <- matrix(NA,I,1)
-  Psi <- matrix(NA,I,1) 
-  Delta <- matrix(NA,I,1)
-  Gamma <- matrix(NA,I,1)
-  Lambda <- matrix(NA,I,1)
-  Upsilon <- matrix(NA,I,1)
-  cov_obs <- matrix(0,I,J)
-  cov_reel <- matrix(0,I,J)
-  msep_obs <- matrix(NA,1,J+1)
-  msep_reel <- matrix(NA,1,J+1)
-  Delta[1] <- Phi[1] <- Psi[1] <- Upsilon[1] <- Lambda[1] <- 0
-    
-  #   Mack$sigma[J-1] <- sqrt(min(Mack$sigma[J-2]^4/
-  #                                 Mack$sigma[J-3]^2,min(Mack$sigma[J-2]^2,
-  #                                                       Mack$sigma[J-3]^2)))
-  #   #plot(Mack)
+  I0 <- nrow(x$Triangle)
+  J0 <- ncol(x$Triangle)
   
-  sigma <- Mack$sigma
-  f <- Mack$f
+  C_ij <- x$FullTriangle
+  f <- x$f[-J0]
+  sigma2 <- x$sigma^2
+  ratio <- sigma2/f^2
+  alpha <- rev(summary(x)[["ByOrigin"]][["Latest"]])[1:(J0-1)] / 
+    apply(x$Triangle, 2, sum, na.rm=TRUE)[-J0]
   
-  diag <- summary(Mack)[["ByOrigin"]][["Latest"]]
-  diag_inv <- rev(diag)
+  CL_param <- data.frame(f, sigma2, ratio, alpha)
   
-  #   for (i in 1:I){
-  #     # Diagonal elements
-  #     diag[i] = Trian[i,I-i+1]
-  #     # The following line looks likes
-  #     diag_inv[i] = Trian[I-i+1,i]
-  #   }
-  #   
-  #   for (j in 1:J){
-  #     S_I[j] <- sum(Trian[1:(I-j),j])
-  #     S_II[j] <- sum(Trian[1:(I-j+1),j])
-  #   }
-  #   S_I[I] <- 0
+  CL_results <- CL_MSEPs(C_ij, I0, J0, CL_param) # Calculation MSEP's 
   
-  S_II <- apply(Trian, 2, sum, na.rm=TRUE)
-  S_I <- S_II - diag_inv
+  CL_results[, 2:(J0+2)] <- CL_results[, 2:(J0+2)]^(1/2)
   
+  CL_results <- data.frame(CL_results)
+  colnames(CL_results) <- c("IBNR", paste("CDR(", c(1:J0),")S.E.", sep=""), 
+                            "Mack.S.E.")
+  rownames(CL_results) <- c(rownames(x$Triangle), "Total")
   
-  Delta[2] <- sigma[I-1]^2/(S_I[I-1]*(f[I-1])^2)
-  Phi[2] <- 0
-  Psi[2] <- sigma[I-1]^2/(diag[2]*(f[I-1])^2)
-  Upsilon[2] <- sigma[I-1]^2/(S_II[I-1]*(f[I-1])^2)
-  Lambda[2] <- diag[2]*sigma[I-1]^2/((f[I-1]^2)*S_II[I-1]*S_I[I-1])
-  
-  for (i in 3:I){
-    
-    Delta[i] <- sigma[I-i+1]^2/(S_I[I-i+1]*(f[I-i+1])^2) + sum(
-      (diag_inv[(I-i+2):(J-1)]/S_II[(I-i+2):(J-1)])^2*
-        sigma[(I-i+2):(J-1)]^2/(S_I[(I-i+2):(J-1)]*(f[(I-i+2):(J-1)])^2))        
-    
-    Phi[i] <- sum((diag_inv[(I-i+2):(J-1)]/S_II[(I-i+2):(J-1)])^2*
-                    sigma[(I-i+2):(J-1)]^2/(diag_inv[(I-i+2):(J-1)]*(f[(I-i+2):(J-1)])^2))    
-    
-    Psi[i] <- sigma[I-i+1]^2/(diag[i]*(f[I-i+1])^2)
-    
-    Upsilon[i] <- Phi[i] + sigma[I-i+1]^2/(S_II[I-i+1]*(f[I-i+1])^2)
-    
-    Lambda[i] <- diag[i]*sigma[I-i+1]^2/((f[I-i+1]^2)*S_II[I-i+1]*S_I[I-i+1]) + sum(
-      (diag_inv[(I-i+2):(J-1)]/S_II[(I-i+2):(J-1)])^2*
-        sigma[(I-i+2):(J-1)]^2/(S_I[(I-i+2):(J-1)]*(f[(I-i+2):(J-1)])^2))
-  }
-  Gamma = Phi + Psi
-  
-  #MSEP par acc. year
-  for (i in 1:I){
-    msep_obs[i] = Mack$FullTriangle[i,J]^2 * (Gamma[i] + Delta[i])
-    msep_reel[i] = Mack$FullTriangle[i,J]^2 * (Phi[i] + Delta[i])
-  }
-  
-  #Covariance
-  for (i in 2:(I-1)){ 
-    for (k in (i+1):I){
-      cov_obs[i,k] <- Mack$FullTriangle[i,J]*Mack$FullTriangle[k,J]*(Upsilon[i] + Lambda[i])
-      cov_reel[i,k] <- Mack$FullTriangle[i,J]*Mack$FullTriangle[k,J]*(Phi[i] + Lambda[i])    
-    }
-  }
-  
-  #MSEP aggregated  
-  msep_obs[I+1] = sum(msep_obs[2:I]) + 2*sum(cov_obs)
-  # Something is not quite right here
-  # It should be msep_reel = msep_ops - vari
-  # msep_reel[I+1] = sum(msep_reel[2:I]) + 2*sum(cov_obs)
-  
-  
-  
-  ##################################################################################################################
-  ## EXACTES
-  ##################################################################################################################
-  #Declaration des variables
-  #   facteur <- matrix(1,I,1)
-  #   Phi_exact <- matrix(NA,I,1)
-  #   Psi_exact <- matrix(NA,I,1)
-  #   Gamma_exact <- matrix(NA,I,1)
-  #   Upsilon_exact <- matrix(NA,I,1)
-  #   cov_obs_exact <- matrix(0,I,J)
-  #   cov_reel_exact <- matrix(0,I,J)
-  #   msep_obs_exact <- matrix(NA,1,J+1)
-  #   msep_reel_exact <- matrix(NA,1,J+1)
-  #   Phi_exact[1] <- Upsilon_exact[1]<- Gamma_exact[1] <- 0
-  #   
-  #   # i=2
-  #   Phi_exact[2] <- Psi_exact[2] <- 0
-  #   Gamma_exact[2] <- Mack$sigma[I-1]^2/(diag[I-1]*(Mack$f[I-1])^2)
-  #   Upsilon_exact[2] <- Mack$sigma[I-1]^2/(S_II[I-1]*(Mack$f[I-1])^2)
-  #   
-  #   # loop for prior
-  #   for (i in 3:I){
-  #     facteur[i] <-prod(1 + diag_inv[(I-i+2):(J-1)]*(Mack$sigma[(I-i+2):(J-1)]^2)/((S_II[(I-i+2):(J-1)]*
-  #                                                                                     Mack$f[(I-i+2):(J-1)])^2))
-  #     Phi_exact[i] <- (1 + Mack$sigma[I-i+1]^2/(diag_inv[I-i+1]*(Mack$f[I-i+1])^2))* (facteur[i]-1)    
-  #     Psi_exact[i] <- (1 + Mack$sigma[I-i+1]^2/(S_II[i]*(Mack$f[I-i+1])^2)) * Phi[i] /
-  #       (1 + Mack$sigma[I-i+1]^2/(diag_inv[I-i+1]*(Mack$f[I-i+1])^2))
-  #     Upsilon_exact[i] <- (1 + Mack$sigma[I-i+1]^2/(S_II[I-i+1]*(Mack$f[I-i+1])^2))* facteur[i]-1    
-  #     Gamma_exact[i] <- (1 + Mack$sigma[I-i+1]^2/(diag_inv[I-i+1]*(Mack$f[I-i+1])^2))* facteur[i]-1    
-  #   }
-  #   
-  #   #MSEP per accident year
-  #   for (i in 1:I){
-  #     msep_obs_exact[i] = Mack$FullTriangle[i,J]^2 * (Gamma_exact[i] + Delta[i])
-  #     msep_reel_exact[i] = Mack$FullTriangle[i,J]^2 * (Phi_exact[i] + Delta[i])
-  #   }
-  #   
-  #   #Covariance
-  #   for (i in 2:(I-1)){ 
-  #     for (k in (i+1):I){
-  #       cov_obs_exact[i,k] <- Mack$FullTriangle[i,J]*Mack$FullTriangle[k,J]*(Upsilon_exact[i] + Lambda[i])
-  #       cov_reel_exact[i,k] <- Mack$FullTriangle[i,J]*Mack$FullTriangle[k,J]*(Psi_exact[i] + Lambda[i])   
-  #     }
-  #   }
-  #   
-  #   #MSEP ag.  
-  #   msep_obs_exact[I+1] <- sum(msep_obs_exact[2:I]) + 2*sum(cov_obs_exact)
-  #   
-  #   ## Something is not quite right here  
-  #   msep_reel_exact[I+1] <- sum(msep_reel_exact[2:I]) + 2*sum(cov_obs_exact)
-  # 
-  #   
-  #   
-  ##################################################################################################################
-  ##Outputs Function 
-  ##################################################################################################################
-  msep_Mack <- array(0,c(1,I+1))
-  msep_Mack[1:I] <- Mack$Mack.S.E[,I]
-  msep_Mack[I+1] <- Mack$Total.Mack.S.E
-  #   
-  #   Vari <- array(0,c(1,I+1))
-  #   for (i in 1:I){
-  #     Vari[i] <- Mack$FullTriangle[i,J]^2 * Psi[i]
-  #   }
-  #   Vari[I+1] <- sum(Vari[1:I])
-  
-  #   # complete vision
-  #   if(bool==1){    
-  #     result <- cbind(t(msep_Mack), t(sqrt(Vari)), t(sqrt(msep_obs)), t(sqrt(msep_obs_exact)), t(sqrt(msep_reel)), t(sqrt(msep_reel_exact)))
-  #     result <- as.data.frame(result)
-  #     l <- list("Variance CDR", "MSEP Mack","MSEP obs. approx.","MSEP obs. exact", "MSEP real approx.","MSEP real exact")
-  #     names(result) <- l  
-  #    }
-  #   
-  #   #Var <- rev(Mack$Mack.ProcessRisk[row(Trian) == (J + 1 - col(Trian))])
-  #   
-  #   #si l'on souhaite uniquement l'aspect solvabilite
-  #   if(bool==0){
-  #     result <- cbind(t(msep_Mack), t(sqrt(msep_obs)), t(sqrt(msep_obs_exact)))
-  #     result <- as.data.frame(result)
-  #     l <- list("MSEP Mack","MSEP CDR approx","MSEP CDR exact")
-  #     names(result) <- l
-  #   }
-  
-  #if(bool=="MWpaper"){
-  ## Follow output of table 4 on page 562 in the 2008 MW paper 
-    reserve_Mack <- array(0,c(1,I+1))
-    reserve_Mack[1:I] <- summary(Mack)$ByOrigin$IBNR
-    reserve_Mack[I+1] <- summary(Mack)$Total[4,1]
-    
-    result <- cbind(t(reserve_Mack),
-                    #t(sqrt(Vari)), # Process
-                    #t(sqrt(msep_reel)), # Parameter 
-                    t(sqrt(msep_obs)),                   
-                    #t(sqrt(msep_obs_exact)), 
-                    #t(sqrt(msep_reel_exact)),
-                    t(msep_Mack))
-    
-    result <- as.data.frame(result)
-     names(result) <- c("IBNR",
-                        #"MSEP.CDR.Process",                         
-                        #"MSEP.CDR.Parameter",                        
-                        "CDR.S.E",
-                        "Mack.S.E")    
-  # }
-  
-  rownames(result) <- c(rownames(Trian), "Total")
-  return(result)
-  
-}
+  ###################
+  ### reserves, Mack S.E. and CDR S.E.
+  # Consider a full output in next version
+  CL_results[, c(1,2,J0+2)] 
+} 
