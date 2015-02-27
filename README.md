@@ -48,7 +48,8 @@ See the ChainLadder package [vignette](http://cran.r-project.org/web/packages/Ch
 
 To cite package 'ChainLadder' in publications use:
 
-  Markus Gesmann, Daniel Murphy, Wayne Zhang and Alessandro Carrato (2015). 
+  Markus Gesmann, Daniel Murphy, Wayne Zhang, Alessandro Carrato,
+  Giuseppe Crupi and Mario Wüthrich (2015). 
   ChainLadder: Statistical methods and models for the calculation of 
   outstanding claims reserves in general insurance. R package version 0.2.0.
   
