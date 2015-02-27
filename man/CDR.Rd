@@ -8,7 +8,7 @@
 One year claims development result
 }
 
-\encoding{UTF-8}
+\encoding{latin1}
 
 \description{
 Standard deviation of the claims development result after one year 
