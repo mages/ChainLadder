@@ -675,7 +675,9 @@ CDR.BootChainLadder <- function(x, probs=c(0.75, 0.95), ...){
                     #CDR.Process.S.E, 
                     CDR.S.E, CDR.Q)
   
-  names(res)[-c(1:3)] <- paste0("CDR ", 100*probs,"%")
+  names(res)[-c(1:2)] <- c("CDR(1)S.E",
+                           paste0("CDR(1)", 100*probs,"%"))
+  
   rownames(res) <- c(rownames(B$Triangle), "Total")
   return(res)
 }

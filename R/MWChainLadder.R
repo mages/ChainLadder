@@ -71,7 +71,7 @@ CL_MSEPs <- function(x, I0, J0, param) {
 }
 
 
-CDR.MackChainLadder <- function(x,...){  
+CDR.MackChainLadder <- function(x, year=1, ...){  
   # Author: Markus Gesmann
   if(!"MackChainLadder" %in% class(x))
     stop("The input to CDR.MackChainLadder has to be output of MackChainLadder.")
@@ -101,6 +101,10 @@ CDR.MackChainLadder <- function(x,...){
   
   ###################
   ### reserves, Mack S.E. and CDR S.E.
-  # Consider a full output in next version
-  CL_results[, c(1,2,J0+2)] 
+  if(("all" %in% year) | (max(year) > J0)){
+    years <- 1:J0
+  }else{
+    years <- year
+  }
+  CL_results[, c(1,1+years,J0+2)] 
 } 
