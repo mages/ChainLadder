@@ -3,7 +3,7 @@ Type: Package
 Title: Statistical Methods and Models for Claims Reserving in 
        General Insurance
 Version: 0.2.0
-Date: 2015-02-25
+Date: 2015-02-27
 Authors@R: c(person("Markus", "Gesmann", role = c("aut", "cre"),
              email = "markus.gesmann@googlemail.com"),
              person("Daniel", "Murphy", role = "aut", 
@@ -12,11 +12,11 @@ Authors@R: c(person("Markus", "Gesmann", role = c("aut", "cre"),
 	           email="actuary_zhang@hotmail.com"),
              person("Alessandro", "Carrato", role = "aut", 
              email="alessandro.carrato@gmail.com"),
-             person("Giuseppe", "Crupi", role="ctb"),
+             person("Giuseppe", "Crupi", role="aut"),
              person("Christophe", "Dutang", role="ctb"),
              person("Arnaud", "Lacoume", role="ctb"),               
              person("Arthur", "Charpentier", role = "ctb"),
-             person("Mario", "Wuthrich", role = "ctb")
+             person("Mario", "Wuthrich", role = "aut")
              )
 Description: Various statistical methods and models which are
     typically used for the estimation of outstanding claims reserves
