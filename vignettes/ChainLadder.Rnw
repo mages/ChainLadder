@@ -48,7 +48,7 @@ lattice.options(default.theme = standard.theme(color = FALSE))
 
 \author{Alessandro Carrato, 
   Markus Gesmann,
-  Dan  Murphy,
+  Dan  Murphy,\\
   Mario W\"{u}thrich and
   Wayne Zhang 
 }
