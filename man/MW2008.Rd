@@ -1,6 +1,6 @@
 \name{MW2008}
 \alias{MW2008}
-\encoding{UTF-8}
+\encoding{latin1}
 \docType{data}
 \title{Run-off claims triangle}
 \description{
