@@ -72,7 +72,7 @@ CL_MSEPs <- function(x, I0, J0, param) {
 
 
 CDR.MackChainLadder <- function(x, dev=1, ...){  
-  # Author: Markus Gesmann
+  # Author: Mario Wuthrich, Markus Gesmann
   if(!"MackChainLadder" %in% class(x))
     stop("The input to CDR.MackChainLadder has to be output of MackChainLadder.")
   if(!all(x$alpha==1))
