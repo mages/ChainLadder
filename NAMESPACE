@@ -1,7 +1,7 @@
 importFrom(methods, coerce, cbind2, rbind2 )
 importFrom(utils, packageDescription)
 importFrom(lattice, xyplot, barchart)
-importFrom(Hmisc, errbar, prn)
+importFrom(Hmisc, errbar, prn, all.is.numeric)
 importFrom(actuar, pllogis)
 importFrom(reshape2, acast)
 import(systemfit)
