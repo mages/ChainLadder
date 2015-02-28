@@ -1,4 +1,4 @@
-Version 0.2.0 [2015-02-27]
+Version 0.2.0 [2015-02-28]
 --------------------------
 
 NEW FEATURES
@@ -16,6 +16,9 @@ NEW FEATURES
         development result of the bootstrap model, using ideas by
         Giuseppe Crupi.
         
+  o Package vignette has new chapter on one year claims development
+    result
+  
   o BootChainLadder works now also for triangles with few development
     periods than origin periods.
 
