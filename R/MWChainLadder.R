@@ -77,11 +77,9 @@ CDR.MackChainLadder <- function(x, dev=1, ...){
     stop("The input to CDR.MackChainLadder has to be output of MackChainLadder.")
   if(!all(x$alpha==1))
     warning("The Merz & Wuthrich forumlae hold only for alpha=1.")
-  if((x$tail != FALSE))
-    stop("Tail factors are currently not been considered.")
-  
-  
-  
+  #    if((x$tail != FALSE))
+  #      stop("Tail factors are currently not been considered.")
+   
   I0 <- nrow(x$Triangle)
   J0 <- ncol(x$Triangle)
   
@@ -94,6 +92,15 @@ CDR.MackChainLadder <- function(x, dev=1, ...){
   alpha <-  Latest / apply(x$Triangle, 2, sum, na.rm=TRUE)[ind]
   
   CL_param <- data.frame(f, sigma2, ratio, alpha)
+  
+  # Check if a tail factor has been set, which means sigma tail 
+  # was either set or estimated by MackChainLadder and hence 
+  # length(ind) is greater than J0.
+  # Then set J0 to J0 + 1, so that the loop in CL_MSEPs takes 
+  # into account the tail as well.
+  if(length(ind) == J0){
+    J0 <- J0 + 1
+  }
   CL_results <- CL_MSEPs(C_ij, I0, J0, CL_param) # Calculation MSEP's 
   CL_results[, 2:(J0+2)] <- CL_results[, 2:(J0+2)]^(1/2)
   
