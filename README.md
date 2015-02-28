@@ -7,7 +7,7 @@ used in insurance claims reserving, including:
 - General multivariate chain ladder-models 
 - Loss development factor fitting and Cape Cod models 
 - Generalized linear models 
-- One year claims development results functions
+- One year claims development result functions
 - Utility functions to:
   - convert tables into triangles and triangles into tables 
   - convert cumulative into incremental and incremental into cumulative triangles

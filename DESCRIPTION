@@ -21,7 +21,7 @@ Authors@R: c(person("Markus", "Gesmann", role = c("aut", "cre"),
 Description: Various statistical methods and models which are
     typically used for the estimation of outstanding claims reserves
     in general insurance, including those to estimate the claims
-    development results as required under Solvency II.
+    development result as required under Solvency II.
 Imports:
     Matrix,
     actuar,
