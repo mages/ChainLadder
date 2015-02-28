@@ -6,7 +6,8 @@
 %% build_vignettes("~/Dropbox/chainladder")
 
 \documentclass{article}
-\usepackage[T1]{fontenc} 
+%% \usepackage[T1]{fontenc} 
+\usepackage[utf8]{inputenc}
 \usepackage{Sweave}
 \usepackage{thumbpdf}
 \usepackage{url}
