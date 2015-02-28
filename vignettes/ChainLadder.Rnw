@@ -1256,42 +1256,40 @@ print(gg)
 %\end{figure}
 \section{One year claims development result}
 
-The stochastic claims reserving  methods considered above predict the lower (unknown)
+The stochastic claims reserving  methods
+ considered above predict the lower (unknown)
 triangle and assess the uncertainty of this prediction. For instance, Mack's
-uncertainty formula quantifies the total prediction uncertainty of the chain-ladder predictor over the entire run-off of the outstanding claims. Modern solvency considerations, such as Solvency II, require a second view of claims reserving uncertainty.
-This second view is a short-term view because it requires assessment of
-the one-year change of the claims prediction when one updates the available information
-at the end of the accounting year. At time $n$ we have information
+uncertainty formula
+quantifies the total prediction uncertainty of the chain-ladder predictor over the
+entire run-off of the outstanding claims. Modern solvency considerations, such
+as Solvency II, require a second view of claims reserving uncertainty.
+This second view is a short-term view because it requires assessments of
+the one-year changes of the claims predictions when one updates the available information
+at the end of each accounting year. At time $t\ge n$ we have information
 \begin{equation*}
-{\cal D}_{n} 
-= \left\{C_{i,k};~{i+k \le n+1} \right\},
+{\cal D}_{t} 
+= \left\{C_{i,k};~{i+k \le t+1} \right\}.
 \end{equation*}
-and one year later at time $n+1$ we have information
+This motivates the following sequence of predictors for the ultimate claim $C_{i,K}$
+at times $t\ge n$ 
 \begin{equation*}
-{\cal D}_{n+1} 
-= \left\{C_{i,k};~{i+k \le n+2} \right\}.
+\widehat{C}^{(t)}_{i,K}= \mathbb{E}[C_{i,K}|{\cal D}_t].
 \end{equation*}
-This motivates the following two predictors for the ultimate claim $C_{i,K}$
-at times $n$ and $n+1$, respectively,
+The one year claims development results (CDR), see Merz-W\"uthrich \cite{MW2008,
+Merz;Wuthrich:2014}, consider the changes in these one year updates, that is, 
 \begin{equation*}
-\widehat{C}^{(n)}_{i,K}= E[C_{i,K}|{\cal D}_n]
-\qquad \text{ and } \qquad 
-\widehat{C}^{(n+1)}_{i,K}= E[C_{i,K}|{\cal D}_{n+1}].
-\end{equation*}
-The one year claims development result (CDR), see Merz-W\"uthrich~\cite{MW2008,
-Merz;Wuthrich:2014}, considers the change in this one year update
-\begin{equation*}
-{\rm CDR}_{i,n+1}
-=\widehat{C}^{(n)}_{i,K}-\widehat{C}^{(n+1)}_{i,K}.
+{\rm CDR}_{i,t+1}
+=\widehat{C}^{(t)}_{i,K}-\widehat{C}^{(t+1)}_{i,K}.
 \end{equation*}
 The tower property of conditional expectation implies that the
-CDR is on average 0, that is, $E[{\rm CDR}_{i,n+1}|{\cal D}_n]=0$
+CDRs are on average 0, that is, $\mathbb{E}[{\rm CDR}_{i,t+1}|{\cal D}_t]=0$
 and the Merz-W\"uthrich formula \cite{MW2008, Merz;Wuthrich:2014} assesses
-the uncertainty of this prediction measured
+the uncertainty of these predictions measured
 by the following conditional mean square error of prediction (MSEP)
 \begin{equation*}
-{\rm msep}_{{\rm CDR}_{i,n+1}|{\cal D}_n}(0) = \mathbb{E} \left[\left.\left({\rm CDR}_{i,n+1}-0\right)^2
-\right|{\cal D}_n \right].
+{\rm msep}_{{\rm CDR}_{i,t+1}|{\cal D}_t}(0)
+= \mathbb{E} \left[\left.\left({\rm CDR}_{i,t+1}-0\right)^2
+\right|{\cal D}_t \right].
 \end{equation*}
 The major difficulty in the evaluation of the conditional MSEP is 
 the quantification of
