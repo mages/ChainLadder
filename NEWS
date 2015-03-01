@@ -1,4 +1,4 @@
-Version 0.2.0 [2015-02-28]
+Version 0.2.0 [2015-03-01]
 --------------------------
 
 NEW FEATURES
@@ -17,7 +17,7 @@ NEW FEATURES
         Giuseppe Crupi.
         
   o Package vignette has new chapter on one year claims development
-    result
+    result. 
   
   o BootChainLadder works now also for triangles with few development
     periods than origin periods.
@@ -31,6 +31,14 @@ Changes
   
   o as.data.frame.triangle now gives warning message when dev. period 
     is a character  
+
+  o Alessandro Carrato, Giuseppe Crupi and Mario Wuthrich have been 
+    added as authors, thanks to their major contirbution to code and
+    documentation
+  
+  o Christophe Dutang, Arnaud Lacoume and Arthur Charpentier have been 
+    added as contributors, thanks to their feedback, guidance and 
+    code contirbution   
 
 
 Version 0.1.9 [2014-12-20]
