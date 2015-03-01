@@ -1320,7 +1320,9 @@ M <- MackChainLadder(MW2014, est.sigma="Mack")
 cdrM <- CDR(M)
 round(cdrM, 1)
 @
-Or, using the \texttt{BootChainLadder} function:
+
+Note, the one year claims development result can also be estimated for output
+of the \texttt{BootChainLadder} function:
 <<>>=
 B <- BootChainLadder(MW2014)
 cdrB <- CDR(B)
