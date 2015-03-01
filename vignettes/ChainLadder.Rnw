@@ -1321,14 +1321,6 @@ cdrM <- CDR(M)
 round(cdrM, 1)
 @
 
-Note, the one year claims development result can also be estimated for output
-of the \texttt{BootChainLadder} function:
-<<>>=
-B <- BootChainLadder(MW2014)
-cdrB <- CDR(B)
-round(cdrB, 1)
-@
-
 The \texttt{tweedieReserve} function offers also the option to estimate the
 one year CDR, by setting the argument \texttt{rereserving=TRUE}. The main advantage
 of using this function is that the user can test different regression structures, with the
