@@ -1,6 +1,5 @@
 ## MackChainLadder demos
-## Author: Markus Gesmann, March 2010
-
+## Author: Markus Gesmann, March 2010, 2015
 
 # See the Taylor/Ashe example in Mack's 1993 paper
 GenIns
@@ -161,3 +160,18 @@ Totals
 require(lattice)
 barchart(Latest + IBNR ~ factor(origin) | lob, stack=TRUE, data=ByOrigin,
         scale="free", auto.key=TRUE, as.table=TRUE, xlab="origin")
+
+## One year claims development result
+# Example from the 2008 Merz & Wuthrich paper 
+MW2008
+M <- MackChainLadder(MW2008, est.sigma="Mack")
+plot(M)
+CDR(M)
+# Return all run-off result developments
+CDR(M, dev="all")
+
+# Example from the 2014 Merz & Wuthrich paper
+MW2014
+W <- MackChainLadder(MW2014, est.sigma="Mack")
+plot(W)
+CDR(W)

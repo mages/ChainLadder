@@ -4,7 +4,6 @@
 ## demo(DatabaseExamples)
 ## demo(MSOffice)
 
-
 ## Example triangle
 RAA
 plot(RAA)
@@ -14,11 +13,16 @@ MCL
 plot(MCL)
 # plot developments by origin period
 plot(MCL, lattice=TRUE)
+# one year claims development result
+CDR(MCL)
 
 # BootChainLadder
 B <- BootChainLadder(RAA, R=999, process.distr="gamma")
 B
 plot(B)
+# one year claims development result
+CDR(B)
+
 # fit a log-normal distribution
 library(MASS)
 # fit a log-normal distribution
@@ -34,6 +38,7 @@ MCLincurred
 MCL <- MunichChainLadder(MCLpaid, MCLincurred, est.sigmaP="Mack", est.sigmaI="Mack")
 MCL
 plot(MCL)
+
 
 # Working with triangles
 # RAA is a matrix with additional class attribute 'triangle'
