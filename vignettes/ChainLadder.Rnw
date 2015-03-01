@@ -131,6 +131,13 @@ estimate both the level and variability of reserves for insurance claims,
 see~\cite{Schmidt2011} or
 \cite{EnglandVerrall2002} for an overview. 
 
+
+In practice the Mack chain-ladder and bootstrap chain-ladder models are used
+by many actuaries along with stress testing / scenario analysis and expert 
+judgement to estimate ranges of reasonable outcomes, see the surveys of UK 
+actuaries in 2002,~\cite{ClaimsReservingWorkingParty:2002}, and
+across the Lloyd's market in 2012,~\cite{JamesOrr:2012}. 
+
 \section{The \chainladder package}
 
 \subsection{Motivation}
@@ -154,9 +161,8 @@ Implementing reserving methods in R has several advantages. R provides:
  \item many interfaces to data bases and other applications, such as MS
    Excel
   
- \item an established framework for documentation and testing 
-
- \item workflows with version control systems
+ \item an established framework for End User Computing, including 
+  documentation, testing and workflows with version control systems
 
  \item code written in plain text files, allowing effective knowledge
    transfer 
@@ -241,7 +247,7 @@ library(ChainLadder)
 cat(ChainLadder:::chainladderWelcomeMessage())
 @ 
 
-The development version of \chainladder is available via GitHub:\url{https://github.com/mages/ChainLadder}
+% The development version of \chainladder is available via GitHub:\url{https://github.com/mages/ChainLadder}
 
 \section{Using the  \chainladder package}
 
@@ -362,18 +368,22 @@ In most cases you want to analyse your own data, usually stored in
 data bases. R makes it easy to access data using SQL statements,
 e.g. via an ODBC connection\footnote{See the
   \href{http://cran.r-project.org/package=RODBC}{\texttt{RODBC}}
-  package} and the \chainladder packages includes a demo to showcase
+  and \href{http://cran.r-project.org/package=DBI}{\texttt{DBI}}
+  packages}, for more details see~\cite{Rdata}. 
+The \chainladder packages includes a demo to showcase
 how data can be imported from a MS Access data base, see: 
 <<eval=FALSE>>=
 demo(DatabaseExamples)
 @ 
-For more details see~\cite{Rdata}.
 
 In this section we use data stored in a CSV-file\footnote{Please
-  ensure that your CSV-file is free from formatting, e.g. characters to
-  separate units of thousands, as those columns will be read as
-  characters or factors rather than numerical values.} to demonstrate some
+ensure that your CSV-file is free from formatting, e.g. characters to
+separate units of thousands, as those columns will be read as
+characters or factors rather than numerical values.} to demonstrate some
 typical operations you will want to carry out with data stored in data bases.
+CSV stands for comma separted values, stored in a text file.
+Note many European countries use a comma as decimal point and a semicolon as 
+field separator, see also the help file to \texttt{read.csv2}. 
 In most cases your triangles will be stored in tables and not in a
 classical triangle shape. The \chainladder package contains a
 CSV-file with sample data in a long table format. We read the
@@ -442,14 +452,14 @@ write.table(RAA, file="clipboard", sep="\t", na="")
 Now you can paste the content into Excel. Please note that you can't
 copy lists structures from R to Excel easily. 
 
-\subsection{Chain-ladder methods}
+\section{Chain-ladder methods}
 
 The classical chain-ladder is a  deterministic algorithm 
 to forecast claims based on historical data. It assumes that the
 proportional developments of claims from one development period to the
 next are the same for all origin years.
 
-\subsubsection{Basic idea}
+\subsection{Basic idea}
 Most commonly as a first step, the age-to-age link ratios are
 calculated as the volume weighted average development ratios of a
 cumulative loss development triangle from one development period to
@@ -562,7 +572,7 @@ lmCL <- function(i, Triangle){
 } 
 sapply(lapply(c(1:(n-1)), lmCL, RAA), coef)
 @ 
-\subsubsection{Mack chain-ladder}
+\subsection{Mack chain-ladder}
 Thomas Mack published in 1993 ~\cite{Mack_distributionfree1993} a
 method which estimates the standard errors of the 
 chain-ladder forecast without assuming a distribution under three 
@@ -628,7 +638,29 @@ plot(mack, lattice=TRUE)
 @ 
 \end{center}
 
-\subsubsection{Bootstrap chain-ladder}
+
+\subsection{Munich chain-ladder}
+ Munich chain-ladder is a reserving method that reduces the gap between IBNR 
+ projections based on paid losses and IBNR projections based on incurred 
+ losses. The Munich chain-ladder method uses correlations between
+ paid and incurred losses of the historical data into the projection
+ for the future.~\cite{Quarg2004}.
+  
+<<fig=TRUE, width = 5, height = 4>>=
+MCLpaid
+MCLincurred
+op <- par(mfrow=c(1,2))
+plot(MCLpaid)
+plot(MCLincurred)
+par(op)
+
+# Following the example in Quarg's (2004) paper:
+MCL <- MunichChainLadder(MCLpaid, MCLincurred, est.sigmaP=0.1, est.sigmaI=0.1)
+MCL
+plot(MCL)
+@ 
+
+\subsection{Bootstrap chain-ladder}
 
  The \texttt{BootChainLadder} function uses a two-stage
  bootstrapping/simulation approach following the paper by England and
@@ -671,24 +703,6 @@ fit <- fitdistr(B$IBNR.Totals[B$IBNR.Totals>0], "lognormal")
 fit
 curve(plnorm(x,fit$estimate["meanlog"], fit$estimate["sdlog"]),
       col="red", add=TRUE)  
-@ 
-
-\subsubsection{Munich chain-ladder}
- The Mack-chain-ladder model forecasts future claims developments
- based on a historical cumulative claims development triangle and estimates
- the standard error around those~\cite{Quarg2004}.
-<<fig=TRUE, width = 5, height = 4>>=
-MCLpaid
-MCLincurred
-op <- par(mfrow=c(1,2))
-plot(MCLpaid)
-plot(MCLincurred)
-par(op)
-
-# Following the example in Quarg's (2004) paper:
-MCL <- MunichChainLadder(MCLpaid, MCLincurred, est.sigmaP=0.1, est.sigmaI=0.1)
-MCL
-plot(MCL)
 @ 
 
 
@@ -743,7 +757,7 @@ triangles to the \texttt{MultiChainLadder} function will be converted
 to \texttt{"triangles"} internally. We then present loss reserving
 methods based on the MCL and GMCL models in turn. 
 
-\subsubsection{The \texttt{"triangles"} class}
+\subsection{The \texttt{"triangles"} class}
 Consider the two liability loss triangles from
 \cite{Merz;Wuthrich:2008}. It comes as a list of two matrices : 
 <<>>=
@@ -769,7 +783,7 @@ The following combines two columns of the triangles to form a new matrix:
 cbind2(liab2[1:3, 12])
 @
 
-\subsubsection{Separate chain ladder ignoring correlations}
+\subsection{Separate chain ladder ignoring correlations}
 
 The form of regression models used in estimating the development
 parameters is controlled by the \texttt{fit.method} argument. If we
@@ -815,7 +829,7 @@ even though only one triangle is used.
     mse.method = "Independence"))
 @
 
-\subsubsection{Multivariate chain ladder using seemingly unrelated regressions}
+\subsection{Multivariate chain ladder using seemingly unrelated regressions}
 
 To allow correlations to be incorporated, we employ the seemingly
 unrelated regressions (see the package \texttt{systemfit}) that
@@ -873,7 +887,7 @@ documentation for possible values of these two arguments.
 
 
 
-\subsubsection{Other residual covariance estimation methods}
+\subsection{Other residual covariance estimation methods}
 Internally, the \texttt{MultiChainLadder} calls the \texttt{systemfit}
 function to fit the regression models period by period. When SUR
 models are specified, there are several ways to estimate the residual
@@ -943,7 +957,7 @@ Also note that in the above two examples, the argument
 are encouraged to explore how other options available in 
 \texttt{systemfit} can be applied.  
 
-\subsubsection{Model with intercepts}
+\subsection{Model with intercepts}
 
 Consider the \texttt{auto} triangles from \cite{Zhang2010a}. It
 includes three automobile insurance triangles: personal auto paid,
@@ -997,7 +1011,7 @@ paid triangles as the portfolio estimate:
 lapply(summary(f1, portfolio = "1+3")@report.summary, "[", 11, )
 @ 
 
-\subsubsection{Joint modelling of the paid and incurred losses}
+\subsection{Joint modelling of the paid and incurred losses}
 
 Although the model with intercepts proved to be an improvement over
 the MCL model, it still fails to account for the structural
@@ -1035,7 +1049,7 @@ r2 <- c(r2, summary(M2)[[2]][2, 3])
 print(do.call(cbind, c(r1, list(MuCl = r2))) * 100, digits = 4)
 @
 
-\subsection{Clark's methods}
+\section{Clark's methods}
 
 The \chainladder package contains functionality to carry out the
 methods described in the paper \footnote{ This
@@ -1077,7 +1091,7 @@ based on the assumption that incremental losses follow an
 over-dispersed Poisson (ODP) process. 
 
 
-\subsubsection{Clark's LDF method}
+\subsection{Clark's LDF method}
 Consider again the RAA triangle. Accepting all defaults, the Clark LDF
 Method would estimate total ultimate losses of 272,009 and a reserve
 (FutureValue) of 111,022, or almost twice the value based on the
@@ -1123,7 +1137,7 @@ assumption of normally distributed standardized residuals\footnote{As
   an exercise, the reader can confirm that the normal distribution
   assumption is rejected at the 5\% level with the log-logistic curve.} . 
 
-\subsubsection{Clark's Cap Cod method}
+\subsection{Clark's Cap Cod method}
 
 The RAA data set, widely researched in the literature, has no premium
 associated with it traditionally. Let's assume a constant earned
@@ -1150,7 +1164,7 @@ plot(ClarkCapeCod(RAA, Premium = 40000, G = "weibull"))
 @ 
 \end{figure}
 
-\subsection{Generalised linear model methods}
+\section{Generalised linear model methods}
 
 Recent years have also seen growing interest in using generalised
 linear models [GLM] for insurance loss reserving. The use of GLM in
@@ -1318,7 +1332,7 @@ one year CDR, by setting the argument \texttt{rereserving=TRUE}. The main advant
 of using this function is that the user can test different regression structures, with the
 one year CDR derived coherently.
 
-\section{Model Validation with \texttt{tweedieReserve}}
+\subsection{Model Validation with \texttt{tweedieReserve}}
 Model validation is one of the key activities when an insurance company goes through the 
 Internal Model Approval Process with the regulator. 
 This section gives some examples how the arguments of the \texttt{tweedieReserve} function can be used to validate a stochastic reserving model. 
@@ -1436,11 +1450,10 @@ context of actuarial work:
 \item  Introduction to R for Actuaries~\cite{DeSilva2006}.
   
 \item Computational Actuarial Science with R~\cite{CASwR2014}  
-\item An Actuarial Toolkit~\cite{MaynardDeSilvaHollowayGesmannLauHarnett2006}.  
-  
-\item The book \emph{Modern Actuarial Risk Theory -- Using R}~\cite{KaassGoovaertsDhaeneDenuit2001}
 
-\item Actuar package vignettes: \url{http://cran.r-project.org/web/packages/actuar/index.html}
+\item Modern Actuarial Risk Theory -- Using R~\cite{KaassGoovaertsDhaeneDenuit2001}
+
+\item An Actuarial Toolkit~\cite{MaynardDeSilvaHollowayGesmannLauHarnett2006}.  
 
 \item
   Mailing list
