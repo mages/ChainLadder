@@ -1,6 +1,6 @@
 \name{MackChainLadder}
 \alias{MackChainLadder}
-
+\encoding{UTF-8}
 \title{ Mack-Chain-Ladder Model }
 \description{
   The Mack-chain-ladder model forecasts future claims developments
@@ -141,7 +141,7 @@ tail=FALSE, tail.se=NULL, tail.sigma=NULL, mse.method="Mack")
 Factors. \emph{Proceedings of the Casualty Actuarial Society Casualty
 Actuarial Society} - Arlington, Virginia 1994: LXXXI 154-222}
 
-\cite{Buchwalder, Buhlmann, Merz, and Wuthrich.
+\cite{Buchwalder, Bühlmann, Merz, and Wüthrich.
   The Mean Square Error of Prediction in the Chain Ladder Reserving Method
   (Mack and Murphy Revisited).
   \emph{Astin Bulletin} Vol. 36. 2006. pp.521:542
