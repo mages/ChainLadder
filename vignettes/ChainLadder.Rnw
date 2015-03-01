@@ -1310,10 +1310,14 @@ The major difficulty in the evaluation of the conditional MSEP is
 the quantification of
 parameter estimation uncertainty.
 
-
+\subsection{CDR functions}
 The one year claims development result (CDR)
-can be estimate via the \texttt{CDR} function for objects of
+can be estimate via the generic \texttt{CDR} function for objects of
 \texttt{MackChainLadder} and \texttt{BootChainLadder}.
+
+Further, the \texttt{tweedieReserve} function offers also the option to 
+estimate the one year CDR, by setting the argument \texttt{rereserving=TRUE}. 
+
 For example, to reproduce the results of~\cite{Merz;Wuthrich:2014} use:
 <<>>=
 M <- MackChainLadder(MW2014, est.sigma="Mack")
@@ -1321,12 +1325,9 @@ cdrM <- CDR(M)
 round(cdrM, 1)
 @
 
-The \texttt{tweedieReserve} function offers also the option to estimate the
-one year CDR, by setting the argument \texttt{rereserving=TRUE}. The main advantage
-of using this function is that the user can test different regression structures, with the
-one year CDR derived coherently.
+See the help files to \texttt{CDR} and \texttt{tweedieReserve} for more details.
 
-\subsection{Model Validation with \texttt{tweedieReserve}}
+\section{Model Validation with \texttt{tweedieReserve}}
 Model validation is one of the key activities when an insurance company goes through the 
 Internal Model Approval Process with the regulator. 
 This section gives some examples how the arguments of the \texttt{tweedieReserve} function can be used to validate a stochastic reserving model. 
