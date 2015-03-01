@@ -68,9 +68,9 @@ with contributions from Arthur Charpentier and Arnaud Lacoume
 for \code{CDR.MackChainLadder} and Giuseppe Crupi and 
 Markus Gesmann for \code{CDR.BootChainLadder}.
 }
-%\note{
-%%  ~~further notes~~
-%}
+\note{
+Tail factors are currently not supported.
+}
 
 %% ~Make other sections like Warning with \section{Warning }{....} ~
 
