@@ -381,7 +381,7 @@ ensure that your CSV-file is free from formatting, e.g. characters to
 separate units of thousands, as those columns will be read as
 characters or factors rather than numerical values.} to demonstrate some
 typical operations you will want to carry out with data stored in data bases.
-CSV stands for comma separted values, stored in a text file.
+CSV stands for comma separated values, stored in a text file.
 Note many European countries use a comma as decimal point and a semicolon as 
 field separator, see also the help file to \texttt{read.csv2}. 
 In most cases your triangles will be stored in tables and not in a
