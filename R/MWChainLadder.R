@@ -95,10 +95,10 @@ CDR.MackChainLadder <- function(x, dev=1, ...){
   
   # Check if a tail factor has been set, which means sigma tail 
   # was either set or estimated by MackChainLadder and hence 
-  # length(sigma2) is equal to J0.
+  # nrow(CL_param) is equal to J0.
   # Then set J0 to J0 + 1, so that the loop in CL_MSEPs takes 
   # into account the tail as well.
-  if(length(sigma2) == J0){
+  if(nrow(CL_param) == J0){
     J0 <- J0 + 1
     warning(paste0("The Merz-Wuthrich formula will be used to take into ",
                    "account the tail factor.\n",
