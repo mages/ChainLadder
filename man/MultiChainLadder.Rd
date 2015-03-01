@@ -1,7 +1,7 @@
 \name{MultiChainLadder}
 \alias{MultiChainLadder}
 \alias{MultiChainLadder2}
-
+\encoding{UTF-8}
 \title{ Multivariate Chain Ladder Models }
 \description{
   The function \code{MultiChainLadder} implements multivariate methods to  forecast insurance loss payments based on several cumulative claims development triangles. These methods are multivariate extensions of the chain ladder technique, which develop several correlated triangles simultaneously in a way that both contemporaneous correlations and structural relationships can be accounted for. The estimated conditional Mean Square Errors (MSE) are also produced. 
@@ -85,7 +85,7 @@ Also, we recommend the use of \code{MultiChainLadder2} over \code{MultiChainLadd
   \item{int}{intercept indicators}
 }
 \references{ 
-\cite{Buchwalder M, Buhlmann H, Merz M, Wuthrich M.V (2006). The mean square error of prediction in the chain ladder reserving method (Mack and Murphy revisited), \emph{ASTIN Bulletin}, 36(2), 521-542.}
+\cite{Buchwalder M, Bühlmann H, Merz M, Wüthrich M.V (2006). The mean square error of prediction in the chain ladder reserving method (Mack and Murphy revisited), \emph{ASTIN Bulletin}, 36(2), 521-542.}
 
 \cite{Prohl C, Schmidt K.D (2005). Multivariate chain-ladder, \emph{Dresdner Schriften zur Versicherungsmathematik}.}
 
@@ -93,7 +93,7 @@ Also, we recommend the use of \code{MultiChainLadder2} over \code{MultiChainLadd
 
 \cite{ Mack T (1999). The standard error of chain ladder reserve estimates: recursive calculation and inclusion of a tail factor, \emph{ASTIN Bulletin}, 29, No.2, 361-366.}
 
-\cite{ Merz M, Wuthrich M (2008). Prediction error of the multivariate chain ladder reserving method, \emph{North American Actuarial Journal}, 12, No.2, 175-197.}
+\cite{ Merz M, Wüthrich M (2008). Prediction error of the multivariate chain ladder reserving method, \emph{North American Actuarial Journal}, 12, No.2, 175-197.}
 
 \cite{Zhang Y (2010). A general multivariate chain ladder model.\emph{Insurance: Mathematics and Economics}, 46, pp. 588-599.}
 
