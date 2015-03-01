@@ -10,16 +10,16 @@ NEW FEATURES
     result. S3 methods for the Mack and bootstrap model have been 
     added already:
       - CDR.MackChainLadder to estimate the one year claims 
-        development result of the Mack model. Based on a paper by 
-        Merz & Wuthrich (2008, 2014)
+        development result of the Mack model without tail factor. 
+        Based on a paper by Merz & Wuthrich (2008, 2014)
       - CDR.BootChainLadder to estimate the one year claims 
-        development result of the bootstrap model, using ideas by
-        Giuseppe Crupi.
+        development result of the bootstrap model, using ideas and code 
+        by Giuseppe Crupi.
         
-  o Package vignette has new chapter on one year claims development
-    result. 
+  o Package vignette has new chapter 'One Year Claims Development
+    Result'. 
   
-  o BootChainLadder works now also for triangles with few development
+  o BootChainLadder works now also for triangles with fewer development
     periods than origin periods.
 
   o New example data sets MW2008 and MW2014
@@ -38,7 +38,7 @@ Changes
   
   o Christophe Dutang, Arnaud Lacoume and Arthur Charpentier have been 
     added as contributors, thanks to their feedback, guidance and 
-    code contirbution   
+    code contribution   
 
 
 Version 0.1.9 [2014-12-20]
