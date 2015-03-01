@@ -26,14 +26,14 @@ NEW FEATURES
   
 Changes
 
-  o Source code developement moved from Google Code to GitHub:
+  o Source code development moved from Google Code to GitHub:
     https://github.com/mages/ChainLadder
   
   o as.data.frame.triangle now gives warning message when dev. period 
     is a character  
 
   o Alessandro Carrato, Giuseppe Crupi and Mario Wuthrich have been 
-    added as authors, thanks to their major contirbution to code and
+    added as authors, thanks to their major contribution to code and
     documentation
   
   o Christophe Dutang, Arnaud Lacoume and Arthur Charpentier have been 
@@ -294,8 +294,8 @@ NEW FEATURES
 	  paper (i.e., without the sigma^2 value)
 	- dR = the gradient of the reserves function evaluated at the
 	  optimal parameter values
-	- value = value of the loglikelihood function at the solution
-	- counts = number of evaluations of the loglikelihood and its
+	- value = value of the log-likelihood function at the solution
+	- counts = number of evaluations of the log likelihood and its
 	  derivative before convergence
 
   o Fine-tuning of maximum likelihood numerical algorithm's control
@@ -332,7 +332,7 @@ NEW FEATURES
 
 	- Includes LDF and CapeCod methods (functions 'ClarkLDF' and
           'ClarkCapeCod', respectively)
-	- Programmed to handle loglogistic and weibull growth functions
+	- Programmed to handle log-logistic and weibull growth functions
 	- Printing an object returned by the function results in a
           table similar to that on p. 65 of the paper
 	- Plotting such an object results in four residual plots,
@@ -500,7 +500,7 @@ USER-VISIBLE CHANGES
   o 'MackChainLadder' gives two more elements back: 'Mack.ProcessRisk'
     and 'Mack.ParameterRisk' for the process and parameter risk error
     (Thanks to Daniel Murphy)
-  o In the summary output of'MackChainLadder' the label 'CV'  changed
+  o In the summary output of 'MackChainLadder' the label 'CV'  changed
     to 'CV(IBNR)' to clarify that we show the coefficient of variance
     of the IBNR.
   o 'MackChainLadder' provides new example plots for CV(IBNR)
