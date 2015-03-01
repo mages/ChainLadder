@@ -3,26 +3,27 @@ Version 0.2.0 [2015-03-01]
 
 NEW FEATURES
 
-  o New function tweedieReserve to estimate reserves in a GLM framework,
-    including the one year claims development result.
-
   o New generic function CDR to estimate the one year claims development
     result. S3 methods for the Mack and bootstrap model have been 
     added already:
       - CDR.MackChainLadder to estimate the one year claims 
-        development result of the Mack model without tail factor. 
-        Based on a paper by Merz & Wuthrich (2008, 2014)
+        development result of the Mack model without tail factor, 
+        based papers by Merz & Wuthrich (2008, 2014)
       - CDR.BootChainLadder to estimate the one year claims 
         development result of the bootstrap model, using ideas and code 
         by Giuseppe Crupi.
         
+  o New function tweedieReserve to estimate reserves in a GLM framework,
+    including the one year claims development result.
+
   o Package vignette has new chapter 'One Year Claims Development
     Result'. 
   
   o BootChainLadder works now also for triangles with fewer development
     periods than origin periods.
 
-  o New example data sets MW2008 and MW2014
+  o New example data MW2008 and MW2014 form the Merz & Wuthrich (2008, 2014) 
+    papers
   
 Changes
 
