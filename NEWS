@@ -8,7 +8,7 @@ NEW FEATURES
     added already:
       - CDR.MackChainLadder to estimate the one year claims 
         development result of the Mack model without tail factor, 
-        based papers by Merz & Wuthrich (2008, 2014)
+        based on papers by Merz & Wuthrich (2008, 2014)
       - CDR.BootChainLadder to estimate the one year claims 
         development result of the bootstrap model, using ideas and code 
         by Giuseppe Crupi.
