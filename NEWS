@@ -18,9 +18,6 @@ NEW FEATURES
 
   o Package vignette has new chapter 'One Year Claims Development
     Result'. 
-  
-  o BootChainLadder works now also for triangles with fewer development
-    periods than origin periods.
 
   o New example data MW2008 and MW2014 form the Merz & Wuthrich (2008, 2014) 
     papers

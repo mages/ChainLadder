@@ -12,7 +12,7 @@ BootChainLadder <- function(Triangle, R = 999, process.distr=c("gamma", "od.pois
   weights <- 1/Triangle
   
   triangle <- Triangle
-  if(nrow(triangle) < ncol(triangle))
+  if(nrow(triangle) != ncol(triangle))
     stop("Number of origin periods has to be equal or greater then the number of development periods.\n")
   
   triangle <- checkTriangle(Triangle)
