@@ -39,7 +39,7 @@ Depends:
 Suggests:
     RUnit
 License: GPL (>= 2)
-URL: http://code.google.com/p/chainladder/
+URL: https://github.com/mages/ChainLadder
 BugReports: https://github.com/mages/ChainLadder/issues 
 LazyLoad: yes
 LazyData: yes
