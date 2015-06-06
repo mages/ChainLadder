@@ -1,21 +1,33 @@
 #' PaidIncurredChain
 #'
-#' This is the Description section
+#' This is the Description section, edit.
 #'
-#' This is the Details section
+#' This is the Details section, edit.
 #'
 #' @param triangleP Please explain
 #' @param triangleI Please explain
-#' @return a numeric vector of random deviates of length \code{100 * x}
-#' @author your name
+#' @return explain what the function return
+#' @details Perhaps some details here
+#' @note Anything note worthy?
+#' @author your name. Who to blame and praise
 #' @seealso \code{\link{MackChainLadder}}
 #' @examples
 #' PaidIncurredChain(USAApaid, USAAincurred)
 #' @export
 PaidIncurredChain <- function(triangleP,triangleI) {
-  # Paid Incurred Chain method (Merz, Wüthrich (2010)) in the special case
+  # Paid Incurred Chain method (Merz, Wuthrich (2010)) in the special case
   # of non-informative priors (no prior parameter information).
 
+  # To do list:
+  # Consider a better function name, in particular list model assumption
+  # Document the function and data sets man/USAA.Rd better
+  # Conisder a better output format, e.g. full triangle
+  # How does the user know if this model is applicable to the data at hand?
+  # Can the for be loops replaced with apply statments / matrix algebra?
+  # How do we know the function works? Consider tests, 
+  # e.g. published examples that you can reporduce
+  # Add a section to the package vignette
+  
   if(dim(triangleP)[1] != dim(triangleP)[2] || dim(triangleI)[1] != dim(triangleI)[2]) {
     stop("Origin and development years should be equal.")
   }
