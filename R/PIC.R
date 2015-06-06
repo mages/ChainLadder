@@ -11,6 +11,7 @@
 #' @note Anything note worthy?
 #' @author your name. Who to blame and praise
 #' @seealso \code{\link{MackChainLadder}}
+#' @references Add references
 #' @examples
 #' PaidIncurredChain(USAApaid, USAAincurred)
 #' @export
