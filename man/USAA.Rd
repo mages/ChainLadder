@@ -1,8 +1,9 @@
 \name{USAA triangle}
-\alias{USAApaid, USAAincurred}
+\alias{USAApaid}
+\alias{USAAincurred}
 \docType{data}
 \title{
-Example paid and incurred triangle data from
+Example paid and incurred triangle data from CAS web site
 }
 \description{
 A concise (1-5 lines) description of the dataset. 
