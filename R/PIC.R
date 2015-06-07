@@ -9,7 +9,7 @@
 #' @return explain what the function return
 #' @details Perhaps some details here
 #' @note Anything note worthy?
-#' @author your name. Who to blame and praise
+#' @author Fabio Concina
 #' @seealso \code{\link{MackChainLadder}}
 #' @references Add references
 #' @examples
