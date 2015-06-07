@@ -1,8 +1,11 @@
 #' PaidIncurredChain
 #'
-#' This is the Description section, edit.
-#'
-#' This is the Details section, edit.
+#' The Paid-incurred Chain model combines claims payments and incurred losses information
+#' to get a unified ultimate loss prediction.
+#' 
+#' The method uses some basic properties of multivariate Gaussian distributions
+#' to obtain a mathematically rigorous and consistent model for the combination
+#' of the two information channels.
 #'
 #' @param triangleP Please explain
 #' @param triangleI Please explain
