@@ -1,17 +1,18 @@
 #' PaidIncurredChain
 #'
-#' The Paid-incurred Chain model combines claims payments and incurred losses information
-#' to get a unified ultimate loss prediction.
+#' The Paid-incurred Chain model (Merz, Wuthrich (2010)) combines 
+#' claims payments and incurred losses information to get 
+#' a unified ultimate loss prediction.
 #' 
 #' The method uses some basic properties of multivariate Gaussian distributions
 #' to obtain a mathematically rigorous and consistent model for the combination
 #' of the two information channels.
 #'
-#' @param triangleP Please explain
-#' @param triangleI Please explain
+#' @param triangleP Cumulative claims payments triangle
+#' @param triangleI Incurred losses triangle
 #' @return explain what the function return
 #' @details Perhaps some details here
-#' @note Anything note worthy?
+#' @note The model is implemented in the special case of non-informative priors.
 #' @author Fabio Concina
 #' @seealso \code{\link{MackChainLadder}}
 #' @references Add references
@@ -19,9 +20,7 @@
 #' PaidIncurredChain(USAApaid, USAAincurred)
 #' @export
 PaidIncurredChain <- function(triangleP,triangleI) {
-  # Paid Incurred Chain method (Merz, Wuthrich (2010)) in the special case
-  # of non-informative priors (no prior parameter information).
-
+  
   # To do list:
   # Consider a better function name, change the name in the NAMESPACE file as well
   # Consider a better output format, e.g. full triangle, s.e. for all origin periods
