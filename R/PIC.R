@@ -10,7 +10,13 @@
 #'
 #' @param triangleP Cumulative claims payments triangle
 #' @param triangleI Incurred losses triangle.
-#' @return explain what the function return.
+#' @return The function returns:
+#' \describe{
+#'   \item{Res.Origin}{Claims reserves for different origin years.}
+#'   \item{Res.Tot}{Total reserve.}
+#'   \item{s.e.}{Square root of mean square error of prediction 
+#'   for the total reserve.}
+#' }
 #' @details Perhaps some details here
 #' @note The model is implemented in the special case of non-informative priors.
 #' @author Fabio Concina, \email{fabio.concina@@gmail.com}
