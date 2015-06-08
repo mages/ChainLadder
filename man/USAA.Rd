@@ -10,12 +10,7 @@ Paid and incurred triangle data from the United Services Automobile Association 
 }
 \usage{data("USAApaid")}
 \format{
-  The format is:
- triangle [1:10, 1:10] 271778 296828 334331 354530 423048 ...
- - attr(*, "dimnames")=List of 2
-  ..$ origin: chr [1:10] "0" "1" "2" "3" ...
-  ..$ dev   : chr [1:10] "1" "2" "3" "4" ...
- - attr(*, "class")= chr [1:2] "triangle" "matrix"
+  A triangle with 10 accident years and 10 development years.
 }
 \details{
 The claims data comes from Schedule P – Analysis of Losses and Loss Expenses in the National Association of Insurance Commissioners (NAIC) database.
