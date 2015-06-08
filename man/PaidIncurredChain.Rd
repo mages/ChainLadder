@@ -7,26 +7,45 @@
 PaidIncurredChain(triangleP, triangleI)
 }
 \arguments{
-\item{triangleP}{Please explain}
+\item{triangleP}{Cumulative claims payments triangle}
 
-\item{triangleI}{Please explain}
+\item{triangleI}{Incurred losses triangle.}
 }
 \value{
-a numeric vector of random deviates of length \code{100 * x}
+The function returns:
+\describe{
+  \item{Res.Origin}{Claims reserves for different origin years.}
+  \item{Res.Tot}{Total reserve.}
+  \item{s.e.}{Square root of mean square error of prediction
+  for the total reserve.}
+}
 }
 \description{
-This is the Description section
+The Paid-incurred Chain model (Merz, Wuthrich (2010)) combines
+claims payments and incurred losses information to get
+a unified ultimate loss prediction.
 }
 \details{
-This is the Details section
+The method uses some basic properties of multivariate Gaussian distributions
+to obtain a mathematically rigorous and consistent model for the combination
+of the two information channels.
+
+Perhaps some details here
+}
+\note{
+The model is implemented in the special case of non-informative priors.
 }
 \examples{
 PaidIncurredChain(USAApaid, USAAincurred)
 }
 \author{
-your name
+Fabio Concina, \email{fabio.concina@gmail.com}
+}
+\references{
+Merz, M., Wüthrich, M. (2010). Paid–incurred chain claims reserving method.
+Insurance: Mathematics and Economics, 46(3), 568–579.
 }
 \seealso{
-\code{\link{MackChainLadder}}
+\code{\link{MackChainLadder}},\code{\link{MunichChainLadder}}
 }
 
