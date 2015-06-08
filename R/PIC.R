@@ -9,11 +9,11 @@
 #' of the two information channels.
 #'
 #' @param triangleP Cumulative claims payments triangle
-#' @param triangleI Incurred losses triangle
-#' @return explain what the function return
+#' @param triangleI Incurred losses triangle.
+#' @return explain what the function return.
 #' @details Perhaps some details here
 #' @note The model is implemented in the special case of non-informative priors.
-#' @author Fabio Concina
+#' @author Fabio Concina, \email{fabio.concina@@gmail.com}
 #' @seealso \code{\link{MackChainLadder}},\code{\link{MunichChainLadder}}
 #' @references Merz, M., Wüthrich, M. (2010). Paid–incurred chain claims reserving method. 
 #' Insurance: Mathematics and Economics, 46(3), 568–579.
