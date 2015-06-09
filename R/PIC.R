@@ -11,11 +11,11 @@
 #' @param triangleP Cumulative claims payments triangle
 #' @param triangleI Incurred losses triangle.
 #' @return The function returns:
-#' \describe{
-#'   \item{Res.Origin}{Claims reserves for different origin years.}
-#'   \item{Res.Tot}{Total reserve.}
-#'   \item{s.e.}{Square root of mean square error of prediction 
-#'   for the total reserve.}
+#' \itemize{
+#'   \item \strong{Res.Origin} Claims reserves for different origin years.
+#'   \item \strong{Res.Tot} Total reserve.
+#'   \item \strong{s.e.} Square root of mean square error of prediction 
+#'   for the total reserve.
 #' }
 #' @details
 #' We assume as usual that I=J. 
