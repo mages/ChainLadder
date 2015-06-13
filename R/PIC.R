@@ -258,17 +258,18 @@ PaidIncurredChain <- function(triangleP,triangleI) {
   }
   
   # ultimate loss vector
-  PIC.ult <- c()
+  PIC.Ult <- c()
   for (i in 2:J) {
-    PIC.ult[i-1] <- triangleP[i,J+1-i]^(1 - beta[J+1-i]) *
+    PIC.Ult[i-1] <- triangleP[i,J+1-i]^(1 - beta[J+1-i]) *
     triangleI[i,J+1-i]^(beta[J+1-i]) * exp((1 - beta[J+1-i]) *
     sum(theta.post[(J-i+2):J]) + beta[J+1-i] *
     sum(theta.post[(2*J-i+1):(2*J-1)])) * exp((1 - beta[J+1-i]) *
     (v2[J] - w2[J-i+1])/2 + s2.post[i-1]/2)
   }
+  PIC.UltTot <- sum(PIC.Ult)
 
   # claims reserves
-  PIC.Ris <- PIC.ult - diagP
+  PIC.Ris <- PIC.Ult - diagP
   PIC.RisTot <- sum(PIC.Ris)
 
   # prediction uncertainty
@@ -277,16 +278,19 @@ PaidIncurredChain <- function(triangleP,triangleI) {
     for (k in 2:J) {
       if (i==k) {
         msep <- msep + (exp((1-beta[J+1-i]) * (v2[J] - w2[J+1-i]) +
-        E[i-1, ]%*% Ainv %*% E[k-1, ]) - 1) * PIC.ult[i-1] * PIC.ult[k-1]
+        E[i-1, ]%*% Ainv %*% E[k-1, ]) - 1) * PIC.Ult[i-1] * PIC.Ult[k-1]
       } else {
         msep <- msep + (exp(E[i-1, ] %*% Ainv %*% E[k-1, ]) - 1) *
-        PIC.ult[i-1] * PIC.ult[k-1]	
+        PIC.Ult[i-1] * PIC.Ult[k-1]	
       }
     }
   }
   PIC.se <- sqrt(msep)
 
   output <- list()
+  
+  output[["Ult.Loss.Origin"]] <- as.matrix(PIC.Ult)
+  output[["Ult.Loss"]] <- as.numeric(PIC.UltTot)
   output[["Res.Origin"]] <- as.matrix(PIC.Ris)
   output[["Res.Tot"]] <- as.numeric(PIC.RisTot)
   output[["s.e."]] <- as.numeric(PIC.se)
