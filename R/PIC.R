@@ -68,7 +68,6 @@ PaidIncurredChain <- function(triangleP,triangleI) {
   # Consider a better function name, change the name in the NAMESPACE file as well
   # Consider a better output format, e.g. full triangle, s.e. for all origin periods
   # How does the user know if this model is applicable to the data at hand?
-  # List model assumptions
   # Can the 'for' loops be replaced with apply statments / matrix algebra?
   # How do we know the function works? Consider tests, 
   # e.g. published examples that you can be reproduced
@@ -287,5 +286,10 @@ PaidIncurredChain <- function(triangleP,triangleI) {
   }
   PIC.se <- sqrt(msep)
 
-  return(list(Res.Origin=PIC.Ris,Res.Tot=PIC.RisTot,s.e.=PIC.se))
+  output <- list()
+  output[["Res.Origin"]] <- as.matrix(PIC.Ris)
+  output[["Res.Tot"]] <- as.numeric(PIC.RisTot)
+  output[["s.e."]] <- as.numeric(PIC.se)
+  
+  return(output)
 }
