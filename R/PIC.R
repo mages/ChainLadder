@@ -12,6 +12,8 @@
 #' @param triangleI Incurred losses triangle.
 #' @return The function returns:
 #' \itemize{
+#'   \item \strong{Ult.Loss.Origin} Ultimate losses for different origin years.
+#'   \item \strong{Ult.Loss} Total ultimate loss.
 #'   \item \strong{Res.Origin} Claims reserves for different origin years.
 #'   \item \strong{Res.Tot} Total reserve.
 #'   \item \strong{s.e.} Square root of mean square error of prediction 
