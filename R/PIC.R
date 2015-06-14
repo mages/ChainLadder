@@ -17,7 +17,7 @@
 #'   \item \strong{Res.Origin} Claims reserves for different origin years.
 #'   \item \strong{Res.Tot} Total reserve.
 #'   \item \strong{s.e.} Square root of mean square error of prediction 
-#'   for the total reserve.
+#'   for the total ultimate loss.
 #' }
 #' @details
 #' We assume as usual that I=J. 
