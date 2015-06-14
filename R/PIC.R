@@ -73,7 +73,6 @@ PaidIncurredChain <- function(triangleP,triangleI) {
   # Can the 'for' loops be replaced with apply statments / matrix algebra?
   # How do we know the function works? Consider tests, 
   # e.g. published examples that you can be reproduced
-  # Add a section to the package vignette
   
   if(dim(triangleP)[1] != dim(triangleP)[2] || dim(triangleI)[1] != dim(triangleI)[2]) {
     stop("Origin and development years should be equal.")
