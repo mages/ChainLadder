@@ -1269,6 +1269,83 @@ print(gg)
 % the above code doesn't seem to be stable
 %\caption{The predictive distribution of loss reserves for each year based on bootstrapping. }
 %\end{figure}
+
+\section{Paid-incurred Chain model}
+
+The Paid-incurred Chain model has been published by M.Wuthrich and M.Merz in 2010. It combines claims payments and incurred losses information in a a mathematically rigorous and consistent way to get a unified ultimate loss prediction.
+
+
+\subsection{Model assumptions}
+
+The model assumptions for the Log-Normal PIC Model are the following:
+ \itemize{
+   \item Conditionally, given $\Theta = (\Phi_0,...,\Phi_I,
+   \Psi_0,...,\Psi_{I-1},\sigma_0,...,\sigma_{I-1},\tau_0,...,\tau_{I-1})$
+   we have
+   \itemize{
+     \item the random vector $(\xi_{0,0},...,\xi_{I,I},
+     \zeta_{0,0},...,\zeta_{I,I-1})$ has multivariate Gaussian distribution
+     with uncorrelated components given by
+     \begin{equation*}
+     \xi_{i,j} \sim N(\Phi_j,\sigma^2_j),
+     \end{equation*}
+     \begin{equation*}
+     \zeta_{k,l} \sim N(\Psi_l,\tau^2_l);
+     \end{equation*}
+     \item cumulative payments are given by the recursion
+     \begin{equation*}
+     P_{i,j} = P_{i,j-1} \exp(\xi_{i,j}),
+     \end{equation*}
+     with initial value $P_{i,0} = \exp (\xi_{i,0})$;
+     \item incurred losses $I_{i,j}$ are given by the backwards
+     recursion
+     \begin{equation*}
+     I_{i,j-1} = I_{i,j} \exp(-\zeta_{i,j-1}),
+     \end{equation*}
+     with initial value $I_{i,I}=P_{i,I}$.
+   }
+   \item The components of $\Theta$ are indipendent and 
+   $\sigma_j,\tau_j > 0$ for all j.
+  }
+  
+\subsection{Parameter estimation}
+
+Parameters $\Theta$ in the model are in general not known and need to be
+estimated from observations. They are estimated in a Bayesian framework.
+In the Bayesian PIC model they assume that the previous assumptions 
+hold true with deterministic $\sigma_0,...,\sigma_J$ and $\tau_0,...,\tau_{J-1}$ and
+\begin{equation*}
+\Phi_m \sim N(\phi_m,s^2_m),
+\end{equation*}
+\begin{equation*}
+\Psi_n \sim N(\psi_n,t^2_n).
+\end{equation*}
+This is not a full Bayesian approach but has the advantage to give
+analytical expressions for the posterior distributions and the prediction
+uncertainty.
+     
+The Paid-incurred Chain model is implemented in the \texttt{ChainLadder} package via the function \texttt{PaidIncurredChain}.
+As an example we apply the function to the USAA paid and incurred triangles:
+<<>>=
+library(ChainLadder)
+PIC <- PaidIncurredChain(USAApaid, USAAincurred)
+PIC
+@
+
+We can access the reserves by origin year via
+<<>>=
+PIC$Res.Origin
+@
+and the total reserve via
+<<>>=
+PIC$Res.Tot
+@
+
+\texttt{s.e.} is the square root of mean square error of prediction for the total reserve.
+
+It's important to notice that the model is implemented in the special case of non-informative priors for $\Phi_m$ and $\Psi_n$; this means that we let $s^2_m \to \infty$ and $t^2_n \to \infty$.
+
+
 \section{One year claims development result}
 
 The stochastic claims reserving  methods
