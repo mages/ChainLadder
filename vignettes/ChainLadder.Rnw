@@ -1341,7 +1341,7 @@ and the total reserve via
 PIC$Res.Tot
 @
 
-\texttt{s.e.} is the square root of mean square error of prediction for the total reserve.
+\texttt{s.e.} is the square root of mean square error of prediction for the total ultimate loss.
 
 It's important to notice that the model is implemented in the special case of non-informative priors for $\Phi_m$ and $\Psi_n$; this means that we let $s^2_m \to \infty$ and $t^2_n \to \infty$.
 
