@@ -14,10 +14,12 @@ PaidIncurredChain(triangleP, triangleI)
 \value{
 The function returns:
 \itemize{
+  \item \strong{Ult.Loss.Origin} Ultimate losses for different origin years.
+  \item \strong{Ult.Loss} Total ultimate loss.
   \item \strong{Res.Origin} Claims reserves for different origin years.
   \item \strong{Res.Tot} Total reserve.
   \item \strong{s.e.} Square root of mean square error of prediction
-  for the total reserve.
+  for the total ultimate loss.
 }
 }
 \description{
@@ -76,8 +78,8 @@ PaidIncurredChain(USAApaid, USAAincurred)
 Fabio Concina, \email{fabio.concina@gmail.com}
 }
 \references{
-Merz, M., Wüthrich, M. (2010). Paid–incurred chain claims reserving method.
-Insurance: Mathematics and Economics, 46(3), 568–579.
+Merz, M., Wuthrich, M. (2010). Paid-incurred chain claims reserving method.
+Insurance: Mathematics and Economics, 46(3), 568-579.
 }
 \seealso{
 \code{\link{MackChainLadder}},\code{\link{MunichChainLadder}}
