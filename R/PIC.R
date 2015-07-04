@@ -7,7 +7,7 @@
 #' The method uses some basic properties of multivariate Gaussian distributions
 #' to obtain a mathematically rigorous and consistent model for the combination
 #' of the two information channels.
-#'
+#' 
 #' @param triangleP Cumulative claims payments triangle
 #' @param triangleI Incurred losses triangle.
 #' @return The function returns:
@@ -59,8 +59,8 @@
 #' @note The model is implemented in the special case of non-informative priors.
 #' @author Fabio Concina, \email{fabio.concina@@gmail.com}
 #' @seealso \code{\link{MackChainLadder}},\code{\link{MunichChainLadder}}
-#' @references Merz, M., Wüthrich, M. (2010). Paid–incurred chain claims reserving method. 
-#' Insurance: Mathematics and Economics, 46(3), 568–579.
+#' @references Merz, M., Wuthrich, M. (2010). Paid-incurred chain claims reserving method. 
+#' Insurance: Mathematics and Economics, 46(3), 568-579.
 #' @examples
 #' PaidIncurredChain(USAApaid, USAAincurred)
 #' @export
