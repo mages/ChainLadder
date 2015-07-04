@@ -22,7 +22,7 @@ You can install the stable version from
 install.packages('ChainLadder')
 ```
 
-To install the current development version from github you need the [devtools package](http://cran.r-project.org/web/packages/devtools/index.html) and the other packages on which ChainLadder depends:
+To install the current development version from github you need the [devtools package](http://cran.r-project.org/package=devtools) and the other packages on which ChainLadder depends:
 
 ```s
 install.packages(c("systemfit", "actuar", "Hmisc", "statmod", "tweedie", "cplm"))
