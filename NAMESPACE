@@ -19,7 +19,7 @@ importFrom(methods, show, coerce, cbind2, rbind2,
                     as, new, slot, slotNames)
 importFrom(graphics, plot, abline, barplot, boxplot, hist, legend, 
            lines, matplot, mtext, par, points, rug, text)
-
+importFrom(grDevices, gray.colors)
 importMethodsFrom(Matrix, summary)
 
 export(MackChainLadder, MunichChainLadder, BootChainLadder,
