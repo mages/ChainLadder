@@ -48,6 +48,7 @@ lattice.options(default.theme = standard.theme(color = FALSE))
 \SweaveOpts{concordance=TRUE}
 
 \author{Alessandro Carrato, 
+  Fabio Concina,
   Markus Gesmann,
   Dan  Murphy,\\
   Mario W\"{u}thrich and
