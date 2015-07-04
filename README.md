@@ -1,4 +1,5 @@
 # ChainLadder 
+[![Travis-CI Build Status](https://travis-ci.org/mages/chainladder.svg?branch=master)](https://travis-ci.org/mages/chainladder)
 
 ChainLadder is an R package providing methods and models which are typically 
 used in insurance claims reserving, including:
