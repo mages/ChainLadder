@@ -1359,7 +1359,7 @@ setMethod("plot",
 					 }
 				
 			matplot(t(.FullTriangles[[i]]), 
-					t="l",
+					type="l",
                 			main=main2,
                 			xlab="Development period",
                 			ylab="Amount",
