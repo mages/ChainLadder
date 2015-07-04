@@ -1272,8 +1272,8 @@ print(gg)
 
 \section{Paid-incurred Chain model}
 
-The Paid-incurred Chain model has been published by M.Wuthrich and M.Merz in 2010. It combines claims payments and incurred losses information in a a mathematically rigorous and consistent way to get a unified ultimate loss prediction.
-
+The Paid-incurred Chain model was published by M.Wüthrich and M.Merz in 
+2010~\ref{MerzWuthrich:2010}. It combines claims payments and incurred losses information in a a mathematically rigorous and consistent way to get a unified ultimate loss prediction.
 
 \subsection{Model assumptions}
 
