@@ -1,5 +1,12 @@
-Version 0.2.1 [2015-03-04]
+Version 0.2.1 [2015-07-04]
 --------------------------
+
+Changes
+  
+  o Updated NAMESPACE file to comply with new R CMD checks in R-3.3.0
+  
+  o New function PaidIncurredChain by Fabio Concina based on the
+    2010 Merz & Wuthrich paper Paid-incurred chain claims reserving method
 
 
 Version 0.2.0 [2015-03-04]

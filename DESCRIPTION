@@ -3,7 +3,7 @@ Type: Package
 Title: Statistical Methods and Models for Claims Reserving in 
        General Insurance
 Version: 0.2.1
-Date: 2015-06-05
+Date: 2015-07-04
 Authors@R: c(person("Markus", "Gesmann", role = c("aut", "cre"),
              email = "markus.gesmann@googlemail.com"),
              person("Daniel", "Murphy", role = "aut", 
@@ -14,6 +14,8 @@ Authors@R: c(person("Markus", "Gesmann", role = c("aut", "cre"),
              email="alessandro.carrato@gmail.com"),
              person("Giuseppe", "Crupi", role="aut"),
              person("Christophe", "Dutang", role="ctb"),
+             person("Fabio", "Concina", role="ctb",
+             email="fabio.concina@gmail.com"),
              person("Arnaud", "Lacoume", role="ctb"),               
              person("Arthur", "Charpentier", role = "ctb"),
              person("Mario", "Wuthrich", role = "aut")
