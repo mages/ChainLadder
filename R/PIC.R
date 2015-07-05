@@ -298,3 +298,262 @@ PaidIncurredChain <- function(triangleP,triangleI) {
   
   return(output)
 }
+
+
+# Bayesian model code from Mario Wuthrich
+# 
+# #############################################################      
+# ####### functions for parameter initialization
+# #############################################################      
+# 
+# param.empirical <- function(xi, I0, J0) {
+#   param <- array(0, c(J0, 2))
+#   for (j in 1:J0){
+#     param[j,1] <- mean(xi[(1:(I0-j+1)),j])       
+#     if (j<I0) {param[j,2] <- sd(xi[(1:(I0-j+1)),j])
+#     } else { 
+#       param[j,2]= min(param[(j-1),2], param[(j-2),2], param[(j-1),2]^2/param[(j-2),2])
+#     }}                  
+#   param
+# }           
+# 
+# 
+# Sigma.matrix <- function(sigma, I0, J0){
+#   Sigma <- array(0, c(I0*J0, I0*J0))
+#   for (i1 in 1:I0){
+#     for (j1 in 1:J0){
+#       Sigma[(i1-1)*J0+j1,(i1-1)*J0+j1] <- sigma[j1]^2
+#     }}
+#   Sigma
+# }
+# 
+# 
+# T_matrix <- function(vco, theta, I0, J0){
+#   T1 <- array(0, c(I0+J0, I0+J0))  
+#   for (i1 in 1:(I0+J0)){
+#     T1[i1,i1] <- theta[i1]^2 * vco^2 
+#   }
+#   T1
+# }
+# 
+# #############################################################      
+# ####### matrices and projections
+# #############################################################      
+# 
+# A_matrix_cross_classified <- function(I0, J0){
+#   A <- array(0, c(I0*J0, I0+J0))
+#   for (i in 1:I0){
+#     for (j in 1:J0){
+#       A[(i-1)*J0+j,i] <- 1
+#       A[(i-1)*J0+j,I0+j] <- 1
+#     }}
+#   A
+# }         
+# 
+# A_matrix_CL <- function(I0, J0){
+#   A <- array(0, c(I0*J0, I0+J0))
+#   for (i in 1:I0){
+#     for (j in 1:J0){
+#       if (j==1){A[(i-1)*J0+j,i] <- 1}
+#       A[(i-1)*J0+j,I0+j] <- 1
+#     }}
+#   A
+# }         
+# 
+# 
+# P_1 <- function(I0, J0){ 
+#   P_1 <- array(0, c(I0*J0, I0*J0))
+#   n1 <- 0
+#   for (i in 1:I0) {
+#     for (j in 1:(min(I0-i+1, J0))){
+#       n1 <- n1 + 1
+#       P_1[n1, (i-1)*J0 + j] <- 1
+#     }}
+#   P_1[1:n1,]
+# }        
+# 
+# 
+# P_2 <- function(I0, J0){
+#   P_2 <- array(0, c(I0*J0, I0*J0))
+#   n2 <- 0
+#   for (i in 1:I0) {
+#     if ((I0-i+1)< J0){
+#       for (j in (I0-i+2): J0){
+#         n2 <- n2 + 1
+#         P_2[n2, (i-1)*J0 + j] <- 1
+#       }}}
+#   P_2[1:n2,]
+# }
+# 
+# 
+# #############################################################      
+# ####### load data cross-classified log-normal case
+# #############################################################      
+# 
+# data.x <- read.table("data_increments.csv", header=FALSE, sep=";")
+# I0 <- nrow(data.x)
+# J0 <- ncol(data.x)
+# data.prior <- read.table("data_prior.csv", header=FALSE, sep=";")
+# 
+# xi <- array(0, c(I0*J0,1))
+# theta <- array(0, c(I0+J0,1))
+# 
+# for (i in 1:I0) {
+#   theta[i,1] <- log(data.prior[i, 1]) 
+#   for (j in 1:(min(I0-i+1, J0))){
+#     xi[(i-1)*J0+j,1] <- log(data.x[i,j])
+#   }}      
+# 
+# #############################################################      
+# ####### calculate parameters
+# #############################################################      
+# 
+# param <- array(0, c(J0, 2))
+# param <- param.empirical(log(data.x), I0, J0)
+# sigma <- array(0, c(J0,1))
+# sigma <- param[,2]
+# normalization <- array(0, dim=c(J0, 1)) 
+# for (j in 1:J0){normalization[j,1]<- exp(param[j,1]+param[j,2]^2/2)}
+# theta[(I0+1):(I0+J0),1] <- param[,1] - log(sum(normalization[,1]))
+# 
+# A <- array(0, c(I0*J0, I0+J0))
+# A <- A_matrix_cross_classified(I0, J0)
+# mu <- A %*% theta
+# 
+# Sigma <- array(0, c(I0*J0, I0*J0))
+# Sigma <- Sigma.matrix(sigma, I0, J0)
+# T1 <- array(0, c(I0+J0, I0+J0)) 
+# vco <- 1 
+# T1 <- T_matrix(vco, theta, I0, J0)
+# S <- array(0, c(I0*J0, I0*J0))
+# S <- Sigma + A %*% T1 %*% t(A)
+# P1 <- P_1(I0,J0)
+# P2 <- P_2(I0,J0)  
+# S11 <- P1 %*% S %*% t(P1)
+# S11_inv <- solve(S11)
+# S22 <- P2 %*% S %*% t(P2)
+# S12 <- P1 %*% S %*% t(P2)
+# N2 <- nrow(P2)
+# 
+# #############################################################      
+# ####### calculate posterior parameters
+# #############################################################      
+# 
+# mu2_post <- array(0, c(N2,1))
+# S22_post <- array(0, c(N2,N2))
+# mu2_post <- P2 %*% mu + t(S12) %*% S11_inv %*% (P1 %*% xi - P1 %*% mu)
+# S22_post <- S22 - t(S12) %*% S11_inv %*% S12
+# 
+# #############################################################      
+# ####### calculate reserves
+# #############################################################      
+# 
+# result <- array(0, c(2,1))
+# for (j1 in (1:N2)){
+#   result[1,1] <- result[1,1] + exp(mu2_post[j1,1]+S22_post[j1,j1]/2)
+#   for (j2 in (1:N2)){
+#     result[2,1] <- result[2,1] + exp(mu2_post[j1,1]+S22_post[j1,j1]/2)*exp(mu2_post[j2,1]+S22_post[j2,j2]/2)*(exp(S22_post[j1,j2])-1)
+#   }}
+# result[2,1] <- sqrt(result[2,1])
+# 
+# round(result,0)
+# 
+# 
+# 
+# 
+# 
+# #############################################################      
+# ####### load data multiplicative CL case
+# #############################################################      
+# 
+# data.x <- read.table("data_cumulative.csv", header=FALSE, sep=";")
+# I0 <- nrow(data.x)
+# J0 <- ncol(data.x)
+# data.prior <- read.table("data_prior.csv", header=FALSE, sep=";")
+# 
+# xi <- array(0, c(I0*J0,1))
+# xi_ij <- array(0, c(I0,J0))
+# C_ij  <- array(0, c(I0,J0))
+# theta <- array(0, c(I0+J0,1))
+# 
+# for (i in 1:I0) {
+#   theta[i,1] <- log(data.prior[i, 1]) 
+#   for (j in 1:(min(I0-i+1, J0))){
+#     if (j==1){xi[(i-1)*J0+j,1] <- log(data.x[i,j])
+#     } else {
+#       xi[(i-1)*J0+j,1] <- log(data.x[i,j]/data.x[i,j-1])
+#     }
+#     C_ij[i,j] <- data.x[i,j]            
+#     xi_ij[i,j] <- xi[(i-1)*J0+j,1]            
+#   }}
+# 
+# #############################################################      
+# ####### calculate parameters
+# #############################################################      
+# 
+# param <- array(0, c(J0, 2))
+# param <- param.empirical(xi_ij, I0, J0)
+# sigma <- array(0, c(J0,1))
+# sigma <- param[,2]
+# theta[(I0+1):(I0+J0),1] <- param[,1] - param[,2]^2/2
+# theta[I0+1,1] <- theta[I0+1,1] - mean(theta[1:I0,1])
+# 
+# 
+# A <- array(0, c(I0*J0, I0+J0))
+# A <- A_matrix_CL(I0, J0)
+# mu <- A %*% theta
+# 
+# Sigma <- array(0, c(I0*J0, I0*J0))
+# Sigma <- Sigma.matrix(sigma, I0, J0)
+# T1 <- array(0, c(I0+J0, I0+J0)) 
+# vco <- 1 
+# T1 <- T_matrix(vco, theta, I0, J0)
+# S <- array(0, c(I0*J0, I0*J0))
+# S <- Sigma + A %*% T1 %*% t(A)
+# P1 <- P_1(I0,J0)
+# P2 <- P_2(I0,J0)  
+# S11 <- P1 %*% S %*% t(P1)
+# S11_inv <- solve(S11)
+# S22 <- P2 %*% S %*% t(P2)
+# S12 <- P1 %*% S %*% t(P2)
+# N2 <- nrow(P2)
+# 
+# #############################################################      
+# ####### calculate posterior parameters
+# #############################################################      
+# 
+# mu2_post <- array(0, c(N2,1))
+# S22_post <- array(0, c(N2,N2))
+# mu2_post <- P2 %*% mu + t(S12) %*% S11_inv %*% (P1 %*% xi - P1 %*% mu)
+# S22_post <- S22 - t(S12) %*% S11_inv %*% S12
+# 
+# #############################################################      
+# ####### calculate reserves
+# #############################################################      
+# 
+# e_i <- array(0, c(I0, I0*J0))
+# e_it <- array(0, c(I0, N2))
+# for (i in (1:I0)){
+#   for (j in (1:J0)){
+#     e_i[i,(i-1)*J0+j ] <- 1
+#   }
+#   e_it[i,] <- P2 %*% e_i[i,]
+# }
+# 
+# results <- array(0, c(2,1))
+# for (i1 in ((I0-J0+1):I0)){
+#   results[1,1] <- results[1,1] + C_ij[i1,I0-i1+1]*(exp( t(e_it[i1, ])%*% mu2_post[,1]+(t(e_it[i1, ])%*% S22_post %*% e_it[i1, ])/2)-1)
+#   for (i2 in (I0-J0+1):I0){
+#     x <- C_ij[i1,I0-i1+1]*exp( t(e_it[i1, ])%*% mu2_post[,1]+(t(e_it[i1, ])%*% S22_post %*% e_it[i1, ])/2)
+#     x <- x * C_ij[i2,I0-i2+1]*exp( t(e_it[i2, ])%*% mu2_post[,1]+(t(e_it[i2, ])%*% S22_post %*% e_it[i2, ])/2)
+#     x <- x * (exp( t(e_it[i1, ])%*% S22_post %*% e_it[i2, ])-1)
+#     results[2,1] <- results[2,1] + x
+#   }}
+# results[2,1] <- sqrt(results[2,1]) 
+# 
+# 
+# round(results,0)
+# 
+# 
+# result[2,1]/result[1,1]
+# results[2,1]/results[1,1]
