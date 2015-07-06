@@ -220,7 +220,7 @@ demo("demo name")
 @
 
 For more information and examples see the project web site:
-\url{http://code.google.com/p/chainladder/}
+\url{https://github.com/mages/ChainLadder}
 
 
 \subsection{Installation}

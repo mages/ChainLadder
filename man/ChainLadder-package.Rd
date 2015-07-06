@@ -15,14 +15,12 @@
   followed by talks at CAS meetings in 2008 and 2010.
    
   More information is available on the project web site
-  \url{http://code.google.com/p/chainladder/} 
+  \url{https://github.com/mages/ChainLadder} 
     
   For more financial packages see also CRAN Task View 'Emperical Finance'
   at \url{http://cran.r-project.org/web/views/Finance.html}.
 }
 \author{
-  Markus Gesmann, Wayne Zhang, Daniel Murphy, Alessandro Carrato
-  
   Maintainer: Markus Gesmann <markus.gesmann@gmail.com>
 }
 \references{

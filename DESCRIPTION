@@ -14,7 +14,7 @@ Authors@R: c(person("Markus", "Gesmann", role = c("aut", "cre"),
              email="alessandro.carrato@gmail.com"),
              person("Giuseppe", "Crupi", role="aut"),
              person("Christophe", "Dutang", role="ctb"),
-             person("Fabio", "Concina", role="ctb",
+             person("Fabio", "Concina", role="aut",
              email="fabio.concina@gmail.com"),
              person("Arnaud", "Lacoume", role="ctb"),               
              person("Arthur", "Charpentier", role = "ctb"),
@@ -41,7 +41,7 @@ Depends:
 Suggests:
     RUnit
 License: GPL (>= 2)
-URL: https://github.com/mages/ChainLadder
+URL: https://github.com/mages/ChainLadder#chainladder
 BugReports: https://github.com/mages/ChainLadder/issues 
 LazyLoad: yes
 LazyData: yes
