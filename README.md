@@ -1,5 +1,5 @@
 # ChainLadder 
-[![Travis-CI Build Status](https://travis-ci.org/mages/ChainLadder.svg?branch=master)](https://travis-ci.org/mages/ChainLadder) [![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/ChainLadder)](http://cran.r-project.org/web/packages/metricsgraphics) ![downloads](http://cranlogs.r-pkg.org/badges/grand-total/ChainLadder)
+[![Travis-CI Build Status](https://travis-ci.org/mages/ChainLadder.svg?branch=master)](https://travis-ci.org/mages/ChainLadder) [![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/ChainLadder)](http://cran.r-project.org/web/packages/ChainLadder) ![downloads](http://cranlogs.r-pkg.org/badges/grand-total/ChainLadder)
 
 
 ChainLadder is an R package providing methods and models which are typically 
