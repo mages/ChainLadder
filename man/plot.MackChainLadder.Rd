@@ -8,7 +8,8 @@
   of a \code{MackChainLadder} object and to check Mack's model assumptions.
 }
 \usage{
-\method{plot}{MackChainLadder}(x, mfrow=c(3,2), title=NULL, lattice=FALSE,\dots)
+\method{plot}{MackChainLadder}(x, mfrow=NULL, title=NULL, 
+lattice=FALSE, which=1:6, \dots)
 }
 
 \arguments{
@@ -19,6 +20,7 @@
   described in the details section are produced. If \code{lattice=TRUE}, the function
   \code{\link{xyplot}} of the lattice package is used to plot
   developments by origin period in different panels, plus Mack's S.E.}  
+  \item{which}{if a subset of the plots is required, specify a subset of the numbers 1:6.}
   \item{\dots}{ optional arguments. See \code{\link{plot.default}} for
     more details.} 
 }
