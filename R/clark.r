@@ -205,10 +205,10 @@ ClarkLDF <- function(Triangle,
     U <- thetaU <- theta[K1]
     thetaG <- tail(theta, G@np)
     if (any(G@LBFGSB.lower(workarea) == thetaG | G@LBFGSB.upper(workarea) == thetaG)) {
-        prn(G@LBFGSB.lower(workarea))
-        prn(thetaG)
-        prn(G@LBFGSB.upper(workarea))
-        prn(thetaG)
+        .prn(G@LBFGSB.lower(workarea))
+        .prn(thetaG)
+        .prn(G@LBFGSB.upper(workarea))
+        .prn(thetaG)
         warning("Solution constrained at growth function boundary! Use results with caution!\n\n")
         }
     
@@ -1165,8 +1165,8 @@ LL.ODP <- function(theta, MU, G, workarea) {
     # Calculate the expected value of all observations, store in workarea.
     MU(theta, G, workarea)
     if (any(workarea$mu < 0)) { # should not happen if G's formed correctly
-        #prn(theta)
-        #prn(workarea$mu)
+        #.prn(theta)
+        #.prn(workarea$mu)
         msg <- c("Maximum likelihood search failure!\n",
                 "Search area bounds need to be tailored to this growth function and data.\n",
                 paste("Growth function parameters at point of failure: ",
@@ -1401,4 +1401,22 @@ R.CapeCod <- new("dfunction",
     d2fdx2 = NULL # not needed at this point
     )
 
-
+.prn <- function (
+  x, txt, file = "") 
+{
+    # Based on code by Frank Harrell, Hmisc package, licence: GPL >= 2
+  calltext <- as.character(sys.call())[2]
+  if (file != "") 
+    sink(file, append = TRUE)
+  if (!missing(txt)) {
+    if (nchar(txt) + nchar(calltext) + 3 > .Options$width) 
+      calltext <- paste("\n\n  ", calltext, sep = "")
+    else txt <- paste(txt, "   ", sep = "")
+    cat("\n", txt, calltext, "\n\n", sep = "")
+  }
+  else cat("\n", calltext, "\n\n", sep = "")
+  print(x)
+  if (file != "") 
+    sink()
+  invisible()
+}

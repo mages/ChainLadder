@@ -2,6 +2,24 @@
 ## Copyright: Markus Gesmann, markus.gesmann@gmail.com
 ## Date:10/11/2007; 17/09/2008; 16/11/2009
 
+.allisnumeric <- function (x, 
+                          what = c("test", "vector"), 
+                          extras = c(".", "NA")) 
+{
+  # Based on code by Frank Harrell, Hmisc package, licence: GPL >= 2                          
+  what <- match.arg(what)
+  x <- sub("[[:space:]]+$", "", x)
+  x <- sub("^[[:space:]]+", "", x)
+  #xs <- x[x %nin% c("", extras)]
+  xs <- x[match(x, extras, nomatch = 0) == 0]
+  isnum <- suppressWarnings(!any(is.na(as.numeric(xs))))
+  if (what == "test") 
+    isnum
+  else if (isnum) 
+    as.numeric(x)
+  else x
+}
+
 incr2cum <- function(Triangle, na.rm=FALSE){
   if(na.rm){
     upper <- col(Triangle) <= ncol(Triangle) + 1 - row(Triangle)
@@ -134,7 +152,7 @@ print.triangle <- function(x, ...) {
   nms <- names(dimnames(x))
   .origin <- try(as.numeric(dimnames(x)[[nms[1L]]]))
   if(class(dimnames(x)[['dev']]) %in% "character"){
-    if(all.is.numeric(dimnames(x)[['dev']])){
+    if(.allisnumeric(dimnames(x)[['dev']])){
       .dev <- try(as.numeric(dimnames(x)[[nms[2L]]]))
     }else{
       .dev <- seq(along=(dimnames(x)[['dev']]))

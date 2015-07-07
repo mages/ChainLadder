@@ -27,7 +27,6 @@ Description: Various statistical methods and models which are
 Imports:
     Matrix,
     actuar,
-    Hmisc,
     methods,
     stats,   
     reshape2,
