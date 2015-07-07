@@ -922,6 +922,7 @@ For example, the following fits the SUR method to the first part (the
 first 11 columns) using the unbiased residual covariance estimator in
 \cite{Merz;Wuthrich:2008}, and separate chain ladders for the rest: 
 <<>>=
+require(systemfit)
 W1 <- MultiChainLadder2(liab, mse.method = "Independence", 
       	control = systemfit.control(methodResidCov = "Theil"))
 lapply(summary(W1)$report.summary, "[", 15, )
