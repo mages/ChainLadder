@@ -7,7 +7,8 @@
   of a \code{BootChainLadder} object and to check the model assumptions.
 }
 \usage{
-\method{plot}{BootChainLadder}(x, mfrow=c(2,2), title=NULL, log=FALSE, \dots)
+\method{plot}{BootChainLadder}(x, mfrow=NULL, title=NULL, log=FALSE, 
+    which=1:4, \dots)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -16,6 +17,7 @@
   \item{title}{see \code{\link{title}}} 
   \item{log}{logical. If \code{TRUE} the y-axes of the 'latest
     incremental actual vs. simulated' plot will be on a log-scale}
+  \item{which}{if a subset of the plots is required, specify a subset of the numbers 1:4.}
   \item{\dots}{ optional arguments. See \code{\link{plot.default}} for
     more details. }
 }

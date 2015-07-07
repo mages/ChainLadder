@@ -1,4 +1,4 @@
-Version 0.2.1 [2015-07-06]
+Version 0.2.1 [2015-07-07]
 --------------------------
 
 NEW FEATURES
@@ -6,9 +6,9 @@ NEW FEATURES
   o New function PaidIncurredChain by Fabio Concina based on the
     2010 Merz & Wuthrich paper Paid-incurred chain claims reserving method
 
-  o plot.MackChainLadder function gained new argument 'which', allowing
-    users to specify which subplot to display. Thanks to Christophe Dutang
-    for this suggestion.
+  o plot.MackChainLadder and plot.BootChainLadder gained new argument     
+    'which', allowing users to specify which subplot to display. 
+    Thanks to Christophe Dutang for this suggestion.
   
 Changes
   

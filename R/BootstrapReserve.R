@@ -451,30 +451,49 @@ rnbinom.od<-function (n, size, prob, mu, d=1) {
 ############################################################################
 ## plot.BootChainLadder
 ##
-plot.BootChainLadder <- function(x,mfrow=c(2,2),title=NULL,log=FALSE,...){
-  
-  if(is.null(title)) myoma <- c(0,0,0,0) else myoma <- c(0,0,2,0)
-  
-  Total.IBNR <- x$IBNR.Total
-  
-  op=par(mfrow=mfrow, oma=myoma,...)
-  ## Histogram
-  hist(Total.IBNR, xlab="Total IBNR")
-  lines(density(Total.IBNR))
-  rug(Total.IBNR)
-  ## Empirical distribution
-  plot(ecdf(Total.IBNR), xlab="Total IBNR")
-  
-  ## Plot simultated Ultiamtes by Origin
-  plotBootstrapUltimates(x)
-  
-  ## Backtest last developemt year and check for cal. year trends
-  backTest <- backTestLatestIncremental(x)
-  plotLatestIncremental(backTest, log=log)
-  
-  title( title , outer=TRUE)
-  par(op)
-}
+plot.BootChainLadder <- function(
+  x, mfrow=NULL, title=NULL, log=FALSE,
+  which=1:4, ...){
+    
+    if(is.null(title)){ 
+      myoma <- c(0,0,0,0) 
+    }else{ 
+      myoma <- c(0,0,2,0)
+    }
+    
+    Total.IBNR <- x$IBNR.Total
+    
+    if(is.null(mfrow)){
+      mfrow <- c(ifelse(length(which) < 2,1, 
+                        ifelse(length(which) < 3, 2,
+                               ceiling(length(which)/2))), 
+                 ifelse(length(which)>2,2,1))
+    }
+    
+    op=par(mfrow=mfrow, oma=myoma,...)
+    
+    if(1 %in% which){
+      ## Histogram
+      hist(Total.IBNR, xlab="Total IBNR")
+      lines(density(Total.IBNR))
+      rug(Total.IBNR)
+    }
+    if(2 %in% which){
+      ## Empirical distribution
+      plot(ecdf(Total.IBNR), xlab="Total IBNR")
+    }
+    if(3 %in% which){
+      ## Plot simultated Ultiamtes by Origin
+      plotBootstrapUltimates(x)
+    }
+    if(4 %in% which){
+      ## Backtest last developemt year and check for cal. year trends
+      backTest <- backTestLatestIncremental(x)
+      plotLatestIncremental(backTest, log=log)
+    }
+    title( title , outer=TRUE)
+    par(op)
+  }
 
 
 
