@@ -130,13 +130,14 @@ par(parold)
 # use the unbiased residual covariance estimator 
 # in Merz and Wuthrich (2008)
 (W1 <- MultiChainLadder2(liab, mse.method = "Independence", 
-    		control = systemfit.control(methodResidCov = "Theil"))) 
+    		control = systemfit::systemfit.control(methodResidCov = "Theil"))) 
 
 \dontrun{
 # use the iterative residual covariance estimator
 for (i in 1:5){
   W2 <- MultiChainLadder2(liab, mse.method = "Independence", 
-      control = systemfit.control(methodResidCov = "Theil", maxiter = i))
+      control = systemfit::systemfit.control(
+      methodResidCov = "Theil", maxiter = i))
   print(format(summary(W2)@report.summary[[3]][15, 4:5], 
           digits = 6, big.mark = ","))    
 }
