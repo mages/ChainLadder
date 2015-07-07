@@ -34,7 +34,7 @@
 #       Reserve Functions
 #           LDF Method
 #           Cape Cod Method
-require(actuar) # for its fast loglogistic function!
+#require(actuar) # for its fast loglogistic function!
 
 ClarkLDF <- function(Triangle,
         cumulative = TRUE,
