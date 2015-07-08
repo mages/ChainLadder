@@ -12,7 +12,7 @@
 \hypersetup{
   colorlinks=true,
   pdftitle={ChainLadder: Claims reserving with R},%
-  pdfauthor={Alessandro Carrato, Markus Gesmann, Dan Murphy, Mario W\"{u}thrich, and Wayne Zhang}%
+  pdfauthor={Alessandro Carrato, Fabio Concina, Markus Gesmann, Dan Murphy, Mario W\"{u}thrich, and Wayne Zhang}%
 }
 
 %\VignetteIndexEntry{ChainLadder: Claims reserving with R}

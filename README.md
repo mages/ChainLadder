@@ -27,7 +27,7 @@ install.packages('ChainLadder')
 To install the current development version from github you need the [devtools package](http://cran.r-project.org/package=devtools) and the other packages on which ChainLadder depends:
 
 ```s
-install.packages(c("systemfit", "actuar", "Hmisc", "statmod", "tweedie", "cplm"))
+install.packages(c("systemfit", "actuar", "statmod", "tweedie", "cplm"))
 ```
 
 To install ChainLadder run:
@@ -51,9 +51,9 @@ See the ChainLadder package [vignette](http://cran.r-project.org/web/packages/Ch
 To cite package 'ChainLadder' in publications use:
 
   Markus Gesmann, Daniel Murphy, Wayne Zhang, Alessandro Carrato,
-  Giuseppe Crupi and Mario Wüthrich (2015). 
+  Giuseppe Crupi, Mario Wüthrich and Fabio Concina (2015). 
   ChainLadder: Statistical methods and models for the calculation of 
-  outstanding claims reserves in general insurance. R package version 0.2.0.
+  outstanding claims reserves in general insurance. R package version 0.2.1.
   
 See also:
 
