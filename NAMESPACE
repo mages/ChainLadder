@@ -1,5 +1,3 @@
-import(grid)
-import(MASS)
 import(stats)
 import(statmod)
 import(tweedie)
@@ -16,6 +14,8 @@ importFrom(methods, show, coerce, cbind2, rbind2,
 importFrom(graphics, plot, abline, barplot, boxplot, hist, legend, 
            lines, matplot, mtext, par, points, rug, text,
            axis, segments, strwidth)
+importFrom(grid, grid.layout, unit, frameGrob, placeGrob, 
+           linesGrob, gpar, textGrob)
 importMethodsFrom(Matrix, summary)
 
 export(MackChainLadder, MunichChainLadder, BootChainLadder,
