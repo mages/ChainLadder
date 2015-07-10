@@ -27,7 +27,7 @@ install.packages('ChainLadder')
 To install the current development version from github you need the [devtools package](http://cran.r-project.org/package=devtools) and the other packages on which ChainLadder depends:
 
 ```s
-install.packages(c("systemfit", "actuar", "statmod", "tweedie", "cplm"))
+install.packages(c("systemfit", "actuar", "statmod", "tweedie"))
 ```
 
 To install ChainLadder run:
