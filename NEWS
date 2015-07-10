@@ -7,7 +7,7 @@ NEW FEATURES
     2010 Merz & Wuthrich paper Paid-incurred chain claims reserving method
 
   o plot.MackChainLadder and plot.BootChainLadder gained new argument     
-    'which', allowing users to specify which subplot to display. 
+    'which', allowing users to specify which sub-plot to display. 
     Thanks to Christophe Dutang for this suggestion.
   
 Changes
