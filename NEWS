@@ -3,7 +3,7 @@ Version 0.2.1 [2015-07-10]
 
 NEW FEATURES
 
-  o New function PaidIncurredChain by Fabio Concina based on the
+  o New function PaidIncurredChain by Fabio Concina, based on the
     2010 Merz & Wuthrich paper Paid-incurred chain claims reserving method
 
   o plot.MackChainLadder and plot.BootChainLadder gained new argument     
