@@ -16,9 +16,10 @@ Changes
   
   o Removed package dependencies on grDevices and Hmisc
   
-  o Expanded package vignette with new section "Paid-Incurred Chain Model"
-    and added example for a full claims development picture in the 
-    "One Year Claims Development Result" section.
+  o Expanded package vignette with new paragraph on importing spreadsheet
+    data, a new section "Paid-Incurred Chain Model" and an added example for
+    a full claims development picture in the "One Year Claims Development
+    Result" section.
 
 
 Version 0.2.0 [2015-03-04]

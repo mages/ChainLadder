@@ -359,7 +359,52 @@ raa.cum[1,]
 
 \subsubsection{Importing triangles from external data sources}
 In most cases you want to analyse your own data, usually stored in
-data bases. R makes it easy to access data using SQL statements,
+data bases or spreadsheets. 
+
+\paragraph{Importing a triangle from a spreadsheet}
+
+There are many ways to import the data from a spreadsheet. 
+A quick and dirty solution is using a CSV-file.
+
+Open a new workbook and copy your triangle into cell A1, with the first column being the accident or origin period and the first row describing the development period or age. 
+
+Ensure the triangle has no formatting, such a commas to separate thousands, as
+those cells will be saved as characters. 
+
+\begin{figure}[!ht]
+  \centering
+\includegraphics{SpreadsheetTriangle.png}
+\caption{Screen shot of a triangle in a spreadsheet software.}
+\label{ExcelTriangle}
+\end{figure}
+
+Now open R and go through the following commands:
+<<eval=FALSE>>=
+myCSVfile <- "path/to/folder/with/triangle.csv"
+## Use the R command: 
+# myCSVfile <- file.choose() 
+## to select the file interactively
+tri <- read.csv(file=myCSVfile, header = FALSE) 
+## Use read.csv2 if semicolons are used as a separator likely  
+## to be the case if you are in continental Europe
+library(ChainLadder)
+## Convert to triangle
+tri <- as.triangle(as.matrix(tri))
+# Job done.
+@
+
+\paragraph{Copying and pasting from a spreadsheet}
+Small data sets can be transfered to R backwards and forwards
+via the clipboard under MS Windows.
+
+Select a data set in the spreadsheet and copy it into the clipboard, then go to
+R and type:
+<<eval=FALSE>>=
+x <- read.table(file="clipboard", sep="\t", na.strings="")
+@ 
+
+\paragraph{Reading data from a data base}
+R makes it easy to access data using SQL statements,
 e.g. via an ODBC connection\footnote{See the
   \href{http://cran.r-project.org/package=RODBC}{\texttt{RODBC}}
   and \href{http://cran.r-project.org/package=DBI}{\texttt{DBI}}
@@ -426,25 +471,6 @@ potential data flow between R and data bases.
   \caption{Flow chart of data between R and data bases.}
   \label{fig:database}
 \end{figure}
-
-\subsubsection{Copying and pasting from MS Excel}
-Small data sets in Excel can be transfered to R backwards and forwards
-with via the clipboard under MS Windows.
-
-\paragraph{Copying from Excel to R}
-Select a data set in Excel and copy it into the clipboard, then go to
-R and type:
-<<eval=FALSE>>=
-x <- read.table(file="clipboard", sep="\t", na.strings="")
-@ 
-\paragraph{Copying from R to Excel}
-Suppose you would like to copy the \texttt{RAA} triangle into Excel,
-then the following statement would copy the data into the clipboard:
-<<eval=FALSE>>=
-write.table(RAA, file="clipboard", sep="\t", na="")
-@ 
-Now you can paste the content into Excel. Please note that you can't
-copy lists structures from R to Excel easily. 
 
 \section{Chain-ladder methods}
 
