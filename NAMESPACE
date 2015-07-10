@@ -1,7 +1,12 @@
 import(stats)
+
 importFrom(statmod, tweedie)
 importFrom(tweedie, rtweedie)
 importFrom(systemfit, systemfit, systemfit.control)
+importFrom(methods, coerce, cbind2, rbind2 )
+importFrom(utils, packageDescription, head, setTxtProgressBar, 
+           tail, txtProgressBar)
+importFrom(lattice, xyplot, barchart)
 importFrom(actuar, pllogis)
 importFrom(reshape2, acast)
 importFrom(methods, show, coerce, cbind2, rbind2,
@@ -85,4 +90,3 @@ S3method(print, tweedieReserve)
 S3method(summary, tweedieReserve)
 
 export(PaidIncurredChain)
-
