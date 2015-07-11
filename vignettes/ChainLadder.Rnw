@@ -400,7 +400,7 @@ via the clipboard under MS Windows.
 Select a data set in the spreadsheet and copy it into the clipboard, then go to
 R and type:
 <<eval=FALSE>>=
-x <- read.table(file="clipboard", sep="\t", na.strings="")
+tri <- read.table(file="clipboard", sep="\t", na.strings="")
 @ 
 
 \paragraph{Reading data from a data base}
