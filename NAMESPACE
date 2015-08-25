@@ -15,6 +15,10 @@ importFrom(graphics, plot, abline, barplot, boxplot, hist, legend,
            axis, segments, strwidth)
 importFrom(grid, grid.layout, unit, frameGrob, placeGrob, 
            linesGrob, gpar, textGrob)
+
+importFrom(cplm, cpglm)
+importClassesFrom(cplm, NullNum, NullList)
+importMethodsFrom(cplm, show, predict, vcov, residuals, resid, coef, fitted, plot, terms)
 importMethodsFrom(Matrix, summary)
 
 export(MackChainLadder, MunichChainLadder, BootChainLadder,

@@ -35,7 +35,8 @@ Imports:
     tweedie,
     utils, 
     systemfit, 
-    statmod
+    statmod,
+    cplm (>= 0.7-3)
 Suggests:
     RUnit, MASS
 License: GPL (>= 2)
