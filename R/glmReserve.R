@@ -244,7 +244,7 @@ plot.glmReserve <- function(x, which = 1, ...){
   } else 
   if (which == 4){
     plot(resid(x) ~ fitted(model), ...)
-    abline(h = 0, col = gray(0.7))
+    abline(h = 0, col = "#B3B3B3")
   } else  
   if (which == 5){
     qqnorm(resid(x), ...)
