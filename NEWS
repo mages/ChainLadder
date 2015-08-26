@@ -1,10 +1,11 @@
-Version 0.2.2 [2015-07-11]
+Version 0.2.2 [2015-08-26]
 --------------------------
 
-  o Add back functionality to estimate the index parameter for the compound 
+  o Added back functionality to estimate the index parameter for the compound 
     Poisson model in 'glmReserve' (now depends on package cplm). This works for 
     both 'formula' and 'bootstrap'. 
-  o Add methods 'resid' and plot for class 'glmReserve' (now depends on ggplot2)
+    
+  o Added methods 'resid' and plot for class 'glmReserve' (now depends on ggplot2)
 
 
 Version 0.2.1 [2015-07-11]
