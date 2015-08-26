@@ -199,3 +199,55 @@ summary.glmReserve <- function(object, type = c("triangle", "model"), ...){
 print.glmReserve <- function(x, ...)
   summary(x)
 
+# return pearson residuals (scaled)
+residuals.glmReserve <- function(object, ...){
+  m <- object$model
+  r <- residuals(m, type = "pearson")
+  if (class(m)[1] == "glm") {
+    phi <- sum((m$weights * m$residuals^2)[m$weights > 0])/m$df.residual
+  } else {
+    phi <- m$phi
+  }
+  return(r/sqrt(phi))
+}
+
+resid.glmReserve <- function(object, ...)
+  residuals(object)
+
+# 1 Original triangle 
+# 2 Full triangle 
+# 3 Reserve distribution
+# 4 Residual plot
+# 5 QQnorm
+plot.glmReserve <- function(x, which = 1, ...){
+  model <- x$model
+  if (which == 1){
+    plot(x$Triangle, ...)  
+  } else 
+  if (which == 2){
+    plot(x$FullTriangle, ...)  
+  } else 
+  if (which == 3){
+    sim <- x$sims.reserve.pred
+    if (ncol(sim) == 1)
+      stop('No predictions found, try bootstrap?')
+    sim <- cbind(sim, total = rowSums(sim))
+    nm <- colnames(sim)
+    sim <- data.frame(group = factor(rep(nm, rep(nrow(sim), ncol(sim))), levels = nm),
+                                   prediction = as.vector(sim))
+    prediction <- NULL
+    gg <- ggplot(sim, aes(prediction))
+    gg <- gg + geom_density() + 
+      facet_wrap(~group, nrow = 2, scales = "free") +
+      scale_x_continuous("predicted reserve")
+    print(gg) 
+  } else 
+  if (which == 4){
+    plot(resid(x) ~ fitted(model), ...)
+    abline(h = 0, col = gray(0.7))
+  } else  
+  if (which == 5){
+    qqnorm(resid(x), ...)
+    qqline(resid(x))
+  }   
+}

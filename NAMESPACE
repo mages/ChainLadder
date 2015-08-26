@@ -1,4 +1,5 @@
 import(stats)
+import(ggplot2)
 importFrom(statmod, tweedie)
 importFrom(tweedie, rtweedie)
 importFrom(systemfit, systemfit, systemfit.control)
@@ -55,7 +56,7 @@ S3method(print, triangle)
 S3method(print, ClarkLDF)
 S3method(print, ClarkCapeCod)
 S3method(print, ata)
-S3method(print, glmReserve)
+
 
 S3method(as.triangle, matrix)
 S3method(as.triangle, data.frame)
@@ -67,7 +68,13 @@ S3method(summary, BootChainLadder)
 S3method(summary, ClarkLDF)
 S3method(summary, ClarkCapeCod)
 S3method(summary, ata)
+
+S3method(print, glmReserve)
 S3method(summary, glmReserve)
+S3method(residuals, glmReserve)
+S3method(resid, glmReserve)
+S3method(plot, glmReserve)
+
 
 S3method(predict, TriangleModel)
 S3method(predict, ChainLadder)
@@ -81,7 +88,7 @@ S3method(vcov, clark)
 
 exportMethods(predict, Mse, summary, show, coerce, 
               "[", "$", "[[", "[<-", names, coef, vcov, residCov, residCor,
-              residuals, resid, rstandard, fitted, plot, cbind2, rbind2, dim )
+              residuals, resid, rstandard, fitted, plot, cbind2, rbind2, dim)
 
 S3method(CDR, MackChainLadder)
 S3method(CDR, BootChainLadder)

@@ -1,5 +1,9 @@
 \name{glmReserve}
 \alias{glmReserve}
+\alias{plot.glmReserve}
+\alias{summary.glmReserve}
+\alias{print.glmReserve}
+\alias{resid.glmReserve}
 
 \title{
 GLM-based Reserving Model 
@@ -94,11 +98,24 @@ GenIns <- GenIns / 1000
 (fit1 <- glmReserve(GenIns))
 summary(fit1, type = "model")   # extract the underlying glm
 
+# which:
+# 1 Original triangle 
+# 2 Full triangle 
+# 3 Reserve distribution
+# 4 Residual plot
+# 5 QQ-plot
+
+# plot original triangle
+plot(fit1, which = 1, xlab = "dev year", ylab = "cum loss")
+
+# plot residuals 
+plot(fit1, which = 4, xlab = "fitted values", ylab = "residuals")
+
 # Gamma GLM:
 (fit2 <- glmReserve(GenIns, var.power = 2))
 
 # compound Poisson GLM (variance function estimated from the data):
-fit3 <- glmReserve(GenIns, var.power = NULL)
+(fit3 <- glmReserve(GenIns, var.power = NULL))
 
 # Now suppose we have an exposure measure
 # we can put it as an offset term in the model
@@ -116,7 +133,12 @@ set.seed(11)
 # compute the quantiles of the predicted loss reserves
 t(apply(fit5$sims.reserve.pred, 2, quantile, 
         c(0.025, 0.25, 0.5, 0.75, 0.975)))
+        
+# plot distribution of reserve
+plot(fit5, which = 3)
 }
+
+
 
 }
 

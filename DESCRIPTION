@@ -8,7 +8,7 @@ Authors@R: c(person("Markus", "Gesmann", role = c("aut", "cre"),
              email = "markus.gesmann@googlemail.com"),
              person("Daniel", "Murphy", role = "aut", 
              email="danielmarkmurphy@gmail.com"),
-             person("Wayne", "Zhang", role = "aut", 
+             person("Yanwei (Wayne)", "Zhang", role = "aut", 
 	           email="actuary_zhang@hotmail.com"),
              person("Alessandro", "Carrato", role = "aut", 
              email="alessandro.carrato@gmail.com"),
@@ -36,7 +36,8 @@ Imports:
     utils, 
     systemfit, 
     statmod,
-    cplm (>= 0.7-3)
+    cplm (>= 0.7-3),
+    ggplot2
 Suggests:
     RUnit, MASS
 License: GPL (>= 2)
