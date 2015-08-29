@@ -1285,11 +1285,12 @@ gg <- gg + geom_density(aes(fill = year), alpha = 0.3) +
          theme(legend.position = "none") 
 print(gg)
 @ 
-%\begin{figure}[!ht]
-%\centering
+\begin{figure}[!ht]
+\centering
 % the above code doesn't seem to be stable
-%\caption{The predictive distribution of loss reserves for each year based on bootstrapping. }
-%\end{figure}
+\includegraphics{glmReservePlot.png}
+\caption{The predictive distribution of loss reserves for each year based on bootstrapping. }
+\end{figure}
 
 \section{Paid-incurred chain model}
 
@@ -1503,7 +1504,7 @@ seems to be  between 0 and 1, which is not possible as Tweedie models aren't
 defined for 0 < p < 1, thus the Error message. 
 But, despite this, we can conclude that overall a value \texttt{p=1} could be 
 reasonable for this dataset and the chosen regression function, 
-as anyway it seems to be near the MLE.  
+as it seems to be near the MLE.  
 Other sensitivities could be run on:
 \begin{itemize}
   \item Bootstrap type (parametric / semi-parametric), 
