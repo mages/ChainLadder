@@ -1,11 +1,12 @@
-Version 0.2.2 [2015-08-26]
+Version 0.2.2 [2015-08-31]
 --------------------------
 
   o Added back functionality to estimate the index parameter for the compound 
-    Poisson model in 'glmReserve' (now depends on package cplm). This works for 
-    both 'formula' and 'bootstrap'. 
+    Poisson model in 'glmReserve' (now depends on package cplm). 
+    This works for both 'formula' and 'bootstrap'. 
     
-  o Added methods 'resid' and plot for class 'glmReserve' (now depends on ggplot2)
+  o Added methods 'resid' and plot for class 'glmReserve' (now depends on 
+    ggplot2)
 
 
 Version 0.2.1 [2015-07-11]
@@ -581,7 +582,7 @@ USER-VISIBLE CHANGES
     back with two elements: 'ByOrigin' and 'Totals'	
   o Change of labels: origin years -> origin period and development years ->
     development origin
-  o Coefficient of Variance is abbreviate with 'CV' instead of 'CoV'
+  o Coefficient of Variation is abbreviate with 'CV' instead of 'CoV'
   o The example spreadsheet 'ChainLadder_in_Excel.xls' has new examples, 
     including 'BootChainLadder'
   o New greeting message after the R-call 'library(ChainLadder)'
