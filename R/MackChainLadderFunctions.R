@@ -135,14 +135,10 @@ Mack.S.E <- function(MackModel, FullTriangle, est.sigma="log-linear", weights, a
   sigma <- rep(0, n - 1)
   
   ## Extract estimated slopes, std. error and sigmas
-  x  <- sapply(lapply(MackModel, summary), coef)
-  # Row names of x are "Estimate" "Std. Error" "t value" "Pr(>|t|)"
-  f <- x[1,]
-  f.se <- x[2,]
-  sigma <- x[3,]
-  #   f <- sapply(MackModel, function(x) summary(x)$coef["x","Estimate"])
-  #   f.se <- sapply(MackModel, function(x) summary(x)$coef["x","Std. Error"])
-  #   sigma <- sapply(MackModel, function(x) summary(x)$sigma)
+  smmry <- lapply(MackModel, summary)
+  f <- sapply(smmry, function(x) x$coef["x","Estimate"])
+  f.se <- sapply(smmry, function(x) x$coef["x","Std. Error"])
+  sigma <- sapply(smmry, function(x) x$sigma)
   #   
   isna <- is.na(sigma)
   ## Think about weights!!!
