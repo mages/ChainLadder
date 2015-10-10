@@ -126,7 +126,7 @@ MackChainLadder <- function(
 ## Calculation of the mean squared error and standard error
 ## mean squared error = stochastic error (process variance) + estimation error
 ## standard error = sqrt(mean squared error)
-
+approx.equal <- function (x, y, tol=.Machine$double.eps^0.5) abs(x-y)<tol
 Mack.S.E <- function(MackModel, FullTriangle, est.sigma="log-linear", weights, alpha) {
   n <- ncol(FullTriangle)
   m <- nrow(FullTriangle)
@@ -142,7 +142,7 @@ Mack.S.E <- function(MackModel, FullTriangle, est.sigma="log-linear", weights, a
   sigma <- sapply(smmry, function(x) x$sigma)
   df <- sapply(smmry, function(x) x$df[2L])
   tolerance <- .Machine$double.eps
-  perfect.fit <- (df > 0) & (f.se < tolerance) & (f == 1.000)
+  perfect.fit <- (df > 0) & (f.se < tolerance) & approx.equal(f, 1.000)
   w <- which(perfect.fit)
   if (length(w)) {
     warn <- "Information: essentially no development in data for period(s):\n"
