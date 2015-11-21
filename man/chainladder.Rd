@@ -18,7 +18,8 @@ chainladder(Triangle, weights = 1, delta = 1)
     origin period frequency (e.g accident years).}
   \item{weights}{ weights. Default: 1, which sets the weights for all
     triangle entries to 1. Otherwise specify weights as a matrix of the same
-    dimension as \code{Triangle} with all weight entries in [0; 1]}
+    dimension as \code{Triangle} with all weight entries in [0; 1], where entry
+    \eqn{W_{i,k}} corresponds to the point \eqn{C_{i,k+1}/C_{i,k}}.}
   \item{delta}{'weighting' parameters, either 0,1 or 2. Default: 1;
     delta=1 gives the historical chain
     ladder age-to-age factors, delta=2 gives the straight average of the
