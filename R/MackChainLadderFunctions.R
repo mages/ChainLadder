@@ -126,7 +126,7 @@ MackChainLadder <- function(
 ## Calculation of the mean squared error and standard error
 ## mean squared error = stochastic error (process variance) + estimation error
 ## standard error = sqrt(mean squared error)
-
+approx.equal <- function (x, y, tol=.Machine$double.eps^0.5) abs(x-y)<tol
 Mack.S.E <- function(MackModel, FullTriangle, est.sigma="log-linear", weights, alpha) {
   n <- ncol(FullTriangle)
   m <- nrow(FullTriangle)
@@ -135,10 +135,22 @@ Mack.S.E <- function(MackModel, FullTriangle, est.sigma="log-linear", weights, a
   sigma <- rep(0, n - 1)
   
   ## Extract estimated slopes, std. error and sigmas
-  smmry <- lapply(MackModel, summary)
+  ## 2015-10-9 Replace lm's warning with more appropriate message
+  smmry <- suppressWarnings(lapply(MackModel, summary))
   f <- sapply(smmry, function(x) x$coef["x","Estimate"])
   f.se <- sapply(smmry, function(x) x$coef["x","Std. Error"])
   sigma <- sapply(smmry, function(x) x$sigma)
+  df <- sapply(smmry, function(x) x$df[2L])
+  tolerance <- .Machine$double.eps
+  perfect.fit <- (df > 0) & (f.se < tolerance) & approx.equal(f, 1.000)
+  w <- which(perfect.fit)
+  if (length(w)) {
+    warn <- "Information: essentially no development in data for period(s):\n"
+    nms <- colnames(FullTriangle)
+    periods <- paste0("'", paste(nms[w], nms[w+1], sep = "-"), "'")
+    warn <- c(warn, paste(periods, collapse = ", "))
+    cat(warn, "\n")
+  }
   #   
   isna <- is.na(sigma)
   ## Think about weights!!!
