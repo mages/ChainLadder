@@ -23,35 +23,37 @@
 #' We assume as usual that I=J. 
 #' The model assumptions for the Log-Normal PIC Model are the following:
 #' \itemize{
-#'   \item Conditionally, given \eqn{latex}{\Theta = (\Phi_0,...,\Phi_I,
-#'   \Psi_0,...,\Psi_{I-1},\sigma_0,...,\sigma_{I-1},\tau_0,...,\tau_{I-1})}
+#'   \item Conditionally, given \eqn{\Theta = (\Phi_0,...,\Phi_I,
+#'   \Psi_0,...,\Psi_{I-1},\sigma_0,...,\sigma_{I-1},\tau_0,...,\tau_{I-1})}{\Theta = (\Phi[0],...,\Phi[I],
+#'   \Psi[0],...,\Psi[I-1],\sigma[0],...,\sigma[I-1],\tau[0],...,\tau[I-1])}
 #'   we have
 #'   \itemize{
-#'     \item the random vector \eqn{latex}{(\xi_{0,0},...,\xi_{I,I},
-#'     \zeta_{0,0},...,\zeta_{I,I-1})} has multivariate Gaussian distribution
+#'     \item the random vector \eqn{(\xi_{0,0},...,\xi_{I,I},
+#'     \zeta_{0,0},...,\zeta_{I,I-1})}{(\xi[0,0],...,\xi[I,I],
+#'     \zeta[0,0],...,\zeta[I,I-1])} has multivariate Gaussian distribution
 #'     with uncorrelated components given by
-#'     \deqn{latex}{\xi_{i,j} \sim N(\Phi_j,\sigma^2_j),}
-#'     \deqn{latex}{\zeta_{k,l} \sim N(\Psi_l,\tau^2_l);}
+#'     \deqn{\xi_{i,j} \sim N(\Phi_j,\sigma^2_j),}{\xi[i,j] distributed as N(\Phi[j],\sigma^2[j]),}
+#'     \deqn{\zeta_{k,l} \sim N(\Psi_l,\tau^2_l);}{\zeta[k,l] distributed as N(\Psi[l],\tau^2[l]);}
 #'     \item cumulative payments are given by the recursion
-#'     \deqn{latex}{P_{i,j} = P_{i,j-1} \exp(\xi_{i,j}),}
-#'     with initial value \eqn{P_{i,0} = \exp (\xi_{i,0})};
-#'     \item incurred losses \eqn{I_{i,j}} are given by the backwards
+#'     \deqn{P_{i,j} = P_{i,j-1} \exp(\xi_{i,j}),}{P[i,j] = P[i,j-1] * exp(\xi[i,j]),}
+#'     with initial value \eqn{P_{i,0} = \exp (\xi_{i,0})}{P[i,0] = * exp (\xi[i,0])};
+#'     \item incurred losses \eqn{I_{i,j}}{I[i,j]} are given by the backwards
 #'     recursion
-#'     \deqn{latex}{I_{i,j-1} = I_{i,j} \exp(-\zeta_{i,j-1}),}
-#'     with initial value \eqn{I_{i,I}=P_{i,I}}.
+#'     \deqn{I_{i,j-1} = I_{i,j} \exp(-\zeta_{i,j-1}),}{I[i,j-1] = I[i,j] * exp(-\zeta[i,j-1]),}
+#'     with initial value \eqn{I_{i,I}=P_{i,I}}{I[i,I] = P[i,I]}.
 #'   }
-#'   \item The components of \eqn{latex}{\Theta} are indipendent and 
-#'   \eqn{latex}{\sigma_j,\tau_j > 0} for all j.
+#'   \item The components of \eqn{\Theta}{\Theta} are independent and 
+#'   \eqn{\sigma_j,\tau_j > 0}{\sigma[j],\tau[j] > 0} for all j.
 #'  }
 #'  
 #' 
-#' Parameters \eqn{latex}{\Theta} in the model are in general not known and need to be
+#' Parameters \eqn{\Theta}{\Theta} in the model are in general not known and need to be
 #' estimated from observations. They are estimated in a Bayesian framework.
 #' In the Bayesian PIC model they assume that the previous assumptions 
-#' hold true with deterministic \eqn{latex}{\sigma_0,...,\sigma_J} and 
-#' \eqn{latex}{\tau_0,...,\tau_{J-1}} and
-#' \deqn{latex}{\Phi_m \sim N(\phi_m,s^2_m),}
-#' \deqn{latex}{\Psi_n \sim N(\psi_n,t^2_n).}
+#' hold true with deterministic \eqn{\sigma_0,...,\sigma_J}{\sigma[0],...,\sigma[J]} and 
+#' \eqn{\tau_0,...,\tau_{J-1}}{\tau[0],...,\tau[J-1]} and
+#' \deqn{\Phi_m \sim N(\phi_m,s^2_m),}{\Phi[m] distributed as N(\phi[m],s^2[m]),}
+#' \deqn{\Psi_n \sim N(\psi_n,t^2_n).}{\Psi[n] distributed as N(\psi[n],t^2[n]).}
 #' This is not a full Bayesian approach but has the advantage to give
 #' analytical expressions for the posterior distributions and the prediction
 #' uncertainty.
