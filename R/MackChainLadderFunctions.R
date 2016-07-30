@@ -30,9 +30,9 @@ MackChainLadder <- function(
     ## Create chain ladder models
     
     ## Mack uses alpha between 0 and 2 to distinguish
-    ## alpha = 0 ordinary regression with intercept 0
+    ## alpha = 0 straight averages
     ## alpha = 1 historical chain ladder age-to-age factors
-    ## alpha = 2 straight averages
+    ## alpha = 2 ordinary regression with intercept 0
     
     ## However, in Zehnwirth & Barnett they use the notation of delta, whereby delta = 2 - alpha
     ## the delta is than used in a linear modelling context.

@@ -507,7 +507,7 @@ tail.model <- lm(log(f-1) ~ dev.period)
 abline(tail.model)
 co <- coef(tail.model)
 ## extrapolate another 100 dev. period
-tail <- exp(co[1] + c((n + 1):(n + 100)) * co[2]) + 1
+tail <- exp(co[1] + c(n:(n + 100)) * co[2]) + 1
 f.tail <- prod(tail)
 f.tail      
 @ 
@@ -525,7 +525,7 @@ claims amount to forecast the next development period. The
 \emph{squaring} of the RAA triangle is calculated below, where an
 \emph{ultimate} column is appended to the right to accommodate the
 expected development beyond the oldest age (10) of the triangle due to
-the tail factor (1.005) being greater than unity. 
+the tail factor (1.009) being greater than unity. 
 <<>>=
 f <- c(f, f.tail)
 fullRAA <- cbind(RAA, Ult = rep(0, 10))
@@ -535,7 +535,7 @@ for(k in 1:n){
 round(fullRAA)
 @ 
 
-The total estimated outstanding loss under this method is about 53200:
+The total estimated outstanding loss under this method is about 54100:
 <<>>=
 sum(fullRAA[ ,11] - getLatestCumulative(RAA))
 @ 
@@ -555,7 +555,7 @@ displayed in favor of that multiplicative calculation.
 
 For example, suppose the actuary decides that the volume weighted
 factors from the RAA triangle are representative of expected future
-growth, but discards the 1.005 tail factor derived from the loglinear
+growth, but discards the 1.009 tail factor derived from the loglinear
 fit in favor of a five percent tail (1.05) based on loss data from a
 larger book of similar business. The LDF method might be displayed in
 R as follows. 

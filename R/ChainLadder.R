@@ -11,9 +11,9 @@ chainladder <- function(Triangle, weights=1,
 
 
     ## Mack uses alpha between 0 and 2 to distinguish
-    ## alpha = 0 ordinary regression with intercept 0
+    ## alpha = 0 straight averages
     ## alpha = 1 historical chain ladder age-to-age factors
-    ## alpha = 2 straight averages
+    ## alpha = 2 ordinary regression with intercept 0
 
     ## However, in Zehnwirth & Barnett they use the notation of delta, whereby delta = 2 - alpha
     ## the delta is than used in a linear modelling context.
@@ -88,7 +88,7 @@ tailfactor <- function (clratios){
     if (f[n - 2] * f[n - 1] > 1.0001) {
         fn <- which(clratios > 1)
         f <- clratios[fn]
-        n <- length(f)
+        n <- max(fn)
         tail.model <- lm(log(f - 1) ~ fn)
         co <- coef(tail.model)
         tail <- exp(co[1] + c((n+1):(n + 100)) * co[2]) + 1
