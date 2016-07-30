@@ -18,4 +18,5 @@ Many thanks to all who provided ideas, suggestions, corrections and bug reports:
   to the one year claims development result functions
 - Mario Wüthrich for guidance on the one year CDR functions
 - Ben Gorman for clarifying the documentation of weights in chainladder function
+- Mark Lee for fixing tail extrapolation in Vignette
 
