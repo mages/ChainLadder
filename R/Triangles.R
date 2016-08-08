@@ -74,7 +74,7 @@ as.triangle.data.frame <- function(Triangle, origin="origin", dev="dev", value="
 
   isDate <- intersect(class(Triangle[[origin]]), "Date")
   
-  if ( !is.null(isDate) ){
+  if ( length(isDate) != 0 ){
     warning("Converting origin from Date to numeric")
     Triangle[[origin]] <- as.numeric(Triangle[[origin]])
   }
