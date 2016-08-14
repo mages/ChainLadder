@@ -3,7 +3,7 @@ Version 0.2.3 [2015-07-30]
 
 Changes
 
-  o Calirfied error statements in MackChainLadder.
+  o Clarified error statements in MackChainLadder.
   
   o Fixed tail extrapolation in Vignette. Thanks to Mark Lee.
 
