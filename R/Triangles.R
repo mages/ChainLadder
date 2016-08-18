@@ -72,7 +72,7 @@ as.triangle.matrix <- function(Triangle, origin="origin", dev="dev", value="valu
 
 as.triangle.data.frame <- function(Triangle, origin="origin", dev="dev", value="value", ...){
 
-  isDate <- intersect(class(Triangle[[origin]]), "Date")
+  isDate <- inherits(Triangle[[origin]], "Date")
   
   if ( length(isDate) != 0 ){
     warning("Converting origin from Date to numeric")
