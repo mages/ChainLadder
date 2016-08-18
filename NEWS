@@ -13,6 +13,15 @@ Changes
     	  Give an "information" message when that occurs and the
 	  development factor is unity.
 
+  o Convert column of Date class in as.triangle; Change test from null to
+    length
+    - Triangles with Date Row.names test plot with lattice = TRUE no
+      longer fails with Brian's fix.
+      
+  o New /inst/unittests/runit.Triangles.R file for checking for continued
+    clean ChainLadder compilations whenever code in Triangles.R is
+    improved or otherwise changed.
+
 Bug Fixes
 
   o Fixed tail extrapolation in Vignette. Thanks to Mark Lee.
@@ -40,15 +49,6 @@ Bug Fixes
 	    3) Minor fix to the comments in ChainLadder.R and MackChainLadder.R,
 	       fixing notation for alpha which is now consistent with the
 	       documentation and Mack's original paper.
-
-  o Convert column of Date class in as.triangle; Change test from null to
-    length
-    - Triangles with Date Row.names test plot with lattice = TRUE no
-      longer fails with Brian's fix.
-      
-  o New /inst/unittests/runit.Triangles.R file for checking for continued
-    clean ChainLadder compilations whenever code in Triangles.R is
-    improved or otherwise changed.
 
   
 
