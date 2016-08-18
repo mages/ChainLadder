@@ -164,10 +164,18 @@ Mack.S.E <- function(MackModel, FullTriangle, est.sigma="log-linear", weights, a
     }
     else {
       ## estimate sigma[n-1] via log-linear regression
-      sig.model <- estimate.sigma(sigma)
+      sig.model <- suppressWarnings(estimate.sigma(sigma))
       sigma <- sig.model$sigma
       
-      p.value.of.model <- summary(sig.model$model)$coefficient[2,4]
+      p.value.of.model <- tryCatch(summary(sig.model$model)$coefficient[2,4],
+                                   error = function(e) e)
+      if (inherits(p.value.of.model, "error")) {
+        warning(paste("'loglinear' model to estimate sigma_n doesn't appear appropriate.\n",
+                      "est.sigma will be overwritten to 'Mack'.\n",
+                      "Mack's estimation method will be used instead."))
+        est.sigma <- "Mack"
+      }
+      else
       if(p.value.of.model > 0.05){
         warning(paste("'loglinear' model to estimate sigma_n doesn't appear appropriate.",
                       "\np-value > 5.\n",
@@ -175,7 +183,8 @@ Mack.S.E <- function(MackModel, FullTriangle, est.sigma="log-linear", weights, a
                       "Mack's estimation method will be used instead."))
         
         est.sigma <- "Mack"
-      }else{
+      }
+      else{
         f.se[isna] <- sigma[isna]/sqrt(weights[1,isna]*FullTriangle[1,isna]^alpha[isna])
       }
     }

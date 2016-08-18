@@ -49,3 +49,16 @@ test.NoDevelopmentExample <- function(){
   m <- tryCatch(MackChainLadder(x, est.sigma = "Mack"), warning = function(w) w)
   checkTrue(!inherits(m, "warning"))
 }
+test.loglinear.NA.Example <- function(){
+  x <- matrix(byrow = TRUE, nrow = 4, ncol = 4,
+              dimnames = list(origin = LETTERS[1:4], dev = 1:4),
+              data = c(
+                100, 105, 105.00001, 105.00001,
+                200, 210, 210.00001, NA,
+                300, 315, NA, NA,
+                400, NA, NA, NA)
+  )
+  # This should no longer generate an error
+  m <- tryCatch(MackChainLadder(x, est.sigma = "log-linear"), error = function(e) e)
+  checkTrue(!inherits(m, "error"))
+}
