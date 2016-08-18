@@ -5,7 +5,7 @@ Changes
 
   o Clarified error statements in MackChainLadder.
   
-  o Simplfied model extraction from lm
+  o Simplified model extraction from lm
   
 	- lm generates a warning when the fit is "essentially perfect".
     	  For development triangles that occurs when the link ratios are
