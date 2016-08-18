@@ -1,11 +1,56 @@
-Version 0.2.3 [2015-07-30]
+Version 0.2.3 [2016-08-13]
 --------------------------
 
 Changes
 
   o Clarified error statements in MackChainLadder.
   
+  o Simplfied model extraction from lm
+  
+	- lm generates a warning when the fit is "essentially perfect".
+    	  For development triangles that occurs when the link ratios are
+    	  indistinguishable within the machine’s tolerance.
+    	  Give an "information" message when that occurs and the
+	  development factor is unity.
+
+Bug Fixes
+
   o Fixed tail extrapolation in Vignette. Thanks to Mark Lee.
+
+  o Fixed summary calls 
+    - approximately unity ata: Test for essentially-unity link ratio
+      to within a reasonable tolerance.
+
+  o Updated documentation for weights parameter of chainladder method
+  
+    - Fixed documentation
+    - Fixes for tail extrapolation in Vignette and Chainladder
+    
+  	  1) The calculation for the tail log-linear extrapolation given in
+	       the vignette had a minor error.  This has been corrected,
+	       and the result now agrees with the results of
+	       MackChainLadder(RAA, tail=TRUE).
+      2) The calculation of the tail using the log-linear extrapolation
+	       in ChainLadder.R had a potential error - when clratios has
+	       values of less than unity they are dropped, but the extrapolation
+	       was started from a quantity indexed by the length of f, not
+	       the value of fn.  This changes the results if clratios has a
+	       pattern like e.,g.: ... 1.1, 0.98,1.01,0.005 (i.e. a link ratio
+	       less than unity which is not the last value)
+	    3) Minor fix to the comments in ChainLadder.R and MackChainLadder.R,
+	       fixing notation for alpha which is now consistent with the
+	       documentation and Mack's original paper.
+
+  o Convert column of Date class in as.triangle; Change test from null to
+    length
+    - Triangles with Date Row.names test plot with lattice = TRUE no
+      longer fails with Brian's fix.
+      
+  o New /inst/unittests/runit.Triangles.R file for checking for continued
+    clean ChainLadder compilations whenever code in Triangles.R is
+    improved or otherwise changed.
+
+  
 
 Version 0.2.2 [2015-08-31]
 --------------------------
