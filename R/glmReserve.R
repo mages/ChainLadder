@@ -33,7 +33,22 @@ glmReserve <- function(triangle, var.power = 1, link.power = 0,
   if (is.null(attr(tr.incr, "exposure"))) {
     lda$offset <-  rep(0, nrow(lda))
   } else {
-    lda$offset <- fam$linkfun(attr(tr.incr, "exposure")[lda$origin - min (lda$origin) + 1])
+    # Allow exposures to be expanded to the long data.frame by matching
+    #   names(exposure) with triangle's origin values, or by the arithmetic
+    #   formula that has always been there, if triangles origin values are
+    #   convertible from their character representations to numeric.
+    expo <- attr(tr.incr, "exposure")
+    if (is.null(names(expo))) names(expo) <- NA
+    if (all(names(expo) %in% lda$origin)) lda$offset <- 
+        fam$linkfun(attr(tr.incr, "exposure")[lda$origin])
+    else {
+      numorig <- suppressWarnings(as.numeric(lda$origin))
+      if (any(is.na(numorig))) stop(
+        "Unnamed exposures incompatible when triangle's origin values are not convertible from character to numeric."
+      )
+      lda$offset <- 
+        fam$linkfun(attr(tr.incr, "exposure")[numorig - min (numorig) + 1])
+    }
   }
   
   # divide data 
