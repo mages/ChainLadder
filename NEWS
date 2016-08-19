@@ -7,13 +7,22 @@ Changes
 
   o Clarified error statements in MackChainLadder.
   
-  o Simplfied model extraction from lm
+  o Simplified model extraction from lm
   
 	- lm generates a warning when the fit is "essentially perfect".
     	  For development triangles that occurs when the link ratios are
     	  indistinguishable within the machine’s tolerance.
     	  Give an "information" message when that occurs and the
 	  development factor is unity.
+
+  o Convert column of Date class in as.triangle; Change test from null to
+    length
+    - Triangles with Date Row.names test plot with lattice = TRUE no
+      longer fails with Brian's fix.
+      
+  o New /inst/unittests/runit.Triangles.R file for checking for continued
+    clean ChainLadder compilations whenever code in Triangles.R is
+    improved or otherwise changed.
 
 Bug Fixes
 
@@ -42,15 +51,6 @@ Bug Fixes
 	    3) Minor fix to the comments in ChainLadder.R and MackChainLadder.R,
 	       fixing notation for alpha which is now consistent with the
 	       documentation and Mack's original paper.
-
-  o Convert column of Date class in as.triangle; Change test from null to
-    length
-    - Triangles with Date Row.names test plot with lattice = TRUE no
-      longer fails with Brian's fix.
-      
-  o New /inst/unittests/runit.Triangles.R file for checking for continued
-    clean ChainLadder compilations whenever code in Triangles.R is
-    improved or otherwise changed.
 
   
 

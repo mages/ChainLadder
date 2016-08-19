@@ -142,7 +142,7 @@ Mack.S.E <- function(MackModel, FullTriangle, est.sigma="log-linear", weights, a
   sigma <- sapply(smmry, function(x) x$sigma)
   df <- sapply(smmry, function(x) x$df[2L])
   tolerance <- .Machine$double.eps
-  perfect.fit <- (df > 0) & (f.se < tolerance) & approx.equal(f, 1.000)
+  perfect.fit <- (df > 0) & (f.se < tolerance) # & approx.equal(f, 1.000)
   w <- which(perfect.fit)
   if (length(w)) {
     warn <- "Information: essentially no development in data for period(s):\n"
@@ -164,10 +164,18 @@ Mack.S.E <- function(MackModel, FullTriangle, est.sigma="log-linear", weights, a
     }
     else {
       ## estimate sigma[n-1] via log-linear regression
-      sig.model <- estimate.sigma(sigma)
+      sig.model <- suppressWarnings(estimate.sigma(sigma))
       sigma <- sig.model$sigma
       
-      p.value.of.model <- summary(sig.model$model)$coefficient[2,4]
+      p.value.of.model <- tryCatch(summary(sig.model$model)$coefficient[2,4],
+                                   error = function(e) e)
+      if (inherits(p.value.of.model, "error")) {
+        warning(paste("'loglinear' model to estimate sigma_n doesn't appear appropriate.\n",
+                      "est.sigma will be overwritten to 'Mack'.\n",
+                      "Mack's estimation method will be used instead."))
+        est.sigma <- "Mack"
+      }
+      else
       if(p.value.of.model > 0.05){
         warning(paste("'loglinear' model to estimate sigma_n doesn't appear appropriate.",
                       "\np-value > 5.\n",
@@ -175,7 +183,8 @@ Mack.S.E <- function(MackModel, FullTriangle, est.sigma="log-linear", weights, a
                       "Mack's estimation method will be used instead."))
         
         est.sigma <- "Mack"
-      }else{
+      }
+      else{
         f.se[isna] <- sigma[isna]/sqrt(weights[1,isna]*FullTriangle[1,isna]^alpha[isna])
       }
     }
