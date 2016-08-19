@@ -13,7 +13,7 @@ This function implements loss reserving models within the generalized linear mod
 }
 \usage{
 glmReserve(triangle, var.power = 1, link.power = 0, cum = TRUE, 
-      mse.method = c("formula", "bootstrap"),  nsim = 1000, ...)
+      mse.method = c("formula", "bootstrap"),  nsim = 1000, nb = FALSE, ...)
 }
 
 \arguments{
@@ -37,6 +37,9 @@ glmReserve(triangle, var.power = 1, link.power = 0, cum = TRUE,
 }
   \item{nsim}{
   Number of simulations to be performed in the bootstrapping, with a default value of 1000.
+}
+  \item{nb}{
+  Whether the negative binomial distribution is used. If \code{true}, the arguments \code{var.power} and \code{link.power} are ignored and a negative binomial GLM is fitted using \code{glm.nb}. 
 }
   \item{\dots}{
   Arguments to be passed onto the function \code{\link[stats]{glm}} or \code{\link[cplm]{cpglm}} such as \code{contrasts} or \code{control}. It is important that \code{offset} and \code{weight} should not be specified. Otherwise, an error will be reported and the program will quit. 
@@ -66,6 +69,7 @@ However,  the user should be cautious of some of the key assumptions that underl
 }
 To solve these potential problems, many variants of the current basic GLM model have been proposed in the actuarial literature. Some of these may be included in the future release.
 
+Support of the negative binomial GLM was added since version 0.2.3.  
 }
 
 \value{The output is an object of class \code{"glmReserve"} that has the following components:
@@ -88,7 +92,7 @@ Wayne Zhang \email{actuary_zhang@hotmail.com}
 }
 
 \seealso{
-See also \code{\link[stats]{glm}}, \code{\link[statmod]{tweedie}},  \code{\link[cplm]{cpglm}} and \code{\link{MackChainLadder}}.
+See also \code{\link[stats]{glm}}, \code{\link[MASS]{glm.nb}}, \code{\link[statmod]{tweedie}},  \code{\link[cplm]{cpglm}} and \code{\link{MackChainLadder}}.
 }
 \examples{
 data(GenIns)
@@ -138,7 +142,8 @@ t(apply(fit5$sims.reserve.pred, 2, quantile,
 plot(fit5, which = 3)
 }
 
-
+# alternative over-dispersed Poisson: negative binomial GLM
+(fit5 <- glmReserve(GenIns, nb = TRUE))
 
 }
 

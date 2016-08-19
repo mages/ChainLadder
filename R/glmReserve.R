@@ -6,7 +6,7 @@
 
 glmReserve <- function(triangle, var.power = 1, link.power = 0,
                        cum = TRUE, mse.method = c("formula", "bootstrap"), 
-                       nsim = 1000, ...){
+                       nsim = 1000, nb = FALSE, ...){
   call <- match.call()
   mse.method <- match.arg(mse.method)
   
@@ -41,18 +41,25 @@ glmReserve <- function(triangle, var.power = 1, link.power = 0,
   ldaOut <- subset(lda, is.na(lda$value)) 
    
   # fit the model
-  if (!is.null(var.power)){
-    glmFit <- glm(value ~ factor(origin) + factor(dev), family = fam,
-              data = ldaFit, offset = offset, ...)
-    phi <- with(glmFit, sum(weights * residuals^2) / df.residual)
-  } else{ 
-    glmFit <- cpglm(value ~ factor(origin) + factor(dev),
-                  link = link.power, data = ldaFit, offset = offset, ...)
-    phi <- glmFit$phi
-    # update fam
-    fam <- tweedie(glmFit$p, link.power)
+  if (nb){
+    ldaFit$value <- round(ldaFit$value)  #warning
+    glmFit <- glm.nb(value ~ factor(origin) + factor(dev), 
+                  data = ldaFit, ...)
+    phi <- 1.0
+    fam <- glmFit$family
+  } else {
+    if (!is.null(var.power)){
+      glmFit <- glm(value ~ factor(origin) + factor(dev), family = fam,
+                data = ldaFit, offset = offset, ...)
+      phi <- with(glmFit, sum(weights * residuals^2) / df.residual)
+    } else{ 
+      glmFit <- cpglm(value ~ factor(origin) + factor(dev),
+                    link = link.power, data = ldaFit, offset = offset, ...)
+      phi <- glmFit$phi
+      # update fam
+      fam <- tweedie(glmFit$p, link.power)
+    }
   }
-
   ################################
   ## calculate reserves 
   ################################
@@ -125,20 +132,31 @@ glmReserve <- function(triangle, var.power = 1, link.power = 0,
       }
       
       # fit model on new data
-      if (!is.null(var.power)){
-        glmFitB <- glm(yB ~ factor(origin) + factor(dev),
-                        family = fam, data = ldaFit, offset = offset, ...)
-        phi <- with(glmFitB, sum(weights * residuals^2) / df.residual)
-        cf <- c(coef(glmFitB), phi, var.power)
-      } else{ 
-        glmFitB <- cpglm(yB ~ factor(origin) + factor(dev),
-                        link = link.power, data = ldaFit, offset = offset, ...)
-        cf <- c(coef(glmFitB), glmFitB$phi, glmFitB$p)
-      }      
+      if (nb){
+        yB <- round(yB)
+        glmFitB <- glm.nb(yB ~ factor(origin) + factor(dev), 
+                         data = ldaFit)
+        phi <- 1.0
+        cf <- c(coef(glmFitB), 1.0, glmFitB$theta)
+      } else {
+        if (!is.null(var.power)){
+          glmFitB <- glm(yB ~ factor(origin) + factor(dev),
+                          family = fam, data = ldaFit, offset = offset, ...)
+          phi <- with(glmFitB, sum(weights * residuals^2) / df.residual)
+          cf <- c(coef(glmFitB), phi, var.power)
+        } else{ 
+          glmFitB <- cpglm(yB ~ factor(origin) + factor(dev),
+                          link = link.power, data = ldaFit, offset = offset, ...)
+          cf <- c(coef(glmFitB), glmFitB$phi, glmFitB$p)
+        }      
+      }
       # mean and prediction
       ymB <- predict(glmFitB, newdata = ldaOut, type = "response")
-      ypB <- rtweedie(length(ymB), mu = ymB, phi = cf[nB + 1], power = cf[nB + 2])
-      
+      if (nb){
+        ypB <- rnbinom(length(ymB), size = glmFitB$theta, mu = ymB)
+      } else {
+        ypB <- rtweedie(length(ymB), mu = ymB, phi = cf[nB + 1], power = cf[nB + 2])
+      }
       # save simulations
       resMeanAyB[i, ] <- as.numeric(tapply(ymB, ldaOut$origin, sum))      
       resPredAyB[i, ] <- as.numeric(tapply(ypB, ldaOut$origin, sum))      
@@ -205,6 +223,8 @@ residuals.glmReserve <- function(object, ...){
   r <- residuals(m, type = "pearson")
   if (class(m)[1] == "glm") {
     phi <- sum((m$weights * m$residuals^2)[m$weights > 0])/m$df.residual
+  } else if (class(m)[1] == "glm"){
+    phi <- 1
   } else {
     phi <- m$phi
   }

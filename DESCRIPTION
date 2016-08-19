@@ -37,9 +37,10 @@ Imports:
     systemfit, 
     statmod,
     cplm (>= 0.7-3),
-    ggplot2
+    ggplot2,
+    MASS
 Suggests:
-    RUnit, MASS
+    RUnit
 License: GPL (>= 2)
 URL: https://github.com/mages/ChainLadder#chainladder
 BugReports: https://github.com/mages/ChainLadder/issues 

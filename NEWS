@@ -3,6 +3,8 @@ Version 0.2.3 [2016-08-13]
 
 Changes
 
+  o glmReserve adds support for negative binomial GLM.
+
   o Clarified error statements in MackChainLadder.
   
   o Simplfied model extraction from lm
