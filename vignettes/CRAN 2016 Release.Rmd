@@ -1,0 +1,209 @@
+---
+title: "ChainLadder CRAN 2016 Release"
+author: "ChainLadder Contributors"
+date: "August 18, 2016"
+output: pdf_document
+subtitle: Changes since prior release
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+The current release of the ChainLadder package on CRAN is
+0.2.3.
+Changes and bug fixes since the prior release are:
+
+* Changes
+    + Clarified warnings issued by MackChainLadder
+    + Triangles may now have non-numeric rownames
+    + glmReserve "exposure" attribute may now have names
+    + Simplified model extraction from lm
+    + approximately unity ata
+    + New unit tests
+* Bug Fixes
+    + Fixed tail extrapolation in Vignette. Thanks to Mark Lee.
+
+# Changes
+
+## Clarified warnings issued by MackChainLadder
+
+By default, R's 'lm' method generates a warning when it detects
+an "essentially perfect fit".
+This can happen when one column of a triangle is identical to the previous column;
+i.e., when all link ratios are the same.
+In the example below, the second column is a fixed constant, 1.05,
+times the first column.
+ChainLadder previously issued the lm warning below.
+
+```{r echo = FALSE}
+suppressPackageStartupMessages(library(ChainLadder))
+
+```
+```
+x <- matrix(byrow = TRUE, nrow = 4, ncol = 4, 
+            dimnames = list(origin = LETTERS[1:4], dev = 1:4),
+            data = c(
+              100, 105, 105.00001, 105.00001,
+              200, 210, 210.00001, NA,
+              300, 315, NA, NA,
+              400, NA, NA, NA)
+            )
+mcl <- MackChainLadder(x, est.sigma = "Mack")
+
+Warning messages:
+1: In summary.lm(x) : essentially perfect fit: summary may be unreliable
+2: In summary.lm(x) : essentially perfect fit: summary may be unreliable
+3: In summary.lm(x) : essentially perfect fit: summary may be unreliable
+```
+which may have raised a concern with the user when none was warranted.
+
+Now ChainLadder issues an informational message at the console:
+
+```{r echo = FALSE}
+x <- matrix(byrow = TRUE, nrow = 4, ncol = 4, 
+            dimnames = list(origin = LETTERS[1:4], dev = 1:4),
+            data = c(
+              100, 105, 105.00001, 105.00001,
+              200, 210, 210.00001, NA,
+              300, 315, NA, NA,
+              400, NA, NA, NA)
+            )
+```
+```{r}
+mcl <- MackChainLadder(x, est.sigma = "Mack")
+```
+
+## Triangles may now have non-numeric rownames
+
+Previously it was required that the row and column names of a triangle be convertible
+to numeric.
+Curiously, sometimes that "requirement" did not seem to cause a problem.
+For example, the following sets the rownames of GenIns to the beginning Date
+of the accident year, and the default call to plot displays the triangle without error
+
+```{r}
+x <- GenIns
+rownames(x) <- paste0(2001:2010, "-01-01")
+plot(x)
+```
+
+However, a plot with the lattice=TRUE option would blow up.
+Now it displays with the pretty headings.
+
+```{r}
+plot(x, lattice=TRUE)
+```
+
+As it turns out, 
+this need for "origin" values that are 
+not necessarily convertible to numeric
+arises frequently.
+
+Suppose you have a table of claim detail at various evaluation dates.
+Invariable, such a table will have a date field holding the date of loss.
+It would be nice to be able to summarize that data by accident year "cuts".
+It turns out there's a builtin function in R that will get you most of the way there.
+It's called 'cut'.
+
+In this example we take the GenIns data in long format and
+generate 50 claims per accident period.
+We assign each claim a random date within the year.
+The value given is a random perturbation of one-fiftieth of
+the value in GenInsLong.
+We accumulate the detail into an accident year triangle using
+ChainLadder's as.triangle method.
+The summarized triangle displayed at the end is very similar to GenIns, and
+has more informative row labels.
+
+```{r}
+x <- GenInsLong
+# start off y with x's headings
+y <- x[0,]
+names(y)[1] <- "lossdate"
+set.seed(1234)
+n = 50 # number of simulated claims per accident perior
+for (i in 1:nrow(x)) {
+  y <- rbind(y,
+             data.frame(
+               lossdate = as.Date(
+                 as.numeric(as.Date(paste0(x[i, "accyear"]+2000, "-01-01"))) +
+                   round(runif(n, 0, 364),0), origin = "1970-01-01"),
+               devyear = x[i, "devyear"],
+               incurred.claims = rnorm(n, mean = x[i, "incurred claims"] / n,
+                                         sd = x[i, "incurred claims"]/(10*n))
+             ))
+}
+# here's the magic cut
+y$ay <- cut(y$lossdate, breaks = "years")
+# this summarized triangle is very similar to GenIns
+as.triangle(y, origin = "ay", dev = "devyear", value = "incurred.claims")
+```
+
+## glmReserve "exposure" attribute may now have names
+
+Previously, when an "exposure" attribute was assigned to a triangle, 
+it was assumed/expected that the user would supply the values in the
+same order as the accident years. 
+Then, behind the scenes, glmReserve would use an arithmetic formula to match
+the exposure with the appropriate accident year 
+using the numeric "origin" values
+after the triangle
+had been converted to long format.
+
+glmReserve now allows for "exposure" to have "names"
+that coincide with the rownames of the triangle,
+which are used to match to origin in Long format.
+Here is an example, also found in ?glmReserve.
+
+```{r}
+  GenIns2 <- GenIns
+  rownames(GenIns2) <- paste0(2001:2010, "-01-01")
+  expos <- (7 + 1:10 * 0.4) * 10
+  names(expos) <- rownames(GenIns2)
+  attr(GenIns2, "exposure") <- expos
+  glmReserve(GenIns2)
+```
+
+## Simplified model extraction from lm
+
+Anything to add here?
+
+## approximately unity ata
+
+Test for essentially-unity link ratio to within a reasonable tolerance.
+      
+## New unit tests
+
+New files in the /inst/unittests/ folder can be used for
+future enhancements
+
+runit.Triangles.R for Triangles.R
+
+runit.glmReserve.R for glmReserve.R
+
+
+# Bug fixes
+
+## Fixed tail extrapolation
+
+Fixed tail extrapolation in Vignette.
+(Thanks to Mark Lee.)
+
+    * Fixed summary calls.
+    * Updated documentation for weights parameter of chainladder method.
+    * Fixes for tail extrapolation in Vignette and Chainladder
+      1) The calculation for the tail log-linear extrapolation given in
+	       the vignette had a minor error.  This has been corrected,
+	       and the result now agrees with the results of
+	       MackChainLadder(RAA, tail=TRUE).
+      2) The calculation of the tail using the log-linear extrapolation
+	       in ChainLadder.R had a potential error - when clratios has
+	       values of less than unity they are dropped, but the extrapolation
+	       was started from a quantity indexed by the length of f, not
+	       the value of fn.  This changes the results if clratios has a
+	       pattern like e.,g.: ... 1.1, 0.98,1.01,0.005 (i.e. a link ratio
+	       less than unity which is not the last value)
+      3) Minor fix to the comments in ChainLadder.R and MackChainLadder.R,
+	       fixing notation for alpha which is now consistent with the
+	       documentation and Mack's original paper.
