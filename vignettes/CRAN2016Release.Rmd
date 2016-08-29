@@ -174,10 +174,13 @@ Anything to add here?
 New files in the /inst/unittests/ folder can be used for
 future enhancements
 
-runit.Triangles.R for Triangles.R
+    * runit.Triangles.R for Triangles.R
+    * runit.glmReserve.R for glmReserve.R
 
-runit.glmReserve.R for glmReserve.R
-
+Contributors of new contributions to those R files are encouraged
+to utilize those runit scripts for testing, 
+and, of course, add other runit scripts as warrantted. 
+(Thank)
 
 # Bug fixes
 
