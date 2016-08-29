@@ -19,7 +19,6 @@ Changes and bug fixes since the prior release are:
     + Triangles may now have non-numeric rownames
     + glmReserve "exposure" attribute may now have names
     + Simplified model extraction from lm
-    + approximately unity ata
     + New unit tests
 * Bug Fixes
     + Fixed tail extrapolation in Vignette. Thanks to Mark Lee.
@@ -170,10 +169,6 @@ Here is an example, also found in ?glmReserve.
 
 Anything to add here?
 
-## approximately unity ata
-
-Test for essentially-unity link ratio to within a reasonable tolerance.
-      
 ## New unit tests
 
 New files in the /inst/unittests/ folder can be used for
