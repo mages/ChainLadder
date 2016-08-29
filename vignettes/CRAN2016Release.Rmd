@@ -18,7 +18,6 @@ Changes and bug fixes since the prior release are:
     + Clarified warnings issued by MackChainLadder
     + Triangles may now have non-numeric rownames
     + glmReserve "exposure" attribute may now have names
-    + Simplified model extraction from lm
     + New unit tests
 * Bug Fixes
     + Fixed tail extrapolation in Vignette. Thanks to Mark Lee.
@@ -164,10 +163,6 @@ Here is an example, also found in ?glmReserve.
   attr(GenIns2, "exposure") <- expos
   glmReserve(GenIns2)
 ```
-
-## Simplified model extraction from lm
-
-Anything to add here?
 
 ## New unit tests
 
