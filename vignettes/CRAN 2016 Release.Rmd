@@ -70,6 +70,7 @@ x <- matrix(byrow = TRUE, nrow = 4, ncol = 4,
               400, NA, NA, NA)
             )
 ```
+
 ```{r}
 mcl <- MackChainLadder(x, est.sigma = "Mack")
 ```
