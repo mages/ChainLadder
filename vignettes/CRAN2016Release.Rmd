@@ -164,12 +164,15 @@ Here is an example, newly found in ?glmReserve.
 ```
 
 ## glmReserve adds support for negative binomial GLM
+<<<<<<< 67f1e86b24fc9e19e774ff3d64099097cdea26f4
 The glmReserve function now supports the negative binomial GLM, a more natural way to model over-dispersion in count data. The model is fitted through the `glm.nb` function from the `MASS` package. 
 
 To fit the negative binomial GLM to the loss triangle, simply set `nb = TRUE` in calling the glmReserve function:
 ```{r}
 (fit6 <- glmReserve(GenIns, nb = TRUE))
 ```
+=======
+>>>>>>> mentioned negative binomial in glmReserve
 
 ## New unit tests
 
