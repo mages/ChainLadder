@@ -33,6 +33,7 @@ export(Join2Fits, JoinFitMse, Mse, residCov, residCor)
 export(ClarkLDF, ClarkCapeCod)
 export(Table64, Table65, Table68)
 export(ata)
+export(as.LongTriangle)
 export(CLFMdelta, LRfunction)
 export(glmReserve)
 
