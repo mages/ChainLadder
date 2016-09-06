@@ -153,8 +153,8 @@ as.LongTriangle <- function(Triangle, varnames = names(dimnames(Triangle)), ...,
     if (is.na(varnames[1L])) varnames[1L] <- "origin"
     if (is.na(varnames[2L])) varnames[2L] <- "dev"
   }
-  y <- reshape2::melt.array(Triangle, varnames = varnames, ..., na.rm = na.rm, as.is = as.is, 
-                            value.name = value.name)
+  y <- reshape2::melt(Triangle, varnames = varnames, ..., na.rm = na.rm, as.is = as.is, 
+                      value.name = value.name)
   names(y)[1:2] <- varnames
   y
 }
