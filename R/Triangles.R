@@ -151,13 +151,14 @@ print.triangle <- function(x, ...) {
   # in the data.frame rather than forcing 'origin' and 'dev'
   x <- Triangle
   nms <- names(dimnames(x))
-#  .origin <- try(as.numeric(dimnames(x)[[nms[1L]]]))
+  .dev <- try(as.numeric(dimnames(x)[[nms[2L]]]))
+  #  .origin <- try(as.numeric(dimnames(x)[[nms[1L]]]))
   .origin <- dimnames(x)[[nms[1L]]]
-  if(class(dimnames(x)[['dev']]) %in% "character"){
-    if(.allisnumeric(dimnames(x)[['dev']])){
+  if(class(dimnames(x)[[nms[2L]]]) %in% "character"){
+    if(.allisnumeric(dimnames(x)[[nms[2L]]])){
       .dev <- try(as.numeric(dimnames(x)[[nms[2L]]]))
     }else{
-      .dev <- seq(along=(dimnames(x)[['dev']]))
+      .dev <- seq(along=(dimnames(x)[[nms[2L]]]))
       warning(paste(
         c("Development period was a character and has been set to:\n",.dev), 
         collapse = " "))
