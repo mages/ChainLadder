@@ -3,6 +3,10 @@ Version 0.2.3 [2016-08-13]
 
 Changes
 
+  o new as.LongTriangle
+    - may rename columns
+    - rownames and colnames stored as factors for more accurate plots 
+
   o glmReserve adds support for negative binomial GLM.
 
   o Clarified error statements in MackChainLadder.
