@@ -23,6 +23,7 @@ Changes and bug fixes since the prior release are:
     + Triangles may now have non-numeric rownames
     + New as.LongTriangle function
     + glmReserve "exposure" attribute may now have names
+    + glmReserve adds support for negative binomial GLM
     + Clarified warnings issued by MackChainLadder
     + New unit tests
 * Bug Fixes
@@ -161,6 +162,8 @@ Here is an example, newly found in ?glmReserve.
   attr(GenIns2, "exposure") <- expos
   glmReserve(GenIns2)
 ```
+
+## glmReserve adds support for negative binomial GLM
 
 ## New unit tests
 
