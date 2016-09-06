@@ -145,6 +145,20 @@ print.triangle <- function(x, ...) {
   return(z)
 }
 
+as.LongTriangle <- function(Triangle, varnames = names(dimnames(Triangle)), ..., 
+                           na.rm = TRUE, as.is = TRUE, value.name = "value") {
+  if (!inherits(Triangle, "matrix")) stop("asLongTriangle only works for matrices")
+  if (is.null(varnames)) varnames <- c("origin", "dev")
+  else {
+    if (is.na(varnames[1L])) varnames[1L] <- "origin"
+    if (is.na(varnames[2L])) varnames[2L] <- "dev"
+  }
+  y <- reshape2::melt.array(Triangle, varnames = varnames, ..., na.rm = na.rm, as.is = as.is, 
+                            value.name = value.name)
+  names(y)[1:2] <- varnames
+  y
+}
+
 .as.LongTriangle <- function(Triangle, na.rm=FALSE){
   # 3/20/2013
   # Difference from old version: preserves names(dimnames) to be column names
