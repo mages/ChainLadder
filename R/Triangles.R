@@ -145,19 +145,34 @@ print.triangle <- function(x, ...) {
   return(z)
 }
 
+as.LongTriangle <- function(Triangle, varnames = names(dimnames(Triangle)), ..., 
+                           na.rm = TRUE, as.is = TRUE, value.name = "value") {
+  if (!inherits(Triangle, "matrix")) stop("asLongTriangle only works for matrices")
+  if (is.null(varnames)) varnames <- c("origin", "dev")
+  else {
+    if (is.na(varnames[1L])) varnames[1L] <- "origin"
+    if (is.na(varnames[2L])) varnames[2L] <- "dev"
+  }
+  y <- reshape2::melt(Triangle, varnames = varnames, ..., na.rm = na.rm, as.is = as.is, 
+                      value.name = value.name)
+  names(y)[1:2] <- varnames
+  y
+}
+
 .as.LongTriangle <- function(Triangle, na.rm=FALSE){
   # 3/20/2013
   # Difference from old version: preserves names(dimnames) to be column names
   # in the data.frame rather than forcing 'origin' and 'dev'
   x <- Triangle
   nms <- names(dimnames(x))
-#  .origin <- try(as.numeric(dimnames(x)[[nms[1L]]]))
+  .dev <- try(as.numeric(dimnames(x)[[nms[2L]]]))
+  #  .origin <- try(as.numeric(dimnames(x)[[nms[1L]]]))
   .origin <- dimnames(x)[[nms[1L]]]
-  if(class(dimnames(x)[['dev']]) %in% "character"){
-    if(.allisnumeric(dimnames(x)[['dev']])){
+  if(class(dimnames(x)[[nms[2L]]]) %in% "character"){
+    if(.allisnumeric(dimnames(x)[[nms[2L]]])){
       .dev <- try(as.numeric(dimnames(x)[[nms[2L]]]))
     }else{
-      .dev <- seq(along=(dimnames(x)[['dev']]))
+      .dev <- seq(along=(dimnames(x)[[nms[2L]]]))
       warning(paste(
         c("Development period was a character and has been set to:\n",.dev), 
         collapse = " "))
