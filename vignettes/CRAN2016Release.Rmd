@@ -22,6 +22,7 @@ Changes and bug fixes since the prior release are:
 * Changes
     + Triangles may now have non-numeric rownames
     + glmReserve "exposure" attribute may now have names
+    + glmReserve adds support for negative binomial GLM
     + Clarified warnings issued by MackChainLadder
     + New unit tests
 * Bug Fixes
@@ -121,6 +122,14 @@ Here is an example, newly found in ?glmReserve.
   names(expos) <- rownames(GenIns2)
   attr(GenIns2, "exposure") <- expos
   glmReserve(GenIns2)
+```
+
+## glmReserve adds support for negative binomial GLM
+The glmReserve function now supports the negative binomial GLM, a more natural way to model over-dispersion in count data. The model is fitted through the `glm.nb` function from the `MASS` package. 
+
+To fit the negative binomial GLM to the loss triangle, simply set `nb = TRUE` in calling the glmReserve function:
+```{r}
+(fit6 <- glmReserve(GenIns, nb = TRUE))
 ```
 
 ## New unit tests

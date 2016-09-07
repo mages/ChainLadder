@@ -174,7 +174,7 @@ plot(fit5, which = 3)
 }
 
 # alternative over-dispersed Poisson: negative binomial GLM
-(fit5 <- glmReserve(GenIns, nb = TRUE))
+(fit6 <- glmReserve(GenIns, nb = TRUE))
 
 }
 
