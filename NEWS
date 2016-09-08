@@ -1,5 +1,8 @@
-Version 0.2.3 [2016-08-13]
+Version 0.2.3 [2016-09]
 --------------------------
+
+The NEWS vignette illustrates new package functionality
+since the prior CRAN release, summarized below.
 
 Changes
 
@@ -14,9 +17,9 @@ Changes
   o Simplified model extraction from lm
   
 	o lm generates a warning when the fit is "essentially perfect".
-    - For development triangles that occur when all link ratios
+    - For development triangles that occurs when all link ratios
     in a column are essentially indistinguishable (within the 
-    machine’s tolerance.) When that occurs user now gets an 
+    machine’s tolerance). When that occurs user now gets an 
     "information" message rather than lm's warning message.
 
   o Numeric restriction on dimnames(Triangle) is being relaxed
