@@ -24,7 +24,7 @@ suppressPackageStartupMessages(library(ChainLadder))
   
 ## Changes
 
-### NEWS file
+### NEWS file
 Moved NEWS file into RMarkdown package vignette format.
 
 ### Triangles may now have non-numeric rownames
@@ -168,8 +168,8 @@ simply set `nb = TRUE` in calling the glmReserve function:
 New files in the `/inst/unittests/` folder can be used for
 future enhancements
 
-    * runit.Triangles.R for Triangles.R
-    * runit.glmReserve.R for glmReserve.R
+  * runit.Triangles.R for Triangles.R
+  * runit.glmReserve.R for glmReserve.R
 
 Contributors of new contributions to those R files are encouraged
 to utilize those runit scripts for testing, 
@@ -227,9 +227,9 @@ mcl <- MackChainLadder(x, est.sigma = "Mack")
 Fixed tail extrapolation in Vignette.
 (Thanks to Mark Lee.)
 
-    * Fixed summary calls.
-    * Updated documentation for weights parameter of chainladder method.
-    * Fixes for tail extrapolation in Vignette and Chainladder
+  * Fixed summary calls.
+  * Updated documentation for weights parameter of chainladder method.
+  * Fixes for tail extrapolation in Vignette and Chainladder
       1) The calculation for the tail log-linear extrapolation given in
 	       the vignette had a minor error.  This has been corrected,
 	       and the result now agrees with the results of
