@@ -1,7 +1,7 @@
 ---
 title: "ChainLadder CRAN 2016 Release"
 author: "ChainLadder Contributors"
-date: "August 18, 2016"
+date: "September 30, 2016"
 output: pdf_document
 subtitle: Changes since prior release
 ---
@@ -21,6 +21,7 @@ Changes and bug fixes since the prior release are:
 
 * Changes
     + Triangles may now have non-numeric rownames
+    + New as.LongTriangle function
     + glmReserve "exposure" attribute may now have names
     + glmReserve adds support for negative binomial GLM
     + Clarified warnings issued by MackChainLadder
@@ -37,15 +38,16 @@ to numeric,
 although  
 that "requirement" did not always cause a problem.
 For example, the following sets the rownames of GenIns to the beginning Date
-of the accident year, and the default call to plot displays the triangle without error
+of the accident year.
 
 ```{r fig.width = 4, fig.height=3}
 x <- GenIns
 rownames(x) <- paste0(2001:2010, "-01-01")
-plot(x)
+x
 ```
 
-A plot with the lattice=TRUE option that previously would blow up
+A plot with the lattice=TRUE option,
+which previously would blow up,
 now displays with nice headings.
 
 ```{r}
@@ -98,6 +100,43 @@ as.triangle(y, origin = "ay", dev = "devyear", value = "incurred.claims")
 The user is encouraged to experiment with other cut's --
 e.g., breaks = "quarters" will generate accident quarter triangles.
 
+## New as.LongTriangle function
+
+A new function, as.LongTriangle, will convert a triangle
+from "wide" (matrix) format to "long" (data.frame) format.
+This differs from ChainLadder's
+as.data.frame.triangle method in that the 
+rownames and colnames of Triangle are stored as **factors**.
+This feature can be particularly important when plotting a triangle
+because the order of the "origin" and "dev" values is important.
+
+Additionally, the columns of the resulting data.frame
+may be renamed from the default values ("origin", "dev", and "value")
+using the "varnames" argument for "origin"/"dev"
+and the "value.name" argument for "value".
+
+In the following example, the GenIns triangle in ChainLadder
+is converted to a data.frame with non-default names:
+
+```{r long}
+GenLong <- as.LongTriangle(GenIns, varnames = c("accident year", "development age"),
+                           value.name = "Incurred Loss")
+head(GenLong)
+```
+
+In the following plot,
+the last accident year and the last development age are shown last, 
+rather than second as they would have been if displayed alphabetically
+(ggplot's default for character data):
+
+```{r plotlong}
+library(ggplot2)
+ggplot(GenLong, aes(x=`development age`, y = `Incurred Loss`,
+                    group = `accident year`, color = `accident year`)) +
+  geom_line()
+```
+
+
 ## glmReserve "exposure" attribute may now have names
 
 Previously, when an "exposure" attribute was assigned to a triangle
@@ -125,9 +164,14 @@ Here is an example, newly found in ?glmReserve.
 ```
 
 ## glmReserve adds support for negative binomial GLM
-The glmReserve function now supports the negative binomial GLM, a more natural way to model over-dispersion in count data. The model is fitted through the `glm.nb` function from the `MASS` package. 
 
-To fit the negative binomial GLM to the loss triangle, simply set `nb = TRUE` in calling the glmReserve function:
+The glmReserve function now supports the negative binomial GLM, 
+a more natural way to model over-dispersion in count data.
+The model is fitted through the `glm.nb` function from the `MASS` package. 
+
+To fit the negative binomial GLM to the loss triangle, 
+simply set `nb = TRUE` in calling the glmReserve function:
+
 ```{r}
 (fit6 <- glmReserve(GenIns, nb = TRUE))
 ```

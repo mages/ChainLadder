@@ -1,7 +1,14 @@
-Version 0.2.3 [2016-08-13]
+Version 0.2.3 [2016-09]
 --------------------------
 
+The NEWS vignette illustrates new package functionality
+since the prior CRAN release, summarized below.
+
 Changes
+
+  o new as.LongTriangle
+    - may rename columns
+    - rownames and colnames stored as factors for more accurate plots 
 
   o glmReserve adds support for negative binomial GLM.
 
@@ -9,20 +16,19 @@ Changes
   
   o Simplified model extraction from lm
   
-	- lm generates a warning when the fit is "essentially perfect".
-    	  For development triangles that occurs when the link ratios are
-    	  indistinguishable within the machine’s tolerance.
-    	  Give an "information" message when that occurs and the
-	  development factor is unity.
+	o lm generates a warning when the fit is "essentially perfect".
+    - For development triangles that occurs when all link ratios
+    in a column are essentially indistinguishable (within the 
+    machine’s tolerance). When that occurs user now gets an 
+    "information" message rather than lm's warning message.
 
-  o Convert column of Date class in as.triangle; Change test from null to
-    length
-    - Triangles with Date Row.names test plot with lattice = TRUE no
-      longer fails with Brian's fix.
+  o Numeric restriction on dimnames(Triangle) is being relaxed
+    - rownames from Date class are allowed (thank you Brian Fannin)
+      - plotting a triangle with lattice = TRUE no longer fails
       
-  o New /inst/unittests/runit.Triangles.R file for checking for continued
+  o New /inst/unittests/runit.Triangles.R file for ensuring continued
     clean ChainLadder compilations whenever code in Triangles.R is
-    improved or otherwise changed.
+    changed.
 
 Bug Fixes
 

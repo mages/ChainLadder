@@ -145,7 +145,7 @@ print.triangle <- function(x, ...) {
   return(z)
 }
 
-as.LongTriangle <- function(Triangle, varnames = names(dimnames(Triangle)), ..., 
+as.LongTriangle1 <- function(Triangle, varnames = names(dimnames(Triangle)), ..., 
                            na.rm = TRUE, as.is = TRUE, value.name = "value") {
   if (!inherits(Triangle, "matrix")) stop("asLongTriangle only works for matrices")
   if (is.null(varnames)) varnames <- c("origin", "dev")
@@ -156,6 +156,26 @@ as.LongTriangle <- function(Triangle, varnames = names(dimnames(Triangle)), ...,
   y <- reshape2::melt(Triangle, varnames = varnames, ..., na.rm = na.rm, as.is = as.is, 
                       value.name = value.name)
   names(y)[1:2] <- varnames
+  y
+}
+
+as.LongTriangle <- function (Triangle, varnames = names(dimnames(data)), 
+                             value.name = "value", na.rm = TRUE) {
+  if (!inherits(Triangle, "matrix")) stop("asLongTriangle only works for matrices")
+  if (is.null(varnames)) varnames <- c("origin", "dev")
+  else {
+    if (is.na(varnames[1L])) varnames[1L] <- "origin"
+    if (is.na(varnames[2L])) varnames[2L] <- "dev"
+  }
+  namecols <- setNames(expand.grid(dimnames(Triangle), KEEP.OUT.ATTRS = FALSE, 
+                                   stringsAsFactors = TRUE), varnames)
+  if (na.rm) {
+    isna <- is.na(Triangle)
+    namecols <- namecols[!isna,]
+    Triangle <- Triangle[!isna]
+  }
+  y <- cbind(namecols, setNames(data.frame(c(Triangle)), value.name))
+  #   class(y) <- c("long.triangle", "data.frame")
   y
 }
 

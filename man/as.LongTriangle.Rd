@@ -6,8 +6,8 @@ Given a Triangle in matrix ("wide") format,
 convert to data.frame ("long") format.
 }
 \usage{
-as.LongTriangle(Triangle, varnames = names(dimnames(Triangle)), ..., 
-                na.rm = TRUE, as.is = TRUE, value.name = "value")
+as.LongTriangle(Triangle, varnames = names(dimnames(Triangle)), 
+                value.name = "value", na.rm = TRUE)
 }
 \arguments{
     \item{Triangle}{a loss "triangle". Must be a \code{matrix}.}
@@ -15,24 +15,22 @@ as.LongTriangle(Triangle, varnames = names(dimnames(Triangle)), ...,
     \code{rownames} and \code{colnames} of matrix \code{Triangle}. 
     Defaults to \code{names(dimnames(Triangle))} if available.
     If not provided, uses c("origin", "dev").}
-    \item{\dots}{arguments passed to \code{reshape2::melt}. Unused.}
-    \item{na.rm}{should NA values be excluded from the data.frame?
-    Defaults to TRUE.}
-    \item{as.is}{should \code{rownames(Triangle)} and \code{colnames(Triangle)}
-    remain "as.is" -- \code{character} -- values in the data.frame or
-    should they be converted, if possible,
-    to other supported modes? 
-    Default is TRUE -- i.e., keep them character values. 
-    For more information, including supported modes, 
-    see help for \code{melt} --
-    particularly \code{melt.array} --
-    in package \code{reshape2}.}
     \item{value.name}{column name to be given to the matrix
     values that will be stored in the data.frame. 
     Defaults to "value".}
+    \item{na.rm}{should NA values be excluded from the data.frame?
+    Defaults to TRUE.}
     }
 \details{
-Based on the 'melt' method in the 'reshape2' package.
+Unlike the as.data.frame.triangle method,
+and Unlike the 'melt' method in the 'reshape2' package, 
+this function returns a data.frame where the rownames and colnames of Triangle
+are stored as \emph{factors}.
+This can be a critical feature when the order of the levels of the columns
+is important.
+For example, when a Triangle is plotted, the order of the
+origin and dev dimensions is important.
+See Examples section.
 }
 \value{
 A \code{data.frame}.
@@ -41,8 +39,12 @@ A \code{data.frame}.
 Daniel Murphy
 }
 \seealso{
-  \code{reshape2::melt}
+  \code{as.data.frame.triangle}
 }
 \examples{
 as.LongTriangle(GenIns)
+\dontrun{
+ggplot(as.LongTriangle(GenIns), 
+       aes(x = dev, y = value, group = origin, color = origin)) + geom_line()
+}
 }
