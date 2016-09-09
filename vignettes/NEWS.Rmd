@@ -1,42 +1,35 @@
 ---
-title: "ChainLadder CRAN 2016 Release"
+title: "News"
+subtitle: "Changes since prior release"
 author: "ChainLadder Contributors"
-date: "September 30, 2016"
-output: pdf_document
-subtitle: Changes since prior release
+date: "`r Sys.Date()`"
+output:
+  knitr:::html_vignette:
+    theme: united
+    highlight: tango
+vignette: >
+  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteEngine{knitr::rmarkdown}
+  \usepackage[utf8]{inputenc}
 ---
 
-```{r setup, include=FALSE}
+```{r setup, include=FALSE, echo=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
-```
-
-```{r echo = FALSE}
 suppressPackageStartupMessages(library(ChainLadder))
-
 ```
 
-The current release of the ChainLadder package on CRAN is
-0.2.3.
-Changes and bug fixes since the prior release are:
 
-* Changes
-    + Triangles may now have non-numeric rownames
-    + New as.LongTriangle function
-    + glmReserve "exposure" attribute may now have names
-    + glmReserve adds support for negative binomial GLM
-    + Clarified warnings issued by MackChainLadder
-    + New unit tests
-* Bug Fixes
-    + Fixed tail extrapolation in Vignette. Thanks to Mark Lee.
 
-# Changes
+# Version 0.2.3 [2015-09-09]
+  
+## Changes
 
-## Triangles may now have non-numeric rownames
+### NEWS file
+Moved NEWS file into RMarkdown package vignette format.
 
-Previously it was required that the row and column names of a triangle be convertible
-to numeric,
-although  
-that "requirement" did not always cause a problem.
+### Triangles may now have non-numeric rownames
+
+Previously it was required that the row and column names of a triangle be convertible to numeric, although that "requirement" did not always cause a problem.
 For example, the following sets the rownames of GenIns to the beginning Date
 of the accident year.
 
@@ -46,8 +39,7 @@ rownames(x) <- paste0(2001:2010, "-01-01")
 x
 ```
 
-A plot with the lattice=TRUE option,
-which previously would blow up,
+A plot with the `lattice=TRUE` option, which previously would blow up,
 now displays with nice headings.
 
 ```{r}
@@ -56,21 +48,20 @@ plot(x, lattice=TRUE)
 
 It can often be useful to have "origin" values that are 
 not necessarily convertible to numeric.
-For example,
-suppose you have a table of claim detail at various evaluation dates.
+For example, suppose you have a table of claim detail at various evaluation dates.
 Invariably, such a table will have a Date field holding the date of loss.
 It would be nice to be able to summarize that data by accident year "cuts".
-It turns out there's a builtin function in R that will get you most of the way there.
-It's called 'cut'.
+It turns out there's a builtin function in R that will get you most of the way there. It's called 'cut'.
 
 Here we take the GenIns data in long format and
 generate 50 claims per accident period.
 We assign each claim a random date within the year.
 The incurred (or paid) "value" given is a random perturbation of one-fiftieth of
-GenInsLong$value.
+`GenInsLong$value.`
+
 We accumulate the detail into an accident year triangle using
-ChainLadder's as.triangle method.
-The summarized triangle displayed at the end is very similar to GenIns, and
+ChainLadder's `as.triangle` method.
+The summarized triangle displayed at the end is very similar to `GenIns`, and
 has informative row labels.
 
 ```{r}
@@ -98,11 +89,11 @@ as.triangle(y, origin = "ay", dev = "devyear", value = "incurred.claims")
 ```
 
 The user is encouraged to experiment with other cut's --
-e.g., breaks = "quarters" will generate accident quarter triangles.
+e.g., `breaks = "quarters"` will generate accident quarter triangles.
 
-## New as.LongTriangle function
+### New as.LongTriangle function
 
-A new function, as.LongTriangle, will convert a triangle
+A new function, `as.LongTriangle`, will convert a triangle
 from "wide" (matrix) format to "long" (data.frame) format.
 This differs from ChainLadder's
 as.data.frame.triangle method in that the 
@@ -110,13 +101,13 @@ rownames and colnames of Triangle are stored as **factors**.
 This feature can be particularly important when plotting a triangle
 because the order of the "origin" and "dev" values is important.
 
-Additionally, the columns of the resulting data.frame
+Additionally, the columns of the resulting data frame
 may be renamed from the default values ("origin", "dev", and "value")
 using the "varnames" argument for "origin"/"dev"
 and the "value.name" argument for "value".
 
-In the following example, the GenIns triangle in ChainLadder
-is converted to a data.frame with non-default names:
+In the following example, the `GenIns` triangle in ChainLadder
+is converted to a `data.frame` with non-default names:
 
 ```{r long}
 GenLong <- as.LongTriangle(GenIns, varnames = c("accident year", "development age"),
@@ -137,22 +128,18 @@ ggplot(GenLong, aes(x=`development age`, y = `Incurred Loss`,
 ```
 
 
-## glmReserve "exposure" attribute may now have names
+### glmReserve "exposure" attribute may now have names
 
 Previously, when an "exposure" attribute was assigned to a triangle
-for use with glmReserve, 
-it was assumed/expected that the user would supply the values in the
-same order as the accident years. 
+for use with `glmReserve`,  it was assumed/expected that the user would supply the values in the same order as the accident years. 
 Then, behind the scenes, glmReserve would use an arithmetic formula to match
-the exposure with the appropriate accident year 
-using the numeric "origin" values
-after the triangle
-had been converted to long format.
+the exposure with the appropriate accident year using the numeric "origin" values
+after the triangle had been converted to long format.
 
-glmReserve now allows for "exposure" to have "names"
+`glmReserve` now allows for "exposure" to have "names"
 that coincide with the rownames of the triangle,
-which are used to match to origin in Long format.
-Here is an example, newly found in ?glmReserve.
+which are used to match to origin in long format.
+Here is an example, newly found in `?glmReserve`.
 
 ```{r}
   GenIns2 <- GenIns
@@ -163,9 +150,9 @@ Here is an example, newly found in ?glmReserve.
   glmReserve(GenIns2)
 ```
 
-## glmReserve adds support for negative binomial GLM
+### glmReserve adds support for negative binomial GLM
 
-The glmReserve function now supports the negative binomial GLM, 
+The `glmReserve` function now supports the negative binomial GLM, 
 a more natural way to model over-dispersion in count data.
 The model is fitted through the `glm.nb` function from the `MASS` package. 
 
@@ -176,9 +163,9 @@ simply set `nb = TRUE` in calling the glmReserve function:
 (fit6 <- glmReserve(GenIns, nb = TRUE))
 ```
 
-## New unit tests
+### New unit tests
 
-New files in the /inst/unittests/ folder can be used for
+New files in the `/inst/unittests/` folder can be used for
 future enhancements
 
     * runit.Triangles.R for Triangles.R
@@ -187,11 +174,10 @@ future enhancements
 Contributors of new contributions to those R files are encouraged
 to utilize those runit scripts for testing, 
 and, of course, add other runit scripts as warrantted. 
-(Thank)
 
-## Clarified warnings issued by MackChainLadder
+### Clarified warnings issued by MackChainLadder
 
-By default, R's 'lm' method generates a warning when it detects
+By default, R's `lm` method generates a warning when it detects
 an "essentially perfect fit".
 This can happen when one column of a triangle is identical to the previous column;
 i.e., when all link ratios are the same.
@@ -234,9 +220,9 @@ x <- matrix(byrow = TRUE, nrow = 4, ncol = 4,
 mcl <- MackChainLadder(x, est.sigma = "Mack")
 ```
 
-# Bug fixes
+## Bug fixes
 
-## Fixed tail extrapolation
+### Fixed tail extrapolation
 
 Fixed tail extrapolation in Vignette.
 (Thanks to Mark Lee.)
@@ -258,3 +244,666 @@ Fixed tail extrapolation in Vignette.
       3) Minor fix to the comments in ChainLadder.R and MackChainLadder.R,
 	       fixing notation for alpha which is now consistent with the
 	       documentation and Mack's original paper.
+	       
+
+# Version 0.2.2 [2015-08-31]
+  
+
+  * Added back functionality to estimate the index parameter for the compound 
+    Poisson model in 'glmReserve' (now depends on package cplm). 
+    This works for both 'formula' and 'bootstrap'. 
+    
+  * Added methods 'resid' and plot for class 'glmReserve' (now depends on 
+    ggplot2)
+
+
+# Version 0.2.1 [2015-07-11]
+  
+
+## New Features
+
+  * New function PaidIncurredChain by Fabio Concina, based on the
+    2010 Merz & Wuthrich paper Paid-incurred chain claims reserving method
+
+  * plot.MackChainLadder and plot.BootChainLadder gained new argument     
+    'which', allowing users to specify which sub-plot to display. 
+    Thanks to Christophe Dutang for this suggestion.
+  
+## Changes
+  
+  * Updated NAMESPACE file to comply with new R CMD checks in R-3.3.0
+  
+  * Removed package dependencies on grDevices and Hmisc
+  
+  * Expanded package vignette with new paragraph on importing spreadsheet
+    data, a new section "Paid-Incurred Chain Model" and an added example for
+    a full claims development picture in the "One Year Claims Development
+    Result" section.
+
+
+# Version 0.2.0 [2015-03-04]
+  
+
+## New Features
+
+  * New generic function CDR to estimate the one year claims development
+    result. S3 methods for the Mack and bootstrap model have been 
+    added already:
+      - CDR.MackChainLadder to estimate the one year claims 
+        development result of the Mack model without tail factor, 
+        based on papers by Merz & Wuthrich (2008, 2014)
+      - CDR.BootChainLadder to estimate the one year claims 
+        development result of the bootstrap model, using ideas and code 
+        by Giuseppe Crupi.
+        
+  * New function tweedieReserve to estimate reserves in a GLM framework,
+    including the one year claims development result.
+
+  * Package vignette has new chapter 'One Year Claims Development
+    Result'. 
+
+  * New example data MW2008 and MW2014 form the Merz & Wuthrich (2008, 2014) 
+    papers
+  
+## Changes
+
+  * Source code development moved from Google Code to GitHub:
+    https://github.com/mages/ChainLadder
+  
+  * as.data.frame.triangle now gives warning message when dev. period 
+    is a character  
+
+  * Alessandro Carrato, Giuseppe Crupi and Mario Wuthrich have been 
+    added as authors, thanks to their major contribution to code and
+    documentation
+  
+  * Christophe Dutang, Arnaud Lacoume and Arthur Charpentier have been 
+    added as contributors, thanks to their feedback, guidance and 
+    code contribution   
+
+
+# Version 0.1.9 [2014-12-20]
+  
+
+## Changes
+
+  * Updated README and DESCRIPTION file to comply with changes of 
+    CRAN policy.
+
+
+# Version 0.1.8 [2014-08-22]
+  
+
+## Bug Fixes
+  
+  * BootChainLadder produced warnings for triangles that had static 
+    developments when the argument process.distr was set to "od.pois".
+  * as.triangle.data.frame didn't work for a data.frame less than three rows
+  * Arguments xlab and ylab were not passed through in plot.triangle, when
+    lattice=TRUE
+
+# Version 0.1.7 [2013-09-15]
+  
+## Changes
+
+  * The glmReserve function currently doesn't allow the parameter var.power
+    to be set to NULL, which would have called the cpglm function of the 
+    cplm package. The cplm package is due to dependency issues with lme4 
+    no longer available via CRAN.
+
+# Version 0.1.6 [2013-08-09]
+  
+
+## New Features
+
+  * A new function, CLFMdelta, finds the value of 
+    delta such that the model coefficients resulting from 
+    the 'chainladder' function with that value for argument delta are 
+    consistent with an input vector of 'selected' age-to-age factors,
+    subject to restrictions on the 'selected' factors relative to
+    the input 'Triangle'. See the paper 
+    "A Family of Chain-Ladder Factor Models for Selected Link Ratios"
+    by Bardis, Majidi, Murphy:
+    http://www.variancejournal.org/issues/?fa=article&abstrID=6943
+  
+  * A new 'coef' method returns the age-to-age factor coefficients of 
+    the regression models estimated by the 'chainladder' function.
+    
+  * Exports a function "LRfunction" that calculates a Triangle's 
+    link ratio function and can be used to plot the space of 
+    "reasonable link ratio selections" per the CLFM paper.
+    
+## Changes
+
+   * Removed some package dependencies in DESCRIPTION and moved them 
+     to Imports.
+
+
+# Version 0.1.5-6 [2013-03-16]
+   
+
+## New Features
+
+  * The list output of the MackChainLadder function now includes
+    the parameter risk and process risk breakdowns of the total risk
+    estimate for the sum of projected losses across all origin years
+    by development age.
+  * The Mack Method's recursive parameter risk calculation now enables 
+    Dr. Mack's original two-term formula (the default) and optionally
+    the three-term formula found in Murphy's 1994 paper and in the 
+    2006 paper by Buchwalder, Buhlmann, Merz, and Wuthrich.
+  * A few more Mack Method examples.
+
+
+# Version 0.1.5-5 [2013-02-13]
+   
+
+## Bug Fixes
+
+  * The phi-scaling factor in BootChainLadder was incorrect. 
+    Instead of calculating the number of data items in the upper left
+    triangle as n*(n+1)/2, n*(n-1)/2 was used. Thanks to Thomas
+    Girodot for reporting this bug.
+
+
+# Version 0.1.5-4 [2012-11-10]
+   
+
+## New Features
+
+  * The function "getLatestCumulative" adds attributes to 
+    the result
+    - names = origin (rownames) from the Triangle
+    - rowsname = name of row dimension of Triangle
+    - colnames = dev (colnames) from Triangle
+    - colsname = name of the column dimension of Triangle
+    The function has an additional argument, na.values, a 
+    vector of values (e.g., zero) that are synonymous with NA 
+    when searching for the rightmost non-NA value
+  * as.triangle.data.frame now aggregates multiple data.frame
+    records when more than one (origin, dev) observation is
+    found (the previous version took the first observation).
+
+## Changes
+
+   * The vignette has been updated with sections on Multivariate
+     chain-ladder, Clark's method and Generalised linear model methods 
+   * MunichChainLadder no longer accepts triangles with more rows than
+     columns as the function is not laid out for such data sets
+     yet. Thanks to Ben Escoto for highlighting this issue. 
+
+
+# Version 0.1.5-3 [2012-08-10]
+   
+
+## New Features
+
+   * The function "glmReserve" now simulates predictive distributions
+     of the loss reserves when bootstrapping is used.
+   * "glmReserve" allows the variance function of the compound Poisson 
+     distribution to be estimated from the data, using the estimation 
+     method provided by the "cplm" package. 
+   * We offer a new function "MultiChainLadder2" to fit several commonly 
+     used multivariate chain ladder models, which is much easier to use. 
+
+## Changes
+
+   * The output from "glmReserve" is made to be of class "glmReserve", instead 
+     of class "glm" used in previous versions. 
+   * Fix bugs when exposure is included in "glmReserve". Thanks to
+     Alessandro Carrato for reporting this bug. 
+   * The "mse.method" argument in "glmReserve" supports partial match.
+   * Dramatic improvement on the documentation of "MultiChainLadder".
+   * Complete the sections of "MultiChainLadder" and "glmReserve" in
+     the vignettes.  
+
+
+# Version 0.1.5-2 [2012-03-25]
+   
+
+## New Features
+
+  * We started writing a vignette. The current version is still draft
+    and far from complete. Feedback will be much appreciated.
+
+## Changes
+
+  * Removed .Internal call to make ChainLadder compliant with R 2.15.0 
+  * Changed argument "t" in plot.triangle to "type" in order to be
+    consistent with plot.default
+
+## Bug Fixes
+
+  * as.triangle() gave triangles back, with development periods not 
+    ordered, when the input data frame had unordered development 
+    periods in different units, e.g. dev=c(1,100,10)
+    Thanks to Ben Escoto for reporting this issue.
+
+
+# Version 0.1.5-1 [2011-11-12]
+  
+
+  * Internal changes to plot.MackChainLadder to pass new checks
+    introduced by R 2.14.0.
+  * Commented out unnecessary creation of 'io' matrix in ClarkCapeCod
+    function. Allows for analysis of very large matrices for CapeCod
+    without running out of RAM. 'io' matrix is an integral part of
+    ClarkLDF, and so remains in that function.
+  * plot.clark method
+     - Removed "conclusion" stated in QQplot of clark methods.
+     - Restore 'par' settings upon exit
+     - Slight change to the title
+  * Reduced the minimum 'theta' boundary for weibull growth function
+  * Added warnings to as.triangle if origin dev. period are not numeric
+   
+
+# Version 0.1.5-0 [2011-08-29]
+   
+
+## New Features
+
+  * New function glmReserve, which implements loss reserving models
+    within the generalized linear model framework following a paper by
+    England P. and Verrall R. (1999) 
+
+
+# Version 0.1.4-4 [2011-03-27]
+   
+
+ * Minor changes to reflect a more rigours package build process for
+   R >= 2.14.0
+ * Start up message uses now packageStartupMessage rather than cat to
+   allow the message to be suppressed.
+
+
+# Version 0.1.4-3 [2011-01-18]
+   
+
+## New Features
+
+  * ClarkLDF and ClarkCapeCod functions were reorganized to clarify
+    the delivery and presentation of the methods' results
+    - Individual components now contain distinct values within
+      Clark's methodologies 
+    - 'summary' methods produce "reports" that display results in
+      the form of typical loss development and Bornhuetter-Ferguson
+      exhibits
+    - "Table" functions now produce the results as shown in the
+      tables on pp. 64, 65 and 68 of Clark's paper
+    - A 'vcov' method produces the covariance matrix of the
+      estimated parameters
+  * An 'ata' function exists to calculate the "age-to-age" development
+    factors of a loss "triangle", as well as the simple and volume
+    weighted averages
+
+
+# Version 0.1.4-2 [2011-01-03]
+   
+
+## Bug fixes
+
+  * The TruncatedGrowth function value under the Clark Cape Cod method
+    was incorrectly printed in the Table68 data.frame when the
+    calculations were to be based on the average date of loss (argument
+    adol=TRUE). The underlying calculations used the correct adol
+    adjustment, only the printed output was incorrect.
+
+
+# Version 0.1.4-1 [2010-12-1]
+  
+## New Features
+
+  * ClarkLDF and ClarkCapeCod functions: additional functionality
+	- Clark's methods now work for "one-row triangles" -- i.e.,
+	  loss experience from only one origin period
+	- Clark's methods work for "phase-shifted" triangles -- i.e.,
+	  triangles whose first age does not coincide with the end of
+	  the origin period. Example: accident year origin periods with
+	  September 30th evaluation dates.
+
+  * A 'vcov' method now exists to produce the covariance matrix of the
+    estimated parameters using the approach in Clark's paper
+
+  * Additional values (in lists) returned by Clark's methods:
+	- FI = Fisher Information matrix as Clark defines it in his
+	  paper (i.e., without the sigma^2 value)
+	- dR = the gradient of the reserves function evaluated at the
+	  optimal parameter values
+	- value = value of the log-likelihood function at the solution
+	- counts = number of evaluations of the log likelihood and its
+	  derivative before convergence
+
+  * Fine-tuning of maximum likelihood numerical algorithm's control
+    parameters
+	- Enable more consistent convergence properties between R's
+   	  32-bit and 64-bit environments
+  	- Initial starting values for the weibull function were
+    	  adjusted for successful convergence across a wider set of
+    	  triangles
+  	- Upper bounds introduced for "L-BFGS-B" maximum likelihood
+	  method to bound weibull away from unity at too early an age
+
+  * If the solution is found at the boundary of the parameter region,
+    it is conceivable that a "more optimal" solution might exist if the
+    boundary constraints were not as conservative, so a warning is given
+
+## Bug fixes
+
+  * The parameters returned by the methods were the scaled versions;
+    they now at their original scales.
+
+
+  * The loss development factor (LDF) being returned by ClarkCapeCod
+    was not documented
+
+
+# Version 0.1.4-0 [2010-11-11]
+   
+
+## New Features
+
+  * New implementation of the methods in David Clark's "LDF Curve
+    Fitting" paper in the 2003 Forum by Daniel Murphy.
+
+	- Includes LDF and CapeCod methods (functions 'ClarkLDF' and
+          'ClarkCapeCod', respectively)
+	- Programmed to handle log-logistic and weibull growth functions
+	- Printing an object returned by the function results in a
+          table similar to that on p. 65 of the paper
+	- Plotting such an object results in four residual plots,
+          including a Q-Q plot with the results of the Shapiro-Wilk
+          test
+
+
+# Version 0.1.3-4 [2010-10-19]
+  
+   
+## Bug fixes
+
+  * 'residuals.MackChainLadder': Zero weights applied to
+    MackChainLadder caused an error. Thanks to Ernesto Schirmacher for
+    reporting this bug.  
+
+
+# Version 0.1.3-3 [2010-05-16]
+   
+
+## New Features
+
+  * New multivariate chain ladder function 'MultiChainLadder' by Wayne
+    (Yanwei) Zhang  <actuaryzhang@uchicago.edu>
+  * New function 'getLatestCumulative' available. It returns for a
+    given triangle the most recent values for each origin period.
+  * New demos! Type demo(package='ChainLadder') for more information.
+  * Demos exist for the following topics: ChainLadder,
+    MackChainLadder, DatabaseExamples, MSOffice, MultiChainLadder
+  * New SWord example file ChainLadder_SWord_Example.doc, which
+    demonstrates how R code snippets can be integrated into a Word
+    file.
+    The following R command system.file("SWord",
+    package="ChainLadder") will show the directory of the file.
+
+
+## User-visible changes
+
+  * The examples in MackChainLadder and ChainLadder-package have been
+    shortened and demo files have been created instead.
+    The examples focus on the syntax of the function calls, while the
+    demos give more detailed information on how you might want to use
+    the functions in a business context.
+   
+## Bug fixes
+
+  * 'plot.MunichChainLadder':  The labels of the axis of the residuals
+    plots where the mixed up. 
+    Thanks to Ben Escoto for reporting this issue.
+  * 'estimate.sigma' didn't check for sigma>0 before applying a
+    log-linear regression. Thanks to Dan Murphy reporting this bug.
+
+
+# Version 0.1.2-13 [2009-11-24]
+
+## User-visible changes
+
+  * 'MackChainLadder' has new argument 'alpha' as an additional
+     weighting parameter. As a result, the argument 'weights' is now
+     just that, weights should be between 0 and 1.
+     The argument 'alpha' describes the different chain ladder
+     age-to-age factors:
+     The default for alpha for all development periods is 1. See
+     Mack's 1999 paper: 
+     alpha=1 gives the historical chain ladder age-to-age factors, 
+     alpha=0 gives the straight average of the observed individual
+      	     development factors and 
+     alpha=2 is the result of an ordinary regression with intercept 0. 
+  
+  * Basic 'chainladder' function now available using linear
+    models. See ?chainladder for more information.
+
+  * More examples for 'MackChainLadder' demonstrate how to apply the
+    MackChainLadder over several triangles in 'one-line'.
+
+  * 'as.data.frame.triangle' has new argument 'lob' (e.g. line of
+    business) which allows to set an additional label column in the
+    data frame output.
+
+## Bug fixes
+
+  * 'MackChainLadder':  Latest position of incomplete triangles were
+    in some cases not returned correctly. Thanks to Ben Escoto for
+    reporting and providing a patch.
+
+  * 'MackChainLadder': 
+    - Mack.S.E was not correctly calculated for non-standard chain
+      ladder age-to-age factors (e.g. straight averages or ordinary
+      regression through the origin) due the missing argument for 'alpha'. 
+    - Chain ladder age-to-age factors were always applied to diagonal
+      elements to calculate forecasts, although data in sub-diagonal
+      triangle could exist. Many thanks to Przemyslaw Sloma for
+      reporting those issues. 
+  
+
+# Version 0.1.2-12 [2009-02-01]
+   
+## New Features
+
+ * New triangle class with S3 methods for plot, print and conversion
+   from triangles to data.frames and vis versa
+
+ * New utility functions 'incr2cum' and 'cum2incr' to convert
+   incremental triangles into  cumulative triangles and vis
+   versa. Thanks to Chritophe Dutang.
+ * New logical argument lattice for plot.MackChainLadder (and
+   plot.triangle), which allows to plot developments by origin period
+   in separate panels.  
+
+## Bug fixes
+
+  * 'MunichChainLadder': tail factors were not accepted. Thanks to
+    Stefan Pohl for reporting this issue.
+
+
+# Version 0.1.2-11 [2009-03-28]
+   
+
+## Bug fixes
+
+  * 'MackChainLadder': 'F.se'[ultimate] was calculated of the ultimate
+    column instead of the latest paid. 
+
+
+# Version 0.1.2-10 [2009-03-27]
+   
+
+## User-visible changes
+
+  * 'MackChainLadder' has new arguments 'tail.sigma' and 'tail.se' to
+    provide estimates of the variability for a given tail factor.
+ 
+## Bug fixes
+
+  * 'MackChainLadder': calculation of 'Mack.S.E' did not use an
+    ultimate sigma factor to estimate 'Mack.S.E' when a tail factor >
+    1 was provided (Thanks to Mark Hoffmann for reporting this issue).
+
+
+# Version 0.1.2-9 [2009-02-01]
+   
+
+## User-visible changes
+
+  * Updated documentation to work with new Rd-file parser 
+    (R version >= 2.9.0) 
+  * Updated documentation for 'ABC' data (Thanks to Glen Barnett)
+
+
+# Version 0.1.2-8 [2008-11-03]
+   
+
+## User-visible changes
+
+  * Updated documentation for 'MackChainLadder' (Thanks to Daniel Murphy)
+
+
+# Version 0.1.2-7 [2008-10-24]
+   
+
+## User-visible changes 
+
+  * 'MackChainLadder' gives two more elements back: 'Mack.ProcessRisk'
+    and 'Mack.ParameterRisk' for the process and parameter risk error
+    (Thanks to Daniel Murphy)
+  * In the summary output of 'MackChainLadder' the label 'CV'  changed
+    to 'CV(IBNR)' to clarify that we show the coefficient of variance
+    of the IBNR.
+  * 'MackChainLadder' provides new example plots for CV(IBNR)
+    vs. origin period and CV(Ultimate) vs. origin period  
+  * Updated documentation
+
+
+# Version 0.1.2-6 [2008-10-14]
+   
+
+## User-visible changes
+
+  * Updated documentation
+
+
+# Version 0.1.2-5 [2008-10-13]
+   
+
+## New Features
+
+  * New function 'BootChainLadder', based on papers by England and Verrall, 
+    and Barnett and Zehnwirth
+  * 'MackChainLadder' and 'MunichChainLadder' allow for tail factors
+  * 'MackChainLadder' estimates the overall standard error for the total IBNR	
+  * New arguments 'tail' and 'est.sigma' for MackChainLadder, to control 
+    the tail factor and the estimation of sigma_{n-1}
+  * New arguments 'tailP', 'tailI' and 'est.sigmaP', 'est.sigmaI' for
+    'MunichChainLadder', which are passed on to 'MackChainLadder' to control 
+    the tail factor and the estimation of sigma_{n-1} for the Paid and 
+    Incurred triangle
+  * 'Mack-, 'Munich-, and 'BootChainLadder' accept (mxn) matrices with m>=n,
+    e.g more accident years than development years
+  * New example data sets: 'ABC' (annual run-off triangle of a worker's 
+    compensation portfolio of a large company), 'qpaid', 'qincurred' ('made-up'
+    data of a quarterly development triangle of annual origin period)
+  * Triangles with higher development period frequency (e.g quarterly) than 
+    origin period frequency (e.g annual) can be used after being 'blown-up'
+    to a common period frequency, see the help of 'qpaid'
+  * 'Mack-, 'Munich- and 'BootChainLadder' accept 'blown-up' triangles of 
+    higher development period frequency than origin period frequency filled 
+    with 'NA', see the help of 'qpaid'
+
+## User-visible changes
+
+  * summary functions for 'Mack-, 'Munich-, 'BootChainLadder' give all a list 
+    back with two elements: 'ByOrigin' and 'Totals'	
+  * Change of labels: origin years -> origin period and development years ->
+    development origin
+  * Coefficient of Variation is abbreviate with 'CV' instead of 'CoV'
+  * The example spreadsheet 'ChainLadder_in_Excel.xls' has new examples, 
+    including 'BootChainLadder'
+  * New greeting message after the R-call 'library(ChainLadder)'
+  * Improved documentation
+
+## Bug fixes
+
+  * 'MunichChainLadder': calculation of 'lambdaP' and 'lambdI' was incorrect. 
+    Thanks to Beat Huggler for reporting this issue.
+
+
+# Version 0.1.2-4 [2009-09-23]
+   
+
+  * R/BootstrapReserve.R Included all the functions for the BootChainLadder
+    function. The BootChainLadder procedure provides a predictive
+    distribution of reserves for a cumulative claims development
+    triangle.
+  * R/BootstrapReserve.R, MackChainLadder.R, MunichChainLadder The summary
+    methods for MackChainLadder, MunichChainLadder, BootChainLadder
+    give a list back with two elements "ByOrigin" and "Totals"
+  * R/zzz.R Included a .onLoad function to produce a little message
+    after the ChainLadder package is loaded.
+  * Excel/ChainLadder_in_Excel.xls Added new examples for
+    BootChainLadder and how to use Rapply to call functions from the
+    ChainLadder package.
+
+
+# Version 0.1.2-2 [2008-09-18]
+   
+
+  * R/MackChainLadder.R Included tail factor estimation. The
+    function MackChainLadder has a new argument "tail" to either
+    estimate the tail factor via a log-linear regression or to set it manually.
+  * data/qpaid.RData, qincurred.RData Added examples of quarterly
+    development triangles 
+
+
+# Version 0.1.2-0 [2008-09-08]
+   
+
+  * R/MackChainLadder.R Prepared the functions Mack.S.E and 
+    Total.Mack.S.E to accept triangles with rows full of NA values.
+    This might be useful for non quadratic triangles
+
+
+# Version 0.1.1-5 [2008-05-19]
+   
+
+  * R/MackChainLadder.R Bug fix: Function Mack.S.E did not give F.se back, 
+    which is needed by TotalMack.S.E. 
+    Many thanks to Florian Leitenstorfer for reporting this issue.
+
+
+# Version 0.1.1-4 [2008-05-16]
+   
+
+  * inst/Excel/ChainLadder_in_Excel.xls uses now dynamic functions 
+    and shows how to call 'plot' from Excel 
+  * R/MackChainLadderFunctions.R: Changed labels Reserving to IBNR 
+    (=Incurred But Not Reported)
+
+
+# Version 0.1.1-3 [2008-02-20]
+   
+
+  * R/MackChainLadderFunctions.R: Mack.S.E checks now which sigma>0 before log
+    linear regression of sigma to estimate sigma[n-1]
+
+
+# Version 0.1.1-2 [2008-02-07]
+   
+
+  * R/MackChainLadderFunctions.R: added function
+    TotalMack.S.E function to estimate the overall standard error for
+    the reserve. MackChainLadder gives now also the
+    Total.Mack.S.E. back plus the estimate standard error for all
+    individual age-to-age factors F.se.
+
+
+# Version 0.1.1-1 [2007-12-07]
+   
+
+  * First release on CRAN  
