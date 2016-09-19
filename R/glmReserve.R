@@ -190,12 +190,12 @@ glmReserve <- function(triangle, var.power = 1, link.power = 0,
   CV <- S.E / IBNR
   Latest <- getLatestCumulative(incr2cum(tr.incr))
   Latest <- Latest[-(1:(length(Latest) - length(unique(ldaOut$origin))))]
-  Latest <- c(Latest, sum(Latest))
+  Latest <- c(Latest, total = sum(Latest))
   Ultimate <- Latest + IBNR
   resDf <- data.frame(Latest = Latest, Dev.To.Date = Latest/Ultimate,
                       Ultimate = Ultimate, IBNR = IBNR,
                       S.E = S.E, CV = CV)
-	row.names(resDf) <- c(as.character(sort(unique(ldaOut$origin))), "total")
+	row.names(resDf) <- names(Latest)
   
   # produce fullly projected triangle
   ldaOut$value <- round(yp)
