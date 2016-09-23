@@ -25,9 +25,10 @@ glmReserve <- function(triangle, var.power = 1, link.power = 0,
   fam <- tweedie(ifelse(!is.null(var.power), var.power, 1.5), link.power)
   
   # convert to long format
-  lda <-  as.data.frame(tr.incr, origin=names(dimnames(tr.incr))[1], 
-                        dev=names(dimnames(tr.incr))[2])
+  lda <-  as.data.frame(tr.incr, origin = names(dimnames(tr.incr))[1], 
+                        dev = names(dimnames(tr.incr))[2])
   names(lda)[1:3] <- c("origin", "dev", "value")
+  lda <- transform(lda, origin = factor(origin, levels = dimnames(triangle)[[1]]))
   
   # create offset
   if (is.null(attr(tr.incr, "exposure"))) {
@@ -84,7 +85,7 @@ glmReserve <- function(triangle, var.power = 1, link.power = 0,
   eta <- as.numeric(predict(glmFit, newdata = ldaOut, type = "link"))
                 
   # sum to get reserve by year
-  resMeanAy <- tapply(yp, ldaOut$origin, sum)
+  resMeanAy <- tapply(yp, factor(ldaOut$origin), sum)
   resMeanTot <- sum(resMeanAy)
 
   ################################
@@ -95,7 +96,7 @@ glmReserve <- function(triangle, var.power = 1, link.power = 0,
     
     # process variance 
     ypv <- fam$variance(yp)
-    mseProcAy <-  phi * tapply(ypv, ldaOut$origin, sum)
+    mseProcAy <-  phi * tapply(ypv, factor(ldaOut$origin), sum)
     mseProcTot <-  phi * sum(ypv) 
     
     # estimation variance                
@@ -173,8 +174,8 @@ glmReserve <- function(triangle, var.power = 1, link.power = 0,
         ypB <- rtweedie(length(ymB), mu = ymB, phi = cf[nB + 1], power = cf[nB + 2])
       }
       # save simulations
-      resMeanAyB[i, ] <- as.numeric(tapply(ymB, ldaOut$origin, sum))      
-      resPredAyB[i, ] <- as.numeric(tapply(ypB, ldaOut$origin, sum))      
+      resMeanAyB[i, ] <- as.numeric(tapply(ymB, factor(ldaOut$origin), sum))      
+      resPredAyB[i, ] <- as.numeric(tapply(ypB, factor(ldaOut$origin), sum))      
       sims.par[i, ] <- unname(cf)
     }
     # get names
@@ -190,12 +191,12 @@ glmReserve <- function(triangle, var.power = 1, link.power = 0,
   CV <- S.E / IBNR
   Latest <- getLatestCumulative(incr2cum(tr.incr))
   Latest <- Latest[-(1:(length(Latest) - length(unique(ldaOut$origin))))]
-  Latest <- c(Latest, sum(Latest))
+  Latest <- c(Latest, total = sum(Latest))
   Ultimate <- Latest + IBNR
   resDf <- data.frame(Latest = Latest, Dev.To.Date = Latest/Ultimate,
                       Ultimate = Ultimate, IBNR = IBNR,
                       S.E = S.E, CV = CV)
-	row.names(resDf) <- c(as.character(sort(unique(ldaOut$origin))), "total")
+	row.names(resDf) <- names(Latest)
   
   # produce fullly projected triangle
   ldaOut$value <- round(yp)

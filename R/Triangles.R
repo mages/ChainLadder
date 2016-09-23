@@ -159,7 +159,7 @@ as.LongTriangle1 <- function(Triangle, varnames = names(dimnames(Triangle)), ...
   y
 }
 
-as.LongTriangle <- function (Triangle, varnames = names(dimnames(data)), 
+as.LongTriangle <- function (Triangle, varnames = names(dimnames(Triangle)), 
                              value.name = "value", na.rm = TRUE) {
   if (!inherits(Triangle, "matrix")) stop("asLongTriangle only works for matrices")
   if (is.null(varnames)) varnames <- c("origin", "dev")
