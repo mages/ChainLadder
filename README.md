@@ -48,13 +48,11 @@ See the ChainLadder package [vignette](http://cran.r-project.org/web/packages/Ch
 
 ## Citation
 
-To cite package 'ChainLadder' in publications use:
+To cite package 'ChainLadder' in publications see the output of:
+```s
+citation(package="ChainLadder")
+```
 
-  Markus Gesmann, Daniel Murphy, Wayne Zhang, Alessandro Carrato,
-  Giuseppe Crupi, Mario Wüthrich and Fabio Concina (2015). 
-  ChainLadder: Statistical methods and models for the calculation of 
-  outstanding claims reserves in general insurance. R package version 0.2.2.
-  
 See also:
 
   Markus Gesmann. Claims Reserving and IBNR. [Computational Actuarial Science
