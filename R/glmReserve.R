@@ -7,6 +7,7 @@
 glmReserve <- function(triangle, var.power = 1, link.power = 0,
                        cum = TRUE, mse.method = c("formula", "bootstrap"), 
                        nsim = 1000, nb = FALSE, ...){
+  origin <- NULL
   call <- match.call()
   mse.method <- match.arg(mse.method)
   
