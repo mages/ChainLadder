@@ -1,7 +1,7 @@
 import(stats)
 importFrom(ggplot2, ggplot, geom_density, facet_wrap, aes, "scale_x_continuous")
+importFrom(tweedie, rtweedie, "tweedie.profile")
 importFrom(statmod, tweedie)
-importFrom(tweedie, rtweedie)
 importFrom(systemfit, systemfit, systemfit.control)
 importFrom(methods, coerce, cbind2, rbind2 )
 importFrom(utils, packageDescription, head, setTxtProgressBar, 
