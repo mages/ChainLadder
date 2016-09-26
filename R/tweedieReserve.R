@@ -87,6 +87,9 @@ tweedieReserve <- function(triangle, var.power=1, link.power=0,
       family$linkfun(attr(tr.incr,"exposure")[lda$origin])
   
   #parameter fix for better intrepretation of results
+  lda$dev <- as.numeric(lda$dev)
+  lda$origin <- as.numeric(lda$origin)
+  
   base.year <- min(lda$origin)
   lda$origin <- lda$origin - base.year + 1 # ORIGIN MUST START FROM 1
   
