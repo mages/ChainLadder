@@ -145,7 +145,7 @@ Mack.S.E <- function(MackModel, FullTriangle, est.sigma="log-linear", weights, a
   perfect.fit <- (df > 0) & (f.se < tolerance) # & approx.equal(f, 1.000)
   w <- which(perfect.fit)
   if (length(w)) {
-    warn <- "Information: essentially no development in data for period(s):\n"
+    warn <- "Information: essentially no variation in development data for period(s):\n"
     nms <- colnames(FullTriangle)
     periods <- paste0("'", paste(nms[w], nms[w+1], sep = "-"), "'")
     warn <- c(warn, paste(periods, collapse = ", "))
