@@ -142,7 +142,7 @@ Mack.S.E <- function(MackModel, FullTriangle, est.sigma="log-linear", weights, a
   sigma <- sapply(smmry, function(x) x$sigma)
   df <- sapply(smmry, function(x) x$df[2L])
   tolerance <- .Machine$double.eps
-  perfect.fit <- (df > 0) & (f.se < tolerance) # & approx.equal(f, 1.000)
+  perfect.fit <- (df > 0) & (f.se < tolerance)
   w <- which(perfect.fit)
   if (length(w)) {
     warn <- "Information: essentially no variation in development data for period(s):\n"
