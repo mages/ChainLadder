@@ -188,8 +188,8 @@ ChainLadder previously issued the lm warning below.
 x <- matrix(byrow = TRUE, nrow = 4, ncol = 4, 
             dimnames = list(origin = LETTERS[1:4], dev = 1:4),
             data = c(
-              100, 105, 105.00001, 105.00001,
-              200, 210, 210.00001, NA,
+              100, 105, 106, 106.5,
+              200, 210, 211, NA,
               300, 315, NA, NA,
               400, NA, NA, NA)
             )
@@ -208,8 +208,8 @@ Now ChainLadder issues an "informational warning":
 x <- matrix(byrow = TRUE, nrow = 4, ncol = 4, 
             dimnames = list(origin = LETTERS[1:4], dev = 1:4),
             data = c(
-              100, 105, 105.00001, 105.00001,
-              200, 210, 210.00001, NA,
+              100, 105, 106, 106.5,
+              200, 210, 211, NA,
               300, 315, NA, NA,
               400, NA, NA, NA)
             )
