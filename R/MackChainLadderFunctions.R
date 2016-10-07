@@ -149,7 +149,8 @@ Mack.S.E <- function(MackModel, FullTriangle, est.sigma="log-linear", weights, a
     nms <- colnames(FullTriangle)
     periods <- paste0("'", paste(nms[w], nms[w+1], sep = "-"), "'")
     warn <- c(warn, paste(periods, collapse = ", "))
-    cat(warn, "\n")
+    # Print warning message
+    warning(warn)
   }
   #   
   isna <- is.na(sigma)

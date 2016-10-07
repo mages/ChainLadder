@@ -64,7 +64,7 @@ tweedieReserve <- function(triangle, var.power=1, link.power=0,
   glmFit <- NULL
   glmFitB <- NULL
   glmFit1yr <- NULL
-  
+  origin <- NULL
   call <- match.call()
   if (!("triangle") %in% class(triangle))
     stop("triangle must be of class 'triangle'")

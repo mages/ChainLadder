@@ -36,7 +36,7 @@ test.NoDevelopmentExample <- function(){
   # If there's essentially no development from one age to the next, lm will warn
   # that it's "essentially perfect fit". Want to replace that with a better message.
   # The solution is to suppress that message, detect a perfect.fit separately,
-  # and "cat" an informational message to the console.
+  # and "warning" an informational message to the console.
   x <- matrix(byrow = TRUE, nrow = 4, ncol = 4,
               dimnames = list(origin = LETTERS[1:4], dev = 1:4),
               data = c(
@@ -47,7 +47,7 @@ test.NoDevelopmentExample <- function(){
   )
   # This should no longer generate a warning
   m <- tryCatch(MackChainLadder(x, est.sigma = "Mack"), warning = function(w) w)
-  checkTrue(!inherits(m, "warning"))
+  checkTrue(inherits(m, "warning"))
 }
 test.loglinear.NA.Example <- function(){
   x <- matrix(byrow = TRUE, nrow = 4, ncol = 4,
