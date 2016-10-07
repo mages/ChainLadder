@@ -179,7 +179,7 @@ and, of course, add other runit scripts as warrantted.
 By default, R's `lm` method generates a warning when it detects
 an "essentially perfect fit".
 This can happen when one column of a triangle is identical to the previous column;
-i.e., when all link ratios are the same.
+i.e., when all link ratios in a column are the same.
 In the example below, the second column is a fixed constant, 1.05,
 times the first column.
 ChainLadder previously issued the lm warning below.
@@ -202,7 +202,7 @@ Warning messages:
 ```
 which may have raised a concern with the user when none was warranted.
 
-Now ChainLadder issues an informational message at the console:
+Now ChainLadder issues an "informational warning":
 
 ```{r echo = FALSE}
 x <- matrix(byrow = TRUE, nrow = 4, ncol = 4, 
