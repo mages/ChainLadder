@@ -22,7 +22,7 @@ MackChainLadder <- function(
     # 2013-02-25 Parameter risk recursive formula may have a third term per
     #   Murphy and BBMW
     if (! mse.method %in% c("Mack", "Independence")) stop("mse.method must be 'Mack' or 'Independence'")
-    if (! est.sigma %in% c("Mack", "log-linear")) {
+    if (! est.sigma[1] %in% c("Mack", "log-linear")) {
       if (!is.numeric(est.sigma)) 
         stop("est.sigma must be 'Mack' or 'log-linear' or numeric")
       }
