@@ -22,6 +22,11 @@ MackChainLadder <- function(
     # 2013-02-25 Parameter risk recursive formula may have a third term per
     #   Murphy and BBMW
     if (! mse.method %in% c("Mack", "Independence")) stop("mse.method must be 'Mack' or 'Independence'")
+    if (! est.sigma[1] %in% c("Mack", "log-linear")) {
+      if (!is.numeric(est.sigma)) 
+        stop("est.sigma must be 'Mack' or 'log-linear' or numeric")
+      }
+    if (!is.logical(tail) & !is.numeric(tail)) stop("tail must be logical or numeric")
     
     Triangle <- checkTriangle(Triangle)
     m <- dim(Triangle)[1]
@@ -347,15 +352,41 @@ tail.SE <- function(FullTriangle, StdErr, Total.SE, tail.factor, tail.se = NULL,
   
   if(is.null(tail.se)){
     .fse <- StdErr$f.se[start:(n-2)]
-    mse <- lm(log(.fse) ~ .dev)
-    tail.se <- exp(predict(mse, newdata=data.frame(.dev=tail.pos)))
+    ndx <- .fse > 0
+    numpos <- sum(ndx)
+    if (numpos) {
+      .devse <- .dev[ndx]
+      .fse <- .fse[ndx]
+      mse <- lm(log(.fse) ~ .devse)
+      if (numpos > 1) tail.se <- exp(predict(mse, newdata=data.frame(.devse=tail.pos)))
+      else {
+        warning("Only one column for estimating tail.se")
+        tail.se <- suppressWarnings(
+          exp(predict(mse, newdata=data.frame(.dev=tail.pos))))
+        }
+    }
+    else {
+      warning("No development variability in triangle. Setting tail.se = 0")
+      tail.se <- 0
+    }
   }
   StdErr$f.se <- c(StdErr$f.se, tail.se = tail.se)
   
   if(is.null(tail.sigma)){
     .sigma <- StdErr$sigma[start:(n-2)]
-    msig <- lm(log(.sigma) ~ .dev)
-    tail.sigma <- exp(predict(msig, newdata = data.frame(.dev = tail.pos)))
+    ndx <- .sigma > 0
+    numpos <- sum(ndx)
+    if (numpos) {
+      .devsigma <- .dev[ndx]
+      .sigma <- .sigma[ndx]
+      msig <- lm(log(.sigma) ~ .devsigma)
+      if (numpos > 1) tail.sigma <- exp(
+        predict(msig, newdata = data.frame(.devsigma = tail.pos)))
+      else {
+        warning("No development variability in triangle. Setting tail.sigma = 0")
+        tail.sigma <- 0
+      }
+    }
   }
   StdErr$sigma <- c(StdErr$sigma, tail.sigma = as.numeric(tail.sigma))
   
