@@ -1,13 +1,17 @@
-plotParms <- function(x) UseMethod("plotParms")
-plotParms.ChainLadder <- function(x) {
+plotParms <- function(x, ...) UseMethod("plotParms")
+plotParms.ChainLadder <- function(x, title) {
   library(grid)
   library(gridExtra)
   p1 <- plot.cl.f(x) + theme(axis.title.y=element_blank())
   p2 <- plot.cl.f.se(x) + theme(axis.title.y=element_blank())
   p3 <- plot.cl.f.cv(x) + theme(axis.title.y=element_blank()) 
   p4 <- plot.cl.sigma(x) + theme(axis.title.y=element_blank())
-  arrangeGrob(grobs=list(p1, p2, p3, p4), ncol = 2, nrow = 2,
-               top = "chainladder(GenIns) parameter estimates")
+  if (missing(title)) title <- paste0("ChainLadder(",
+                                      x$TriangleName, 
+                                      ") parameter estimates")
+    
+  marrangeGrob(grobs=list(p1, p2, p3, p4), ncol = 2, nrow = 2,
+               top = title)
 }
 plot.cl.f <- function(x) {
   require(ggplot2)

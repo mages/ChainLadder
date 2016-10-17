@@ -5,6 +5,8 @@
 
 chainladder <- function(Triangle, weights=1,
                         delta=1){
+  
+  TriangleName <- deparse(substitute(Triangle))
 
     Triangle <- checkTriangle(Triangle)
     n <- dim(Triangle)[2]
@@ -27,7 +29,8 @@ chainladder <- function(Triangle, weights=1,
     } 
     myModel <- lapply(c(1:(n-1)), lmCL, Triangle)
     
-    output <- list(Models=myModel, Triangle=Triangle, delta=delta, weights=weights)
+    output <- list(Models=myModel, Triangle=Triangle, delta=delta, 
+                   weights=weights, TriangleName = TriangleName)
     class(output) <- c("ChainLadder", "TriangleModel", class(output))
     return(output)
 }

@@ -123,6 +123,7 @@ MackChainLadder <- function(
     output[["Total.ProcessRisk"]] <- attr(Total.SE, "processrisk")
     output[["Total.ParameterRisk"]] <- attr(Total.SE, "paramrisk")
     output[["tail"]] <- tail
+    output[["TriangleName"]] <- CL$TriangleName
     class(output) <- c("MackChainLadder", "TriangleModel", "list")
     return(output)
   }
