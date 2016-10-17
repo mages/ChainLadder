@@ -1,4 +1,14 @@
 plotParms <- function(x) UseMethod("plotParms")
+plotParms.ChainLadder <- function(x) {
+  library(grid)
+  library(gridExtra)
+  p1 <- plot.cl.f(x) + theme(axis.title.y=element_blank())
+  p2 <- plot.cl.f.se(x) + theme(axis.title.y=element_blank())
+  p3 <- plot.cl.f.cv(x) + theme(axis.title.y=element_blank()) 
+  p4 <- plot.cl.sigma(x) + theme(axis.title.y=element_blank())
+  arrangeGrob(grobs=list(p1, p2, p3, p4), ncol = 2, nrow = 2,
+               top = "chainladder(GenIns) parameter estimates")
+}
 plot.cl.f <- function(x) {
   require(ggplot2)
   smmry <- suppressWarnings(lapply(x$Models, summary))
@@ -55,7 +65,7 @@ plot.cl.sigma <- function(x) {
   nobs <- as.character(sapply(x$Models, nobs))
   na_sigma <- is.na(sigma)
   xx <- factor(colnames(x$Triangle)[1:n], levels = colnames(x$Triangle)[1:n])
-  df <- data.frame(xx, f1, f.se, sigma, na_sigma, nobs, 
+  df <- data.frame(xx, f.se, sigma, na_sigma, nobs, 
                    sigmapoint = sigma,
                    label = nobs,
                    stringsAsFactors = FALSE)
@@ -111,6 +121,7 @@ plot.cl.f.cv <- function(x) {
   df$f.cv.point[est_source!="regr"] <- 0
   P <- ggplot(df, aes(x=xx, y=f.cv, colour = est_source)) +  
     xlab(names(dimnames(x$Triangle))[2L]) +
+    ylab("cv(f-1)") +
     geom_line(aes(group = 1), na.rm = TRUE) +
     geom_point(aes(y=f.cv.point, colour = est_source), na.rm = TRUE) +
     ggtitle("cv(f-1) estimates") 
