@@ -1,7 +1,18 @@
+#' plotParms Plot the estimated parameters of a model
+#' 
+#' Methods to visualize the estimated parameters. 
+#' S3 methods currently exist for objects of class
+#' ChainLadder and MackChainLadder.
+#' 
+#' @param x object whose parameters are to be visualized
+#' 
+#' @param title optional; character holding title of the plot;
+#' defaults to something the class author deems appropriate.
+library(ggplot2)
+library(grid)
+library(gridExtra)
 plotParms <- function(x, ...) UseMethod("plotParms")
 plotParms.ChainLadder <- function(x, title) {
-  library(grid)
-  library(gridExtra)
   p1 <- plot.cl.f(x) + theme(axis.title.y=element_blank())
   p2 <- plot.cl.f.se(x) + theme(axis.title.y=element_blank())
   p3 <- plot.cl.f.cv(x) + theme(axis.title.y=element_blank()) 
@@ -14,7 +25,7 @@ plotParms.ChainLadder <- function(x, title) {
                top = title)
 }
 plot.cl.f <- function(x) {
-  require(ggplot2)
+#  require(ggplot2)
   smmry <- suppressWarnings(lapply(x$Models, summary))
   f <- sapply(smmry, function(x) x$coef["x","Estimate"])
   n <- length(f)
