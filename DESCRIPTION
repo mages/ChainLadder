@@ -32,6 +32,7 @@ Imports:
     reshape2,
     lattice,
     grid,
+    gridExtra,
     tweedie,
     utils, 
     systemfit, 
