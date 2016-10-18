@@ -8,11 +8,15 @@
 #' 
 #' @param title optional; character holding title of the plot;
 #' defaults to something the class author deems appropriate.
-library(ggplot2)
-library(grid)
-library(gridExtra)
+#library(ggplot2)
+#library(grid)
+#library(gridExtra)
 plotParms <- function(x, ...) UseMethod("plotParms")
-plotParms.ChainLadder <- function(x, title) {
+plotParms.default <- function(x, ...){
+  stop("No 'plotParms' method exists for objects of class ",
+       class(x))
+}
+plotParms.ChainLadder <- function(x, title, ...) {
   p1 <- plot.cl.f(x) + theme(axis.title.y=element_blank())
   p2 <- plot.cl.f.se(x) + theme(axis.title.y=element_blank())
   p3 <- plot.cl.f.cv(x) + theme(axis.title.y=element_blank()) 
@@ -38,7 +42,12 @@ plot.cl.f <- function(x) {
                    label = nobs,
                    stringsAsFactors = FALSE)
   df$f.se[na_sigma] <- 0
-  P <- ggplot(df, aes(x=xx, y=f, label = label)) +  
+  # Need for aes_: see exchange at link (wrapped) below 
+  #   and final solution
+  # http://stackoverflow.com/questions/9439256/
+  #   how-can-i-handle-r-cmd-check-no-visible-binding-for-
+  #   global-variable-notes-when
+  P <- ggplot(df, aes_(x=~xx, y=~f, label = ~label)) +  
     geom_errorbar(aes(ymin=f-f.se, ymax=f+f.se), colour="black", width=.1) +
     xlab(names(dimnames(x$Triangle))[1L]) +
     geom_line(aes(colour = na_sigma, group = 1)) +
@@ -48,7 +57,7 @@ plot.cl.f <- function(x) {
   P
 }
 plot.cl.f1 <- function(x) {
-  require(ggplot2)
+#  require(ggplot2)
   smmry <- suppressWarnings(lapply(x$Models, summary))
   f1 <- sapply(smmry, function(x) x$coef["x","Estimate"]) - 1
   n <- length(f1)
@@ -61,7 +70,7 @@ plot.cl.f1 <- function(x) {
                    label = nobs,
                    stringsAsFactors = FALSE)
   df$f.se[na_sigma] <- 0
-  P <- ggplot(df, aes(x=xx, y=f1, label = label)) +  
+  P <- ggplot(df, aes_(x=~xx, y=~f1, label = ~label)) +  
     geom_errorbar(aes(ymin=f1-f.se, ymax=f1+f.se), colour="black", width=.1) +
     xlab(names(dimnames(x$Triangle))[1L]) +
     geom_line(aes(colour = na_sigma, group = 1)) +
@@ -71,7 +80,7 @@ plot.cl.f1 <- function(x) {
   P
 }
 plot.cl.sigma <- function(x) {
-  require(ggplot2)
+#  require(ggplot2)
   smmry <- suppressWarnings(lapply(x$Models, summary))
   f <- sapply(smmry, function(x) x$coef["x","Estimate"])
   n <- length(f)
@@ -85,16 +94,16 @@ plot.cl.sigma <- function(x) {
                    label = nobs,
                    stringsAsFactors = FALSE)
   df$sigmapoint[na_sigma] <- 0
-  P <- ggplot(df, aes(x=xx, y=sigma, label = label)) +  
+  P <- ggplot(df, aes_(x=~xx, y=~sigma, label = ~label)) +  
     xlab(names(dimnames(x$Triangle))[1L]) +
     geom_line(aes(colour = na_sigma, group = 1), na.rm = TRUE) +
-    geom_point(aes(y = sigmapoint, colour = na_sigma)) +
+    geom_point(aes_(y = ~sigmapoint, colour = ~na_sigma)) +
     ggtitle("sigma estimates")
   if (all(!na_sigma)) P <- P + theme(legend.position="none")
   P
 }
 plot.cl.f.se <- function(x) {
-  require(ggplot2)
+#  require(ggplot2)
   smmry <- suppressWarnings(lapply(x$Models, summary))
   f <- sapply(smmry, function(x) x$coef["x","Estimate"])
   n <- length(f)
@@ -111,13 +120,13 @@ plot.cl.f.se <- function(x) {
   P <- ggplot(df, aes(x=xx, y=f.se, colour = na_sigma)) +  
     xlab(names(dimnames(x$Triangle))[2L]) +
     geom_line(aes(colour = na_sigma, group = 1), na.rm = TRUE) +
-    geom_point(aes(y = f.se.point, colour = na_sigma), na.rm = TRUE) +
+    geom_point(aes_(y = ~f.se.point, colour = ~na_sigma), na.rm = TRUE) +
     ggtitle("f.se estimates") 
     if (all(!na_sigma)) P <- P + theme(legend.position="none")
   P
 }
 plot.cl.f.cv <- function(x) {
-  require(ggplot2)
+#  require(ggplot2)
   smmry <- suppressWarnings(lapply(x$Models, summary))
   f <- sapply(smmry, function(x) x$coef["x","Estimate"])
   n <- length(f)
@@ -138,14 +147,14 @@ plot.cl.f.cv <- function(x) {
     xlab(names(dimnames(x$Triangle))[2L]) +
     ylab("cv(f-1)") +
     geom_line(aes(group = 1), na.rm = TRUE) +
-    geom_point(aes(y=f.cv.point, colour = est_source), na.rm = TRUE) +
+    geom_point(aes_(y=~f.cv.point, colour = ~est_source), na.rm = TRUE) +
     ggtitle("cv(f-1) estimates") 
   P
 }
 
 # Now MackCL
 plot.MackCL.f <- function(x) {
-  require(ggplot2)
+#  require(ggplot2)
   smmry <- suppressWarnings(lapply(x$Models, summary))
   f <- sapply(smmry, function(x) x$coef["x","Estimate"])
   n <- length(f)
@@ -157,7 +166,7 @@ plot.MackCL.f <- function(x) {
   df <- data.frame(xx, f, f.se, sigma, nasigma, nobs, 
                    label = nobs,
                    stringsAsFactors = FALSE)
-  P <- ggplot(df, aes(x=xx, y=f, label = label)) +  
+  P <- ggplot(df, aes_(x=~xx, y=~f, label = ~label)) +  
     geom_errorbar(aes(ymin=f-f.se, ymax=f+f.se), colour="black", width=.1) +
     xlab(names(dimnames(x$Triangle))[1L]) +
     geom_line(aes(colour = nasigma[1], group = 1)) +
@@ -167,7 +176,7 @@ plot.MackCL.f <- function(x) {
   P
 }
 plot.MackCL.f1 <- function(x) {
-  require(ggplot2)
+#  require(ggplot2)
   smmry <- suppressWarnings(lapply(x$Models, summary))
   f1 <- sapply(smmry, function(x) x$coef["x","Estimate"]) - 1
   n <- length(f1)
@@ -179,7 +188,7 @@ plot.MackCL.f1 <- function(x) {
   df <- data.frame(xx, f1, f.se, sigma, nasigma, nobs, 
                    label = nobs,
                    stringsAsFactors = FALSE)
-  P <- ggplot(df, aes(x=xx, y=f1, label = label)) +  
+  P <- ggplot(df, aes_(x=~xx, y=~f1, label = ~label)) +  
     geom_errorbar(aes(ymin=f1-f.se, ymax=f1+f.se), colour="black", width=.1) +
     xlab(names(dimnames(x$Triangle))[1L]) +
     geom_line(aes(colour = nasigma[1], group = 1)) +
@@ -189,7 +198,7 @@ plot.MackCL.f1 <- function(x) {
   P
 }
 plot.MackCL.sigma <- function(x) {
-  require(ggplot2)
+#  require(ggplot2)
   smmry <- suppressWarnings(lapply(x$Models, summary))
   #smmry <- lapply(x$Models, summary)
   f <- sapply(smmry, function(x) x$coef["x","Estimate"])
@@ -213,7 +222,7 @@ plot.MackCL.sigma <- function(x) {
   P
 }
 plot.MackCL.f.se <- function(x) {
-  require(ggplot2)
+#  require(ggplot2)
   smmry <- suppressWarnings(lapply(x$Models, summary))
   f <- sapply(smmry, function(x) x$coef["x","Estimate"])
   n <- length(f)
@@ -236,7 +245,7 @@ plot.MackCL.f.se <- function(x) {
   P
 }
 plot.MackCL.f.cv <- function(x) {
-  require(ggplot2)
+#  require(ggplot2)
   smmry <- suppressWarnings(lapply(x$Models, summary))
   f <- sapply(smmry, function(x) x$coef["x","Estimate"])
   n <- length(f)
