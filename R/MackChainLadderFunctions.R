@@ -16,6 +16,7 @@ MackChainLadder <- function(
   tail.sigma=NULL,
   mse.method = "Mack")
 {
+  TriangleName <- deparse(substitute(Triangle))
     ## idea: have a list for tail factor
     ## tail=list(f=FALSE, f.se=NULL, sigma=NULL, F.se=NULL)
     ##
@@ -124,7 +125,7 @@ MackChainLadder <- function(
     output[["Total.ProcessRisk"]] <- attr(Total.SE, "processrisk")
     output[["Total.ParameterRisk"]] <- attr(Total.SE, "paramrisk")
     output[["tail"]] <- tail
-    output[["TriangleName"]] <- CL$TriangleName
+    output[["TriangleName"]] <- TriangleName
     output$est.sigma <- est.sigma
     output$tail <- tail.input
     output$tail.se <- tail.se
