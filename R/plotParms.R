@@ -72,7 +72,7 @@ plot.cl.f1 <- function(x) {
   df$f.se[na_sigma] <- 0
   P <- ggplot(df, aes_(x=~xx, y=~f1, label = ~label)) +  
     geom_errorbar(aes(ymin=f1-f.se, ymax=f1+f.se), colour="black", width=.1) +
-    xlab(names(dimnames(x$Triangle))[1L]) +
+    xlab(names(dimnames(x$Triangle))[2L]) +
     geom_line(aes(colour = na_sigma, group = 1)) +
     geom_point(aes(colour = na_sigma)) +
     ggtitle("f-1 estimates")
@@ -95,7 +95,7 @@ plot.cl.sigma <- function(x) {
                    stringsAsFactors = FALSE)
   df$sigmapoint[na_sigma] <- 0
   P <- ggplot(df, aes_(x=~xx, y=~sigma, label = ~label)) +  
-    xlab(names(dimnames(x$Triangle))[1L]) +
+    xlab(names(dimnames(x$Triangle))[2L]) +
     geom_line(aes(colour = na_sigma, group = 1), na.rm = TRUE) +
     geom_point(aes_(y = ~sigmapoint, colour = ~na_sigma)) +
     ggtitle("sigma estimates")
@@ -153,6 +153,49 @@ plot.cl.f.cv <- function(x) {
 }
 
 # Now MackCL
+plotParms.MackChainLadder <- function(x, title, ...) {
+  p1 <- plot.mackcl.f(x) + theme(axis.title.y=element_blank())
+  p2 <- plot.cl.f.se(x) + theme(axis.title.y=element_blank())
+  p3 <- plot.cl.f.cv(x) + theme(axis.title.y=element_blank()) 
+  p4 <- plot.cl.sigma(x) + theme(axis.title.y=element_blank())
+  if (missing(title)) title <- paste0("MackChainLadder(",
+                                      x$TriangleName, 
+                                      ") parameter estimates")
+    
+  marrangeGrob(grobs=list(p1, p2, p3, p4), ncol = 2, nrow = 2,
+               top = title)
+}
+plot.mackcl.f <- function(x) {
+  smmry <- suppressWarnings(lapply(x$Models, summary))
+  f <- sapply(smmry, function(x) x$coef["x","Estimate"])
+  n <- length(f)
+  f.se <- sapply(smmry, function(x) x$coef["x","Std. Error"])
+  f.cv <- f.se / (f-1)
+  sigma <- sapply(smmry, function(x) x$sigma)
+  na_sigma <- is.na(sigma)
+  # set the display order
+  src <- factor(c("regr", "est'd", "deflt", "input"), 
+                levels = c("regr", "est'd", "deflt", "input"))
+  source <- rep(src[1L], n)
+  source[n] <- src[ifelse(is.logical(x$tail), 
+                          ifelse(x$tail, 2L, 3L),
+                          4L)]
+#  source[f==1] <- "f=1"
+  xx <- factor(colnames(x$Triangle)[1:n], levels = colnames(x$Triangle)[1:n])
+  df <- data.frame(xx, f, f.se, sigma, na_sigma, f.cv, 
+                   f.cv.point = f.cv,
+                   source,
+                   stringsAsFactors = FALSE)
+  df$f.cv.point[source!="regr"] <- 0
+  P <- ggplot(df, aes(x = xx, y = f, colour = source)) +  
+    xlab(names(dimnames(x$Triangle))[2L]) +
+#    ylab("cv(f-1)") +
+    geom_line(aes(group = 1), na.rm = TRUE) +
+    geom_point() +
+#    geom_point(aes_(y=~f.cv.point, colour = ~source), na.rm = TRUE) +
+    ggtitle("f estimates") 
+  P
+}
 plot.MackCL.f <- function(x) {
 #  require(ggplot2)
   smmry <- suppressWarnings(lapply(x$Models, summary))
@@ -263,5 +306,30 @@ plot.MackCL.f.cv <- function(x) {
     geom_point(aes(colour = imputed), na.rm = TRUE) +
     ggtitle("f.cv estimates") 
   if (all(!imputed)) P <- P + theme(legend.position="none")
+  P
+}
+plot.mackcl.f.cv <- function(x) {
+  smmry <- suppressWarnings(lapply(x$Models, summary))
+  f <- sapply(smmry, function(x) x$coef["x","Estimate"])
+  n <- length(f)
+  f.se <- sapply(smmry, function(x) x$coef["x","Std. Error"])
+  f.cv <- f.se / (f-1)
+  sigma <- sapply(smmry, function(x) x$sigma)
+  na_sigma <- is.na(sigma)
+  est_source <- rep("regr", n)
+  est_source[na_sigma] <- "sigma=NA"
+  est_source[f==1] <- "f=1"
+  xx <- factor(colnames(x$Triangle)[1:n], levels = colnames(x$Triangle)[1:n])
+  df <- data.frame(xx, f, f.se, sigma, na_sigma, f.cv, 
+                   f.cv.point = f.cv,
+                   est_source,
+                   stringsAsFactors = FALSE)
+  df$f.cv.point[est_source!="regr"] <- 0
+  P <- ggplot(df, aes(x=xx, y=f.cv, colour = est_source)) +  
+    xlab(names(dimnames(x$Triangle))[2L]) +
+    ylab("cv(f-1)") +
+    geom_line(aes(group = 1), na.rm = TRUE) +
+    geom_point(aes_(y=~f.cv.point, colour = ~est_source), na.rm = TRUE) +
+    ggtitle("cv(f-1) estimates") 
   P
 }
