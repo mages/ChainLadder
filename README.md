@@ -18,13 +18,13 @@ used in insurance claims reserving, including:
 ## Installation
 
 You can install the stable version from
-[CRAN](http://cran.r-project.org/package=ChainLadder):
+[CRAN](https://cran.r-project.org/package=ChainLadder):
 
 ```s
 install.packages('ChainLadder', dependencies = TRUE)
 ```
 
-To install the current development version from github you need the [devtools package](http://cran.r-project.org/package=devtools) and the other packages on which ChainLadder depends and links to:
+To install the current development version from github you need the [devtools package](https://cran.r-project.org/package=devtools) and the other packages on which ChainLadder depends and links to:
 
 ```s
 install.packages(c("actuar", "cplm", "grid", "ggplot2", "knitr", "lattice", "Matrix", "MASS", "reshape2", "rmarkdown", "RUnit", "systemfit",  "statmod", "tweedie"))
@@ -44,7 +44,7 @@ library(ChainLadder)
 demo(ChainLadder)
 ```
 
-See the ChainLadder package [vignette](http://cran.r-project.org/web/packages/ChainLadder/vignettes/ChainLadder.pdf) for more details. 
+See the ChainLadder package [vignette](https://cran.r-project.org/package=ChainLadder/vignettes/ChainLadder.pdf) for more details. 
 
 ## Citation
 

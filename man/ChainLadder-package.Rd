@@ -18,7 +18,7 @@
   \url{https://github.com/mages/ChainLadder} 
     
   For more financial packages see also CRAN Task View 'Emperical Finance'
-  at \url{http://cran.r-project.org/web/views/Finance.html}.
+  at \url{https://CRAN.R-project.org/view=Finance}.
 }
 \author{
   Maintainer: Markus Gesmann <markus.gesmann@gmail.com>
