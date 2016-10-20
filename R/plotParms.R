@@ -19,7 +19,7 @@ plotParms.default <- function(x, ...){
 plotParms.ChainLadder <- function(x, title, ...) {
   p1 <- plot.cl.f(x) + theme(axis.title.y=element_blank())
   p2 <- plot.cl.f.se(x) + theme(axis.title.y=element_blank())
-  p3 <- plot.cl.f.cv(x) + theme(axis.title.y=element_blank()) 
+  p3 <- plot.cl.f1.cv(x) + theme(axis.title.y=element_blank()) 
   p4 <- plot.cl.sigma(x) + theme(axis.title.y=element_blank())
   if (missing(title)) title <- paste0("ChainLadder(",
                                       x$TriangleName, 
@@ -126,6 +126,32 @@ plot.cl.f.se <- function(x) {
   P
 }
 plot.cl.f.cv <- function(x) {
+  #  require(ggplot2)
+  smmry <- suppressWarnings(lapply(x$Models, summary))
+  f <- sapply(smmry, function(x) x$coef["x","Estimate"])
+  n <- length(f)
+  f.se <- sapply(smmry, function(x) x$coef["x","Std. Error"])
+  f.cv <- f.se / f
+  sigma <- sapply(smmry, function(x) x$sigma)
+  na_sigma <- is.na(sigma)
+  est_source <- rep("regres", n)
+  est_source[na_sigma] <- "sigma=NA"
+  est_source[f==1] <- "f=1"
+  xx <- factor(colnames(x$Triangle)[1:n], levels = colnames(x$Triangle)[1:n])
+  df <- data.frame(xx, f, f.se, sigma, na_sigma, f.cv, 
+                   f.cv.point = f.cv,
+                   est_source,
+                   stringsAsFactors = FALSE)
+  df$f.cv.point[est_source!="regres"] <- 0
+  P <- ggplot(df, aes(x=xx, y=f.cv, colour = est_source)) +  
+    xlab(names(dimnames(x$Triangle))[2L]) +
+    ylab("cv(f)") +
+    geom_line(aes(group = 1), na.rm = TRUE) +
+    geom_point(aes_(y=~f.cv.point, colour = ~est_source), na.rm = TRUE) +
+    ggtitle("cv(f) estimates") 
+  P
+}
+plot.cl.f1.cv <- function(x) {
 #  require(ggplot2)
   smmry <- suppressWarnings(lapply(x$Models, summary))
   f <- sapply(smmry, function(x) x$coef["x","Estimate"])
@@ -134,7 +160,7 @@ plot.cl.f.cv <- function(x) {
   f.cv <- f.se / (f-1)
   sigma <- sapply(smmry, function(x) x$sigma)
   na_sigma <- is.na(sigma)
-  est_source <- rep("regr", n)
+  est_source <- rep("regres", n)
   est_source[na_sigma] <- "sigma=NA"
   est_source[f==1] <- "f=1"
   xx <- factor(colnames(x$Triangle)[1:n], levels = colnames(x$Triangle)[1:n])
@@ -142,7 +168,7 @@ plot.cl.f.cv <- function(x) {
                    f.cv.point = f.cv,
                    est_source,
                    stringsAsFactors = FALSE)
-  df$f.cv.point[est_source!="regr"] <- 0
+  df$f.cv.point[est_source!="regres"] <- 0
   P <- ggplot(df, aes(x=xx, y=f.cv, colour = est_source)) +  
     xlab(names(dimnames(x$Triangle))[2L]) +
     ylab("cv(f-1)") +
@@ -155,9 +181,9 @@ plot.cl.f.cv <- function(x) {
 # Now MackCL
 plotParms.MackChainLadder <- function(x, title, ...) {
   p1 <- plot.mackcl.f(x) + theme(axis.title.y=element_blank())
-  p2 <- plot.cl.f.se(x) + theme(axis.title.y=element_blank())
-  p3 <- plot.cl.f.cv(x) + theme(axis.title.y=element_blank()) 
-  p4 <- plot.cl.sigma(x) + theme(axis.title.y=element_blank())
+  p2 <- plot.mackcl.f.se(x) + theme(axis.title.y=element_blank())
+  p3 <- plot.mackcl.f1.cv(x) + theme(axis.title.y=element_blank()) 
+  p4 <- plot.mackcl.sigma(x) + theme(axis.title.y=element_blank())
   if (missing(title)) title <- paste0("MackChainLadder(",
                                       x$TriangleName, 
                                       ") parameter estimates")
@@ -167,27 +193,35 @@ plotParms.MackChainLadder <- function(x, title, ...) {
 }
 plot.mackcl.f <- function(x) {
   smmry <- suppressWarnings(lapply(x$Models, summary))
-  f <- sapply(smmry, function(x) x$coef["x","Estimate"])
+  #f <- sapply(smmry, function(x) x$coef["x","Estimate"])
+  f <- x$f
   n <- length(f)
-  f.se <- sapply(smmry, function(x) x$coef["x","Std. Error"])
-  f.cv <- f.se / (f-1)
-  sigma <- sapply(smmry, function(x) x$sigma)
-  na_sigma <- is.na(sigma)
+  #f.se <- sapply(smmry, function(x) x$coef["x","Std. Error"])
+  f.se <- x$f.se
+  if (length(f.se < n)) f.se <- c(f.se, NA)
+  #f.se[is.na(f.se)] <- 0
+#  f.cv <- f.se / (f-1)
+#  sigma <- sapply(smmry, function(x) x$sigma)
+#  na_sigma <- is.na(sigma)
   # set the display order
-  src <- factor(c("regr", "est'd", "deflt", "input"), 
-                levels = c("regr", "est'd", "deflt", "input"))
+  src <- factor(c("regres", "est'd", "default", "input", "NA"), 
+                levels = c("regres", "est'd", "default", "input", "NA"))
   source <- rep(src[1L], n)
   source[n] <- src[ifelse(is.logical(x$tail), 
                           ifelse(x$tail, 2L, 3L),
                           4L)]
+  source.se <- rep(src[1L], n)
+  source.se[is.na(f.se)] <- src[5L]
+  f.se[is.na(f.se)] <- 0
 #  source[f==1] <- "f=1"
   xx <- factor(colnames(x$Triangle)[1:n], levels = colnames(x$Triangle)[1:n])
-  df <- data.frame(xx, f, f.se, sigma, na_sigma, f.cv, 
-                   f.cv.point = f.cv,
-                   source,
+  df <- data.frame(xx, f, f.se, # sigma, na_sigma, f.cv, 
+  #                 f.cv.point = f.cv,
+                   source, source.se,
                    stringsAsFactors = FALSE)
-  df$f.cv.point[source!="regr"] <- 0
+  #df$f.cv.point[source!="regres"] <- 0
   P <- ggplot(df, aes(x = xx, y = f, colour = source)) +  
+    geom_errorbar(aes(ymin=f-f.se, ymax=f+f.se), colour="black", width=.1) +
     xlab(names(dimnames(x$Triangle))[2L]) +
 #    ylab("cv(f-1)") +
     geom_line(aes(group = 1), na.rm = TRUE) +
@@ -196,140 +230,135 @@ plot.mackcl.f <- function(x) {
     ggtitle("f estimates") 
   P
 }
-plot.MackCL.f <- function(x) {
-#  require(ggplot2)
+plot.mackcl.sigma <- function(x) {
+  sigma <- x$sigma
+  n <- length(x$f)
+  if (length(sigma) < n) sigma <- c(sigma, NA)
   smmry <- suppressWarnings(lapply(x$Models, summary))
-  f <- sapply(smmry, function(x) x$coef["x","Estimate"])
-  n <- length(f)
-  f.se <- x$f.se #sapply(smmry, function(x) x$coef["x","Std. Error"])
-  sigma <- sapply(smmry, function(x) x$sigma)
-  nobs <- as.character(sapply(x$Models, nobs))
-  nasigma <- is.na(sigma)
+  sigmaregr <- sapply(smmry, function(x) x$sigma)
+  if (length(sigmaregr) < n) sigmaregr <- 
+    c(sigmaregr, rep(NA, n - length(sigmaregr)))
+  ndx <- sigma != sigmaregr
+  ndx[is.na(ndx)] <- TRUE
+  src <- factor(c("regres", "log-linear", "Mack", "input", "NA"), 
+                levels = c("regres", "log-linear", "Mack", "input", "NA"))
+  source <- rep(src[1L], n)
+  if (x$est.sigma[1] %in% "log-linear") source[ndx] <- src[2L] 
+  else 
+    if (x$est.sigma[1] %in% "Mack") source[ndx] <- src[3L]
+    else source[ndx] <- src[4L]
+  source[n] <- src[ifelse(is.null(x$tail.sigma), 5L, 2L)]
   xx <- factor(colnames(x$Triangle)[1:n], levels = colnames(x$Triangle)[1:n])
-  df <- data.frame(xx, f, f.se, sigma, nasigma, nobs, 
-                   label = nobs,
+  sigmaNoNAs <- sigma
+  
+  sigmaNoNAs[is.na(sigma)] <- 0
+  df <- data.frame(xx, sigma, sigmaNoNAs, 
+                   source,
                    stringsAsFactors = FALSE)
-  P <- ggplot(df, aes_(x=~xx, y=~f, label = ~label)) +  
-    geom_errorbar(aes(ymin=f-f.se, ymax=f+f.se), colour="black", width=.1) +
-    xlab(names(dimnames(x$Triangle))[1L]) +
-    geom_line(aes(colour = nasigma[1], group = 1)) +
-    geom_point(aes(colour = nasigma)) +
-    ggtitle("f estimates")
-  P <- P + theme(legend.position="none")
+  P <- ggplot(df, aes(x = xx, y = sigma, colour = source)) +  
+    xlab(names(dimnames(x$Triangle))[2L]) +
+    geom_line(aes(colour = source, group = 1), na.rm = TRUE) +
+    geom_point(aes(y=sigmaNoNAs)) +
+    ggtitle("sigma estimates") 
   P
 }
-plot.MackCL.f1 <- function(x) {
-#  require(ggplot2)
+plot.mackcl.f.se <- function(x) {
+  f.se <- x$f.se
+  n <- length(x$f)
+  if (length(f.se) < n) f.se <- c(f.se, NA)
   smmry <- suppressWarnings(lapply(x$Models, summary))
-  f1 <- sapply(smmry, function(x) x$coef["x","Estimate"]) - 1
-  n <- length(f1)
-  f.se <- x$f.se #sapply(smmry, function(x) x$coef["x","Std. Error"])
-  sigma <- sapply(smmry, function(x) x$sigma)
-  nobs <- as.character(sapply(x$Models, nobs))
-  nasigma <- is.na(sigma)
+  f.seregr <- sapply(smmry, function(x) x$coef["x","Std. Error"])
+  if (length(f.seregr) < n) f.seregr <- 
+    c(f.seregr, rep(NA, n - length(f.seregr)))
+  ndx <- f.se != f.seregr
+  ndx[is.na(ndx)] <- TRUE
+  src <- factor(c("regres", "log-linear", "Mack", "input", "NA"), 
+                levels = c("regres", "log-linear", "Mack", "input", "NA"))
+  source <- rep(src[1L], n)
+  if (x$est.sigma[1] %in% "log-linear") source[ndx] <- src[2L] 
+  else 
+    if (x$est.sigma[1] %in% "Mack") source[ndx] <- src[3L]
+  else source[ndx] <- src[4L]
+  source[n] <- src[ifelse(is.null(x$tail.f.se), 5L, 2L)]
   xx <- factor(colnames(x$Triangle)[1:n], levels = colnames(x$Triangle)[1:n])
-  df <- data.frame(xx, f1, f.se, sigma, nasigma, nobs, 
-                   label = nobs,
+  f.seNoNAs <- f.se
+  
+  f.seNoNAs[is.na(f.se)] <- 0
+  df <- data.frame(xx, f.se, f.seNoNAs, 
+                   source,
                    stringsAsFactors = FALSE)
-  P <- ggplot(df, aes_(x=~xx, y=~f1, label = ~label)) +  
-    geom_errorbar(aes(ymin=f1-f.se, ymax=f1+f.se), colour="black", width=.1) +
-    xlab(names(dimnames(x$Triangle))[1L]) +
-    geom_line(aes(colour = nasigma[1], group = 1)) +
-    geom_point(aes(colour = nasigma)) +
-    ggtitle("f-1 estimates")
-  P <- P + theme(legend.position="none")
-  P
-}
-plot.MackCL.sigma <- function(x) {
-#  require(ggplot2)
-  smmry <- suppressWarnings(lapply(x$Models, summary))
-  #smmry <- lapply(x$Models, summary)
-  f <- sapply(smmry, function(x) x$coef["x","Estimate"])
-  n <- length(f)
-  f.se <- sapply(smmry, function(x) x$coef["x","Std. Error"])
-  sigma <- sapply(smmry, function(x) x$sigma)
-  #nobs <- rep(">1", n)
-  imputed <- is.na(sigma)
-  nasigma <- is.na(sigma)
-  #nobs[nasigma] <- "T"
-  sigma[nasigma] <- x$sigma[imputed]
-  #  df <- sapply(smmry, function(x) x$df[2L])
-  xx <- factor(colnames(x$Triangle)[1:n], levels = colnames(x$Triangle)[1:n])
-  df <- data.frame(xx, sigma, imputed, stringsAsFactors = FALSE)
-  P <- ggplot(df, aes(x=xx, y=sigma, colour = imputed)) +  
+  P <- ggplot(df, aes(x = xx, y = f.se, colour = source)) +  
     xlab(names(dimnames(x$Triangle))[2L]) +
-    geom_line(aes(colour = imputed[1], group = 1)) +
-    geom_point(aes(colour = imputed)) +
-    ggtitle("sigma estimates")
-  if (all(!nasigma)) P <- P + theme(legend.position="none")
-  P
-}
-plot.MackCL.f.se <- function(x) {
-#  require(ggplot2)
-  smmry <- suppressWarnings(lapply(x$Models, summary))
-  f <- sapply(smmry, function(x) x$coef["x","Estimate"])
-  n <- length(f)
-  f.se <- sapply(smmry, function(x) x$coef["x","Std. Error"])
-  f.cv <- f.se / (f-1)
-  sigma <- sapply(smmry, function(x) x$sigma)
-  imputed <- is.na(sigma)
-  sigma[imputed] <- x$sigma[imputed]
-  f.se[imputed] <- x$f.se[imputed]
-  #isna <- is.na(f.cv)
-  #sigma[isna] <- 0
-  xx <- factor(colnames(x$Triangle)[1:n], levels = colnames(x$Triangle)[1:n])
-  df <- data.frame(xx, f, f.se, sigma, imputed, f.cv, stringsAsFactors = FALSE)
-  P <- ggplot(df, aes(x=xx, y=f.se, colour = imputed)) +  
-    xlab(names(dimnames(x$Triangle))[2L]) +
-    geom_line(aes(colour = imputed[1], group = 1), na.rm = TRUE) +
-    geom_point(aes(colour = imputed), na.rm = TRUE) +
+    geom_line(aes(colour = source, group = 1), na.rm = TRUE) +
+    geom_point(aes(y=f.seNoNAs)) +
     ggtitle("f.se estimates") 
-  if (all(!imputed)) P <- P + theme(legend.position="none")
   P
 }
-plot.MackCL.f.cv <- function(x) {
-#  require(ggplot2)
-  smmry <- suppressWarnings(lapply(x$Models, summary))
-  f <- sapply(smmry, function(x) x$coef["x","Estimate"])
+plot.mackcl.f1.cv <- function(x) {
+  f <- x$f
   n <- length(f)
-  f.se <- sapply(smmry, function(x) x$coef["x","Std. Error"])
-  sigma <- sapply(smmry, function(x) x$sigma)
-  imputed <- is.na(sigma)
-  sigma[imputed] <- x$sigma[imputed]
-  f.se[imputed] <- x$f.se[imputed]
-  f.cv <- f.se / (f-1)
+  f.se <- x$f.se
+  if (length(f.se) < n) f.se <- c(f.se, NA)
+  f1.cv <- f.se/ (f - 1)
+  smmry <- suppressWarnings(lapply(x$Models, summary))
+  f.seregr <- sapply(smmry, function(x) x$coef["x","Std. Error"])
+  if (length(f.seregr) < n) f.seregr <- 
+    c(f.seregr, rep(NA, n - length(f.seregr)))
+  ndx <- f.se != f.seregr
+  ndx[is.na(ndx)] <- TRUE
+  src <- factor(c("regres", "log-linear", "Mack", "input", "NA", "f=1"), 
+                levels = c("regres", "log-linear", "Mack", "input", "NA", "f=1"))
+  source <- rep(src[1L], n)
+  if (x$est.sigma[1] %in% "log-linear") source[ndx] <- src[2L] 
+  else 
+    if (x$est.sigma[1] %in% "Mack") source[ndx] <- src[3L]
+  else source[ndx] <- src[4L]
+  source[n] <- src[ifelse(is.null(x$tail.f.se), 5L, 2L)]
   xx <- factor(colnames(x$Triangle)[1:n], levels = colnames(x$Triangle)[1:n])
-  df <- data.frame(xx, f, f.se, sigma, imputed, f.cv, stringsAsFactors = FALSE)
-  P <- ggplot(df, aes(x=xx, y=f.cv, colour = imputed)) +  
+  f1.cvNoNAs <- f1.cv
+  f1.cvNoNAs[is.na(f.se)] <- 0
+  df <- data.frame(xx, f1.cv, f1.cvNoNAs, 
+                   source,
+                   stringsAsFactors = FALSE)
+  P <- ggplot(df, aes(x = xx, y = f1.cv, colour = source)) +  
     xlab(names(dimnames(x$Triangle))[2L]) +
-    geom_line(aes(colour = imputed[1], group = 1), na.rm = TRUE) +
-    geom_point(aes(colour = imputed), na.rm = TRUE) +
-    ggtitle("f.cv estimates") 
-  if (all(!imputed)) P <- P + theme(legend.position="none")
+    ylab("cv(f-1)") +
+    geom_line(aes(colour = source, group = 1), na.rm = TRUE) +
+    geom_point(aes(y=f1.cvNoNAs)) +
+    ggtitle("cv(f-1) estimates") 
   P
 }
 plot.mackcl.f.cv <- function(x) {
-  smmry <- suppressWarnings(lapply(x$Models, summary))
-  f <- sapply(smmry, function(x) x$coef["x","Estimate"])
+  f <- x$f
   n <- length(f)
-  f.se <- sapply(smmry, function(x) x$coef["x","Std. Error"])
-  f.cv <- f.se / (f-1)
-  sigma <- sapply(smmry, function(x) x$sigma)
-  na_sigma <- is.na(sigma)
-  est_source <- rep("regr", n)
-  est_source[na_sigma] <- "sigma=NA"
-  est_source[f==1] <- "f=1"
+  f.se <- x$f.se
+  if (length(f.se) < n) f.se <- c(f.se, NA)
+  f.cv <- f.se/ f
+  smmry <- suppressWarnings(lapply(x$Models, summary))
+  f.seregr <- sapply(smmry, function(x) x$coef["x","Std. Error"])
+  if (length(f.seregr) < n) f.seregr <- 
+    c(f.seregr, rep(NA, n - length(f.seregr)))
+  ndx <- f.se != f.seregr
+  ndx[is.na(ndx)] <- TRUE
+  src <- factor(c("regres", "log-linear", "Mack", "input", "NA", "f=1"), 
+                levels = c("regres", "log-linear", "Mack", "input", "NA", "f=1"))
+  source <- rep(src[1L], n)
+  if (x$est.sigma[1] %in% "log-linear") source[ndx] <- src[2L] 
+  else 
+    if (x$est.sigma[1] %in% "Mack") source[ndx] <- src[3L]
+  else source[ndx] <- src[4L]
+  source[n] <- src[ifelse(is.null(x$tail.f.se), 5L, 2L)]
   xx <- factor(colnames(x$Triangle)[1:n], levels = colnames(x$Triangle)[1:n])
-  df <- data.frame(xx, f, f.se, sigma, na_sigma, f.cv, 
-                   f.cv.point = f.cv,
-                   est_source,
+  f.cvNoNAs <- f.cv
+  f.cvNoNAs[is.na(f.se)] <- 0
+  df <- data.frame(xx, f.cv, f.cvNoNAs, 
+                   source,
                    stringsAsFactors = FALSE)
-  df$f.cv.point[est_source!="regr"] <- 0
-  P <- ggplot(df, aes(x=xx, y=f.cv, colour = est_source)) +  
+  P <- ggplot(df, aes(x = xx, y = f.cv, colour = source)) +  
     xlab(names(dimnames(x$Triangle))[2L]) +
-    ylab("cv(f-1)") +
-    geom_line(aes(group = 1), na.rm = TRUE) +
-    geom_point(aes_(y=~f.cv.point, colour = ~est_source), na.rm = TRUE) +
-    ggtitle("cv(f-1) estimates") 
+    ylab("cv(f)") +
+    geom_line(aes(colour = source, group = 1), na.rm = TRUE) +
+    geom_point(aes(y=f.cvNoNAs)) +
+    ggtitle("cv(f) estimates") 
   P
 }

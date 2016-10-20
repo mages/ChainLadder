@@ -1,6 +1,6 @@
 \name{plotParms}
 \alias{plotParms}
-%\alias{plotParms.MackChainLadder}
+\alias{plotParms.MackChainLadder}
 \alias{plotParms.ChainLadder}
 \alias{plotParms.default}
 \title{
@@ -18,6 +18,7 @@ ChainLadder and MackChainLadder.
 \usage{
 plotParms(x, \dots)
 \method{plotParms}{ChainLadder}(x, title, \dots)
+\method{plotParms}{MackChainLadder}(x, title, \dots)
 \method{plotParms}{default}(x, \dots)
 
 }
@@ -34,15 +35,16 @@ defaults to something the class author deems appropriate.
 TBD
 }
 \value{
-In the case of class ChainLadder,
+In the case of class ChainLadder or MackChainLadder,
 list of class arrangelist returned by 
 gridExtra::marrangeGrob.
 In all other cases, a stop error is executed at this time.
 }
 \author{
-Dan Murphy for class ChainLadder.
+dmm
 }
 \examples{
 plotParms(chainladder(GenIns))
+plotParms(MackChainLadder(GenIns))
 }
 \keyword{ models }

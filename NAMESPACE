@@ -107,6 +107,6 @@ S3method(summary, tweedieReserve)
 
 export(plotParms)
 S3method(plotParms, ChainLadder)
-#S3method(plotParms, MackChainLadder)
+S3method(plotParms, MackChainLadder)
 
 export(PaidIncurredChain)
