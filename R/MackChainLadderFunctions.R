@@ -21,7 +21,9 @@ MackChainLadder <- function(
     ## tail=list(f=FALSE, f.se=NULL, sigma=NULL, F.se=NULL)
     ##
   tail.input <- tail
-    # 2013-02-25 Parameter risk recursive formula may have a third term per
+  tail.se.input <- tail.se
+  tail.sigma.input <- tail.sigma
+  # 2013-02-25 Parameter risk recursive formula may have a third term per
     #   Murphy and BBMW
     if (! mse.method %in% c("Mack", "Independence")) stop("mse.method must be 'Mack' or 'Independence'")
     if (! est.sigma[1] %in% c("Mack", "log-linear")) {
@@ -128,8 +130,8 @@ MackChainLadder <- function(
     output[["TriangleName"]] <- TriangleName
     output$est.sigma <- est.sigma
     output$tail <- tail.input
-    output$tail.se <- tail.se
-    output$tail.sigma <- tail.sigma
+    output$tail.se <- tail.se.input
+    output$tail.sigma <- tail.sigma.input
     output$mse.method <- mse.method
     class(output) <- c("MackChainLadder", "TriangleModel", "list")
     return(output)
