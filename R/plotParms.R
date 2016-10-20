@@ -193,16 +193,11 @@ plotParms.MackChainLadder <- function(x, title, ...) {
 }
 plot.mackcl.f <- function(x) {
   smmry <- suppressWarnings(lapply(x$Models, summary))
-  #f <- sapply(smmry, function(x) x$coef["x","Estimate"])
   f <- x$f
   n <- length(f)
   #f.se <- sapply(smmry, function(x) x$coef["x","Std. Error"])
   f.se <- x$f.se
-  if (length(f.se < n)) f.se <- c(f.se, NA)
-  #f.se[is.na(f.se)] <- 0
-#  f.cv <- f.se / (f-1)
-#  sigma <- sapply(smmry, function(x) x$sigma)
-#  na_sigma <- is.na(sigma)
+  if (length(f.se) < n) f.se <- c(f.se, NA)
   # set the display order
   src <- factor(c("regres", "est'd", "default", "input", "NA"), 
                 levels = c("regres", "est'd", "default", "input", "NA"))
@@ -213,20 +208,15 @@ plot.mackcl.f <- function(x) {
   source.se <- rep(src[1L], n)
   source.se[is.na(f.se)] <- src[5L]
   f.se[is.na(f.se)] <- 0
-#  source[f==1] <- "f=1"
   xx <- factor(colnames(x$Triangle)[1:n], levels = colnames(x$Triangle)[1:n])
   df <- data.frame(xx, f, f.se, # sigma, na_sigma, f.cv, 
-  #                 f.cv.point = f.cv,
                    source, source.se,
                    stringsAsFactors = FALSE)
-  #df$f.cv.point[source!="regres"] <- 0
   P <- ggplot(df, aes(x = xx, y = f, colour = source)) +  
     geom_errorbar(aes(ymin=f-f.se, ymax=f+f.se), colour="black", width=.1) +
     xlab(names(dimnames(x$Triangle))[2L]) +
-#    ylab("cv(f-1)") +
     geom_line(aes(group = 1), na.rm = TRUE) +
     geom_point() +
-#    geom_point(aes_(y=~f.cv.point, colour = ~source), na.rm = TRUE) +
     ggtitle("f estimates") 
   P
 }
@@ -247,7 +237,7 @@ plot.mackcl.sigma <- function(x) {
   else 
     if (x$est.sigma[1] %in% "Mack") source[ndx] <- src[3L]
     else source[ndx] <- src[4L]
-  source[n] <- src[ifelse(is.null(x$tail.sigma), 5L, 2L)]
+  source[n] <- src[ifelse(is.null(x$tail.sigma.input), 5L, 2L)]
   xx <- factor(colnames(x$Triangle)[1:n], levels = colnames(x$Triangle)[1:n])
   sigmaNoNAs <- sigma
   
@@ -279,7 +269,7 @@ plot.mackcl.f.se <- function(x) {
   else 
     if (x$est.sigma[1] %in% "Mack") source[ndx] <- src[3L]
   else source[ndx] <- src[4L]
-  source[n] <- src[ifelse(is.null(x$tail.f.se), 5L, 2L)]
+  source[n] <- src[ifelse(is.null(x$tail.se.input), 5L, 2L)]
   xx <- factor(colnames(x$Triangle)[1:n], levels = colnames(x$Triangle)[1:n])
   f.seNoNAs <- f.se
   
