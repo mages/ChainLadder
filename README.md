@@ -21,13 +21,13 @@ You can install the stable version from
 [CRAN](http://cran.r-project.org/package=ChainLadder):
 
 ```s
-install.packages('ChainLadder')
+install.packages('ChainLadder', dependencies = TRUE)
 ```
 
-To install the current development version from github you need the [devtools package](http://cran.r-project.org/package=devtools) and the other packages on which ChainLadder depends:
+To install the current development version from github you need the [devtools package](http://cran.r-project.org/package=devtools) and the other packages on which ChainLadder depends and links to:
 
 ```s
-install.packages(c("systemfit", "actuar", "statmod", "tweedie"))
+install.packages(c("actuar", "cplm", "grid", "ggplot2", "knitr", "lattice", "Matrix", "MASS", "reshape2", "rmarkdown", "RUnit", "systemfit",  "statmod", "tweedie"))
 ```
 
 To install ChainLadder run:
