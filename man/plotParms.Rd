@@ -16,9 +16,9 @@ ChainLadder and MackChainLadder.
 }
 
 \usage{
-plotParms(x, \dots)
-\method{plotParms}{ChainLadder}(x, title, \dots)
-\method{plotParms}{MackChainLadder}(x, title, \dots)
+plotParms(x, which, ncol, nrow, title, \dots)
+\method{plotParms}{ChainLadder}(x, which = c(1, 3, 4, 6), ncol, nrow, title, \dots)
+\method{plotParms}{MackChainLadder}(x, which = c(1, 3, 4, 6), ncol, nrow, title, \dots)
 \method{plotParms}{default}(x, \dots)
 
 }
@@ -26,13 +26,25 @@ plotParms(x, \dots)
 \arguments{
 
   \item{x}{object whose parameters are to be visualized}
+  \item{which}{if a subset of the plots is required,
+  specify a subset of the numbers 1:6}
+  \item{ncol}{number of columns in the resulting plot}
+  \item{nrow}{number of rows in the resulting plot}
   \item{title}{optional; character holding title of the plot;
 defaults to something the class author deems appropriate.
   }
-  \item{\dots}{unused at this time}
+  \item{\dots}{arguments passed to other methods}
 }
 \details{
-TBD
+Currently six plots are available
+\itemize{
+  \item{1}{estimated link ratios f}
+  \item{2}{estimated link ratios f less unity}
+  \item{3}{estimated sigma values}
+  \item{4}{estimated standard error of the link ratio f.se}
+  \item{5}{coefficient of variation of the link ratio}
+  \item{6}{coefficient of variation of the link ratio less unity}
+}
 }
 \value{
 In the case of class ChainLadder or MackChainLadder,
