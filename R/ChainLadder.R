@@ -31,6 +31,7 @@ chainladder <- function(Triangle, weights=1,
     
     output <- list(Models=myModel, Triangle=Triangle, delta=delta, 
                    weights=weights, TriangleName = TriangleName)
+    output[["call"]] <-  match.call(expand.dots = FALSE)
     class(output) <- c("ChainLadder", "TriangleModel", class(output))
     return(output)
 }
