@@ -10,7 +10,8 @@ Plot the estimated parameters of a model
 \encoding{UTF-8}
 
 \description{
-Methods to visualize the estimated parameters. 
+Generic function for visualizing the estimated parameters
+of a model in the ChainLadder package.
 S3 methods currently exist for objects of class
 ChainLadder and MackChainLadder.
 }
@@ -36,21 +37,22 @@ defaults to something the class author deems appropriate.
   \item{\dots}{arguments passed to other methods}
 }
 \details{
-Currently six plots are available
-\itemize{
-  \item{1}{estimated link ratios f}
-  \item{2}{estimated link ratios f less unity}
-  \item{3}{estimated sigma values}
-  \item{4}{estimated standard error of the link ratio f.se}
-  \item{5}{coefficient of variation of the link ratio}
-  \item{6}{coefficient of variation of the link ratio less unity}
+Currently six plots are available for 
+\code{chainladder} and \code{MackChainLadder}:
+\enumerate{
+  \item {estimated link ratios f}
+  \item {estimated link ratios f less unity}
+  \item {estimated sigma values}
+  \item {estimated standard error of the link ratio f.se}
+  \item {coefficient of variation of the link ratio}
+  \item {coefficient of variation of the link ratio less unity}
 }
 }
 \value{
 In the case of class ChainLadder or MackChainLadder,
-list of class arrangelist returned by 
-gridExtra::marrangeGrob.
-In all other cases, a stop error is executed at this time.
+list of class \code{arrangelist} returned by 
+\code{gridExtra::marrangeGrob}.
+In all other cases, a \code{stop} error is executed at this time.
 }
 \author{
 dmm

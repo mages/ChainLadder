@@ -1,0 +1,128 @@
+---
+title: "plotParms"
+author: "Dan Murphy"
+date: "October 24, 2016"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Description
+
+*plotParms* is a generic function in the *ChainLadder* package
+that plots various parameters estimated by models in the package.
+Currently two models are supported:
+
+* chainladder
+* MackChainLadder
+
+For those models, six plots can be rendered by *ggplot*:
+
+1. estimated link ratios **f**
+1. estimated link ratios **f** less unity
+1. estimated **sigma** values
+1. estimated standard error of the link ratio **f.se**
+1. coefficient of variation of the link ratio
+1. coefficient of variation of the link ratio less unity
+
+By default the four plots 1, 3, 4, and 6 are displayed in a 2x2 grid
+(using *gridExtra::marrangeGrob*).
+Any other selection is displayed using two columns in left-to-right order,
+unless only one plot is requested.
+See section **Arguments** below.
+
+## Details
+
+### chainladder
+
+The chainladder function uses R's **lm** function to estimate 
+average age-to-age factors for a given actuarial *Triangle*.
+In particular, when a development period has only one observation
+there is insufficient data for **lm** to estimate the **sigma**
+parameter of that period's regression model.
+(This often occurs in the last period of a *summarized triangle*.)
+In that case, 
+the value of the **sigma** parameter
+(and dependent parameters) 
+is technically **NA**.
+**plotParms** indicates that fact with:
+
+* a broken line at that point
+* a point value at zero (for lack of a better choice)
+* a legend entry indicating that the source of the parameter is **NA**
+
+For the **GenIns** Triangle in *ChainLadder*,
+here is a plot of the weighted average link ratios,
+the standard error of the residuals,
+the standard error of the estimated link ratios,
+and the coefficient of variation of the link ratios less unity:
+```{r echo=FALSE}
+suppressPackageStartupMessages(library(ChainLadder))
+```
+```{r}
+plotParms(chainladder(GenIns))
+```
+
+Like *ChainLadder*,
+*plotParms* borrows the notation of *Mack*.
+The legend indicates the source of the parameter's value:
+
+* "lm": results from the regression model
+* NA: not available
+* "calc": the coefficient of variation is always a calculated value 
+(cv(f) = f/f.se)
+
+### MackChainLadder
+
+*ChainLadder's* **MackChainLadder** model uses
+**chainladder** for the purpose of estimating parameters
+and adds capabilities for two situations:
+
+* sigma = NA
+* a tail
+
+#### sigma = NA
+
+When *Triangle* has insufficient data to estimate **sigma**,
+*MackChainLadder* has two methods for imputing a value:
+
+* log-linear regression (the default)
+* the method of *Mack*
+
+Here is the default plot of the parameters of the
+*MackChainLadder* model of the **GenIns** dataset:
+
+```{r}
+plotParms(MackChainLadder(GenIns))
+```
+
+Observations:
+
+* In contrast to the nine parameters estimated by *chainladder* above,
+values for ten parameters are shown because *MackChainLadder* provides
+for a **tail** argument, whose default value is unity.
+
+* The nineth **sigma** parameter is no longer NA (as with *chainladder* above)
+but is estimated using log-linear regression ("log-lin"),
+as *MackChainLadder* will do by default for any situation in which 
+**lm**'s estimated **sigma* is NA.
+Refer to the **est.sigma** argument of *MackChainLadder*.
+The tenth **sigma** parameter, not available by default, 
+can be provided by the user or can be estimated
+by *MackChainLadder* (see below).
+Refer to the **tail.sigma** argument of *MackChainLadder*.
+
+* When a non-tail **sigma** value is estimated ("imputed"),
+the corresponding **f.se** is always calculated based on the
+values in **Triangle** and the model's **alpha** argument.
+So indicated in the legend for the nineth value.
+As with **tail.sigma**, the **tail.se** value is not available
+by default but can be provided or estimate by *MackChainLadder*.
+
+* In contrast to the *chainladder* method above
+the source of the coefficient of variation parameters are indicated
+as being "calculated".
+The exception is when the **sigma** parameter is not available.
+
