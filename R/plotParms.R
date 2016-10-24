@@ -133,7 +133,7 @@ plot.cl.f.cv <- function(x) {
   f <- sapply(smmry, function(x) x$coef["x","Estimate"])
   f.se <- sapply(smmry, function(x) x$coef["x","Std. Error"])
   f.cv <- f.se / f
-  legend_captions <- c("lm", "NA")
+  legend_captions <- c("calc", "NA")
   src <- factor(legend_captions, levels = legend_captions)
   source <- rep(src[1L], n)
   source[is.na(f.cv)] <- src[2L]
@@ -155,7 +155,7 @@ plot.cl.f1.cv <- function(x) {
   f <- sapply(smmry, function(x) x$coef["x","Estimate"]) - 1
   f.se <- sapply(smmry, function(x) x$coef["x","Std. Error"])
   f.cv <- f.se / f
-  legend_captions <- c("lm", "NA")
+  legend_captions <- c("calc", "NA")
   src <- factor(legend_captions, levels = legend_captions)
   source <- rep(src[1L], n)
   source[is.na(f.cv)] <- src[2L]
