@@ -2,7 +2,7 @@
 title: "plotParms"
 author: "Dan Murphy"
 date: "October 24, 2016"
-output: html_document
+output: pdf_document
 ---
 
 ```{r setup, include=FALSE}
@@ -23,15 +23,17 @@ For those models, six plots can be rendered by *ggplot*:
 1. estimated link ratios **f**
 1. estimated link ratios **f** less unity
 1. estimated **sigma** values
-1. estimated standard error of the link ratio **f.se**
-1. coefficient of variation of the link ratio
-1. coefficient of variation of the link ratio less unity
+1. estimated standard error of the link ratios **f.se**
+1. coefficient of variation of the link ratios
+1. coefficient of variation of the link ratios less unity
 
-By default the four plots 1, 3, 4, and 6 are displayed in a 2x2 grid
+By default,
+plots 1, 3, 4, and 6 are displayed in a 2x2 grid
 (using *gridExtra::marrangeGrob*).
-Any other selection is displayed using two columns in left-to-right order,
+Any other selection is displayed in two columns,
 unless only one plot is requested.
-See section **Arguments** below.
+Some flexibility is provided.
+See **Arguments** section below.
 
 ## Details
 
@@ -54,31 +56,31 @@ is technically **NA**.
 * a legend entry indicating that the source of the parameter is **NA**
 
 For the **GenIns** Triangle in *ChainLadder*,
-here is a plot of the weighted average link ratios,
+Figure 1 below is a plot of the weighted average link ratios,
 the standard error of the residuals,
 the standard error of the estimated link ratios,
 and the coefficient of variation of the link ratios less unity:
 ```{r echo=FALSE}
 suppressPackageStartupMessages(library(ChainLadder))
 ```
-```{r}
+```{r, fig.cap="chainladder(GenIns)"}
 plotParms(chainladder(GenIns))
 ```
 
-Like *ChainLadder*,
-*plotParms* borrows the notation of *Mack*.
+Both the *chainladder* function and 
+*plotParms* borrow the notation of *Mack*.
 The legend indicates the source of the parameter's value:
 
 * "lm": results from the regression model
 * NA: not available
 * "calc": the coefficient of variation is always a calculated value 
-(cv(f) = f/f.se)
+(cv(f) = f/f.se) or NA
 
 ### MackChainLadder
 
-*ChainLadder's* **MackChainLadder** model uses
-**chainladder** for the purpose of estimating parameters
-and adds capabilities for two situations:
+*ChainLadder's* **MackChainLadder** model leans on
+**chainladder** to estimate parameters
+and extends that method's capabilities for two situations:
 
 * sigma = NA
 * a tail
@@ -86,15 +88,43 @@ and adds capabilities for two situations:
 #### sigma = NA
 
 When *Triangle* has insufficient data to estimate **sigma**,
-*MackChainLadder* has two methods for imputing a value:
+*MackChainLadder* has two methods for estimating ("imputing") a value:
 
 * log-linear regression (the default)
 * the method of *Mack*
 
-Here is the default plot of the parameters of the
-*MackChainLadder* model of the **GenIns** dataset:
+#### tail
 
-```{r}
+For a 10x10 triangle,
+**chainladder** generates nine factors.
+In contrast,
+**MackChainLadder** generates ten factors because
+that method *always includes a tail factor.*
+The default tail value is 1.000.
+The user can provide a tail,
+e.g., with **tail = 1.10**,
+or can request MackChainLadder estimate a tail by specifying
+**tail = TRUE**.
+**sigma** and **se** tail parameters are determined by arguments
+**tail.sigma** and **tail.se**.
+Here also the user can provide values for those tail parameters
+or can request MackChainLadder estimate their values by
+specifying NULL's for those arguments.
+Refer to the MackChainLadder documentation for more details.
+
+Figure 2 below is the default plot of the parameters of the
+*MackChainLadder* model of the **GenIns** dataset.
+Ten factors are plotted.
+The NA value of sigma for the ninth link ratio 
+in Figure 1 above is replaced with a value imputed via log-linear regression
+(via default argument **est.sigma = "log-linear"**).
+The associated **f.se** 
+and **cv** values may now be calculated.
+The default unity tail value is shown, 
+but MackChainLadder assumes a unity value is deterministic
+so therefore does not estimate **tail.sigma** and **tail.se** values.
+
+```{r, fig.cap="MackChainLadder(GenIns)"}
 plotParms(MackChainLadder(GenIns))
 ```
 
@@ -104,25 +134,80 @@ Observations:
 values for ten parameters are shown because *MackChainLadder* provides
 for a **tail** argument, whose default value is unity.
 
-* The nineth **sigma** parameter is no longer NA (as with *chainladder* above)
+* The ninth **sigma** parameter is no longer NA (as with *chainladder* above)
 but is estimated using log-linear regression ("log-lin"),
-as *MackChainLadder* will do by default for any situation in which 
-**lm**'s estimated **sigma* is NA.
+as *MackChainLadder* will do by default for any such situation.
 Refer to the **est.sigma** argument of *MackChainLadder*.
 The tenth **sigma** parameter, not available by default, 
 can be provided by the user or can be estimated
-by *MackChainLadder* (see below).
+by *MackChainLadder* (see Example 3 below).
 Refer to the **tail.sigma** argument of *MackChainLadder*.
 
 * When a non-tail **sigma** value is estimated ("imputed"),
 the corresponding **f.se** is always calculated based on the
-values in **Triangle** and the model's **alpha** argument.
-So indicated in the legend for the nineth value.
+values in *Triangle* and the model's **alpha** argument;
+so indicated in the legend for the ninth value.
 As with **tail.sigma**, the **tail.se** value is not available
-by default but can be provided or estimate by *MackChainLadder*.
+by default but can be provided or estimated by *MackChainLadder*.
 
 * In contrast to the *chainladder* method above
 the source of the coefficient of variation parameters are indicated
 as being "calculated".
 The exception is when the **sigma** parameter is not available.
 
+## Arguments
+
+*plotParms* for the two methods in this document is called as follows:
+
+```
+plotParms(x, which, ncol, nrow, title)
+```
+
+* x
+    + a *chainladder* or *MackChainLadder* object
+    + no default
+* which
+    + a subset of integers 1 through 6
+    + default: 1, 3, 4, 6 -- see list in **Description** section above
+    + follows in the tradition of ChainLadder::plot.glmReserve 
+    by Wayne Zhang as well as stats::plot.lm
+* ncol
+    + number of columns in the multi-plot output
+    + default: either 2, or 1 if only one plot is requested
+* nrow
+    + number of rows in the multi-plot output
+    + default: sufficient number to display all plots on one page
+  given the number of plots selected and the **ncol** value
+* title
+    + overall title to display at the top of the output page
+    + default: method's call
+
+## Last Example
+
+Here we use the Mack Method to estimate the chain-ladder projection 
+of the GenIns *Triangle* data:
+
+* The method used to impute **sigma* and **f.se** values is that
+recommended by T. Mack
+* The mse.method = "Mack" argument (the default, but here specified 
+explicitly)
+determines that the recursive formulas reproduce Mack's 
+closed form formula.
+
+We also ask that the tail be estimated,
+as well as the associated **sigma** and **se**
+parameters, 
+by log-linear extrapolation of the link ratios,
+**sigma**s and **f.se**'s.
+See **?MackChainLadder*.
+We also ask for all six of the plots to be displayed
+and specify our own title.
+
+Notice that this is the first example where all **cv** parameter values
+are calculated.
+
+```{r, fig.cap="Mack Method on GenIns"}
+x <- MackChainLadder(GenIns, est.sigma = "Mack", mse.method = "Mack",
+             tail = TRUE, tail.sigma = NULL, tail.se = NULL)
+plotParms(x, which = 1:6, title = "Mack Method on GenIns: Estimated Parameters")
+```
