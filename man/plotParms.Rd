@@ -32,7 +32,7 @@ plotParms(x, which, ncol, nrow, title, \dots)
   \item{ncol}{number of columns in the resulting plot}
   \item{nrow}{number of rows in the resulting plot}
   \item{title}{optional; character holding title of the plot;
-defaults to something the class author deems appropriate.
+defaults to method call.
   }
   \item{\dots}{arguments passed to other methods}
 }

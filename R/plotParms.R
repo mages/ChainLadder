@@ -24,7 +24,7 @@ plotParms.default <- function(x, ...){
 plotParms.ChainLadder <- function(x, which = c(1L, 3L, 4L, 6L), 
                                   ncol = min(2L, length(which)),
                                   nrow = ceiling(length(which) / ncol),
-                                  title, ...) {
+                                  title = deparse(x$call), ...) {
   grobs <- lapply(which, function(i)
     switch(i,
            plot.cl.f(x) + theme(axis.title.y=element_blank()),
@@ -35,9 +35,9 @@ plotParms.ChainLadder <- function(x, which = c(1L, 3L, 4L, 6L),
            plot.cl.f1.cv(x) + theme(axis.title.y=element_blank())
     )
   )
-  if (missing(title)) title <- paste0("chainladder(",
-                                      x$TriangleName, 
-                                      ") parameter estimates")
+#  if (missing(title)) title <- paste0("chainladder(",
+#                                      x$TriangleName, 
+#                                      ") parameter estimates")
   
   marrangeGrob(grobs = grobs, ncol = ncol, nrow = nrow, top = title, ...)
 }
@@ -176,7 +176,7 @@ plot.cl.f1.cv <- function(x) {
 plotParms.MackChainLadder <- function(x, which = c(1L, 3L, 4L, 6L), 
                                       ncol = min(2L, length(which)),
                                       nrow = ceiling(length(which) / ncol),
-                                      title, ...) {
+                                      title = deparse(x$call), ...) {
   grobs <- lapply(which, function(i)
     switch(i,
            plot.mackcl.f(x) + theme(axis.title.y=element_blank()),
@@ -187,9 +187,9 @@ plotParms.MackChainLadder <- function(x, which = c(1L, 3L, 4L, 6L),
            plot.mackcl.f1.cv(x) + theme(axis.title.y=element_blank())
     )
   )
-  if (missing(title)) title <- paste0("MackChainLadder(",
-                                      x$TriangleName, 
-                                      ") parameter estimates")
+#  if (missing(title)) title <- paste0("MackChainLadder(",
+#                                      x$TriangleName, 
+#                                      ") parameter estimates")
     
   marrangeGrob(grobs = grobs, ncol = ncol, nrow = nrow, top = title, ...)
 }
@@ -246,7 +246,7 @@ plot.mackcl.f1 <- function(x) {
     xlab(names(dimnames(x$Triangle))[2L]) +
     geom_line(aes(group = 1), na.rm = TRUE) +
     geom_point() +
-    ggtitle("f estimates") 
+    ggtitle("f-1 estimates") 
   P
 }
 plot.mackcl.sigma <- function(x) {
