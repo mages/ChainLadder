@@ -49,7 +49,7 @@ plot.cl.f <- function(x) {
   legend_captions <- c("lm", "NA")
   src <- factor(legend_captions, levels = legend_captions)
   source <- rep(src[1L], n)
-  source[is.na(f.se)] <- src[2L]
+  source[is.na(f)] <- src[2L]
   xx <- factor(colnames(x$Triangle)[1:n], levels = colnames(x$Triangle)[1:n])
   df <- data.frame(xx, f.se, 
                    source,
