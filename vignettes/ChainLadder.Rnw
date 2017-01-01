@@ -16,7 +16,8 @@
 }
 
 %\VignetteIndexEntry{ChainLadder: Claims reserving with R}
-% \VignetteDepends{ChainLadder}
+%!\VignetteEncoding{UTF-8}
+%\VignetteDepends{ChainLadder}
 %\VignetteKeywords{Claims, reserving, IBNR, chain ladder, stochastic reserving, statistical software}
 %\VignettePackage{ChainLadder}
 
@@ -33,7 +34,7 @@ lattice.options(default.theme = standard.theme(color = FALSE))
 \setlength{\headsep}{0.05in}
 \setlength{\tabcolsep}{1.5pt}
 
-\newcommand{\chainladder}{\textbf{\texttt{ChainLadder}} }
+\newcommand{\chainladder}{\textbf{\texttt{ChainLadder}}}
 % Change default font to a sans serifs
 \renewcommand{\familydefault}{\sfdefault}
 
@@ -657,7 +658,6 @@ standard errors by origin period by setting the argument \texttt{lattice=TRUE}.
 plot(mack, lattice=TRUE)
 @ 
 \end{center}
-
 
 \subsection{Munich chain-ladder}
  Munich chain-ladder is a reserving method that reduces the gap between IBNR 
@@ -1294,7 +1294,7 @@ print(gg)
 
 \section{Paid-incurred chain model}
 
-The Paid-incurred chain model was published by Merz and Wüthrich in 
+The Paid-incurred chain model was published by Merz and W\"{u}thrich in 
 2010~\cite{MerzWuthrich:2010}. It combines claims payments and incurred losses information in a a mathematically rigorous and consistent way to get a unified ultimate loss prediction.
 
 \subsection{Model assumptions}
