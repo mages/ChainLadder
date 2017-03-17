@@ -284,7 +284,7 @@ the most recent evaluation available. The column headings -- 1,
 2,$\dots$, 10 -- hold the \emph{ages} (in years) of the observations
 in the column relative to the beginning of the exposure period. For
 example, for the 1988 origin year, the age of the 1351 value,
-evaluated as of 1988-12-31, is three years. 
+evaluated as of 1990-12-31, is three years. 
 
 The objective of a reserving exercise is to forecast the future claims
 development in the bottom right corner of the triangle and potential
