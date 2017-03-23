@@ -32,33 +32,33 @@ test.MackMortgageCVWithTail <- function() {
     MRT <- MackChainLadder(Mortgage, tail=1.05, tail.se = .05)
     checkEquals(round(tail(MRT$Total.ParameterRisk, 1) / summary(MRT)$Totals["IBNR", ], 2), .19)
 }
-test.NoDevelopmentExample <- function(){
-  # If there's essentially no development from one age to the next, lm will warn
-  # that it's "essentially perfect fit". Want to replace that with a better message.
-  # The solution is to suppress that message, detect a perfect.fit separately,
-  # and "warning" an informational message to the console.
-  x <- matrix(byrow = TRUE, nrow = 4, ncol = 4,
-              dimnames = list(origin = LETTERS[1:4], dev = 1:4),
-              data = c(
-                100, 105, 105.00001, 105.00001,
-                200, 210, 210.00001, NA,
-                300, 315, NA, NA,
-                400, NA, NA, NA)
-  )
-  # This should no longer generate a warning
-  m <- tryCatch(MackChainLadder(x, est.sigma = "Mack"), warning = function(w) w)
-  checkTrue(inherits(m, "warning"))
-}
-test.loglinear.NA.Example <- function(){
-  x <- matrix(byrow = TRUE, nrow = 4, ncol = 4,
-              dimnames = list(origin = LETTERS[1:4], dev = 1:4),
-              data = c(
-                100, 105, 105.00001, 105.00001,
-                200, 210, 210.00001, NA,
-                300, 315, NA, NA,
-                400, NA, NA, NA)
-  )
-  # This should no longer generate an error
-  m <- tryCatch(MackChainLadder(x, est.sigma = "log-linear"), error = function(e) e)
-  checkTrue(!inherits(m, "error"))
-}
+# test.NoDevelopmentExample <- function(){
+#   # If there's essentially no development from one age to the next, lm will warn
+#   # that it's "essentially perfect fit". Want to replace that with a better message.
+#   # The solution is to suppress that message, detect a perfect.fit separately,
+#   # and "warning" an informational message to the console.
+#   x <- matrix(byrow = TRUE, nrow = 4, ncol = 4,
+#               dimnames = list(origin = LETTERS[1:4], dev = 1:4),
+#               data = c(
+#                 100, 105, 105.00001, 105.00001,
+#                 200, 210, 210.00001, NA,
+#                 300, 315, NA, NA,
+#                 400, NA, NA, NA)
+#   )
+#   # This should no longer generate a warning
+#   m <- tryCatch(MackChainLadder(x, est.sigma = "Mack"), warning = function(w) w)
+#   checkTrue(inherits(m, "warning"))
+# }
+# test.loglinear.NA.Example <- function(){
+#   x <- matrix(byrow = TRUE, nrow = 4, ncol = 4,
+#               dimnames = list(origin = LETTERS[1:4], dev = 1:4),
+#               data = c(
+#                 100, 105, 105.00001, 105.00001,
+#                 200, 210, 210.00001, NA,
+#                 300, 315, NA, NA,
+#                 400, NA, NA, NA)
+#   )
+#   # This should no longer generate an error
+#   m <- tryCatch(MackChainLadder(x, est.sigma = "log-linear"), error = function(e) e)
+#   checkTrue(!inherits(m, "error"))
+# }
