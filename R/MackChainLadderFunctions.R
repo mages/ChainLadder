@@ -192,8 +192,12 @@ Mack.S.E <- function(MackModel, FullTriangle, est.sigma="log-linear", weights, a
   }
   if(est.sigma[1] %in% "Mack"){
     for(i in which(isna)){   # usually i = n - 1
-      sigma[i] <- sqrt(abs(min((sigma[i - 1]^4/sigma[i - 2]^2),
-                               min(sigma[i - 2]^2, sigma[i - 1]^2))))
+      ratio <- (sigma[i - 1]^4/sigma[i - 2]^2) # Bug fix: sigma[i - 2]^2 could be zero
+      if(is.nan(ratio) | is.infinite(ratio)){ 
+        sigma[i] <- sqrt(abs(min(sigma[i - 2]^2, sigma[i - 1]^2)))  
+      }else{
+        sigma[i] <- sqrt(abs(min(ratio, min(sigma[i - 2]^2, sigma[i - 1]^2))))  
+      }
       f.se[i] <- sigma[i]/sqrt(weights[1,i]*FullTriangle[1,i]^alpha[i])
     }
   }
