@@ -15,6 +15,8 @@ used in insurance claims reserving, including:
   - convert cumulative into incremental and incremental into cumulative triangles
   - visualise triangles
 
+David Hindley has created a [Shiny App](https://davidjhindley.com/shiny/claimsreserving/), which provides and interface to many of the ChainLadder package functions to accompany his book on [*Claims Reserving in General Insurance*](http://www.cambridge.org/gb/academic/subjects/mathematics/optimization-or-and-risk-analysis/claims-reserving-general-insurance?format=HB&isbn=9781107076938#Xdlv1szU8mUQoG50.97).
+
 ## Installation
 
 You can install the stable version from
