@@ -1,5 +1,7 @@
 import(stats)
-importFrom(ggplot2, ggplot, geom_density, facet_wrap, aes, "scale_x_continuous")
+import(ggplot2)
+#importFrom(ggplot2, ggplot, geom_density, facet_wrap, aes, "scale_x_continuous")
+importFrom(gridExtra, marrangeGrob)
 importFrom(tweedie, rtweedie, "tweedie.profile")
 importFrom(statmod, tweedie)
 importFrom(systemfit, systemfit, systemfit.control)
@@ -20,7 +22,8 @@ importFrom(cplm, cpglm)
 importFrom(MASS, glm.nb)
 
 importClassesFrom(cplm, NullNum, NullList)
-importMethodsFrom(cplm, show, predict, vcov, residuals, resid, coef, fitted, plot, terms)
+importMethodsFrom(cplm, show, predict, vcov, residuals, resid, coef, fitted, 
+                  plot, terms)
 importMethodsFrom(Matrix, summary)
 
 export(MackChainLadder, MunichChainLadder, BootChainLadder,
@@ -59,7 +62,6 @@ S3method(print, ClarkLDF)
 S3method(print, ClarkCapeCod)
 S3method(print, ata)
 
-
 S3method(as.triangle, matrix)
 S3method(as.triangle, data.frame)
 S3method(as.data.frame, triangle)
@@ -89,8 +91,10 @@ S3method(mean, BootChainLadder)
 S3method(vcov, clark)
 
 exportMethods(predict, Mse, summary, show, coerce, 
-              "[", "$", "[[", "[<-", names, coef, vcov, residCov, residCor,
-              residuals, resid, rstandard, fitted, plot, cbind2, rbind2, dim)
+              "[", "$", "[[", "[<-", names, coef, 
+              vcov, residCov, residCor,
+              residuals, resid, rstandard, fitted, 
+              plot, cbind2, rbind2, dim)
 
 S3method(CDR, MackChainLadder)
 S3method(CDR, BootChainLadder)
@@ -100,5 +104,9 @@ export(CDR)
 export(tweedieReserve)
 S3method(print, tweedieReserve)
 S3method(summary, tweedieReserve)
+
+export(plotParms)
+S3method(plotParms, ChainLadder)
+S3method(plotParms, MackChainLadder)
 
 export(PaidIncurredChain)
