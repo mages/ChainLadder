@@ -47,24 +47,6 @@ cum2incr <- function(Triangle){
   incr
 }
 
-triangle <- function(..., bycol = FALSE, origin = "origin", dev = "dev", value = "value"){
-  x <- list(...)
-
-  ## 'len' contains the number of development periods (when filling
-  ## by row) or origin periods (when filling by column) derived from
-  ## the *first* data vector in '...' (this avoids looking at the
-  ## length of each and every element)
-  len <- length(x[[1L]])
-
-  ## extend each data vector to length 'len', filling with NAs, and
-  ## put into matrix form at the same time; dimension names will be
-  ## in place thnaks to 'sapply'
-  x <- sapply(x, function(x) { length(x) <- len; x })
-
-  as.triangle.matrix(if (bycol) x else t(x),
-                     origin = origin, dev = dev, value = value)
-}
-
 as.triangle <- function(Triangle, origin="origin", dev="dev", value="value",...){
   UseMethod("as.triangle")
 }
@@ -104,6 +86,30 @@ as.triangle.data.frame <- function(Triangle, origin="origin", dev="dev", value="
   class(matrixTriangle) <- c("triangle", "matrix")
   return(matrixTriangle)
 }
+
+
+## Copyright notice for function 'triangle' only
+## Author: Vincent Goulet
+## Copyright: Vincent Goulet, vincent.goulet@act.ulaval.ca
+## Date: 23/05/2018
+triangle <- function(..., bycol = FALSE, origin = "origin", dev = "dev", value = "value"){
+  x <- list(...)
+
+  ## 'len' contains the number of development periods (when filling
+  ## by row) or origin periods (when filling by column) derived from
+  ## the *first* data vector in '...' (this avoids looking at the
+  ## length of each and every element to find the maximum).
+  len <- length(x[[1L]])
+
+  ## Extend each data vector to length 'len' by filling with NAs and
+  ## put into matrix form at the same time; dimension names will be in
+  ## place thanks to 'sapply'.
+  x <- sapply(x, function(x) { length(x) <- len; x })
+
+  as.triangle.matrix(if (bycol) x else t(x),
+                     origin = origin, dev = dev, value = value)
+}
+
 
 as.data.frame.triangle <- function(x, row.names=NULL, optional, lob=NULL, na.rm=FALSE,...){
 
