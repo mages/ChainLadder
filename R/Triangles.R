@@ -92,52 +92,32 @@ as.triangle.data.frame <- function(Triangle, origin="origin", dev="dev", value="
 ## Author: Vincent Goulet
 ## Copyright: Vincent Goulet, vincent.goulet@act.ulaval.ca
 ## Date: 23/05/2018
-triangle <- function(..., nrow = NULL, ncol = NULL, bycol = FALSE, origin = "origin", dev = "dev", value = "value"){
+triangle <- function(..., bycol = FALSE, origin = "origin", dev = "dev", value = "value"){
   x <- list(...)
 
-  if (length(x) == 1L)
-  {
-      ## Number of development or origin periods positive root of n(n
-      ## + 1)/2 = k, where k is the number of data provided.
-      if (is.null(nrow))
-      {
-          if (is.null(ncol))
-          {
-              ncol <- (-1 + sqrt(1 + 8 * length(x[[1L]])))/2
-              if (abs(ncol - round(ncol)) > .Machine$double.eps^0.5)
-                  stop("number of data points inadequate for a triangle")
-          }
-          nrow <- ncol
-      }
-      if (is.null(ncol))
-          ncol <- nrow
+  if (length(x) == 1L) {
+    ## 'len' contains the number of development periods (when
+    ## filling by row) or origin periods (when filling by column).
+    ## Here it is the positive root of n(n + 1)/2 = k, where k is
+    ## the number of data points provided.
+    len <- (-1 + sqrt(1 + 8 * length(x[[1L]])))/2
 
-      n <- min(nrow, ncol)
+    ## Error if 'len' is not an integer, otherwise it is just too
+    ## complicated to try infer what user wants.
+    if (abs(len - round(len)) > .Machine$double.eps^0.5)
+        stop("invalid number of data points for a triangle")
 
-      x[[1]] <- rep_len(x[[1]], nrow * ncol - (n - 1) * n/2)
-
-      if (bycol)
-      {
-          m <- ncol
-          n <- nrow
-      }
-      else
-      {
-          m <- nrow
-          n <- ncol
-      }
-
-      x <- split(x[[1]], rep(seq_len(m), rev(c(seq_len(n), rep(n, abs(m - n))))))
-
-      ## s <- seq_len(if (bycol) ncol else nrow)
-      ## x <- split(x[[1L]], rep(s, rev(c(s)))
+    ## Rearrange the data vector in a list of vectors suitable to
+    ## build a 'len' x 'len' triangle.
+    s <- seq_len(len)
+    x <- split(x[[1L]], rep(s, rev(s)))
+  } else {
+    ## If more than one data vector is provided in argument, the
+    ## number of development or origin periods is derived from the
+    ## *first* vector (this avoids looking at the length of each
+    ## and every element to find the maximum).
+    len <- length(x[[1L]])
   }
-
-  ## 'len' contains the number of development periods (when filling
-  ## by row) or origin periods (when filling by column) derived from
-  ## the *first* data vector in '...' (this avoids looking at the
-  ## length of each and every element to find the maximum).
-  len <- length(x[[1L]])
 
   ## Extend each data vector to length 'len' by filling with NAs and
   ## put into matrix form at the same time; dimension names will be in
