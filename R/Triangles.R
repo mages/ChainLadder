@@ -92,8 +92,46 @@ as.triangle.data.frame <- function(Triangle, origin="origin", dev="dev", value="
 ## Author: Vincent Goulet
 ## Copyright: Vincent Goulet, vincent.goulet@act.ulaval.ca
 ## Date: 23/05/2018
-triangle <- function(..., bycol = FALSE, origin = "origin", dev = "dev", value = "value"){
+triangle <- function(..., nrow = NULL, ncol = NULL, bycol = FALSE, origin = "origin", dev = "dev", value = "value"){
   x <- list(...)
+
+  if (length(x) == 1L)
+  {
+      ## Number of development or origin periods positive root of n(n
+      ## + 1)/2 = k, where k is the number of data provided.
+      if (is.null(nrow))
+      {
+          if (is.null(ncol))
+          {
+              ncol <- (-1 + sqrt(1 + 8 * length(x[[1L]])))/2
+              if (abs(ncol - round(ncol)) > .Machine$double.eps^0.5)
+                  stop("number of data points inadequate for a triangle")
+          }
+          nrow <- ncol
+      }
+      if (is.null(ncol))
+          ncol <- nrow
+
+      n <- min(nrow, ncol)
+
+      x[[1]] <- rep_len(x[[1]], nrow * ncol - (n - 1) * n/2)
+
+      if (bycol)
+      {
+          m <- ncol
+          n <- nrow
+      }
+      else
+      {
+          m <- nrow
+          n <- ncol
+      }
+
+      x <- split(x[[1]], rep(seq_len(m), rev(c(seq_len(n), rep(n, abs(m - n))))))
+
+      ## s <- seq_len(if (bycol) ncol else nrow)
+      ## x <- split(x[[1L]], rep(s, rev(c(s)))
+  }
 
   ## 'len' contains the number of development periods (when filling
   ## by row) or origin periods (when filling by column) derived from
