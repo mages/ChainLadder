@@ -58,8 +58,8 @@ as.triangle(Triangle, origin="origin", dev="dev", value="value", \dots)
     of the lattice package is used, to plot developments of each origin
     period in a different panel.}
   \item{type}{type, see \code{\link{plot.default}}}
-  \item{\dots}{vectors of data in \code{triangle}; arguments to be
-    passed to other methods everywhere else.}
+  \item{\dots}{vectors of data in \code{triangle}, see details;
+    arguments to be passed to other methods everywhere else.}
 }
 \details{
   Function \code{triangle} builds a triangle matrix from the vectors of
@@ -67,12 +67,14 @@ as.triangle(Triangle, origin="origin", dev="dev", value="value", \dots)
   vectors should be one shorter than the preceeding one. The length of
   the first vector dictates the number of development periods or origin
   periods (respectively when \code{bycol} is \code{FALSE} or
-  \code{TRUE}).
+  \code{TRUE}). As a special case, the function will build an \eqn{n
+    \times n} triangle from a single vector of \eqn{n(n + 1)/2} data
+  points.
 
   The names of the arguments in \code{\dots} for function
-  \code{triangle} are retained for row/column names. Similarly, the
-  names of the elements of the \emph{first} argument are used as
-  column/row names.
+  \code{triangle} (when there are more than one) are retained for
+  row/column names. Similarly, the names of the elements of the
+  \emph{first} argument are used as column/row names.
 }
 \author{
   Markus Gesmann, Dan Murphy, Vincent Goulet
@@ -127,5 +129,8 @@ triangle("2012" = c("12 months" = 100,
          "2014" = c(115, 169, 202),
          "2015" = c(125, 185),
          "2016" = 150)
+
+## Quick, simplified usage
+triangle(c(100, 150, 175, 119, 168, 115))
 }
 \keyword{ methods }
