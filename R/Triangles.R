@@ -96,20 +96,22 @@ triangle <- function(..., bycol = FALSE, origin = "origin", dev = "dev", value =
   x <- list(...)
 
   if (length(x) == 1L) {
-    ## 'len' contains the number of development periods (when
-    ## filling by row) or origin periods (when filling by column).
-    ## Here it is the positive root of n(n + 1)/2 = k, where k is
-    ## the number of data points provided.
+    ## 'len' contains the number of development periods (when filling
+    ## by row) or origin periods (when filling by column). In the case
+    ## where there is only one vector of data provided, 'len' is the
+    ## positive root of n(n + 1)/2 = k, where k is the number of data
+    ## points.
     len <- (-1 + sqrt(1 + 8 * length(x[[1L]])))/2
 
     ## Error if 'len' is not an integer, otherwise it is just too
-    ## complicated to try infer what user wants.
+    ## complicated to try infer what user wants. (Test taken from
+    ## ?is.integer.)
     if (abs(len - round(len)) > .Machine$double.eps^0.5)
         stop("invalid number of data points for a triangle")
 
     ## Rearrange the data vector in a list of vectors suitable to
-    ## build a 'len' x 'len' triangle.
-    s <- seq_len(len)
+    ## build a 'len x len' triangle.
+    s <- seq_len(len)                   # avoid generating twice
     x <- split(x[[1L]], rep(s, rev(s)))
   } else {
     ## If more than one data vector is provided in argument, the
@@ -124,6 +126,7 @@ triangle <- function(..., bycol = FALSE, origin = "origin", dev = "dev", value =
   ## place thanks to 'sapply'.
   x <- sapply(x, function(x) { length(x) <- len; x })
 
+  ## Turn to 'as.triangle' to complete the work.
   as.triangle.matrix(if (bycol) x else t(x),
                      origin = origin, dev = dev, value = value)
 }
