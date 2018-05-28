@@ -131,6 +131,6 @@ triangle("2012" = c("12 months" = 100,
          "2016" = 150)
 
 ## Quick, simplified usage
-triangle(c(100, 150, 175, 119, 168, 115))
+triangle(c(100, 150, 175, 110, 168, 115))
 }
 \keyword{ methods }

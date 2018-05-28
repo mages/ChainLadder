@@ -55,6 +55,18 @@ X
 triangle <- as.triangle(X, origin="origin", dev="dev", value="value")
 triangle
 
+# One may also create triangles from data "by hand"
+triangle("2012" = c(100, 150, 175, 180, 200),
+         "2013" = c(110, 168, 192, 205),
+         "2014" = c(115, 169, 202),
+         "2015" = c(125, 185),
+         "2016" = 150)
+# Quick, simplified usage with a single vector of data
+triangle(c(100, 150, 175, 180, 200,
+           110, 168, 192, 205,
+           115, 169, 202,
+           125, 185,
+           250))
 
 ## More for a laugh - 3d plot of a triangle and MackChainLadder output
 if(require(rgl)){ #provides interactive 3d plotting functions
