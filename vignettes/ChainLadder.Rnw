@@ -283,7 +283,7 @@ respectively. The \emph{latest diagonal} -- i.e., the vector 18834,
 the most recent evaluation available. The column headings -- 1,
 2,$\dots$, 10 -- hold the \emph{ages} (in years) of the observations
 in the column relative to the beginning of the exposure period. For
-example, for the 1988 origin year, the age of the 1351 value,
+example, for the 1988 origin year, the age of the 13112 value,
 evaluated as of 1990-12-31, is three years.
 
 The objective of a reserving exercise is to forecast the future claims
