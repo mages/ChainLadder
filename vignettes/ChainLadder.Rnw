@@ -1608,6 +1608,8 @@ items to be added to the list.
   scale parameter, Reversible Jump MCMC for determining the functional
   form of the consumption path, and a structural break in this
   path~\cite{LawsSchmid2011}.
+  
+\item \textbf{\texttt{DCL}}:  Claims Reserving under the Double Chain Ladder Model. Statistical modelling and forecasting in claims reserving in non-life insurance under the Double Chain Ladder framework by~\cite{miranda_nielsen_verrall_2012}.
 
 \item \textbf{\texttt{favir}}: Formatted Actuarial Vignettes in R. FAViR lowers the learning
   curve of the R environment. It is a series of peer-reviewed Sweave
