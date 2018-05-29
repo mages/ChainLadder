@@ -2,20 +2,20 @@
 ## Copyright: Markus Gesmann, markus.gesmann@gmail.com
 ## Date:10/11/2007; 17/09/2008; 16/11/2009
 
-.allisnumeric <- function (x, 
-                          what = c("test", "vector"), 
-                          extras = c(".", "NA")) 
+.allisnumeric <- function (x,
+                          what = c("test", "vector"),
+                          extras = c(".", "NA"))
 {
-  # Based on code by Frank Harrell, Hmisc package, licence: GPL >= 2                          
+  # Based on code by Frank Harrell, Hmisc package, licence: GPL >= 2
   what <- match.arg(what)
   x <- sub("[[:space:]]+$", "", x)
   x <- sub("^[[:space:]]+", "", x)
   #xs <- x[x %nin% c("", extras)]
   xs <- x[match(x, extras, nomatch = 0) == 0]
   isnum <- suppressWarnings(!any(is.na(as.numeric(xs))))
-  if (what == "test") 
+  if (what == "test")
     isnum
-  else if (isnum) 
+  else if (isnum)
     as.numeric(x)
   else x
 }
@@ -24,7 +24,7 @@ incr2cum <- function(Triangle, na.rm=FALSE){
   if(na.rm){
     upper <- col(Triangle) <= ncol(Triangle) + 1 - row(Triangle)
     upperna <- which(is.na(Triangle[upper]), arr.ind=TRUE)
-    
+
     Triangle[upper][upperna] <- 0
   }
   cum <- t(apply(Triangle,1, cumsum))
@@ -42,11 +42,10 @@ cum2incr <- function(Triangle){
   dimnames(incr) <- dimnames(Triangle)
   expos <- attr(Triangle,"exposure")
   if (!is.null(expos))
-    attr(incr,"exposure") <- expos    
+    attr(incr,"exposure") <- expos
   class(incr) <- c("triangle", "matrix")
   incr
 }
-
 
 as.triangle <- function(Triangle, origin="origin", dev="dev", value="value",...){
   UseMethod("as.triangle")
@@ -58,14 +57,14 @@ as.triangle.matrix <- function(Triangle, origin="origin", dev="dev", value="valu
     dimnames(Triangle) <- list(origin=1:nrow(Triangle), dev=1:ncol(Triangle))
   }
   names(dimnames(Triangle)) <- c(origin, dev)
-  
+
   if(is.null(dimnames(Triangle)[[origin]])){
     dimnames(Triangle)[[origin]] <- 1:nrow(Triangle)
   }
   if(is.null(dimnames(Triangle)[[dev]])){
     dimnames(Triangle)[[dev]] <- 1:ncol(Triangle)
   }
-  
+
   storage.mode(Triangle) <- "double"
   return(Triangle)
 }
@@ -73,14 +72,14 @@ as.triangle.matrix <- function(Triangle, origin="origin", dev="dev", value="valu
 as.triangle.data.frame <- function(Triangle, origin="origin", dev="dev", value="value", ...){
 
 #  isDate <- inherits(Triangle[[origin]], "Date")
-#  
+#
 #  if (isDate) {
 #    warning("Converting origin from Date to numeric")
 #    Triangle[[origin]] <- as.numeric(Triangle[[origin]])
 #  }
-  
+
   fmla <- as.formula(paste(origin, "~", dev))
-  matrixTriangle <- acast(Triangle, fmla, fun.aggregate = sum, 
+  matrixTriangle <- acast(Triangle, fmla, fun.aggregate = sum,
                           value.var = value, fill = as.numeric(NA))
   names(dimnames(matrixTriangle)) <- c(origin, dev)
 
@@ -88,15 +87,60 @@ as.triangle.data.frame <- function(Triangle, origin="origin", dev="dev", value="
   return(matrixTriangle)
 }
 
+
+## Copyright notice for function 'triangle' only
+## Author: Vincent Goulet
+## Copyright: Vincent Goulet, vincent.goulet@act.ulaval.ca
+## Date: 23/05/2018
+triangle <- function(..., bycol = FALSE, origin = "origin", dev = "dev", value = "value"){
+  x <- list(...)
+
+  if (length(x) == 1L) {
+    ## 'len' contains the number of development periods (when filling
+    ## by row) or origin periods (when filling by column). In the case
+    ## where there is only one vector of data provided, 'len' is the
+    ## positive root of n(n + 1)/2 = k, where k is the number of data
+    ## points.
+    len <- (-1 + sqrt(1 + 8 * length(x[[1L]])))/2
+
+    ## Error if 'len' is not an integer, otherwise it is just too
+    ## complicated to try infer what user wants. (Test taken from
+    ## ?is.integer.)
+    if (abs(len - round(len)) > .Machine$double.eps^0.5)
+        stop("invalid number of data points for a triangle")
+
+    ## Rearrange the data vector in a list of vectors suitable to
+    ## build a 'len x len' triangle.
+    s <- seq_len(len)                   # avoid generating twice
+    x <- split(x[[1L]], rep(s, rev(s)))
+  } else {
+    ## If more than one data vector is provided in argument, the
+    ## number of development or origin periods is derived from the
+    ## *first* vector (this avoids looking at the length of each
+    ## and every element to find the maximum).
+    len <- length(x[[1L]])
+  }
+
+  ## Extend each data vector to length 'len' by filling with NAs and
+  ## put into matrix form at the same time; dimension names will be in
+  ## place thanks to 'sapply'.
+  x <- sapply(x, function(x) { length(x) <- len; x })
+
+  ## Turn to 'as.triangle' to complete the work.
+  as.triangle.matrix(if (bycol) x else t(x),
+                     origin = origin, dev = dev, value = value)
+}
+
+
 as.data.frame.triangle <- function(x, row.names=NULL, optional, lob=NULL, na.rm=FALSE,...){
-  
-  
+
+
   longTriangle <- .as.LongTriangle(x, na.rm)
   if(is.null(row.names))
     rownames(longTriangle) <- paste(longTriangle[,1], longTriangle[,2], sep="-")
   if(!is.null(lob))
     longTriangle$lob=lob
-  
+
   class(longTriangle) <- c("long.triangle", "data.frame")
   return(longTriangle)
 }
@@ -112,7 +156,7 @@ plot.triangle <- function(x,type="b",
             ylab=ifelse(is.null(ylab), deparse(substitute(x)), ylab),...)
   }else{
     df <- as.data.frame(as.triangle(.x))
-    xyplot(value ~ dev | factor(origin), data=df, type=type, 
+    xyplot(value ~ dev | factor(origin), data=df, type=type,
            as.table=TRUE, xlab=xlab, ylab=ylab, ...)
   }
 }
@@ -126,26 +170,26 @@ print.triangle <- function(x, ...) {
   ## x has to be a data.frame with columns: origin, dev and value
   x <- x[,c(origin, dev, value)]
   names(x) <- c("origin", "dev", "value")
-  
+
   z <- reshape(x, timevar="dev", v.names="value", idvar="origin", direction="wide")
-  
+
   z <- z[order(z$origin), ]
-  
+
   .origin.names <- z$origin
   z <- z[,-1]
-  
+
   names(z) <- gsub("value.", "",names(z))
-  .dev.names <- as.numeric(as.character(names(z)))	
+  .dev.names <- as.numeric(as.character(names(z)))
   z <- z[,order(.dev.names)]
-  
+
   z<- as.matrix(z)
   dimnames(z) <- list(origin=.origin.names, dev=sort(.dev.names))
-  
+
   names(dimnames(z)) <- c(origin, dev)
   return(z)
 }
 
-as.LongTriangle1 <- function(Triangle, varnames = names(dimnames(Triangle)), ..., 
+as.LongTriangle1 <- function(Triangle, varnames = names(dimnames(Triangle)), ...,
                            na.rm = TRUE, as.is = TRUE, value.name = "value") {
   if (!inherits(Triangle, "matrix")) stop("asLongTriangle only works for matrices")
   if (is.null(varnames)) varnames <- c("origin", "dev")
@@ -153,13 +197,13 @@ as.LongTriangle1 <- function(Triangle, varnames = names(dimnames(Triangle)), ...
     if (is.na(varnames[1L])) varnames[1L] <- "origin"
     if (is.na(varnames[2L])) varnames[2L] <- "dev"
   }
-  y <- reshape2::melt(Triangle, varnames = varnames, ..., na.rm = na.rm, as.is = as.is, 
+  y <- reshape2::melt(Triangle, varnames = varnames, ..., na.rm = na.rm, as.is = as.is,
                       value.name = value.name)
   names(y)[1:2] <- varnames
   y
 }
 
-as.LongTriangle <- function (Triangle, varnames = names(dimnames(Triangle)), 
+as.LongTriangle <- function (Triangle, varnames = names(dimnames(Triangle)),
                              value.name = "value", na.rm = TRUE) {
   if (!inherits(Triangle, "matrix")) stop("asLongTriangle only works for matrices")
   if (is.null(varnames)) varnames <- c("origin", "dev")
@@ -167,7 +211,7 @@ as.LongTriangle <- function (Triangle, varnames = names(dimnames(Triangle)),
     if (is.na(varnames[1L])) varnames[1L] <- "origin"
     if (is.na(varnames[2L])) varnames[2L] <- "dev"
   }
-  namecols <- setNames(expand.grid(dimnames(Triangle), KEEP.OUT.ATTRS = FALSE, 
+  namecols <- setNames(expand.grid(dimnames(Triangle), KEEP.OUT.ATTRS = FALSE,
                                    stringsAsFactors = TRUE), varnames)
   if (na.rm) {
     isna <- is.na(Triangle)
@@ -194,7 +238,7 @@ as.LongTriangle <- function (Triangle, varnames = names(dimnames(Triangle)),
     }else{
       .dev <- seq(along=(dimnames(x)[[nms[2L]]]))
       warning(paste(
-        c("Development period was a character and has been set to:\n",.dev), 
+        c("Development period was a character and has been set to:\n",.dev),
         collapse = " "))
     }
   }else{

@@ -7,32 +7,39 @@
 \alias{as.triangle.data.frame}
 \alias{as.triangle.matrix}
 
-
-%- Also NEED an '\alias' for EACH other topic documented here.
 \title{
   Generic functions for triangles
 }
 \description{
- Functions to ease the work with triangle shaped matrix data. A
- 'triangle' is a matrix with some generic functions.
- Triangles are usually stored in a 'long' format in data bases. The
- function \code{as.triangle} can transform a \code{data.frame} into a
- triangle shape.
+  Functions to ease the work with triangle shaped matrix data. A
+  'triangle' is a matrix with some generic functions.
+
+  \code{triangle} creates a triangle from the given set of vectors of
+  observed data.
+
+  \code{as.triangle} attempts to turn its argument into a triangle.
+  Triangles are usually stored in a \dQuote{long} format in data bases. The
+  function can transform a \code{data.frame} into a triangle shape.
+
+  \code{as.data.frame} turns a triangle into a data frame.
 }
 \usage{
-\method{as.triangle}{matrix}(Triangle,origin="origin", dev="dev", value="value",...)
-\method{as.triangle}{data.frame}(Triangle, origin="origin", dev="dev", value="value",...)
-\method{as.data.frame}{triangle}(x, row.names=NULL, optional, lob=NULL, na.rm=FALSE, ...)
-as.triangle(Triangle, origin="origin", dev="dev", value="value",...)
-\method{plot}{triangle}(x, type = "b", xlab = "dev. period", ylab = NULL, lattice=FALSE, ...)
+triangle(\dots, bycol=FALSE, origin="origin", dev="dev", value="value")
+
+\method{as.triangle}{matrix}(Triangle, origin="origin", dev="dev", value="value", \dots)
+\method{as.triangle}{data.frame}(Triangle, origin="origin", dev="dev", value="value", \dots)
+\method{as.data.frame}{triangle}(x, row.names=NULL, optional, lob=NULL, na.rm=FALSE, \dots)
+as.triangle(Triangle, origin="origin", dev="dev", value="value", \dots)
+\method{plot}{triangle}(x, type = "b", xlab = "dev. period", ylab = NULL, lattice=FALSE, \dots)
 }
-%- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{Triangle}{a triangle}
+  \item{bycol}{logical. If \code{FALSE} (the default) the triangle is filled by
+    rows, otherwise the triangle is filled by columns.}
   \item{origin}{name of the origin period, default is \code{"origin"}.}
   \item{dev}{name of the development period, default is \code{"dev"}.}
   \item{value}{name of the value, default is \code{"value"}.}
-  \item{row.names}{default is set to \code{NULL} an will merge origin
+  \item{row.names}{default is set to \code{NULL} and will merge origin
     and dev. period to create row names.}
   \item{lob}{default is \code{NULL}. The idea is to use \code{lob} (line
     of business) as an additional column to label a triangle in a long format, see the
@@ -51,23 +58,26 @@ as.triangle(Triangle, origin="origin", dev="dev", value="value",...)
     of the lattice package is used, to plot developments of each origin
     period in a different panel.}
   \item{type}{type, see \code{\link{plot.default}}}
-  \item{\dots}{arguments to be passed to other methods}
+  \item{\dots}{vectors of data in \code{triangle}, see details;
+    arguments to be passed to other methods everywhere else.}
 }
-%\details{
-  %%  ~~ If necessary, more details than the description above ~~
-%}
-%\value{
-%%  ~Describe the value returned
-%%  If it is a LIST, use
-%%  \item{comp1 }{Description of 'comp1'}
-%%  \item{comp2 }{Description of 'comp2'}
-%% ...
-%}
-%\references{
-%% ~put references to the literature/web site here ~
-%}
+\details{
+  Function \code{triangle} builds a triangle matrix from the vectors of
+  \emph{known} data provided in \code{\dots}. Normally, each of these
+  vectors should be one shorter than the preceeding one. The length of
+  the first vector dictates the number of development periods or origin
+  periods (respectively when \code{bycol} is \code{FALSE} or
+  \code{TRUE}). As a special case, the function will build an \eqn{n
+    \times n} triangle from a single vector of \eqn{n(n + 1)/2} data
+  points.
+
+  The names of the arguments in \code{\dots} for function
+  \code{triangle} (when there are more than one) are retained for
+  row/column names. Similarly, the names of the elements of the
+  \emph{first} argument are used as column/row names.
+}
 \author{
-  Markus Gesmann, Dan Murphy
+  Markus Gesmann, Dan Murphy, Vincent Goulet
 }
 \section{Warning}{
 Please note that for the function \code{as.triangle} the origin and
@@ -78,12 +88,6 @@ Also note that when converting from a data.frame to a matrix with
 \code{as.triangle}, multiple records with the same \code{origin} and 
 \code{dev} will be aggregated.
 }
-
-%% ~Make other sections like Warning with \section{Warning }{....} ~
-
-%\seealso{
-%% ~~objects to See Also as \code{\link{help}}, ~~~
-%}
 \examples{
 GenIns
 plot(GenIns)
@@ -101,8 +105,32 @@ head(X)
 Y <- as.data.frame(RAA, lob="General Liability")
 head(Y)
 
+## Basic creation of a triangle from loss development data
+triangle(c(100, 150, 175, 180, 200),
+         c(110, 168, 192, 205),
+         c(115, 169, 202),
+         c(125, 185),
+         150)
+
+## Same, with named origin periods
+triangle("2012" = c(100, 150, 175, 180, 200),
+         "2013" = c(110, 168, 192, 205),
+         "2014" = c(115, 169, 202),
+         "2015" = c(125, 185),
+         "2016" = 150)
+
+## Again, with also named development periods
+triangle("2012" = c("12 months" = 100,
+                    "24 months" = 150,
+                    "36 months" = 175,
+                    "48 months" = 180,
+                    "60 months" = 200),
+         "2013" = c(110, 168, 192, 205),
+         "2014" = c(115, 169, 202),
+         "2015" = c(125, 185),
+         "2016" = 150)
+
+## Quick, simplified usage
+triangle(c(100, 150, 175, 110, 168, 115))
 }
-% Add one or more standard keywords, see file 'KEYWORDS' in the
-% R documentation directory.
 \keyword{ methods }
-%\keyword{ plot }% __ONLY ONE__ keyword per line
