@@ -7,7 +7,7 @@ Basic chain ladder function to estimate age-to-age factors for a given
 cumulative run-off triangle. This function is used by Mack- and MunichChainLadder.
 }
 \usage{
-chainladder(Triangle, weights = 1, delta = 1)
+chainladder(Triangle, weights = 1, delta = 1, origin.incl=nrow(Triangle))
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -28,6 +28,12 @@ chainladder(Triangle, weights = 1, delta = 1)
     intercept 0, see Barnett & Zehnwirth (2000);.
     Please note that Mack (1999) used the notation of alphas, with alpha=2-delta.
   }
+  \item{origin.incl}{specifies The maximum number of individual age-to-age factors to be
+    included in the linear regression. Default: nrow(Triangle). This allows the the number
+    of age-to-age factors used in the linear regression to be restricted so that the method
+    can be applied based on only the most recent age-to-age fatcors if required. Note this
+    applies after removing any age-to-age factors exlcuded through the weights argument.}
+           
 }
 
 \details{
