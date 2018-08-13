@@ -170,7 +170,10 @@ Mack.S.E <- function(MackModel, FullTriangle, est.sigma="log-linear", weights, a
       
       p.value.of.model <- tryCatch(summary(sig.model$model)$coefficient[2,4],
                                    error = function(e) e)
-      if (inherits(p.value.of.model, "error")) {
+      if (inherits(p.value.of.model, "error") |
+          is.infinite(p.value.of.model) |
+          is.nan(p.value.of.model)
+      ) {
         warning(paste("'loglinear' model to estimate sigma_n doesn't appear appropriate.\n",
                       "est.sigma will be overwritten to 'Mack'.\n",
                       "Mack's estimation method will be used instead."))
