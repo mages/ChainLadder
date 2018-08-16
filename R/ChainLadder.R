@@ -3,8 +3,8 @@
 ## Date:19/09/2008
 
 
-chainladderNew <- function(Triangle, weights=1,
-                        delta=1,origin.incl=nrow(Triangle)){
+chainladder <- function(Triangle, weights=1,
+                        delta=1){
 
     Triangle <- checkTriangle(Triangle)
     n <- dim(Triangle)[2]
@@ -21,26 +21,6 @@ chainladderNew <- function(Triangle, weights=1,
     weights <- checkWeights(weights, Triangle)
     delta <- rep(delta,(n-1))[1:(n-1)]
     
-    limitOriginPeriods <- function(i,Triangle, weights, origin.incl){
-      # adjusts weights to limit number of origin periods included
-      n <- dim(Triangle)[2]
-      origin.selected<-origin.incl[min(i,length(origin.incl))]
-      
-      weight_vec<-weights[,i]
-      # set weights to zero if na in triangle in origin year
-      weight_vec[is.na(Triangle[,i])]<-0
-      if(i < n ){weight_vec[is.na(Triangle[,i+1])]<-0}
-      miss <- is.na(weight_vec)
-      x<-rev(cumsum(na.omit(rev(weight_vec))))
-      if (max(x)> origin.selected) {
-        weight_vec[x > origin.selected]<-0
-        weight_vec[miss] <- NA
-      }
-      weight_vec
-    }
-    
-    weights<-sapply(1:ncol(weights),limitOriginPeriods, Triangle,weights,origin.incl)
-
     lmCL <- function(i, Triangle){
       lm(y~x+0, weights=weights[,i]/Triangle[,i]^delta[i],
          data=data.frame(x=Triangle[,i], y=Triangle[,i+1]))
@@ -66,7 +46,39 @@ return(weights)
 
 }
 
+limitOrigins <- function(Triangle, weights = 1, origin.incl=nrow(Triangle)){
+ # This function limits the number of origin periods used in the chain ladder
+ # method by adjsuting the weights.
+  n <- dim(Triangle)[2]
+  weights <- checkWeights(weights, Triangle)
 
+  limitOriginPeriods <- function(i,Triangle, weights, origin.incl){
+    # adjusts weights to limit number of origin periods included in the 
+    # regression in chain ladder.
+    #  useage example:
+    #chainladder(RAA, weights = limitOrigins(Triangle,weights = 1,origin.incl = 1))
+    
+    # num orign periods used in each dev period can be vector.
+    # if vector length is less than dev periods the last value in vector
+    # will be used for remaining dev periods
+    origin.selected<-origin.incl[min(i,length(origin.incl))]
+    
+    weight_vec<-weights[,i]
+    # set weights to zero if na in triangle in origin year
+    weight_vec[is.na(Triangle[,i])]<-0
+    if(i < n ){weight_vec[is.na(Triangle[,i+1])]<-0}
+    miss <- is.na(weight_vec)
+    x<-rev(cumsum(na.omit(rev(weight_vec))))
+    if (max(x)> origin.selected) {
+      weight_vec[x > origin.selected]<-0
+      weight_vec[miss] <- NA
+    }
+    weight_vec
+  }
+  
+  weights<-sapply(1:ncol(weights),limitOriginPeriods, Triangle,weights,origin.incl)
+  
+}
 
 
 ###############################################################################

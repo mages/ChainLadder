@@ -59,3 +59,28 @@ test.names_of_chainladder_Triangle <- function () {
   y <- chainladder(x)
 	checkEquals(colnames(y$Triangle), colnames(x))
 }
+
+test.limitOrigins<- function () {
+  
+  # test limiting origin on RAA triangle
+  x <-sapply(chainladder(RAA, weights = limitOrigins(RAA,1,4))$Models, coefficients)
+  checkEquals(x, c(3.48, 1.913, 1.266, 1.158, 1.1, 1.042, 1.033, 1.017, 1.0092), checkNames=FALSE, tolerance =0.001)
+  
+  # test limiting origin using a vector on RAA triangle
+  y <-sapply(chainladder(RAA, weights = limitOrigins(RAA,1,c(3,4,3,2,1)))$Models, coefficients)
+  checkEquals(y, c(3.246, 1.913, 1.232, 1.191, 1.009, 1.038, 1.026, 1.033, 1.0092), checkNames=FALSE, tolerance =0.001)
+  
+  
+  # test on non std triangle
+  tri_nonstd <- as.triangle(matrix(c(
+    100, 200, 300, 400, 500,
+    150, NA, 200, 400, NA,
+    200, 250, NA, NA, NA,
+    300, 350, NA, NA, NA,
+    400, NA, NA, NA, NA
+  ), nrow = 5, byrow = TRUE))
+  z <-sapply(chainladder(tri_nonstd, weights = limitOrigins(tri_nonstd,1,1))$Models, coefficients)
+  checkEquals(z, c(350/300, 1.5, 2,1.25), checkNames=FALSE)
+}
+
+
