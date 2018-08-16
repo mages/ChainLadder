@@ -3,7 +3,7 @@
 ## Date:19/09/2008
 
 
-chainladder <- function(Triangle, weights=1,
+chainladderNew <- function(Triangle, weights=1,
                         delta=1,origin.incl=nrow(Triangle)){
 
     Triangle <- checkTriangle(Triangle)
@@ -21,22 +21,25 @@ chainladder <- function(Triangle, weights=1,
     weights <- checkWeights(weights, Triangle)
     delta <- rep(delta,(n-1))[1:(n-1)]
     
-    limitOriginPeriods <- function(i,weights, origin.incl){
+    limitOriginPeriods <- function(i,Triangle, weights, origin.incl){
       # adjusts weights to limit number of origin periods included
-      
+      n <- dim(Triangle)[2]
       origin.selected<-origin.incl[min(i,length(origin.incl))]
       
       weight_vec<-weights[,i]
+      # set weights to zero if na in triangle in origin year
+      weight_vec[is.na(Triangle[,i])]<-0
+      if(i < n ){weight_vec[is.na(Triangle[,i+1])]<-0}
       miss <- is.na(weight_vec)
       x<-rev(cumsum(na.omit(rev(weight_vec))))
-      if (max(x)> origin.selected+1) {
-        weight_vec[x > origin.selected+1]<-0
+      if (max(x)> origin.selected) {
+        weight_vec[x > origin.selected]<-0
         weight_vec[miss] <- NA
       }
       weight_vec
     }
     
-    weights<-sapply(1:ncol(weights),limitOriginPeriods, weights,origin.incl)
+    weights<-sapply(1:ncol(weights),limitOriginPeriods, Triangle,weights,origin.incl)
 
     lmCL <- function(i, Triangle){
       lm(y~x+0, weights=weights[,i]/Triangle[,i]^delta[i],
