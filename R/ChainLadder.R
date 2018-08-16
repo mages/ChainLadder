@@ -23,12 +23,14 @@ chainladder <- function(Triangle, weights=1,
     
     limitOriginPeriods <- function(i,weights, origin.incl){
       # adjusts weights to limit number of origin periods included
-      # if specified using origin.incl
+      
+      origin.selected<-origin.incl[min(i,length(origin.incl))]
+      
       weight_vec<-weights[,i]
       miss <- is.na(weight_vec)
       x<-rev(cumsum(na.omit(rev(weight_vec))))
-      if (max(x)> origin.incl+1) {
-        weight_vec[x > origin.incl+1]<-0
+      if (max(x)> origin.selected+1) {
+        weight_vec[x > origin.selected+1]<-0
         weight_vec[miss] <- NA
       }
       weight_vec
