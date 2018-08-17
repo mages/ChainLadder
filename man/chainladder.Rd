@@ -7,7 +7,7 @@ Basic chain ladder function to estimate age-to-age factors for a given
 cumulative run-off triangle. This function is used by Mack- and MunichChainLadder.
 }
 \usage{
-chainladder(Triangle, weights = 1, delta = 1, origin.incl=nrow(Triangle))
+chainladder(Triangle, weights = 1, delta = 1)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
