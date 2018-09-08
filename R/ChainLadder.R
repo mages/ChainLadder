@@ -47,17 +47,15 @@ return(weights)
 }
 
 limitOrigins <- function(Triangle, weights = 1, norigin.incl=nrow(Triangle)){
- # This function limits the number of origin periods used in the chain ladder
- # method by adjsuting the weights.
+ # This function can be used to limit the number of origin periods used in the chain ladder
+ # method by adjusting the weights.
+ # example: chainladder(RAA, weights = limitOrigins(Triangle,weights = 1,norigin.incl = 1))
   n <- dim(Triangle)[2]
   weights <- checkWeights(weights, Triangle)
 
-  limitOriginPeriods <- function(i,Triangle, weights, norigin.incl){
-    # adjusts weights to limit number of origin periods included in the 
-    # regression in chain ladder.
-    #  useage example:
-    #chainladder(RAA, weights = limitOrigins(Triangle,weights = 1,norigin.incl = 1))
-    
+  limitOriginInDevPeriod <- function(i,Triangle, weights, norigin.incl){
+    # for dev period i weights are set to include the last norigin.incl origin years
+
     # num orign periods used in each dev period can be vector.
     # if vector length is less than dev periods the last value in vector
     # will be used for remaining dev periods
@@ -76,7 +74,7 @@ limitOrigins <- function(Triangle, weights = 1, norigin.incl=nrow(Triangle)){
     weight_vec
   }
   
-  weights<-sapply(1:ncol(weights),limitOriginPeriods, Triangle,weights,norigin.incl)
+  weights<-sapply(1:ncol(weights),limitOriginInDevPeriod, Triangle,weights,norigin.incl)
   
 }
 
