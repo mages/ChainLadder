@@ -68,7 +68,9 @@ test.limitOrigins<- function () {
   
   # test limiting origin using a vector on RAA triangle
   y <-sapply(chainladder(RAA, weights = limitOrigins(RAA,1,c(3,4,3,2,1)))$Models, coefficients)
-  checkEquals(y, c(3.246, 1.913, 1.232, 1.191, 1.009, 1.038, 1.026, 1.033, 1.0092), checkNames=FALSE, tolerance =0.001)
+  checkEquals(y, c(sum(RAA[7:9,2])/sum(RAA[7:9,1]), sum(RAA[5:8,3])/sum(RAA[5:8,2]), sum(RAA[5:7,4])/sum(RAA[5:7,3]),
+                   sum(RAA[5:6,5])/sum(RAA[5:6,4]), RAA[5,6]/RAA[5,5], RAA[4,7]/RAA[4,6], RAA[3,8]/RAA[3,7],
+                   RAA[2,9]/RAA[2,8], RAA[1,10]/RAA[1,9]), checkNames=FALSE)
   
   
   # test on non std triangle
