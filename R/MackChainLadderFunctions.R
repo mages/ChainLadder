@@ -14,113 +14,291 @@ MackChainLadder <- function(
   tail=FALSE,
   tail.se=NULL,
   tail.sigma=NULL,
-  mse.method = "Mack")
+  mse.method = "Mack",
+  Quantil=FALSE)
 {
-    ## idea: have a list for tail factor
-    ## tail=list(f=FALSE, f.se=NULL, sigma=NULL, F.se=NULL)
-    ##
-    # 2013-02-25 Parameter risk recursive formula may have a third term per
-    #   Murphy and BBMW
-    if (! mse.method %in% c("Mack", "Independence")) stop("mse.method must be 'Mack' or 'Independence'")
-    
-    Triangle <- checkTriangle(Triangle)
-    m <- dim(Triangle)[1]
-    n <- dim(Triangle)[2]
-    
-    ## Create chain ladder models
-    
-    ## Mack uses alpha between 0 and 2 to distinguish
-    ## alpha = 0 straight averages
-    ## alpha = 1 historical chain ladder age-to-age factors
-    ## alpha = 2 ordinary regression with intercept 0
-    
-    ## However, in Zehnwirth & Barnett they use the notation of delta, whereby delta = 2 - alpha
-    ## the delta is than used in a linear modelling context.
-    delta <- 2-alpha
-    CL <- chainladder(Triangle, weights=weights, delta=delta)
-    alpha <- 2 - CL$delta
-    
-    # Estimate expected values and standard errors in four steps:
-    # 1) Squaring the Triangle: Expected values and f/F SE's from the data in the triangle
-    # 2) Expected values and f/F SE's from the tail factor specifications
-    # 3) Process Risk and Parameter Risk estimates of the squared triangle (incl tail column)
-    # 3) Expected values and SE's for the totals-across-origin-periods of the predicted values
-    
-    
-    ## 1) Squaring the Triangle
-    
-    ## EXPECTED VALUES: Predict the chain ladder models
-    FullTriangle <- predict.ChainLadder(list(Models=CL[["Models"]], Triangle=Triangle))
-    ## f/F SE's
-    StdErr <- Mack.S.E(CL[["Models"]], FullTriangle, est.sigma = est.sigma,
-                       weights = CL[["weights"]], alpha = alpha)
-    
-    ## 2) Tail
-    ## Check for tail factor
-    if(is.logical(tail)){
-      if(tail){
-        tail <- tailfactor(StdErr$f)
-        tail.factor <- tail$tail.factor
-        StdErr$f <- c(StdErr$f, tail.factor = tail.factor)
-      }else{
-        #            tail.factor <- tail
-        # MunichChainLadder needs an 'f' vector as long as the triangle is wide
-        #   and adding on a harmless tail doesn't seem to cause any 
-        #   Mack difficulties
-        # Default will not be named in the output
-        tail.factor <- 1.000
-        StdErr$f <- c(StdErr$f, tail.factor)
-      }
-    }else{
-      #        if(is.numeric(tail))
-      # Documentation says tail must be logic or numeric
-      tail.factor <- as.numeric(tail)
+  ## idea: have a list for tail factor
+  ## tail=list(f=FALSE, f.se=NULL, sigma=NULL, F.se=NULL)
+  ##
+  # 2013-02-25 Parameter risk recursive formula may have a third term per
+  #   Murphy and BBMW
+  if (! mse.method %in% c("Mack", "Independence")) stop("mse.method must be 'Mack' or 'Independence'")
+  
+  Triangle <- checkTriangle(Triangle)
+  m <- dim(Triangle)[1]
+  n <- dim(Triangle)[2]
+  
+  ## Create chain ladder models
+  
+  ## Mack uses alpha between 0 and 2 to distinguish
+  ## alpha = 0 straight averages
+  ## alpha = 1 historical chain ladder age-to-age factors
+  ## alpha = 2 ordinary regression with intercept 0
+  
+  ## However, in Zehnwirth & Barnett they use the notation of delta, whereby delta = 2 - alpha
+  ## the delta is than used in a linear modelling context.
+  delta <- 2-alpha
+  CL <- chainladder(Triangle, weights=weights, delta=delta)
+  alpha <- 2 - CL$delta
+  
+  # Estimate expected values and standard errors in four steps:
+  # 1) Squaring the Triangle: Expected values and f/F SE's from the data in the triangle
+  # 2) Expected values and f/F SE's from the tail factor specifications
+  # 3) Process Risk and Parameter Risk estimates of the squared triangle (incl tail column)
+  # 3) Expected values and SE's for the totals-across-origin-periods of the predicted values
+  
+  
+  ## 1) Squaring the Triangle
+  
+  ## EXPECTED VALUES: Predict the chain ladder models
+  FullTriangle <- predict.ChainLadder(list(Models=CL[["Models"]], Triangle=Triangle))
+  ## f/F SE's
+  StdErr <- Mack.S.E(CL[["Models"]], FullTriangle, est.sigma = est.sigma,
+                     weights = CL[["weights"]], alpha = alpha)
+  
+  ## 2) Tail
+  ## Check for tail factor
+  if(is.logical(tail)){
+    if(tail){
+      tail <- tailfactor(StdErr$f)
+      tail.factor <- tail$tail.factor
       StdErr$f <- c(StdErr$f, tail.factor = tail.factor)
+    }else{
+      #            tail.factor <- tail
+      # MunichChainLadder needs an 'f' vector as long as the triangle is wide
+      #   and adding on a harmless tail doesn't seem to cause any 
+      #   Mack difficulties
+      # Default will not be named in the output
+      tail.factor <- 1.000
+      StdErr$f <- c(StdErr$f, tail.factor)
     }
-    # Then finally, ...
-    if (tail.factor > 1) {
-      ## EXPECTED VALUES
-      FullTriangle <- tail.E(FullTriangle, tail.factor)
-      ## STANDARD ERRORS
-      ## Estimate the standard error of f and F in the tail
-      ##  If tail.se and/or tail.sigma provided, return those values
-      StdErr <- tail.SE(FullTriangle, StdErr, Total.SE, tail.factor,
-                        tail.se = tail.se, tail.sigma = tail.sigma)
-    }
-    
-    ## 3) Calculate process and parameter risks of the predicted loss amounts
-    StdErr <- c(StdErr, MackRecursive.S.E(FullTriangle, StdErr$f, StdErr$f.se, StdErr$F.se, mse.method = mse.method))
-    
-    ## 4) Total-across-origin-periods by development period
-    ## EXPECTED VALUES
-    ##   Not complicated. Not required at this time.
-    ## STANDARD ERRORS
-    ## Calculate process and parameter risk for the sum of the predicted loss amounts
-    Total.SE <- TotalMack.S.E(FullTriangle, StdErr$f, StdErr$f.se, StdErr$F.se, StdErr$FullTriangle.procrisk, mse.method = mse.method)
-    
-    ## Collect the output
-    output <- list()
-    output[["call"]] <-  match.call(expand.dots = FALSE)
-    output[["Triangle"]] <- Triangle
-    output[["FullTriangle"]] <- FullTriangle
-    output[["Models"]] <- CL[["Models"]]
-    output[["f"]] <- StdErr$f
-    output[["f.se"]] <- StdErr$f.se
-    output[["F.se"]] <- StdErr$F.se
-    output[["sigma"]] <- StdErr$sigma
-    output[["Mack.ProcessRisk"]]   <- StdErr$FullTriangle.procrisk  # new dmm
-    output[["Mack.ParameterRisk"]] <- StdErr$FullTriangle.paramrisk  # new dmm
-    output[["Mack.S.E"]] <- sqrt(StdErr$FullTriangle.procrisk^2 + StdErr$FullTriangle.paramrisk^2)
-    output[["weights"]] <- CL$weights
-    output[["alpha"]] <- alpha
-    ## total.procrisk <- apply(StdErr$FullTriangle.procrisk, 2, function(x) sqrt(sum(x^2)))
-    output[["Total.Mack.S.E"]] <- Total.SE[1] # [1] removes attributes
-    output[["Total.ProcessRisk"]] <- attr(Total.SE, "processrisk")
-    output[["Total.ParameterRisk"]] <- attr(Total.SE, "paramrisk")
-    output[["tail"]] <- tail
-    class(output) <- c("MackChainLadder", "TriangleModel", "list")
-    return(output)
+  }else{
+    #        if(is.numeric(tail))
+    # Documentation says tail must be logic or numeric
+    tail.factor <- as.numeric(tail)
+    StdErr$f <- c(StdErr$f, tail.factor = tail.factor)
   }
+  # Then finally, ...
+  if (tail.factor > 1) {
+    ## EXPECTED VALUES
+    FullTriangle <- tail.E(FullTriangle, tail.factor)
+    ## STANDARD ERRORS
+    ## Estimate the standard error of f and F in the tail
+    ##  If tail.se and/or tail.sigma provided, return those values
+    StdErr <- tail.SE(FullTriangle, StdErr, Total.SE, tail.factor,
+                      tail.se = tail.se, tail.sigma = tail.sigma)
+  }
+  
+  ## 3) Calculate process and parameter risks of the predicted loss amounts
+  StdErr <- c(StdErr, MackRecursive.S.E(FullTriangle, StdErr$f, StdErr$f.se, StdErr$F.se, mse.method = mse.method))
+  
+  
+  
+  ## Addition Eric Dal Moro 31 July 2018
+  ## Quantile check
+  if(is.logical(Quantil)){
+    if(Quantil) {}
+    else
+    {Quantil<-0.5}
+  }
+  
+  Skewn <- Asymetrie(Triangle, FullTriangle, StdErr)
+  ## End Addition Eric Dal Moro 31 July 2018
+  
+  
+  
+  ## 4) Total-across-origin-periods by development period
+  ## EXPECTED VALUES
+  ##   Not complicated. Not required at this time.
+  ## STANDARD ERRORS
+  ## Calculate process and parameter risk for the sum of the predicted loss amounts
+  Total.SE <- TotalMack.S.E(FullTriangle, StdErr$f, StdErr$f.se, StdErr$F.se, StdErr$FullTriangle.procrisk, mse.method = mse.method)
+  
+  ## Collect the output
+  output <- list()
+  output[["call"]] <-  match.call(expand.dots = FALSE)
+  output[["Triangle"]] <- Triangle
+  output[["FullTriangle"]] <- FullTriangle
+  output[["Models"]] <- CL[["Models"]]
+  output[["f"]] <- StdErr$f
+  output[["f.se"]] <- StdErr$f.se
+  output[["F.se"]] <- StdErr$F.se
+  output[["sigma"]] <- StdErr$sigma
+  output[["Mack.ProcessRisk"]]   <- StdErr$FullTriangle.procrisk  # new dmm
+  output[["Mack.ParameterRisk"]] <- StdErr$FullTriangle.paramrisk  # new dmm
+  output[["Mack.S.E"]] <- sqrt(StdErr$FullTriangle.procrisk^2 + StdErr$FullTriangle.paramrisk^2)
+  output[["weights"]] <- CL$weights
+  output[["alpha"]] <- alpha
+  ## total.procrisk <- apply(StdErr$FullTriangle.procrisk, 2, function(x) sqrt(sum(x^2)))
+  output[["Total.Mack.S.E"]] <- Total.SE[1] # [1] removes attributes
+  output[["Total.ProcessRisk"]] <- attr(Total.SE, "processrisk")
+  output[["Total.ParameterRisk"]] <- attr(Total.SE, "paramrisk")
+  output[["tail"]] <- tail
+  
+  
+  ## Addition Eric Dal Moro 31 July 2018
+  output[["Skewness"]]<-Skewn$Skewnes
+  output[["Correlation"]]<-Skewn$Correlation
+  output[["OverSkew"]]<-Skewn$OverSkew
+  output[["Sk3k"]]<-Skewn$Sk3k
+  output[["Variance"]]<-Skewn$Variance
+  output[["Quantil"]]<-Quantil
+  
+  
+  ## End Addition Eric Dal Moro 31 July 2018
+  
+  
+  class(output) <- c("MackChainLadder", "TriangleModel", "list")
+  return(output)
+}
+
+##############################################################################
+## Calculation of the skewness (Eric Dal Moro - added 31 July 2018)
+## 
+
+Asymetrie<- function(Triangle, FullTriangle, Ecartype) {
+  MyData <- Triangle
+  
+  n <- dim(MyData)[2]
+  
+  Skewnes<- c(n-1)
+  Skewnesi<- c(n)
+  Sk3ki<-c(n)
+  Inter<- c(n-1)
+  OverSkew<-c(1)
+  Variance<-c(n-1)
+  Correlation<-matrix(nrow=n-2,ncol=n-2) 
+  
+  CL<-chainladder(MyData)
+  
+  MackModel<-CL[["Models"]]
+  Sigma2<-Ecartype$sigma^2
+  
+  f <- Ecartype$f
+  f.se <- Ecartype$f.se
+  sigma <- Ecartype$sigma
+  
+  
+  CLRatio <- function(i, Triangle, f){
+    y=Triangle[,i+1]/Triangle[,i]-f[i]
+  } 
+  myModel <- sapply(c(1:(n-1)), CLRatio, MyData, f)
+  
+  Interm1<-function(i, yData){
+    Interm1=sum(yData[c(1:(n-i)),i]^1.5)
+  }
+  
+  Interm2<-function(i, yData){
+    Interm2=sum(yData[c(1:(n-i)),i])
+  }
+  
+  #Calculation of Sk3k
+  
+  Skew<- function(i, yModel, yData, Interme1, Interme2){
+    #    yModel <- yModel[!is.na(yModel)]
+    y=1/(n-i-Interme1[i]^2/Interme2[i]^3)*sum(yData[c(1:(n-i)),i]^1.5*(yModel[c(1:(n-i)),i]^3))
+  } 
+  
+  Interme1 <- sapply(c(1:(n-1)), Interm1, MyData)
+  Interme2 <- sapply(c(1:(n-1)), Interm2, MyData)
+  Interme2<- as.numeric(Interme2)
+  Sk3k <- sapply(c(1:(n-1)), Skew, myModel, MyData, Interme1, Interme2)
+  
+  for (k in c(1:(n-1)))
+  {
+    if ((is.infinite(Sk3k[k])) | (is.nan(Sk3k[k])))
+    {Sk3k[k]=0}
+  }
+  
+  
+  # Calculation of Skewness per accident year
+  
+  for (k in c(1:(n-1))) {
+    Variance[k] <- MyData[n+1-k,k]^2*Sigma2[k]*(1/Interme2[k]+1/MyData[n+1-k,k])
+    
+    if (k<n-1) { Skewnes[k] <- MyData[n+1-k,k]^1.5*Sk3k[k]+MyData[n+1-k,k]^3*Sk3k[k]*Interme1[k]/Interme2[k]^3 }
+    
+    for (j in c((k+1):(n-1))) {
+      intermediaire <- 0
+      intermediaire1 <- 0
+      for (v in c(1:(n-j))) {
+        intermediaire <- intermediaire + FullTriangle[v,j]
+      }
+      
+      for (v in c(1:(n-j))) {
+        intermediaire1 <- intermediaire1 + FullTriangle[v,j]^1.5
+      }
+      
+      if (k<n-1) {
+        Skewnes[k] <- Skewnes[k]*f[j]^3+FullTriangle[n+1-k,j]^1.5*Sk3k[j]*(1+Variance[k]/FullTriangle[n+1-k,j]^2)^(3/8)+3*Sigma2[j]*f[j]*Variance[k]+FullTriangle[n+1-k,j]^3*intermediaire1/intermediaire^3*Sk3k[j]
+      }
+      if (k<n-1) {
+        Variance[k] <- Variance[k]*f[j]^2+FullTriangle[n+1-k,j]^2*Sigma2[j]*(1/intermediaire+1/FullTriangle[n+1-k,j])
+      }
+      
+    }
+  }
+  
+  #Calculation of Mack correlation between accident years
+  for (k in c(1:(n-1))) {
+    Inter[n-k]<-Sigma2[k]/f[k]^2/Interme2[k]
+  }
+  
+  for (k in c(2:(n-2))) {
+    Inter[k]<-Inter[k-1]+Inter[k]
+  }
+  
+  for (k in c(1:(n-2))) {
+    for (l in c((k+1):(n-1))) {
+      Correlation[k,l-1]<-Inter[k]*FullTriangle[k+1,n]*FullTriangle[l+1,n]/Variance[n-k]^0.5/Variance[n-l]^0.5
+    }
+  }
+  
+  #Calculation of overall Skewness across all accident years
+  OverSkew<-sum(Skewnes)
+  
+  for (o in c(1:(n-2))) {
+    for (p in c((o+1):(n-1))) {
+      OverSkew=OverSkew + 3*Correlation[o,p-1]*(Variance[n-o]*Variance[n-p])^0.5*(Variance[n-o]/FullTriangle[o+1,n]+Variance[n-p]/FullTriangle[p+1,n])*(2+Correlation[o,p-1]*(Variance[n-o]*Variance[n-p])^0.5/(FullTriangle[p+1,n]*FullTriangle[o+1,n]))
+      OverSkew=OverSkew + 3*Correlation[o,p-1]^2*(Variance[n-o]*Variance[n-p])*(FullTriangle[o+1,n]+FullTriangle[p+1,n])/(FullTriangle[o+1,n]*FullTriangle[p+1,n])
+    }
+  }
+  
+  for (o in c(1:(n-3))) {
+    for (p in c((o+1):(n-2))) {
+      for (q in c((p+1):((n-1)))) {
+        OverSkew=OverSkew + 6*Correlation[o,p-1]*Correlation[p,q-1]*Correlation[o,q-1]*(Variance[n-o]*Variance[n-p]*Variance[n-q])^0.5*((Variance[n-o]*Variance[n-p]*Variance[n-q])^0.5/(FullTriangle[o+1,n]*FullTriangle[p+1,n]*FullTriangle[q+1,n])+Variance[n-o]^0.5/(Correlation[p,q-1]*FullTriangle[o+1,n])+Variance[n-p]^0.5/(Correlation[o,q-1]*FullTriangle[p+1,n])+Variance[n-q]^0.5/(Correlation[o,p-1]*FullTriangle[q+1,n]))
+      }
+    }
+  }
+  
+  Skewnesi[1]<-0
+  Skewnesi[2]<-0
+  Sk3ki[1]<-0
+  Sk3ki[2]<-0
+  
+  for (k in c(3:n)) {
+    
+    Skewnesi[k]<-0
+    
+    if (Variance[n-k+1]>0) {
+      Skewnesi[k]<-Skewnes[n-k+1]/Variance[n-k+1]^1.5
+    }
+    
+    Sk3ki[k]<-Sk3k[n-k+1]
+  }  
+  
+  output <- list()
+  output[["Skewnes"]]<-Skewnesi
+  output[["Correlation"]]<-Correlation
+  output[["OverSkew"]]<-OverSkew
+  output[["Sk3k"]]<-Sk3ki
+  
+  return(output)
+}
+
+## End addition Eric Dal Moro 31 July 2018
+
 
 ##############################################################################
 ## Calculation of the mean squared error and standard error
@@ -170,24 +348,21 @@ Mack.S.E <- function(MackModel, FullTriangle, est.sigma="log-linear", weights, a
       
       p.value.of.model <- tryCatch(summary(sig.model$model)$coefficient[2,4],
                                    error = function(e) e)
-      if (inherits(p.value.of.model, "error") |
-          is.infinite(p.value.of.model) |
-          is.nan(p.value.of.model)
-      ) {
+      if (inherits(p.value.of.model, "error")|is.infinite(p.value.of.model) | is.nan(p.value.of.model)) {
         warning(paste("'loglinear' model to estimate sigma_n doesn't appear appropriate.\n",
                       "est.sigma will be overwritten to 'Mack'.\n",
                       "Mack's estimation method will be used instead."))
         est.sigma <- "Mack"
       }
       else
-      if(p.value.of.model > 0.05){
-        warning(paste("'loglinear' model to estimate sigma_n doesn't appear appropriate.",
-                      "\np-value > 5.\n",
-                      "est.sigma will be overwritten to 'Mack'.\n",
-                      "Mack's estimation method will be used instead."))
-        
-        est.sigma <- "Mack"
-      }
+        if(p.value.of.model > 0.05){
+          warning(paste("'loglinear' model to estimate sigma_n doesn't appear appropriate.",
+                        "\np-value > 5.\n",
+                        "est.sigma will be overwritten to 'Mack'.\n",
+                        "Mack's estimation method will be used instead."))
+          
+          est.sigma <- "Mack"
+        }
       else{
         f.se[isna] <- sigma[isna]/sqrt(weights[1,isna]*FullTriangle[1,isna]^alpha[isna])
       }
@@ -391,23 +566,49 @@ summary.MackChainLadder <- function(object,...){
   Mack.S.E <- object[["Mack.S.E"]][,ncol(object[["Mack.S.E"]])]
   CV <- Mack.S.E/(Ultimate-Latest)
   
-  ByOrigin <- data.frame(Latest, Dev.To.Date, Ultimate, IBNR, Mack.S.E, CV)
+  ## Added Eric Dal Moro 31 July 2018
+  Skewness<-object[["Skewness"]]
+  
+  ## Cornish-Fisher
+  quantile <- qnorm(object[["Quantil"]])
+  
+  ## Cornish-Fisher
+  CF<-quantile+1/6*(quantile^2-1)*Skewness
+  QuantilePY<-(1+CF*CV)*IBNR
+  
+  ByOrigin <- data.frame(Latest, Dev.To.Date, Ultimate, IBNR, Mack.S.E, CV, Skewness, QuantilePY)
   names(ByOrigin)[6]="CV(IBNR)"
+  names(ByOrigin)[8]=paste("Quantile ",object[["Quantil"]])
   ByOrigin <- ByOrigin[ex.origin.period,]
+  
+  ## Cornish-Fisher
+  quantile <- qnorm(object[["Quantil"]])
+  
+  ## Cornish-Fisher
+  CF<-quantile+1/6*(quantile^2-1)*object[["OverSkew"]]/object[["Total.Mack.S.E"]]^3
+  TotQuantile<-(1+CF*object[["Total.Mack.S.E"]]/sum(IBNR))*sum(IBNR)
+  
+  
+  ## Added Eric Dal Moro 31 July 2018 - OverSkew
   
   Totals <-  c(sum(Latest,na.rm=TRUE),
                sum(Latest,na.rm=TRUE)/sum(Ultimate,na.rm=TRUE),
                sum(Ultimate,na.rm=TRUE),
                sum(IBNR,na.rm=TRUE), object[["Total.Mack.S.E"]],
-               object[["Total.Mack.S.E"]]/sum(IBNR,na.rm=TRUE)
+               object[["Total.Mack.S.E"]]/sum(IBNR,na.rm=TRUE),
+               object[["OverSkew"]]/object[["Total.Mack.S.E"]]^3,
+               TotQuantile
   )
   # Totals <- c(Totals, round(x[["Total.Mack.S.E"]]/sum(res$IBNR,na.rm=TRUE),2))
   Totals <- as.data.frame(Totals)
   
   colnames(Totals)=c("Totals")
+  
+  ## Added Eric Dal Moro 31 July 2018 - OverSkew
+  
   rownames(Totals) <- c("Latest:","Dev:","Ultimate:",
                         "IBNR:","Mack S.E.:",
-                        "CV(IBNR):")
+                        "CV(IBNR):", "Skewness:","Quantile ")
   
   output <- list(ByOrigin=ByOrigin, Totals=Totals)
   return(output)
@@ -428,7 +629,7 @@ print.MackChainLadder <- function(x,...){
   
   Totals <- summary.x$Totals
   rownames(Totals)[5] <- "Mack.S.E"
-  Totals[1:6,] <- formatC(Totals[1:6,], big.mark=",",digits=2,format="f")
+  Totals[1:8,] <- formatC(Totals[1:8,], big.mark=",",digits=3,format="f")
   cat("\n")
   print(Totals, quote=FALSE)
   #invisible(x)
@@ -442,138 +643,138 @@ print.MackChainLadder <- function(x,...){
 plot.MackChainLadder <- function(
   x, mfrow=NULL, title=NULL,
   lattice=FALSE, which=1:6, ...){
-    
-    .myResult <-  summary(x)$ByOrigin
-    
-    .FullTriangle <- x[["FullTriangle"]]
-    .Triangle <- x[["Triangle"]]
-    
-    if(is.null(mfrow)){
-      mfrow <- c(ifelse(length(which) < 2,1, 
-                        ifelse(length(which) < 3, 2,
-                               ceiling(length(which)/2))), 
-                 ifelse(length(which)>2,2,1))
-    }
-    if(!lattice){
-      if(is.null(title)) myoma <- c(0,0,0,0) else myoma <- c(0,0,2,0)
-      
-      op=par(mfrow=mfrow, oma=myoma, mar=c(4.5,4.5,2,2))
-      
-      plotdata <- t(as.matrix(.myResult[,c("Latest","IBNR")]))
-      n <- ncol(plotdata)
-      
-      if(1 %in% which){
-        
-        if(getRversion() < "2.9.0") { ## work around missing feature
-          
-          bp <- barplot(plotdata,
-                        legend.text=c("Latest","Forecast"),
-                        ##    args.legend=list(x="topleft"), only avilable from R version >= 2.9.0
-                        names.arg=rownames(.myResult),
-                        main="Mack Chain Ladder Results",
-                        xlab="Origin period",
-                        ylab="Amount",#paste(Currency,myUnit),
-                        ylim=c(0, max(apply(.myResult[c("Ultimate", "Mack.S.E")],1,sum),na.rm=TRUE)))
-          
-        }else{
-          bp <- barplot(plotdata,
-                        legend.text=c("Latest","Forecast"),
-                        args.legend=list(x="topleft"),
-                        names.arg=rownames(.myResult),
-                        main="Mack Chain Ladder Results",
-                        xlab="Origin period",
-                        ylab="Amount",#paste(Currency,myUnit),
-                        ylim=c(0, max(apply(.myResult[c("Ultimate", "Mack.S.E")],1,sum),na.rm=TRUE)))
-        }
-        ## add error ticks
-        ## require("Hmisc")
-        .errbar(x=bp, y=.myResult$Ultimate,
-               yplus=(.myResult$Ultimate + .myResult$Mack.S.E),
-               yminus=(.myResult$Ultimate - .myResult$Mack.S.E),
-               cap=0.05,
-               add=TRUE)
-      }
-      if(2 %in% which){
-        
-        matplot(t(.FullTriangle), type="l",
-                main="Chain ladder developments by origin period",
-                xlab="Development period", ylab="Amount", #paste(Currency, myUnit)
-        )
-        matplot(t(.Triangle), add=TRUE)
-      }
-      Residuals=residuals(x)
-      if(3 %in% which){
-        plot(standard.residuals ~ fitted.value, data=Residuals,
-             ylab="Standardised residuals", xlab="Fitted")
-        lines(lowess(Residuals$fitted.value, Residuals$standard.residuals), col="red")
-        abline(h=0, col="grey")
-      }
-      if(4 %in% which){
-        plot(standard.residuals ~ origin.period, data=Residuals,
-             ylab="Standardised residuals", xlab="Origin period")
-        lines(lowess(Residuals$origin.period, Residuals$standard.residuals), col="red")
-        abline(h=0, col="grey")
-      }
-      if(5 %in% which){
-        plot(standard.residuals ~ cal.period, data=Residuals,
-             ylab="Standardised residuals", xlab="Calendar period")
-        lines(lowess(Residuals$cal.period, Residuals$standard.residuals), col="red")
-        abline(h=0, col="grey")
-      }
-      if(6 %in% which){
-        plot(standard.residuals ~ dev.period, data=Residuals,
-             ylab="Standardised residuals", xlab="Development period")
-        lines(lowess(Residuals$dev.period, Residuals$standard.residuals), col="red")
-        abline(h=0, col="grey")
-      }
-      title( title , outer=TRUE)
-      par(op)
-      
-    }else{
-      
-      ## require(grid)
-      ## Set legend 
-      fl <-
-        grid.layout(nrow = 2, ncol = 4,
-                    heights = unit(rep(1, 2), "lines"),
-                    widths =
-                      unit(c(2, 1, 2, 1),
-                           c("cm", "strwidth", "cm",
-                             "strwidth"),
-                           data = list(NULL, "Chain ladder dev.", NULL,
-                                       "Mack's S.E.")))
-      
-      foo <- frameGrob(layout = fl)
-      
-      foo <- placeGrob(foo,
-                       linesGrob(c(0.2, 0.8), c(.5, .5),
-                                 gp = gpar(col=1, lty=1)),
-                       row = 1, col = 1)
-      foo <- placeGrob(foo,
-                       linesGrob(c(0.2, 0.8), c(.5, .5),
-                                 gp = gpar(col=1, lty=3)), 
-                       row = 1, col = 3)
-      foo <- placeGrob(foo,
-                       textGrob(label = "Chain ladder dev."), 
-                       row = 1, col = 2)
-      foo <- placeGrob(foo,
-                       textGrob(label = "Mack's S.E."), 
-                       row = 1, col = 4)
-      
-      long <- expand.grid(origin=as.numeric(dimnames(.FullTriangle)$origin),
-                          dev=as.numeric(dimnames(.FullTriangle)$dev))
-      long$value <- as.vector(.FullTriangle)
-      long$valuePlusMack.S.E <-  long$value + as.vector(x$Mack.S.E)
-      long$valueMinusMack.S.E <- long$value - as.vector(x$Mack.S.E)
-      sublong <- long[!is.na(long$value),]
-      xyplot(valuePlusMack.S.E + valueMinusMack.S.E + value ~ dev |
-               factor(origin), data=sublong, t="l", lty=c(3,3,1), as.table=TRUE,
-             main="Chain ladder developments by origin period",
-             xlab="Development period",
-             ylab="Amount",col=1,
-             legend = list(top = list(fun = foo)),...)
-    }
+  
+  .myResult <-  summary(x)$ByOrigin
+  
+  .FullTriangle <- x[["FullTriangle"]]
+  .Triangle <- x[["Triangle"]]
+  
+  if(is.null(mfrow)){
+    mfrow <- c(ifelse(length(which) < 2,1, 
+                      ifelse(length(which) < 3, 2,
+                             ceiling(length(which)/2))), 
+               ifelse(length(which)>2,2,1))
   }
+  if(!lattice){
+    if(is.null(title)) myoma <- c(0,0,0,0) else myoma <- c(0,0,2,0)
+    
+    op=par(mfrow=mfrow, oma=myoma, mar=c(4.5,4.5,2,2))
+    
+    plotdata <- t(as.matrix(.myResult[,c("Latest","IBNR")]))
+    n <- ncol(plotdata)
+    
+    if(1 %in% which){
+      
+      if(getRversion() < "2.9.0") { ## work around missing feature
+        
+        bp <- barplot(plotdata,
+                      legend.text=c("Latest","Forecast"),
+                      ##    args.legend=list(x="topleft"), only avilable from R version >= 2.9.0
+                      names.arg=rownames(.myResult),
+                      main="Mack Chain Ladder Results",
+                      xlab="Origin period",
+                      ylab="Amount",#paste(Currency,myUnit),
+                      ylim=c(0, max(apply(.myResult[c("Ultimate", "Mack.S.E")],1,sum),na.rm=TRUE)))
+        
+      }else{
+        bp <- barplot(plotdata,
+                      legend.text=c("Latest","Forecast"),
+                      args.legend=list(x="topleft"),
+                      names.arg=rownames(.myResult),
+                      main="Mack Chain Ladder Results",
+                      xlab="Origin period",
+                      ylab="Amount",#paste(Currency,myUnit),
+                      ylim=c(0, max(apply(.myResult[c("Ultimate", "Mack.S.E")],1,sum),na.rm=TRUE)))
+      }
+      ## add error ticks
+      ## require("Hmisc")
+      .errbar(x=bp, y=.myResult$Ultimate,
+              yplus=(.myResult$Ultimate + .myResult$Mack.S.E),
+              yminus=(.myResult$Ultimate - .myResult$Mack.S.E),
+              cap=0.05,
+              add=TRUE)
+    }
+    if(2 %in% which){
+      
+      matplot(t(.FullTriangle), type="l",
+              main="Chain ladder developments by origin period",
+              xlab="Development period", ylab="Amount", #paste(Currency, myUnit)
+      )
+      matplot(t(.Triangle), add=TRUE)
+    }
+    Residuals=residuals(x)
+    if(3 %in% which){
+      plot(standard.residuals ~ fitted.value, data=Residuals,
+           ylab="Standardised residuals", xlab="Fitted")
+      lines(lowess(Residuals$fitted.value, Residuals$standard.residuals), col="red")
+      abline(h=0, col="grey")
+    }
+    if(4 %in% which){
+      plot(standard.residuals ~ origin.period, data=Residuals,
+           ylab="Standardised residuals", xlab="Origin period")
+      lines(lowess(Residuals$origin.period, Residuals$standard.residuals), col="red")
+      abline(h=0, col="grey")
+    }
+    if(5 %in% which){
+      plot(standard.residuals ~ cal.period, data=Residuals,
+           ylab="Standardised residuals", xlab="Calendar period")
+      lines(lowess(Residuals$cal.period, Residuals$standard.residuals), col="red")
+      abline(h=0, col="grey")
+    }
+    if(6 %in% which){
+      plot(standard.residuals ~ dev.period, data=Residuals,
+           ylab="Standardised residuals", xlab="Development period")
+      lines(lowess(Residuals$dev.period, Residuals$standard.residuals), col="red")
+      abline(h=0, col="grey")
+    }
+    title( title , outer=TRUE)
+    par(op)
+    
+  }else{
+    
+    ## require(grid)
+    ## Set legend 
+    fl <-
+      grid.layout(nrow = 2, ncol = 4,
+                  heights = unit(rep(1, 2), "lines"),
+                  widths =
+                    unit(c(2, 1, 2, 1),
+                         c("cm", "strwidth", "cm",
+                           "strwidth"),
+                         data = list(NULL, "Chain ladder dev.", NULL,
+                                     "Mack's S.E.")))
+    
+    foo <- frameGrob(layout = fl)
+    
+    foo <- placeGrob(foo,
+                     linesGrob(c(0.2, 0.8), c(.5, .5),
+                               gp = gpar(col=1, lty=1)),
+                     row = 1, col = 1)
+    foo <- placeGrob(foo,
+                     linesGrob(c(0.2, 0.8), c(.5, .5),
+                               gp = gpar(col=1, lty=3)), 
+                     row = 1, col = 3)
+    foo <- placeGrob(foo,
+                     textGrob(label = "Chain ladder dev."), 
+                     row = 1, col = 2)
+    foo <- placeGrob(foo,
+                     textGrob(label = "Mack's S.E."), 
+                     row = 1, col = 4)
+    
+    long <- expand.grid(origin=as.numeric(dimnames(.FullTriangle)$origin),
+                        dev=as.numeric(dimnames(.FullTriangle)$dev))
+    long$value <- as.vector(.FullTriangle)
+    long$valuePlusMack.S.E <-  long$value + as.vector(x$Mack.S.E)
+    long$valueMinusMack.S.E <- long$value - as.vector(x$Mack.S.E)
+    sublong <- long[!is.na(long$value),]
+    xyplot(valuePlusMack.S.E + valueMinusMack.S.E + value ~ dev |
+             factor(origin), data=sublong, t="l", lty=c(3,3,1), as.table=TRUE,
+           main="Chain ladder developments by origin period",
+           xlab="Development period",
+           ylab="Amount",col=1,
+           legend = list(top = list(fun = foo)),...)
+  }
+}
 ################################################################################
 ## residuals
 ##
@@ -729,68 +930,68 @@ print.Mack <- function(x,...){
   add = FALSE, lty = 1, type = "p", ylim = NULL, lwd = 1, pch = 16, 
   errbar.col = par("fg"), Type = rep(1, length(y)), ...) 
 {
-    # Based on code by Frank Harrell, Hmisc package, licence: GPL >= 2
-    if (is.null(ylim)) 
-      ylim <- range(y[Type == 1], yplus[Type == 1], yminus[Type == 
-                                                             1], na.rm = TRUE)
-    if (is.factor(x) || is.character(x)) {
-      x <- as.character(x)
-      n <- length(x)
-      t1 <- Type == 1
-      t2 <- Type == 2
-      n1 <- sum(t1)
-      n2 <- sum(t2)
-      omai <- par("mai")
-      mai <- omai
-      mai[2] <- max(strwidth(x, "inches")) + 0.25
-      par(mai = mai)
-      on.exit(par(mai = omai))
-      plot(NA, NA, xlab = ylab, ylab = "", xlim = ylim, ylim = c(1, 
-                                                                 n + 1), axes = FALSE, ...)
-      axis(1)
-      w <- if (any(t2)) 
-        n1 + (1:n2) + 1
-      else numeric(0)
-      axis(2, at = c(seq.int(length.out = n1), w), labels = c(x[t1], 
-                                                              x[t2]), las = 1, adj = 1)
-      points(y[t1], seq.int(length.out = n1), pch = pch, type = type, 
+  # Based on code by Frank Harrell, Hmisc package, licence: GPL >= 2
+  if (is.null(ylim)) 
+    ylim <- range(y[Type == 1], yplus[Type == 1], yminus[Type == 
+                                                           1], na.rm = TRUE)
+  if (is.factor(x) || is.character(x)) {
+    x <- as.character(x)
+    n <- length(x)
+    t1 <- Type == 1
+    t2 <- Type == 2
+    n1 <- sum(t1)
+    n2 <- sum(t2)
+    omai <- par("mai")
+    mai <- omai
+    mai[2] <- max(strwidth(x, "inches")) + 0.25
+    par(mai = mai)
+    on.exit(par(mai = omai))
+    plot(NA, NA, xlab = ylab, ylab = "", xlim = ylim, ylim = c(1, 
+                                                               n + 1), axes = FALSE, ...)
+    axis(1)
+    w <- if (any(t2)) 
+      n1 + (1:n2) + 1
+    else numeric(0)
+    axis(2, at = c(seq.int(length.out = n1), w), labels = c(x[t1], 
+                                                            x[t2]), las = 1, adj = 1)
+    points(y[t1], seq.int(length.out = n1), pch = pch, type = type, 
+           ...)
+    segments(yplus[t1], seq.int(length.out = n1), yminus[t1], 
+             seq.int(length.out = n1), lwd = lwd, lty = lty, col = errbar.col)
+    if (any(Type == 2)) {
+      abline(h = n1 + 1, lty = 2, ...)
+      offset <- mean(y[t1]) - mean(y[t2])
+      if (min(yminus[t2]) < 0 & max(yplus[t2]) > 0) 
+        lines(c(0, 0) + offset, c(n1 + 1, par("usr")[4]), 
+              lty = 2, ...)
+      points(y[t2] + offset, w, pch = pch, type = type, 
              ...)
-      segments(yplus[t1], seq.int(length.out = n1), yminus[t1], 
-               seq.int(length.out = n1), lwd = lwd, lty = lty, col = errbar.col)
-      if (any(Type == 2)) {
-        abline(h = n1 + 1, lty = 2, ...)
-        offset <- mean(y[t1]) - mean(y[t2])
-        if (min(yminus[t2]) < 0 & max(yplus[t2]) > 0) 
-          lines(c(0, 0) + offset, c(n1 + 1, par("usr")[4]), 
-                lty = 2, ...)
-        points(y[t2] + offset, w, pch = pch, type = type, 
-               ...)
-        segments(yminus[t2] + offset, w, yplus[t2] + offset, 
-                 w, lwd = lwd, lty = lty, col = errbar.col)
-        at <- pretty(range(y[t2], yplus[t2], yminus[t2]))
-        axis(side = 3, at = at + offset, labels = format(round(at, 
-                                                               6)))
-      }
-      return(invisible())
+      segments(yminus[t2] + offset, w, yplus[t2] + offset, 
+               w, lwd = lwd, lty = lty, col = errbar.col)
+      at <- pretty(range(y[t2], yplus[t2], yminus[t2]))
+      axis(side = 3, at = at + offset, labels = format(round(at, 
+                                                             6)))
     }
-    if (add) 
-      points(x, y, pch = pch, type = type, ...)
-    else plot(x, y, ylim = ylim, xlab = xlab, ylab = ylab, pch = pch, 
-              type = type, ...)
-    xcoord <- par()$usr[1:2]
-    smidge <- cap * (xcoord[2] - xcoord[1])/2
-    segments(x, yminus, x, yplus, lty = lty, lwd = lwd, col = errbar.col)
-    if (par()$xlog) {
-      xstart <- x * 10^(-smidge)
-      xend <- x * 10^(smidge)
-    }
-    else {
-      xstart <- x - smidge
-      xend <- x + smidge
-    }
-    segments(xstart, yminus, xend, yminus, lwd = lwd, lty = lty, 
-             col = errbar.col)
-    segments(xstart, yplus, xend, yplus, lwd = lwd, lty = lty, 
-             col = errbar.col)
     return(invisible())
   }
+  if (add) 
+    points(x, y, pch = pch, type = type, ...)
+  else plot(x, y, ylim = ylim, xlab = xlab, ylab = ylab, pch = pch, 
+            type = type, ...)
+  xcoord <- par()$usr[1:2]
+  smidge <- cap * (xcoord[2] - xcoord[1])/2
+  segments(x, yminus, x, yplus, lty = lty, lwd = lwd, col = errbar.col)
+  if (par()$xlog) {
+    xstart <- x * 10^(-smidge)
+    xend <- x * 10^(smidge)
+  }
+  else {
+    xstart <- x - smidge
+    xend <- x + smidge
+  }
+  segments(xstart, yminus, xend, yminus, lwd = lwd, lty = lty, 
+           col = errbar.col)
+  segments(xstart, yplus, xend, yplus, lwd = lwd, lty = lty, 
+           col = errbar.col)
+  return(invisible())
+}
