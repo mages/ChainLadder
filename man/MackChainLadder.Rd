@@ -164,6 +164,7 @@ Actuarial Society} - Arlington, Virginia 1994: LXXXI 154-222}
 \seealso{ See also \code{\link{qpaid}} for dealing with non-square triangles,  
   \code{\link{chainladder}} for the underlying chain-ladder method,    
   \code{\link{summary.MackChainLadder}},  
+  \code{\link{quantile.MackChainLadder}},  
   \code{\link{plot.MackChainLadder}} and 
   \code{\link{residuals.MackChainLadder}} displaying results and finally 
   \code{\link{CDR.MackChainLadder}} for the one year claims development result.

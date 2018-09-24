@@ -14,8 +14,7 @@ MackChainLadder <- function(
   tail=FALSE,
   tail.se=NULL,
   tail.sigma=NULL,
-  mse.method = "Mack",
-  Quantil=FALSE)
+  mse.method = "Mack")
 {
   ## idea: have a list for tail factor
   ## tail=list(f=FALSE, f.se=NULL, sigma=NULL, F.se=NULL)
@@ -92,21 +91,6 @@ MackChainLadder <- function(
   ## 3) Calculate process and parameter risks of the predicted loss amounts
   StdErr <- c(StdErr, MackRecursive.S.E(FullTriangle, StdErr$f, StdErr$f.se, StdErr$F.se, mse.method = mse.method))
   
-  
-  
-  ## Addition Eric Dal Moro 31 July 2018
-  ## Quantile check
-  if(is.logical(Quantil)){
-    if(Quantil) {}
-    else
-    {Quantil<-0.5}
-  }
-  
-  Skewn <- Asymetrie(Triangle, FullTriangle, StdErr)
-  ## End Addition Eric Dal Moro 31 July 2018
-  
-  
-  
   ## 4) Total-across-origin-periods by development period
   ## EXPECTED VALUES
   ##   Not complicated. Not required at this time.
@@ -134,171 +118,9 @@ MackChainLadder <- function(
   output[["Total.ProcessRisk"]] <- attr(Total.SE, "processrisk")
   output[["Total.ParameterRisk"]] <- attr(Total.SE, "paramrisk")
   output[["tail"]] <- tail
-  
-  
-  ## Addition Eric Dal Moro 31 July 2018
-  output[["Skewness"]]<-Skewn$Skewnes
-  output[["Correlation"]]<-Skewn$Correlation
-  output[["OverSkew"]]<-Skewn$OverSkew
-  output[["Sk3k"]]<-Skewn$Sk3k
-  output[["Variance"]]<-Skewn$Variance
-  output[["Quantil"]]<-Quantil
-  
-  
-  ## End Addition Eric Dal Moro 31 July 2018
-  
-  
   class(output) <- c("MackChainLadder", "TriangleModel", "list")
   return(output)
 }
-
-##############################################################################
-## Calculation of the skewness (Eric Dal Moro - added 31 July 2018)
-## 
-
-Asymetrie<- function(Triangle, FullTriangle, Ecartype) {
-  MyData <- Triangle
-  
-  n <- dim(MyData)[2]
-  
-  Skewnes<- c(n-1)
-  Skewnesi<- c(n)
-  Sk3ki<-c(n)
-  Inter<- c(n-1)
-  OverSkew<-c(1)
-  Variance<-c(n-1)
-  Correlation<-matrix(nrow=n-2,ncol=n-2) 
-  
-  CL<-chainladder(MyData)
-  
-  MackModel<-CL[["Models"]]
-  Sigma2<-Ecartype$sigma^2
-  
-  f <- Ecartype$f
-  f.se <- Ecartype$f.se
-  sigma <- Ecartype$sigma
-  
-  
-  CLRatio <- function(i, Triangle, f){
-    y=Triangle[,i+1]/Triangle[,i]-f[i]
-  } 
-  myModel <- sapply(c(1:(n-1)), CLRatio, MyData, f)
-  
-  Interm1<-function(i, yData){
-    Interm1=sum(yData[c(1:(n-i)),i]^1.5)
-  }
-  
-  Interm2<-function(i, yData){
-    Interm2=sum(yData[c(1:(n-i)),i])
-  }
-  
-  #Calculation of Sk3k
-  
-  Skew<- function(i, yModel, yData, Interme1, Interme2){
-    #    yModel <- yModel[!is.na(yModel)]
-    y=1/(n-i-Interme1[i]^2/Interme2[i]^3)*sum(yData[c(1:(n-i)),i]^1.5*(yModel[c(1:(n-i)),i]^3))
-  } 
-  
-  Interme1 <- sapply(c(1:(n-1)), Interm1, MyData)
-  Interme2 <- sapply(c(1:(n-1)), Interm2, MyData)
-  Interme2<- as.numeric(Interme2)
-  Sk3k <- sapply(c(1:(n-1)), Skew, myModel, MyData, Interme1, Interme2)
-  
-  for (k in c(1:(n-1)))
-  {
-    if ((is.infinite(Sk3k[k])) | (is.nan(Sk3k[k])))
-    {Sk3k[k]=0}
-  }
-  
-  
-  # Calculation of Skewness per accident year
-  
-  for (k in c(1:(n-1))) {
-    Variance[k] <- MyData[n+1-k,k]^2*Sigma2[k]*(1/Interme2[k]+1/MyData[n+1-k,k])
-    
-    if (k<n-1) { Skewnes[k] <- MyData[n+1-k,k]^1.5*Sk3k[k]+MyData[n+1-k,k]^3*Sk3k[k]*Interme1[k]/Interme2[k]^3 }
-    
-    for (j in c((k+1):(n-1))) {
-      intermediaire <- 0
-      intermediaire1 <- 0
-      for (v in c(1:(n-j))) {
-        intermediaire <- intermediaire + FullTriangle[v,j]
-      }
-      
-      for (v in c(1:(n-j))) {
-        intermediaire1 <- intermediaire1 + FullTriangle[v,j]^1.5
-      }
-      
-      if (k<n-1) {
-        Skewnes[k] <- Skewnes[k]*f[j]^3+FullTriangle[n+1-k,j]^1.5*Sk3k[j]*(1+Variance[k]/FullTriangle[n+1-k,j]^2)^(3/8)+3*Sigma2[j]*f[j]*Variance[k]+FullTriangle[n+1-k,j]^3*intermediaire1/intermediaire^3*Sk3k[j]
-      }
-      if (k<n-1) {
-        Variance[k] <- Variance[k]*f[j]^2+FullTriangle[n+1-k,j]^2*Sigma2[j]*(1/intermediaire+1/FullTriangle[n+1-k,j])
-      }
-      
-    }
-  }
-  
-  #Calculation of Mack correlation between accident years
-  for (k in c(1:(n-1))) {
-    Inter[n-k]<-Sigma2[k]/f[k]^2/Interme2[k]
-  }
-  
-  for (k in c(2:(n-2))) {
-    Inter[k]<-Inter[k-1]+Inter[k]
-  }
-  
-  for (k in c(1:(n-2))) {
-    for (l in c((k+1):(n-1))) {
-      Correlation[k,l-1]<-Inter[k]*FullTriangle[k+1,n]*FullTriangle[l+1,n]/Variance[n-k]^0.5/Variance[n-l]^0.5
-    }
-  }
-  
-  #Calculation of overall Skewness across all accident years
-  OverSkew<-sum(Skewnes)
-  
-  for (o in c(1:(n-2))) {
-    for (p in c((o+1):(n-1))) {
-      OverSkew=OverSkew + 3*Correlation[o,p-1]*(Variance[n-o]*Variance[n-p])^0.5*(Variance[n-o]/FullTriangle[o+1,n]+Variance[n-p]/FullTriangle[p+1,n])*(2+Correlation[o,p-1]*(Variance[n-o]*Variance[n-p])^0.5/(FullTriangle[p+1,n]*FullTriangle[o+1,n]))
-      OverSkew=OverSkew + 3*Correlation[o,p-1]^2*(Variance[n-o]*Variance[n-p])*(FullTriangle[o+1,n]+FullTriangle[p+1,n])/(FullTriangle[o+1,n]*FullTriangle[p+1,n])
-    }
-  }
-  
-  for (o in c(1:(n-3))) {
-    for (p in c((o+1):(n-2))) {
-      for (q in c((p+1):((n-1)))) {
-        OverSkew=OverSkew + 6*Correlation[o,p-1]*Correlation[p,q-1]*Correlation[o,q-1]*(Variance[n-o]*Variance[n-p]*Variance[n-q])^0.5*((Variance[n-o]*Variance[n-p]*Variance[n-q])^0.5/(FullTriangle[o+1,n]*FullTriangle[p+1,n]*FullTriangle[q+1,n])+Variance[n-o]^0.5/(Correlation[p,q-1]*FullTriangle[o+1,n])+Variance[n-p]^0.5/(Correlation[o,q-1]*FullTriangle[p+1,n])+Variance[n-q]^0.5/(Correlation[o,p-1]*FullTriangle[q+1,n]))
-      }
-    }
-  }
-  
-  Skewnesi[1]<-0
-  Skewnesi[2]<-0
-  Sk3ki[1]<-0
-  Sk3ki[2]<-0
-  
-  for (k in c(3:n)) {
-    
-    Skewnesi[k]<-0
-    
-    if (Variance[n-k+1]>0) {
-      Skewnesi[k]<-Skewnes[n-k+1]/Variance[n-k+1]^1.5
-    }
-    
-    Sk3ki[k]<-Sk3k[n-k+1]
-  }  
-  
-  output <- list()
-  output[["Skewnes"]]<-Skewnesi
-  output[["Correlation"]]<-Correlation
-  output[["OverSkew"]]<-OverSkew
-  output[["Sk3k"]]<-Sk3ki
-  
-  return(output)
-}
-
-## End addition Eric Dal Moro 31 July 2018
-
 
 ##############################################################################
 ## Calculation of the mean squared error and standard error
@@ -348,7 +170,10 @@ Mack.S.E <- function(MackModel, FullTriangle, est.sigma="log-linear", weights, a
       
       p.value.of.model <- tryCatch(summary(sig.model$model)$coefficient[2,4],
                                    error = function(e) e)
-      if (inherits(p.value.of.model, "error")|is.infinite(p.value.of.model) | is.nan(p.value.of.model)) {
+      if (inherits(p.value.of.model, "error") |
+          is.infinite(p.value.of.model) |
+          is.nan(p.value.of.model)
+      ) {
         warning(paste("'loglinear' model to estimate sigma_n doesn't appear appropriate.\n",
                       "est.sigma will be overwritten to 'Mack'.\n",
                       "Mack's estimation method will be used instead."))
@@ -566,49 +391,23 @@ summary.MackChainLadder <- function(object,...){
   Mack.S.E <- object[["Mack.S.E"]][,ncol(object[["Mack.S.E"]])]
   CV <- Mack.S.E/(Ultimate-Latest)
   
-  ## Added Eric Dal Moro 31 July 2018
-  Skewness<-object[["Skewness"]]
-  
-  ## Cornish-Fisher
-  quantile <- qnorm(object[["Quantil"]])
-  
-  ## Cornish-Fisher
-  CF<-quantile+1/6*(quantile^2-1)*Skewness
-  QuantilePY<-(1+CF*CV)*IBNR
-  
-  ByOrigin <- data.frame(Latest, Dev.To.Date, Ultimate, IBNR, Mack.S.E, CV, Skewness, QuantilePY)
+  ByOrigin <- data.frame(Latest, Dev.To.Date, Ultimate, IBNR, Mack.S.E, CV)
   names(ByOrigin)[6]="CV(IBNR)"
-  names(ByOrigin)[8]=paste("Quantile ",object[["Quantil"]])
   ByOrigin <- ByOrigin[ex.origin.period,]
-  
-  ## Cornish-Fisher
-  quantile <- qnorm(object[["Quantil"]])
-  
-  ## Cornish-Fisher
-  CF<-quantile+1/6*(quantile^2-1)*object[["OverSkew"]]/object[["Total.Mack.S.E"]]^3
-  TotQuantile<-(1+CF*object[["Total.Mack.S.E"]]/sum(IBNR))*sum(IBNR)
-  
-  
-  ## Added Eric Dal Moro 31 July 2018 - OverSkew
   
   Totals <-  c(sum(Latest,na.rm=TRUE),
                sum(Latest,na.rm=TRUE)/sum(Ultimate,na.rm=TRUE),
                sum(Ultimate,na.rm=TRUE),
                sum(IBNR,na.rm=TRUE), object[["Total.Mack.S.E"]],
-               object[["Total.Mack.S.E"]]/sum(IBNR,na.rm=TRUE),
-               object[["OverSkew"]]/object[["Total.Mack.S.E"]]^3,
-               TotQuantile
+               object[["Total.Mack.S.E"]]/sum(IBNR,na.rm=TRUE)
   )
   # Totals <- c(Totals, round(x[["Total.Mack.S.E"]]/sum(res$IBNR,na.rm=TRUE),2))
   Totals <- as.data.frame(Totals)
   
   colnames(Totals)=c("Totals")
-  
-  ## Added Eric Dal Moro 31 July 2018 - OverSkew
-  
   rownames(Totals) <- c("Latest:","Dev:","Ultimate:",
                         "IBNR:","Mack S.E.:",
-                        "CV(IBNR):", "Skewness:","Quantile ")
+                        "CV(IBNR):")
   
   output <- list(ByOrigin=ByOrigin, Totals=Totals)
   return(output)
@@ -629,7 +428,7 @@ print.MackChainLadder <- function(x,...){
   
   Totals <- summary.x$Totals
   rownames(Totals)[5] <- "Mack.S.E"
-  Totals[1:8,] <- formatC(Totals[1:8,], big.mark=",",digits=3,format="f")
+  Totals[1:6,] <- formatC(Totals[1:6,], big.mark=",",digits=2,format="f")
   cat("\n")
   print(Totals, quote=FALSE)
   #invisible(x)
@@ -995,3 +794,212 @@ print.Mack <- function(x,...){
            col = errbar.col)
   return(invisible())
 }
+
+
+quantile.MackChainLadder <- function(x, probs=c(0.75, 0.95), na.rm = FALSE,
+                                     names = TRUE, type = 7,...){
+  
+  if(! ("MackChainLadder" %in% class(x))){
+    stop("x is not a MackChainLadder output")
+  }
+  
+  Latest <- getLatestCumulative(x$Triangle)
+  Ultimate <- x[["FullTriangle"]][,ncol(x[["FullTriangle"]])]
+  Dev.To.Date <- Latest/Ultimate
+  IBNR <- Ultimate-Latest
+  Mack.S.E <- x[["Mack.S.E"]][,ncol(x[["Mack.S.E"]])]
+  
+  CV <- Mack.S.E/IBNR
+  
+  Skewn <- Asymetrie(x)
+  
+  ## Cornish-Fisher
+  quantile <- qnorm(probs)
+  
+  print(Skewn$Skewnes)
+  ## Cornish-Fisher: by origin period
+  #CF <- quantile + 1/6 * (quantile^2 - 1) * Skewn$Skewnes
+  
+  CF <- (apply(t(quantile), 2, function(q) 
+    q + 1/6 * (q^2 - 1) * Skewn$Skewnes))
+  QuantilePY <- (1 + CF * CV) * IBNR
+  
+  ## Cornish-Fisher: totals across origin periods
+  CF <- quantile + 1/6*(quantile^2-1) * Skewn$OverSkew/x[["Total.Mack.S.E"]]^3
+  TotQuantile <- (1 + CF*x[["Total.Mack.S.E"]]/sum(IBNR))*sum(IBNR)
+  
+  
+  if(length(probs)>1){
+    ByOrigin <- as.data.frame(QuantilePY)
+  }else{
+    ByOrigin <- as.data.frame(t(QuantilePY))
+  }
+  names(ByOrigin) <- paste("IBNR ", probs*100, "%", sep="")
+  
+  origin <- dimnames(x$Triangle)[[1]]
+  
+  if(length(origin)==nrow(ByOrigin)){
+    rownames(ByOrigin) <- origin
+  }
+  
+  Totals <- as.data.frame(TotQuantile)
+  
+  colnames(Totals)=c("Totals")
+  rownames(Totals) <- paste("IBNR ", probs*100, "%:", sep="")
+  
+  output <- list(ByOrigin=ByOrigin, Totals=Totals)
+  return(output)
+}
+
+##############################################################################
+## Calculation of the skewness (Eric Dal Moro - added 31 July 2018)
+## 
+
+Asymetrie<- function(x) {
+  
+  if(! ("MackChainLadder" %in% class(x))){
+    stop("x is not a MackChainLadder output")
+  }
+  
+  
+  Triangle <- x$Triangle
+  FullTriangle <- x$FullTriangle
+  
+  n <- dim(Triangle)[2]
+  
+  Skewnes <- c(n-1)
+  Skewnesi <- c(n)
+  Sk3ki <- c(n)
+  Inter <- c(n-1)
+  OverSkew <- c(1)
+  Variance <- c(n-1)
+  Correlation <- matrix(nrow=n-2,ncol=n-2) 
+  
+  MackModel <- x$Models
+  Sigma2<-x$sigma^2
+  
+  f <- x$f
+  f.se <- x$f.se
+  sigma <- x$sigma
+  
+  
+  CLRatio <- function(i, Triangle, f){
+    y=Triangle[,i+1]/Triangle[,i] - f[i]
+  } 
+  
+  myModel <- sapply(c(1:(n-1)), CLRatio, Triangle, f)
+  
+  Interm1<-function(i, yData){
+    Interm1 <- sum(yData[c(1:(n-i)),i]^1.5)
+  }
+  
+  Interm2<-function(i, yData){
+    Interm2 <- sum(yData[c(1:(n-i)),i])
+  }
+  
+  #Calculation of Sk3k
+  
+  Skew<- function(i, yModel, yData, Interme1, Interme2){
+    #    yModel <- yModel[!is.na(yModel)]
+    y=1/(n-i-Interme1[i]^2/Interme2[i]^3)*sum(yData[c(1:(n-i)),i]^1.5*(yModel[c(1:(n-i)),i]^3))
+  } 
+  
+  Interme1 <- sapply(c(1:(n-1)), Interm1, Triangle)
+  Interme2 <- sapply(c(1:(n-1)), Interm2, Triangle)
+  Interme2<- as.numeric(Interme2)
+  Sk3k <- sapply(c(1:(n-1)), Skew, myModel, Triangle, Interme1, Interme2)
+  
+  for (k in c(1:(n-1)))
+  {
+    if ((is.infinite(Sk3k[k])) | (is.nan(Sk3k[k])))
+    {Sk3k[k]=0}
+  }
+  
+  
+  # Calculation of Skewness per accident year
+  
+  for (k in c(1:(n-1))) {
+    Variance[k] <- Triangle[n+1-k,k]^2*Sigma2[k]*(1/Interme2[k]+1/Triangle[n+1-k,k])
+    
+    if (k<n-1) { Skewnes[k] <- Triangle[n+1-k,k]^1.5*Sk3k[k]+Triangle[n+1-k,k]^3*Sk3k[k]*Interme1[k]/Interme2[k]^3 }
+    
+    for (j in c((k+1):(n-1))) {
+      intermediaire <- 0
+      intermediaire1 <- 0
+      for (v in c(1:(n-j))) {
+        intermediaire <- intermediaire + FullTriangle[v,j]
+      }
+      
+      for (v in c(1:(n-j))) {
+        intermediaire1 <- intermediaire1 + FullTriangle[v,j]^1.5
+      }
+      
+      if (k<n-1) {
+        Skewnes[k] <- Skewnes[k]*f[j]^3+FullTriangle[n+1-k,j]^1.5*Sk3k[j]*(1+Variance[k]/FullTriangle[n+1-k,j]^2)^(3/8)+3*Sigma2[j]*f[j]*Variance[k]+FullTriangle[n+1-k,j]^3*intermediaire1/intermediaire^3*Sk3k[j]
+      }
+      if (k<n-1) {
+        Variance[k] <- Variance[k]*f[j]^2+FullTriangle[n+1-k,j]^2*Sigma2[j]*(1/intermediaire+1/FullTriangle[n+1-k,j])
+      }
+      
+    }
+  }
+  
+  #Calculation of Mack correlation between accident years
+  for (k in c(1:(n-1))) {
+    Inter[n-k]<-Sigma2[k]/f[k]^2/Interme2[k]
+  }
+  
+  for (k in c(2:(n-2))) {
+    Inter[k]<-Inter[k-1]+Inter[k]
+  }
+  
+  for (k in c(1:(n-2))) {
+    for (l in c((k+1):(n-1))) {
+      Correlation[k,l-1]<-Inter[k]*FullTriangle[k+1,n]*FullTriangle[l+1,n]/Variance[n-k]^0.5/Variance[n-l]^0.5
+    }
+  }
+  
+  #Calculation of overall Skewness across all accident years
+  OverSkew<-sum(Skewnes)
+  
+  for (o in c(1:(n-2))) {
+    for (p in c((o+1):(n-1))) {
+      OverSkew=OverSkew + 3*Correlation[o,p-1]*(Variance[n-o]*Variance[n-p])^0.5*(Variance[n-o]/FullTriangle[o+1,n]+Variance[n-p]/FullTriangle[p+1,n])*(2+Correlation[o,p-1]*(Variance[n-o]*Variance[n-p])^0.5/(FullTriangle[p+1,n]*FullTriangle[o+1,n]))
+      OverSkew=OverSkew + 3*Correlation[o,p-1]^2*(Variance[n-o]*Variance[n-p])*(FullTriangle[o+1,n]+FullTriangle[p+1,n])/(FullTriangle[o+1,n]*FullTriangle[p+1,n])
+    }
+  }
+  
+  for (o in c(1:(n-3))) {
+    for (p in c((o+1):(n-2))) {
+      for (q in c((p+1):((n-1)))) {
+        OverSkew=OverSkew + 6*Correlation[o,p-1]*Correlation[p,q-1]*Correlation[o,q-1]*(Variance[n-o]*Variance[n-p]*Variance[n-q])^0.5*((Variance[n-o]*Variance[n-p]*Variance[n-q])^0.5/(FullTriangle[o+1,n]*FullTriangle[p+1,n]*FullTriangle[q+1,n])+Variance[n-o]^0.5/(Correlation[p,q-1]*FullTriangle[o+1,n])+Variance[n-p]^0.5/(Correlation[o,q-1]*FullTriangle[p+1,n])+Variance[n-q]^0.5/(Correlation[o,p-1]*FullTriangle[q+1,n]))
+      }
+    }
+  }
+  
+  Skewnesi[1]<-0
+  Skewnesi[2]<-0
+  Sk3ki[1]<-0
+  Sk3ki[2]<-0
+  
+  for (k in c(3:n)) {
+    
+    Skewnesi[k]<-0
+    
+    if (Variance[n-k+1]>0) {
+      Skewnesi[k]<-Skewnes[n-k+1]/Variance[n-k+1]^1.5
+    }
+    
+    Sk3ki[k]<-Sk3k[n-k+1]
+  }  
+  
+  output <- list()
+  output[["Skewnes"]]<-Skewnesi
+  output[["Correlation"]]<-Correlation
+  output[["OverSkew"]]<-OverSkew
+  output[["Sk3k"]]<-Sk3ki
+  
+  return(output)
+}
+
+## End addition Eric Dal Moro 31 July 2018

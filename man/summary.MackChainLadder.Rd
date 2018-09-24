@@ -1,11 +1,12 @@
 \name{summary.MackChainLadder}
 \alias{summary.MackChainLadder}
 \alias{print.MackChainLadder}
+\alias{quantile.MackChainLadder}
 
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{ Summary and print function for Mack-chain-ladder }
 \description{
-  \code{summary} and \code{print} methods for a \code{MackChainLadder}
+  \code{summary}, \code{print} and \code{quantile} methods for a \code{MackChainLadder}
   object
 }
 \usage{
@@ -14,11 +15,25 @@
 
 \method{print}{MackChainLadder}(x, \dots)
 
+\method{quantile}{MackChainLadder}(x, probs=c(0.75, 0.95), na.rm = FALSE,
+              names = TRUE, type = 7,\dots)
+
+
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{x, object}{object of class \code{"MackChainLadder"}}
-  \item{\dots}{ optional arguments to \code{print} or \code{summary} methods }
+   \item{type}{an integer between 1 and 9 selecting one of the nine quantile
+    algorithms detailed below to be used, see \code{\link{quantile}}}         
+  \item{\dots}{ optional arguments to \code{print}, \code{summary} or \code{quantile} methods }
+    \item{probs}{numeric vector of probabilities with values in [0,1],
+    see \code{\link{quantile}} for more help}
+  \item{na.rm}{logical; if true, any \code{NA} and \code{NaN}'s are
+    removed from 'x' before the quantiles are computed,
+    see \code{\link{quantile}} for more help}
+  \item{names}{logical; if true, the result has a \code{names}
+    attribute. Set to \code{FALSE} for speedup with many 'probs',
+    see \code{\link{quantile}} for more help}
 }
 \details{
   \code{print.MackChainLadder} calls \code{summary.MackChainLadder} and
@@ -43,6 +58,7 @@
  R
  summary(R)
  summary(R)$ByOrigin$Ultimate
+ quantile(R, probs=c(0.5, 0.75, 0.9))
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.
