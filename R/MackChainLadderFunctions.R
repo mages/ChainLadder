@@ -816,7 +816,6 @@ quantile.MackChainLadder <- function(x, probs=c(0.75, 0.95), na.rm = FALSE,
   ## Cornish-Fisher
   quantile <- qnorm(probs)
   
-  print(Skewn$Skewnes)
   ## Cornish-Fisher: by origin period
   #CF <- quantile + 1/6 * (quantile^2 - 1) * Skewn$Skewnes
   
