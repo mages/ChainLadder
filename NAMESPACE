@@ -103,3 +103,5 @@ S3method(print, tweedieReserve)
 S3method(summary, tweedieReserve)
 
 export(PaidIncurredChain)
+
+export(QuantileIFRS17)
