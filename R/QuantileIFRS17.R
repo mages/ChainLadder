@@ -51,8 +51,8 @@ QuantileIFRS17 <- function(
   asm <- lapply(MCL, Asymetrie)
   Skew <- sapply(asm, "[[", "OverSkew")
   Stdev <- sapply(MCL, '[[', 'Total.Mack.S.E')
-  Reserve <- sapply(lapply(lapply(MCL, 'summary'), 
-                           '[[', 'Totals'), t)[4,]
+  Reserve <- sum(sapply(lapply(lapply(MCL, 'summary'), 
+                           '[[', 'Totals'), t)[4,])
   
   Gamma <- Skew/Stdev^3
   Phi <- acos(-Gamma/sqrt(8))
@@ -75,7 +75,7 @@ QuantileIFRS17 <- function(
   for (i in c(1:nbTriangle))  {
     for (j in c(1:nbTriangle))  {
       for (l in c(1:nbTriangle)) {
-        if ((i != j)& (i !=l) & (j !=l)) {
+        if ((i != j) & (i !=l) & (j !=l)) {
           Skewness <- Skewness + Stdev[i]*Stdev[j]*Stdev[l]*(2*(ai[j]*ai[l]*bi[i]*Mycorrel[i,j]*Mycorrel[i,l]+ai[j]*ai[i]*bi[l]*Mycorrel[j,l]*Mycorrel[i,l]+ai[i]*ai[l]*bi[j]*Mycorrel[i,j]*Mycorrel[j,l])+8*bi[i]*bi[j]*bi[l]*Mycorrel[i,j]*Mycorrel[i,l]*Mycorrel[j,l])
         }
       }
@@ -88,9 +88,9 @@ QuantileIFRS17 <- function(
   
   output <-list(
     QuantileIFRS_17 = pnorm(Za),
-    CoV = Variance^0.5/sum(Reserve),
+    CoV = Variance^0.5/Reserve,
     Skewness = GammaX,
-    Reserve = sum(Reserve))
+    Reserve = Reserve)
   
   output <- sapply(output, as.numeric)
   
