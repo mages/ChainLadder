@@ -92,7 +92,7 @@ QuantileIFRS17 <- function(
     Skewness = GammaX,
     Reserve = sum(Reserve))
   
-  output <- sapply(x, as.numeric)
+  output <- sapply(output, as.numeric)
   
   return(output)
 }

@@ -23,14 +23,14 @@ QuantileIFRS17(MCL, Correlation, RiskMargin)
 }
 }
 \details{
-%%  ~~ If necessary, more details than the description above ~~
+Eric, Yuriy PLEASE ADD MORE DETAILS HERE
 }
 \value{
 QuantileIFRS17 returns a vector with the following elements
 \item{QuantileIFRS_17}{Quantile attained on the reserve risk distribution with the booked Risk Adjustment}
-\item{Skewness}{Skewness of the overall aggregated risk distribution across all triangles input}
-\item{CoV}{Coefficient of Variation of the overall aggregated risk distribution across all triangles input}
-\item{Res}{Best Estimate reserve using a chain-ladder model applied on all input triangles}
+\item{Skewness}{Skewness of the overall aggregated risk distribution across all triangles}
+\item{CoV}{Coefficient of Variation of the overall aggregated risk distribution across all triangles}
+\item{Reserve}{Sum of reserves of the input MackChainLadder objects}
 %\item{Totals}{A summary of the above elements: Quantile attained on the reserve risk distribution with the booked Risk Adjustment, Skewness, Coefficient of Variation and Total Reserves}
 }
 \references{
@@ -46,7 +46,7 @@ QuantileIFRS17 returns a vector with the following elements
 Eric Dal Moro
 }
 \note{
-%%  ~~further notes~~
+IS THERE ANYTHING WE SHOULD TELL USERS?
 }
 
 %% ~Make other sections like Warning with \section{Warning }{....} ~
