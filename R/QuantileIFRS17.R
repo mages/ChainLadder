@@ -3,10 +3,7 @@
 ## Copyright: Eric Dal Moro / Yuriy Krvavych
 ## Added 1 August 2018
 
-QuantileIFRS17 <- function(
-  MCL,
-  Correlation,
-  RiskMargin)
+QuantileIFRS17 <- function(MCL, Correlation, RiskMargin)
 {
  # Check that all inputs MCL are MackChainLadder outputs 
   if(!all(sapply(MCL, function(x) {
@@ -28,11 +25,6 @@ QuantileIFRS17 <- function(
   # Check correlation matrix is of the correct dimension
   if(! (dim(Correlation)[1] == length(MCL) & dim(Correlation)[2] == length(MCL)))
     stop("The number of rows and columns of the correlation matrix should be the same as the number of MackChainLadder object provided.")
-  
-  MyData <- do.call("rbind", lapply(MCL, function(x) x$Triangle))
-  Mycorrel <- Correlation
-  
-  RM <- RiskMargin
   
   # Dimensions of triangles
   ncol <- dim(MCL[[1]]$Triangle)[2]
@@ -65,8 +57,8 @@ QuantileIFRS17 <- function(
   for (j in c(1:nbTriangle))  {
     for (k in c(1:nbTriangle))  {
       if (j != k) {
-        Variance <- Variance+Stdev[j]*Stdev[k]*Mycorrel[j,k]*(ai[j]*ai[k]+2*bi[j]*bi[k]*Mycorrel[j,k])
-        Skewness <- Skewness+3*Stdev[j]^2*Stdev[k]*2*Mycorrel[j,k]*(2*ai[j]*ai[k]*bi[j]+(ai[j]^2+4*bi[j]^2)*bi[k]*Mycorrel[j,k])
+        Variance <- Variance+Stdev[j]*Stdev[k]*Correlation[j,k]*(ai[j]*ai[k]+2*bi[j]*bi[k]*Correlation[j,k])
+        Skewness <- Skewness+3*Stdev[j]^2*Stdev[k]*2*Correlation[j,k]*(2*ai[j]*ai[k]*bi[j]+(ai[j]^2+4*bi[j]^2)*bi[k]*Correlation[j,k])
       }
     }
   }
@@ -76,14 +68,14 @@ QuantileIFRS17 <- function(
     for (j in c(1:nbTriangle))  {
       for (l in c(1:nbTriangle)) {
         if ((i != j) & (i !=l) & (j !=l)) {
-          Skewness <- Skewness + Stdev[i]*Stdev[j]*Stdev[l]*(2*(ai[j]*ai[l]*bi[i]*Mycorrel[i,j]*Mycorrel[i,l]+ai[j]*ai[i]*bi[l]*Mycorrel[j,l]*Mycorrel[i,l]+ai[i]*ai[l]*bi[j]*Mycorrel[i,j]*Mycorrel[j,l])+8*bi[i]*bi[j]*bi[l]*Mycorrel[i,j]*Mycorrel[i,l]*Mycorrel[j,l])
+          Skewness <- Skewness + Stdev[i]*Stdev[j]*Stdev[l]*(2*(ai[j]*ai[l]*bi[i]*Correlation[i,j]*Correlation[i,l]+ai[j]*ai[i]*bi[l]*Correlation[j,l]*Correlation[i,l]+ai[i]*ai[l]*bi[j]*Correlation[i,j]*Correlation[j,l])+8*bi[i]*bi[j]*bi[l]*Correlation[i,j]*Correlation[i,l]*Correlation[j,l])
         }
       }
     }  
   }
   
   GammaX <- Skewness/Variance^1.5
-  q <- RM/Variance^0.5
+  q <- RiskMargin/Variance^0.5
   Za <- -3/GammaX+sqrt(9/GammaX^2+6*q/GammaX+1)
   
   output <-list(
