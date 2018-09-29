@@ -1,9 +1,9 @@
 \name{MackChainLadder}
 \alias{MackChainLadder}
 \encoding{UTF-8}
-\title{ Mack-Chain-Ladder Model }
+\title{ Mack Chain-Ladder Model }
 \description{
-  The Mack-chain-ladder model forecasts future claims developments
+  The Mack chain-ladder model forecasts future claims developments
   based on a historical cumulative claims development triangle and estimates
   the standard error around those.
 }
@@ -44,7 +44,7 @@ tail=FALSE, tail.se=NULL, tail.sigma=NULL, mse.method="Mack")
   \item{tail}{can be logical or a numeric value.
     If \code{tail=FALSE} no tail factor will be applied, if \code{tail=TRUE} 
     a tail factor will be estimated via a linear extrapolation of
-    \eqn{log(chain ladder factors - 1)}, if \code{tail} is a numeric
+    \eqn{log(chain-ladder factors - 1)}, if \code{tail} is a numeric
     value than this value will be used instead.}
   \item{tail.se}{defines how the standard error of the tail factor is estimated. Only needed if
     a tail factor > 1 is provided. Default is \code{NULL}. If
@@ -88,10 +88,10 @@ tail=FALSE, tail.se=NULL, tail.sigma=NULL, mse.method="Mack")
     C_j1, ... ,C_jn\}, are independent for origin period i != j 
   }
   with \eqn{w_{ik} \in [0;1]}{w_{ik} in [0;1]}, \eqn{\alpha \in \{0,1,2\}}{alpha in \{0,1,2\}}.   
-  If these assumptions are hold, the Mack-chain-ladder-model gives an
+  If these assumptions are hold, the Mack chain-ladder-  gives an
   unbiased estimator for IBNR (Incurred But Not Reported) claims.
   
-  The Mack-chain-ladder model can be regarded as a weighted linear regression
+  The Mack chain-ladder model can be regarded as a weighted linear regression
   through the origin for each development period:
   \code{lm(y ~ x  + 0, weights=w/x^(2-alpha))}, 
   where \code{y} is the vector of claims at development period
@@ -117,8 +117,8 @@ tail=FALSE, tail.se=NULL, tail.sigma=NULL, mse.method="Mack")
     losses explained by the variability of the link-ratio estimators
     alone (explained variation)}
   \item{Mack.S.E}{total variability in the projection of future losses
-    by the chain ladder method; the square root of the mean square error
-    of the chain ladder estimate: \eqn{\mbox{Mack.S.E.}^2 = \mbox{Mack.ProcessRisk}^2 +
+    by the chain-ladder method; the square root of the mean square error
+    of the chain-ladder estimate: \eqn{\mbox{Mack.S.E.}^2 = \mbox{Mack.ProcessRisk}^2 +
     \mbox{Mack.ParameterRisk}^2}{Mack.S.E.^2 = Mack.ProcessRisk^2 +
   Mack.ParameterRisk^2}}
   \item{Total.Mack.S.E}{total variability of projected loss for all

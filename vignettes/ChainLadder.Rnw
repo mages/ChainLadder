@@ -18,7 +18,7 @@
 %\VignetteIndexEntry{ChainLadder: Claims reserving with R}
 %!\VignetteEncoding{UTF-8}
 %\VignetteDepends{ChainLadder}
-%\VignetteKeywords{Claims, reserving, IBNR, chain ladder, stochastic reserving, statistical software}
+%\VignetteKeywords{Claims, reserving, IBNR, chain-ladder, stochastic reserving, statistical software}
 %\VignettePackage{ChainLadder}
 
 \SweaveOpts{engine=R, eps=FALSE, keep.source = TRUE}
@@ -189,7 +189,7 @@ more detail in the respective help files and examples, see also
 % Boot\-strap chain-ladder methods~\cite{Mack1993}, \cite{Mack1999},
 % \cite{Quarg2004}, \cite{EnglandVerrall1999}.
 % Since version 0.1.3-3 it provides general multivariate
-% chain ladder models by Wayne Zhang~\cite{Zhang2010a}.
+% chain-ladder models by Wayne Zhang~\cite{Zhang2010a}.
 % Version 0.1.4-0 introduced new functions on loss development factor
 % (LDF) fitting methods and Cape Cod by Daniel Murphy following a paper
 % by David Clark~\cite{Clark2003}.  Version 0.1.5-0 has added loss
@@ -641,10 +641,10 @@ chain-ladder-model assumes:
     \neq j
 \end{align}
 with $w_{ik} \in [0;1], \alpha \in \{0,1,2\}$.  If these
-assumptions hold, the Mack-chain-ladder-model gives an
+assumptions hold, the Mack chain-ladder-model gives an
 unbiased estimator for IBNR (Incurred But Not Reported) claims.
 
-The Mack-chain-ladder model can be regarded as a weighted linear regression
+The Mack chain-ladder model can be regarded as a weighted linear regression
 through the origin for each development period:
 \verb|lm(y ~ x  + 0, weights=w/x^(2-alpha))|,
 where \texttt{y} is the vector of claims at development period
@@ -754,7 +754,7 @@ curve(plnorm(x,fit$estimate["meanlog"], fit$estimate["sdlog"]),
 
 \subsection{Multivariate chain-ladder}
 
-The Mack chain ladder technique can be generalized to the multivariate
+The Mack chain-ladder technique can be generalized to the multivariate
 setting where multiple reserving triangles are modelled and developed
 simultaneously. The advantage of the multivariate modelling is that
 correlations among different triangles can be modelled, which will lead
@@ -794,7 +794,7 @@ positive value that controls how the variance depends on the mean (as
 weights). This model is referred to as the general multivariate chain
 ladder [GMCL] in \cite{Zhang2010a}. A important special case where
 $A_k=0$ and $B_k$'s are diagonal is a naive generalization of the
-chain ladder, often referred to as the multivariate chain ladder [MCL]
+chain-ladder, often referred to as the multivariate chain-ladder [MCL]
 \cite{Prohl;Schmidt:2005}.
 
 In the following, we first introduce the class \texttt{"triangles"},
@@ -829,7 +829,7 @@ The following combines two columns of the triangles to form a new matrix:
 cbind2(liab2[1:3, 12])
 @
 
-\subsection{Separate chain ladder ignoring correlations}
+\subsection{Separate chain-ladder ignoring correlations}
 
 The form of regression models used in estimating the development
 parameters is controlled by the \texttt{fit.method} argument. If we
@@ -837,7 +837,7 @@ specify \texttt{fit.method = "OLS"}, the ordinary least squares will
 be used and the estimation of development factors for each triangle is
 independent of the others. In this case, the residual covariance
 matrix $\Sigma_k$ is diagonal. As a result, the multivariate model is
-equivalent to running multiple Mack chain ladders separately.
+equivalent to running multiple Mack chain-ladders separately.
 
 <<>>=
 fit1 <- MultiChainLadder(liab, fit.method = "OLS")
@@ -875,7 +875,7 @@ even though only one triangle is used.
     mse.method = "Independence"))
 @
 
-\subsection{Multivariate chain ladder using seemingly unrelated regressions}
+\subsection{Multivariate chain-ladder using seemingly unrelated regressions}
 
 To allow correlations to be incorporated, we employ the seemingly
 unrelated regressions (see the package \texttt{systemfit}) that
@@ -955,7 +955,7 @@ such an approach, the package offers the \texttt{MultiChainLadder2}
 function, which implements a split-and-join procedure: we split the
 input data into two parts, specify a multivariate model with rich
 structures on the first part (with enough data) to reflect the
-multivariate dependencies, apply separate univariate chain ladders on
+multivariate dependencies, apply separate univariate chain-ladders on
 the second part, and then join the two models together to produce the
 final predictions. The splitting is determined by the \texttt{"last"}
 argument, which specifies how many of the development periods in the
@@ -963,16 +963,16 @@ tail go into the second part of the split. The type of the model
 structure to be specified for the first part of the split model in
 \texttt{MultiChainLadder2} is controlled by the \texttt{type}
 argument. It takes one of the following values: \texttt{"MCL"}- the
-multivariate chain ladder with diagonal development matrix;
-\texttt{"MCL+int"}- the multivariate chain ladder with additional
-intercepts; \texttt{"GMCL-int"}- the general multivariate chain ladder
+multivariate chain-ladder with diagonal development matrix;
+\texttt{"MCL+int"}- the multivariate chain-ladder with additional
+intercepts; \texttt{"GMCL-int"}- the general multivariate chain-ladder
 without intercepts; and \texttt{"GMCL"} - the full general
-multivariate chain ladder with intercepts and non-diagonal development
+multivariate chain-ladder with intercepts and non-diagonal development
 matrix.
 
 For example, the following fits the SUR method to the first part (the
 first 11 columns) using the unbiased residual covariance estimator in
-\cite{Merz;Wuthrich:2008}, and separate chain ladders for the rest:
+\cite{Merz;Wuthrich:2008}, and separate chain-ladders for the rest:
 <<>>=
 require(systemfit)
 W1 <- MultiChainLadder2(liab, mse.method = "Independence",
@@ -1017,13 +1017,13 @@ correlated. So we run a MCL model on them:
 <<>>=
 f0 <- MultiChainLadder2(auto, type = "MCL")
 # show correlation- the last three columns have zero correlation
-# because separate chain ladders are used
+# because separate chain-ladders are used
 print(do.call(cbind, residCor(f0)), digits = 3)
 @
 However, from the residual plot, the first row in Figure
 \ref{fig:multi_resid}, it is evident that the default mean structure
 in the MCL model is not adequate. Usually this is a common problem
-with the chain ladder based models, owing to the missing of
+with the chain-ladder based models, owing to the missing of
 intercepts.
 
 We can improve the above model by including intercepts in the SUR fit as follows:
@@ -1076,14 +1076,14 @@ developing the incurred triangle, and vice versa.
 
 We illustrate this ignoring the commercial auto triangle. See the demo
 for a model that uses all three triangles. We also include the MCL
-model and the Munich chain ladder as a comparison:
+model and the Munich chain-ladder as a comparison:
 <<>>=
 da <- auto[1:2]
 # MCL with diagonal development
 M0 <- MultiChainLadder(da)
 # non-diagonal development matrix with no intercepts
 M1 <- MultiChainLadder2(da, type = "GMCL-int")
-# Munich Chain Ladder
+# Munich chain-ladder
 M2 <- MunichChainLadder(da[[1]], da[[2]])
 # compile results and compare projected paid to incured ratios
 r1 <- lapply(list(M0, M1), function(x){
@@ -1218,7 +1218,7 @@ linear models [GLM] for insurance loss reserving. The use of GLM in
 insurance loss reserving has many compelling aspects, e.g.,
 \begin{itemize}
 \item when over-dispersed Poisson model is used, it reproduces the
-  estimates from Chain Ladder;
+  estimates from chain-ladder;
 \item it provides a more coherent modelling framework than the Mack
   method;
 \item all the relevant established statistical theory can be directly
@@ -1609,7 +1609,7 @@ items to be added to the list.
   form of the consumption path, and a structural break in this
   path~\cite{LawsSchmid2011}.
   
-\item \textbf{\texttt{DCL}}:  Claims Reserving under the Double Chain Ladder Model. Statistical modelling and forecasting in claims reserving in non-life insurance under the Double Chain Ladder framework by~\cite{miranda_nielsen_verrall_2012}.
+\item \textbf{\texttt{DCL}}:  Claims Reserving under the Double Chain-Ladder Model. Statistical modelling and forecasting in claims reserving in non-life insurance under the Double Chain-Ladder framework by~\cite{miranda_nielsen_verrall_2012}.
 
 \item \textbf{\texttt{favir}}: Formatted Actuarial Vignettes in R. FAViR lowers the learning
   curve of the R environment. It is a series of peer-reviewed Sweave
