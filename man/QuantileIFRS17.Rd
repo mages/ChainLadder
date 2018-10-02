@@ -47,7 +47,6 @@ QuantileIFRS17 returns a vector with the following elements
   }
 }
 \author{Eric Dal Moro \email{EDalMoro@scor.com}}
-}
 \note{
 The use of Fleishman polynomials and Cornish-Fisher expansion imply that the different risks involved in the triangles inputs should be "close to normality". If the risks involved in the input triangles are far from normal distributions (e.g. extreme events, nat cats ...), the proposed framework will not apply and the quantile derived from the function will not be relevant.   
 }
