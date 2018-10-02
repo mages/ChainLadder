@@ -817,7 +817,6 @@ quantile.MackChainLadder <- function(x, probs=c(0.75, 0.95), na.rm = FALSE,
   quantile <- qnorm(probs)
   
   ## Cornish-Fisher: by origin period
-  #CF <- quantile + 1/6 * (quantile^2 - 1) * Skewn$Skewnes
   
   CF <- (apply(t(quantile), 2, function(q) 
     q + 1/6 * (q^2 - 1) * Skewn$Skewnes))
@@ -826,14 +825,11 @@ quantile.MackChainLadder <- function(x, probs=c(0.75, 0.95), na.rm = FALSE,
   ## Cornish-Fisher: totals across origin periods
   CF <- quantile + 1/6*(quantile^2-1) * Skewn$OverSkew/x[["Total.Mack.S.E"]]^3
   TotQuantile <- (1 + CF*x[["Total.Mack.S.E"]]/sum(IBNR))*sum(IBNR)
+  TotSkew <- Skewn$OverSkew/x[["Total.Mack.S.E"]]^3
   
-  
-  if(length(probs)>1){
-    ByOrigin <- as.data.frame(QuantilePY)
-  }else{
-    ByOrigin <- as.data.frame(t(QuantilePY))
-  }
-  names(ByOrigin) <- paste("IBNR ", probs*100, "%", sep="")
+  ByOrigin <- data.frame(Skewness=Skewn$Skewnes, 
+                         (QuantilePY))
+  names(ByOrigin) <- c("Skewness", paste("IBNR ", probs*100, "%", sep=""))
   
   origin <- dimnames(x$Triangle)[[1]]
   
@@ -841,10 +837,10 @@ quantile.MackChainLadder <- function(x, probs=c(0.75, 0.95), na.rm = FALSE,
     rownames(ByOrigin) <- origin
   }
   
-  Totals <- as.data.frame(TotQuantile)
+  Totals <- as.data.frame(c(TotSkew, TotQuantile))
   
   colnames(Totals)=c("Totals")
-  rownames(Totals) <- paste("IBNR ", probs*100, "%:", sep="")
+  rownames(Totals) <- c("Skewness", paste("IBNR ", probs*100, "%:", sep=""))
   
   output <- list(ByOrigin=ByOrigin, Totals=Totals)
   return(output)
@@ -881,7 +877,7 @@ Asymetrie<- function(x) {
   f.se <- x$f.se
   sigma <- x$sigma
   
-  
+  ## Calculation of the difference between individual chain-ladder coefficients and the chain-ladder coef 
   CLRatio <- function(i, Triangle, f){
     y=Triangle[,i+1]/Triangle[,i] - f[i]
   } 
@@ -943,7 +939,7 @@ Asymetrie<- function(x) {
     }
   }
   
-  #Calculation of Mack correlation between accident years
+  #Calculation of Mack correlation between accident years (Mack article 1993)
   for (k in c(1:(n-1))) {
     Inter[n-k]<-Sigma2[k]/f[k]^2/Interme2[k]
   }

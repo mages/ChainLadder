@@ -22,15 +22,20 @@
   \item{\dots}{not used}
 }
 \details{
-Reserves at the desired quantile using the Cornish-Fisher expansion.
+Reserves at the desired quantile using the Cornish-Fisher expansion. 
+
+The Cornish-Fisher expansion relies on the first three moments of the reserve risk distribution: The Best estimate resulting from the Chain-Ladder projection, the Mack standard deviation and the skewness of the distribution (for skewness estimation, see references below).
+
+The quantile estimation requires only that the standard Mack assumptions are met.
+
 For details of the underlying calculations, see references below.
 }
 \value{
 \code{quantile.MackChainLadder} gives a list with two elements back:
-  \item{ByOrigin}{data frame with summary/mean/quantile statistics by
+  \item{ByOrigin}{data frame with skewness and quantile statistics by
     origin period}
-  \item{Totals}{data frame with total summary/mean/quantile statistics
-    for all origin period}
+  \item{Totals}{data frame with total skewness and quantile statistics
+    across all origin periods}
 }
 
 \references{
@@ -41,12 +46,11 @@ For details of the underlying calculations, see references below.
  \cite{Dal Moro, Eric, A Closed-Form Formula for the Skewness Estimation of Non-Life Reserve Risk Distribution (September 15, 2013). Available at SSRN: https://ssrn.com/abstract=2344297 or http://dx.doi.org/10.2139/ssrn.2344297
  }
 }
-\author{Eric Dal Moro}
-\seealso{ See also \code{\link{MackChainLadder}} }
-\examples{
- R <- MackChainLadder(RAA, est.sigma = "Mack")
- quantile(R, probs=c(0.5, 0.75, 0.9))
+\author{Eric Dal Moro \email{EDalMoro@scor.com}}
+\seealso{ See also \code{\link{MackChainLadder}} 
 }
-% Add one or more standard keywords, see file 'KEYWORDS' in the
-% R documentation directory.
+\examples{
+M <- MackChainLadder(GenIns, est.sigma="Mack")
+quantile(M, c(0.65, 0.75, 0.9))
+}
 \keyword{ methods }
