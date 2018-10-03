@@ -42,7 +42,7 @@ QuantileIFRS17 returns a vector with the following elements
 
 \cite{Thomas Mack. The standard error of chain ladder reserve estimates: Recursive calculation and inclusion of a tail factor. \emph{Astin Bulletin}. Vol. 29. No 2. 1999. pp.361:366}
 
-\cite{Dal Moro, Krvavych.
+\cite{Eric Dal Moro and Yuriy Krvavych.
   Probability of sufficiency of Solvency II Reserve risk margins: Practical approximations. \emph{ASTIN Bulletin}, 47(3), 737-785
   }
 }
