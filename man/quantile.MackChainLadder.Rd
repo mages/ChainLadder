@@ -46,7 +46,7 @@ For details of the underlying calculations, see references below.
  \cite{Dal Moro, Eric, A Closed-Form Formula for the Skewness Estimation of Non-Life Reserve Risk Distribution (September 15, 2013). Available at SSRN: https://ssrn.com/abstract=2344297 or http://dx.doi.org/10.2139/ssrn.2344297
  }
 }
-\author{Eric Dal Moro \email{EDalMoro@scor.com}}
+\author{Eric Dal Moro \email{eric_dal_moro@yahoo.com}}
 \seealso{ See also \code{\link{MackChainLadder}} 
 }
 \examples{

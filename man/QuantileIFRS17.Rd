@@ -46,7 +46,7 @@ QuantileIFRS17 returns a vector with the following elements
   Probability of sufficiency of Solvency II Reserve risk margins: Practical approximations. \emph{ASTIN Bulletin}, 47(3), 737-785
   }
 }
-\author{Eric Dal Moro \email{EDalMoro@scor.com}}
+\author{Eric Dal Moro \email{eric_dal_moro@yahoo.com}}
 \note{
 The use of Fleishman polynomials and Cornish-Fisher expansion imply that the different risks involved in the triangles inputs should be "close to normality". If the risks involved in the input triangles are far from normal distributions (e.g. extreme events, nat cats ...), the proposed framework will not apply and the quantile derived from the function will not be relevant.   
 }
