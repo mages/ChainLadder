@@ -431,7 +431,7 @@ print.MackChainLadder <- function(x,...){
   Totals[1:6,] <- formatC(Totals[1:6,], big.mark=",",digits=2,format="f")
   cat("\n")
   print(Totals, quote=FALSE)
-  #invisible(x)
+  invisible(x)
   
 }
 
