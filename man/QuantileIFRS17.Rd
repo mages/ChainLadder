@@ -16,10 +16,10 @@ QuantileIFRS17(MCL, Correlation, RiskMargin)
   a list of \code{MackChainLadder} objects
 }
   \item{Correlation}{
-  Correlation matrix depicting the correlations between each triangle imported
+  Correlation matrix depicting the correlations between each triangle imported. The correlation matrix is of dimension n x n, with n the number of items in the list of MackChainLadder objects. For correlation estimations between P&C risks, please refer to the article of Arbenz et al. below.
 }
   \item{RiskMargin}{
-  Input the risk margin as a single number
+  Input the risk margin as a single number. The risk margin corresponds to the IFRS 17 risk adjustment. It is estimated outside this function and can come from e.g. Solvency 2 standard formula. See International Actuarial Association reference below for details on risk adjustment calculations.
 }
 }
 \details{
@@ -42,11 +42,22 @@ QuantileIFRS17 returns a vector with the following elements
 
 \cite{Thomas Mack. The standard error of chain ladder reserve estimates: Recursive calculation and inclusion of a tail factor. \emph{Astin Bulletin}. Vol. 29. No 2. 1999. pp.361:366}
 
-\cite{Eric Dal Moro and Yuriy Krvavych.
+\cite{Dal Moro, Krvavych.
   Probability of sufficiency of Solvency II Reserve risk margins: Practical approximations. \emph{ASTIN Bulletin}, 47(3), 737-785
   }
+  
+\cite{P. Arbenz, D. Canestraro (2012) 
+Estimating Copulas for Insurance from Scarce Observations, Expert Opinion and Prior Information: A Bayesian Approach, \emph{Astin Bulletin}, vol. 42(1), pages 271-290.
+  }
+
+\cite{International Actuarial Association (2018)
+Risk Adjustments for Insurance Contracts under IFRS 17
+   }
+
 }
-\author{Eric Dal Moro \email{eric_dal_moro@yahoo.com}}
+\author{
+Eric Dal Moro, Yuriy Krvavych
+}
 \note{
 The use of Fleishman polynomials and Cornish-Fisher expansion imply that the different risks involved in the triangles inputs should be "close to normality". If the risks involved in the input triangles are far from normal distributions (e.g. extreme events, nat cats ...), the proposed framework will not apply and the quantile derived from the function will not be relevant.   
 }
@@ -63,4 +74,4 @@ QuantileIFRS17(MCL=list(M1=MackChainLadder(RAA, est.sigma = "Mack"),
          M2=MackChainLadder(GenIns/1000, est.sigma = "Mack")), 
          Correlation=matrix(c(1,0.3, 0.3, 1), ncol=2), 
          RiskMargin = 20000)
-} 
+}
