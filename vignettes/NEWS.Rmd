@@ -18,7 +18,7 @@ knitr::opts_chunk$set(echo = TRUE)
 suppressPackageStartupMessages(library(ChainLadder))
 ```
 
-# Version 0.2.7 [2018-10-01]
+# Version 0.2.7 [2018-10-16]
 
  * New quantile method for 'MackChainLadder' andv function QuantileIFRS17  to estimate the IFRS 17 Risk Adjustment. Thanks to Eric Dal Moro and Yuriy Krvavych
 
