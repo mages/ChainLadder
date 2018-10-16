@@ -9,3 +9,8 @@ test.glmReserve.DateLabels <- function() {
   (fit6 <- glmReserve(GenIns2))
   }
 
+test.print.glmReserve <- function() {
+  # Test that print(x) returns x; see ?print
+  res <- glmReserve(GenIns / 1000)
+  checkEquals(res, print(res))
+}

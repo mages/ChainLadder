@@ -248,19 +248,17 @@ test.correct_SummaryCapeCod_comparison <- function() {
     checkTrue(all((zInf[["FutureGrowthFactor"]] > z240[["FutureGrowthFactor"]])[1:10]))
     }
 
-test.class_returned_by_print.ClarkLDF <- function() {
-    x <- ClarkLDF(RAA)
-    z <- print(x)
-    y <- sapply(z, class)
-    checkTrue(all(y == "character"))
-    }
+test.print.ClarkLDF <- function() {
+  # Test that print(x) returns x; see ?print
+  res <- ClarkLDF(RAA)
+  checkEquals(res, print(res))
+}
 
-test.class_returned_by_print.ClarkCapeCod <- function() {
-    x <- ClarkCapeCod(RAA, Premium=25000)
-    z <- print(x)
-    y <- sapply(z, class)
-    checkTrue(all(y == "character"))
-    }
+test.print.ClarkCapeCod <- function() {
+  # Test that print(x) returns x; see ?print
+  res <- ClarkCapeCod(RAA, Premium = 25000)
+  checkEquals(res, print(res))
+}
 
 test.zero_expected_value <- function() {
     # Create a new environment, store ages we know will 

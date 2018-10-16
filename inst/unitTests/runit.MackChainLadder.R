@@ -179,3 +179,9 @@ test.MackNANissue <- function(){
   checkEquals(summary(MackChainLadder(MackNANTriIssue, est.sigma="Mack"))$Totals[1,1],
               1900)
 }
+
+test.print.MackChainLadder <- function() {
+  # Test that print(x) returns x; see ?print
+  res <- MackChainLadder(RAA)
+  checkEquals(res, print(res))
+}
