@@ -162,8 +162,11 @@ plot.triangle <- function(x,type="b",
 }
 
 print.triangle <- function(x, ...) {
+  ret <- x
   class(x) <- tail(class(x), -1)
   NextMethod(x, ...)
+  
+  invisible(ret)
 }
 
 .as.MatrixTriangle <- function(x, origin="origin", dev="dev", value="value"){

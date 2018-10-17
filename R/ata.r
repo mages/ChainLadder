@@ -75,5 +75,9 @@ summary.ata <- function(object, digits=3, ...) {
         ) 
     }
 
-print.ata <- function(x, ...) print(summary(x), ...)
+print.ata <- function(x, ...) {
+  print(summary(x), ...)
+  
+  invisible(x)
+}
 

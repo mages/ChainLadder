@@ -224,6 +224,7 @@ print.MunichChainLadder <- function(x,...){
     cat("\nTotals\n")
     print(format(summary.x$Totals, big.mark = ",", digits = 2),...)
 
+    invisible(x)
 }
 
 ##############################################################################
