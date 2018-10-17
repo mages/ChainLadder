@@ -22,4 +22,5 @@ Many thanks to all who provided ideas, suggestions, corrections and bug reports:
 - Brian Fannin for fixing an issue with Triangles with Date Row.names
 - James Triveri for fiing a typo in the vignette
 - Patrick Green for fixing an issue for the  Mack method if "sigma[i - 2]^2" is zero in the Mack.S.E function.
+- Markus Senn for providing a fix to print statments to align them with the generic print methods
 

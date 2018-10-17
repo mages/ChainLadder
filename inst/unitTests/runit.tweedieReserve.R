@@ -25,3 +25,12 @@ test.tweedieReserve <- function() {
   checkEquals(rep_2$Diagnostic,diag_2,tol=0.01, checkNames = FALSE)
   
 }
+
+test.print.tweedieReserve <- function() {
+  # Test that print(x) returns x; see ?print
+  res <- tweedieReserve(MW2008, var.power = 1,link.power = 0, 
+                        design.type = c(1, 1, 0), rereserving = TRUE,
+                        progressBar = TRUE
+  )
+  checkEquals(res, print(res))
+}

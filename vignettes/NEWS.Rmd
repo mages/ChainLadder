@@ -17,6 +17,9 @@ vignette: >
 knitr::opts_chunk$set(echo = TRUE)
 suppressPackageStartupMessages(library(ChainLadder))
 ```
+# Version 0.2.8 [2018-10-17]
+
+ * Fix to print statments to align them with the generic print methods. Thanks to Markus Senn
 
 # Version 0.2.7 [2018-10-16]
 

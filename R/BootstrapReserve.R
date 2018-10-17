@@ -295,6 +295,7 @@ print.BootChainLadder <- function(x,probs=c(0.75,0.95),...){
   rownames(Totals)[4] <- "IBNR.S.E"
   print(format(Totals, big.mark=",",digits=3), quote=FALSE)
   
+  invisible(x)
 }
 
 
