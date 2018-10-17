@@ -784,6 +784,8 @@ print.ClarkLDF <- function(x, Amountdigits=0, LDFdigits=3, CVdigits=3, row.names
         names = c(names(y)[1:6], "CV%")
         )
     print(z, row.names = row.names, ...)
+    
+    invisible(x)
     }
 
 summary.ClarkCapeCod <- function(object, ...) {
@@ -818,6 +820,8 @@ print.ClarkCapeCod <- function(x, Amountdigits=0, ELRdigits=3, Gdigits=4, CVdigi
         names = c(names(y)[1:8], "CV%")
         )
     print(z, row.names = FALSE, ...)
+    
+    invisible(x)
     }
 
 plot.clark <- function(x, ...) {

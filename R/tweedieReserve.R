@@ -569,6 +569,8 @@ print.tweedieReserve <- function(x,...){
     out <- x$summary[c("Latest", "Det.IBNR", "Ultimate")]
   }
   print(out)  
+  
+  invisible(x)
 }
 
 summary.tweedieReserve <- function(object,

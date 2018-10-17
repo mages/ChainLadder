@@ -428,8 +428,8 @@ print.MackChainLadder <- function(x,...){
   Totals[1:6,] <- formatC(Totals[1:6,], big.mark=",",digits=2,format="f")
   cat("\n")
   print(Totals, quote=FALSE)
-  #invisible(x)
   
+  invisible(x)
 }
 
 
@@ -714,6 +714,8 @@ print.Mack <- function(x,...){
   df$Mack.S.E=x$Mack.S.E[,n]
   df$CV=df$Mack.S.E/df$IBNR
   print(df)
+  
+  invisible(x)
 }
 
 

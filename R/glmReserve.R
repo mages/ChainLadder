@@ -231,8 +231,11 @@ summary.glmReserve <- function(object, type = c("triangle", "model"), ...){
     summary(object$model)
 }
 
-print.glmReserve <- function(x, ...)
+print.glmReserve <- function(x, ...) {
   summary(x)
+  
+  invisible(x)
+}
 
 # return pearson residuals (scaled)
 residuals.glmReserve <- function(object, ...){
