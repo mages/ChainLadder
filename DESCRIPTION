@@ -25,7 +25,7 @@ Authors@R: c(person("Markus", "Gesmann", role = c("aut", "cre"),
              person("Yuriy", "Krvavych", role="ctb", 
              email="y.krvavych@gmail.com"),
              person("Vincent", "Goulet", role="ctb",
-             email="vincent.goulet@act.ulaval.ca"))
+             email="vincent.goulet@act.ulaval.ca")
              )
 Description: Various statistical methods and models which are
     typically used for the estimation of outstanding claims reserves
