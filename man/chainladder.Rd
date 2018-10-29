@@ -19,7 +19,7 @@ chainladder(Triangle, weights = 1, delta = 1)
   \item{weights}{weights. Default: 1, which sets the weights for all
     triangle entries to 1. Otherwise specify weights as a matrix of the same
     dimension as \code{Triangle} with all weight entries in [0; 1], where entry
-    \eqn{w_{i,k}} corresponds to the point \eqn{C_{i,k+1}/C_{i,k}}. Hence, any entry set to 0 or \code{NA} eliminates that age-to-age factor from inclusion in the model. See also ‘Details’}
+    \eqn{w_{i,k}} corresponds to the point \eqn{C_{i,k+1}/C_{i,k}}. Hence, any entry set to 0 or \code{NA} eliminates that age-to-age factor from inclusion in the model. See also 'Details'}
   \item{delta}{'weighting' parameters, either 0,1 or 2. Default: 1;
     delta=1 gives the historical chain
     ladder age-to-age factors, delta=2 gives the straight average of the

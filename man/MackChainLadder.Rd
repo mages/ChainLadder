@@ -24,7 +24,7 @@ tail=FALSE, tail.se=NULL, tail.sigma=NULL, mse.method="Mack")
     triangle entries to 1. Otherwise specify weights as a matrix of the same
     dimension as \code{Triangle} with all weight entries in [0; 1].
     Hence, any entry set to 0 or \code{NA} eliminates that age-to-age factor 
-    from inclusion in the model. See also ‘Details’}
+    from inclusion in the model. See also 'Details'}
   \item{alpha}{'weighting' parameter.
     Default: 1 for all development periods; alpha=1 gives the historical chain
     ladder age-to-age factors, alpha=0 gives the straight average of the
