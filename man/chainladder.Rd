@@ -15,11 +15,11 @@ chainladder(Triangle, weights = 1, delta = 1)
     which is filled for \eqn{k \leq n+1-i; i=1,\ldots,m; m\geq n }, see
     \code{\link{qpaid}} for how to use (mxn)-development triangles with
     m<n, say higher development period frequency (e.g quarterly) than
-    origin period frequency (e.g accident years).}
-  \item{weights}{ weights. Default: 1, which sets the weights for all
+    origin period frequency (e.g annual).}
+  \item{weights}{weights. Default: 1, which sets the weights for all
     triangle entries to 1. Otherwise specify weights as a matrix of the same
     dimension as \code{Triangle} with all weight entries in [0; 1], where entry
-    \eqn{W_{i,k}} corresponds to the point \eqn{C_{i,k+1}/C_{i,k}}.}
+    \eqn{w_{i,k}} corresponds to the point \eqn{C_{i,k+1}/C_{i,k}}. Hence, any entry set to 0 or \code{NA} eliminates that age-to-age factor from inclusion in the model. See also ‘Details’}
   \item{delta}{'weighting' parameters, either 0,1 or 2. Default: 1;
     delta=1 gives the historical chain
     ladder age-to-age factors, delta=2 gives the straight average of the
@@ -32,21 +32,31 @@ chainladder(Triangle, weights = 1, delta = 1)
 
 \details{
  
-  The key idea is to see the chain ladder algorithm as a weighted linear regression
-  through the origin applied to each development period.
+  The key idea is to see the chain ladder algorithm as a special form of a
+  weighted linear regression through the origin, applied to each development 
+  period.
 
   Suppose \code{y} is the vector of cumulative claims at development period
-  \code{i+1}, and \code{x} at development period \code{i}, \code{w} are
+  \code{i+1}, and \code{x} at development period \code{i}, \code{weights} are
   weighting factors and \code{F} the individual age-to-age factors \code{F=y/x}, than
-  we get the various age-to-age factors for different deltas (alphas) as:
+  we get the various age-to-age factors:
+\itemize{
+  \item{Basic weighted linear regression through the origin:
+    \code{lm(y~x + 0, weights=weights)} 
+  }
+ \item{Volume weighted chain-ladder age-to-age factors: 
+  \code{lm(y~x + 0, weights=weights/x)}
+  }
+ \item{Simple average of age-to-age factors:
+  \code{lm(y~x + 0, weights=weights^2)}
+ } 
+}
+Barnett & Zehnwirth (2000) use delta = 0, 1, 2 to distinguish between the above 
+three different regression approaches: \code{lm(y~x + 0, weights=weights/x^delta)}.
 
-  \code{sum(w*x^alpha*F)/sum(w*x^alpha) # Mack (1999) notation}
-  
-  \code{delta <- 2-alpha}
-  
-  \code{lm(y~x + 0 ,weights=w/x^delta) # Barnett & Zehnwirth (2000) notation}
-  
- }
+Thomas Mack uses the notation \code{alpha = 2 - delta} to achieve the same result:
+\code{sum(weights*x^alpha*F)/sum(weights*x^alpha) # Mack (1999) notation}
+}
 \value{
   chainladder returns a list with the following elements:
   \item{Models}{linear regression models for each development period}
