@@ -19,7 +19,7 @@ chainladder(Triangle, weights = 1, delta = 1)
   \item{weights}{weights. Default: 1, which sets the weights for all
     triangle entries to 1. Otherwise specify weights as a matrix of the same
     dimension as \code{Triangle} with all weight entries in [0; 1], where entry
-    \eqn{w_{i,k}} corresponds to the point \eqn{C_{i,k+1}/C_{i,k}}. Hence, any entry set to 0 or \code{NA} eliminates that age-to-age factor from inclusion in the model. See also 'Details'}
+    \eqn{w_{i,k}} corresponds to the point \eqn{C_{i,k+1}/C_{i,k}}. Hence, any entry set to 0 or \code{NA} eliminates that age-to-age factor from inclusion in the model. See also 'Details'.}
   \item{delta}{'weighting' parameters, either 0,1 or 2. Default: 1;
     delta=1 gives the historical chain
     ladder age-to-age factors, delta=2 gives the straight average of the
@@ -38,17 +38,20 @@ chainladder(Triangle, weights = 1, delta = 1)
 
   Suppose \code{y} is the vector of cumulative claims at development period
   \code{i+1}, and \code{x} at development period \code{i}, \code{weights} are
-  weighting factors and \code{F} the individual age-to-age factors \code{F=y/x}, than
+  weighting factors and \code{F} the individual age-to-age factors \code{F=y/x}. Then
   we get the various age-to-age factors:
 \itemize{
+  \item{Basic (unweighted) linear regression through the origin:
+    \code{lm(y~x + 0)} 
+  }
   \item{Basic weighted linear regression through the origin:
     \code{lm(y~x + 0, weights=weights)} 
   }
  \item{Volume weighted chain-ladder age-to-age factors: 
-  \code{lm(y~x + 0, weights=weights/x)}
+  \code{lm(y~x + 0, weights=1/x)}
   }
  \item{Simple average of age-to-age factors:
-  \code{lm(y~x + 0, weights=weights^2)}
+  \code{lm(y~x + 0, weights=1/x^2)}
  } 
 }
 Barnett & Zehnwirth (2000) use delta = 0, 1, 2 to distinguish between the above 

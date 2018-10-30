@@ -90,7 +90,7 @@ tail=FALSE, tail.se=NULL, tail.sigma=NULL, mse.method="Mack")
     C_j1, ... ,C_jn\}, are independent for origin period i != j 
   }
   with \eqn{w_{ik} \in [0;1]}{w_{ik} in [0;1]}, \eqn{\alpha \in \{0,1,2\}}{alpha in \{0,1,2\}}.   
-  If these assumptions are hold, the Mack chain-ladder-  gives an
+  If these assumptions hold, the Mack chain-ladder gives an
   unbiased estimator for IBNR (Incurred But Not Reported) claims.
   
   Here \eqn{w_{ik} are the \code{weights} from above.}
