@@ -15,18 +15,23 @@ chainladder(Triangle, weights = 1, delta = 1)
     which is filled for \eqn{k \leq n+1-i; i=1,\ldots,m; m\geq n }, see
     \code{\link{qpaid}} for how to use (mxn)-development triangles with
     m<n, say higher development period frequency (e.g quarterly) than
-    origin period frequency (e.g annual).}
+    origin period frequency (e.g annual).
+    }
   \item{weights}{weights. Default: 1, which sets the weights for all
     triangle entries to 1. Otherwise specify weights as a matrix of the same
     dimension as \code{Triangle} with all weight entries in [0; 1], where entry
-    \eqn{w_{i,k}} corresponds to the point \eqn{C_{i,k+1}/C_{i,k}}. Hence, any entry set to 0 or \code{NA} eliminates that age-to-age factor from inclusion in the model. See also 'Details'.}
-  \item{delta}{'weighting' parameters, either 0,1 or 2. Default: 1;
-    delta=1 gives the historical chain
-    ladder age-to-age factors, delta=2 gives the straight average of the
+    \eqn{w_{i,k}} corresponds to the point \eqn{C_{i,k+1}/C_{i,k}}. 
+    Hence, any entry set to 0 or \code{NA} eliminates that age-to-age factor 
+    from inclusion in the model. See also 'Details'.}
+  \item{delta}{'weighting' parameters. Default: 1;
+    delta=1 gives the historical chain-ladder age-to-age factors, 
+    delta=2 gives the straight average of the
     observed individual development factors and delta=0 is the result of
     an ordinary regression of \eqn{C_{i,k+1}} against \eqn{C_{i,k}} with
-    intercept 0, see Barnett & Zehnwirth (2000);.
-    Please note that Mack (1999) used the notation of alphas, with alpha=2-delta.
+    intercept 0, see Barnett & Zehnwirth (2000).
+    
+    Please note that \code{\link{MackChainLadder}} uses the argument \code{alpha}, 
+    with \code{alpha = 2 - delta}, following the original paper Mack (1999)
   }
 }
 
@@ -90,96 +95,67 @@ Thomas Mack uses the notation \code{alpha = 2 - delta} to achieve the same resul
  \code{\link{MackChainLadder}},  
 }
 \examples{
-
 ## Concept of different chain-ladder age-to-age factors.
 ## Compare Mack's and Barnett & Zehnwirth's papers.
 x <- RAA[1:9,1]
 y <- RAA[1:9,2]
 
-weights <- RAA
-weights[!is.na(weights)] <- 1
-w <- weights[1:9,1]
-
 F <- y/x
 ## wtd. average chain-ladder age-to-age factors
-alpha <- 1
-delta <- 2-alpha
+alpha <- 1 ## Mack notation
+delta <- 2 - alpha ## Barnett & Zehnwirth notation
 
-sum(w*x^alpha*F)/sum(w*x^alpha)
-lm(y~x + 0 ,weights=w/x^delta)
-summary(chainladder(RAA, weights=weights, delta=delta)$Models[[1]])$coef
-
-## straight average age-to-age factors
-alpha <- 0
-delta <- 2 - alpha 
-sum(w*x^alpha*F)/sum(w*x^alpha)
-lm(y~x + 0 ,weights=w/x^(2-alpha))
-summary(chainladder(RAA, weights=weights, delta=delta)$Models[[1]])$coef
-
-## ordinary regression age-to-age factors
-alpha=2
-delta <- 2-alpha
-sum(w*x^alpha*F)/sum(w*x^alpha)
-lm(y~x + 0 ,weights=w/x^delta)
-summary(chainladder(RAA, weights=weights, delta=delta)$Models[[1]])$coef
-
-## Change weights
-
-weights[2,1] <- 0.5
-w <- weights[1:9,1] 
-
-## wtd. average chain-ladder age-to-age factors
-alpha <- 1
-delta <- 2-alpha
-sum(w*x^alpha*F)/sum(w*x^alpha)
-lm(y~x + 0 ,weights=w/x^delta)
-summary(chainladder(RAA, weights=weights, delta=delta)$Models[[1]])$coef
+sum(x^alpha*F)/sum(x^alpha)
+lm(y~x + 0 ,weights=1/x^delta)
+summary(chainladder(RAA, delta=delta)$Models[[1]])$coef
 
 ## straight average age-to-age factors
 alpha <- 0
 delta <- 2 - alpha 
-sum(w*x^alpha*F)/sum(w*x^alpha)
-lm(y~x + 0 ,weights=w/x^(2-alpha))
-summary(chainladder(RAA, weights=weights, delta=delta)$Models[[1]])$coef
+sum(x^alpha*F)/sum(x^alpha)
+lm(y~x + 0, weights=1/x^(2-alpha))
+summary(chainladder(RAA, delta=delta)$Models[[1]])$coef
 
 ## ordinary regression age-to-age factors
 alpha=2
 delta <- 2-alpha
-sum(w*x^alpha*F)/sum(w*x^alpha)
-lm(y~x + 0 ,weights=w/x^delta)
-summary(chainladder(RAA, weights=weights, delta=delta)$Models[[1]])$coef
+sum(x^alpha*F)/sum(x^alpha)
+lm(y~x + 0, weights=1/x^delta)
+summary(chainladder(RAA, delta=delta)$Models[[1]])$coef
 
-## Model review
-CL0 <- chainladder(RAA, weights=weights, delta=0)
+## Compare different models
+CL0 <- chainladder(RAA)
 ## age-to-age factors
 sapply(CL0$Models, function(x) summary(x)$coef["x","Estimate"])
 ## f.se
 sapply(CL0$Models, function(x) summary(x)$coef["x","Std. Error"])
 ## sigma
 sapply(CL0$Models, function(x) summary(x)$sigma)
+predict(CL0)
 
-CL1 <- chainladder(RAA, weights=weights, delta=1)
+CL1 <- chainladder(RAA, delta=1)
 ## age-to-age factors
 sapply(CL1$Models, function(x) summary(x)$coef["x","Estimate"])
 ## f.se
 sapply(CL1$Models, function(x) summary(x)$coef["x","Std. Error"])
 ## sigma
 sapply(CL1$Models, function(x) summary(x)$sigma)
+predict(CL1)
 
-CL2 <- chainladder(RAA, weights=weights, delta=2)
+CL2 <- chainladder(RAA, delta=2)
 ## age-to-age factors
 sapply(CL2$Models, function(x) summary(x)$coef["x","Estimate"])
 ## f.se
 sapply(CL2$Models, function(x) summary(x)$coef["x","Std. Error"])
 ## sigma
 sapply(CL2$Models, function(x) summary(x)$sigma)
-
-
-## Forecasting
-
-predict(CL0)
-predict(CL1)
 predict(CL2)
 
+## Set 'weights' parameter to use only the last 5 diagonals, 
+## i.e. the last 5 calendar years
+(weights <- ifelse(row(RAA) + col(RAA) <= 6 | row(RAA) + col(RAA) > 11, 0, 1))
+CL3 <- chainladder(RAA, weights=weights)
+summary(CL3$Models[[1]])$coef
+predict(CL3)
 }
 \keyword{ models }
