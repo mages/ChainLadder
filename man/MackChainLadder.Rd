@@ -25,12 +25,12 @@ tail=FALSE, tail.se=NULL, tail.sigma=NULL, mse.method="Mack")
     dimension as \code{Triangle} with all weight entries in [0; 1].
     Hence, any entry set to 0 or \code{NA} eliminates that age-to-age factor 
     from inclusion in the model. See also 'Details'}
-  \item{alpha}{'weighting' parameter.
-    Default: 1 for all development periods; alpha=1 gives the historical chain
-    ladder age-to-age factors, alpha=0 gives the straight average of the
+  \item{alpha}{'weighting' parameters.
+    Default: 1 for all development periods; alpha=1 gives the historical 
+    chain-ladder age-to-age factors, alpha=0 gives the straight average of the
     observed individual development factors and alpha=2 is the result of
     an ordinary regression of \eqn{C_{i,k+1}} against \eqn{C_{i,k}} with
-    intercept 0, see also Mack's 1999 paper and \code{chainladder}}
+    intercept 0, see also 'Details' below, \code{\link{chainladder}} and Mack's 1999 paper}
   \item{est.sigma}{defines how to estimate \eqn{sigma_{n-1}}, the
     variability of the individual age-to-age factors at development time
     \eqn{n-1}.
@@ -194,9 +194,8 @@ MackChainLadder(GenIns, alpha=0)$f
 apply(GenIns[,-1]/GenIns[,-10],2, mean, na.rm=TRUE)
 
 ## Only use the last 5 diagonals, i.e. the last 5 calendar years
-MackChainLadder(GenIns, 
-                weights=ifelse(row(GenIns) + col(GenIns) <= 5, 0, 1),
-                est.sigma = "Mack")
+(weights <- ifelse(row(RAA) + col(RAA) <= 6 | row(RAA) + col(RAA) > 11, 0, 1))
+MackChainLadder(GenIns, weights=weights, est.sigma = "Mack")
 
 ## Tail
 ## See the example in Mack's 1999 paper
