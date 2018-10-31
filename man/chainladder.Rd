@@ -3,7 +3,7 @@
 \alias{chainladder}
 \title{ Estimate age-to-age factors }
 \description{
-Basic chain ladder function to estimate age-to-age factors for a given
+Basic chain-ladder function to estimate age-to-age factors for a given
 cumulative run-off triangle. This function is used by Mack- and MunichChainLadder.
 }
 \usage{
@@ -32,7 +32,7 @@ chainladder(Triangle, weights = 1, delta = 1)
 
 \details{
  
-  The key idea is to see the chain ladder algorithm as a special form of a
+  The key idea is to see the chain-ladder algorithm as a special form of a
   weighted linear regression through the origin, applied to each development 
   period.
 
@@ -91,7 +91,7 @@ Thomas Mack uses the notation \code{alpha = 2 - delta} to achieve the same resul
 }
 \examples{
 
-## Concept of different chain ladder age-to-age factors.
+## Concept of different chain-ladder age-to-age factors.
 ## Compare Mack's and Barnett & Zehnwirth's papers.
 x <- RAA[1:9,1]
 y <- RAA[1:9,2]
@@ -101,7 +101,7 @@ weights[!is.na(weights)] <- 1
 w <- weights[1:9,1]
 
 F <- y/x
-## wtd. average chain ladder age-to-age factors
+## wtd. average chain-ladder age-to-age factors
 alpha <- 1
 delta <- 2-alpha
 
@@ -128,7 +128,7 @@ summary(chainladder(RAA, weights=weights, delta=delta)$Models[[1]])$coef
 weights[2,1] <- 0.5
 w <- weights[1:9,1] 
 
-## wtd. average chain ladder age-to-age factors
+## wtd. average chain-ladder age-to-age factors
 alpha <- 1
 delta <- 2-alpha
 sum(w*x^alpha*F)/sum(w*x^alpha)

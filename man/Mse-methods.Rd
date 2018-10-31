@@ -8,7 +8,7 @@
 
 \title{ Methods for Generic Function Mse }
 \description{
-  \code{Mse} is a generic function to calculate mean square error estimations in the chain ladder framework. 
+  \code{Mse} is a generic function to calculate mean square error estimations in the chain-ladder framework. 
 }
 
 \usage{
