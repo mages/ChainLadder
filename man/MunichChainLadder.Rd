@@ -54,10 +54,10 @@ MunichChainLadder(Paid, Incurred,
   \item{IncurredResiduals}{incurred residuals}
   \item{QResiduals}{paid/incurred residuals}
   \item{QinverseResiduals}{incurred/paid residuals}
-  \item{lambdaP}{dependency coefficient between paid chain ladder
+  \item{lambdaP}{dependency coefficient between paid chain-ladder
     age-to-age factors and
     incurred/paid age-to-age factors}
-  \item{lambdaI}{dependency coefficient between incurred chain ladder
+  \item{lambdaI}{dependency coefficient between incurred chain-ladder
     ratios and paid/incurred ratios}
   \item{qinverse.f}{chain-ladder-link age-to-age factors of the incurred/paid triangle}
   \item{rhoP.sigma}{estimated conditional deviation around the
@@ -93,7 +93,7 @@ par(op)
 MCL <- MunichChainLadder(MCLpaid, MCLincurred, est.sigmaP=0.1, est.sigmaI=0.1)
 MCL
 plot(MCL)
-# You can access the standard chain ladder (Mack) output via
+# You can access the standard chain-ladder (Mack) output via
 MCL$MackPaid
 MCL$MackIncurred
 
@@ -101,7 +101,7 @@ MCL$MackIncurred
 MCL$Paid
 MCL$Incurred
 # Parameters from section 3.3.2
-# Standard chain ladder age-to-age factors
+# Standard chain-ladder age-to-age factors
 MCL$MackPaid$f
 MCL$MackIncurred$f
 MCL$MackPaid$sigma

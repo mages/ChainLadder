@@ -22,13 +22,15 @@ tail=FALSE, tail.se=NULL, tail.sigma=NULL, mse.method="Mack")
     origin period frequency (e.g accident years).}
   \item{weights}{ weights. Default: 1, which sets the weights for all
     triangle entries to 1. Otherwise specify weights as a matrix of the same
-    dimension as \code{Triangle} with all weight entries in [0; 1]}
-  \item{alpha}{'weighting' parameter.
-    Default: 1 for all development periods; alpha=1 gives the historical chain
-    ladder age-to-age factors, alpha=0 gives the straight average of the
+    dimension as \code{Triangle} with all weight entries in [0; 1].
+    Hence, any entry set to 0 or \code{NA} eliminates that age-to-age factor 
+    from inclusion in the model. See also 'Details'}
+  \item{alpha}{'weighting' parameters.
+    Default: 1 for all development periods; alpha=1 gives the historical 
+    chain-ladder age-to-age factors, alpha=0 gives the straight average of the
     observed individual development factors and alpha=2 is the result of
     an ordinary regression of \eqn{C_{i,k+1}} against \eqn{C_{i,k}} with
-    intercept 0, see also Mack's 1999 paper and \code{chainladder}}
+    intercept 0, see also 'Details' below, \code{\link{chainladder}} and Mack's 1999 paper}
   \item{est.sigma}{defines how to estimate \eqn{sigma_{n-1}}, the
     variability of the individual age-to-age factors at development time
     \eqn{n-1}.
@@ -88,12 +90,15 @@ tail=FALSE, tail.se=NULL, tail.sigma=NULL, mse.method="Mack")
     C_j1, ... ,C_jn\}, are independent for origin period i != j 
   }
   with \eqn{w_{ik} \in [0;1]}{w_{ik} in [0;1]}, \eqn{\alpha \in \{0,1,2\}}{alpha in \{0,1,2\}}.   
-  If these assumptions are hold, the Mack chain-ladder-  gives an
+  If these assumptions hold, the Mack chain-ladder gives an
   unbiased estimator for IBNR (Incurred But Not Reported) claims.
   
-  The Mack chain-ladder model can be regarded as a weighted linear regression
+  Here \eqn{w_{ik} are the \code{weights} from above.}
+  
+  The Mack chain-ladder model can be regarded as a special form of a 
+  weighted linear regression
   through the origin for each development period:
-  \code{lm(y ~ x  + 0, weights=w/x^(2-alpha))}, 
+  \code{lm(y ~ x  + 0, weights=weights/x^(2-alpha))}, 
   where \code{y} is the vector of claims at development period
   \eqn{k+1} and \code{x} is  the vector of claims at development period
   \eqn{k}. 
@@ -127,8 +132,8 @@ tail=FALSE, tail.se=NULL, tail.sigma=NULL, mse.method="Mack")
     of projected loss for all origin years combined by development period}
   \item{Total.ParameterRisk}{vector of parameter risk estimate of the total 
     of projected loss for all origin years combined by development period}
-  \item{weights}{weights used.}
-  \item{alpha}{alphas used.}
+  \item{weights}{weights used}
+  \item{alpha}{alphas used}
   \item{tail}{tail factor used. If tail was set to TRUE the output will
     include the linear model used to estimate the tail factor}
 }
@@ -187,6 +192,10 @@ plot(GNI, lattice=TRUE)
 MackChainLadder(GenIns, alpha=0)$f
 # You get the same result via:
 apply(GenIns[,-1]/GenIns[,-10],2, mean, na.rm=TRUE)
+
+## Only use the last 5 diagonals, i.e. the last 5 calendar years
+(weights <- ifelse(row(RAA) + col(RAA) <= 6 | row(RAA) + col(RAA) > 11, 0, 1))
+MackChainLadder(GenIns, weights=weights, est.sigma = "Mack")
 
 ## Tail
 ## See the example in Mack's 1999 paper

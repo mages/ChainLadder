@@ -3,7 +3,7 @@
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{ Join Two Fitted MultiChainLadder Models }
 \description{
-  This function is created to facilitate the fitting of the multivariate functions when specifying different models in two different development periods, especially when separate chain ladder is used in later periods.
+  This function is created to facilitate the fitting of the multivariate functions when specifying different models in two different development periods, especially when separate chain-ladder is used in later periods.
 }
 \usage{
 Join2Fits(object1, object2)

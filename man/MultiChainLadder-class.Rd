@@ -13,8 +13,8 @@
 \alias{show,MultiChainLadder-method}
 \alias{vcov,MultiChainLadder-method}
 
-\title{Class "MultiChainLadder" of Multivariate Chain Ladder Results }
-\description{ This class includes the first and second moment estimation result using the multivariate reserving methods in chain ladder. Several primitive methods and statistical methods are also created to facilitate further analysis. }
+\title{Class "MultiChainLadder" of Multivariate Chain-Ladder Results }
+\description{ This class includes the first and second moment estimation result using the multivariate reserving methods in chain-ladder. Several primitive methods and statistical methods are also created to facilitate further analysis. }
 \section{Objects from the Class}{
 Objects can be created by calls of the form \code{new("MultiChainLadder", ...)}, or they could also be a result of calls from \code{MultiChainLadder} or \code{JoinFitMse}.
 

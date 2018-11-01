@@ -1302,9 +1302,8 @@ year can be visualized easily:
 
 <<eval=FALSE>>=
 library(ggplot2)
-library(reshape2)
-prm <- melt(pr)
-names(prm) <- c("year", "reserve")
+prm <- reshape(pr, varying=list(names(pr)), v.names = "reserve", 
+               timevar = "year", direction="long")
 gg <- ggplot(prm, aes(reserve))
 gg <- gg + geom_density(aes(fill = year), alpha = 0.3) +
         facet_wrap(~year, nrow = 2, scales = "free")  +
