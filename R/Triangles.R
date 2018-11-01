@@ -77,12 +77,32 @@ as.triangle.data.frame <- function(Triangle, origin="origin", dev="dev", value="
 #    warning("Converting origin from Date to numeric")
 #    Triangle[[origin]] <- as.numeric(Triangle[[origin]])
 #  }
-
-  fmla <- as.formula(paste(origin, "~", dev))
-  matrixTriangle <- acast(Triangle, fmla, fun.aggregate = sum,
-                          value.var = value, fill = as.numeric(NA))
+  
+  # aggregate claims data
+  aggTriangle <- stats::aggregate(Triangle[[value]], 
+                        list(Triangle[[dev]], Triangle[[origin]]), 
+                        sum)
+  names(aggTriangle) <- c(origin, dev, value)
+  
+  origin_names <- unique(aggTriangle[, origin])
+  dev_names <-   unique(aggTriangle[, dev])
+  
+  
+  # reshape into wide format
+  tria <- stats::reshape(aggTriangle, 
+                  v.names=value, 
+                  timevar = dev, 
+                  idvar = origin, 
+                  direction = "wide", 
+                  new.row.names = origin_names)[, -1]
+  
+  matrixTriangle <- as.matrix(tria)
+  
   names(dimnames(matrixTriangle)) <- c(origin, dev)
 
+  dimnames(matrixTriangle)[[1]] <- origin_names
+  dimnames(matrixTriangle)[[2]] <- dev_names
+  
   class(matrixTriangle) <- c("triangle", "matrix")
   return(matrixTriangle)
 }
@@ -190,20 +210,6 @@ print.triangle <- function(x, ...) {
 
   names(dimnames(z)) <- c(origin, dev)
   return(z)
-}
-
-as.LongTriangle1 <- function(Triangle, varnames = names(dimnames(Triangle)), ...,
-                           na.rm = TRUE, as.is = TRUE, value.name = "value") {
-  if (!inherits(Triangle, "matrix")) stop("asLongTriangle only works for matrices")
-  if (is.null(varnames)) varnames <- c("origin", "dev")
-  else {
-    if (is.na(varnames[1L])) varnames[1L] <- "origin"
-    if (is.na(varnames[2L])) varnames[2L] <- "dev"
-  }
-  y <- reshape2::melt(Triangle, varnames = varnames, ..., na.rm = na.rm, as.is = as.is,
-                      value.name = value.name)
-  names(y)[1:2] <- varnames
-  y
 }
 
 as.LongTriangle <- function (Triangle, varnames = names(dimnames(Triangle)),

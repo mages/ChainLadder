@@ -8,7 +8,6 @@ importFrom(utils, packageDescription, head, setTxtProgressBar,
            tail, txtProgressBar)
 importFrom(lattice, xyplot, barchart)
 importFrom(actuar, pllogis)
-importFrom(reshape2, acast)
 importFrom(methods, show, coerce, cbind2, rbind2,
                     as, new, slot, slotNames)
 importFrom(graphics, plot, abline, barplot, boxplot, hist, legend,

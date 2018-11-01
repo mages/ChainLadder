@@ -3,7 +3,7 @@ Type: Package
 Title: Statistical Methods and Models for Claims Reserving in 
        General Insurance
 Version: 0.2.8
-Date: 2018-10-31
+Date: 2018-11-01
 Authors@R: c(person("Markus", "Gesmann", role = c("aut", "cre"),
              email = "markus.gesmann@googlemail.com"),
              person("Daniel", "Murphy", role = "aut", 
@@ -17,7 +17,8 @@ Authors@R: c(person("Markus", "Gesmann", role = c("aut", "cre"),
              person("Christophe", "Dutang", role="ctb"),
              person("Arnaud", "Lacoume", role="ctb"),               
              person("Arthur", "Charpentier", role = "ctb"),
-             person("Mario", "Wuthrich", role = "aut"),
+             person("Mario", "Wuthrich", role = "aut",
+             email = "mario.wuethrich@math.ethz.ch"),
              person("Fabio", "Concina", role="aut",
              email="fabio.concina@gmail.com"),
              person("Eric", "Dal Moro", role="aut", 
@@ -36,7 +37,6 @@ Imports:
     actuar,
     methods,
     stats,   
-    reshape2,
     lattice,
     grid,
     tweedie,
