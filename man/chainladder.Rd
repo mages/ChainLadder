@@ -153,7 +153,7 @@ predict(CL2)
 
 ## Set 'weights' parameter to use only the last 5 diagonals, 
 ## i.e. the last 5 calendar years
-(weights <- ifelse(row(RAA) + col(RAA) <= 6 | row(RAA) + col(RAA) > 11, 0, 1))
+(weights <- ifelse((row(RAA) + col(RAA) - 1) <= 5 | (row(RAA) + col(RAA) - 1) > 10, 0, 1))
 CL3 <- chainladder(RAA, weights=weights)
 summary(CL3$Models[[1]])$coef
 predict(CL3)

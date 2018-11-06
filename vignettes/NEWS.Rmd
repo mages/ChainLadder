@@ -17,7 +17,7 @@ vignette: >
 knitr::opts_chunk$set(echo = TRUE)
 suppressPackageStartupMessages(library(ChainLadder))
 ```
-# Version 0.2.8 [2018-10-17]
+# Version 0.2.8 [2018-11-06]
 
  * Fix to print statments to align them with the generic print methods. Thanks to Markus Senn
  * Clarified how the 'weights' argument in chainladder and MackChainLadder can be used 
