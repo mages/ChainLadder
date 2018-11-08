@@ -687,9 +687,9 @@ plot(mack, lattice=TRUE)
 
 \subsubsection{Using a subset of the triangle}
 
-The \code{weights} argument allows for the selection of a subset of the triangle for the projections. 
+The \texttt{weights} argument allows for the selection of a subset of the triangle for the projections. 
 
-For example, in order to use only the last 5 calendar years of the triangle, set the \code{weights} as follows:
+For example, in order to use only the last 5 calendar years of the triangle, set the \texttt{weights} as follows:
 
 <<>>=
 (weights <- ifelse((row(RAA) + col(RAA) - 1) <= 5, 0, 
