@@ -685,6 +685,18 @@ plot(mack, lattice=TRUE)
 @
 \end{center}
 
+\subsubsection{Using a subset of the triangle}
+
+The \code{weights} argument allows for the selection of a subset of the triangle for the projections. 
+
+For example, in order to use only the last 5 calendar years of the triangle, set the \code{weights} as follows:
+
+<<>>=
+(weights <- ifelse((row(RAA) + col(RAA) - 1) <= 5, 0, 
+        ifelse(row(RAA) + col(RAA) - 1 > 10, NA, 1)))
+MackChainLadder(RAA, weights=weights, est.sigma = "Mack")
+@
+
 \subsection{Munich chain-ladder}
  Munich chain-ladder is a reserving method that reduces the gap between IBNR
  projections based on paid losses and IBNR projections based on incurred
