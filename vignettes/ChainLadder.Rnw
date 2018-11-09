@@ -692,8 +692,8 @@ The \texttt{weights} argument allows for the selection of a subset of the triang
 For example, in order to use only the last 5 calendar years of the triangle, set the \texttt{weights} as follows:
 
 <<>>=
-(weights <- ifelse((row(RAA) + col(RAA) - 1) <= 5, 0, 
-        ifelse(row(RAA) + col(RAA) - 1 > 10, NA, 1)))
+calPeriods <- (row(RAA) + col(RAA) - 1)
+(weights <- ifelse(calPeriods <= 5, 0, ifelse(calPeriods > 10, NA, 1)))
 MackChainLadder(RAA, weights=weights, est.sigma = "Mack")
 @
 

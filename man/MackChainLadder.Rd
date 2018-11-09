@@ -194,8 +194,8 @@ MackChainLadder(GenIns, alpha=0)$f
 apply(GenIns[,-1]/GenIns[,-10],2, mean, na.rm=TRUE)
 
 ## Only use the last 5 diagonals, i.e. the last 5 calendar years
-(weights <- ifelse((row(GenIns) + col(GenIns) - 1) <= 5, 0, 
-        ifelse(row(GenIns) + col(GenIns) - 1 > 10, NA, 1)))
+calPeriods <- (row(GenIns) + col(GenIns) - 1)
+(weights <- ifelse(calPeriods <= 5, 0, ifelse(calPeriods > 10, NA, 1)))
 MackChainLadder(GenIns, weights=weights, est.sigma = "Mack")
 
 ## Tail
