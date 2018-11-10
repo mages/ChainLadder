@@ -18,4 +18,3 @@ notifications:
 
 repos:
   CRAN: https://cloud.r-project.org
-  ropensci: https://packages.ropensci.org
