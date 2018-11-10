@@ -14,7 +14,7 @@ years over time (development years).
 }
 
 \source{
-\url{http://www.actuaries.org.uk/research-and-resources/documents/claims-reserving-manual-vol2-section-d5-regression-models-based-lo-0}
+\url{https://www.actuaries.org.uk/research-and-resources/documents/claims-reserving-manual-vol2-section-d5-regression-models-based-lo-0}
 }
 \references{
 Stavros Christofides. Regression models based on log-incremental payments. 

@@ -41,13 +41,13 @@
 \cite{ Zhang, Y. Likelihood-based and Bayesian Methods for Tweedie Compound Poisson Linear Mixed Models, \emph{Statistics and Computing}, forthcoming. 
 }
 
-\cite{Bardis, Majidi, Murphy. A Family of Chain-Ladder Factor Models for Selected Link Ratios. \emph{Variance}. Pending. Variance 6:2, 2012, pp. 143-160. \url{http://www.variancejournal.org/issues/06-02/143.pdf}}
+\cite{Bardis, Majidi, Murphy. A Family of Chain-Ladder Factor Models for Selected Link Ratios. \emph{Variance}. Pending. Variance 6:2, 2012, pp. 143-160. \url{https://www.variancejournal.org/issues/06-02/143.pdf}}
 
 \cite{Modelling the claims development result for solvency purposes.
 Michael Merz, Mario V. Wüthrich. Casualty Actuarial Society E-Forum, Fall 2008.}
 
 \cite{Claims Run-Off Uncertainty: The Full Picture. Michael Merz, 
-Mario V. Wüthrich. Swiss Finance Institute Research Paper No. 14-69. \url{http://ssrn.com/abstract=2524352}. 2014}
+Mario V. Wüthrich. Swiss Finance Institute Research Paper No. 14-69. \url{https://ssrn.com/abstract=2524352}. 2014}
 
 \cite{Markus Gesmann. Claims Reserving and IBNR. 
   \emph{Computational Actuarial Science with R}. Chapman and Hall/CRC. 2014}

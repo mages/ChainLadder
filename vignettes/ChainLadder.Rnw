@@ -115,7 +115,7 @@ forecasts.
 As the computer became more powerful, ideas of more sophisticated models
 started to evolve. Changes in regulatory requirements, e.g.
 Solvency II\footnote{See
-  \url{http://ec.europa.eu/internal_market/insurance/solvency/index_en.htm}}
+  \url{https://ec.europa.eu/internal_market/insurance/solvency/index_en.htm}}
 in Europe, have fostered further research and promoted the use of stochastic and
 statistical techniques. In particular, for many countries extreme
 percentiles of reserve deterioration over a fixed time period have to be
@@ -316,7 +316,7 @@ plot(RAA)
 
 Setting the argument \texttt{lattice=TRUE} will produce individual
 plots for each origin period\footnote{{\chainladder} uses the
-  \href{http://cran.r-project.org/package=lattice}{\texttt{lattice}}
+  \href{https://cran.r-project.org/package=lattice}{\texttt{lattice}}
   package for plotting the development of the origin years in separate
 panels.}, see Figure~\ref{RAAplot2}.
 <<eval=FALSE>>=
@@ -407,8 +407,8 @@ tri <- read.table(file="clipboard", sep="\t", na.strings="")
 \paragraph{Reading data from a data base}
 R makes it easy to access data using SQL statements,
 e.g. via an ODBC connection\footnote{See the
-  \href{http://cran.r-project.org/package=RODBC}{\texttt{RODBC}}
-  and \href{http://cran.r-project.org/package=DBI}{\texttt{DBI}}
+  \href{https://cran.r-project.org/package=RODBC}{\texttt{RODBC}}
+  and \href{https://cran.r-project.org/package=DBI}{\texttt{DBI}}
   packages}, for more details see~\cite{Rdata}.
 The {\chainladder} packages includes a demo to showcase
 how data can be imported from a MS Access data base, see:
@@ -1555,7 +1555,7 @@ Please refer to \texttt{help(tweedieReserve)} for additional information.
 
 The {\chainladder} package comes with example files which
 demonstrate how its functions can be embedded in
-Excel and Word using the \href{http://rcom.univie.ac.at/}{statconn}
+Excel and Word using the \href{https://rcom.univie.ac.at/}{statconn}
 interface\cite{BaierNeuwirth2007}.
 
 The  spreadsheet is located in the Excel folder
@@ -1603,9 +1603,9 @@ context of actuarial work:
 
 Below is a list of further R packages in the context of insurance.
 The list is by no-means complete, and the CRAN Task Views
-\href{http://cran.r-project.org/web/views/Finance.html}{\emph{'Empirical
+\href{https://cran.r-project.org/web/views/Finance.html}{\emph{'Empirical
     Finance'}} and
-\href{http://cran.r-project.org/web/views/Distributions.html}{\emph{Probability
+\href{https://cran.r-project.org/web/views/Distributions.html}{\emph{Probability
     Distributions}} will provide links to additional resources. Please
 feel free to contact \href{mailto:markus.gesmann@gmail.com}{us} with
 items to be added to the list.
@@ -1645,77 +1645,12 @@ items to be added to the list.
 
 \end{itemize}
 
-%
-% \subsection{Presentations}
-% Over the years the contributors of the {\chainladder} package have given
-% numerous presentations and most of those are still available on-line:
-%
-% \begin{itemize}
-%
-% \item A re-reserving algorithm to derive the one-year reserve risk view,
-% R in Insurance, London, Alessandro Carrato, 2013.
-%
-% \item Bayesian Hierarchical Models in Property-Casualty Insurance, Wayne Zhang, 2011
-%
-% \item
-%   \href{http://chainladder.googlecode.com/files/ChainLadder_Markus_20010Nov10.pdf}{ChainLadder
-%     at the Predictive Modelling Seminar, Institute of Actuaries,
-%     November 2010}, Markus Gesmann, 2010
-%
-% \item
-%   \href{http://chainladder.googlecode.com/files/CAS-Spring-Meeting-2010-C21.pdf}{Reserve
-%     variability calculations},  CAS spring meeting, San Diego,
-%    Jimmy Curcio Jr., Markus Gesmann and Wayne Zhang,  2010
-%
-% \item
-%   \href{http://chainladder.googlecode.com/files/ChainLadder_Markus_20090724.pdf}{The
-%     ChainLadder package, working with databases and MS Office
-%     interfaces, presentation at the "R you ready?" workshop} , Institute
-%   of Actuaries, Markus Gesmann, 2009
-%
-% \item
-%   \href{http://chainladder.googlecode.com/files/ChainLadder_at_London_R_User_Group_20090331.pdf}
-%   {The ChainLadder package}, London R user group meeting, Markus
-%   Gesmann, 2009
-%
-% \item
-%   \href{http://chainladder.googlecode.com/files/Introduction_to_R_20081203.pdf}{Introduction
-%     to R},
-%   \href{http://chainladder.googlecode.com/files/Loss_Reserving_in_R_20081203.pdf}{Loss
-%     Reserving with R},  Stochastic Reserving and Modelling Seminar, Institute of Actuaries,
-%   Markus Gesmann, 2008
-%
-% \item
-%   \href{https://www.casact.org/education/annual/2008/handouts/gesmann.pdf}{Loss
-%     Reserving with R} , CAS meeting, Vincent Goulet, Markus Gesmann and Daniel Murphy, 2008
-%
-% \item
-%   \href{https://www.r-project.org/conferences/useR-2008/slides/Gesmann.pdf}{The
-%     ChainLadder package} R-user conference Dortmund, Markus Gesmann,
-%   2008
-% \end{itemize}
-%
-% \subsection{Further reading}
-% Other papers and presentations which cited {\chainladder}:
-% \cite{Orr2007}, \cite{Nichols2009}, \cite{Zhang2010a},
-% \cite{MariaDoloresMartinezMiranda2010}, \cite{Schirmacher2010},
-% \cite{MariaDoloresMartinezMiranda2011}, \cite{Escoto2011},
-% \cite{Spedicato2011}
-%
+
 \bibliographystyle{alpha}
 \bibliography{ChainLadder}
 \addcontentsline{toc}{section}{References}
 
 \clearpage
 
-%\section*{Thanks}
-%\addcontentsline{toc}{section}{Thanks}
-%Many thanks to all who provided ideas, suggestions,
-%corrections and bug reports:
-%\begin{itemize}
-%<<echo=FALSE, results=tex>>=
-%x <- readLines("../../THANKS")
-%cat(gsub("    ", "\\\\item", x[-1]), sep="\n")
-%@
-%\end{itemize}
+
 \end{document}

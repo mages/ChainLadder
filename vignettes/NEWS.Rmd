@@ -17,7 +17,7 @@ vignette: >
 knitr::opts_chunk$set(echo = TRUE)
 suppressPackageStartupMessages(library(ChainLadder))
 ```
-# Version 0.2.8 [2018-11-06]
+# Version 0.2.8 [2018-11-10]
 
  * Fix to print statments to align them with the generic print methods. Thanks to Markus Senn
  * Clarified how the 'weights' argument in chainladder and MackChainLadder can be used 
@@ -386,7 +386,7 @@ Fixed tail extrapolation in Vignette.
     the input 'Triangle'. See the paper 
     "A Family of Chain-Ladder Factor Models for Selected Link Ratios"
     by Bardis, Majidi, Murphy:
-    http://www.variancejournal.org/issues/?fa=article&abstrID=6943
+    https://www.variancejournal.org/issues/?fa=article&abstrID=6943
   
   * A new 'coef' method returns the age-to-age factor coefficients of 
     the regression models estimated by the 'chainladder' function.

@@ -17,4 +17,5 @@ notifications:
     on_failure: change
 
 repos:
-  cran: http://cran.rstudio.com
+  CRAN: https://cloud.r-project.org
+  ropensci: https://packages.ropensci.org

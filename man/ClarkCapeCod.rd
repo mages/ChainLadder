@@ -171,7 +171,7 @@ all-lower-case represent observation-level (origin, development age) results.)
 Clark, David R., 
 "LDF Curve-Fitting and Stochastic Reserving: A Maximum Likelihood Approach",
 \emph{Casualty Actuarial Society Forum}, Fall, 2003
-\url{http://www.casact.org/pubs/forum/03fforum/03ff041.pdf} 
+\url{https://www.casact.org/pubs/forum/03fforum/03ff041.pdf} 
 }
 \author{
 Daniel Murphy

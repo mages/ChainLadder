@@ -2,7 +2,7 @@
 ##
 ## Origianlly follows Gregor Gojanc's example in CRAN package  'gdata'
 ## and the corresponding section in the R Wiki:
-## http://wiki.r-project.org/rwiki/doku.php?id=developers:runit
+## https://wiki.r-project.org/rwiki/doku.php?id=developers:runit
 ##
 ## Changed by Martin Maechler for Rmetrics, making them "runnable"
 ## for *installed* packages without ./tests/ directory by placing
