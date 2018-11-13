@@ -19,7 +19,7 @@ suppressPackageStartupMessages(library(ChainLadder))
 ```
 # Version 0.2.8 [2018-11-10]
 
- * Fix to print statments to align them with the generic print methods. Thanks to Markus Senn
+ * Fix to print statements to align them with the generic print methods. Thanks to Markus Senn
  * Clarified how the 'weights' argument in chainladder and MackChainLadder can be used 
  * Removed dependency on reshape2 as it has been deprecated
 
