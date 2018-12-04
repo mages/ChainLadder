@@ -82,7 +82,7 @@ as.triangle.data.frame <- function(Triangle, origin="origin", dev="dev", value="
   aggTriangle <- stats::aggregate(Triangle[[value]], 
                         list(Triangle[[dev]], Triangle[[origin]]), 
                         sum)
-  names(aggTriangle) <- c(origin, dev, value)
+  names(aggTriangle) <- c(dev, origin, value)
   
   origin_names <- unique(aggTriangle[, origin])
   dev_names <-   unique(aggTriangle[, dev])
