@@ -23,4 +23,4 @@ Many thanks to all who provided ideas, suggestions, corrections and bug reports:
 - James Triveri for fiing a typo in the vignette
 - Patrick Green for fixing an issue for the  Mack method if "sigma[i - 2]^2" is zero in the Mack.S.E function.
 - Markus Senn for providing a fix to print statments to align them with the generic print methods
-
+- Edward Tasker for reporting a bug in as.triangle
