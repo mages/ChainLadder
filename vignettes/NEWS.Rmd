@@ -17,7 +17,7 @@ vignette: >
 knitr::opts_chunk$set(echo = TRUE)
 suppressPackageStartupMessages(library(ChainLadder))
 ```
-# Version 0.2.9 [2018-12-05]
+# Version 0.2.9 [2018-12-06]
 
  * Fix to as.triangle.data.frame. The labels of origin and development period were mixed up with the move away from reshape2 to aggregate in version 0.2.8. Thanks to Edward Tasker for reporting this issue.
 
