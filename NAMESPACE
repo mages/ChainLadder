@@ -6,7 +6,7 @@ importFrom(systemfit, systemfit, systemfit.control)
 importFrom(methods, coerce, cbind2, rbind2 )
 importFrom(utils, packageDescription, head, setTxtProgressBar,
            tail, txtProgressBar)
-importFrom(lattice, xyplot, barchart)
+importFrom(lattice, xyplot, barchart, panel.xyplot, panel.lines)
 importFrom(actuar, pllogis)
 importFrom(methods, show, coerce, cbind2, rbind2,
                     as, new, slot, slotNames)
@@ -35,6 +35,7 @@ export(ata)
 export(as.LongTriangle)
 export(CLFMdelta, LRfunction)
 export(glmReserve)
+export(cyeff.test, dfcor.test, check.tr.infl, inflate.triangle, BS.paid.adj)
 
 #Classes
 exportClasses(triangles, MultiChainLadder, MultiChainLadderFit,
@@ -50,6 +51,11 @@ S3method(plot, triangle)
 
 S3method(plot, clark)
 
+S3method(plot, cyeff.test)
+S3method(plot, dfcor.test)
+S3method(plot, check.tr.infl)
+
+
 S3method(print, MackChainLadder)
 S3method(print, MunichChainLadder)
 S3method(print, BootChainLadder)
@@ -58,6 +64,9 @@ S3method(print, ClarkLDF)
 S3method(print, ClarkCapeCod)
 S3method(print, ata)
 
+S3method(print, cyeff.test)
+S3method(print, dfcor.test)
+S3method(print, check.tr.infl)
 
 S3method(as.triangle, matrix)
 S3method(as.triangle, data.frame)
@@ -69,6 +78,11 @@ S3method(summary, BootChainLadder)
 S3method(summary, ClarkLDF)
 S3method(summary, ClarkCapeCod)
 S3method(summary, ata)
+
+S3method(summary, cyeff.test)
+S3method(summary, dfcor.test)
+S3method(summary, check.tr.infl)
+
 
 S3method(print, glmReserve)
 S3method(summary, glmReserve)
