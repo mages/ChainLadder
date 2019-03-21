@@ -61,8 +61,8 @@ dfcor.test(Triangle, ci = .5)
 \seealso{ See also \code{\link{qpaid}} for dealing with non-square triangles,  
   \code{\link{cyeff.test}} for the test for calendar year effect,
   \code{\link{chainladder}} for the chain-ladder method,
-  \code{\link{summary.CYTest}},  
-  \code{\link{plot.CYTest}}
+  \code{\link{summary.dfcor.test}},  
+  \code{\link{plot.dfcor.test}}
   }
 
 \examples{

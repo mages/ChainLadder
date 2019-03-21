@@ -62,8 +62,8 @@ cyeff.test(Triangle, ci = 0.95)
 \seealso{ See also \code{\link{qpaid}} for dealing with non-square triangles,  
   \code{\link{dfcor.test}} for the test for correlations between subsequent development factors,
   \code{\link{chainladder}} for the chain-ladder method,
-  \code{\link{summary.CYTest}},  
-  \code{\link{plot.CYTest}}
+  \code{\link{summary.cyeff.test}},  
+  \code{\link{plot.cyeff.test}}
   }
 
 \examples{
