@@ -8,11 +8,19 @@
   of a \code{dfcor.test} object and to check the assumption of independece between development factors.
 }
 \usage{
-\method{plot}{dfcor.test}(x, \dots)
+\method{plot}{dfcor.test}(x, type = "l", xlab = "T", ylab = "Density", 
+                          main = "Development Factor Correlation", col.area = "gray",
+                          border = NA, \dots)
 }
 
 \arguments{
   \item{x}{output from \code{dfcor.test}}
+  \item{type}{Default: "l". What type of plot should be drawn}
+  \item{xlab}{Default: "Z". X axis label}
+  \item{ylab}{Default: "Density". Y axis label}
+  \item{main}{Default: "Development Factor Correlation". Plot title}
+  \item{col.area}{Default: "gray". Color of the shaded area.}
+  \item{border}{Default: NULL, the color to draw the border. Use \code{border = NA} to omit borders.}
   \item{\dots}{ optional arguments. See \code{\link{plot.default}} for
     more details.} 
 }

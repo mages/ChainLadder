@@ -7,10 +7,10 @@
   object
 }
 \usage{
-\method{summary}{cyeff.test}(x, \dots)
+\method{summary}{cyeff.test}(object, \dots)
 }
 \arguments{
-  \item{x}{object of class \code{cyeff.test}}
+  \item{object}{object of class \code{cyeff.test}}
   \item{\dots}{ optional arguments for a \code{summary} method }
 }
 \details{

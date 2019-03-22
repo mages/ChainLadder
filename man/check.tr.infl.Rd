@@ -46,7 +46,7 @@ check.tr.infl(Triangle)
   }
 
 \examples{
-test <- check.tr.infl( MedMal$MedMalOutstanding / MedMal$MedMalOpen ) 
+test <- check.tr.infl( MedMal$MedMalOutstanding / MedMal$MedMalOpen )
 plot(test)
 summary(test)
 print(test)

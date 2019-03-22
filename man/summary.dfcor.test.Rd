@@ -7,10 +7,10 @@
   object
 }
 \usage{
-\method{summary}{dfcor.test}(x, \dots)
+\method{summary}{dfcor.test}(object, \dots)
 }
 \arguments{
-  \item{x}{object of class \code{dfcor.test}}
+  \item{object}{object of class \code{dfcor.test}}
   \item{\dots}{ optional arguments for a \code{summary} method }
 }
 \details{

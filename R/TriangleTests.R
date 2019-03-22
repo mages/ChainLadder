@@ -63,14 +63,14 @@ cyeff.test <- function(Triangle, ci = 0.95) {
 
 # function to plot the ci of a CYTest class
 
-plot.cyeff.test <- function(object, type = "l", xlab = "Z", ylab = "Density", main = "Calendar Year Effect", col.area ="gray", border = NA, ...) {
-    x <- seq(object$E - qnorm(0.9999 + (1 - 0.9999)/2, 0, 1) * sqrt(object$Var), object$E + qnorm(0.9999 + (1 - 0.9999)/2, 0, 1) * sqrt(object$Var), 0.01)
-    cord.x <- c(object$Range[1], seq(object$Range[1], object$Range[2], 0.01), object$Range[2])
-    cord.y <- c(0, dnorm(seq(object$Range[1], object$Range[2], 0.01), object$E, sqrt(object$Var)), 0)
+plot.cyeff.test <- function(x, type = "l", xlab = "Z", ylab = "Density", main = "Calendar Year Effect", col.area ="gray", border = NA, ...) {
+    x_seq <- seq(x$E - qnorm(0.9999 + (1 - 0.9999)/2, 0, 1) * sqrt(x$Var), x$E + qnorm(0.9999 + (1 - 0.9999)/2, 0, 1) * sqrt(x$Var), 0.01)
+    cord.x <- c(x$Range[1], seq(x$Range[1], x$Range[2], 0.01), x$Range[2])
+    cord.y <- c(0, dnorm(seq(x$Range[1], x$Range[2], 0.01), x$E, sqrt(x$Var)), 0)
     
-    plot(x, dnorm(x, object$E, sqrt(object$Var)), type = type, xlab = xlab, ylab = ylab, main = main, ...)
+    plot(x_seq, dnorm(x_seq, x$E, sqrt(x$Var)), type = type, xlab = xlab, ylab = ylab, main = main, ...)
     polygon(cord.x, cord.y, col = col.area, border = border)
-    segments(object$Z, 0, object$Z, dnorm(object$Z, object$E, sqrt(object$Var)), lwd = 2)
+    segments(x$Z, 0, x$Z, dnorm(x$Z, x$E, sqrt(x$Var)), lwd = 2)
     
 }
 
@@ -88,23 +88,21 @@ print.cyeff.test <- function(x, ...) {
 
 # summary function of a CYTest class
 
-summary.cyeff.test <- function(x, ...) {
-    table <- x$test_table
+summary.cyeff.test <- function(object, ...) {
     
-    totals <- as.data.frame(c(sum(x$test_table$Z_j), sum(x$test_table$E_Zj), sum(x$test_table$Var_Zj)))
-    rownames(totals) <- c("Z", "E[Z]", "Var[Z]")
-    colnames(totals) <- c("Totals")
+  table <- object$test_table
     
+  totals <- as.data.frame(c(sum(object$test_table$Z_j), sum(object$test_table$E_Zj), sum(object$test_table$Var_Zj)))
+  rownames(totals) <- c("Z", "E[Z]", "Var[Z]")
+  colnames(totals) <- c("Totals")
     
-    range <- as.data.frame(c(x$Range[1], x$Range[2]))
-    rownames(range) <- c("Lower", "Upper")
-    colnames(range) <- c("Value")
+  range <- as.data.frame(c(object$Range[1], object$Range[2]))
+  rownames(range) <- c("Lower", "Upper")
+  colnames(range) <- c("Value")
+  
+  output <- list(Table = table, Totals = totals, Range = range)
     
-    output <- list(Table = table, Totals = totals, Range = range)
-    
-    
-    
-    return(output)
+  return(output)
 }
 
 
@@ -145,14 +143,15 @@ dfcor.test <- function(Triangle, ci = .5) {
 
 # function to plot the ci of a dfcor.test class
 
-plot.dfcor.test <- function(object, type = "l", xlab = "T", ylab = "Density", main = "Development Factor Correlation", col.area ="gray", border = NA, ...) {
-    x <- seq(-qnorm(0.9999 + (1 - 0.9999)/2, 0, 1) * sqrt(object$Var), qnorm(0.9999 + (1 - 0.9999)/2, 0, 1) * sqrt(object$Var), 0.01)
-    cord.x <- c(object$Range[1], seq(object$Range[1], object$Range[2], 0.01), object$Range[2])
-    cord.y <- c(0, dnorm(seq(object$Range[1], object$Range[2], 0.01), 0, sqrt(object$Var)), 0)
+plot.dfcor.test <- function(x, type = "l", xlab = "T", ylab = "Density", main = "Development Factor Correlation", col.area ="gray", border = NA, ...) {
     
-    plot(x, dnorm(x, 0, sqrt(object$Var)), type = type, xlab = xlab, ylab = ylab, main = main, ...)
+    x_seq <- seq(-qnorm(0.9999 + (1 - 0.9999)/2, 0, 1) * sqrt(x$Var), qnorm(0.9999 + (1 - 0.9999)/2, 0, 1) * sqrt(x$Var), 0.01)
+    cord.x <- c(x$Range[1], seq(x$Range[1], x$Range[2], 0.01), x$Range[2])
+    cord.y <- c(0, dnorm(seq(x$Range[1], x$Range[2], 0.01), 0, sqrt(x$Var)), 0)
+    
+    plot(x_seq, dnorm(x_seq, 0, sqrt(x$Var)), type = type, xlab = xlab, ylab = ylab, main = main, ...)
     polygon(cord.x, cord.y, col = col.area, border = border)
-    segments(object$T_stat, 0, object$T_stat, dnorm(object$T_stat, 0, sqrt(object$Var)), lwd = 2)
+    segments(x$T_stat, 0, x$T_stat, dnorm(x$T_stat, 0, sqrt(x$Var)), lwd = 2)
     
 }
 
@@ -170,15 +169,15 @@ print.dfcor.test <- function(x, ...) {
 
 # summary function of a CYTest class
 
-summary.dfcor.test <- function(x, ...) {
-    table <- x$test_table
+summary.dfcor.test <- function(object, ...) {
+    table <- object$test_table
     
-    results <- as.data.frame(c(x$T_stat, 0, x$Var))
+    results <- as.data.frame(c(object$T_stat, 0, object$Var))
     rownames(results) <- c("T", "E[T]", "Var[T]")
     colnames(results) <- c("Value")
     
     
-    range <- as.data.frame(c(x$Range[1], x$Range[2]))
+    range <- as.data.frame(c(object$Range[1], object$Range[2]))
     rownames(range) <- c("Lower", "Upper")
     colnames(range) <- c("Value")
     
@@ -234,11 +233,11 @@ check.tr.infl <- function(Triangle) {
   
 }
 
-plot.check.tr.infl <- function(object, col.line="black", type="b", xlab="dev. period", ylab=NULL, ...){
+plot.check.tr.infl <- function(x, col.line="black", type="b", xlab="dev. period", ylab=NULL, ...){
   
-  dft<-as.data.frame(object$Triangle)
+  dft<-as.data.frame(x$Triangle)
   
-  n<-nrow(object$Triangle)  
+  n<-nrow(x$Triangle)  
   
   df<-dft[which(!is.na(dft$value) & dft$origin!=n), ]
   
@@ -269,12 +268,12 @@ print.check.tr.infl <- function(x, ...){
   
 }
 
-summary.check.tr.infl <- function(x, ...){
+summary.check.tr.infl <- function(object, ...){
 
-  table <- x$summ_table
+  summ_table <- object$summ_table
    
-  colnames(table)<-as.character(1:ncol(x$summ_table))
+  colnames(summ_table)<-as.character(1:ncol(object$summ_table))
    
-  return(table)
+  return(summ_table)
   
 }

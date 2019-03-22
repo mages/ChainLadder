@@ -7,10 +7,10 @@
   object
 }
 \usage{
-\method{summary}{check.tr.infl}(x, \dots)
+\method{summary}{check.tr.infl}(object, \dots)
 }
 \arguments{
-  \item{x}{object of class \code{check.tr.infl}}
+  \item{object}{object of class \code{check.tr.infl}}
   \item{\dots}{ optional arguments for a \code{summary} method }
 }
 \details{
@@ -27,8 +27,8 @@
 \seealso{ See also \code{\link{check.tr.infl}},
   \code{\link{plot.check.tr.infl}} }
 \examples{
- test <- check.tr.infl(RAA)
- summary(check.tr.infl)
+ test <- test <- check.tr.infl( MedMal$MedMalOutstanding / MedMal$MedMalOpen )
+ summary(test)
 }
 \keyword{ methods }
 \keyword{ summary }

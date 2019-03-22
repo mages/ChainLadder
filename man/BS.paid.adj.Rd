@@ -6,6 +6,8 @@
   The B-S Paid Claim Development Adjustment methods adjusts paid claims based on the underlying relation between paid and closed claims.
 }
 \usage{
+BS.paid.adj(Triangle_rep_counts = NULL, Triangle_closed, Triangle_paid, 
+            ult_counts = NULL, regression.type = "exponential")
 }
 \arguments{
   \item{Triangle_rep_counts}{cumulative reported claim counts triangle.  Assume columns are the development
@@ -51,9 +53,13 @@
   \code{\link{inflate.triangle}} to inflate a triangle based on an inflation rate,
   }
 \examples{
-adj_paid <- BS.paid.adj( Triangle_rep_counts = AutoBI$AutoBIReportedCounts, Triangle_closed = AutoBI$AutoBIClosed, 
-                         Triangle_paid = AutoBI$AutoBIPaid, regression.type = 'exponential' )
+adj_paid <- BS.paid.adj( Triangle_rep_counts = AutoBI$AutoBIReportedCounts,
+                         Triangle_closed = AutoBI$AutoBIClosed,
+                         Triangle_paid = AutoBI$AutoBIPaid,
+                         regression.type = 'exponential' )
+
 std_ibnr <- summary(MackChainLadder(AutoBI$AutoBIPaid))$Totals[4, 1]
+
 infl_ibnr <- summary(MackChainLadder(adj_paid))$Totals[4, 1]
 
 ## For more examples see:
