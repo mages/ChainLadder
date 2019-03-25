@@ -1,20 +1,20 @@
-\name{plot.cyeff.test}
-\alias{plot.cyeff.test}
+\name{plot.cyEffTest}
+\alias{plot.cyEffTest}
 
-\title{ Plot method for a cyeff.test object }
+\title{ Plot method for a cyEffTest object }
 \description{
-  \code{plot.cyeff.test}, a method to plot the output of
-  \code{\link{cyeff.test}}. It is designed to give a quick overview
-  of a \code{cyeff.test} object and to check the assumption of independece between calendar years.
+  \code{plot.cyEffTest}, a method to plot the output of
+  \code{\link{cyEffTest}}. It is designed to give a quick overview
+  of a \code{cyEffTest} object and to check the assumption of independece between calendar years.
 }
 \usage{
-\method{plot}{cyeff.test}(x, type = "l", xlab = "Z", ylab = "Density", 
+\method{plot}{cyEffTest}(x, type = "l", xlab = "Z", ylab = "Density", 
                           main = "Calendar Year Effect", col.area = "gray", 
                           border = NA, \dots)
 }
 
 \arguments{
-  \item{x}{output from \code{cyeff.test}}
+  \item{x}{output from \code{cyEffTest}}
   \item{type}{Default: "l". What type of plot should be drawn}
   \item{xlab}{Default: "Z". X axis label}
   \item{ylab}{Default: "Density". Y axis label}
@@ -25,15 +25,15 @@
     more details.} 
 }
 \details{
- \code{plot.cyeff.test} shows the underlying distribution, the test statistic \eqn{Z} and the relative Confidence Interval.
+ \code{plot.cyEffTest} shows the underlying distribution, the test statistic \eqn{Z} and the relative Confidence Interval.
  If the test statistic \eqn{Z} is within the highlighted region the hypothesis of dependence between calendar years could be rejected.
  
  }
 \author{Marco De Virgilis \email{devirgilis.marco@gmail.com}}
-\seealso{ See Also \code{\link{cyeff.test}},
-\code{\link{summary.cyeff.test}}}
+\seealso{ See Also \code{\link{cyEffTest}},
+\code{\link{summary.cyEffTest}}}
 \examples{
-plot(cyeff.test(RAA))
+plot(cyEffTest(RAA))
 }
 \keyword{ plot }
 \keyword{ methods }

@@ -6,19 +6,19 @@
   The B-S Paid Claim Development Adjustment methods adjusts paid claims based on the underlying relation between paid and closed claims.
 }
 \usage{
-BS.paid.adj(Triangle_rep_counts = NULL, Triangle_closed, Triangle_paid, 
-            ult_counts = NULL, regression.type = "exponential")
+BS.paid.adj(Triangle.rep.counts = NULL, Triangle.closed, Triangle.paid, 
+            ult.counts = NULL, regression.type = "exponential")
 }
 \arguments{
-  \item{Triangle_rep_counts}{cumulative reported claim counts triangle.  Assume columns are the development
+  \item{Triangle.rep.counts}{cumulative reported claim counts triangle.  Assume columns are the development
     period, use transpose otherwise.
     A (mxn)-matrix \eqn{C_{ik}} which is filled for \eqn{k \leq n+1-i; i=1,\ldots,m; m\geq n }, see
     \code{\link{qpaid}} .}
-  \item{Triangle_closed}{cumulative closed claim counts triangle.  Assume columns are the development
+  \item{Triangle.closed}{cumulative closed claim counts triangle.  Assume columns are the development
     period, use transpose otherwise.}
-  \item{Triangle_paid}{cumulative paid claims triangle.  Assume columns are the development
+  \item{Triangle.paid}{cumulative paid claims triangle.  Assume columns are the development
     period, use transpose otherwise.}
-  \item{ult_counts}{vector of ultimate claim counts.}  
+  \item{ult.counts}{vector of ultimate claim counts.}  
   \item{regression.type}{Default = "exponential". Type of regression used in the model, it can take 'exponential' or 'linear'. See also 'Details'}
 }
 \details{
@@ -35,7 +35,7 @@ BS.paid.adj(Triangle_rep_counts = NULL, Triangle_closed, Triangle_paid,
   The selected disposal rate for each maturity are multiplied by the ultimate number of claims to determine the adjusted triangle 
   of closed claim counts. \cr
   Berquist and Sherman then use regression analysis to identify a mathematical formula that approximates the relationship between the cumulative 
-  number of closed claims (X) and cumulative paid claims (Y). The algorithm gives the possibility, through the choice of the 'regression_type' field, 
+  number of closed claims (X) and cumulative paid claims (Y). The algorithm gives the possibility, through the choice of the 'regression.type' field, 
   to fit an exponential model, \eqn{Y = a*e^(bX)}, or a linear model, \eqn{Y = a+b*X}. \cr
   The relation is estimated based on unadjusted closed claim counts and unadjusted paid claims. Once the regression coefficients are estimated, they will be used to
   adjust paid claims based on such coefficients and the adjusted closed claim counts triangle.
@@ -50,17 +50,28 @@ BS.paid.adj(Triangle_rep_counts = NULL, Triangle_closed, Triangle_paid,
 \author{Marco De Virgilis \email{devirgilis.marco@gmail.com}}
 
 \seealso{ See also \code{\link{qpaid}} for dealing with non-square triangles,  
-  \code{\link{inflate.triangle}} to inflate a triangle based on an inflation rate,
+  \code{\link{inflateTriangle}} to inflate a triangle based on an inflation rate,
   }
 \examples{
-adj_paid <- BS.paid.adj( Triangle_rep_counts = AutoBI$AutoBIReportedCounts,
-                         Triangle_closed = AutoBI$AutoBIClosed,
-                         Triangle_paid = AutoBI$AutoBIPaid,
+# Adjust the Triangle of Paid Claims based on Reported Claim Counts
+
+adj_paid <- BS.paid.adj( Triangle.rep.counts = AutoBI$AutoBIReportedCounts,
+                         Triangle.closed = AutoBI$AutoBIClosed,
+                         Triangle.paid = AutoBI$AutoBIPaid,
                          regression.type = 'exponential' )
+
+# Calculate the IBNR from the standard unadjusted Paid Triangle
 
 std_ibnr <- summary(MackChainLadder(AutoBI$AutoBIPaid))$Totals[4, 1]
 
-infl_ibnr <- summary(MackChainLadder(adj_paid))$Totals[4, 1]
+# Calculate the IBNR from the adjusted Paid Triangle
+
+adj_ibnr <- summary(MackChainLadder(adj_paid))$Totals[4, 1]
+
+# Compare the two
+
+adj_ibnr
+std_ibnr
 
 ## For more examples see:
 \dontrun{

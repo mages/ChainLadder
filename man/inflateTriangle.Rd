@@ -1,16 +1,15 @@
-\name{inflate.triangle}
-\alias{inflate.triangle}
+\name{inflateTriangle}
+\alias{inflateTriangle}
 \encoding{UTF-8}
 \title{ Inflate a Triangle based on an Inflation Rate }
 \description{
   Inflate the amounts of a Triangle from the latest diagonal based on an Inflation Rate
 }
 \usage{
-  inflate.triangle(rate, Triangle)
+  inflateTriangle(Triangle, rate)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
-  \item{rate}{Inflation rate to be applied to the triangle according to an exponential model}
   \item{Triangle}{claim triangle. Assume columns are the development
     period, use transpose otherwise.
     A (mxn)-matrix \eqn{C_{ik}} 
@@ -18,6 +17,7 @@
     \code{\link{qpaid}} for how to use (mxn)-development triangles with
     m<n, say higher development period frequency (e.g quarterly) than
     origin period frequency (e.g accident years).}
+  \item{rate}{Inflation rate to be applied to the triangle according to an exponential model}
 }
 \details{
   The sensitivity of projections of ultimate losses based on incurred loss
@@ -31,7 +31,7 @@
   Ideally the metrics that should be restated are average O/S or average claim paid.
 }
 \value{
-  inflate.triangle returns the inflated triangle according to the provided rate 
+  inflateTriangle returns the inflated triangle according to the provided rate 
   }
 \references{
 \cite{Berquist, J.R. and Sherman, R.E., Loss Reserve Adequacy Testing: A Comprehensive,
@@ -40,18 +40,37 @@
 \author{Marco De Virgilis \email{devirgilis.marco@gmail.com}}
 
 \seealso{ See also \code{\link{qpaid}} for dealing with non-square triangles,  
-  \code{\link{check.tr.infl}} to check Y-o-Y Triangle Inflation Rates,
+  \code{\link{checkTriangleInflation}} to check Y-o-Y Triangle Inflation Rates,
   }
 
 \examples{
+# Create a Triangle of Average Case O/S
+
 avg <- MedMal$MedMalOutstanding / MedMal$MedMalOpen
-inflated_tr <- inflate.triangle(rate = .15, avg) * MedMal$MedMalOpen + MedMal$MedMalPaid
+
+# Select a rate of 15\% and inflate the average =/S Triangle
+
+inflated_tr <- inflateTriangle(Triangle = avg, rate = .15) 
+
+# Multiply it by open claims and add paymnets to calulate the adjusted Reported Claims Trinagle
+
+adj_reported <- inflated_tr * MedMal$MedMalOpen + MedMal$MedMalPaid
+
+# Calculate the IBNR from the unadjusted Triangle
+
 std_ibnr <- summary(MackChainLadder(MedMal$MedMalReported))$Totals[4, 1]
-infl_ibnr <- summary(MackChainLadder(inflated_tr))$Totals[4, 1]
+
+# Calculate the IBNR from the adjusted Triangle
+
+adj_reported_ibnr <- summary(MackChainLadder(adj_reported))$Totals[4, 1]
+
+# Compare the two
+
+std_ibnr - adj_reported_ibnr
 
 ## For more examples see:
 \dontrun{
- demo(inflate.triangle)
+ demo(inflateTriangle)
 }
 }
 \keyword{models}

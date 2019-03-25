@@ -35,7 +35,7 @@ export(ata)
 export(as.LongTriangle)
 export(CLFMdelta, LRfunction)
 export(glmReserve)
-export(cyeff.test, dfcor.test, check.tr.infl, inflate.triangle, BS.paid.adj)
+export(cyEffTest, dfCorTest, checkTriangleInflation, inflateTriangle, BS.paid.adj)
 
 #Classes
 exportClasses(triangles, MultiChainLadder, MultiChainLadderFit,
@@ -51,9 +51,9 @@ S3method(plot, triangle)
 
 S3method(plot, clark)
 
-S3method(plot, cyeff.test)
-S3method(plot, dfcor.test)
-S3method(plot, check.tr.infl)
+S3method(plot, cyEffTest)
+S3method(plot, dfCorTest)
+S3method(plot, checkTriangleInflation)
 
 
 S3method(print, MackChainLadder)
@@ -64,9 +64,9 @@ S3method(print, ClarkLDF)
 S3method(print, ClarkCapeCod)
 S3method(print, ata)
 
-S3method(print, cyeff.test)
-S3method(print, dfcor.test)
-S3method(print, check.tr.infl)
+S3method(print, cyEffTest)
+S3method(print, dfCorTest)
+S3method(print, checkTriangleInflation)
 
 S3method(as.triangle, matrix)
 S3method(as.triangle, data.frame)
@@ -79,9 +79,9 @@ S3method(summary, ClarkLDF)
 S3method(summary, ClarkCapeCod)
 S3method(summary, ata)
 
-S3method(summary, cyeff.test)
-S3method(summary, dfcor.test)
-S3method(summary, check.tr.infl)
+S3method(summary, cyEffTest)
+S3method(summary, dfCorTest)
+S3method(summary, checkTriangleInflation)
 
 
 S3method(print, glmReserve)

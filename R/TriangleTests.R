@@ -3,12 +3,12 @@
 # In particular:
 # Calendar Year Effect
 # Test Correlation between subsequent development factor
-# Check level of infaltion year on year
+# Check level of inflation year on year
 
 
 # Calendar Year Effect ----------------------------------------------------
 
-cyeff.test <- function(Triangle, ci = 0.95) {
+cyEffTest <- function(Triangle, ci = 0.95) {
     if (ci == 1) {
         stop("Select a confidence level less than 1")
     }
@@ -24,7 +24,7 @@ cyeff.test <- function(Triangle, ci = 0.95) {
     # Check smaller or larger ata
     
     S_L_Triangle <- apply(atatriangle, 2, function(x) {
-        ifelse(x < median(x, na.rm = T), "S", ifelse(x > median(x, na.rm = T), "L", "*"))
+        ifelse(x < median(x, na.rm = TRUE), "S", ifelse(x > median(x, na.rm = T), "L", "*"))
     })
     
     # collect the diagonals
@@ -35,8 +35,18 @@ cyeff.test <- function(Triangle, ci = 0.95) {
     
     # create final dataframe
     
-    df <- data.frame(j = (2:(n - 1)), S_j = rep(NA, n - 2), L_j = rep(NA, n - 2), Z_j = rep(NA, n - 2), n = rep(NA, n - 2), m = rep(NA, n - 2), E_Zj = rep(NA, 
-        n - 2), Var_Zj = rep(NA, n - 2))
+    df <-
+      data.frame(
+        j = (2:(n - 1)),
+        S_j = rep(NA, n - 2),
+        L_j = rep(NA, n - 2),
+        Z_j = rep(NA, n - 2),
+        n = rep(NA, n - 2),
+        m = rep(NA, n - 2),
+        E_Zj = rep(NA,
+                   n - 2),
+        Var_Zj = rep(NA, n - 2)
+      )
     
     for (i in 1:(n - 2)) {
         df$S_j[i] <- sum(S_L_Diags[[i]] == "S")
@@ -56,14 +66,14 @@ cyeff.test <- function(Triangle, ci = 0.95) {
     Range <- c(E_Zj - qnorm(ci + (1 - ci)/2, 0, 1) * sqrt(Var_Zj), E_Zj + qnorm(ci + (1 - ci)/2, 0, 1) * sqrt(Var_Zj))
     
     output <- list(test_table = df, Z = Z_j, E = E_Zj, Var = Var_Zj, Range = Range, ci = ci)
-    class(output) <- c("cyeff.test", class(output))
+    class(output) <- c("cyEffTest", class(output))
     return(output)
     
 }
 
-# function to plot the ci of a CYTest class
+# function to plot the ci of a cyEffTest class
 
-plot.cyeff.test <- function(x, type = "l", xlab = "Z", ylab = "Density", main = "Calendar Year Effect", col.area ="gray", border = NA, ...) {
+plot.cyEffTest <- function(x, type = "l", xlab = "Z", ylab = "Density", main = "Calendar Year Effect", col.area ="gray", border = NA, ...) {
     x_seq <- seq(x$E - qnorm(0.9999 + (1 - 0.9999)/2, 0, 1) * sqrt(x$Var), x$E + qnorm(0.9999 + (1 - 0.9999)/2, 0, 1) * sqrt(x$Var), 0.01)
     cord.x <- c(x$Range[1], seq(x$Range[1], x$Range[2], 0.01), x$Range[2])
     cord.y <- c(0, dnorm(seq(x$Range[1], x$Range[2], 0.01), x$E, sqrt(x$Var)), 0)
@@ -74,9 +84,9 @@ plot.cyeff.test <- function(x, type = "l", xlab = "Z", ylab = "Density", main = 
     
 }
 
-# function to print the results of a CYTest class
+# function to print the results of a cyEffTest class
 
-print.cyeff.test <- function(x, ...) {
+print.cyEffTest <- function(x, ...) {
     cat("Calendar Year Effect")
     cat("\n\n")
     cat("Z =", x$Z)
@@ -86,9 +96,9 @@ print.cyeff.test <- function(x, ...) {
     cat("Calendar Year Effect:", !(x$Z >= x$Range[1] & x$Z <= x$Range[2]))
 }
 
-# summary function of a CYTest class
+# summary function of a cyEffTest class
 
-summary.cyeff.test <- function(object, ...) {
+summary.cyEffTest <- function(object, ...) {
     
   table <- object$test_table
     
@@ -108,7 +118,7 @@ summary.cyeff.test <- function(object, ...) {
 
 # DF Correlation ----------------------------------------------------
 
-dfcor.test <- function(Triangle, ci = .5) {
+dfCorTest <- function(Triangle, ci = .5) {
     if (ci == 1) {
         stop("Select a confidence level less than 1")
     }
@@ -136,14 +146,14 @@ dfcor.test <- function(Triangle, ci = .5) {
     #return summary statistics
     
     output <- list(T_stat = T_final, Var = Var_T, Range = Range, ci = ci)
-    class(output) <- c("dfcor.test", class(output))
+    class(output) <- c("dfCorTest", class(output))
     return(output)
     
 }
 
-# function to plot the ci of a dfcor.test class
+# function to plot the ci of a dfCorTest class
 
-plot.dfcor.test <- function(x, type = "l", xlab = "T", ylab = "Density", main = "Development Factor Correlation", col.area ="gray", border = NA, ...) {
+plot.dfCorTest <- function(x, type = "l", xlab = "T", ylab = "Density", main = "Development Factor Correlation", col.area ="gray", border = NA, ...) {
     
     x_seq <- seq(-qnorm(0.9999 + (1 - 0.9999)/2, 0, 1) * sqrt(x$Var), qnorm(0.9999 + (1 - 0.9999)/2, 0, 1) * sqrt(x$Var), 0.01)
     cord.x <- c(x$Range[1], seq(x$Range[1], x$Range[2], 0.01), x$Range[2])
@@ -155,9 +165,9 @@ plot.dfcor.test <- function(x, type = "l", xlab = "T", ylab = "Density", main = 
     
 }
 
-# function to print the results of a CYTest class
+# function to print the results of a dfCorTest class
 
-print.dfcor.test <- function(x, ...) {
+print.dfCorTest <- function(x, ...) {
     cat("Development Factor Correlation")
     cat("\n\n")
     cat("T =", x$T_stat)
@@ -167,9 +177,9 @@ print.dfcor.test <- function(x, ...) {
     cat("Development Factor Correlation:", !(x$T_stat >= x$Range[1] & x$T_stat <= x$Range[2]))
 }
 
-# summary function of a CYTest class
+# summary function of a dfCorTest class
 
-summary.dfcor.test <- function(object, ...) {
+summary.dfCorTest <- function(object, ...) {
     table <- object$test_table
     
     results <- as.data.frame(c(object$T_stat, 0, object$Var))
@@ -191,14 +201,19 @@ summary.dfcor.test <- function(object, ...) {
 
 # defining function that calculates rates considering an exponential model
 
-exp.infl <- function(i, Triangle) {
+expInfl <- function(i, Triangle) {
   
   Triangle <- checkTriangle(Triangle)
   
   n <- dim(Triangle)[1]  
   
+  # Fit the model
+  
   model <- lm(log(y) ~ x, data = data.frame(y = Triangle[, i], x = 1:n))
+  
   fl_rate <- exp(model$coefficients[2]) - 1
+  
+  # extract residuals and fitted values to calculate the R2
   
   r <- model$residuals
   
@@ -207,6 +222,8 @@ exp.infl <- function(i, Triangle) {
   mss <- sum((f - mean(f))^2)
   
   rss <- sum(r^2)
+  
+  # create final vector retain only needed metrics
   
   final <- c(fl_rate, mss/(mss + rss), length(f))
   
@@ -218,34 +235,47 @@ exp.infl <- function(i, Triangle) {
 
 # apply the function to a triangle
 
-check.tr.infl <- function(Triangle) {
+checkTriangleInflation <- function(Triangle) {
+  
   Triangle <- checkTriangle(Triangle)
   
   n <- dim(Triangle)[1]
   
-  summ <- sapply(1:(n - 1), exp.infl, Triangle)
+  summ <- sapply(1:(n - 1), expInfl, Triangle)
+  
+  # create final output retaining only summary statistics
   
   output <- list(Triangle = Triangle, summ_table = summ)
   
-  class(output) <- c("check.tr.infl", class(output))
+  class(output) <- c("checkTriangleInflation", class(output))
   
   return(output)
   
 }
 
-plot.check.tr.infl <- function(x, col.line="black", type="b", xlab="dev. period", ylab=NULL, ...){
+# function to plot the inflation from a checkTriangleInflation class
+
+plot.checkTriangleInflation <- function(x, col.line="black", type="b", xlab="dev. period", ylab=NULL, ...){
+  
+  # transform the trinagle into a data.frame to make it work with the xyplot function
   
   dft<-as.data.frame(x$Triangle)
   
+  # create variable n from the triangle dimensions
+  
   n<-nrow(x$Triangle)  
   
+  # filter prevuiously created df in order to retain only needed rows
+  
   df<-dft[which(!is.na(dft$value) & dft$origin!=n), ]
+  
+  # plot function with regression
   
   xyplot(
     value ~ dev | factor(origin),
     data = df,
     type = type,
-    as.table = T,
+    as.table = TRUE,
     xlab = xlab,
     ylab = ylab,
     
@@ -255,11 +285,13 @@ plot.check.tr.infl <- function(x, col.line="black", type="b", xlab="dev. period"
       panel.lines(x, exp(fitted(fm)), col.line = col.line)
     },
     
-    ylim = c(0,1.15*max(df$value,na.rm=T)), ...)
+    ylim = c(0,1.15*max(df$value,na.rm=TRUE)), ...)
   
 }
 
-print.check.tr.infl <- function(x, ...){
+# function to print the results of a checkTriangleInflation class
+
+print.checkTriangleInflation <- function(x, ...){
   
   colnames(x$summ_table)<-as.character(1:ncol(x$summ_table))
   cat("Triangle Inflation Calculation")
@@ -268,7 +300,9 @@ print.check.tr.infl <- function(x, ...){
   
 }
 
-summary.check.tr.infl <- function(object, ...){
+# summary function for a checkTriangleInflation class
+
+summary.checkTriangleInflation <- function(object, ...){
 
   summ_table <- object$summ_table
    

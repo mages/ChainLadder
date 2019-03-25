@@ -1,12 +1,12 @@
-\name{check.tr.infl}
-\alias{check.tr.infl}
+\name{checkTriangleInflation}
+\alias{checkTriangleInflation}
 \encoding{UTF-8}
 \title{ Check Y-o-Y Triangle Inflation Rates }
 \description{
   Check for Year-on-Year Inflation rates down the columns of a run-off triangle
 }
 \usage{
-check.tr.infl(Triangle)
+checkTriangleInflation(Triangle)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -31,7 +31,7 @@ check.tr.infl(Triangle)
   possible to appreciate the inflation rate that has affected the average case reserve.
 }
 \value{
-  check.tr.infl returns a list with the following elements
+  checkTriangleInflation returns a list with the following elements
   \item{Triangle}{Input triangle} 
   \item{summ_table}{summary table showing the inflation rate, the \eqn{R^2} of the regression and the number of points used}
   }
@@ -42,18 +42,27 @@ check.tr.infl(Triangle)
 \author{Marco De Virgilis \email{devirgilis.marco@gmail.com}}
 
 \seealso{ See also \code{\link{qpaid}} for dealing with non-square triangles,  
-  \code{\link{inflate.triangle}} to inflate a triangle based on an inflation rate,
+  \code{\link{inflateTriangle}} to inflate a triangle based on an inflation rate,
   }
 
 \examples{
-test <- check.tr.infl( MedMal$MedMalOutstanding / MedMal$MedMalOpen )
+# Create a Triangle of Average Case O/S
+
+avg <- MedMal$MedMalOutstanding / MedMal$MedMalOpen
+
+# Calculate the Inflation Rates
+test <- checkTriangleInflation( avg )
+
+# Plot the results
 plot(test)
+
+# Check Coefficients, R^2 and Number of points used
 summary(test)
 print(test)
 
 ## For more examples see:
 \dontrun{
- demo(check.tr.infl)
+ demo(checkTriangleInflation)
 }
 }
 \keyword{tests}

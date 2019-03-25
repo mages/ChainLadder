@@ -1,14 +1,14 @@
-\name{dfcor.test}
-\alias{dfcor.test}
+\name{cyEffTest}
+\alias{cyEffTest}
 \encoding{UTF-8}
-\title{ Testing for Correlations between Subsequent Development Factors }
+\title{ Testing for Calendar Year Effect }
 \description{
-  One of the main assumptions underlying the chain ladder
-  method is the uncorrelation of subsequest development factor. 
+  One of the three basic assumptions underlying the chain ladder
+  method is the independence of the accident years. 
   The function tests this assumption.
 }
 \usage{
-dfcor.test(Triangle, ci = .5)
+cyEffTest(Triangle, ci = 0.95)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -19,7 +19,7 @@ dfcor.test(Triangle, ci = .5)
     \code{\link{qpaid}} for how to use (mxn)-development triangles with
     m<n, say higher development period frequency (e.g quarterly) than
     origin period frequency (e.g accident years).}
-  \item{ci}{confidence interval. Default: .5. A confidence interval is 
+  \item{ci}{confidence interval. Default: .95. A confidence interval is 
   a type of interval estimate, computed from the statis tics of the observed data, 
   that might contain the true value of an unknown population parameter. 
   The interval has an associated confidence level that quantifies 
@@ -27,18 +27,21 @@ dfcor.test(Triangle, ci = .5)
   }
 }
 \details{
+  The main reason why this independence can be violated in practice is the fact that 
+  there could be certain calendar year effects such as major changes in claims handling or in 
+  case reserving or external influences such as substantial changes in court decisions or 
+  inflation.
   As described by the Mack's 1994 paper a procedure is designed to test for calendar year 
   influences.
-  The usual test for uncorrelatedness requires that we have identically distributed pairs of 
-  observations which come from a  Normal distribution. Both conditions are usually not fulfilled
-  for adjacent columns of development factors. Spearman's correlation coefficient is therefore used.
-  The metric calulated by the procudeure described return a statistic \eqn{T} that it is assumed to
-  be Normally Distributed. It is therefore possible to define a confidence interval threshold in order 
-  to evaluate the outcome of the test.
+  The procedure returns a summary statistic \eqn{Z} which is assumed to be Normally Distributed.
+  It is therefore possible to define a confidence interval threshold in order to evaluate the 
+  outcome of the test.
 }
 \value{
-  dfcor.test returns a list with the following elements
-  \item{T_stat}{summary statistic}
+  cyEffTest returns a list with the following elements
+  \item{test_table}{complete table of results} 
+  \item{Z}{summary statistic}
+  \item{E}{expected value of the resulting distribution}
   \item{Var}{variance of the resulting distribution}
   \item{Range}{vector of the range corresponding the confidence interval threshold selected}
   \item{ci}{confidence interval}
@@ -54,26 +57,30 @@ dfcor.test(Triangle, ci = .5)
   \cite{Thomas Mack. Distribution-free calculation of the standard error of chain ladder reserve estimates. \emph{Astin Bulletin}. Vol. 23. No 2. 1993. pp.213:225}
 
   \cite{Thomas Mack. The standard error of chain ladder reserve estimates: Recursive calculation and inclusion of a tail factor. \emph{Astin Bulletin}. Vol. 29. No 2. 1999. pp.361:366}
-  
-  \cite{Venter, G.G., Testing the Assumptions of Age-to-Age Factors, \emph{Proceedings of the Casualty Actuarial Society} LXXXV, 1998, pp. 807-847}
 
 }
 \seealso{ See also \code{\link{qpaid}} for dealing with non-square triangles,  
-  \code{\link{cyeff.test}} for the test for calendar year effect,
+  \code{\link{dfCorTest}} for the test for correlations between subsequent development factors,
   \code{\link{chainladder}} for the chain-ladder method,
-  \code{\link{summary.dfcor.test}},  
-  \code{\link{plot.dfcor.test}}
+  \code{\link{summary.cyEffTest}},  
+  \code{\link{plot.cyEffTest}}
   }
 
 \examples{
-test<-dfcor.test(RAA)
-plot(test)
-summary(test)
+# Test the Triangle for Calendar Year Effect
+
+test<-cyEffTest(RAA) 
+
+# Plot the results
+plot(test) 
+
+# Summary of the calculations
+summary(test) 
 print(test)
 
 ## For more examples see:
 \dontrun{
- demo(dfcor.test)
+ demo(cyEffTest)
 }
 }
 \keyword{tests}
