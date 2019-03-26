@@ -4,8 +4,8 @@ DatabaseExamples   Demo showing how the ChainLadder package can be used in conne
 MackChainLadder  Detailed demo of the MackChainLadder function
 MSOffice   Demo showing how R and ChainLadder can be used for auto reporting
 MultiChainLadder Detailed demo of the MultiChainLadder function
-dfcor.test Demo of DF Correlation Test
-cyeff.test Demo of Calendar Year Effect Test
-check.tr.infl Demo of Triangle Inflation Test
-inflate.triangle Demo of the inflate.triangle function
+dfCorTest Demo of DF Correlation Test
+cyEffTest Demo of Calendar Year Effect Test
+checkTriangleInflation Demo of Triangle Inflation Test
+inflateTriangle Demo of the inflate.triangle function
 BS.paid.adj Detailed Demo of the B_S Paid Adjustment
