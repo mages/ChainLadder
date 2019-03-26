@@ -1,10 +1,10 @@
 test.BS.paid.adj <- function() {
   
-  test <- BS.paid.adj( Triangle_rep_counts = AutoBI$AutoBIReportedCounts, Triangle_closed = AutoBI$AutoBIClosed, Triangle_paid = AutoBI$AutoBIPaid, regression.type = 'exponential' )
+  test <- BS.paid.adj( Triangle.rep.counts = AutoBI$AutoBIReportedCounts, Triangle.closed = AutoBI$AutoBIClosed, Triangle.paid = AutoBI$AutoBIPaid, regression.type = 'exponential' )
   
-  test1 <- BS.paid.adj( Triangle_rep_counts = AutoBI$AutoBIReportedCounts, Triangle_closed = AutoBI$AutoBIClosed, Triangle_paid = AutoBI$AutoBIPaid, regression.type = 'linear' )
+  test1 <- BS.paid.adj( Triangle.rep.counts = AutoBI$AutoBIReportedCounts, Triangle.closed = AutoBI$AutoBIClosed, Triangle.paid = AutoBI$AutoBIPaid, regression.type = 'linear' )
   
-  checkEquals(test, structure(c(1432.93518268829, 1747.77628224761, 1989.14373325504, 
+  check1 <- checkEquals(test, structure(c(1432.93518268829, 1747.77628224761, 1989.14373325504, 
                                 2250.0616303118, 2587.43836103051, 2293.67382384549, 2719.49309911284, 
                                 2801, 3917.37593039777, 4878.08876711966, 6032.93810942967, 7109.30363394323, 
                                 7934.5609790615, 7089.86360368265, 9182, NA, 6495.28128222582, 
@@ -16,7 +16,7 @@ test.BS.paid.adj <- function() {
                                 NA, NA, NA, 10256, NA, NA, NA, NA, NA, NA, NA), .Dim = c(8L,8L), class = c("triangle", "matrix"), 
                               .Dimnames = list(origin = c("1","2", "3", "4", "5", "6", "7", "8"), dev = c("1", "2", "3", "4", "5", "6", "7", "8"))))
   
-  checkEquals(test1, structure(c(950.988037878944, 1273.94538704395, 1529.51029982584, 
+  check2 <- checkEquals(test1, structure(c(950.988037878944, 1273.94538704395, 1529.51029982584, 
                                  1992.55020334767, 2353.92346440271, 2186.71515067255, 2681.95459900876, 
                                  2801, 3349.42137344275, 4411.63719817611, 5592.49369603111, 6795.38888377494, 
                                  7721.79652293179, 6861.93962089091, 9182, NA, 6325.37535605051, 
@@ -28,5 +28,5 @@ test.BS.paid.adj <- function() {
                                  NA, NA, NA, 10256, NA, NA, NA, NA, NA, NA, NA), .Dim = c(8L, 8L), class = c("triangle", "matrix"), 
                                .Dimnames = list(origin = c("1", "2", "3", "4", "5", "6", "7", "8"), dev = c("1", "2", "3", "4", "5", "6", "7", "8"))))
   
-  
+  return(all(chck1, check2))
 }

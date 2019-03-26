@@ -1,28 +1,32 @@
-test.cyeff.test <- function() {
+test.cyEffTest <- function() {
   
-  test <- cyeff.test(RAA)
+  test <- cyEffTest(RAA)
   
-  checkEquals(test$Z, 14)
-  checkEquals(test$E, 12.875)
+  check1 <- checkEquals(test$Z, 14)
+  check2 <- checkEquals(test$E, 12.875)
+  
+  return(all(check1,check2))
   }
 
 
-test.dfcor.test <- function() {
+test.dfCorTest <- function() {
   
-  test <- dfcor.test(RAA)
+  test <- dfCorTest(RAA)
   
-  checkEquals(round(test$T_stat,8),  0.06955782)
-  checkEquals(round(test$Var,8), 0.03571429)
+  check1 <- checkEquals(round(test$T_stat,8),  0.06955782)
+  check2 <- checkEquals(round(test$Var,8), 0.03571429)
+  
+  return(all(check1,check2))
   }
 
 
-test.check.tr.infl <- function() {
+test.checkTriangleInflation <- function() {
   
   avg <- MedMal$MedMalOutstanding / MedMal$MedMalOpen
   
-  test <- check.tr.infl(avg)
+  test <- checkTriangleInflation(avg)
   
-  checkEquals(test, structure(list(Triangle = structure(c(3700.93457943925, 7250, 
+  check <- checkEquals(test, structure(list(Triangle = structure(c(3700.93457943925, 7250, 
                                                           5876.99316628702, 8324.06519654842, 10124.0808823529, 8261.37463697967, 
                                                           11175.7469244288, 13028.4280936455, 5659.52380952381, 10635.3187042842, 
                                                           8121.89616252822, 11433.0557335042, 13785.3025936599, 22476.7277856135, 
@@ -43,7 +47,8 @@ test.check.tr.infl <- function() {
                                                             5, 0.32961696510089, 0.988784438746122, 4, 0.321636702798935, 
                                                             0.983135130025194, 3, 0.276155049497859, 1, 2), .Dim = c(3L,7L), 
                                                             .Dimnames = list(c("rate", "R2", "Points"), NULL))), 
-                                                            class = c("check.tr.infl","list"))
+                                                            class = c("checkTriangleInflation","list"))
               )
-  
+ return(check)
+   
 }

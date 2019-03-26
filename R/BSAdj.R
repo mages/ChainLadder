@@ -47,49 +47,49 @@ inflateTriangle <- function(Triangle, rate) {
 
 # define function that extract coefficients from a model Y = a * exp( b * x ) 
 
-get_coeff_exp <- function(x, y) {
-    
-    # define model structure
-  
-    model <- lm(log(y) ~ x, data = data.frame(x = x, y = y))
-    
-    # save coefficients
-    
-    a <- exp(model$coefficients[1])
-    
-    b <- model$coefficients[2]
-    
-    # get final vector
-    
-    coeff <- c(a, b)
-    
-    return(coeff)
-    
-}
+# get_coeff_exp <- function(x, y) {
+#     
+#     # define model structure
+#   
+#     model <- lm(log(y) ~ x, data = data.frame(x = x, y = y))
+#     
+#     # save coefficients
+#     
+#     a <- exp(model$coefficients[1])
+#     
+#     b <- model$coefficients[2]
+#     
+#     # get final vector
+#     
+#     coeff <- c(a, b)
+#     
+#     return(coeff)
+#     
+# }
 
 ### get triangular linear regression coefficient
 
 # define function that extract coefficients from a model Y = a + b * x
 
-get_coeff_lin <- function(x, y) {
-  
-    # define the model structure  
-  
-    model <- lm(y ~ x, data = data.frame(x = x, y = y))
-    
-    # save coefficients
-    
-    a <- model$coefficients[1]
-    
-    b <- model$coefficients[2]
-    
-    # get final vector
-    
-    coeff <- c(a, b)
-    
-    return(coeff)
-    
-}
+# get_coeff_lin <- function(x, y) {
+#   
+#     # define the model structure  
+#   
+#     model <- lm(y ~ x, data = data.frame(x = x, y = y))
+#     
+#     # save coefficients
+#     
+#     a <- model$coefficients[1]
+#     
+#     b <- model$coefficients[2]
+#     
+#     # get final vector
+#     
+#     coeff <- c(a, b)
+#     
+#     return(coeff)
+#     
+# }
 
 ### Compute the paid adj triangle
 
@@ -179,16 +179,25 @@ BS.paid.adj <- function(Triangle.rep.counts = NULL, Triangle.closed, Triangle.pa
     for (i in (1:(n - 1))) {
       for (j in (1:(n - i))) {
         if (regression.type == "exponential") {
-          a_tr[i, (j)] <-
-            get_coeff_exp(x = Triangle.closed[i, j:(j + 1)], y = Triangle.paid[i, j:(j + 1)])[1]
-          b_tr[i, (j)] <-
-            get_coeff_exp(x = Triangle.closed[i, j:(j + 1)], y = Triangle.paid[i, j:(j + 1)])[2]
+          
+          a_tr[i, j] <-
+            exp(coef(lm(log(y) ~ x, data = data.frame(y = Triangle.paid[i, j:(j + 1)], x = Triangle.closed[i, j:(j + 1)])))[1])
+            #get_coeff_exp(x = Triangle.closed[i, j:(j + 1)], y = Triangle.paid[i, j:(j + 1)])[1]
+          
+          b_tr[i, j] <-
+            coef(lm(log(y) ~ x, data = data.frame(y = Triangle.paid[i, j:(j + 1)], x = Triangle.closed[i, j:(j + 1)])))[2]
+            #get_coeff_exp(x = Triangle.closed[i, j:(j + 1)], y = Triangle.paid[i, j:(j + 1)])[2]
           
         } else {
-          a_tr[i, (j)] <-
-            get_coeff_lin(x = Triangle.closed[i, j:(j + 1)], y = Triangle.paid[i, j:(j + 1)])[1]
-          b_tr[i, (j)] <-
-            get_coeff_lin(x = Triangle.closed[i, j:(j + 1)], y = Triangle.paid[i, j:(j + 1)])[2]
+          
+          a_tr[i, j] <-
+            coef(lm(y ~ x, data = data.frame(y = Triangle.paid[i, j:(j + 1)], x = Triangle.closed[i, j:(j + 1)])))[1]
+            #get_coeff_lin(x = Triangle.closed[i, j:(j + 1)], y = Triangle.paid[i, j:(j + 1)])[1]
+          
+          b_tr[i, j] <-
+            coef(lm(y ~ x, data = data.frame(y = Triangle.paid[i, j:(j + 1)], x = Triangle.closed[i, j:(j + 1)])))[2]
+            #get_coeff_lin(x = Triangle.closed[i, j:(j + 1)], y = Triangle.paid[i, j:(j + 1)])[2]
+        
         }
       }
     }
@@ -200,7 +209,7 @@ BS.paid.adj <- function(Triangle.rep.counts = NULL, Triangle.closed, Triangle.pa
         rep(NA, x - 1))
     }))
     
-    # initializa adjusted paid triangle that will serve as output
+    # initialize adjusted paid triangle that will serve as output
     
     paid_adj <- matrix(NA, ncol = n, nrow = n)
     
@@ -210,18 +219,25 @@ BS.paid.adj <- function(Triangle.rep.counts = NULL, Triangle.closed, Triangle.pa
       for (j in 1:(n - i)) {
         if (in_range[i, j] != 0) {
           if (regression.type == "exponential") {
-            paid_adj[i, j] <-
+           
+             paid_adj[i, j] <-
               a_tr[i, j] * exp(b_tr[i, j] * full_adj_counts[i, j])
-          } else {
-            paid_adj[i, j] <- a_tr[i, j] + b_tr[i, j] * full_adj_counts[i, j]
+          
+             } else {
+            
+             paid_adj[i, j] <- a_tr[i, j] + b_tr[i, j] * full_adj_counts[i, j]
           }
           
         } else {
+          
           if (regression.type == "exponential") {
-            paid_adj[i, j] <-
+          
+              paid_adj[i, j] <-
               a_tr[i, 1] * exp(b_tr[i, 1] * full_adj_counts[i, j])
-          } else {
-            paid_adj[i, j] <- a_tr[i, 1] + b_tr[i, 1] * full_adj_counts[i, j]
+          
+              } else {
+          
+              paid_adj[i, j] <- a_tr[i, 1] + b_tr[i, 1] * full_adj_counts[i, j]
           }
           
           
