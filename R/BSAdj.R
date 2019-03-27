@@ -174,70 +174,66 @@ BS.paid.adj <- function(Triangle.rep.counts = NULL, Triangle.closed, Triangle.pa
     a_tr <- matrix(NA, ncol = n, nrow = n)
     b_tr <- matrix(NA, ncol = n, nrow = n)
     
+    # initialize adjusted paid triangle that will serve as output
+    paid_adj <- matrix(NA, ncol = n, nrow = n)
+    
+    # create a list of list to store linear regression models
+    myLM <- vector("list", n)
+    myLM <- lapply(myLM, function(x) vector("list", n))
+    
     # populate the matrices just created
     
     for (i in (1:(n - 1))) {
       for (j in (1:(n - i))) {
-        if (regression.type == "exponential") {
-          
-          a_tr[i, j] <-
-            exp(coef(lm(log(y) ~ x, data = data.frame(y = Triangle.paid[i, j:(j + 1)], x = Triangle.closed[i, j:(j + 1)])))[1])
-            #get_coeff_exp(x = Triangle.closed[i, j:(j + 1)], y = Triangle.paid[i, j:(j + 1)])[1]
-          
-          b_tr[i, j] <-
-            coef(lm(log(y) ~ x, data = data.frame(y = Triangle.paid[i, j:(j + 1)], x = Triangle.closed[i, j:(j + 1)])))[2]
-            #get_coeff_exp(x = Triangle.closed[i, j:(j + 1)], y = Triangle.paid[i, j:(j + 1)])[2]
-          
-        } else {
-          
-          a_tr[i, j] <-
-            coef(lm(y ~ x, data = data.frame(y = Triangle.paid[i, j:(j + 1)], x = Triangle.closed[i, j:(j + 1)])))[1]
-            #get_coeff_lin(x = Triangle.closed[i, j:(j + 1)], y = Triangle.paid[i, j:(j + 1)])[1]
-          
-          b_tr[i, j] <-
-            coef(lm(y ~ x, data = data.frame(y = Triangle.paid[i, j:(j + 1)], x = Triangle.closed[i, j:(j + 1)])))[2]
-            #get_coeff_lin(x = Triangle.closed[i, j:(j + 1)], y = Triangle.paid[i, j:(j + 1)])[2]
         
-        }
+        myDat <- data.frame(x = Triangle.closed[i, j:(j + 1)],
+                            y = Triangle.paid[i, j:(j + 1)])
+        
+        if ("exponential" %in% regression.type) {
+          
+          myLM[[i]][[j]] <- lm(log(y) ~ x, data = myDat)
+          
+        }else{
+          
+          myLM[[i]][[j]] <- lm(y ~ x, data = myDat)
+        
+          }
       }
     }
     
     # define if the estimated values are within the range which the regression is based upon
     
     in_range <- t(sapply(1:(n - 1), function(x) {
-      c(findInterval(full_adj_counts[x, 1:(n - x + 1)], Triangle.closed[x, 1:(n - x + 1)]),
+      c(findInterval(full_adj_counts[x, 1:(n - x + 1)], 
+                     Triangle.closed[x, 1:(n - x + 1)]),
         rep(NA, x - 1))
     }))
     
-    # initialize adjusted paid triangle that will serve as output
-    
-    paid_adj <- matrix(NA, ncol = n, nrow = n)
     
     # populate the final matrix
     
     for (i in 1:(n - 1)) {
       for (j in 1:(n - i)) {
+        newDat <- data.frame(x = full_adj_counts[i, j])
         if (in_range[i, j] != 0) {
-          if (regression.type == "exponential") {
+          if ("exponential" %in% regression.type) {
            
-             paid_adj[i, j] <-
-              a_tr[i, j] * exp(b_tr[i, j] * full_adj_counts[i, j])
+            paid_adj[i, j] <- exp(predict(myLM[[i]][[j]], newdata=newDat))
           
-             } else {
+            } else {
             
-             paid_adj[i, j] <- a_tr[i, j] + b_tr[i, j] * full_adj_counts[i, j]
+            paid_adj[i, j] <- predict(myLM[[i]][[j]], newdata=newDat)
           }
           
         } else {
           
-          if (regression.type == "exponential") {
+          if ("exponential" %in% regression.type) {
           
-              paid_adj[i, j] <-
-              a_tr[i, 1] * exp(b_tr[i, 1] * full_adj_counts[i, j])
-          
+              paid_adj[i, j] <- exp(predict(myLM[[i]][[1]], newdata=newDat))
+             
               } else {
           
-              paid_adj[i, j] <- a_tr[i, 1] + b_tr[i, 1] * full_adj_counts[i, j]
+              paid_adj[i, j] <- predict(myLM[[i]][[j]], newdata=newDat)
           }
           
           
