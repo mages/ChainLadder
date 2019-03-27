@@ -9,7 +9,8 @@ test <- cyeff.test(RAA)
 
 plot(test)
 
-# The metric is within the confidence interval, therefore the triangle doesn't have Calendar Year Effect
+# The metric is within the confidence interval, therefore the triangle doesn't
+# have Calendar Year Effect
 
 # Print the summary table
 summary(test)
