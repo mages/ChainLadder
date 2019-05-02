@@ -17,7 +17,7 @@ vignette: >
 knitr::opts_chunk$set(echo = TRUE)
 suppressPackageStartupMessages(library(ChainLadder))
 ```
-# Version 0.2.10 [2019-03-27]
+# Version 0.2.10 [2019-05-02]
 
  * Added B-S Paid Claim Development Adjustment methods to adjust paid claims 
  based on the underlying relation between paid and closed claims. 
