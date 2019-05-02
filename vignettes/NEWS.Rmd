@@ -17,19 +17,31 @@ vignette: >
 knitr::opts_chunk$set(echo = TRUE)
 suppressPackageStartupMessages(library(ChainLadder))
 ```
+# Version 0.2.10 [2019-05-02]
+
+ * Added B-S Paid Claim Development Adjustment methods to adjust paid claims 
+ based on the underlying relation between paid and closed claims. 
+ Thanks to Marco De Virgilis.
+
 # Version 0.2.9 [2018-12-06]
 
- * Fix to as.triangle.data.frame. The labels of origin and development period were mixed up with the move away from reshape2 to aggregate in version 0.2.8. Thanks to Edward Tasker for reporting this issue.
+ * Fix to as.triangle.data.frame. The labels of origin and development period 
+ were mixed up with the move away from reshape2 to aggregate in version 0.2.8. 
+ Thanks to Edward Tasker for reporting this issue.
 
 # Version 0.2.8 [2018-11-10]
 
- * Fix to print statements to align them with the generic print methods. Thanks to Markus Senn
- * Clarified how the 'weights' argument in chainladder and MackChainLadder can be used 
+ * Fix to print statements to align them with the generic print methods. 
+ Thanks to Markus Senn
+ * Clarified how the 'weights' argument in chainladder and MackChainLadder 
+ can be used 
  * Removed dependency on reshape2 as it has been deprecated
 
 # Version 0.2.7 [2018-10-16]
 
- * New quantile method for 'MackChainLadder' andv function QuantileIFRS17  to estimate the IFRS 17 Risk Adjustment. Thanks to Eric Dal Moro and Yuriy Krvavych
+ * New quantile method for 'MackChainLadder' andv function QuantileIFRS17
+ to estimate the IFRS 17 Risk Adjustment. Thanks to Eric Dal Moro and Yuriy
+ Krvavych
 
 # Version 0.2.6 [2018-05-29]
   

@@ -1,4 +1,4 @@
-# Initial esttimate based on Paid Triangles
+# Initial estimate based on Paid Triangles
 
 paid <- AutoBI$AutoBIPaid
 
