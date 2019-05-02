@@ -27,7 +27,7 @@ Authors@R: c(person("Markus", "Gesmann", role = c("aut", "cre"),
              email="y.krvavych@gmail.com"),
              person("Vincent", "Goulet", role="ctb",
              email="vincent.goulet@act.ulaval.ca")
-             )
+             )  
 Description: Various statistical methods and models which are
     typically used for the estimation of outstanding claims reserves
     in general insurance, including those to estimate the claims
@@ -55,3 +55,4 @@ URL: https://github.com/mages/ChainLadder#chainladder
 BugReports: https://github.com/mages/ChainLadder/issues 
 LazyLoad: yes
 LazyData: yes
+RoxygenNote: 6.1.1
