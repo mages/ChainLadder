@@ -122,12 +122,6 @@ BS.paid.adj <- function(Triangle.rep.counts = NULL,
     
     full_adj_counts[lower.tri(full_adj_counts)[, n:1]] <- NA
     
-    
-    # prepare two matrices, a and b, to allocate the regression coefficients
-    
-    a_tr <- matrix(NA, ncol = n, nrow = n)
-    b_tr <- matrix(NA, ncol = n, nrow = n)
-    
     # initialize adjusted paid triangle that will serve as output
     paid_adj <- matrix(NA, ncol = n, nrow = n)
     
@@ -170,7 +164,7 @@ BS.paid.adj <- function(Triangle.rep.counts = NULL,
     }
     
     
-    # get the diagonal from the initial trinagle, i.e. the digonal is not adjusted
+    # get the diagonal from the initial triangle, i.e. the diagonal is not adjusted
     
     diag(paid_adj[, n:1]) <- diag(Triangle.paid[, n:1])
     

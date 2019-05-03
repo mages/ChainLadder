@@ -46,23 +46,21 @@ checkTriangleInflation(Triangle)
   }
 
 \examples{
-# Create a Triangle of Average Case O/S
-
+# Create a triangle of average open claims as the ratio between O/S Claims and Open Claims
 avg <- MedMal$MedMalOutstanding / MedMal$MedMalOpen
 
-# Calculate the Inflation Rates
-test <- checkTriangleInflation( avg )
+# Check the level of average inflation Y-o-Y
+test<-checkTriangleInflation(avg)
 
 # Plot the results
+# A model of exponential inflation fits quite well the level of average O/S claims
+# This is particularly evident for DP 1,2,3
 plot(test)
 
-# Check Coefficients, R^2 and Number of points used
+# Get the summary in an analytical way to observe the ratios and the number of points used
 summary(test)
-print(test)
 
-## For more examples see:
-\dontrun{
- demo(checkTriangleInflation)
-}
+# Print the output
+print(test) 
 }
 \keyword{tests}

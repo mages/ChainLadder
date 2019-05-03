@@ -20,7 +20,8 @@ suppressPackageStartupMessages(library(ChainLadder))
 # Version 0.2.10 [2019-05-02]
 
  * Added B-S Paid Claim Development Adjustment methods to adjust paid claims 
- based on the underlying relation between paid and closed claims. 
+ based on the underlying relation between paid and closed claims.
+ * Added tests to check calendar year effect, correlation between development factors and inflation.
  Thanks to Marco De Virgilis.
 
 # Version 0.2.9 [2018-12-06]

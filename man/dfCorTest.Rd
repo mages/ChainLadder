@@ -65,21 +65,21 @@ dfCorTest(Triangle, ci = .5)
   \code{\link{plot.dfCorTest}}
   }
 
-\examples{
-# Test the Triangle for Correlation between subsequent development factor
+\examples{# Before actually applying the Chain Ladder technique it is necessary to check
+# whether the Development Factors are correlated
 
-test<-dfCorTest(RAA)
+# Apply the function to the triangle and save the output into the variable test
+test <- dfCorTest(RAA)
 
-# Plot the results
+# Plot the confidence interval and the test metric
 plot(test)
 
-# Summary of the calculations
-summary(test)
-print(test)
+# The metric is within the confidence interval, therefore the Development Factors are nor correlated
 
-## For more examples see:
-\dontrun{
- demo(dfCorTest)
-}
+# Print the summary table
+summary(test)
+
+# Print onny the main outcomes
+print(test)
 }
 \keyword{tests}
