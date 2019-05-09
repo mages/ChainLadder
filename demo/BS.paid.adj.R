@@ -14,9 +14,9 @@ plot(paid_res)
 
 paid_adj <-
   BS.paid.adj(
-    Triangle_rep_counts = AutoBI$AutoBIReportedCounts,
-    Triangle_closed = AutoBI$AutoBIClosed,
-    Triangle_paid = AutoBI$AutoBIPaid,
+    Triangle.rep.counts = AutoBI$AutoBIReportedCounts,
+    Triangle.closed = AutoBI$AutoBIClosed,
+    Triangle.paid = AutoBI$AutoBIPaid,
     regression.type = 'exponential'
   )
 
