@@ -27,7 +27,7 @@
 \seealso{ See also \code{\link{checkTriangleInflation}},
   \code{\link{plot.checkTriangleInflation}} }
 \examples{
- test <- test <- checkTriangleInflation( MedMal$MedMalOutstanding / MedMal$MedMalOpen )
+ test <- checkTriangleInflation( MedMal$MedMalOutstanding / MedMal$MedMalOpen )
  summary(test)
 }
 \keyword{ methods }
