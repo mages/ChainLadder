@@ -67,10 +67,5 @@ adj_reported_ibnr <- summary(MackChainLadder(adj_reported))$Totals[4, 1]
 # Compare the two
 
 std_ibnr - adj_reported_ibnr
-
-## For more examples see:
-\dontrun{
- demo(inflateTriangle)
-}
 }
 \keyword{models}
