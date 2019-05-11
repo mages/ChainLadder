@@ -6,7 +6,7 @@
 
 \usage{data(MedMal)}
 \format{
-  U.S. medical malpractice insurance for an experience period of 1969 to 1976. Reported Claims, Paid Claims, Case Outstanding and Open Claims respectively
+  U.S. medical malpractice insurance for an experience period of 1969 to 1976. Reported Claims, Paid Claims, Case Outstanding    and Open Claims (i.e. the number of outstanding claims) respectively
 }
 \source{
 	\cite{Berquist, J.R. and Sherman, R.E., Loss Reserve Adequacy Testing: A Comprehensive,

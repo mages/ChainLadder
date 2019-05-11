@@ -30,9 +30,9 @@ cyEffTest(Triangle, ci = 0.95)
   The main reason why this independence can be violated in practice is the fact that 
   there could be certain calendar year effects such as major changes in claims handling or in 
   case reserving or external influences such as substantial changes in court decisions or 
-  inflation.
+  inflation.\cr
   As described by the Mack's 1994 paper a procedure is designed to test for calendar year 
-  influences.
+  influences.\cr
   The procedure returns a summary statistic \eqn{Z} which is assumed to be Normally Distributed.
   It is therefore possible to define a confidence interval threshold in order to evaluate the 
   outcome of the test.
@@ -82,7 +82,10 @@ plot(test)
 # Print the summary table
 summary(test)
 
-# Print onny the main outcomes
+# Print only the main outcomes
 print(test)
+# The test has returned a negative outcome. This means that the triangle is 
+# not affected by Caledar Year Effect and therefore the chain ladder method 
+# can be applied.
 }
 \keyword{tests}
