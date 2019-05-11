@@ -103,8 +103,7 @@ tail=FALSE, tail.se=NULL, tail.sigma=NULL, mse.method="Mack")
   \eqn{k+1} and \code{x} is  the vector of claims at development period
   \eqn{k}. 
 
-It is necessary, before actually applying the model, to check if the main assumptions behind the model 
-(i.e. Calendar Year Effect and Correlation between subsequent Accident Years) are verified.
+It is necessary, before actually applying the model, to check if the main assumptions behind the model (i.e. Calendar Year Effect and Correlation between subsequent Accident Years, see \code{\link{dfCorTest}}, \code{\link{cyEffTest}}) are verified.
 
 }
 \value{
@@ -170,14 +169,14 @@ Actuarial Society} - Arlington, Virginia 1994: LXXXI 154-222}
 % ~Make other sections like Warning with \section{Warning }{....} ~
 }
 \seealso{ See also \code{\link{qpaid}} for dealing with non-square triangles,  
-  \code{\link{chainladder}} for the underlying chain-ladder method,    
+  \code{\link{chainladder}} for the underlying chain-ladder method,  
+  \code{\link{dfCorTest}} to check for Calendar Year Effect,
+  \code{\link{cyEffTest}} to check for Development Factor Correlation,
   \code{\link{summary.MackChainLadder}},  
   \code{\link{quantile.MackChainLadder}},  
   \code{\link{plot.MackChainLadder}} and 
-  \code{\link{residuals.MackChainLadder}} displaying results and finally 
-  \code{\link{CDR.MackChainLadder}} for the one year claims development result,
-  \code{\link{dfCorTest}} to check for Calendar Year Effect,
-  \code{\link{cyEffTest}} to check for Development Factor Correlation.
+  \code{\link{residuals.MackChainLadder}} displaying results, 
+  \code{\link{CDR.MackChainLadder}} for the one year claims development result.
 }
 
 \examples{

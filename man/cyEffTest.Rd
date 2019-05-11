@@ -27,15 +27,12 @@ cyEffTest(Triangle, ci = 0.95)
   }
 }
 \details{
-  The main reason why this independence can be violated in practice is the fact that 
-  there could be certain calendar year effects such as major changes in claims handling or in 
-  case reserving or external influences such as substantial changes in court decisions or 
-  inflation.\cr
-  As described by the Mack's 1994 paper a procedure is designed to test for calendar year 
-  influences.\cr
-  The procedure returns a summary statistic \eqn{Z} which is assumed to be Normally Distributed.
-  It is therefore possible to define a confidence interval threshold in order to evaluate the 
-  outcome of the test.
+The main reason why this independence can be violated in practice is the fact that 
+there could be certain calendar year effects such as major changes in claims handling or in case reserving or external influences such as substantial changes in court decisions or inflation.
+
+As described by the Mack's 1994 paper a procedure is designed to test for calendar year influences.
+
+The procedure returns a summary statistic \eqn{Z} which is assumed to be Normally Distributed. It is therefore possible to define a confidence interval threshold in order to evaluate the outcome of the test.
 }
 \value{
   cyEffTest returns a list with the following elements

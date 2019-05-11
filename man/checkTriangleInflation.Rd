@@ -22,18 +22,17 @@ checkTriangleInflation(Triangle)
   The sensitivity of projections of ultimate losses based on incurred loss
   development factors to changes in the adequacy level of case reserves increases
   significantly for the long-tail lines. In particular, if the adequacy of the case reserve
-  is changing, the estimates of ultimate losses based on reported claims could be severely distorted.\cr
-  The function fits an exponential inflation model that takes the form of:
-  \deqn{Y=a*(1+b)^x}
-  where \eqn{Y} represents the inflated claim amount, \eqn{a} represents the claim amount at the beginning 
-  of each period (e.g. AY=0), \eqn{b} is the inflation rate  and \eqn{x} is the time (e.g. AY).\cr
-  Fitting such a model on the average level of the case outstanding (or any other average claim amount) 
-  for each development period, it is possible to appreciate the inflation rate that has affected the average case reserve.\cr
-  It is necessary to check the inflation on average amounts, otherwise the estimates may be distorted due to an increase in    the number of claims rather than an actual increase in the inflation level. \cr
-  If the level of inflation is material, it would be necessary to adjust each cell in the triangle.\cr 
-  This is to to have each diagonal in the triangle at the same level as the latest diagonal (i.e. latest valuation). This
-  adjustment would prevent distortions in the estimates caused by inflation and not by actual variations in the claim
-  experience.
+  is changing, the estimates of ultimate losses based on reported claims could be severely distorted.
+  
+The function fits an exponential inflation model that takes the form of:
+\deqn{Y=a*(1+b)^x} where \eqn{Y} represents the inflated claim amount, \eqn{a} represents the claim amount at the beginning of each period (e.g. AY=0), \eqn{b} is the inflation rate  and \eqn{x} is the time (e.g. AY).
+
+Fitting such a model on the average level of the case outstanding (or any other average claim amount) for each development period, it is possible to appreciate the inflation rate that has affected the average case reserve.
+  
+It is necessary to check the inflation on average amounts, otherwise the estimates may be distorted due to an increase in the number of claims rather than an actual increase in the inflation level.
+
+If the level of inflation is material, it would be necessary to adjust each cell in the triangle.\cr 
+  This is to to have each diagonal in the triangle at the same level as the latest diagonal (i.e. latest valuation). This adjustment would prevent distortions in the estimates caused by inflation and not by actual variations in the claim experience.
 }
 \value{
   checkTriangleInflation returns a list with the following elements
