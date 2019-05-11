@@ -103,6 +103,9 @@ tail=FALSE, tail.se=NULL, tail.sigma=NULL, mse.method="Mack")
   \eqn{k+1} and \code{x} is  the vector of claims at development period
   \eqn{k}. 
 
+It is necessary, before actually applying the model, to check if the main assumptions behind the model 
+(i.e. Calendar Year Effect and Correlation between subsequent Accident Years) are verified.
+
 }
 \value{
   MackChainLadder returns a list with the following elements
@@ -172,7 +175,9 @@ Actuarial Society} - Arlington, Virginia 1994: LXXXI 154-222}
   \code{\link{quantile.MackChainLadder}},  
   \code{\link{plot.MackChainLadder}} and 
   \code{\link{residuals.MackChainLadder}} displaying results and finally 
-  \code{\link{CDR.MackChainLadder}} for the one year claims development result.
+  \code{\link{CDR.MackChainLadder}} for the one year claims development result,
+  \code{\link{dfCorTest}} to check for Calendar Year Effect,
+  \code{\link{cyEffTest}} to check for Development Factor Correlation.
 }
 
 \examples{

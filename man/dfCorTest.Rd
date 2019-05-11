@@ -28,10 +28,10 @@ dfCorTest(Triangle, ci = .5)
 }
 \details{
   As described by the Mack's 1994 paper a procedure is designed to test for calendar year 
-  influences.
+  influences.\cr
   The usual test for uncorrelatedness requires that we have identically distributed pairs of 
   observations which come from a  Normal distribution. Both conditions are usually not fulfilled
-  for adjacent columns of development factors. Spearman's correlation coefficient is therefore used.
+  for adjacent columns of development factors. Spearman's correlation coefficient is therefore used.\cr
   The metric calulated by the procudeure described return a statistic \eqn{T} that it is assumed to
   be Normally Distributed. It is therefore possible to define a confidence interval threshold in order 
   to evaluate the outcome of the test.
@@ -79,7 +79,10 @@ plot(test)
 # Print the summary table
 summary(test)
 
-# Print onny the main outcomes
+# Print only the main outcomes
 print(test)
+# The test has returned a negative outcome. This means that the triangle is 
+# not affected by Development Factor Correlation and therefore the chain ladder method 
+# can be applied.
 }
 \keyword{tests}
