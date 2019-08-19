@@ -17,6 +17,11 @@ vignette: >
 knitr::opts_chunk$set(echo = TRUE)
 suppressPackageStartupMessages(library(ChainLadder))
 ```
+# Version 0.2.11 [2019-08-19]
+
+ * Fixed as.triangle for a 'long' data set, when input data had missing values.
+ Thanks to Dimitri Minassian for reporting this issue.
+
 # Version 0.2.10 [2019-05-27]
 
  * Added Berquist-Sherman Paid Claim Development Adjustment methods to adjust 

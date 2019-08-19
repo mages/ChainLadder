@@ -69,7 +69,8 @@ as.triangle.matrix <- function(Triangle, origin="origin", dev="dev", value="valu
   return(Triangle)
 }
 
-as.triangle.data.frame <- function(Triangle, origin="origin", dev="dev", value="value", ...){
+as.triangle.data.frame <- function(Triangle, origin="origin", 
+                                   dev="dev", value="value", ...){
 
 #  isDate <- inherits(Triangle[[origin]], "Date")
 #
@@ -84,8 +85,8 @@ as.triangle.data.frame <- function(Triangle, origin="origin", dev="dev", value="
                         sum)
   names(aggTriangle) <- c(dev, origin, value)
   
-  origin_names <- unique(aggTriangle[, origin])
-  dev_names <-   unique(aggTriangle[, dev])
+  origin_names <- as.character(unique(aggTriangle[, origin]))
+  dev_names <-  as.character(unique(aggTriangle[, dev]))
   
   
   # reshape into wide format
@@ -102,6 +103,9 @@ as.triangle.data.frame <- function(Triangle, origin="origin", dev="dev", value="
 
   dimnames(matrixTriangle)[[1]] <- origin_names
   dimnames(matrixTriangle)[[2]] <- dev_names
+  
+  matrixTriangle <- matrixTriangle[order(nchar(origin_names), origin_names),
+                                   order(nchar(dev_names), dev_names)]
   
   class(matrixTriangle) <- c("triangle", "matrix")
   return(matrixTriangle)
