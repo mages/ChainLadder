@@ -103,9 +103,6 @@ as.triangle.data.frame <- function(Triangle, origin="origin", dev="dev", value="
   dimnames(matrixTriangle)[[1]] <- origin_names
   dimnames(matrixTriangle)[[2]] <- dev_names
   
-  matrixTriangle <- matrixTriangle[order(rownames(matrixTriangle)),
-                                   order(colnames(matrixTriangle))]
-  
   class(matrixTriangle) <- c("triangle", "matrix")
   return(matrixTriangle)
 }
