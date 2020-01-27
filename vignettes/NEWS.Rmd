@@ -17,10 +17,12 @@ vignette: >
 knitr::opts_chunk$set(echo = TRUE)
 suppressPackageStartupMessages(library(ChainLadder))
 ```
-# Version 0.2.11 [2019-08-19]
+# Version 0.2.11 [2020-01-27]
 
  * Fixed as.triangle for a 'long' data set, when input data had missing values.
  Thanks to Dimitri Minassian for reporting this issue.
+ * Fixed standard error estimation in  MackChainLadder when tail factor > 1 
+ and alpha = 2. Thanks to Valentin Cornaciu for reporting this issue.
 
 # Version 0.2.10 [2019-05-27]
 

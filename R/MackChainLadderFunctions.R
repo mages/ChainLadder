@@ -85,7 +85,8 @@ MackChainLadder <- function(
     ## Estimate the standard error of f and F in the tail
     ##  If tail.se and/or tail.sigma provided, return those values
     StdErr <- tail.SE(FullTriangle, StdErr, Total.SE, tail.factor,
-                      tail.se = tail.se, tail.sigma = tail.sigma)
+                      tail.se = tail.se, tail.sigma = tail.sigma,
+                      alpha = alpha)
   }
   
   ## 3) Calculate process and parameter risks of the predicted loss amounts
@@ -331,7 +332,8 @@ tail.E <- function(FullTriangle, tail.factor){
 ########################################################################
 ## Estimate standard error for tail
 
-tail.SE <- function(FullTriangle, StdErr, Total.SE, tail.factor, tail.se = NULL, tail.sigma = NULL) {
+tail.SE <- function(FullTriangle, StdErr, Total.SE, tail.factor, 
+                    tail.se = NULL, tail.sigma = NULL, alpha) {
   n <- ncol(FullTriangle)
   m <- nrow(FullTriangle)
   
@@ -365,9 +367,8 @@ tail.SE <- function(FullTriangle, StdErr, Total.SE, tail.factor, tail.se = NULL,
     tail.sigma <- exp(predict(msig, newdata = data.frame(.dev = tail.pos)))
   }
   StdErr$sigma <- c(StdErr$sigma, tail.sigma = as.numeric(tail.sigma))
-  
   ## estimate the standard error of the tail factor ratios
-  se.F.tail <- tail.sigma / sqrt(FullTriangle[, n - 1])
+  se.F.tail <- tail.sigma / sqrt(FullTriangle[, n - 1]^alpha[n-2])
   StdErr$F.se <- cbind(StdErr$F.se, se.F.tail)
   
   return(StdErr)

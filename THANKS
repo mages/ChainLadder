@@ -28,4 +28,6 @@ Many thanks to all who provided ideas, suggestions, corrections and bug reports:
 - Edward Tasker for reporting a bug in as.triangle
 - Dimitri Minassian for reporting an issue with as.triangle, when input data had
   missing values
+- Valentin Cornaciu for reporting a bug standard error estimation in 
+  MackChainLadder when tail factor > 1 and alpha = 2
 
