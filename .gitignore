@@ -2,3 +2,10 @@
 .Rhistory
 .RData
 .Rbuildignore
+
+vignettes/*.pdf
+vignettes/*.tex
+vignettes/*.bbl
+vignettes/*.log
+vignettes/*.gz
+vignettes/*.toc
