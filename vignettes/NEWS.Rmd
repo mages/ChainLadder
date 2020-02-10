@@ -17,7 +17,7 @@ vignette: >
 knitr::opts_chunk$set(echo = TRUE)
 suppressPackageStartupMessages(library(ChainLadder))
 ```
-# Version 0.2.11 [2020-01-27]
+# Version 0.2.11 [2020-02-10]
 
  * Fixed as.triangle for a 'long' data set, when input data had missing values.
  Thanks to Dimitri Minassian for reporting this issue.
