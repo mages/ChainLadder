@@ -56,7 +56,9 @@ homogeneous lines of business, division levels or perils.
 
 ### Creating triangles interactively
 
-We can create a triangle object interactively using R vectors and the `triangle` function provided by the package:
+We can create a triangle object interactively using R vectors and the `triangle` function provided by the package.
+
+Function `triangle` builds a triangle matrix from the vectors of known data provided in `...`. Normally, each of these vectors should be one shorter than the preceding one. The length of the first vector dictates the number of development periods or origin periods (respectively when bycol is `FALSE` or `TRUE`).
 
 ```{r message=FALSE}
 require(ChainLadder)
@@ -69,7 +71,7 @@ triangle(c(100, 150, 175, 180, 200),
          150)
 ```
 
-We can optionally specify the *labels* for the origin periods:
+We can specify the *labels* for the origin periods:
 ```{r}
 triangle("2012" = c(100, 150, 175, 180, 200),
          "2013" = c(110, 168, 192, 205),
@@ -78,7 +80,8 @@ triangle("2012" = c(100, 150, 175, 180, 200),
          "2016" = 150)
 ```
 
-and we can also specify the labels for development periods:
+and also specify the labels for development periods:
+
 ```{r}
 triangle("2012" = c("12 months" = 100,
                     "24 months" = 150,
@@ -91,13 +94,41 @@ triangle("2012" = c("12 months" = 100,
          "2016" = 150)
 ```
 
+As a special case, the function will build an $n \times n$ triangle from a single vector of $n(n + 1)/2$ data points.
 If a single vector is passed to the triangle constructor, the function will try to infer the structure of the desired triangle:
 ```{r}
 triangle(c(100, 150, 175, 110, 168, 115))
 ```
 
 ### Converting data into triangles
+
+Starting from data stored in table format (for example `data.frame`), we can use the `as.triangle` function to convert data into triangle format:
+
+```{r}
+origin = c(2015, 2015, 2015, 2016, 2016, 2017)
+dev = c(1, 2, 3, 1, 2, 1)
+value = c(100, 150, 175, 110, 168, 115)
+d = data.frame(origin,dev,value)
+d
+tri = as.triangle(d)
+tri
+```
+
 ### Visualizing triangles
+For a data set of class triangle the `ChainLadder` package provides default plotting
+methods to give a graphical overview of the data:
+
+```{r}
+# we load an example dataset provided with the package
+tri = ChainLadder::RAA
+plot(tri)
+```
+Setting the argument `lattice=TRUE` will produce individual plots for each origin
+period:
+```{r}
+plot(tri, lattice=TRUE)
+```
+
 ### Integration with Excel
 
 \pagebreak
