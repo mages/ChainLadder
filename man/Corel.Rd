@@ -2,7 +2,7 @@
 % Please edit documentation in R/BootMackChainLadder.R
 \name{Corel}
 \alias{Corel}
-\title{Title}
+\title{Corel}
 \usage{
 Corel(x, ...)
 }
@@ -15,7 +15,7 @@ Corel(x, ...)
 A corelation matrix of next-year IBNRs.
 }
 \description{
-Title
+Corel
 }
 \details{
 Gives the correlations between the next-year IBNRs of the several triangles under the MBMCL model.
@@ -23,6 +23,6 @@ Gives the correlations between the next-year IBNRs of the several triangles unde
 \examples{
 data(ABC)
 triangles <- list(tri1 = ABC, tri2 = ABC, tri3 = ABC)
-MBMCL <- MultiBootmackChainLadder(triangles,100)
+MBMCL <- MultiBootMackChainLadder(triangles, 100)
 Corel(MBMCL)
 }

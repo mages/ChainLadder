@@ -2,7 +2,7 @@
 % Please edit documentation in R/BootMackChainLadder.R
 \name{NyIBNR}
 \alias{NyIBNR}
-\title{Title}
+\title{Next year IBNR}
 \usage{
 NyIBNR(x, ByOrigin = FALSE)
 }
@@ -15,7 +15,7 @@ NyIBNR(x, ByOrigin = FALSE)
 Data frame with next year informations.
 }
 \description{
-Title
+Next year IBNR
 }
 \details{
 Gives a data.frame with next-year payments informations found by the MBMCL model.
@@ -23,6 +23,6 @@ Gives a data.frame with next-year payments informations found by the MBMCL model
 \examples{
 data(ABC)
 triangles <- list(tri1 = ABC, tri2 = ABC, tri3 = ABC)
-MBMCL <- MultiBootmackChainLadder(triangles,100)
+MBMCL <- MultiBootMackChainLadder(triangles, 100)
 NyIBNR(MBMCL)
 }

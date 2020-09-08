@@ -39,14 +39,15 @@ A BootMackChainLadder object with a lot of information about the bootstrapping. 
 This function implement a simple bootstrap of the residuals from the mack model with a one-year reserving risk point of view.
 }
 \details{
-The bootstrap that is implemented here consist in a resampling of residuals obtained by the Mack model 
-(or simulated standard normal residuals if you choose so), and on thoose samples we construct a one-year 
-point of view of the mack model, allowing us to bootstrap one-year quantities like the CDR or next year IBNRS. 
-Using this function properly, you could check that the proposed bootstrap is convergent with the merz-wuthrich formula 
-if you take standard normal résiduals, but not otherwise. 
+The bootstrap that is implemented here consist in a resampling of residuals obtained by the Mack model
+(or simulated standard normal residuals if you choose so through the `distNy` parameter). On those resampled triangles, we construct a one-year
+point of view of the Mack model, allowing us to bootstrap one-year quantities like the CDR or next year IBNRS.
+Using this function properly, you could check that the proposed bootstrap is convergent with the Merz-Wuthrich formula
+if you take standard normal residuals, but not otherwise.
 
-The residuals can also be clustered. To do that, you need to provide clusters as a list of vectors of integers corresponding to each cluster:
-prodiding clusters=list(seq(1,10),seq(11,15)) for a triangle with 15 columns will cluster the residuals in two parts.
+The residuals can also be clustered through the `clusters` argument, by providing clusters as a list of vectors of integers corresponding to each cluster:
+`clusters=list(seq(1,10),seq(11,15))` for a triangle with 15 columns will cluster the residuals in two parts. The meaning of this parameter is that the residuals are resampled inside clusters only:
+the underlying i.i.d hypothesis that is needed for the resampling can be tampered with through this parameterisation
 }
 \examples{
 data(ABC)

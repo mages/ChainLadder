@@ -23,22 +23,26 @@ MultiBootMackChainLadder(
 \item{names}{enventual names of the different triangles. IF set to NULL, the procedure will try to get names from the triangles list (first argument)}
 
 \item{threshold}{Eventual exclusions limit for residuals. Set to NA (default) to avoid excluding anything.}
+
+\item{stab}{Stabilisation parameter. See the code.}
 }
 \value{
 a MBMCL object containing a list of BMCL objects and a little more.
 }
 \description{
-The multi boot mack chain ladder algorythme computes todays and next-year common estimates on a portefolio of several triangles, following closely a synchronised version of BootMackChainLadder.
+The multi boot mack chain ladder algorythm computes todays and next-year estimates on a portefolio of several triangles, following closely a synchronised version of BootMackChainLadder.
 }
 \details{
-This function calculates, on a list of triangles, a synchronised bootstrap in the Mack model for the triangles. 
-The One-year point of view is also calculated. 
-It returns a specific S3 object, on wich you can use the functionsmean, CDR, NyIBNR, Corel provided by the package. 
+This function calculates, on a list of triangles, a synchronised bootstrap in the Mack model for the triangles.
+The One-year point of view is also calculated.
+It returns a specific S3 object, on wich you can use the standard functions like mean, CDR, NyIBNR, Corel provided by the package,
+to produce usefull outputs. 
 
 This model uses the fact that the Mack model can be seen as a quasi-glm, and therefore provide resiuals.
 Bootstrapping thoose residuals on the upper-left triangle allows to get bootstrap distribution of today's estimations (reserves, ultimates, ...).
 Furthermore, if you simulate net year payments with a given process ditribution in each simulation, it gives 1 year results.
 
+The Multivariate dependence structure is induced by bootstrapping jointly the residueals of each triangles.
 
 If distNy = "normal", it follows *boumezoued & al* and converges to the Merz-Wüthrich formula in the Braun model. 
 If distNy = "residuals", it also converges strongly but NOT to the Merz-Wûthrich formula. Same for ohter possibilities. 
@@ -47,7 +51,7 @@ Notes that if you choose distNy = "residuals.bycolumn", the residuals will be re
 \examples{
 data(ABC)
 triangles <- list(tri1 = ABC, tri2 = ABC, tri3 = ABC)
-MultiBootmackChainLadder(triangles,100)
+MultiBootMackChainLadder(triangles, 100)
 }
 \seealso{
 BootMackChainLadder

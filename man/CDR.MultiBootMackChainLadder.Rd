@@ -2,18 +2,20 @@
 % Please edit documentation in R/BootMackChainLadder.R
 \name{CDR.MultiBootMackChainLadder}
 \alias{CDR.MultiBootMackChainLadder}
-\title{CDR.MultiBootMackChainLadder}
+\title{CDR}
 \usage{
-\method{CDR}{MultiBootMackChainLadder}(x)
+\method{CDR}{MultiBootMackChainLadder}(x, ...)
 }
 \arguments{
 \item{x}{A MultiBootMackChainLadder Object}
+
+\item{...}{other arguments for other methods.}
 }
 \value{
 Informations about CDR and IBNRS.
 }
 \description{
-CDR.MultiBootMackChainLadder
+CDR
 }
 \details{
 Give information about next year volatility for the MBMCL model.
@@ -21,7 +23,7 @@ Give information about next year volatility for the MBMCL model.
 \examples{
 data(ABC)
 triangles <- list(tri1 = ABC, tri2 = ABC, tri3 = ABC)
-MBMCL <- MultiBootmackChainLadder(triangles,100)
+MBMCL <- MultiBootMackChainLadder(triangles, 100)
 CDR(MBMCL)
 }
 \seealso{

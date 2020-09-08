@@ -2,18 +2,20 @@
 % Please edit documentation in R/BootMackChainLadder.R
 \name{print.BootMackChainLadder}
 \alias{print.BootMackChainLadder}
-\title{print.BootMackChainLadder}
+\title{print}
 \usage{
 \method{print}{BootMackChainLadder}(x, ...)
 }
 \arguments{
-\item{BMCL}{}
+\item{x}{the BootMackChainLadder object}
+
+\item{...}{nothing}
 }
 \value{
 the BMCL object
 }
 \description{
-print.BootMackChainLadder
+print
 }
 \examples{
 data(ABC)

@@ -3,9 +3,10 @@ title: "Non-parametric bootstrap of the Mack model"
 author: "Oskar Laverny"
 date: "08 September 2020"
 bibliography: [BootMack.bib]
-output:
-  pdf_document: default
-  html_document: default
+vignette: >
+  %\VignetteIndexEntry{BootMack}
+  %\VignetteEngine{knitr::rmarkdown}
+  \usepackage[utf8]{inputenc}
 ---
 
 ```{r setup, include=FALSE}

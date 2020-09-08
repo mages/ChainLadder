@@ -1,37 +1,43 @@
+## Author: Oskar Laverny
+## Copyright: Oskar Laverny, oskar.laverny@gmail.com
+## Date: 2018
+
+
+
 # @import tidyverse
 # @import magrittr
 # @import dplyr
 #' @import mvtnorm
 NULL
 
-##### Boot Mack Chain Ladder                                                         #####
 #' Boot Mack Chain Ladder model
 #'
-#' This function implement a simple bootstrap of the residuals from the mack model with a one-year reserving risk point of view.
+#' This function implement a simple bootstrap of the residuals from Mack model, potentially including a one-year risk view.
 #'
-#' @param Triangle A simple triangle from che Chain-ladder package.
-#' @param B numeric. The number of bootstrap samples you want
-#' @param distNy character. Distribution of next-year incremental payments. Either "normal" (default) or "residuals"
-#' @param threshold numeric. A value of NA (default) will prevent exclusion of residuals, and a numerci value (e.g 2) will exclude all residuals that have an absolution value greater than 2.
-#' @param BF.premiums If a Bornhuetter-fergusson is needed, input a vector of ultimates premiums here. Otherwise, the BF code will not be triggered.
-#' @param BF.param A vector of 2 interger that represent (respectively) the number of year of averaging Loss-ratios for the bornhuetter fergusson and then the number of year of applying the bornhuetter fergusson to. 
-#' @param stab A stabilisation parameter.
+#' @param Triangle A simple triangle containing the data.
+#' @param B The number of bootstrap resamples
+#' @param distNy Distribution of next-year incremental payments. Either "normal" or "residuals", see details
+#' @param threshold A value of NA (default) will prevent exclusion of residuals, but a numeric value (e.g 2) will exclude all residuals that have an absolution value greater than 2.
+#' @param BF.premiums If a Bornhuetter-fergusson is needed, input a vector of Ultimates Premiums here. Otherwise, the BF code will not be triggered.
+#' @param BF.param A vector of 2 integers that represent (respectively) the number of year of averaging Loss-ratios for the Bornhuetter Fergusson and then the number of year of applying the Bornhuetter Fergusson to.
+#' @param stab A stabilisation parameter: forces developpements factors corresponding to developpements years greater than `stab` to be one.
 #' @param clusters list of sequences of column numbers. See details.
-#' 
-#' @details 
-#' 
-#' The bootstrap that is implemented here consist in a resampling of residuals obtained by the Mack model 
-#' (or simulated standard normal residuals if you choose so), and on thoose samples we construct a one-year 
-#' point of view of the mack model, allowing us to bootstrap one-year quantities like the CDR or next year IBNRS. 
-#' Using this function properly, you could check that the proposed bootstrap is convergent with the merz-wuthrich formula 
-#' if you take standard normal résiduals, but not otherwise. 
-#' 
-#' The residuals can also be clustered. To do that, you need to provide clusters as a list of vectors of integers corresponding to each cluster:
-#' prodiding clusters=list(seq(1,10),seq(11,15)) for a triangle with 15 columns will cluster the residuals in two parts. 
-#' 
-#' 
-#' 
-#' @return A BootMackChainLadder object with a lot of information about the bootstrapping. You can plot it, print it and str it to extract information.
+#'
+#' @details
+#'
+#' The bootstrap that is implemented here consist in a resampling of residuals obtained by the Mack model
+#' (or simulated standard normal residuals if you choose so through the `distNy` parameter). On those resampled triangles, we construct a one-year
+#' point of view of the Mack model, allowing us to bootstrap one-year quantities like the CDR or next year IBNRS.
+#' Using this function properly, you could check that the proposed bootstrap is convergent with the Merz-Wuthrich formula
+#' if you take standard normal residuals, but not otherwise.
+#'
+#' The residuals can also be clustered through the `clusters` argument, by providing clusters as a list of vectors of integers corresponding to each cluster:
+#' `clusters=list(seq(1,10),seq(11,15))` for a triangle with 15 columns will cluster the residuals in two parts. The meaning of this parameter is that the residuals are resampled inside clusters only:
+#' the underlying i.i.d hypothesis that is needed for the resampling can be tampered with through this parameterisation
+#'
+#'
+#'
+#' @return A BootMackChainLadder object with a lot of information about the bootstrapping. You can `plot` it, `print` it and `str` it to extract information. Functions `mean`, `CDR` and `summary` can be used to extract informations as well.
 #' @export
 #'
 #' @import magrittr
@@ -39,18 +45,18 @@ NULL
 #' @examples
 #' data(ABC)
 #' BootMackChainLadder(Triangle = ABC, B = 100, distNy = "residuals", threshold = 2)
-BootMackChainLadder <- function(Triangle, B=100, distNy="normal", threshold=NA,BF.premiums=NULL,BF.param = c(5,5),stab=NA,clusters=NA) {
+BootMackChainLadder <- function(Triangle, B = 100, distNy = "normal", threshold = NA, BF.premiums = NULL, BF.param = c(5, 5), stab = NA, clusters = NA) {
   if (!(distNy %in% c("normal", "residuals"))) {
     stop("DistNy Parameter must be 'normal' (classical MW) or 'residuals'")
   }
-  
-  
-  if(!is.na(clusters)){
-    if(not(sort(unlist(clusters)) == 1:ncol(Triangle))){
+
+
+  if (!is.na(clusters)) {
+    if (!(sort(unlist(clusters)) == seq_len(ncol(Triangle)))) {
       stop("The clusters should be provided as a list that unlist() to the set of integers 1:ncol(Triangle)")
     }
   }
-  
+
   # Cf "One-year reserve risk including a tail factor : closed formula and bootstrapp aproach, 2011"
 
   # First step : Mack model.
@@ -60,8 +66,8 @@ BootMackChainLadder <- function(Triangle, B=100, distNy="normal", threshold=NA,B
   DFIndiv <- .DFIndiv(Triangle)
   sigma <- .sigma(Triangle, DF, DFIndiv)
   residuals <- .residuals(Triangle, centered = TRUE, DF, DFIndiv, sigma)
-  Ultimates <- .ultimates(Triangle, DF, stab=stab)
-  IBNR <- .ibnr(Triangle, DF,stab = stab)
+  Ultimates <- .ultimates(Triangle, DF, stab = stab)
+  IBNR <- .ibnr(Triangle, DF, stab = stab)
 
   # Step 2 : Resampling residuals.
   samples <- .sampling(residuals, B, threshold = threshold, stab = stab, clusters = clusters)
@@ -70,29 +76,27 @@ BootMackChainLadder <- function(Triangle, B=100, distNy="normal", threshold=NA,B
   DFIndivBoot <- lapply(sampledResiduals, function(.x) {
     t(t(.x * sqrt(t(c(sigma^2, 0) / t(Triangle)))) + DF)
   })
-  DFBoot <- lapply(DFIndivBoot, .DFPond, Triangle) # ponderated by the original triangle !
+  DFBoot <- lapply(DFIndivBoot, .DFPond, Triangle) # weighted by the original triangle !
 
-  # Step 5 : Simulation of NY payments by a standard normal OR by the residuals... taking into acount process error
+  # Step 5 : Simulation of NY payments by a standard normal OR by the residuals... taking into account process error
   if (distNy == "normal") {
     NyCum <- lapply(DFBoot, function(.x) {
       rnorm(n = n - 1, mean = (diag * .x)[1:(n - 1)], sd = sqrt((diag * c(sigma^2, 0))[1:(n - 1)]))
     })
   }
   if (distNy == "residuals") {
-    
-    # To simulate the same thing with residuals assuming they are all i.i.d between developpements years, we could do :
+
+    # To simulate the same thing with residuals assuming they are all i.i.d between developments years, we could do :
     if (!is.na(threshold)) { # FIrst, let's discard non-selected residuals.
       residuals[residuals[(!is.na(residuals))] > threshold] <- NA
     }
-    
-    # Stabilisation : 
-    if(!is.na(stab)){
-      residuals[col(Triangle)>stab] <- NA
-    }
-    
-    if (is.na(clusters)) {
 
-      
+    # Stabilization :
+    if (!is.na(stab)) {
+      residuals[col(Triangle) > stab] <- NA
+    }
+
+    if (is.na(clusters)) {
       samples <- sample(residuals[!is.na(residuals)], size = (n - 1) * B, replace = TRUE)
       samples <- lapply(1:B, function(.x) {
         samples[((n - 1) * (.x - 1) + 1):((n - 1) * .x)]
@@ -102,10 +106,10 @@ BootMackChainLadder <- function(Triangle, B=100, distNy="normal", threshold=NA,B
       }, samples, DFBoot, SIMPLIFY = FALSE)
     } else {
 
-      # eg clusters = list(c(1, 2), seq(3, 9), seq(10, 12), seq(13, n - 1))
+      # e.g. clusters = list(c(1, 2), seq(3, 9), seq(10, 12), seq(13, n - 1))
       samples <- list()
 
-      samples <- lapply(1:length(clusters), function(i) {
+      samples <- lapply(seq_len(length(clusters)), function(i) {
         x <- sample(residuals[, clusters[[i]]][!is.na(residuals[, clusters[[i]]])], size = length(clusters[[i]]) * B, replace = TRUE)
         x <- lapply(1:B, function(.x) {
           x[(length(clusters[[i]]) * (.x - 1) + 1):(length(clusters[[i]]) * .x)]
@@ -131,11 +135,11 @@ BootMackChainLadder <- function(Triangle, B=100, distNy="normal", threshold=NA,B
   # Step 6 : Calculation of Ny estimators
   NyInc <- lapply(NyCum, function(.x) {
     .x - diag[1:(n - 1)]
-  }) # Coresponding incremnts
+  }) # Corresponding incremnts
   NyDFIndiv <- lapply(NyCum, function(.x) {
     .x / diag[1:(n - 1)]
-  }) # Coresponding individual DF's
-  NyDF <- lapply(NyDFIndiv, .newDFPond, DFIndiv, Triangle, stab) # coredponing DF
+  }) # Corresponding individual DF's
+  NyDF <- lapply(NyDFIndiv, .newDFPond, DFIndiv, Triangle, stab) # DF
   NyUltimates <- mapply(function(.x, .y) {
     c(.x * rev(cumprod(rev(.y[2:n]))), Triangle[1, n])
   }, NyCum, NyDF, SIMPLIFY = FALSE)
@@ -144,44 +148,45 @@ BootMackChainLadder <- function(Triangle, B=100, distNy="normal", threshold=NA,B
   })
 
 
-  
+
   # Stabilisation :
-  if(!is.na(stab)){
-    
-    # les DF : 
-    DF[(stab+1):length(DF)] <- rep(1,length(DF)-stab)
-    
-    # et les DFBOOT : 
-    DFBoot <- lapply(DFBoot,function(rez){
-        rez[(stab+1):length(rez)] <- rep(1,length(rez)-stab)
-        return(rez)
+  if (!is.na(stab)) {
+
+    # les DF :
+    DF[(stab + 1):length(DF)] <- rep(1, length(DF) - stab)
+
+    # et les DFBOOT :
+    DFBoot <- lapply(DFBoot, function(rez) {
+      rez[(stab + 1):length(rez)] <- rep(1, length(rez) - stab)
+      return(rez)
     })
   }
-  
-  ######### Ajustement Bornhutter fergusson : prend en paramètres les primes ultimes. 
-  if(!is.null(BF.premiums)){
-    Ultimates <- .BF.Ultimates(Ultimates,BF.premiums,DF,BF.param[1],BF.param[2])
+
+  ######### Bf adjustement: takes the ultimate premiums as a parameter.
+  if (!is.null(BF.premiums)) {
+    Ultimates <- .BF.Ultimates(Ultimates, BF.premiums, DF, BF.param[1], BF.param[2])
     IBNR <- Ultimates - rev(diag)
-    
+
     NyUltimates <- mapply(function(df, ultimate) {
-      rev(.BF.Ultimates(rev(ultimate),BF.premiums,df,BF.param[1],BF.param[2]))
+      rev(.BF.Ultimates(rev(ultimate), BF.premiums, df, BF.param[1], BF.param[2]))
     }, NyDF, NyUltimates, SIMPLIFY = FALSE)
-    
+
     NyIBNR <- lapply(NyUltimates, function(.x) {
       .x - diag
     })
   }
-  # formatage et sortie : 
+  # formatage et sortie :
   rez <- .formatOutput(n, Triangle, diag, DF, sigma, residuals, DFBoot, Ultimates, IBNR, NyCum, NyInc, NyDF, NyUltimates, NyIBNR)
   return(rez)
 }
-#' mean.BootMackChainLadder
+#' mean
 #'
-#' Calculate mean statiscics from the bootstraped mack model
+#' Calculate mean statiscics from the BootMackChainLadder object
 #'
 #' @param x A BootMackChainLadder Object
+#' @param ... Nothing
 #'
-#' @return Three data.frames containing data per origin year ("ByOrigin"), by developpement year ("ByDev) and globaly ("Totals)
+#' @return Three data.frames containing data per origin year ("ByOrigin"), by development year ("ByDev") and globally ("Totals")
 #' @export
 #'
 #' @examples
@@ -191,7 +196,7 @@ BootMackChainLadder <- function(Triangle, B=100, distNy="normal", threshold=NA,B
 mean.BootMackChainLadder <- function(x, ...) {
 
   # the purpose of this function is to return means of everything BMCL returned.
-  if(is.null(x$Latest)){ # so it's a light version of the model
+  if (is.null(x$Latest)) { # so it's a light version of the model
     ByOrigin <- data.frame(
       Ultimates = x$Ultimates,
       IBNR = x$IBNR,
@@ -225,11 +230,12 @@ mean.BootMackChainLadder <- function(x, ...) {
 
   return(list(ByOrigin = ByOrigin, ByDev = ByDev, Totals = Totals))
 }
-#' CDR.BootMackChainLadder
+#' CDR
 #'
-#' Calculate the one-year Claim developpement results from the bootstrapped mack model.
+#' Calculate the one-year Claim developpement results from the BootMackChainLadder object
 #'
-#' @param BMCL A BootMackChainLadder Object
+#' @param x A BootMackChainLadder Object
+#' @param ... other arguments for other methods.
 #'
 #' @return A data.Frame with one-year results from the bootstrap.
 #' @export
@@ -238,28 +244,13 @@ mean.BootMackChainLadder <- function(x, ...) {
 #' data(ABC)
 #' BMCL <- BootMackChainLadder(Triangle = ABC, B = 100, distNy = "residuals", threshold = 2)
 #' CDR(BMCL)
-CDR.BootMackChainLadder <- function(BMCL) {
-  Totals <- data.frame(IBNR = sum(BMCL$IBNR), `CDR(1)S.E.` = sd(rowSums(BMCL$NyIBNR)))
+CDR.BootMackChainLadder <- function(x, ...) {
+  Totals <- data.frame(IBNR = sum(x$IBNR), `CDR(1)S.E.` = sd(rowSums(x$NyIBNR)))
   row.names(Totals) <- "Totals"
   names(Totals) <- c("IBNR", "CDR(1)S.E.")
-  rbind(setNames(data.frame(IBNR = BMCL$IBNR, `CDR(1)S.E.` = apply(BMCL$NyIBNR, 2, sd)), names(Totals)), Totals)
+  rbind(setNames(data.frame(IBNR = x$IBNR, `CDR(1)S.E.` = apply(x$NyIBNR, 2, sd)), names(Totals)), Totals)
 }
-#' summary.BootMackChainLadder
-#'
-#'  Give summary statistics about the bootstrap.
-#'
-#' @param object A BootMackChainLadder Object
-#'
-#' @return NULL
 #' @export
-#'
-#' @details
-#' The function only print information about the model.
-#'
-#' @examples
-#' data(ABC)
-#' BMCL <- BootMackChainLadder(Triangle = ABC, B = 100, distNy = "residuals", threshold = 2)
-#' summary(BMCL)
 summary.BootMackChainLadder <- function(object, ...) {
   mean <- mean(object)
   cat("This is a BootMackChainLadder model \n\n")
@@ -270,9 +261,10 @@ summary.BootMackChainLadder <- function(object, ...) {
   print(format(t(mean$Totals), format = "i", nsmall = 0, big.mark = ","))
   return(NULL)
 }
-#' print.BootMackChainLadder
+#' print
 #'
-#' @param BMCL
+#' @param x the BootMackChainLadder object
+#' @param ... nothing
 #'
 #' @return the BMCL object
 #' @export
@@ -286,32 +278,34 @@ print.BootMackChainLadder <- function(x, ...) {
   return(NULL)
 }
 
-
-##### Multi Boot Back Chain Ladder                                                   #####
 #' MultiBootMackChainLadder
 #'
-#' The multi boot mack chain ladder algorythme computes todays and next-year common estimates on a portefolio of several triangles, following closely a synchronised version of BootMackChainLadder.
+#' The multi boot mack chain ladder algorythm computes todays and next-year estimates on a portefolio of several triangles, following closely a synchronised version of BootMackChainLadder.
 #'
 #' @param triangles A List of Triangles objects of the same size.
 #' @param B The number of boostrap replicates
 #' @param distNy The process distribution for next year increments. Either "normal" (default), "residuals.bycolumn","residuals.global" or "residuals". See details below.
 #' @param names enventual names of the different triangles. IF set to NULL, the procedure will try to get names from the triangles list (first argument)
 #' @param threshold Eventual exclusions limit for residuals. Set to NA (default) to avoid excluding anything.
+#' @param stab Stabilisation parameter (number of CL coefs we keep). See the code.
 #'
 #' @details
 #'
-#' This function calculates, on a list of triangles, a synchronised bootstrap in the Mack model for the triangles. 
-#' The One-year point of view is also calculated. 
-#' It returns a specific S3 object, on wich you can use the functionsmean, CDR, NyIBNR, Corel provided by the package. 
+#' This function calculates, on a list of triangles, a synchronised bootstrap in the Mack model for the triangles.
+#' The One-year point of view is also calculated.
+#' It returns a specific S3 object, on wich you can use the standard functions like mean, CDR, NyIBNR, Corel provided by the package,
+#' to produce usefull outputs. 
 #'
 #' This model uses the fact that the Mack model can be seen as a quasi-glm, and therefore provide resiuals.
 #' Bootstrapping thoose residuals on the upper-left triangle allows to get bootstrap distribution of today's estimations (reserves, ultimates, ...).
 #' Furthermore, if you simulate net year payments with a given process ditribution in each simulation, it gives 1 year results.
-#' 
 #'
-#' If distNy = "normal", it follows *boumezoued & al* and converges to the Merz-Wüthrich formula in the Braun model. 
-#' If distNy = "residuals", it also converges strongly but NOT to the Merz-Wûthrich formula. Same for ohter possibilities. 
-#' Notes that if you choose distNy = "residuals.bycolumn", the residuals will be resampled inside each column and not accross columns. Setting distNy = "residuals.global" or "residuals" triggers the same code.
+#' The Multivariate dependence structure is induced by bootstrapping jointly the residueals of each triangles.
+#'
+#' If distNy = "normal", it follows *Boumezoued & al: One-year reserve risk including a tail factor : closed formula and bootstrapp aproach, 2011* and converges to the Merz-Wuthrich formula in the Braun model.
+#' If distNy = "residuals", it also converges strongly but NOT to the Merz-Wuthrich formula, although each triangles is bootstrapped according to the Mack model, and has volatility parameters that matches the Mack model.
+#' Notes that if you choose distNy = "residuals.bycolumn", the residuals will be resampled inside each column and not accross columns. 
+#' Setting distNy = "residuals.global" or "residuals" triggers the same code.
 #'
 #' @return a MBMCL object containing a list of BMCL objects and a little more.
 #' @export
@@ -321,8 +315,8 @@ print.BootMackChainLadder <- function(x, ...) {
 #' @examples
 #' data(ABC)
 #' triangles <- list(tri1 = ABC, tri2 = ABC, tri3 = ABC)
-#' MultiBootmackChainLadder(triangles,100)
-MultiBootMackChainLadder <- function(triangles, B=100, distNy = "normal", names=NULL, threshold=NA,stab=NA) {
+#' MultiBootMackChainLadder(triangles, 100)
+MultiBootMackChainLadder <- function(triangles, B = 100, distNy = "normal", names = NULL, threshold = NA, stab = NA) {
   if (!(distNy %in% c("normal", "residuals.bycolumn", "residuals.global", "residuals"))) {
     stop("DistNy Parameter must be 'normal' (classical MW) or 'residuals'")
   }
@@ -341,15 +335,12 @@ MultiBootMackChainLadder <- function(triangles, B=100, distNy = "normal", names=
   ibnr <- mapply(.ibnr, triangles, DF, stab, SIMPLIFY = FALSE)
   rho <- .rho(triangles, sigma, DFIndiv, DF)
   Ultimates <- mapply(.ultimates, triangles, DF, stab, SIMPLIFY = FALSE)
-  
-  
-  
 
   # Second step : resampling and calculation of basic statistics on resampled triangles.
 
 
-  # first step : tweaking residuals to exclude somes.
-  # the exclusions needs to be done sychronised. So our proposal is to replace positions that are excluded by positions from the same original column.
+  # first step : tweaking residuals to exclude some of them.
+  # the exclusions needs to be done synchronised. So our proposal is to replace positions that are excluded by positions from the same original column.
 
   # Let's calculate excluded positions :
 
@@ -359,13 +350,13 @@ MultiBootMackChainLadder <- function(triangles, B=100, distNy = "normal", names=
       which(abs(x) > threshold)
     })
 
-    # on thoose positions, we have to replace the residuals that pose problem by one another from the same collumn.
+    # on thoose positions, we have to replace the residuals that pose problem by one another from the same column.
     residuals <- mapply(function(res, pos) {
-      for (i in 1:length(pos)) {
+      for (i in seq_len(length(pos))) {
         col <- unique(floor(pos[i] / n) + 1)
         line <- which(abs(res[((col - 1) * n + 1):(col * n)]) > threshold)
         newrez <- sample(res[((col - 1) * n + 1):(col * n)][abs(res[((col - 1) * n + 1):(col * n)]) < threshold], size = length(line), replace = TRUE, prob = !is.na(res[((col - 1) * n + 1):(col * n)][abs(res[((col - 1) * n + 1):(col * n)]) < threshold]))
-        for (j in 1:length(line)) {
+        for (j in seq_len(length(line))) {
           res[col, j] <- newrez[j]
         }
       }
@@ -373,10 +364,8 @@ MultiBootMackChainLadder <- function(triangles, B=100, distNy = "normal", names=
     }, residuals, excluded_positions, SIMPLIFY = FALSE)
   }
 
+  samples <- .sampling(Triangle = residuals[[1]], N = B, stab = stab) # same resampling for all N triangles
 
-
-  samples <- .sampling(Triangle = residuals[[1]], N = B, stab=stab) # same resampling for all N triangles
-  
   sampledResiduals <- lapply(residuals, function(x) {
     lapply(samples, .applysample, x)
   })
@@ -384,19 +373,17 @@ MultiBootMackChainLadder <- function(triangles, B=100, distNy = "normal", names=
     lapply(rez, function(.x) {
       t(t(.x * sqrt(t(c(sigma^2, 0) / t(triangle)))) + DF)
     })
-  }, sampledResiduals, DF, sigma, triangles, SIMPLIFY = FALSE) # individual developpement factors.
+  }, sampledResiduals, DF, sigma, triangles, SIMPLIFY = FALSE) # individual development factors.
 
   DFBoot <- mapply(function(triangle, DFind) {
     lapply(DFind, .DFPond, triangle)
   }, triangles, DFIndivBoot, SIMPLIFY = FALSE) # DFs
 
-
-
-  # simulation of correlated new residuals and formating of thoose residuals.
+  # simulation of correlated new residuals and formatting of those residuals.
   if (distNy == "normal") {
     # simu is a list of (n-1) B*N matrix
     simu <- lapply(1:(n - 1), function(i) {
-      rmvnorm(B, sigma = rho[i, , ])
+      mvtnorm::rmvnorm(B, sigma = rho[i, , ])
     })
     simulation <- DFBoot
     for (c in 1:N) {
@@ -418,7 +405,7 @@ MultiBootMackChainLadder <- function(triangles, B=100, distNy = "normal", names=
       })
     })
   }
-  if (distNy == "residuals.bycolumn") { # inutilisé
+  if (distNy == "residuals.bycolumn") {
     samples <- lapply(1:(n - 1), function(i) {
       sample(1:(n - i), size = B, replace = TRUE)
     })
@@ -432,9 +419,6 @@ MultiBootMackChainLadder <- function(triangles, B=100, distNy = "normal", names=
     }
   }
 
-
-
-
   # Calculation of next year payments on thoose residuals.
   NyCum <- mapply(function(DFBoot, diag, sigma, simulation) {
     sd <- sqrt((diag * c(sigma^2, 0))[1:(n - 1)])
@@ -444,51 +428,39 @@ MultiBootMackChainLadder <- function(triangles, B=100, distNy = "normal", names=
   }, DFBoot, diag, sigma, simulation, SIMPLIFY = FALSE)
 
 
-  # Coresponding incremental paymnts
+  # Corresponding incremental paymnts
   NyInc <- mapply(function(NyCum, diag) {
     lapply(NyCum, function(.x) {
       .x - diag[1:(n - 1)]
     })
   }, NyCum, diag, SIMPLIFY = FALSE)
 
-  
-  # a partir d'ici il faut modifier des trucs pour la stabilité
-  # COnsidérons que "stab" représente le nombre de coef retenus. 
-  # par ex, stab=20 mettra des 1 dans la cadence après les 20 premiers, donc la candece aura la forme c(cad[1:20],rep(1,length(cad)-20))
-  # de même, les coeficients individuels doivent être stabilisé selon le même principe. 
-  # si stab=NA, pas de stabilisation. 
-  # if(is.na(stab)){
-  #   # pas de stabilisation
-  # } else {
-  #   # stabilisation
-  # }
-  
-  # Coreponding individual DF's
+  # Corresponding individual DF's
   NyDFIndiv <- mapply(function(NyCum, diag) {
     lapply(NyCum, function(.x) {
       rez <- .x / diag[1:(n - 1)]
-      if(!is.na(stab)){
-        rez[(stab+1):length(rez)] <- rep(1,length(rez)-stab)
+      if (!is.na(stab)) {
+        rez[(stab + 1):length(rez)] <- rep(1, length(rez) - stab)
       }
       return(rez)
     })
   }, NyCum, diag, SIMPLIFY = FALSE)
 
-  # Coresponding Df's
+  # Corresponding Df's
   NyDF <- mapply(function(NyDFIndiv, DFIndiv, triangle) {
-    # attantion stabilisation.
-    lapply(NyDFIndiv, .newDFPond, DFIndiv, triangle,stab)
+    # sabilisation:
+    lapply(NyDFIndiv, .newDFPond, DFIndiv, triangle, stab)
   }, NyDFIndiv, DFIndiv, triangles, SIMPLIFY = FALSE)
 
-  
-  # Coresponding Ultimates
+
+  # Corresponding Ultimates
   NyUltimates <- mapply(function(triangle, NyCum, NyDF) {
     mapply(function(.x, .y) {
       c(.x * rev(cumprod(rev(.y[2:n]))), triangle[1, n])
     }, NyCum, NyDF, SIMPLIFY = FALSE)
   }, triangles, NyCum, NyDF, SIMPLIFY = FALSE)
 
-  # coreponding IBNRs :
+  # corresponding IBNRs :
   NyIBNR <- mapply(function(y, z) {
     lapply(y, function(.x) {
       (.x - z)
@@ -496,45 +468,41 @@ MultiBootMackChainLadder <- function(triangles, B=100, distNy = "normal", names=
   }, NyUltimates, diag, SIMPLIFY = FALSE)
 
 
-  # Formating of outputs :
+  # Formatting of outputs :
   # names of triangles :
   names <- names(triangles)
   if (is.null(names)) {
     names <- paste0("tri", 1:N)
   }
-  
-  # stabilisation des facteurs de passages : 
-  if(!is.na(stab)){
-    
-    # les DF : 
-    DF <- lapply(DF,function(rez){
-      rez[(stab+1):length(rez)] <- rep(1,length(rez)-stab)
+
+  # Stabilisation of developpement factors:
+  if (!is.na(stab)) {
+    DF <- lapply(DF, function(rez) {
+      rez[(stab + 1):length(rez)] <- rep(1, length(rez) - stab)
       return(rez)
     })
-    
-    # et les DFBOOT : 
-    DFBoot <- lapply(DFBoot,function(DF){
-      lapply(DF,function(rez){
-        rez[(stab+1):length(rez)] <- rep(1,length(rez)-stab)
+    DFBoot <- lapply(DFBoot, function(DF) {
+      lapply(DF, function(rez) {
+        rez[(stab + 1):length(rez)] <- rep(1, length(rez) - stab)
         return(rez)
-    })})
+      })
+    })
   }
-  
-  
-  
+
   # the output will contains the marginals BootChainLadder models, retrieving the corelations will be done in external functions.
   rez <- mapply(.formatOutput, n, triangles, diag, DF, sigma, residuals, DFBoot, Ultimates, ibnr, NyCum, NyInc, NyDF, NyUltimates, NyIBNR, SIMPLIFY = FALSE)
   names(rez) <- names
   class(rez) <- c("MultiBootMackChainLadder", class(rez))
   return(rez)
 }
-#' mean.MultiBootMackChainLadder
+#' mean
 #'
 #' @param x A MultiBootMackChainLadder Object
+#' @param ... nothing
 #'
-#' @details 
-#' 
-#' Return mean informations about the MBMCL computed model. Gives the mean values of estimate quantities in a MBMCL bootstrap. 
+#' @details
+#'
+#' Return mean informations about the MBMCL computed model. Gives the mean values of estimate quantities in a MBMCL bootstrap.
 #'
 #' @return Data frames containing mean informations.
 #' @export
@@ -544,7 +512,7 @@ MultiBootMackChainLadder <- function(triangles, B=100, distNy = "normal", names=
 #' @examples
 #' data(ABC)
 #' triangles <- list(tri1 = ABC, tri2 = ABC, tri3 = ABC)
-#' MBMCL <- MultiBootmackChainLadder(triangles,100)
+#' MBMCL <- MultiBootMackChainLadder(triangles, 100)
 #' mean(MBMCL)
 mean.MultiBootMackChainLadder <- function(x, ...) {
   margins <- lapply(x, mean)
@@ -569,12 +537,13 @@ mean.MultiBootMackChainLadder <- function(x, ...) {
   Totals$Tot <- rowSums(Totals)
   return(list(ByOrigin = ByOr, Totals = Totals))
 }
-#' CDR.MultiBootMackChainLadder
+#' CDR
 #'
 #' @param x A MultiBootMackChainLadder Object
+#' @param ... other arguments for other methods.
 #'
-#' @details 
-#' 
+#' @details
+#'
 #' Give information about next year volatility for the MBMCL model.
 #'
 #' @return Informations about CDR and IBNRS.
@@ -585,9 +554,9 @@ mean.MultiBootMackChainLadder <- function(x, ...) {
 #' @examples
 #' data(ABC)
 #' triangles <- list(tri1 = ABC, tri2 = ABC, tri3 = ABC)
-#' MBMCL <- MultiBootmackChainLadder(triangles,100)
+#' MBMCL <- MultiBootMackChainLadder(triangles, 100)
 #' CDR(MBMCL)
-CDR.MultiBootMackChainLadder <- function(x) {
+CDR.MultiBootMackChainLadder <- function(x, ...) {
   IBNR <- as.data.frame(lapply(x, `[[`, "IBNR"))
   names(IBNR) <- paste0("IBNR.", names(IBNR))
   IBNR$IBNR.Tot <- rowSums(IBNR)
@@ -615,17 +584,17 @@ CDR.MultiBootMackChainLadder <- function(x) {
 #' @param x A MultiBootMackChainLadder Object
 #' @param ByOrigin If Set to TRUE, Next year IBNRS will be rgiveng with per-origin details.
 #'
-#' @details 
-#' 
+#' @details
+#'
 #' Gives a data.frame with next-year payments informations found by the MBMCL model.
-#' 
+#'
 #' @return Data frame with next year informations.
 #' @export
 #'
 #' @examples
 #' data(ABC)
 #' triangles <- list(tri1 = ABC, tri2 = ABC, tri3 = ABC)
-#' MBMCL <- MultiBootmackChainLadder(triangles,100)
+#' MBMCL <- MultiBootMackChainLadder(triangles, 100)
 #' NyIBNR(MBMCL)
 NyIBNR <- function(x, ByOrigin = FALSE) {
   NyIBNR <- lapply(x, `[[`, "NyIBNR")
@@ -635,22 +604,22 @@ NyIBNR <- function(x, ByOrigin = FALSE) {
   }
   return(as.data.frame(NyIBNR))
 }
-#' Title
+#' Corel
 #'
 #' @param x A MultiBootMackChainLadder Object
 #' @param ... Elements to be passed to the cor function
 #'
-#' @details 
-#' 
+#' @details
+#'
 #' Gives the correlations between the next-year IBNRs of the several triangles under the MBMCL model.
-#' 
+#'
 #' @return A corelation matrix of next-year IBNRs.
 #' @export
 #'
 #' @examples
 #' data(ABC)
 #' triangles <- list(tri1 = ABC, tri2 = ABC, tri3 = ABC)
-#' MBMCL <- MultiBootmackChainLadder(triangles,100)
+#' MBMCL <- MultiBootMackChainLadder(triangles, 100)
 #' Corel(MBMCL)
 Corel <- function(x, ...) {
   NyIBNR <- NyIBNR(x)
@@ -659,40 +628,40 @@ Corel <- function(x, ...) {
 }
 
 
-
-
-##### Basic functions                                                                #####
-.diag <- function(Triangle) {unname(rev(diag(Triangle[nrow(Triangle):1, ])))}
+##### Utility functions                                                                #####
+.diag <- function(Triangle) {
+  unname(rev(diag(Triangle[rev(seq_len(nrow(Triangle))), ])))
+}
 .DF <- function(Triangle) {
   # Simply returns Cl developpements factors
   n <- dim(Triangle)[1]
   Triangle2 <- Triangle
-  Triangle2[ col(Triangle2) == n - row(Triangle2) + sum(!is.na(Triangle2[, n]))  ] <- NA
+  Triangle2[col(Triangle2) == n - row(Triangle2) + sum(!is.na(Triangle2[, n]))] <- NA
   return(unname(c(colSums(Triangle[, 2:n], na.rm = TRUE) / colSums(Triangle2[, 1:(n - 1)], na.rm = TRUE), 1)))
 }
-.percent_dev <- function(DF,cumulative=TRUE){
-  if(cumulative){
-    1/rev(cumprod(rev(DF)))
+.percent_dev <- function(DF, cumulative = TRUE) {
+  if (cumulative) {
+    1 / rev(cumprod(rev(DF)))
   } else {
-    .firstdiff(1/rev(cumprod(rev(DF))))
+    .firstdiff(1 / rev(cumprod(rev(DF))))
   }
 }
 .firstdiff <- function(x) {
-  shifted <- c(0,x[1:(length(x)-1)])
-  x-shifted
+  shifted <- c(0, x[1:(length(x) - 1)])
+  x - shifted
 }
-.ultimates <- function(Triangle, df = .DF(Triangle),stab=NA) {
+.ultimates <- function(Triangle, df = .DF(Triangle), stab = NA) {
   # simply returns chain-ladder ultimates.
-  if(!is.na(stab)){
-    df[(stab+1):length(df)] <- rep(1,length(df)-stab)
+  if (!is.na(stab)) {
+    df[(stab + 1):length(df)] <- rep(1, length(df) - stab)
   }
   .diag(Triangle) * cumprod(rev(df))
 }
-.ibnr <- function(Triangle, df = .DF(Triangle),stab=NA) {
+.ibnr <- function(Triangle, df = .DF(Triangle), stab = NA) {
   # simply returns the IBNR from classical chain-ladder model
-  
-  if(!is.na(stab)){
-    df[(stab+1):length(df)] <- rep(1,length(df)-stab)
+
+  if (!is.na(stab)) {
+    df[(stab + 1):length(df)] <- rep(1, length(df) - stab)
   }
   .diag(Triangle) * (cumprod(rev(df)) - 1)
 }
@@ -700,15 +669,15 @@ Corel <- function(x, ...) {
   # Simply returns the Triangle of individual developpements factors.
   unname((cbind(Triangle, NA) / cbind(NA, Triangle))[, 2:(dim(Triangle)[[1]] + 1)])
 }
-.sigma <- function(Triangle, df=.DF(Triangle), DFIndiv = .DFIndiv(Triangle)) {
+.sigma <- function(Triangle, df = .DF(Triangle), DFIndiv = .DFIndiv(Triangle)) {
   # Returns Mack's estimate for the variances parameters sigma_j
   # Returns a line vector, indexed by Triangle columns.
   n <- dim(Triangle)[[1]]
   ecart <- DFIndiv - matrix(df, nrow = n, ncol = n, byrow = TRUE)
   rez <- Triangle * ecart^2
   sigma <- colSums(rez, na.rm = TRUE) / ((n - 2):(-1))
-  
-  # the last value is approximated by mack's sugestion :
+
+  # the last value is approximated by Mack's suggestion :
   sigma <- c(
     sigma[1:(n - 2)],
     min(
@@ -724,38 +693,33 @@ Corel <- function(x, ...) {
   return(unname(sqrt(sigma)))
 }
 .rho <- function(triangles, sigma = lapply(triangles, .sigma), indivF = lapply(triangles, .DFIndiv), f = lapply(triangles, .DF)) {
-  # estimateur de la matrice de correlation par colonne entre les differents triangles :
-  # retourne un array [N - 1 , NbTriangles,Nbtriangles] contenant les matrices de correlations entre les colonnes des triangles d'input.
-  # on attend dans triangles une liste de triangles
-  
-  # construction de l'objet array que l'on va retourner :
+
+  # Estimates the correlation matrix by collumn between different triangles:
+  # Returns an array [N - 1 , NbTriangles,Nbtriangles] that contains correlations matrices between coumns of inputted triangles.
+  # the `trianlges` arguments waits for a list of triangles.
+
+  # Construt the output array:
   I <- dim(triangles[[1]])[1]
   rho <- array(NA, dim = c(I - 1, length(triangles), length(triangles)))
-  omega <- rho
-  
-  # # Precomputage des differentes quantitee d'interet pour nos triangles :
-  # sigma <- lapply(triangles,.sigma)
-  # indivF <- lapply(triangles,.DFPassageIndiv)
-  # f <- lapply(triangles,.DFPassage)
-  
-  # Construison rho :
+
+  # Construct rho:
   for (n in seq_along(triangles)) {
     for (m in seq_along(triangles)) {
       if (n == m) {
-        # si n = m, on est sur le meme triangle
+        # if n = m, this is the same triangle
         rho[, n, m] <- 1
       } else {
-        # si n != m, alors on va construire une matrice de correlation :
-        
+        # if n != m, then we construct a correlation matrix:
+
         for (j in 1:(I - 2)) {
-          # On commencer par contruire w_j^2
+          # we start by w_j^2
           omegaup <- 0
           omegadown <- 0
           for (i in 1:(I - (j - 1) - 1)) {
-            # Partie hautte e la fraction
+            # numerator
             omegaup <- omegaup + sqrt(triangles[[n]][i, j] * triangles[[m]][i, j])
-            
-            # partie basse de la fraction :
+
+            # denominator
             somme <- 0
             for (k in 1:(I - (j - 1) - 1)) {
               somme <- somme + triangles[[m]][k, j]
@@ -763,41 +727,39 @@ Corel <- function(x, ...) {
             omegadown <- omegadown + triangles[[n]][i, j] * somme
           }
           omegaj <- omegaup^2 / omegadown
-          
-          # Puis on construit c_j
+
           cj <- 1 / (I - (j - 1) - 2 + omegaj)
-          
-          # Enfin on construit la partie somme de rho_j_n_m :
+
+          # the sum part of rho_j_n_m :
           somme <- 0
           for (l in 1:(I - (j - 1) - 1)) {
             somme <- somme + sqrt(triangles[[n]][l, j] * triangles[[m]][l, j]) * (indivF[[n]][l, j] - f[[n]][j]) * (indivF[[m]][l, j] - f[[m]][j]) / (sigma[[n]][j] * sigma[[m]][j])
           }
-          # puis on agrege ces differents resultats :
+          # aggregation
           rho[j, n, m] <- cj * somme
         }
-        
-        # Il nous reste a estimer le dernier facteur par une prolongation polynomiale (proposee par MAK 1997, comme poru la vairance : ):
+
+        # We still need to estimate the last factor
+        # by polynomial projection (MACK 1997).
         rho[I - 1, n, m] <- min(
           (rho[I - 2, n, m] * sigma[[n]][I - 2] * sigma[[m]][I - 2])^2 / (rho[I - 3, n, m] * sigma[[n]][I - 3] * sigma[[m]][I - 3]),
           abs(rho[I - 3, n, m] * sigma[[n]][I - 3] * sigma[[m]][I - 3]),
           abs(rho[I - 2, n, m] * sigma[[n]][I - 2] * sigma[[m]][I - 2])
         )
       }
-      
-      
     }
   }
-  # On retourne un array (j,n,m) avec j l'indice de la colonne et n et m les indices des triangles.
-  # On en profite juste pour metrte des zero la ou il a pas pu les calculer :
+  # We return an array (j,n,m) with j the column index, n and m the triangles indices
+  # If nan then 0:
   rho[is.nan(rho)] <- 0
   return(rho)
 }
-.residuals <- function(Triangle, centered = FALSE, DF=.DF(Triangle), DFIndiv=.DFIndiv(Triangle), sigma=.sigma(Triangle)) {
-  # estimation of mack's residuals, based on England & Verral 2007
+.residuals <- function(Triangle, centered = FALSE, DF = .DF(Triangle), DFIndiv = .DFIndiv(Triangle), sigma = .sigma(Triangle)) {
+  # Estimation of Mack's residuals, based on England & Verral 2007
   # returns a Triangle of same size as the input, but with NA on the diagonal (no residuals for the diagonal)
   residus <- Triangle
   n <- dim(Triangle)[1]
-  
+
   for (i in 1:n) {
     for (j in 1:n) {
       residus[i, j] <- sqrt((n - j) / (n - j - 1)) * sqrt(Triangle[i, j]) * (DFIndiv[i, j] - DF[j]) / sigma[j]
@@ -811,49 +773,48 @@ Corel <- function(x, ...) {
   }
   return(residus)
 }
-.sampling <- function(Triangle, N=100, threshold = NA, stab=NA, clusters = NA) {
+.sampling <- function(Triangle, N = 100, threshold = NA, stab = NA, clusters = NA) {
   # Bootstraps a triangle of positions
-  # We biuld  alist of triangles of bootstrapped positions : 
-  
+  # We build a list of triangles of bootstrapped positions :
+
   n <- length(Triangle)
   I <- dim(Triangle)[1]
-  
+
   # Exclusion threshold for residuals
   Triangle2 <- Triangle
   if (!is.na(threshold)) {
     Triangle2[Triangle[(!is.na(Triangle))] > threshold] <- NA
   }
-  
-  
+
+
   # Stabilisation management:
-  if(!is.na(stab)){
-    prob.stab = col(Triangle)<=stab
+  if (!is.na(stab)) {
+    prob.stab <- col(Triangle) <= stab
   } else {
-    prob.stab = !is.na(Triangle2) 
+    prob.stab <- !is.na(Triangle2)
   }
-  
-  
+
+
   if (!is.na(clusters)) {
-    
-    
-    # exemple clusters : 
-    #clusters <- list(c(1, 2), seq(3, 9), seq(10, 12), seq(13, I))
-    
-    samples <- lapply(1:length(clusters), function(i) {
+
+
+    # exemple clusters :
+    # clusters <- list(c(1, 2), seq(3, 9), seq(10, 12), seq(13, I))
+
+    samples <- lapply(seq_len(length(clusters)), function(i) {
       prob <- !is.na(Triangle2[, clusters[[i]]])
       positions <- matrix(1:n, nrow = I)
       return(lapply(1:N, function(x) {
         matrix(sample(positions[, clusters[[i]]],
-                      replace = TRUE,
-                      prob = prob*prob.stab[,clusters[[i]]],
-                      size = length(prob)
-        )
-        ,
+          replace = TRUE,
+          prob = prob * prob.stab[, clusters[[i]]],
+          size = length(prob)
+        ),
         nrow = I
         )
       }))
     })
-    
+
     rez <- lapply(1:N, function(i) {
       return(do.call(cbind, lapply(samples, function(x) {
         x[[i]]
@@ -862,12 +823,12 @@ Corel <- function(x, ...) {
   } else {
     prob <- !is.na(Triangle2)
     positions <- matrix(1:n, nrow = I)
-    rez <- sample(positions, replace = TRUE, prob = prob*prob.stab, size = N * n)
+    rez <- sample(positions, replace = TRUE, prob = prob * prob.stab, size = N * n)
     rez <- lapply(1:N, function(.x) {
       matrix(rez[(n * (.x - 1) + 1):(n * .x)], nrow = I)
     })
   }
-  
+
   rez <- lapply(rez, function(x) {
     x[is.na(Triangle)] <- NA
     return(x)
@@ -875,10 +836,9 @@ Corel <- function(x, ...) {
   return(rez)
 }
 .applysample <- function(sample, Triangle) {
-  # Fonction d'application de cet sampling :
   return(ChainLadder::as.triangle(
     matrix(as.vector(Triangle)[as.vector(sample)],
-           nrow = dim(Triangle)
+      nrow = dim(Triangle)
     )
   ))
 }
@@ -889,17 +849,15 @@ Corel <- function(x, ...) {
   rez[n] <- 1
   return(rez)
 }
-.newDFPond <- function(NyDFIndiv, DFIndiv, Triangle,stab=NA) {
-  
-  
+.newDFPond <- function(NyDFIndiv, DFIndiv, Triangle, stab = NA) {
   n <- dim(Triangle)[1]
   DFIndiv[col(DFIndiv) == n - row(DFIndiv) + 1] <- c(NyDFIndiv, 1)
-  
-  # stabilisation : 
-  if(!is.na(stab)){
+
+  # stabilisation :
+  if (!is.na(stab)) {
     DFIndiv[col(DFIndiv) > stab] <- 1
   }
-  
+
   rez <- colSums(Triangle * DFIndiv, na.rm = TRUE) / colSums(Triangle, na.rm = TRUE)
   rez[n] <- 1
   return(rez)
@@ -912,7 +870,7 @@ Corel <- function(x, ...) {
   NyIBNR <- do.call(rbind, lapply(NyIBNR, rev))
   NyDF <- do.call(rbind, NyDF)
   DFBoot <- do.call(rbind, DFBoot)
-  
+
   names(Ultimates) <- rownames(Triangle)
   names(IBNR) <- rownames(Triangle)
   names(diag) <- rownames(Triangle)
@@ -922,7 +880,7 @@ Corel <- function(x, ...) {
   colnames(NyIBNR) <- rownames(Triangle)
   colnames(NyDF) <- colnames(Triangle)
   colnames(DFBoot) <- colnames(Triangle)
-  
+
   result <- list(
     Latest = rev(diag),
     DF = DF,
@@ -940,15 +898,15 @@ Corel <- function(x, ...) {
   class(result) <- c("BootMackChainLadder", class(result))
   return(result)
 }
-.BF.Ultimates <- function(ultimes,primes,cadence,longeur_moyenne=5,longeur_application=5){
-  # la fonction de base est de prendre un BF 5ans 5ans. On peut le changer ici. 
+.BF.Ultimates <- function(ultimes, primes, cadence, longeur_moyenne = 5, longeur_application = 5) {
+  # la fonction de base est de prendre un BF 5ans 5ans. On peut le changer ici.
   n <- length(ultimes)
   a <- longeur_application
   b <- longeur_moyenne
-  Poids       <- c(rep(0,n-a-b),rep(1,b),rep(0,a))
-  LR          <- weighted.mean(x = ultimes / primes,w=Poids)
+  Poids <- c(rep(0, n - a - b), rep(1, b), rep(0, a))
+  LR <- weighted.mean(x = ultimes / primes, w = Poids)
   Percent_dev <- rev(.percent_dev(cadence))
-  Rez         <- c(ultimes[1:(n-a)], (LR*primes*(1-Percent_dev) + ultimes*(Percent_dev))[(n-a+1):n])
-  
+  Rez <- c(ultimes[1:(n - a)], (LR * primes * (1 - Percent_dev) + ultimes * (Percent_dev))[(n - a + 1):n])
+
   return(Rez)
 }

@@ -2,12 +2,14 @@
 % Please edit documentation in R/BootMackChainLadder.R
 \name{mean.BootMackChainLadder}
 \alias{mean.BootMackChainLadder}
-\title{mean.BootMackChainLadder}
+\title{mean}
 \usage{
 \method{mean}{BootMackChainLadder}(x, ...)
 }
 \arguments{
 \item{x}{A BootMackChainLadder Object}
+
+\item{...}{Nothing}
 }
 \value{
 Three data.frames containing data per origin year ("ByOrigin"), by developpement year ("ByDev) and globaly ("Totals)

@@ -2,12 +2,14 @@
 % Please edit documentation in R/BootMackChainLadder.R
 \name{CDR.BootMackChainLadder}
 \alias{CDR.BootMackChainLadder}
-\title{CDR.BootMackChainLadder}
+\title{CDR}
 \usage{
-\method{CDR}{BootMackChainLadder}(BMCL)
+\method{CDR}{BootMackChainLadder}(x, ...)
 }
 \arguments{
-\item{BMCL}{A BootMackChainLadder Object}
+\item{x}{A BootMackChainLadder Object}
+
+\item{...}{other arguments for other methods.}
 }
 \value{
 A data.Frame with one-year results from the bootstrap.
