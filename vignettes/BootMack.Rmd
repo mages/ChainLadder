@@ -1,0 +1,403 @@
+---
+title: "Non-parametric bootstrap of the Mack model"
+author: "Oskar Laverny"
+date: "08 September 2020"
+bibliography: [bibliography.bib]
+output:
+  pdf_document: default
+  html_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Description
+
+The `BootMackChainLadder` and `MultiBootMackChainLadder` functions are based on a suggestion from [@england2002], who though that the Mack model was kind of a standard GLM. 
+
+A work from [Laverny (2018)](http://www.ressources-actuarielles.net/C12574E200674F5B/0/2B139F22F51AF75FC1258306006E82F2) checks the hypothesis and conclude that Mack models is indeed a quasi-GLM. The most direct implication is that we can bootstrap it's residuals non-parametrically, and obtain a bootstrap estimate that is concordant with Mack's result (on the contrary to the Poisson, ZIP or ZIBN bootstraps), and even with [@Merz2008] results.
+
+The `BootMackChainLadder` function implement this bootstrap, with many parameter to fit the needs of the practitioner. The `MultiBootMackChainLadder` function, on the other hand, implement a multi-triangle version, where every triangles are bind to each other by a correlation link between residuals. the parametrisation of the function allows to specify wich way this link should be taken into account. 
+
+## The theoretical proof
+
+Which actuary does not know about **Mack's model** ? Due to [@Mack1991], this model is fairly simple. Suppose you have a triangle.
+
+Denote $C_{i,j}$ the value of this triangle from the $i$'th row and the $j$'th collumn.
+
+The mack model consist of a stochastic model that enframe the classical chain-ladder estimator, denoted here by the vector $\mathbf{\hat{f}}$, defined $\forall j \in \{1,...,n\}$ by :
+
+$$\hat{f}_j = \frac{\sum\limits_{i=1}^{n-j+1} C_{i,j+1}}{\sum\limits_{i=1}^{n-j+1} C_{i,j}}$$
+
+
+Then we estimate future claims by setting, $\forall i,j \,|\, i+j>n$, $C_{i,j+1} = \hat{f_j} C_{i,j}$, wich is the chain-ladder estimate.
+
+Mack then found stochastic hypothesis that make those estimator _better_ in a certain sense (in the MSE-sense) : 
+
+* $(H1)$ : The lines are independants
+* $(H2)$ : $\exists\, \mathbf{f} \text{ such that }  \forall i,j,\, \mathbb{E}(C_{i,j+1}\,|\, C_{i,1},...,C_{i,j}) = f_j C_{i,j}$
+* $(H3)$ : $\exists\, \mathbf{\sigma} \text{ such that }  \forall i,j,\, \mathbb{V}(C_{i,j+1}\,|\, C_{i,1},...,C_{i,j}) = \sigma_j^2 C_{i,j}$
+
+First, we should note the conditioning of $C_{i,j+1}$ on the past of the origin year. 
+
+Suppose that, following [@england2002], we reformulate the model in term of individual developments factors. Set : 
+
+$$F_{i,j} = \frac{C_{i,j+1}}{C_{i,j}} \text{ and } w_{i,j} = C_{i,j}$$
+
+The 2 last hypothesis can then be reformulated in the following way (just dividing by $w_{i,j}$).
+
+* $(H2*)$ : $\exists\, \mathbf{f} \text{ such that }  \forall i,j,\, \mathbb{E}(F_{i,j}\,|\, w_{i,j}) = f_j$
+* $(H3*)$ : $\exists\, \mathbf{\sigma} \text{ such that }  \forall i,j,\, \mathbb{V}(F_{i,j}\,|\, w_{i,j}) = \frac{\sigma_j^2}{w_{i,j}}$
+
+Note that i assume that the information given by the past is well summarized by $w_ {i,j}$, which is indeed the case under those hypothesis. 
+
+Look again at the formula for the estimator of the chain-ladder development factors. Do you see the weighted mean of $F$'s, weighed by $C$'s ? Indeed, since we posed $w_{i,j} = C_{i,j}$, 
+
+
+$$\hat{f}_j = \frac{\sum\limits_{i=1}^{n-j+1} F_{i,j}\, w_{i,j}}{\sum\limits_{i=1}^{n-j+1} w_{i,j}}$$
+
+Recall now Mack's estimators for the variance parameters $\mathbf{\sigma}$ : 
+
+
+$$\hat{\sigma}_j = \frac{1}{n-j} \sum\limits_{i=1}^{n-j+1} w_{i,j} (F_{i,j} - \hat{f}_j)^2$$
+
+they are simply an unbiased variance estimator, for the estimation of $F$'s by $\hat{f}$'s, with case weights $w$'s. Although the normalization is not right (should be $\frac{1}{n-j-1}$), they do. 
+
+We will now found the corresponding GLM. To estimate the first order, i.e $f$'s, we just take a weighted average of observation $F$'s, with weights $w$'s, by column. This GLM has the following specifications:
+
+* Link function Identity 
+* Any law in the exponential family
+* case weights given by $w$
+* response variable $F$
+* Only covariable: the indicatrix of the column
+
+Here is an exemple on the ABC triangle:
+
+```{r echo=FALSE}
+data(ABC)
+ABC %>% 
+  as.data.frame %>% 
+  mutate(
+    value = if_else(is.na(value),"",as.character(value))
+  ) %>% 
+  group_by(origin) %>% 
+  spread(key = "dev",value = "value") %>%
+  set_names(c("row.names",1:11)) %>%
+  as.data.frame %>% 
+  column_to_rownames("row.names") %>% 
+  kable(row.names = TRUE,caption = "Incured triangle -- cumulative view") %>% 
+  kable_styling(font_size = 10)
+```
+
+First, the estimated development factor given by standard chain-ladder : 
+
+```{r trying_first_order}
+ChainLadder::MackChainLadder(ABC)$f
+```
+
+
+If we create a data.frame with what we need and then try a GLM (actualy it's even a lm there, since the variance hypothesis are Normal-like) on it : 
+
+
+```{r trying_first_order2}
+df <- ABC %>% 
+    as.data.frame %>% 
+    mutate(
+      weight = cbind(rep(NA,nrow(ABC)),ABC %>% as.matrix) %>% .[,1:nrow(ABC)] %>% as.vector,
+      F = value / weight,
+     ) %>% 
+    drop_na
+
+model <- lm(data =df,formula=F~factor(dev)+0,weights=weight)
+  
+df %<>% 
+  mutate(f.hat = model$fitted.values,
+         rez2 = weight * (F - f.hat)^2)
+```
+
+I also extracted the squared Pearson residuals. Indeed, if we want to model $\sigma$'s too, we need a second model to calculate the weighted average of Squared Pearson residuals ! Which is standard in the context of Joint modeling of Glm's, see e.g [@McCullagh1989] . 
+
+To calculate the weighted average of squared residuals (for the dispersion parameters), we use another linear model since only the first order is here of interest. Note that we exclude the last column of the triangle, since there is only one point (and therefore no estimation of variance is possible). We also add the last value estimated by Mack for sake of completeness. 
+
+```{r suite}
+model2 <- df %>% 
+    filter(dev != nrow(ABC)) %>%
+    {lm(data =., formula = rez2 ~ factor(dev))}
+
+df %<>% mutate(
+    estimated.phi = model2$fitted.values %>% {c(.,min(.[length(.)],.[length(.)-1],.[length(.)]^2/.[length(.)-1]))}
+  )
+
+df
+```
+
+And there we have it ! Those estimates are clearly the same as Mack's. Indeed : 
+
+```{r}
+model4 <- MackChainLadder(ABC,est.sigma="Mack")
+  resultat <- 
+    df %>% 
+      group_by(dev) %>% 
+      summarise(phi=mean(estimated.phi)) %>% 
+      mutate(
+        mack = model4$sigma^2,
+        degree.of.freedom = max(dev) - dev, # correction for degree of freedom
+        phi = (phi * (degree.of.freedom+1)/(degree.of.freedom)) %>%
+          .[1:(length(.)-1)] %>%
+          {c(.,min(.[length(.)],.[length(.)-1],.[length(.)]^2/.[length(.)-1]))},
+        f = model$coefficients[1:(dim(ABC)[1]-1)],
+        f.cl = model4$f[1:(dim(ABC)[1]-1)]
+        ) %>%
+      select(f,f.cl,phi,mack) %>%
+      as.data.frame
+```
+
+```{r echo=FALSE}
+resultat %>% kable %>% kable_styling(font_size = 9)
+```
+
+We reproduced Mack's result in a new model. The hypothesis we used are : 
+
+* $(H1**)$ : The lines are independants
+* $(H2**)$ : $\exists\, \mathbf{f}\text{ and }\mathbb{\sigma} \text{ such that }  \forall i,j,\, F_{i,j} |\, w_{i,j} \sim \mathcal{N}(f_j, \frac{\sigma_j^2}{w_{i,j}})$
+
+Well, if we forget about the law assumption and only use quasi-glm (see, once again, [@McCullagh1989]), those are mack hypothesis. Therefore, Mack's model is a Quasi-glm, conditional, and weighted, with a normal-like variance assumption. 
+
+Some remarks : 
+
+- Note that we played a little with degree of freedom : Since we are estimating the $\sigma$'s _after_ the $f$'s, we should take into account that $n-1$ parameters are already estimated. This is classical in the joint modeling process. 
+- Furthermore, the joint modeling process gives the choice of residuals (pearson residuals or deviance contribution), but in a the normal case they are equal. 
+- Last but not least, the accointance for the kurtosis is not necessary here because of the normal variance assumption. 
+
+A gist available [there](https://gist.github.com/lrnv/f87961fbbbdb277aaec3024b06bb9aad)  gives a `check_model` function that allow to check the hypothesis on your own triangle.
+
+The categorization of Mack hypothesis set as a GLM allows several things : 
+
+* The use of standard statistical tools : cook's distance, residual analysis, etc...
+* The use of standard software : R's glm function is probably more safe than ChainLadder's specific function. 
+* The simplicity of extension : The Bornhutter-Fergusson extension, e.g, can be easily introduced within a GLM framework, it's harder within Mack's framework. 
+
+
+
+## The implementation 
+
+The package exports several functions related to this problematic. The most important one is the BootMackChainLadder function, wich implements a standard bootstrap fo residuals for this GLM. Note that these residuals are bare Mack residuals, not Poisson's residuals, and hence the results obtained by this bootstrap are centered on Mack's results. 
+
+To see this, just try it with : 
+
+```{r }
+
+data(ABC)
+model = ABC %>% BootMackChainLadder(B = 50, distNy = 'normal')
+
+print(model)
+print(mean(model))
+print(CDR(model))
+```
+
+The `distNy` option is used to specify if we want a distribution for computation of the CDR. Specifying 'normal' with give results that are convergent to the Merz & Wuthrich formula. Specifiying 'residuals', on the other hand, will give results that are coherent with Mack's hypothesis. 
+
+Several other options are avalibale, see the documentation.
+
+
+_References :_ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## Bootstrap under the hypothesis of the mack model. 
+
+As a blogpost 
+
+### chainladder
+
+*chainladder* uses *lm* to estimate 
+average age-to-age factors for the 
+given actuarial *Triangle* argument.
+Therefore when a development period has only one observation --
+as can often occur in the tail --
+there is insufficient data for *lm* to estimate the **sigma**
+parameter of that period's regression model.
+When the **sigma** estimate
+is technically **NA**,
+*plotParms* indicates such with:
+
+* a broken line at that point
+* a point value at zero (for want of a better choice)
+* a color-coded legend entry indicating 
+that the source of the parameter is **NA**
+
+For example, Figure 1 below shows the default *plotParms*
+of the *chainladder* call for the **GenIns** triangle.
+
+```{r echo=FALSE}
+suppressPackageStartupMessages(library(ChainLadder))
+```
+```{r, fig.cap="chainladder(GenIns)"}
+plotParms(chainladder(GenIns))
+```
+
+Both the *chainladder* function and 
+*plotParms* borrow the *f* notation of Mack^[Thomas Mack. 
+Distribution-free calculation of the standard error of 
+chain ladder reserve estimates. 
+Astin Bulletin. Vol. 23. No 2. 1993. pp.213:225.].
+The legend indicates the source of the parameter's value:
+
+* lm: produced by the underlying regression
+* NA: not available
+* calc: the coefficient of variation is a calculated value 
+(cv(f) = f/f.se) or **NA**
+
+### MackChainLadder
+
+*MackChainLadder* uses
+*chainladder* to estimate most parameters,
+and extends the latter's capabilities in two situations:
+
+* sigma = NA
+* a tail
+
+#### sigma = NA
+
+When *Triangle* has insufficient data to estimate **sigma**
+for a given development period,
+*MackChainLadder* has two methods for estimating ("imputing") a value:
+
+* log-linear regression (the default)
+* the method of *Mack*
+
+*plotParms*' legend indicates which method is used.
+
+#### tail
+
+Suppose your triangle is 10x10.
+In that case there are (typically) nine link ratio factors
+to select,
+and *chainladder* will generate nine such averages 
+depending on the value of arguments **weights** and **delta**.
+In contrast,
+*MackChainLadder* generates 10 factors because
+*that method always includes a tail factor* as follows:
+
+* By default the tail value is 1.000, or
+* The user can provide a tail (e.g., with **tail = 1.10**), or
+* The user can ask *MackChainLadder* to estimate a tail 
+by specifying **tail = TRUE**.
+
+The **sigma** and **se** parameters for the tail are determined by
+*MackChainLadder* arguments
+**tail.sigma** and **tail.se**.
+If the user does not explicitly provide those arguments
+*MackChainLadder* will estimate their values.
+(Refer to the *MackChainLadder* documentation for more information.)
+*plotParms* will graph their value and their source.
+
+For example,
+Figure 2 below is the default plot of the parameters of the
+*MackChainLadder* model for the **GenIns** triangle.
+Ten factors are plotted versus only nine in Figure 1.
+The **NA** value of **sigma** for the ninth link ratio 
+in Figure 1 is replaced with a value 
+imputed via log-linear regression (the default).
+The associated **f.se** 
+and **cv** values may now be calculated and are also no longer **NA**.
+The default unity tail value 
+(the tenth factor)
+is shown but, 
+since a unity value is assumed to be deterministic,
+**tail.sigma** and **tail.se** values are not available.
+
+```{r, fig.cap="MackChainLadder(GenIns)"}
+plotParms(MackChainLadder(GenIns))
+```
+
+## plotParms Arguments
+
+*plotParms* for the two methods in this document is invoked as follows:
+
+```
+plotParms(x, which, ncol, nrow, title)
+```
+
+* x
+    + a *chainladder* or *MackChainLadder* object
+    + no default
+* which
+    + a subset of integers 1 through 6
+    + default: 1, 3, 4, 6 -- see list in **Description** section above
+    + follows in the tradition of *ChainLadder::plot.glmReserve* 
+    by Wayne Zhang as well as *stats::plot.lm*
+* ncol
+    + number of columns in the multi-plot output
+    + default: either 2, or 1 if only one plot is requested
+* nrow
+    + number of rows in the multi-plot output
+    + default: sufficient number to display all plots on one page
+  given the number of plots selected and the **ncol** value
+* title
+    + overall title to display at the top of the output page
+    + default: method's call
+
+## Final Example
+
+In this last example 
+we implement the *Mack Method* on the **GenIns** triangle
+by specifying two key arguments:
+
+* mse.method = "Mack" (the default, but here specified 
+explicitly)
+tells *MackChainLadder*'s recursion steps to duplicate Mack's 
+closed form formula
+* est.sigma = "Mack" (not the default)
+tells *MackChainLadder* to use Mack's
+heuristic formula for imputing **sigma** values
+when not available from a *chainladder* regression
+
+We also ask for a tail and associated uncertainty parameters 
+to be estimated via
+
+* tail = TRUE,
+* tail.sigma = NULL, and 
+* tail.se = NULL.
+
+Finally,
+we tell *plotParms* to display all six plots
+and specify our own more succinct title
+because the call
+is too wide to fit in the display.
+
+```{r, fig.cap="Mack Method on GenIns"}
+x <- MackChainLadder(GenIns, est.sigma = "Mack", mse.method = "Mack",
+             tail = TRUE, tail.sigma = NULL, tail.se = NULL)
+plotParms(x, which = 1:6, title = "Mack Method on GenIns: Estimated Parameters")
+```
+
+Here all **cv** parameter values
+are calculated.
+
+Also of note:
+by comparing **cv(f-1)~9~** points in Figures 2 and 3, 
+the difference between 
+**mse.method = "log-linear"** (Figure 2)
+and **mse.method = "Mack"** (Figure 3)
+does not appear to be significant for this triangle.
+
+## Conclusion
+
+Let the author(s) know if you have any problems with plotParms
+or wish to see an implementation
+for another ChainLadder model.
+
+Cheers.
