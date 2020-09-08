@@ -36,6 +36,7 @@ export(as.LongTriangle)
 export(CLFMdelta, LRfunction)
 export(glmReserve)
 export(cyEffTest, dfCorTest, checkTriangleInflation, inflateTriangle, BS.paid.adj)
+export(BootMackChainLadder,MultiBootMackChainLadder)
 
 #Classes
 exportClasses(triangles, MultiChainLadder, MultiChainLadderFit,
@@ -77,6 +78,7 @@ S3method(summary, MunichChainLadder)
 S3method(summary, BootChainLadder)
 S3method(summary, ClarkLDF)
 S3method(summary, ClarkCapeCod)
+
 S3method(summary, ata)
 
 S3method(summary, cyEffTest)
@@ -100,6 +102,15 @@ S3method(quantile, BootChainLadder)
 S3method(residuals, BootChainLadder)
 S3method(mean, BootChainLadder)
 
+S3method(mean, BootMackChainLadder)
+S3method(print, BootMackChainLadder)
+S3method(CDR, BootMackChainLadder)
+S3method(summary, BootMackChainLadder)
+S3method(mean, MultiBootMackChainLadder)
+S3method(CDR, MultiBootMackChainLadder)
+export(NyIBNR)
+export(Corel)
+
 S3method(vcov, clark)
 
 exportMethods(predict, Mse, summary, show, coerce,
@@ -109,6 +120,7 @@ exportMethods(predict, Mse, summary, show, coerce,
 S3method(CDR, MackChainLadder)
 S3method(CDR, BootChainLadder)
 S3method(CDR, default)
+
 export(CDR)
 
 export(tweedieReserve)

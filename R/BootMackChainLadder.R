@@ -610,7 +610,7 @@ CDR.MultiBootMackChainLadder <- function(x) {
 
   return(list(ByOrigin = ByOrigin, Totals = Totals))
 }
-#' Title
+#' Next year IBNR
 #'
 #' @param x A MultiBootMackChainLadder Object
 #' @param ByOrigin If Set to TRUE, Next year IBNRS will be rgiveng with per-origin details.
