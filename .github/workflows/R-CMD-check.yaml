@@ -70,6 +70,10 @@ jobs:
         run: |
           remotes::install_deps(dependencies = TRUE)
           remotes::install_cran("rcmdcheck")
+          tinytex::parse_install( text = "! LaTeX Error: File ae.sty' not found.") 
+          tinytex::parse_install( text = "! LaTeX Error: File footmisc.sty' not found.")
+          tinytex::parse_install( text = "! LaTeX Error: File ctable.sty' not found.") 
+          tinytex::parse_install( text = "! LaTeX Error: File grfext.sty' not found.")
         shell: Rscript {0}
 
       - name: Check
