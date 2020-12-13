@@ -1,7 +1,8 @@
 # ChainLadder 
 <!-- badges: start -->
 [![R-CMD-check](https://github.com/mages/ChainLadder/workflows/R-CMD-check/badge.svg)](https://github.com/mages/ChainLadder/actions)
-<!-- badges: end --> [![CRAN\_Status\_Badge](https://www.r-pkg.org/badges/version/ChainLadder)](https://cran.r-project.org/package=ChainLadder) [![downloads](https://cranlogs.r-pkg.org/badges/grand-total/ChainLadder)](https://cran.r-project.org/package=ChainLadder)
+<!-- badges: end --> 
+[![CRAN\_Status\_Badge](https://www.r-pkg.org/badges/version/ChainLadder)](https://cran.r-project.org/package=ChainLadder) [![downloads](https://cranlogs.r-pkg.org/badges/grand-total/ChainLadder)](https://cran.r-project.org/package=ChainLadder)
 
 
 ChainLadder is an R package providing methods and models which are typically 
