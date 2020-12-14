@@ -17,6 +17,10 @@ vignette: >
 knitr::opts_chunk$set(echo = TRUE)
 suppressPackageStartupMessages(library(ChainLadder))
 ```
+# Version 0.2.12 [2020-12-14]
+ 
+ * Changed vignette format from Sweave to RMarkdown
+
 # Version 0.2.11 [2020-02-10]
 
  * Fixed as.triangle for a 'long' data set, when input data had missing values.
