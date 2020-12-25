@@ -17,9 +17,11 @@ vignette: >
 knitr::opts_chunk$set(echo = TRUE)
 suppressPackageStartupMessages(library(ChainLadder))
 ```
-# Version 0.2.12 [2020-12-14]
+# Version 0.2.12 [2020-12-25]
  
- * Changed vignette format from Sweave to RMarkdown
+ * Moved continuous integration testing from TravisCI to GitHub Actions
+ * Changed vignette format from Sweave to RMarkdown to facilitate easier
+   testing using GitHub Actions
 
 # Version 0.2.11 [2020-02-10]
 

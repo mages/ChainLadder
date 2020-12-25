@@ -33,6 +33,11 @@ opts_chunk$set(
 suppressPackageStartupMessages(library(ChainLadder))
 ```
 
+```{r, echo=FALSE}
+print(citation("ChainLadder"), bibtex=FALSE)
+```
+
+
 ## Introduction
 
 ### Claims reserving in insurance
@@ -100,7 +105,7 @@ across the Lloyd's market in 2012, [@JamesOrr:2012].
 
 ### Motivation
 
-The ChainLadder package [@chainladder] provides various
+The ChainLadder package provides various
 statistical methods which are typically used for the estimation of
 outstanding claims reserves in general insurance.  The package started
 out of presentations given by Markus Gesmann at the Stochastic
@@ -121,7 +126,7 @@ Implementing reserving methods in R has several advantages. R provides:
  transfer
  - an effective way to collaborate over the internet
  - built in functions to create reproducible research reports
- - in combination with other tools such as  {\LaTeX} or RMarkdown
+ - in combination with other tools such as  LaTeX or RMarkdown
    easy to set up automated reporting facilities
  - access to academic research, which is often first implemented in R
 
@@ -689,7 +694,7 @@ the chain-ladder-based multivariate reserving models can be summarised
 as sequential seemingly unrelated regressions [@Zhang2010a]. We
 note another strand of multivariate loss reserving builds a hierarchical
 structure into the model to allow estimation of one triangle to
-``borrow strength'' from other triangles, reflecting the core insight
+"borrow strength" from other triangles, reflecting the core insight
 of actuarial credibility [@ZhangVanjaGuszcza2012].
 
 Denote $Y_{i,k}=(Y^{(1)}_{i,k}, \cdots ,Y^{(N)}_{i,k})$ as an $N
@@ -812,7 +817,7 @@ even though only one triangle is used.
 ### Multivariate chain-ladder using seemingly unrelated regressions
 
 To allow correlations to be incorporated, we employ the seemingly
-unrelated regressions (see the package `systemfit`) that
+unrelated regressions (see the package `systemfit`, [@systemfit]) that
 simultaneously model the two triangles in each development
 period. This is invoked when we specify `fit.method = "SUR"`:
 
