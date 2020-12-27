@@ -1499,6 +1499,8 @@ Please refer to `help(tweedieReserve)` for additional information.
 
 ## Further resources
 
+For a full Bayesian approach to claims reserving in R with Stan see 'Hierarchical Compartmental Reserving Models' [@gesmann_morris].
+
 Other useful documents and resources to get started with R in the
 context of actuarial work:
 
