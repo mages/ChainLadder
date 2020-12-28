@@ -18,8 +18,6 @@ used in insurance claims reserving, including:
   - convert cumulative into incremental and incremental into cumulative triangles
   - visualise triangles
 
-David Hindley has created a [Shiny App](https://davidjhindley.com/shiny/claimsreserving/), which provides and interface to many of the ChainLadder package functions to accompany his book on [*Claims Reserving in General Insurance*](https://www.cambridge.org/gb/academic/subjects/mathematics/optimization-or-and-risk-analysis/claims-reserving-general-insurance?format=HB&isbn=9781107076938#Xdlv1szU8mUQoG50.97).
-
 ## Installation
 
 You can install the stable version from
@@ -29,16 +27,12 @@ You can install the stable version from
 install.packages('ChainLadder', dependencies = TRUE)
 ```
 
-To install the current development version from github you need the [devtools package](https://cran.r-project.org/package=devtools) and the other packages on which ChainLadder depends and links to:
-
-```s
-install.packages(c("actuar", "cplm", "grid", "ggplot2", "knitr", "lattice", "Matrix", "MASS", "rmarkdown", "RUnit", "systemfit",  "statmod", "tweedie"))
-```
+To install the current development version from github you can use the [devtools package](https://cran.r-project.org/package=devtools):
 
 To install ChainLadder run:
 ```s
 library(devtools)
-install_github("mages/ChainLadder")
+install_github("mages/ChainLadder", dependencies = TRUE)
 ```
 
 ## Usage
@@ -49,7 +43,7 @@ library(ChainLadder)
 demo(ChainLadder)
 ```
 
-See the ChainLadder package [vignette](https://cran.r-project.org/package=ChainLadder/vignettes/ChainLadder.pdf) for more details. 
+See the ChainLadder package [vignette](https://cran.r-project.org/package=ChainLadder) for more details. 
 
 ## Citation
 
