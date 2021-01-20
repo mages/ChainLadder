@@ -11,33 +11,33 @@ vignette: >
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
-
 ```
 
 ## Description
 
-The `BootMackChainLadder` and `MultiBootMackChainLadder` functions are based on a suggestion from [@england2002], who though that the Mack model was kind of a standard GLM. 
+The `BootMackChainLadder` and `MultiBootMackChainLadder` functions are based on a suggestion from [@england2002], point 7.6.5, who though that the Mack model was a certain kind of GLM but did not prove it.
 
-A work from [Laverny (2018)](http://www.ressources-actuarielles.net/C12574E200674F5B/0/2B139F22F51AF75FC1258306006E82F2) checks the hypothesis and conclude that Mack models is indeed a quasi-GLM. The most direct implication is that we can bootstrap it's residuals non-parametrically, and obtain a bootstrap estimate that is concordant with Mack's result (on the contrary to the Poisson, ZIP or ZIBN bootstraps), and even with [@merz2008] results.
 
-The `BootMackChainLadder` function implement this bootstrap, with many parameter to fit the needs of the practitioner. The `MultiBootMackChainLadder` function, on the other hand, implement a multi-triangle version, where every triangles are bind to each other by a correlation link between residuals. the parametrisation of the function allows to specify wich way this link should be taken into account. 
+A non-peer-reviewed work from [Laverny (2018)](http://www.ressources-actuarielles.net/C12574E200674F5B/0/2B139F22F51AF75FC1258306006E82F2) (in french) checks the hypothesis and conclude that Mack models is indeed a quasi-GLM. The most direct implication is that we can bootstrap it's residuals non-parametrically, and obtain a bootstrap estimate that is concordant with Mack's result (on the contrary to the Poisson, ZIP or ZIBN bootstraps), and even with [@merz2008] results.
+
+The `BootMackChainLadder` function implement this bootstrap, with many parameter to fit the needs of the practitioner. The `MultiBootMackChainLadder` function, on the other hand, implement a multi-triangle version, where every triangles are bind to each other by a correlation link between residuals (under the hypothesis of the Braun model). The parametrisation of the function allows to specify which way this link should be taken into account. 
 
 ## The theoretical proof
 
-Which actuary does not know about **Mack's model** ? Due to [@Mack1991], this model is fairly simple. Suppose you have a triangle.
+Which actuary does not know about **Mack's model** ? Due to [@Mack1991], this model is fairly simple.
 
-Denote $C_{i,j}$ the value of this triangle from the $i$'th row and the $j$'th collumn.
+Suppose you have a (cumulative) triangle, and denote $C_{i,j}$ the value of this triangle from the $i$'th row and the $j$'th collumn.
 
-The mack model consist of a stochastic model that enframe the classical chain-ladder estimator, denoted here by the vector $\mathbf{\hat{f}}$, defined $\forall j \in \{1,...,n\}$ by :
+The Mack model consist of a stochastic model that enframe the classical chain-ladder estimator, denoted here by the vector $\mathbf{\hat{f}}$, defined $\forall j \in \{1,...,n\}$ by :
 
 $$\hat{f}_j = \frac{\sum\limits_{i=1}^{n-j+1} C_{i,j+1}}{\sum\limits_{i=1}^{n-j+1} C_{i,j}}$$
 
 
-Then we estimate future claims by setting, $\forall i,j \,|\, i+j>n$, $C_{i,j+1} = \hat{f_j} C_{i,j}$, wich is the chain-ladder estimate.
+Then we estimate future claims by setting, $\forall i,j \,|\, i+j>n$, $C_{i,j+1} = \hat{f_j} C_{i,j}$, which is the chain-ladder estimate.
 
 Mack then found stochastic hypothesis that make those estimator _better_ in a certain sense (in the MSE-sense) : 
 
-* $(H1)$ : The lines are independants
+* $(H1)$ : The lines are independents
 * $(H2)$ : $\exists\, \mathbf{f} \text{ such that }  \forall i,j,\, \mathbb{E}(C_{i,j+1}\,|\, C_{i,1},...,C_{i,j}) = f_j C_{i,j}$
 * $(H3)$ : $\exists\, \mathbf{\sigma} \text{ such that }  \forall i,j,\, \mathbb{V}(C_{i,j+1}\,|\, C_{i,1},...,C_{i,j}) = \sigma_j^2 C_{i,j}$
 
@@ -47,7 +47,7 @@ Suppose that, following [@england2002], we reformulate the model in term of indi
 
 $$F_{i,j} = \frac{C_{i,j+1}}{C_{i,j}} \text{ and } w_{i,j} = C_{i,j}$$
 
-The 2 last hypothesis can then be reformulated in the following way (just dividing by $w_{i,j}$).
+The two last hypothesis can then be reformulated in the following way (just dividing by $w_{i,j}$).
 
 * $(H2*)$ : $\exists\, \mathbf{f} \text{ such that }  \forall i,j,\, \mathbb{E}(F_{i,j}\,|\, w_{i,j}) = f_j$
 * $(H3*)$ : $\exists\, \mathbf{\sigma} \text{ such that }  \forall i,j,\, \mathbb{V}(F_{i,j}\,|\, w_{i,j}) = \frac{\sigma_j^2}{w_{i,j}}$
@@ -78,8 +78,6 @@ Here is an exemple on the ABC triangle (incured triangle -- cumulative view):
 
 ```{r echo=FALSE}
 library(ChainLadder)
-library(dplyr)
-library(tidyr)
 data(ABC)
 print(ABC)
 ```
@@ -87,68 +85,62 @@ print(ABC)
 First, the estimated development factor given by standard chain-ladder : 
 
 ```{r trying_first_order}
-ChainLadder::MackChainLadder(ABC)$f
+MackChainLadder(ABC)$f
 ```
 
 
-If we create a data.frame with what we need and then try a GLM (actualy it's even a lm there, since the variance hypothesis are Normal-like) on it : 
+If we create a data.frame with what we need and then try a GLM (here the function `lm` is enough, as the variance hypothesis is Normal-like) on it : 
 
 
 ```{r trying_first_order2}
-df <- ABC %>% 
-    as.data.frame %>% 
-    mutate(
-      weight = cbind(rep(NA,nrow(ABC)),ABC %>% as.matrix) %>% .[,1:nrow(ABC)] %>% as.vector,
-      F = value / weight,
-     ) %>% 
-    drop_na
+df <- as.data.frame(ABC)
+df$weight <- as.vector(cbind(rep(NA, nrow(ABC)), as.matrix(ABC))[, seq_len(nrow(ABC))])
+df$F <- df$value / df$weight
+df <- df[complete.cases(df), ]
 
-model <- lm(data =df,formula=F~factor(dev)+0,weights=weight)
-  
-df <- df %>% 
-  mutate(f.hat = model$fitted.values,
-         rez2 = weight * (F - f.hat)^2)
+model <- lm(data = df, formula = F ~ factor(dev) + 0, weights = weight)
+
+df$f.hat <- model$fitted.values
+df$rez2 <- df$weight * (df$F - df$f.hat)^2
+print(head(df))
 ```
 
-I also extracted the squared Pearson residuals. Indeed, if we want to model $\sigma$'s too, we need a second model to calculate the weighted average of Squared Pearson residuals ! Which is standard in the context of Joint modeling of Glm's, see e.g [@mccullagh1989] . 
+I also extracted the squared Pearson residuals. Indeed, if we want to model $\sigma$'s too, we nieed a second model to calculate the weighted average of Squared Pearson residuals, which is standard in the context of Joint modeling of Glm's, see e.g [@mccullagh1989] for a very good exposition. 
 
 To calculate the weighted average of squared residuals (for the dispersion parameters), we use another linear model since only the first order is here of interest. Note that we exclude the last column of the triangle, since there is only one point (and therefore no estimation of variance is possible). We also add the last value estimated by Mack for sake of completeness. 
 
 ```{r suite}
-model2 <- df %>% 
-    filter(dev != nrow(ABC)) %>%
-    {lm(data =., formula = rez2 ~ factor(dev))}
 
-df <- df %>% mutate(
-    estimated.phi = model2$fitted.values %>% {c(.,min(.[length(.)],.[length(.)-1],.[length(.)]^2/.[length(.)-1]))}
-  )
 
-df
+model2 <- lm(data = df[df$dev != nrow(ABC), ], formula = rez2 ~ factor(dev))
+
+fit <- model2$fitted.values
+
+df$estimated.phi <- c(fit, min(fit[length(fit)], fit[length(fit) - 1], fit[length(fit)]^2 / fit[length(fit) - 1]))
+
+print(head(df))
 ```
 
 And there we have it ! Those estimates are clearly the same as Mack's. Indeed : 
 
 ```{r}
-model4 <- MackChainLadder(ABC,est.sigma="Mack")
-results <- 
-  df %>% 
-    group_by(dev) %>% 
-    summarise(phi=mean(estimated.phi)) %>% 
-    mutate(
-      mack = model4$sigma^2,
-      degree.of.freedom = max(dev) - dev, # correction for degree of freedom
-      phi = (phi * (degree.of.freedom+1)/(degree.of.freedom)) %>%
-        .[1:(length(.)-1)] %>%
-        {c(.,min(.[length(.)],.[length(.)-1],.[length(.)]^2/.[length(.)-1]))},
-      f = model$coefficients[1:(dim(ABC)[1]-1)],
-      f.cl = model4$f[1:(dim(ABC)[1]-1)]
-      ) %>%
-    select(f,f.cl,phi,mack) %>%
-    as.data.frame
-```
+model4 <- MackChainLadder(ABC, est.sigma = "Mack")
 
-```{r echo=FALSE}
-results
+results <- data.frame(dev = unique(df$dev))
+results$phi <- 0
+for (dev in results$dev) {
+  results[results$dev == dev, "phi"] <- mean(df[df$dev == dev, "estimated.phi"])
+}
+
+results$degree.of.freedom <- max(results$dev) - results$dev
+xxx <- (results$phi * (results$degree.of.freedom + 1) / (results$degree.of.freedom))[1:(length(results$phi) - 1)]
+results$phi <- c(xxx, min(xxx[length(xxx)], xxx[length(xxx) - 1], xxx[length(xxx)]^2 / xxx[length(xxx) - 1]))
+results$f <- model$coefficients[1:(dim(ABC)[1] - 1)]
+results$f.cl <- model4$f[1:(dim(ABC)[1] - 1)]
+results$mack <- model4$sigma^2
+
+results$dev <- NULL
+print(results)
 ```
 
 We reproduced Mack's result in a new model. The hypothesis we used are : 
@@ -156,47 +148,102 @@ We reproduced Mack's result in a new model. The hypothesis we used are :
 * $(H1**)$ : The lines are independants
 * $(H2**)$ : $\exists\, \mathbf{f}\text{ and }\mathbb{\sigma} \text{ such that }  \forall i,j,\, F_{i,j} |\, w_{i,j} \sim \mathcal{N}(f_j, \frac{\sigma_j^2}{w_{i,j}})$
 
-Well, if we forget about the law assumption and only use quasi-glm (see, once again, [@mccullagh1989]), those are mack hypothesis. Therefore, Mack's model is a Quasi-glm, conditional, and weighted, with a normal-like variance assumption. 
+Well, if we forget about the law assumption and only use quasi-Glm (see, once again, [@mccullagh1989]), those are Mack hypothesis. Therefore, Mack's model is a quasi-Glm, conditional, and weighted, with a normal-like variance assumption. 
 
 Some remarks : 
 
 - Note that we played a little with degree of freedom : Since we are estimating the $\sigma$'s _after_ the $f$'s, we should take into account that $n-1$ parameters are already estimated. This is classical in the joint modeling process. 
-- Furthermore, the joint modeling process gives the choice of residuals (pearson residuals or deviance contribution), but in a the normal case they are equal. 
+- Furthermore, the joint modeling process gives the choice of residuals (pearson residuals or deviance contribution), but in a the normal-like case they are equal so this degree of freedom is not present here. 
 - Last but not least, the accointance for the kurtosis is not necessary here because of the normal variance assumption. 
 
-A gist available [there](https://gist.github.com/lrnv/f87961fbbbdb277aaec3024b06bb9aad)  gives a `check_model` function that allow to check the hypothesis on your own triangle.
+The following `check_model` function summarises this process and can be used to check the claim that Mack's model is a GLM on another triangle:
+
+```{r }
+check_model <- function(triangle) {
+  df <- as.data.frame(triangle)
+  df$weight <- as.vector(cbind(rep(NA, nrow(triangle)), as.matrix(triangle))[, seq_len(nrow(triangle))])
+  df$F <- df$value / df$weight
+  df <- df[complete.cases(df), ]
+
+  model <- lm(data = df, formula = F ~ factor(dev) + 0, weights = weight)
+
+  df$f.hat <- model$fitted.values
+  df$rez2 <- df$weight * (df$F - df$f.hat)^2
+
+  model2 <- lm(data = df[df$dev != nrow(triangle), ], formula = rez2 ~ factor(dev))
+
+  fit <- model2$fitted.values
+  df$estimated.phi <- c(fit, min(fit[length(fit)], fit[length(fit) - 1], fit[length(fit)]^2 / fit[length(fit) - 1]))
+
+  model3 <- lm(data = df, formula = F ~ factor(dev) + 0, weights = weight / estimated.phi)
+  model4 <- MackChainLadder(triangle, est.sigma = "Mack")
+
+  results <- data.frame(dev = unique(df$dev))
+  results$phi <- 0
+  for (dev in results$dev) {
+    results[results$dev == dev, "phi"] <- mean(df[df$dev == dev, "estimated.phi"])
+  }
+  results$degree.of.freedom <- max(results$dev) - results$dev
+  xxx <- (results$phi * (results$degree.of.freedom + 1) / (results$degree.of.freedom))[1:(length(results$phi) - 1)]
+  results$phi <- c(xxx, min(xxx[length(xxx)], xxx[length(xxx) - 1], xxx[length(xxx)]^2 / xxx[length(xxx) - 1]))
+  results$f <- model$coefficients[1:(dim(triangle)[1] - 1)]
+  results$f.cl <- model4$f[1:(dim(triangle)[1] - 1)]
+  results$mack <- model4$sigma^2
+  results$dev <- NULL
+
+
+  return(list(mod.f = model, mod.phi = model2, mod.final = model3, rez = results))
+}
+
+
+data(ABC)
+print(check_model(ABC)$rez)
+```
+
+
 
 The categorization of Mack hypothesis set as a GLM allows several things : 
 
 * The use of standard statistical tools : cook's distance, residual analysis, etc...
-* The use of standard software : R's glm function is probably more safe than ChainLadder's specific function. 
+* The use of standard software : R's glm function is probably more safe than `ChainLadder`'s specific function. 
 * The simplicity of extension : The Bornhutter-Fergusson extension, e.g, can be easily introduced within a GLM framework, it's harder within Mack's framework. 
+* The bootstrapping of residuals without distributional assumptions (they are just supposed to be i.i.d).
 
 
 
 ## The implementation 
 
-The package exports several functions related to this problematic. The most important one is the BootMackChainLadder function, wich implements a standard bootstrap fo residuals for this GLM. Note that these residuals are bare Mack residuals, not Poisson's residuals, and hence the results obtained by this bootstrap are centered on Mack's results. 
+The package exports several functions related to this problematic. The most important one is the `BootMackChainLadder` function, which implements a standard bootstrap fo residuals for this GLM. Note that these residuals are bare Mack residuals, not Poisson's residuals, and hence the results obtained by this bootstrap are centered on Mack's results. 
 
-To see this, just try it with : 
+Furthermore, the model allows for a Next year bootstrapping, standardized on Merz-Wuthrich results, as the following tests shows: 
+
 
 ```{r }
-library(magrittr)
 data(ABC)
-model = ABC %>% BootMackChainLadder(B = 50, distNy = 'normal')
-
-print(model)
-print(mean(model))
+model <- BootMackChainLadder(ABC, B = 1000, distNy = "normal")
+mack <- MackChainLadder(ABC)
 print(CDR(model))
+print(CDR(mack)[, 1:2])
 ```
 
-The `distNy` option is used to specify if we want a distribution for computation of the CDR. Specifying 'normal' with give results that are convergent to the Merz & Wuthrich formula. Specifiying 'residuals', on the other hand, will give results that are coherent with Mack's hypothesis. 
+The `distNy` option is used to specify if we want a distribution for computation of the CDR. Specifying 'normal' will give results that are convergent to the Merz & Wuthrich formula, as we just checked. Specifiying 'residuals', on the other hand, will give results that are coherent with Mack's hypothesis. 
 
-Several other options are avalibale, see the documentation.
+Increasing the number of resamples will make the convergence better, but by digging into the `model` object, we can obtain more details and see every Bootstrap run independently from each other.
+
+Another function exported by the package gives the possibility to do the same kind of bootstrap in the Braun model, see [@braun] and [@prohl]: This is a multi-line reserving framework where each triangles are supposed to have joint residuals. 
+
+For empirical residuals from the Mack model, this corresponds to a joint resampling of the residuals attribution across lines of buisness. Under a normal assumption from the residuals, we get back the mulit-line framework that was developped by Merz & Wurthrich in [@merz2007], where the residuals are jointly normal with an estimated covariance structure taken from the Braun model. 
+
+Both these models are avaliable under the `MultiBootMackChainLadder` function, which can be applied as follows: 
+
+```{r }
+data(ABC)
+Triangles <- list(ABC, ABC)
+model <- MultiBootMackChainLadder(Triangles, B = 1000)
+print(CDR(model))
+print(mean(model))
+```
 
 
-_References :_ 
-
-
-
+__References__
 
