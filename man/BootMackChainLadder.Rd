@@ -48,6 +48,9 @@ if you take standard normal residuals, but not otherwise.
 The residuals can also be clustered through the `clusters` argument, by providing clusters as a list of vectors of integers corresponding to each cluster:
 `clusters=list(seq(1,10),seq(11,15))` for a triangle with 15 columns will cluster the residuals in two parts. The meaning of this parameter is that the residuals are resampled inside clusters only:
 the underlying i.i.d hypothesis that is needed for the resampling can be tampered with through this parameterisation
+
+For more details about the model, see the vignette: 
+\code{vignette("BootMack", package = "ChainLadder")}
 }
 \examples{
 data(ABC)

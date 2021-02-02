@@ -34,6 +34,9 @@ NULL
 #' The residuals can also be clustered through the `clusters` argument, by providing clusters as a list of vectors of integers corresponding to each cluster:
 #' `clusters=list(seq(1,10),seq(11,15))` for a triangle with 15 columns will cluster the residuals in two parts. The meaning of this parameter is that the residuals are resampled inside clusters only:
 #' the underlying i.i.d hypothesis that is needed for the resampling can be tampered with through this parameterisation
+#' 
+#' For more details about the model, see the vignette: 
+#' \code{vignette("BootMack", package = "ChainLadder")}
 #'
 #'
 #'
@@ -306,6 +309,9 @@ print.BootMackChainLadder <- function(x, ...) {
 #' If distNy = "residuals", it also converges strongly but NOT to the Merz-Wuthrich formula, although each triangles is bootstrapped according to the Mack model, and has volatility parameters that matches the Mack model.
 #' Notes that if you choose distNy = "residuals.bycolumn", the residuals will be resampled inside each column and not accross columns. 
 #' Setting distNy = "residuals.global" or "residuals" triggers the same code.
+#' 
+#' For more details about the model, see the vignette: 
+#' \code{vignette("BootMack", package = "ChainLadder")}
 #'
 #' @return a MBMCL object containing a list of BMCL objects and a little more.
 #' @export

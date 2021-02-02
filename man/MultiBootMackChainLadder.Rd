@@ -44,9 +44,13 @@ Furthermore, if you simulate net year payments with a given process ditribution 
 
 The Multivariate dependence structure is induced by bootstrapping jointly the residueals of each triangles.
 
-If distNy = "normal", it follows *boumezoued & al* and converges to the Merz-Wüthrich formula in the Braun model. 
-If distNy = "residuals", it also converges strongly but NOT to the Merz-Wûthrich formula. Same for ohter possibilities. 
-Notes that if you choose distNy = "residuals.bycolumn", the residuals will be resampled inside each column and not accross columns. Setting distNy = "residuals.global" or "residuals" triggers the same code.
+If distNy = "normal", it follows *Boumezoued & al: One-year reserve risk including a tail factor : closed formula and bootstrapp aproach, 2011* and converges to the Merz-Wuthrich formula in the Braun model.
+If distNy = "residuals", it also converges strongly but NOT to the Merz-Wuthrich formula, although each triangles is bootstrapped according to the Mack model, and has volatility parameters that matches the Mack model.
+Notes that if you choose distNy = "residuals.bycolumn", the residuals will be resampled inside each column and not accross columns. 
+Setting distNy = "residuals.global" or "residuals" triggers the same code.
+
+For more details about the model, see the vignette: 
+\code{vignette("BootMack", package = "ChainLadder")}
 }
 \examples{
 data(ABC)
