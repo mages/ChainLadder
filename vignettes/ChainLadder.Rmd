@@ -903,6 +903,7 @@ The `MultiBootMackChainLadder` function provides this model:
 model = MultiBootMackChainLadder(liab, distNy='residuals')
 mean(model)
 CDR(model)
+Corel(model)
 ```
 
 More options are avaliable to tweak the dependence assumptions and the resampling assumptions:

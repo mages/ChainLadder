@@ -639,7 +639,7 @@ Corel <- function(x, ...) {
   unname(rev(diag(Triangle[rev(seq_len(nrow(Triangle))), ])))
 }
 .DF <- function(Triangle) {
-  # Simply returns Cl developpements factors
+  # Simply returns Cl developpements factors. Others methods in the package a way slower. 
   n <- dim(Triangle)[1]
   Triangle2 <- Triangle
   Triangle2[col(Triangle2) == n - row(Triangle2) + sum(!is.na(Triangle2[, n]))] <- NA
@@ -649,12 +649,10 @@ Corel <- function(x, ...) {
   if (cumulative) {
     1 / rev(cumprod(rev(DF)))
   } else {
-    .firstdiff(1 / rev(cumprod(rev(DF))))
+    x = 1 / rev(cumprod(rev(DF)))
+    shifted <- c(0, x[1:(length(x) - 1)])
+    x - shifted
   }
-}
-.firstdiff <- function(x) {
-  shifted <- c(0, x[1:(length(x) - 1)])
-  x - shifted
 }
 .ultimates <- function(Triangle, df = .DF(Triangle), stab = NA) {
   # simply returns chain-ladder ultimates.
@@ -664,8 +662,7 @@ Corel <- function(x, ...) {
   .diag(Triangle) * cumprod(rev(df))
 }
 .ibnr <- function(Triangle, df = .DF(Triangle), stab = NA) {
-  # simply returns the IBNR from classical chain-ladder model
-
+  # simply returns the IBNR from classical chain-ladder model, with stabilisation.
   if (!is.na(stab)) {
     df[(stab + 1):length(df)] <- rep(1, length(df) - stab)
   }
@@ -792,7 +789,6 @@ Corel <- function(x, ...) {
     Triangle2[Triangle[(!is.na(Triangle))] > threshold] <- NA
   }
 
-
   # Stabilisation management:
   if (!is.na(stab)) {
     prob.stab <- col(Triangle) <= stab
@@ -800,13 +796,9 @@ Corel <- function(x, ...) {
     prob.stab <- !is.na(Triangle2)
   }
 
-
   if (!is.na(clusters)) {
-
-
     # exemple clusters :
     # clusters <- list(c(1, 2), seq(3, 9), seq(10, 12), seq(13, I))
-
     samples <- lapply(seq_len(length(clusters)), function(i) {
       prob <- !is.na(Triangle2[, clusters[[i]]])
       positions <- matrix(1:n, nrow = I)
@@ -858,12 +850,9 @@ Corel <- function(x, ...) {
 .newDFPond <- function(NyDFIndiv, DFIndiv, Triangle, stab = NA) {
   n <- dim(Triangle)[1]
   DFIndiv[col(DFIndiv) == n - row(DFIndiv) + 1] <- c(NyDFIndiv, 1)
-
-  # stabilisation :
   if (!is.na(stab)) {
     DFIndiv[col(DFIndiv) > stab] <- 1
   }
-
   rez <- colSums(Triangle * DFIndiv, na.rm = TRUE) / colSums(Triangle, na.rm = TRUE)
   rez[n] <- 1
   return(rez)
@@ -905,7 +894,7 @@ Corel <- function(x, ...) {
   return(result)
 }
 .BF.Ultimates <- function(ultimes, primes, cadence, longeur_moyenne = 5, longeur_application = 5) {
-  # la fonction de base est de prendre un BF 5ans 5ans. On peut le changer ici.
+  # This produces BF results when parametrized correctly. 
   n <- length(ultimes)
   a <- longeur_application
   b <- longeur_moyenne
