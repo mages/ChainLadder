@@ -2,11 +2,6 @@
 ## Copyright: Oskar Laverny, oskar.laverny@gmail.com
 ## Date: 2018
 
-
-
-# @import tidyverse
-# @import magrittr
-# @import dplyr
 #' @import mvtnorm
 NULL
 
@@ -35,10 +30,7 @@ NULL
 #' `clusters=list(seq(1,10),seq(11,15))` for a triangle with 15 columns will cluster the residuals in two parts. The meaning of this parameter is that the residuals are resampled inside clusters only:
 #' the underlying i.i.d hypothesis that is needed for the resampling can be tampered with through this parameterisation
 #' 
-#' For more details about the model, see the vignette: 
-#' \code{vignette("BootMack", package = "ChainLadder")}
-#'
-#'
+#' For more details about the model, see the vignette.
 #'
 #' @return A BootMackChainLadder object with a lot of information about the bootstrapping. You can `plot` it, `print` it and `str` it to extract information. Functions `mean`, `CDR` and `summary` can be used to extract informations as well.
 #' @export
@@ -47,7 +39,10 @@ NULL
 #'
 #' @examples
 #' data(ABC)
-#' BootMackChainLadder(Triangle = ABC, B = 100, distNy = "residuals", threshold = 2)
+#' model <- BootMackChainLadder(Triangle = ABC, B = 100, distNy = "normal", threshold = 2)
+#' mack <- MackChainLadder(ABC)
+#' print(CDR(model))
+#' print(CDR(mack)[, 1:2])
 BootMackChainLadder <- function(Triangle, B = 100, distNy = "normal", threshold = NA, BF.premiums = NULL, BF.param = c(5, 5), stab = NA, clusters = NA) {
   if (!(distNy %in% c("normal", "residuals"))) {
     stop("DistNy Parameter must be 'normal' (classical MW) or 'residuals'")
@@ -321,7 +316,9 @@ print.BootMackChainLadder <- function(x, ...) {
 #' @examples
 #' data(ABC)
 #' triangles <- list(tri1 = ABC, tri2 = ABC, tri3 = ABC)
-#' MultiBootMackChainLadder(triangles, 100)
+#' model <- MultiBootMackChainLadder(triangles, 100)
+#' print(CDR(model))
+#' print(mean(model))
 MultiBootMackChainLadder <- function(triangles, B = 100, distNy = "normal", names = NULL, threshold = NA, stab = NA) {
   if (!(distNy %in% c("normal", "residuals.bycolumn", "residuals.global", "residuals"))) {
     stop("DistNy Parameter must be 'normal' (classical MW) or 'residuals'")
