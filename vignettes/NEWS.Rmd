@@ -17,6 +17,12 @@ vignette: >
 knitr::opts_chunk$set(echo = TRUE)
 suppressPackageStartupMessages(library(ChainLadder))
 ```
+
+# master
+
+ * Added the BootMackChainLadder and MultiBootMackChainLadder functions
+
+
 # Version 0.2.12 [2021-01-05]
  
  * Moved continuous integration testing from TravisCI to GitHub Actions
