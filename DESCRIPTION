@@ -28,7 +28,9 @@ Authors@R: c(person("Markus", "Gesmann", role = c("aut", "cre"),
              person("Vincent", "Goulet", role="ctb",
              email="vincent.goulet@act.ulaval.ca"),
              person("Marco", "De Virgilis",  role="ctb",
-             email="devirgilis.marco@gmail.com")
+             email="devirgilis.marco@gmail.com"),
+             person("Oskar", "Laverny", role="ctb",
+             email="oskar.laverny@gmail.com")
              )  
 Description: Various statistical methods and models which are
     typically used for the estimation of outstanding claims reserves
@@ -47,7 +49,8 @@ Imports:
     statmod,
     cplm (>= 0.7-3),
     ggplot2,
-    MASS
+    MASS,
+    mvtnorm
 Suggests:
     RUnit, knitr, rmarkdown
 VignetteBuilder:
@@ -57,4 +60,4 @@ URL: https://github.com/mages/ChainLadder
 BugReports: https://github.com/mages/ChainLadder/issues 
 LazyLoad: yes
 LazyData: yes
-RoxygenNote: 6.1.1
+RoxygenNote: 7.1.1

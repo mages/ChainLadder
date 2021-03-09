@@ -675,6 +675,33 @@ curve(plnorm(x,fit$estimate["meanlog"], fit$estimate["sdlog"]),
       col="red", add=TRUE)
 ```
 
+These boostrap have incremental claims as response variable. 
+The `BootMackChainLadder` function implements another approach,
+described in section 7.4, 7.5 and 7.6 of [@EnglandVerrall2002]. 
+This proposes a resampling of the residuals of a linear model,
+with joint modelisation of the variance, applied to the individual
+developpement factors. 
+
+This bootstrap has the particularity of reproducing the mean of the ChainLadder model,
+as the other ones, but also Mack's variances. A non-peer-reviewed work from
+[Laverny (2018)](http://www.ressources-actuarielles.net/C12574E200674F5B/0/2B139F22F51AF75FC1258306006E82F2)
+(in french) gives the proof of this conjecture from [@EnglandVerrall2002]. 
+This bootstrap also provides a coherent result with the CDR of the standard Mack model, 
+together with a bootstrapped version of next year increments, ibnr and ultimates.  
+
+```{r }
+B <- BootMackChainLadder(RAA, 999)
+next_year_ultimates = rowSums(B$NyUltimates)
+sd(next_year_ultimates)
+mean(B)
+CDR(B)
+```
+
+A parameter `distNy` can be used to specify the distribution of the next year resampling for increments. 
+Using `distNy='normal'`, the default, provides a coherent estimator with the Merz & Wuthrich hypothesis.
+Using `distNy=residuals` is more in-line with the GLM vision, and resamples observed residuals.
+
+More details and options are available in the documentation.
 
 ### Multivariate chain-ladder
 
@@ -865,6 +892,23 @@ The resulting plots are shown in figure above. We use
 `which.triangle` to suppress the plot for the portfolio, and
 use `which.plot` to select the desired types of plots. See the
 documentation for possible values of these two arguments.
+
+### Multivariate chain-ladder through bootstrap under the Braun model.
+
+A bootstrap version corresponding to the previous univariate `BootMackChainLadder` is implemented
+under correlation hypoethesis from [@braun], [@ProhlSchmidt2005] and [@MerzWuthrich2008].
+The `MultiBootMackChainLadder` function provides this model: 
+
+```{r }
+model = MultiBootMackChainLadder(liab, distNy='residuals')
+mean(model)
+CDR(model)
+Corel(model)
+```
+
+More options are avaliable to tweak the dependence assumptions and the resampling assumptions:
+as this is a classical synchronised bootstrap of a GLM, you can exclude the tail residuals,
+or choose to resample by blocks. See the documentation of `MultiBootMackChainLadder` for details. 
 
 ### Other residual covariance estimation methods
 
