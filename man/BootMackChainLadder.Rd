@@ -49,10 +49,12 @@ The residuals can also be clustered through the `clusters` argument, by providin
 `clusters=list(seq(1,10),seq(11,15))` for a triangle with 15 columns will cluster the residuals in two parts. The meaning of this parameter is that the residuals are resampled inside clusters only:
 the underlying i.i.d hypothesis that is needed for the resampling can be tampered with through this parameterisation
 
-For more details about the model, see the vignette: 
-\code{vignette("BootMack", package = "ChainLadder")}
+For more details about the model, see the vignette.
 }
 \examples{
 data(ABC)
-BootMackChainLadder(Triangle = ABC, B = 100, distNy = "residuals", threshold = 2)
+model <- BootMackChainLadder(Triangle = ABC, B = 100, distNy = "normal", threshold = 2)
+mack <- MackChainLadder(ABC)
+print(CDR(model))
+print(CDR(mack)[, 1:2])
 }

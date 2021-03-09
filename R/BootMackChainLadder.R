@@ -32,7 +32,9 @@ NULL
 #' 
 #' For more details about the model, see the vignette.
 #'
-#' @return A BootMackChainLadder object with a lot of information about the bootstrapping. You can `plot` it, `print` it and `str` it to extract information. Functions `mean`, `CDR` and `summary` can be used to extract informations as well.
+#' @return A BootMackChainLadder object with several results: bootstrapped ibnrs, ultimates, latests... 
+#' You can `plot` it, `print` it and `str` it to extract information. 
+#' Functions `mean`, `CDR` and `summary` can be used to extract informations as well.
 #' @export
 #'
 #' @import magrittr
@@ -257,7 +259,7 @@ summary.BootMackChainLadder <- function(object, ...) {
   # print(mean$ByDev)
   cat("\n Totals across origin years : \n")
   print(format(t(mean$Totals), format = "i", nsmall = 0, big.mark = ","))
-  return(NULL)
+  return(invisible(mean))
 }
 #' print
 #'
@@ -272,8 +274,7 @@ summary.BootMackChainLadder <- function(object, ...) {
 #' BMCL <- BootMackChainLadder(Triangle = ABC, B = 100, distNy = "normal", threshold = 2)
 #' print(BMCL)
 print.BootMackChainLadder <- function(x, ...) {
-  print(summary(x))
-  return(NULL)
+  summary(x)
 }
 
 #' MultiBootMackChainLadder

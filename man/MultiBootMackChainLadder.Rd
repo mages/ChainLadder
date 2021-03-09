@@ -55,7 +55,9 @@ For more details about the model, see the vignette:
 \examples{
 data(ABC)
 triangles <- list(tri1 = ABC, tri2 = ABC, tri3 = ABC)
-MultiBootMackChainLadder(triangles, 100)
+model <- MultiBootMackChainLadder(triangles, 100)
+print(CDR(model))
+print(mean(model))
 }
 \seealso{
 BootMackChainLadder
