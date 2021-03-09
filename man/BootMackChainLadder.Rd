@@ -16,27 +16,27 @@ BootMackChainLadder(
 )
 }
 \arguments{
-\item{Triangle}{A simple triangle from che Chain-ladder package.}
+\item{Triangle}{A simple triangle containing the data.}
 
-\item{B}{numeric. The number of bootstrap samples you want}
+\item{B}{The number of bootstrap resamples}
 
-\item{distNy}{character. Distribution of next-year incremental payments. Either "normal" (default) or "residuals"}
+\item{distNy}{Distribution of next-year incremental payments. Either "normal" or "residuals", see details}
 
-\item{threshold}{numeric. A value of NA (default) will prevent exclusion of residuals, and a numerci value (e.g 2) will exclude all residuals that have an absolution value greater than 2.}
+\item{threshold}{A value of NA (default) will prevent exclusion of residuals, but a numeric value (e.g 2) will exclude all residuals that have an absolution value greater than 2.}
 
-\item{BF.premiums}{If a Bornhuetter-fergusson is needed, input a vector of ultimates premiums here. Otherwise, the BF code will not be triggered.}
+\item{BF.premiums}{If a Bornhuetter-fergusson is needed, input a vector of Ultimates Premiums here. Otherwise, the BF code will not be triggered.}
 
-\item{BF.param}{A vector of 2 interger that represent (respectively) the number of year of averaging Loss-ratios for the bornhuetter fergusson and then the number of year of applying the bornhuetter fergusson to.}
+\item{BF.param}{A vector of 2 integers that represent (respectively) the number of year of averaging Loss-ratios for the Bornhuetter Fergusson and then the number of year of applying the Bornhuetter Fergusson to.}
 
-\item{stab}{A stabilisation parameter.}
+\item{stab}{A stabilisation parameter: forces developpements factors corresponding to developpements years greater than `stab` to be one.}
 
 \item{clusters}{list of sequences of column numbers. See details.}
 }
 \value{
-A BootMackChainLadder object with a lot of information about the bootstrapping. You can plot it, print it and str it to extract information.
+A BootMackChainLadder object with a lot of information about the bootstrapping. You can `plot` it, `print` it and `str` it to extract information. Functions `mean`, `CDR` and `summary` can be used to extract informations as well.
 }
 \description{
-This function implement a simple bootstrap of the residuals from the mack model with a one-year reserving risk point of view.
+This function implement a simple bootstrap of the residuals from Mack model, potentially including a one-year risk view.
 }
 \details{
 The bootstrap that is implemented here consist in a resampling of residuals obtained by the Mack model

@@ -12,10 +12,10 @@
 \item{...}{Nothing}
 }
 \value{
-Three data.frames containing data per origin year ("ByOrigin"), by developpement year ("ByDev) and globaly ("Totals)
+Three data.frames containing data per origin year ("ByOrigin"), by development year ("ByDev") and globally ("Totals")
 }
 \description{
-Calculate mean statiscics from the bootstraped mack model
+Calculate mean statiscics from the BootMackChainLadder object
 }
 \examples{
 data(ABC)

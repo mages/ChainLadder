@@ -60,4 +60,4 @@ URL: https://github.com/mages/ChainLadder
 BugReports: https://github.com/mages/ChainLadder/issues 
 LazyLoad: yes
 LazyData: yes
-RoxygenNote: 7.0.2
+RoxygenNote: 7.1.1

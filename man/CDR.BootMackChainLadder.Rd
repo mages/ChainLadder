@@ -15,7 +15,7 @@
 A data.Frame with one-year results from the bootstrap.
 }
 \description{
-Calculate the one-year Claim developpement results from the bootstrapped mack model.
+Calculate the one-year Claim developpement results from the BootMackChainLadder object
 }
 \examples{
 data(ABC)

@@ -24,7 +24,7 @@ MultiBootMackChainLadder(
 
 \item{threshold}{Eventual exclusions limit for residuals. Set to NA (default) to avoid excluding anything.}
 
-\item{stab}{Stabilisation parameter. See the code.}
+\item{stab}{Stabilisation parameter (number of CL coefs we keep). See the code.}
 }
 \value{
 a MBMCL object containing a list of BMCL objects and a little more.
