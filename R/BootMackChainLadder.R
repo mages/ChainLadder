@@ -9,9 +9,9 @@ NULL
 #'
 #' This function implement a simple bootstrap of the residuals from Mack model, potentially including a one-year risk view.
 #'
-#' @param Triangle A simple triangle containing the data.
+#' @param Triangle Cumulative claims triangle. 
 #' @param B The number of bootstrap resamples
-#' @param distNy Distribution of next-year incremental payments. Either "normal" or "residuals", see details
+#' @param distNy A parameter that sets the distribution of next-year incremental payments for the bootstrapping procedure. Either "normal" or "residuals", see details
 #' @param threshold A value of NA (default) will prevent exclusion of residuals, but a numeric value (e.g 2) will exclude all residuals that have an absolution value greater than 2.
 #' @param BF.premiums If a Bornhuetter-fergusson is needed, input a vector of Ultimates Premiums here. Otherwise, the BF code will not be triggered.
 #' @param BF.param A vector of 2 integers that represent (respectively) the number of year of averaging Loss-ratios for the Bornhuetter Fergusson and then the number of year of applying the Bornhuetter Fergusson to.
@@ -211,8 +211,8 @@ mean.BootMackChainLadder <- function(x, ...) {
       Latest = x$Latest,
       Ultimates = x$Ultimates,
       IBNR = x$IBNR,
-      NyCum = c(x$Ultimates[1], colMeans(x$NyCum)),
       NyInc = c(0, colMeans(x$NyInc)),
+      NyCum = c(x$Ultimates[1], colMeans(x$NyCum)),
       NyUltimates = colMeans(x$NyUltimates),
       NyIBNR = colMeans(x$NyIBNR)
     )
@@ -246,7 +246,7 @@ mean.BootMackChainLadder <- function(x, ...) {
 #' CDR(BMCL)
 CDR.BootMackChainLadder <- function(x, ...) {
   Totals <- data.frame(IBNR = sum(x$IBNR), `CDR(1)S.E.` = sd(rowSums(x$NyIBNR)))
-  row.names(Totals) <- "Totals"
+  row.names(Totals) <- "Total"
   names(Totals) <- c("IBNR", "CDR(1)S.E.")
   rbind(setNames(data.frame(IBNR = x$IBNR, `CDR(1)S.E.` = apply(x$NyIBNR, 2, sd)), names(Totals)), Totals)
 }
@@ -258,7 +258,9 @@ summary.BootMackChainLadder <- function(object, ...) {
   print(format(mean$ByOrigin, format = "i", nsmall = 0, big.mark = ","))
   # print(mean$ByDev)
   cat("\n Totals across origin years : \n")
-  print(format(t(mean$Totals), format = "i", nsmall = 0, big.mark = ","))
+  xxx = t(t(mean$Totals))
+  colnames(xxx) = 'Totals'
+  print(xxx)
   return(invisible(mean))
 }
 #' print
@@ -581,7 +583,7 @@ CDR.MultiBootMackChainLadder <- function(x, ...) {
   ByOrigin <- cbind(IBNR, CDR)
   Totals <- data.frame(IBNR = IBNR.tot, `CDR(1)S.E.` = t(CDR.tot))
 
-  return(list(ByOrigin = ByOrigin, Totals = Totals))
+  return(list(ByOrigin = ByOrigin, Total = Totals))
 }
 #' Next year IBNR
 #'

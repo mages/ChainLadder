@@ -16,11 +16,11 @@ BootMackChainLadder(
 )
 }
 \arguments{
-\item{Triangle}{A simple triangle containing the data.}
+\item{Triangle}{Cumulative claims triangle.}
 
 \item{B}{The number of bootstrap resamples}
 
-\item{distNy}{Distribution of next-year incremental payments. Either "normal" or "residuals", see details}
+\item{distNy}{A parameter that sets the distribution of next-year incremental payments for the bootstrapping procedure. Either "normal" or "residuals", see details}
 
 \item{threshold}{A value of NA (default) will prevent exclusion of residuals, but a numeric value (e.g 2) will exclude all residuals that have an absolution value greater than 2.}
 
@@ -33,7 +33,9 @@ BootMackChainLadder(
 \item{clusters}{list of sequences of column numbers. See details.}
 }
 \value{
-A BootMackChainLadder object with a lot of information about the bootstrapping. You can `plot` it, `print` it and `str` it to extract information. Functions `mean`, `CDR` and `summary` can be used to extract informations as well.
+A BootMackChainLadder object with several results: bootstrapped ibnrs, ultimates, latests... 
+You can `plot` it, `print` it and `str` it to extract information. 
+Functions `mean`, `CDR` and `summary` can be used to extract informations as well.
 }
 \description{
 This function implement a simple bootstrap of the residuals from Mack model, potentially including a one-year risk view.
