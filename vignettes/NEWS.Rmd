@@ -17,6 +17,10 @@ vignette: >
 knitr::opts_chunk$set(echo = TRUE)
 suppressPackageStartupMessages(library(ChainLadder))
 ```
+# Version 0.2.13 [2021-10-06]
+ 
+ * Updated URLs in the bibliography of the package vignette and help files
+
 # Version 0.2.12 [2021-01-05]
  
  * Moved continuous integration testing from TravisCI to GitHub Actions
@@ -417,8 +421,7 @@ Fixed tail extrapolation in Vignette.
     subject to restrictions on the 'selected' factors relative to
     the input 'Triangle'. See the paper 
     "A Family of Chain-Ladder Factor Models for Selected Link Ratios"
-    by Bardis, Majidi, Murphy:
-    https://www.variancejournal.org/issues/?fa=article&abstrID=6943
+    by Bardis, Majidi, Murphy, Variance Journal
   
   * A new 'coef' method returns the age-to-age factor coefficients of 
     the regression models estimated by the 'chainladder' function.

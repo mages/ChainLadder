@@ -30,7 +30,7 @@ A \code{data.frame}.
 Clark, David R., 
 "LDF Curve-Fitting and Stochastic Reserving: A Maximum Likelihood Approach",
 \emph{Casualty Actuarial Society Forum}, Fall, 2003
-\url{https://www.casact.org/pubs/forum/03fforum/03ff041.pdf} 
+\url{ https://www.casact.org/sites/default/files/database/forum_03fforum_03ff041.pdf} 
 }
 \author{
 Daniel Murphy

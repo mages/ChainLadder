@@ -2,8 +2,8 @@ Package: ChainLadder
 Type: Package
 Title: Statistical Methods and Models for Claims Reserving in 
        General Insurance
-Version: 0.2.12
-Date: 2021-01-05
+Version: 0.2.13
+Date: 2021-10-06
 Authors@R: c(person("Markus", "Gesmann", role = c("aut", "cre"),
              email = "markus.gesmann@googlemail.com"),
              person("Daniel", "Murphy", role = "aut", 
@@ -47,7 +47,8 @@ Imports:
     statmod,
     cplm (>= 0.7-3),
     ggplot2,
-    MASS
+    MASS,
+    mvtnorm
 Suggests:
     RUnit, knitr, rmarkdown
 VignetteBuilder:
@@ -57,4 +58,4 @@ URL: https://github.com/mages/ChainLadder
 BugReports: https://github.com/mages/ChainLadder/issues 
 LazyLoad: yes
 LazyData: yes
-RoxygenNote: 6.1.1
+RoxygenNote: 7.1.1

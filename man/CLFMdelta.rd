@@ -82,7 +82,7 @@ by convention,
 }
 \references{
   
-\cite{Bardis, Majidi, Murphy. A Family of Chain-Ladder Factor Models for Selected Link Ratios. \emph{Variance}. Pending. Variance 6:2, 2012, pp. 143-160. \url{https://www.variancejournal.org/issues/06-02/143.pdf}}
+\cite{Bardis, Majidi, Murphy. A Family of Chain-Ladder Factor Models for Selected Link Ratios. \emph{Variance}. Pending. Variance 6:2, 2012, pp. 143-160.}
 
 }
 \author{

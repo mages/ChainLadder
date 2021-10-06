@@ -19,7 +19,7 @@ NAIC Schedule P contains information on claims for major personal and
 commercial lines for all property-casualty insurers that write business in US.
 }
 \source{
-\url{https://www.casact.org/research/index.cfm?fa=loss_reserves_data}
+\url{https://www.casact.org}
 }
 \references{
 CAS website.
