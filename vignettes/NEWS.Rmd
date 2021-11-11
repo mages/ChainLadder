@@ -17,6 +17,11 @@ vignette: >
 knitr::opts_chunk$set(echo = TRUE)
 suppressPackageStartupMessages(library(ChainLadder))
 ```
+
+# Version 0.2.14 [2021-11-11]
+ 
+ * Updated package dependencies to address a warning from CRAN
+
 # Version 0.2.13 [2021-10-06]
  
  * Updated URLs in the bibliography of the package vignette and help files
