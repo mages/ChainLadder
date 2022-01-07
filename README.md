@@ -43,7 +43,7 @@ library(ChainLadder)
 demo(ChainLadder)
 ```
 
-See the ChainLadder package [vignette](https://cran.r-project.org/package=ChainLadder) for more details. 
+See the ChainLadder package [vignette](https://mages.github.io/ChainLadder/) for more details. 
 
 ## Citation
 
