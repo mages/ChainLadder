@@ -26,7 +26,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">ChainLadder</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.14</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.15</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -86,10 +86,10 @@
 To cite package 'ChainLadder' in publications use:
 
   Markus Gesmann, Daniel Murphy, Yanwei (Wayne) Zhang, Alessandro
-  Carrato, Mario Wuthrich, Fabio Concina and Eric Dal Moro (2021).
+  Carrato, Mario Wuthrich, Fabio Concina and Eric Dal Moro (2022).
   ChainLadder: Statistical Methods and Models for Claims Reserving in
   General Insurance. https://github.com/mages/ChainLadder,
-  http://mages.github.io/ChainLadder/.</code></pre>
+  https://mages.github.io/ChainLadder/.</code></pre>
 <div class="section level2">
 <h2 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
 </h2>
@@ -655,23 +655,23 @@ Ultimate: 32,371   32,688      0.99</code></pre>
 
      Latest Mean Ultimate Mean IBNR IBNR.S.E IBNR 75% IBNR 95%
 1981 18,834        18,834         0        0        0        0
-1982 16,704        16,865       161      666      207    1,356
-1983 23,466        24,082       616    1,166    1,091    2,771
-1984 27,067        28,832     1,765    1,948    2,691    5,653
-1985 26,180        29,080     2,900    2,388    4,156    7,027
-1986 15,852        19,666     3,814    2,528    5,310    8,399
-1987 12,314        17,830     5,516    3,224    7,232   11,466
-1988 13,112        24,224    11,112    5,210   14,057   20,706
-1989  5,395        16,154    10,759    5,821   14,248   21,593
-1990  2,063        19,662    17,599   13,966   25,340   43,327
+1982 16,704        16,840       136      697      147    1,223
+1983 23,466        24,022       556    1,239      964    3,188
+1984 27,067        28,677     1,610    1,856    2,568    4,961
+1985 26,180        28,940     2,760    2,270    3,945    7,128
+1986 15,852        19,468     3,616    2,347    4,932    7,719
+1987 12,314        17,988     5,674    3,244    7,512   11,599
+1988 13,112        24,268    11,156    5,034   14,002   20,238
+1989  5,395        16,109    10,714    6,077   14,282   21,802
+1990  2,063        19,592    17,529   14,347   25,197   44,851
 
                  Totals
 Latest:         160,987
-Mean Ultimate:  215,230
-Mean IBNR:       54,243
-IBNR.S.E         19,895
-Total IBNR 75%:  64,914
-Total IBNR 95%:  90,306</code></pre>
+Mean Ultimate:  214,738
+Mean IBNR:       53,751
+IBNR.S.E         19,016
+Total IBNR 75%:  65,620
+Total IBNR 95%:  88,018</code></pre>
 <div class="sourceCode" id="cb71"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">B</span><span class="op">)</span></code></pre></div>
 <p><img src="ChainLadder_files/figure-html/unnamed-chunk-28-1.png" width="60%" style="display: block; margin: auto;"></p>
@@ -681,22 +681,22 @@ Total IBNR 95%:  90,306</code></pre>
 <pre><code>$ByOrigin
      IBNR 75% IBNR 95% IBNR 99% IBNR 99.5%
 1981      0.0        0        0          0
-1982    206.6     1356     2577       2848
-1983   1090.8     2771     4683       5127
-1984   2690.8     5653     7841       9045
-1985   4155.5     7027    10653      11982
-1986   5309.9     8399    11029      12095
-1987   7232.4    11466    15745      17259
-1988  14056.9    20706    25946      29617
-1989  14248.3    21593    26704      28204
-1990  25340.4    43327    62057      67223
+1982    146.9     1223     2758       3320
+1983    963.9     3188     4644       4816
+1984   2567.6     4961     7501       9340
+1985   3945.2     7128    10147      11007
+1986   4931.5     7719    11108      12261
+1987   7512.2    11599    17120      18194
+1988  14001.7    20238    25967      26733
+1989  14281.6    21802    29899      30837
+1990  25196.9    44851    58090      66463
 
 $Totals
             Totals
-IBNR 75%:    64914
-IBNR 95%:    90306
-IBNR 99%:   115012
-IBNR 99.5%: 121242</code></pre>
+IBNR 75%:    65620
+IBNR 95%:    88018
+IBNR 99%:   108550
+IBNR 99.5%: 117246</code></pre>
 <p>The distribution of the IBNR appears to follow a log-normal distribution, so let’s fit it:</p>
 <div class="sourceCode" id="cb74"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">## fit a distribution to the IBNR</span>
@@ -706,8 +706,8 @@ IBNR 99.5%: 121242</code></pre>
 <span class="va">fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/MASS/man/fitdistr.html" class="external-link">fitdistr</a></span><span class="op">(</span><span class="va">B</span><span class="op">$</span><span class="va">IBNR.Totals</span><span class="op">[</span><span class="va">B</span><span class="op">$</span><span class="va">IBNR.Totals</span><span class="op">&gt;</span><span class="fl">0</span><span class="op">]</span>, <span class="st">"lognormal"</span><span class="op">)</span>
 <span class="va">fit</span></code></pre></div>
 <pre><code>    meanlog      sdlog  
-  10.832891    0.378421 
- ( 0.011973) ( 0.008466)</code></pre>
+  10.828335    0.364879 
+ ( 0.011544) ( 0.008163)</code></pre>
 <div class="sourceCode" id="cb76"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/curve.html" class="external-link">curve</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Lognormal.html" class="external-link">plnorm</a></span><span class="op">(</span><span class="va">x</span>,<span class="va">fit</span><span class="op">$</span><span class="va">estimate</span><span class="op">[</span><span class="st">"meanlog"</span><span class="op">]</span>, <span class="va">fit</span><span class="op">$</span><span class="va">estimate</span><span class="op">[</span><span class="st">"sdlog"</span><span class="op">]</span><span class="op">)</span>,
       col<span class="op">=</span><span class="st">"red"</span>, add<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
