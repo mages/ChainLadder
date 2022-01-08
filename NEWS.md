@@ -1,48 +1,30 @@
----
-title: "News"
-author: "ChainLadder Contributors"
-date: "`r Sys.Date()`"
-output:
-  knitr:::html_vignette:
-    theme: united
-    highlight: tango
-vignette: >
-  %\VignetteIndexEntry{NEWS}
-  %\VignetteEngine{knitr::rmarkdown}
-  %!\SweaveUTF8
-  \usepackage[utf8]{inputenc}
----
+# ChainLadder 0.2.15 
 
-```{r setup, include=FALSE, echo=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-suppressPackageStartupMessages(library(ChainLadder))
-```
-# Version 0.2.15 [2022-01-07]
+ * Started using pkgdown to create website for the package
+ * Moved vignettes/NEWS.Rmd to /NEW.md to work with pkgdown
  
- * Use pkgdown to create website for the package
- 
-# Version 0.2.14 [2021-11-11]
+# ChainLadder 0.2.14
  
  * Updated package dependencies to address a warning from CRAN
 
-# Version 0.2.13 [2021-10-06]
+# ChainLadder 0.2.13
  
  * Updated URLs in the bibliography of the package vignette and help files
 
-# Version 0.2.12 [2021-01-05]
+# ChainLadder 0.2.12
  
  * Moved continuous integration testing from TravisCI to GitHub Actions
  * Changed vignette format from Sweave to RMarkdown to facilitate easier
    testing using GitHub Actions
 
-# Version 0.2.11 [2020-02-10]
+# ChainLadder 0.2.11
 
  * Fixed as.triangle for a 'long' data set, when input data had missing values.
  Thanks to Dimitri Minassian for reporting this issue.
  * Fixed standard error estimation in  MackChainLadder when tail factor > 1 
  and alpha = 2. Thanks to Valentin Cornaciu for reporting this issue.
 
-# Version 0.2.10 [2019-05-27]
+# ChainLadder 0.2.10
 
  * Added Berquist-Sherman Paid Claim Development Adjustment methods to adjust 
  paid claims based on the underlying relation between paid and closed claims.
@@ -51,13 +33,13 @@ suppressPackageStartupMessages(library(ChainLadder))
  
  Thanks to Marco De Virgilis.
 
-# Version 0.2.9 [2018-12-06]
+# ChainLadder 0.2.9
 
  * Fix to as.triangle.data.frame. The labels of origin and development period 
  were mixed up with the move away from reshape2 to aggregate in version 0.2.8. 
  Thanks to Edward Tasker for reporting this issue.
 
-# Version 0.2.8 [2018-11-10]
+# ChainLadder 0.2.8
 
  * Fix to print statements to align them with the generic print methods. 
  Thanks to Markus Senn
@@ -65,33 +47,34 @@ suppressPackageStartupMessages(library(ChainLadder))
  can be used 
  * Removed dependency on reshape2 as it has been deprecated
 
-# Version 0.2.7 [2018-10-16]
+# ChainLadder 0.2.7
 
  * New quantile method for 'MackChainLadder' andv function QuantileIFRS17
  to estimate the IFRS 17 Risk Adjustment. Thanks to Eric Dal Moro and Yuriy
  Krvavych
 
-# Version 0.2.6 [2018-05-29]
+# ChainLadder 0.2.6
   
   * New function 'triangle' to create a triangle from the given set of vectors 
     of observed data. Thanks to Vincent Goulet
 
-# Version 0.2.5 [2017-10-19]
+# ChainLadder 0.2.5
   
   * Fixed bug in Mack.S.E function when "sigma[i - 2]^2" is zero.
     Thanks to Patrick Green for reporting and fixing the issue.
 
-# Version 0.2.4 [2017-01-01]
+# ChainLadder 0.2.4
   
   * Fixed meta information of NEWS vignette, so it will be shown
     as NEWS on CRAN
 
-# Version 0.2.3 [2016-10-20]
+# ChainLadder 0.2.3
   
 ## Changes
 
 ### NEWS file
-Moved NEWS file into RMarkdown package vignette format.
+
+Moved NEWS file to Markdown format.
 
 ### Triangles may now have non-numeric rownames
 
@@ -99,16 +82,15 @@ Previously it was required that the row and column names of a triangle be conver
 For example, the following sets the rownames of GenIns to the beginning Date
 of the accident year.
 
-```{r fig.width = 4, fig.height=3}
+```
 x <- GenIns
 rownames(x) <- paste0(2001:2010, "-01-01")
-x
 ```
 
 A plot with the `lattice=TRUE` option, which previously would blow up,
 now displays with nice headings.
 
-```{r}
+```
 plot(x, lattice=TRUE)
 ```
 
@@ -130,7 +112,7 @@ ChainLadder's `as.triangle` method.
 The summarized triangle displayed at the end is very similar to `GenIns`, and
 has informative row labels.
 
-```{r}
+```
 x <- GenInsLong
 # start off y with x's headings
 y <- x[0,]
@@ -175,10 +157,10 @@ and the "value.name" argument for "value".
 In the following example, the `GenIns` triangle in ChainLadder
 is converted to a `data.frame` with non-default names:
 
-```{r long}
-GenLong <- as.LongTriangle(GenIns, varnames = c("accident year", "development age"),
+```
+GenLong <- as.LongTriangle(GenIns, 
+              varnames = c("accident year", "development age"),
                            value.name = "Incurred Loss")
-head(GenLong)
 ```
 
 In the following plot,
@@ -186,7 +168,7 @@ the last accident year and the last development age are shown last,
 rather than second as they would have been if displayed alphabetically
 (ggplot's default for character data):
 
-```{r plotlong}
+```
 library(ggplot2)
 ggplot(GenLong, aes(x=`development age`, y = `Incurred Loss`,
                     group = `accident year`, color = `accident year`)) +
@@ -207,7 +189,7 @@ that coincide with the rownames of the triangle,
 which are used to match to origin in long format.
 Here is an example, newly found in `?glmReserve`.
 
-```{r}
+```
   GenIns2 <- GenIns
   rownames(GenIns2) <- paste0(2001:2010, "-01-01")
   expos <- (7 + 1:10 * 0.4) * 10
@@ -225,7 +207,7 @@ The model is fitted through the `glm.nb` function from the `MASS` package.
 To fit the negative binomial GLM to the loss triangle, 
 simply set `nb = TRUE` in calling the glmReserve function:
 
-```{r}
+```
 (fit6 <- glmReserve(GenIns, nb = TRUE))
 ```
 
@@ -271,7 +253,7 @@ which may have raised a concern with the user when none was warranted.
 
 Now ChainLadder issues an "informational warning":
 
-```{r echo = FALSE}
+```
 x <- matrix(byrow = TRUE, nrow = 4, ncol = 4, 
             dimnames = list(origin = LETTERS[1:4], dev = 1:4),
             data = c(
@@ -282,7 +264,7 @@ x <- matrix(byrow = TRUE, nrow = 4, ncol = 4,
             )
 ```
 
-```{r}
+```
 mcl <- MackChainLadder(x, est.sigma = "Mack")
 ```
 
@@ -312,7 +294,7 @@ Fixed tail extrapolation in Vignette.
 	       documentation and Mack's original paper.
 	       
 
-# Version 0.2.2 [2015-08-31]
+# ChainLadder 0.2.2 [2015-08-31]
   
 
   * Added back functionality to estimate the index parameter for the compound 
@@ -323,8 +305,7 @@ Fixed tail extrapolation in Vignette.
     ggplot2)
 
 
-# Version 0.2.1 [2015-07-11]
-  
+# ChainLadder 0.2.1
 
 ## New Features
 
@@ -347,8 +328,7 @@ Fixed tail extrapolation in Vignette.
     Result" section.
 
 
-# Version 0.2.0 [2015-03-04]
-  
+# ChainLadder 0.2.0
 
 ## New Features
 
@@ -388,8 +368,7 @@ Fixed tail extrapolation in Vignette.
     code contribution   
 
 
-# Version 0.1.9 [2014-12-20]
-  
+# ChainLadder 0.1.9
 
 ## Changes
 
@@ -397,8 +376,7 @@ Fixed tail extrapolation in Vignette.
     CRAN policy.
 
 
-# Version 0.1.8 [2014-08-22]
-  
+# ChainLadder 0.1.8
 
 ## Bug Fixes
   
@@ -408,8 +386,8 @@ Fixed tail extrapolation in Vignette.
   * Arguments xlab and ylab were not passed through in plot.triangle, when
     lattice=TRUE
 
-# Version 0.1.7 [2013-09-15]
-  
+# ChainLadder 0.1.7
+
 ## Changes
 
   * The glmReserve function currently doesn't allow the parameter var.power
@@ -417,8 +395,7 @@ Fixed tail extrapolation in Vignette.
     cplm package. The cplm package is due to dependency issues with lme4 
     no longer available via CRAN.
 
-# Version 0.1.6 [2013-08-09]
-  
+# ChainLadder 0.1.6
 
 ## New Features
 
@@ -444,8 +421,7 @@ Fixed tail extrapolation in Vignette.
      to Imports.
 
 
-# Version 0.1.5-6 [2013-03-16]
-   
+# ChainLadder 0.1.5-6
 
 ## New Features
 
@@ -460,8 +436,7 @@ Fixed tail extrapolation in Vignette.
   * A few more Mack Method examples.
 
 
-# Version 0.1.5-5 [2013-02-13]
-   
+# ChainLadder 0.1.5-5
 
 ## Bug Fixes
 
@@ -471,8 +446,7 @@ Fixed tail extrapolation in Vignette.
     Girodot for reporting this bug.
 
 
-# Version 0.1.5-4 [2012-11-10]
-   
+# ChainLadder 0.1.5-4
 
 ## New Features
 
@@ -498,8 +472,7 @@ Fixed tail extrapolation in Vignette.
      yet. Thanks to Ben Escoto for highlighting this issue. 
 
 
-# Version 0.1.5-3 [2012-08-10]
-   
+# ChainLadder 0.1.5-3
 
 ## New Features
 
@@ -523,8 +496,7 @@ Fixed tail extrapolation in Vignette.
      the vignettes.  
 
 
-# Version 0.1.5-2 [2012-03-25]
-   
+# ChainLadder 0.1.5-2
 
 ## New Features
 
@@ -545,8 +517,7 @@ Fixed tail extrapolation in Vignette.
     Thanks to Ben Escoto for reporting this issue.
 
 
-# Version 0.1.5-1 [2011-11-12]
-  
+# ChainLadder 0.1.5-1
 
   * Internal changes to plot.MackChainLadder to pass new checks
     introduced by R 2.14.0.
@@ -562,8 +533,7 @@ Fixed tail extrapolation in Vignette.
   * Added warnings to as.triangle if origin dev. period are not numeric
    
 
-# Version 0.1.5-0 [2011-08-29]
-   
+# ChainLadder 0.1.5-0
 
 ## New Features
 
@@ -572,8 +542,7 @@ Fixed tail extrapolation in Vignette.
     England P. and Verrall R. (1999) 
 
 
-# Version 0.1.4-4 [2011-03-27]
-   
+# ChainLadder 0.1.4-4
 
  * Minor changes to reflect a more rigours package build process for
    R >= 2.14.0
@@ -581,8 +550,7 @@ Fixed tail extrapolation in Vignette.
    allow the message to be suppressed.
 
 
-# Version 0.1.4-3 [2011-01-18]
-   
+# ChainLadder 0.1.4-3
 
 ## New Features
 
@@ -602,8 +570,7 @@ Fixed tail extrapolation in Vignette.
     weighted averages
 
 
-# Version 0.1.4-2 [2011-01-03]
-   
+# ChainLadder 0.1.4-2
 
 ## Bug fixes
 
@@ -614,8 +581,8 @@ Fixed tail extrapolation in Vignette.
     adjustment, only the printed output was incorrect.
 
 
-# Version 0.1.4-1 [2010-12-1]
-  
+# ChainLadder 0.1.4-1
+
 ## New Features
 
   * ClarkLDF and ClarkCapeCod functions: additional functionality
@@ -662,8 +629,7 @@ Fixed tail extrapolation in Vignette.
     was not documented
 
 
-# Version 0.1.4-0 [2010-11-11]
-   
+# ChainLadder 0.1.4-0
 
 ## New Features
 
@@ -680,8 +646,7 @@ Fixed tail extrapolation in Vignette.
           test
 
 
-# Version 0.1.3-4 [2010-10-19]
-  
+# ChainLadder 0.1.3-4
    
 ## Bug fixes
 
@@ -690,8 +655,7 @@ Fixed tail extrapolation in Vignette.
     reporting this bug.  
 
 
-# Version 0.1.3-3 [2010-05-16]
-   
+# ChainLadder 0.1.3-3
 
 ## New Features
 
@@ -726,7 +690,7 @@ Fixed tail extrapolation in Vignette.
     log-linear regression. Thanks to Dan Murphy reporting this bug.
 
 
-# Version 0.1.2-13 [2009-11-24]
+# ChainLadder 0.1.2-13
 
 ## User-visible changes
 
@@ -768,8 +732,8 @@ Fixed tail extrapolation in Vignette.
       reporting those issues. 
   
 
-# Version 0.1.2-12 [2009-02-01]
-   
+# ChainLadder 0.1.2-12
+
 ## New Features
 
  * New triangle class with S3 methods for plot, print and conversion
@@ -788,8 +752,7 @@ Fixed tail extrapolation in Vignette.
     Stefan Pohl for reporting this issue.
 
 
-# Version 0.1.2-11 [2009-03-28]
-   
+# ChainLadder 0.1.2-11
 
 ## Bug fixes
 
@@ -797,8 +760,7 @@ Fixed tail extrapolation in Vignette.
     column instead of the latest paid. 
 
 
-# Version 0.1.2-10 [2009-03-27]
-   
+# ChainLadder 0.1.2-10
 
 ## User-visible changes
 
@@ -812,8 +774,7 @@ Fixed tail extrapolation in Vignette.
     1 was provided (Thanks to Mark Hoffmann for reporting this issue).
 
 
-# Version 0.1.2-9 [2009-02-01]
-   
+# ChainLadder 0.1.2-9
 
 ## User-visible changes
 
@@ -822,16 +783,14 @@ Fixed tail extrapolation in Vignette.
   * Updated documentation for 'ABC' data (Thanks to Glen Barnett)
 
 
-# Version 0.1.2-8 [2008-11-03]
-   
+# ChainLadder 0.1.2-8
 
 ## User-visible changes
 
   * Updated documentation for 'MackChainLadder' (Thanks to Daniel Murphy)
 
 
-# Version 0.1.2-7 [2008-10-24]
-   
+# ChainLadder 0.1.2-7
 
 ## User-visible changes 
 
@@ -846,16 +805,14 @@ Fixed tail extrapolation in Vignette.
   * Updated documentation
 
 
-# Version 0.1.2-6 [2008-10-14]
-   
+# ChainLadder 0.1.2-6
 
 ## User-visible changes
 
   * Updated documentation
 
 
-# Version 0.1.2-5 [2008-10-13]
-   
+# ChainLadder 0.1.2-5
 
 ## New Features
 
@@ -899,8 +856,7 @@ Fixed tail extrapolation in Vignette.
     Thanks to Beat Huggler for reporting this issue.
 
 
-# Version 0.1.2-4 [2009-09-23]
-   
+# ChainLadder 0.1.2-4
 
   * R/BootstrapReserve.R Included all the functions for the BootChainLadder
     function. The BootChainLadder procedure provides a predictive
@@ -916,8 +872,7 @@ Fixed tail extrapolation in Vignette.
     ChainLadder package.
 
 
-# Version 0.1.2-2 [2008-09-18]
-   
+# ChainLadder 0.1.2-2
 
   * R/MackChainLadder.R Included tail factor estimation. The
     function MackChainLadder has a new argument "tail" to either
@@ -926,24 +881,21 @@ Fixed tail extrapolation in Vignette.
     development triangles 
 
 
-# Version 0.1.2-0 [2008-09-08]
-   
+# ChainLadder 0.1.2-0
 
   * R/MackChainLadder.R Prepared the functions Mack.S.E and 
     Total.Mack.S.E to accept triangles with rows full of NA values.
     This might be useful for non quadratic triangles
 
 
-# Version 0.1.1-5 [2008-05-19]
-   
+# ChainLadder 0.1.1-5
 
   * R/MackChainLadder.R Bug fix: Function Mack.S.E did not give F.se back, 
     which is needed by TotalMack.S.E. 
     Many thanks to Florian Leitenstorfer for reporting this issue.
 
 
-# Version 0.1.1-4 [2008-05-16]
-   
+# ChainLadder 0.1.1-4
 
   * inst/Excel/ChainLadder_in_Excel.xls uses now dynamic functions 
     and shows how to call 'plot' from Excel 
@@ -951,15 +903,13 @@ Fixed tail extrapolation in Vignette.
     (=Incurred But Not Reported)
 
 
-# Version 0.1.1-3 [2008-02-20]
-   
+# ChainLadder 0.1.1-3
 
   * R/MackChainLadderFunctions.R: Mack.S.E checks now which sigma>0 before log
     linear regression of sigma to estimate sigma[n-1]
 
 
-# Version 0.1.1-2 [2008-02-07]
-   
+# ChainLadder 0.1.1-2
 
   * R/MackChainLadderFunctions.R: added function
     TotalMack.S.E function to estimate the overall standard error for
@@ -968,7 +918,6 @@ Fixed tail extrapolation in Vignette.
     individual age-to-age factors F.se.
 
 
-# Version 0.1.1-1 [2007-12-07]
-   
+# ChainLadder 0.1.1-1
 
   * First release on CRAN  
