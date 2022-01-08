@@ -409,9 +409,11 @@ calculated as the volume weighted average development ratios of a
 cumulative loss development triangle from one development period to
 the next $C_{ik}, i,k =1, \dots, n$.
 
+$$
 \begin{aligned}
   f_{k} &= \frac{\sum_{i=1}^{n-k} C_{i,k+1}}{\sum_{i=1}^{n-k}C_{i,k}}
 \end{aligned}
+$$
 
 ```{r }
 # Calculate age-to-age factors for RAA triangle
@@ -540,6 +542,7 @@ losses known for development period  (e.g. development year) $k \le n+1-i$.
 In order to forecast the amounts $C_{ik}$ for $k > n+1-i$ the Mack
 chain-ladder-model assumes:
 
+$$
 \begin{aligned}
   \mbox{CL1: }  & E[ F_{ik}| C_{i1},C_{i2},\ldots,C_{ik} ] = f_k
   \mbox{ with } F_{ik}=\frac{C_{i,k+1}}{C_{ik}}\\
@@ -549,6 +552,7 @@ chain-ladder-model assumes:
     C_{j1},\ldots,C_{jn}\},\mbox{ are independent for origin period } i
     \neq j
 \end{aligned}
+$$
 
 with $w_{ik} \in [0;1], \alpha \in \{0,1,2\}$.  If these
 assumptions hold, the Mack chain-ladder-model gives an
@@ -703,19 +707,23 @@ development year $k$ where $(n)$ refers to the n-th
 triangle. [@Zhang2010a] specifies the  model in development period
 $k$ as:
 
+$$
 \begin{equation}
 Y_{i,k+1} = A_k + B_k \cdot Y_{i,k} + \epsilon_{i,k},
 \end{equation}
+$$
 
 where $A_k$ is a column of intercepts and $B_k$ is the  development
 matrix for development period $k$. Assumptions for this model are:
 
+$$
 \begin{aligned}
-&E(\epsilon_{i,k}|Y_{i,1}, \cdots,Y_{i,I+1-k}) =0. \\
-&cov(\epsilon_{i,k}|Y_{i,1}, \cdots, Y_{i,I+1-k})=D(Y_{i,k}^{-\delta/2}) \Sigma_k D(Y_{i,k}^{-\delta/2}). \\
-&\mbox{losses of different accident years are independent}. \\
-&\epsilon_{i,k} \, \mbox{are symmetrically distributed}.
+&E(\epsilon_{i,k}|Y_{i,1}, \cdots,Y_{i,I+1-k}) =0, \\
+&cov(\epsilon_{i,k}|Y_{i,1}, \cdots, Y_{i,I+1-k})=D(Y_{i,k}^{-\delta/2}) \, \Sigma_k \, D(Y_{i,k}^{-\delta/2}), \\
+&\text{losses of different accident years are independent}, \\
+&\epsilon_{i,k} \text{ are symmetrically distributed}.
 \end{aligned}
+$$
 
 In the above, $D$ is the diagonal operator, and $\delta$ is a known
 positive value that controls how the variance depends on the mean (as
@@ -1271,6 +1279,7 @@ The model assumptions for the Log-Normal PIC Model are the following:
    \Psi_0,...,\Psi_{I-1},\sigma_0,...,\sigma_{I-1},\tau_0,...,\tau_{I-1}$
    we have
    - the random vector $(\xi_{0,0},...,\xi_{I,I}, \zeta_{0,0},...,\zeta_{I,I-1})$ has multivariate Gaussian distribution with uncorrelated components given by
+   $$
      \begin{equation*}
      \xi_{i,j} \sim N(\Phi_j,\sigma^2_j),
      \end{equation*}
@@ -1281,12 +1290,15 @@ The model assumptions for the Log-Normal PIC Model are the following:
      \begin{equation*}
      P_{i,j} = P_{i,j-1} \exp(\xi_{i,j}),
      \end{equation*}
+    $$
      with initial value $P_{i,0} = \exp (\xi_{i,0})$;
    - incurred losses $I_{i,j}$ are given by the backwards
      recursion
+    $$
      \begin{equation*}
      I_{i,j-1} = I_{i,j} \exp(-\zeta_{i,j-1}),
      \end{equation*}
+    $$
      with initial value $I_{i,I}=P_{i,I}$.
  - The components of $\Theta$ are independent and $\sigma_j,\tau_j > 0$ for all j.
 
@@ -1298,13 +1310,17 @@ estimated from observations. They are estimated in a Bayesian framework.
 In the Bayesian PIC model they assume that the previous assumptions
 hold true with deterministic $\sigma_0,...,\sigma_J$ and $\tau_0,...,\tau_{J-1}$ and
 
+$$
 \begin{equation*}
 \Phi_m \sim N(\phi_m,s^2_m),
 \end{equation*}
+$$
 
+$$
 \begin{equation*}
 \Psi_n \sim N(\psi_n,t^2_n).
 \end{equation*}
+$$
 
 This is not a full Bayesian approach but has the advantage to give
 analytical expressions for the posterior distributions and the prediction
@@ -1347,25 +1363,31 @@ This second view is a short-term view because it requires assessments of
 the one-year changes of the claims predictions when one updates the available information
 at the end of each accounting year. At time $t\ge n$ we have information
 
+$$
 \begin{equation*}
 {\cal D}_{t}
 = \left\{C_{i,k};~{i+k \le t+1} \right\}.
 \end{equation*}
+$$
 
 This motivates the following sequence of predictors for the ultimate
 claim $C_{i,K}$ at times $t\ge n$
 
+$$
 \begin{equation*}
 \widehat{C}^{(t)}_{i,K}= \mathbb{E}[C_{i,K}|{\cal D}_t].
 \end{equation*}
+$$
 
 The one year claims development results (CDR), see Merz-Wüthrich
 \cite{MW2008, Merz;Wuthrich:2014}, consider the changes in these one year updates, that is,
 
+$$
 \begin{equation*}
 {\rm CDR}_{i,t+1}
 =\widehat{C}^{(t)}_{i,K}-\widehat{C}^{(t+1)}_{i,K}.
 \end{equation*}
+$$
 
 The tower property of conditional expectation implies that the
 CDRs are on average 0, that is, $\mathbb{E}[{\rm CDR}_{i,t+1}|{\cal D}_t]=0$
@@ -1373,11 +1395,13 @@ and the Merz-Wüthrich formula [@MW2008], [@MerzWuthrich2014] assesses
 the uncertainty of these predictions measured
 by the following conditional mean square error of prediction (MSEP)
 
+$$
 \begin{equation*}
 {\rm msep}_{{\rm CDR}_{i,t+1}|{\cal D}_t}(0)
 = \mathbb{E} \left[\left.\left({\rm CDR}_{i,t+1}-0\right)^2
 \right|{\cal D}_t \right].
 \end{equation*}
+$$
 
 The major difficulty in the evaluation of the conditional MSEP is
 the quantification of parameter estimation uncertainty.
@@ -1416,9 +1440,11 @@ This section gives some examples how the arguments of the `tweedieReserve` funct
 The argument `design.type` allows us to test different regression structures.
 The classic over-dispersed Poisson (ODP) model uses the following structure:
 
+$$
 \begin{equation*}
-Y \backsim as.factor(OY) + as.factor(DY),
+Y \backsim \mathtt{as.factor}(OY) + \mathtt{as.factor}(DY),
 \end{equation*}
+$$
 
 (i.e. `design.type=c(1,1,0)`). This allows, together with the log link,
 to achieve the same results of the (volume weighted) chain-ladder model,
@@ -1430,9 +1456,11 @@ regression structure in order to try to strip out these
 patterns [@GiganteSigalotti2005].
 For example, a regression structure like:
 
+$$
 \begin{equation*}
-Y \backsim as.factor(DY) + as.factor(CY),
+Y \backsim \mathtt{as.factor}(DY) + \mathtt{as.factor}(CY),
 \end{equation*}
+$$
 
 i.e. `design.type=c(0,1,1)` could be considered instead.
 This approach returns the same results of the arithmetic separation method,
@@ -1440,9 +1468,11 @@ modelling explicitly inflation parameters between consequent calendar periods.
 Another interesting assumption is the assumed underlying distribution.
 The ODP model assumes the following:
 
+$$
 \begin{equation*}
 P_{i,j} \backsim ODP(m_{i,j},\phi \cdot m_{i,j}),
 \end{equation*}
+$$
 
 which is a particular case of a Tweedie distribution,
 with `p` parameter equals to 1. Generally speaking,
@@ -1450,9 +1480,11 @@ for any random variable Y that obeys a Tweedie distribution,
 the variance $\mathbb{V}[Y]$ relates to the mean $\mathbb{E}[Y]$ by the
 following law:
 
+$$
 \begin{equation*}
 \mathbb{V}[Y] = a \cdot \mathbb{E}[Y]^p,
 \end{equation*}
+$$
 
 where `a` and `p` are positive constants.
 The user is able to test different `p` values through the `var.power`
