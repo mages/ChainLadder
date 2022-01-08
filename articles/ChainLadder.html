@@ -41,11 +41,8 @@
 <li class="nav-item">
   <a class="nav-link" href="../reference/index.html">Reference</a>
 </li>
-<li class="nav-item dropdown">
-  <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
-  <div class="dropdown-menu" aria-labelledby="dropdown-articles">
-    <a class="dropdown-item" href="../articles/NEWS.html">News</a>
-  </div>
+<li class="nav-item">
+  <a class="nav-link" href="../news/index.html">Changelog</a>
 </li>
       </ul>
 <form class="form-inline my-2 my-lg-0" role="search">
@@ -669,23 +666,23 @@ Ultimate: 32,371   32,688      0.99</code></pre>
 
      Latest Mean Ultimate Mean IBNR IBNR.S.E IBNR 75% IBNR 95%
 1981 18,834        18,834         0        0        0        0
-1982 16,704        16,869       165      679      184    1,407
-1983 23,466        24,153       687    1,352    1,225    3,303
-1984 27,067        28,806     1,739    1,919    2,735    5,110
-1985 26,180        29,047     2,867    2,427    4,093    7,315
-1986 15,852        19,634     3,782    2,478    5,299    8,314
-1987 12,314        17,902     5,588    3,329    7,332   11,831
-1988 13,112        24,143    11,031    5,073   14,023   20,174
-1989  5,395        16,499    11,104    6,290   15,108   22,353
-1990  2,063        19,923    17,860   13,980   24,772   44,503
+1982 16,704        16,848       144      718      192    1,281
+1983 23,466        24,107       641    1,305    1,096    3,087
+1984 27,067        28,688     1,621    1,994    2,515    5,274
+1985 26,180        28,995     2,815    2,362    4,158    7,129
+1986 15,852        19,470     3,618    2,400    4,987    8,145
+1987 12,314        17,711     5,397    3,050    7,183   11,297
+1988 13,112        24,267    11,155    4,955   13,981   20,746
+1989  5,395        16,441    11,046    6,227   15,136   21,458
+1990  2,063        19,514    17,451   13,610   25,583   42,402
 
                  Totals
 Latest:         160,987
-Mean Ultimate:  215,811
-Mean IBNR:       54,824
-IBNR.S.E         19,045
-Total IBNR 75%:  66,659
-Total IBNR 95%:  89,015</code></pre>
+Mean Ultimate:  214,877
+Mean IBNR:       53,890
+IBNR.S.E         19,135
+Total IBNR 75%:  66,054
+Total IBNR 95%:  88,364</code></pre>
 <div class="sourceCode" id="cb71"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">B</span><span class="op">)</span></code></pre></div>
 <p><img src="ChainLadder_files/figure-html/unnamed-chunk-28-1.png" width="60%" style="display: block; margin: auto;"></p>
@@ -695,22 +692,22 @@ Total IBNR 95%:  89,015</code></pre>
 <pre><code>$ByOrigin
      IBNR 75% IBNR 95% IBNR 99% IBNR 99.5%
 1981      0.0        0        0          0
-1982    184.2     1407     3084       3682
-1983   1225.3     3303     4914       5453
-1984   2734.8     5110     7869       8233
-1985   4092.5     7315    10867      11994
-1986   5299.1     8314    10588      11339
-1987   7331.9    11831    16016      17134
-1988  14023.3    20174    25339      26311
-1989  15108.2    22353    28407      32418
-1990  24771.6    44503    61659      64304
+1982    191.7     1281     2524       3143
+1983   1095.8     3087     4919       5945
+1984   2515.2     5274     8354       9110
+1985   4157.9     7129     9833      11146
+1986   4987.0     8145    10685      11755
+1987   7183.5    11297    14060      14721
+1988  13981.2    20746    25100      26973
+1989  15135.7    21458    28801      30674
+1990  25582.6    42402    53802      61183
 
 $Totals
             Totals
-IBNR 75%:    66659
-IBNR 95%:    89015
-IBNR 99%:   106934
-IBNR 99.5%: 113665</code></pre>
+IBNR 75%:    66054
+IBNR 95%:    88364
+IBNR 99%:   106857
+IBNR 99.5%: 111993</code></pre>
 <p>The distribution of the IBNR appears to follow a log-normal distribution, so let’s fit it:</p>
 <div class="sourceCode" id="cb74"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">## fit a distribution to the IBNR</span>
@@ -720,8 +717,8 @@ IBNR 99.5%: 113665</code></pre>
 <span class="va">fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/MASS/man/fitdistr.html" class="external-link">fitdistr</a></span><span class="op">(</span><span class="va">B</span><span class="op">$</span><span class="va">IBNR.Totals</span><span class="op">[</span><span class="va">B</span><span class="op">$</span><span class="va">IBNR.Totals</span><span class="op">&gt;</span><span class="fl">0</span><span class="op">]</span>, <span class="st">"lognormal"</span><span class="op">)</span>
 <span class="va">fit</span></code></pre></div>
 <pre><code>    meanlog      sdlog  
-  10.848821    0.365264 
- ( 0.011556) ( 0.008172)</code></pre>
+  10.827651    0.379207 
+ ( 0.011998) ( 0.008484)</code></pre>
 <div class="sourceCode" id="cb76"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/curve.html" class="external-link">curve</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Lognormal.html" class="external-link">plnorm</a></span><span class="op">(</span><span class="va">x</span>,<span class="va">fit</span><span class="op">$</span><span class="va">estimate</span><span class="op">[</span><span class="st">"meanlog"</span><span class="op">]</span>, <span class="va">fit</span><span class="op">$</span><span class="va">estimate</span><span class="op">[</span><span class="st">"sdlog"</span><span class="op">]</span><span class="op">)</span>,
       col<span class="op">=</span><span class="st">"red"</span>, add<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></code></pre></div>

@@ -3,8 +3,7 @@ pkgdown: 2.0.1
 pkgdown_sha: ~
 articles:
   ChainLadder: ChainLadder.html
-  NEWS: NEWS.html
-last_built: 2022-01-08T16:58Z
+last_built: 2022-01-08T19:09Z
 urls:
   reference: http://mages.github.io/ChainLadder/reference
   article: http://mages.github.io/ChainLadder/articles

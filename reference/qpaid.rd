@@ -24,11 +24,8 @@
 <li class="active nav-item">
   <a class="nav-link" href="../reference/index.html">Reference</a>
 </li>
-<li class="nav-item dropdown">
-  <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
-  <div class="dropdown-menu" aria-labelledby="dropdown-articles">
-    <a class="dropdown-item" href="../articles/NEWS.html">News</a>
-  </div>
+<li class="nav-item">
+  <a class="nav-link" href="../news/index.html">Changelog</a>
 </li>
       </ul><form class="form-inline my-2 my-lg-0" role="search">
         <input type="search" class="form-control me-sm-2" aria-label="Toggle navigation" name="search-input" data-search-index="../search.json" id="search-input" placeholder="Search for" autocomplete="off"></form>
@@ -144,25 +141,25 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    Latest Mean Ultimate Mean IBNR IBNR.S.E IBNR 75% IBNR 95%</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1   1,100         1,100      0.00     0.00     0.00     0.00</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5   1,298         1,300      1.94     3.80     4.12     8.46</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 9   1,198         1,201      2.65     4.36     4.95    11.11</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 13  1,293         1,301      8.34     7.50    12.77    19.73</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 17  1,573         1,600     27.17    10.24    33.00    44.17</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 21  1,054         1,098     43.87    12.03    50.30    65.18</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 25  1,387         1,497    110.41    17.14   122.57   135.54</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 29  1,760         1,988    227.78    29.76   250.18   275.90</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 33  1,100         1,392    291.69    32.20   310.76   348.21</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 37    948         1,586    637.82    61.38   675.57   739.60</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 41    183         1,076    892.51   127.90   989.13 1,120.16</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 45      1           966    964.99 2,837.98 1,753.16 4,698.59</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5   1,298         1,300      2.09     4.89     2.98     8.69</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9   1,198         1,200      1.66     4.71     3.50     8.09</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 13  1,293         1,300      6.52     6.36     9.72    18.67</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 17  1,573         1,600     26.94    11.55    34.34    48.09</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 21  1,054         1,099     44.93    11.62    52.24    67.83</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 25  1,387         1,497    109.73    16.14   119.44   137.50</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 29  1,760         1,992    232.27    30.62   252.22   293.92</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 33  1,100         1,389    288.91    33.69   309.63   349.73</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 37    948         1,584    635.82    57.88   678.07   727.39</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 41    183         1,079    895.68   194.04   996.63 1,172.03</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 45      1         1,610  1,609.21 4,557.71 2,424.35 7,364.36</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                 Totals</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Latest:         12,895</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Mean Ultimate:  16,104</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Mean IBNR:       3,209</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> IBNR.S.E         2,858</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Total IBNR 75%:  4,021</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Total IBNR 95%:  7,114</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Mean Ultimate:  16,749</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Mean IBNR:       3,854</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> IBNR.S.E         4,543</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Total IBNR 75%:  4,519</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Total IBNR 95%:  9,808</span>
 <span class="r-in"></span>
 </code></pre></div>
     </div>

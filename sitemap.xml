@@ -7,9 +7,6 @@
     <loc>http://mages.github.io/ChainLadder/articles/ChainLadder.html</loc>
   </url>
   <url>
-    <loc>http://mages.github.io/ChainLadder/articles/NEWS.html</loc>
-  </url>
-  <url>
     <loc>http://mages.github.io/ChainLadder/articles/index.html</loc>
   </url>
   <url>
@@ -17,6 +14,9 @@
   </url>
   <url>
     <loc>http://mages.github.io/ChainLadder/index.html</loc>
+  </url>
+  <url>
+    <loc>http://mages.github.io/ChainLadder/news/index.html</loc>
   </url>
   <url>
     <loc>http://mages.github.io/ChainLadder/reference/ABC.html</loc>
