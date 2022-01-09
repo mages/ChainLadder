@@ -74,7 +74,7 @@
       <img src="../logo.png" class="logo" alt=""><h1>ChainLadder: Claims reserving with R</h1>
                         <h4 data-toc-skip class="author">Alessandro Carrato, Fabio Concina, Markus Gesmann, Dan Murphy, Mario Wüthrich and Wayne Zhang</h4>
             
-            <h4 data-toc-skip class="date">2022-01-08</h4>
+            <h4 data-toc-skip class="date">2022-01-09</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/mages/ChainLadder/blob/HEAD/vignettes/ChainLadder.Rmd" class="external-link"><code>vignettes/ChainLadder.Rmd</code></a></small>
       <div class="d-none name"><code>ChainLadder.Rmd</code></div>
@@ -106,7 +106,7 @@ To cite package 'ChainLadder' in publications use:
 <p>Thus, it should come as no surprise that the biggest item on the liability side of an insurer’s balance sheet is often the provision or reserves for future claims payments. Those reserves can be broken down in case reserves (or outstanding claims), which are losses already reported to the insurance company and losses that are incurred but not reported (IBNR) yet.</p>
 <p>Historically, reserving was based on deterministic calculations with pen and paper, combined with expert judgement. Since the 1980’s, with the arrival of personal computer, spreadsheet software became very popular for reserving. Spreadsheets not only reduced the calculation time, but allowed actuaries to test different scenarios and the sensitivity of their forecasts.</p>
 <p>As the computer became more powerful, ideas of more sophisticated models started to evolve. Changes in regulatory requirements, e.g. Solvency II in Europe, have fostered further research and promoted the use of stochastic and statistical techniques. In particular, for many countries extreme percentiles of reserve deterioration over a fixed time period have to be estimated for the purpose of capital setting.</p>
-<p>Over the years several methods and models have been developed to estimate both the level and variability of reserves for insurance claims, see <span class="citation">(Schmidt 2011)</span> or <span class="citation">(England and Verrall 2002)</span> for an overview.</p>
+<p>Over the years several methods and models have been developed to estimate both the level and variability of reserves for insurance claims, see <span class="citation">(<span class="citeproc-not-found" data-reference-id="Schmidt2011"><strong>???</strong></span>)</span> or <span class="citation">(England and Verrall 2002)</span> for an overview.</p>
 <p>In practice the Mack chain-ladder and bootstrap chain-ladder models are used by many actuaries along with stress testing / scenario analysis and expert judgement to estimate ranges of reasonable outcomes, see the surveys of UK actuaries in 2002, <span class="citation">(Lyons et al. 2002)</span>, and across the Lloyd’s market in 2012, <span class="citation">(Orr 2012)</span>.</p>
 </div>
 </div>
@@ -144,7 +144,7 @@ To cite package 'ChainLadder' in publications use:
 <p>You can install ChainLadder in the usual way from CRAN, e.g.:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">'ChainLadder'</span><span class="op">)</span></code></pre></div>
-<p>For more details about installing packages see <span class="citation">(R Development Core Team 2012b)</span>.</p>
+<p>For more details about installing packages see <span class="citation">(R Development Core Team 2022b)</span>.</p>
 </div>
 </div>
 <div class="section level2">
@@ -250,7 +250,7 @@ Screen shot of a triangle in a spreadsheet software.
 <div class="section level5">
 <h5 id="reading-data-from-a-data-base">Reading data from a data base<a class="anchor" aria-label="anchor" href="#reading-data-from-a-data-base"></a>
 </h5>
-<p>R makes it easy to access data using SQL statements, e.g. via an ODBC connection<a class="footnote-ref" tabindex="0" data-bs-toggle="popover" data-bs-content="&lt;p&gt;See the &lt;code&gt;RODBC&lt;/code&gt; and &lt;code&gt;DBI&lt;/code&gt; packages&lt;/p&gt;"><sup>1</sup></a>, for more details see <span class="citation">(R Development Core Team 2012a)</span>. The ChainLadder packages includes a demo to showcase how data can be imported from a MS Access data base, see:</p>
+<p>R makes it easy to access data using SQL statements, e.g. via an ODBC connection<a class="footnote-ref" tabindex="0" data-bs-toggle="popover" data-bs-content="&lt;p&gt;See the &lt;code&gt;RODBC&lt;/code&gt; and &lt;code&gt;DBI&lt;/code&gt; packages&lt;/p&gt;"><sup>1</sup></a>, for more details see <span class="citation">(R Development Core Team 2022a)</span>. The ChainLadder packages includes a demo to showcase how data can be imported from a MS Access data base, see:</p>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/demo.html" class="external-link">demo</a></span><span class="op">(</span><span class="va">DatabaseExamples</span><span class="op">)</span></code></pre></div>
 <p>In this section we use data stored in a CSV-file<a class="footnote-ref" tabindex="0" data-bs-toggle="popover" data-bs-content="&lt;p&gt;Please ensure that your CSV-file is free from formatting, e.g. characters to separate units of thousands, as those columns will be read as characters or factors rather than numerical values.&lt;/p&gt;"><sup>2</sup></a> to demonstrate some typical operations you will want to carry out with data stored in data bases. CSV stands for comma separated values, stored in a text file. Note many European countries use a comma as decimal point and a semicolon as field separator, see also the help file to <code>read.csv2</code>. In most cases your triangles will be stored in tables and not in a classical triangle shape. The ChainLadder package contains a CSV-file with sample data in a long table format. We read the data into R’s memory with the <code>read.csv</code> command and look at the first couple of rows and summarise it:</p>
@@ -499,7 +499,7 @@ Total      160987    NA  223778</code></pre>
 <p>As an example we apply the <code>MackChainLadder</code> function to our triangle <code>RAA</code>:</p>
 <div class="sourceCode" id="cb48"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">mack</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/MackChainLadder.html">MackChainLadder</a></span><span class="op">(</span><span class="va">RAA</span>, est.sigma<span class="op">=</span><span class="st">"Mack"</span><span class="op">)</span>
-<span class="va">mack</span></code></pre></div>
+<span class="va">mack</span> <span class="co"># same as summary(mack) </span></code></pre></div>
 <pre><code>MackChainLadder(Triangle = RAA, est.sigma = "Mack")
 
      Latest Dev.To.Date Ultimate   IBNR Mack.S.E CV(IBNR)
@@ -539,8 +539,32 @@ origin    1     2     3     4     5     6     7     8     9    10
   1988 1351  6947 13112 16664 19525 21738 22650 23403 23800 24019
   1989 3133  5395  8759 11132 13043 14521 15130 15634 15898 16045
   1990 2063  6188 10046 12767 14959 16655 17353 17931 18234 18402</code></pre>
-<p>To check that Mack’s assumption are valid review the residual plots, you should see no trends in either of them.</p>
+<p>If you are only interested in the summary statistics then use:</p>
 <div class="sourceCode" id="cb54"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">mack_smmry</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">mack</span><span class="op">)</span> <span class="co"># See also ?summary.MackChainLadder</span>
+<span class="va">mack_smmry</span><span class="op">$</span><span class="va">ByOrigin</span></code></pre></div>
+<pre><code>     Latest Dev.To.Date Ultimate    IBNR Mack.S.E CV(IBNR)
+1981  18834      1.0000    18834     0.0      0.0      NaN
+1982  16704      0.9909    16858   154.0    206.2   1.3395
+1983  23466      0.9744    24083   617.4    623.4   1.0097
+1984  27067      0.9430    28703  1636.1    747.2   0.4567
+1985  26180      0.9050    28927  2746.7   1469.5   0.5350
+1986  15852      0.8129    19501  3649.1   2001.9   0.5486
+1987  12314      0.6938    17749  5435.3   2209.2   0.4065
+1988  13112      0.5459    24019 10907.2   5357.9   0.4912
+1989   5395      0.3362    16045 10650.0   6333.2   0.5947
+1990   2063      0.1121    18402 16339.4  24566.3   1.5035</code></pre>
+<div class="sourceCode" id="cb56"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">mack_smmry</span><span class="op">$</span><span class="va">Totals</span></code></pre></div>
+<pre><code>              Totals
+Latest:    1.610e+05
+Dev:       7.554e-01
+Ultimate:  2.131e+05
+IBNR:      5.214e+04
+Mack S.E.: 2.691e+04
+CV(IBNR):  5.161e-01</code></pre>
+<p>To check that Mack’s assumption are valid review the residual plots, you should see no trends in either of them.</p>
+<div class="sourceCode" id="cb58"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">mack</span><span class="op">)</span></code></pre></div>
 <div class="figure" style="text-align: center">
 <img src="ChainLadder_files/figure-html/MackPlot1-1.png" alt="Some residual show clear trends, indicating that the Mack assumptions are not well met" width="60%"><p class="caption">
@@ -548,7 +572,7 @@ Some residual show clear trends, indicating that the Mack assumptions are not we
 </p>
 </div>
 <p>We can plot the development, including the forecast and estimated standard errors by origin period by setting the argument <code>lattice=TRUE</code>.</p>
-<div class="sourceCode" id="cb55"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb59"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">mack</span>, lattice<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
 <p><img src="ChainLadder_files/figure-html/MackPlot2-1.png" width="60%" style="display: block; margin: auto;"></p>
 <div class="section level4">
@@ -556,7 +580,7 @@ Some residual show clear trends, indicating that the Mack assumptions are not we
 </h4>
 <p>The <code>weights</code> argument allows for the selection of a subset of the triangle for the projections.</p>
 <p>For example, in order to use only the last 5 calendar years of the triangle, set the <code>weights</code> as follows:</p>
-<div class="sourceCode" id="cb56"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb60"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">calPeriods</span> <span class="op">&lt;-</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/row.html" class="external-link">row</a></span><span class="op">(</span><span class="va">RAA</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/col.html" class="external-link">col</a></span><span class="op">(</span><span class="va">RAA</span><span class="op">)</span> <span class="op">-</span> <span class="fl">1</span><span class="op">)</span>
 <span class="op">(</span><span class="va">weights</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html" class="external-link">ifelse</a></span><span class="op">(</span><span class="va">calPeriods</span> <span class="op">&lt;=</span> <span class="fl">5</span>, <span class="fl">0</span>, <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html" class="external-link">ifelse</a></span><span class="op">(</span><span class="va">calPeriods</span> <span class="op">&gt;</span> <span class="fl">10</span>, <span class="cn">NA</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <pre><code>      [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10]
@@ -570,7 +594,7 @@ Some residual show clear trends, indicating that the Mack assumptions are not we
  [8,]    1    1    1   NA   NA   NA   NA   NA   NA    NA
  [9,]    1    1   NA   NA   NA   NA   NA   NA   NA    NA
 [10,]    1   NA   NA   NA   NA   NA   NA   NA   NA    NA</code></pre>
-<div class="sourceCode" id="cb58"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb62"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/MackChainLadder.html">MackChainLadder</a></span><span class="op">(</span><span class="va">RAA</span>, weights<span class="op">=</span><span class="va">weights</span>, est.sigma <span class="op">=</span> <span class="st">"Mack"</span><span class="op">)</span></code></pre></div>
 <pre><code>MackChainLadder(Triangle = RAA, weights = weights, est.sigma = "Mack")
 
@@ -599,7 +623,7 @@ CV(IBNR):       0.34</code></pre>
 <h3 id="munich-chain-ladder">Munich chain-ladder<a class="anchor" aria-label="anchor" href="#munich-chain-ladder"></a>
 </h3>
 <p>Munich chain-ladder is a reserving method that reduces the gap between IBNR projections based on paid losses and IBNR projections based on incurred losses. The Munich chain-ladder method uses correlations between paid and incurred losses of the historical data into the projection for the future <span class="citation">(Quarg and Mack 2004)</span>.</p>
-<div class="sourceCode" id="cb60"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb64"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">MCLpaid</span></code></pre></div>
 <pre><code>      dev
 origin    1    2    3    4    5    6    7
@@ -610,7 +634,7 @@ origin    1    2    3    4    5    6    7
      5 1868 3778 4648   NA   NA   NA   NA
      6 1442 4010   NA   NA   NA   NA   NA
      7 2044   NA   NA   NA   NA   NA   NA</code></pre>
-<div class="sourceCode" id="cb62"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb66"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">MCLincurred</span></code></pre></div>
 <pre><code>      dev
 origin    1    2    3    4    5    6    7
@@ -621,14 +645,14 @@ origin    1    2    3    4    5    6    7
      5 2812 4882 4852   NA   NA   NA   NA
      6 2642 4406   NA   NA   NA   NA   NA
      7 5022   NA   NA   NA   NA   NA   NA</code></pre>
-<div class="sourceCode" id="cb64"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb68"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span>mfrow<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">2</span><span class="op">)</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">MCLpaid</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">MCLincurred</span><span class="op">)</span></code></pre></div>
-<p><img src="ChainLadder_files/figure-html/unnamed-chunk-25-1.png" width="60%" style="display: block; margin: auto;"></p>
-<div class="sourceCode" id="cb65"><pre class="downlit sourceCode r">
+<p><img src="ChainLadder_files/figure-html/unnamed-chunk-26-1.png" width="60%" style="display: block; margin: auto;"></p>
+<div class="sourceCode" id="cb69"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span>mfrow<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">1</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<div class="sourceCode" id="cb66"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb70"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Following the example in Quarg's (2004) paper:</span>
 <span class="va">MCL</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/MunichChainLadder.html">MunichChainLadder</a></span><span class="op">(</span><span class="va">MCLpaid</span>, <span class="va">MCLincurred</span>, est.sigmaP<span class="op">=</span><span class="fl">0.1</span>, est.sigmaI<span class="op">=</span><span class="fl">0.1</span><span class="op">)</span>
 <span class="va">MCL</span></code></pre></div>
@@ -656,15 +680,16 @@ Totals
             Paid Incurred P/I Ratio
 Latest:   25,525   29,694      0.86
 Ultimate: 32,371   32,688      0.99</code></pre>
-<div class="sourceCode" id="cb68"><pre class="downlit sourceCode r">
+<p>You can use <code>summary(MCL)$ByOrigin</code> and <code>summary(MCL)$Totals</code> to extract the information from the output above.</p>
+<div class="sourceCode" id="cb72"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">MCL</span><span class="op">)</span></code></pre></div>
-<p><img src="ChainLadder_files/figure-html/unnamed-chunk-26-1.png" width="60%" style="display: block; margin: auto;"></p>
+<p><img src="ChainLadder_files/figure-html/unnamed-chunk-28-1.png" width="60%" style="display: block; margin: auto;"></p>
 </div>
 <div class="section level3">
 <h3 id="bootstrap-chain-ladder">Bootstrap chain-ladder<a class="anchor" aria-label="anchor" href="#bootstrap-chain-ladder"></a>
 </h3>
 <p>The <code>BootChainLadder</code> function uses a two-stage bootstrapping/simulation approach following the paper by England and Verrall <span class="citation">(England and Verrall 2002)</span>. In the first stage an ordinary chain-ladder methods is applied to the cumulative claims triangle. From this we calculate the scaled Pearson residuals which we bootstrap R times to forecast future incremental claims payments via the standard chain-ladder method. In the second stage we simulate the process error with the bootstrap value as the mean and using the process distribution assumed. The set of reserves obtained in this way forms the predictive distribution, from which summary statistics such as mean, prediction error or quantiles can be derived.</p>
-<div class="sourceCode" id="cb69"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb73"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">## See also the example in section 8 of England &amp; Verrall (2002)</span>
 <span class="co">## on page 55.</span>
 <span class="va">B</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/BootChainLadder.html">BootChainLadder</a></span><span class="op">(</span><span class="va">RAA</span>, R<span class="op">=</span><span class="fl">999</span>, process.distr<span class="op">=</span><span class="st">"gamma"</span><span class="op">)</span>
@@ -673,50 +698,51 @@ Ultimate: 32,371   32,688      0.99</code></pre>
 
      Latest Mean Ultimate Mean IBNR IBNR.S.E IBNR 75% IBNR 95%
 1981 18,834        18,834         0        0        0        0
-1982 16,704        16,853       149      782      184    1,362
-1983 23,466        24,070       604    1,245    1,083    3,030
-1984 27,067        28,725     1,658    1,934    2,521    5,295
-1985 26,180        28,940     2,760    2,218    3,943    6,796
-1986 15,852        19,496     3,644    2,403    5,035    8,127
-1987 12,314        17,937     5,623    3,139    7,315   11,257
-1988 13,112        24,173    11,061    4,980   13,978   19,884
-1989  5,395        16,462    11,067    5,944   14,501   21,873
-1990  2,063        19,870    17,807   14,405   24,676   42,555
+1982 16,704        16,842       138      735      170    1,401
+1983 23,466        24,047       581    1,292    1,136    2,937
+1984 27,067        28,659     1,592    1,946    2,452    5,336
+1985 26,180        28,808     2,628    2,309    3,931    6,573
+1986 15,852        19,458     3,606    2,420    4,866    8,343
+1987 12,314        17,809     5,495    3,145    7,196   11,108
+1988 13,112        24,179    11,067    5,085   14,041   20,453
+1989  5,395        16,264    10,869    6,159   14,081   22,321
+1990  2,063        19,215    17,152   13,699   24,517   41,559
 
                  Totals
 Latest:         160,987
-Mean Ultimate:  215,359
-Mean IBNR:       54,372
-IBNR.S.E         19,238
-Total IBNR 75%:  64,564
-Total IBNR 95%:  88,785</code></pre>
-<div class="sourceCode" id="cb71"><pre class="downlit sourceCode r">
+Mean Ultimate:  214,114
+Mean IBNR:       53,127
+IBNR.S.E         18,559
+Total IBNR 75%:  64,815
+Total IBNR 95%:  85,920</code></pre>
+<p>You can use <code>summary(B)$ByOrigin</code> and <code>summary(B)$Totals</code> to extract the information from the output above.</p>
+<div class="sourceCode" id="cb75"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">B</span><span class="op">)</span></code></pre></div>
-<p><img src="ChainLadder_files/figure-html/unnamed-chunk-28-1.png" width="60%" style="display: block; margin: auto;"></p>
+<p><img src="ChainLadder_files/figure-html/unnamed-chunk-30-1.png" width="60%" style="display: block; margin: auto;"></p>
 <p>Quantiles of the bootstrap IBNR can be calculated via the <code>quantile</code> function:</p>
-<div class="sourceCode" id="cb72"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb76"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/stats/quantile.html" class="external-link">quantile</a></span><span class="op">(</span><span class="va">B</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.75</span>,<span class="fl">0.95</span>,<span class="fl">0.99</span>, <span class="fl">0.995</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <pre><code>$ByOrigin
      IBNR 75% IBNR 95% IBNR 99% IBNR 99.5%
 1981      0.0        0        0          0
-1982    184.2     1362     2828       3365
-1983   1083.0     3030     4496       5648
-1984   2520.9     5295     7783       8685
-1985   3943.1     6796     9753      10360
-1986   5035.0     8127    10749      11890
-1987   7314.5    11257    15138      16431
-1988  13977.9    19884    25678      27068
-1989  14500.7    21873    27930      31458
-1990  24676.5    42555    58087      66490
+1982    170.4     1401     2768       3346
+1983   1136.2     2937     4560       5278
+1984   2452.0     5336     8149       9242
+1985   3931.2     6573    10162      11237
+1986   4865.8     8343    10617      11420
+1987   7196.2    11108    16206      17875
+1988  14041.4    20453    26281      27982
+1989  14081.0    22321    28842      31967
+1990  24516.5    41559    57521      64278
 
 $Totals
             Totals
-IBNR 75%:    64564
-IBNR 95%:    88785
-IBNR 99%:   107495
-IBNR 99.5%: 114230</code></pre>
+IBNR 75%:    64815
+IBNR 95%:    85920
+IBNR 99%:   101977
+IBNR 99.5%: 113956</code></pre>
 <p>The distribution of the IBNR appears to follow a log-normal distribution, so let’s fit it:</p>
-<div class="sourceCode" id="cb74"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb78"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">## fit a distribution to the IBNR</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="http://www.stats.ox.ac.uk/pub/MASS4/" class="external-link">MASS</a></span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/ecdf.html" class="external-link">ecdf</a></span><span class="op">(</span><span class="va">B</span><span class="op">$</span><span class="va">IBNR.Totals</span><span class="op">)</span><span class="op">)</span>
@@ -724,12 +750,12 @@ IBNR 99.5%: 114230</code></pre>
 <span class="va">fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/MASS/man/fitdistr.html" class="external-link">fitdistr</a></span><span class="op">(</span><span class="va">B</span><span class="op">$</span><span class="va">IBNR.Totals</span><span class="op">[</span><span class="va">B</span><span class="op">$</span><span class="va">IBNR.Totals</span><span class="op">&gt;</span><span class="fl">0</span><span class="op">]</span>, <span class="st">"lognormal"</span><span class="op">)</span>
 <span class="va">fit</span></code></pre></div>
 <pre><code>    meanlog      sdlog  
-  10.839921    0.366906 
- ( 0.011608) ( 0.008208)</code></pre>
-<div class="sourceCode" id="cb76"><pre class="downlit sourceCode r">
+  10.816456    0.368713 
+ ( 0.011666) ( 0.008249)</code></pre>
+<div class="sourceCode" id="cb80"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/curve.html" class="external-link">curve</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Lognormal.html" class="external-link">plnorm</a></span><span class="op">(</span><span class="va">x</span>,<span class="va">fit</span><span class="op">$</span><span class="va">estimate</span><span class="op">[</span><span class="st">"meanlog"</span><span class="op">]</span>, <span class="va">fit</span><span class="op">$</span><span class="va">estimate</span><span class="op">[</span><span class="st">"sdlog"</span><span class="op">]</span><span class="op">)</span>,
       col<span class="op">=</span><span class="st">"red"</span>, add<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
-<p><img src="ChainLadder_files/figure-html/unnamed-chunk-30-1.png" width="60%" style="display: block; margin: auto;"></p>
+<p><img src="ChainLadder_files/figure-html/unnamed-chunk-32-1.png" width="60%" style="display: block; margin: auto;"></p>
 </div>
 <div class="section level3">
 <h3 id="multivariate-chain-ladder">Multivariate chain-ladder<a class="anchor" aria-label="anchor" href="#multivariate-chain-ladder"></a>
@@ -754,23 +780,23 @@ Y_{i,k+1} = A_k + B_k \cdot Y_{i,k} + \epsilon_{i,k},
 <p>In the following, we first introduce the class <code>triangles</code>, for which we have defined several utility functions. Indeed, any input triangles to the <code>MultiChainLadder</code> function will be converted to <code>triangles</code> internally. We then present loss reserving methods based on the MCL and GMCL models in turn.</p>
 
 <p>Consider the two liability loss triangles from <span class="citation">(M. Merz and Wüthrich 2008b)</span>. It comes as a list of two matrices:</p>
-<div class="sourceCode" id="cb77"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb81"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">liab</span><span class="op">)</span></code></pre></div>
 <pre><code>List of 2
  $ GeneralLiab: num [1:14, 1:14] 59966 49685 51914 84937 98921 ...
  $ AutoLiab   : num [1:14, 1:14] 114423 152296 144325 145904 170333 ...</code></pre>
 <p>We can convert a list to a <code>triangles</code> object using</p>
-<div class="sourceCode" id="cb79"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb83"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">liab2</span> <span class="op">&lt;-</span> <span class="fu">as</span><span class="op">(</span><span class="va">liab</span>, <span class="st">"triangles"</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/base/class.html" class="external-link">class</a></span><span class="op">(</span><span class="va">liab2</span><span class="op">)</span></code></pre></div>
 <pre><code>[1] "triangles"
 attr(,"package")
 [1] "ChainLadder"</code></pre>
 <p>We can find out what methods are available for this class:</p>
-<div class="sourceCode" id="cb81"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb85"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">showMethods</span><span class="op">(</span>classes <span class="op">=</span> <span class="st">"triangles"</span><span class="op">)</span></code></pre></div>
 <p>For example, if we want to extract the last three columns of each triangle, we can use the <code>[</code> operator as follows:</p>
-<div class="sourceCode" id="cb82"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb86"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># use drop = TRUE to remove rows that are all NA's</span>
 <span class="va">liab2</span><span class="op">[</span>, <span class="fl">12</span><span class="op">:</span><span class="fl">14</span>, drop <span class="op">=</span> <span class="cn">TRUE</span><span class="op">]</span></code></pre></div>
 <pre><code>An object of class "triangles"
@@ -786,7 +812,7 @@ attr(,"package")
 [2,] 485138 483974     NA
 [3,] 540742     NA     NA</code></pre>
 <p>The following combines two columns of the triangles to form a new matrix:</p>
-<div class="sourceCode" id="cb84"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb88"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">cbind2</span><span class="op">(</span><span class="va">liab2</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span>, <span class="fl">12</span><span class="op">]</span><span class="op">)</span></code></pre></div>
 <pre><code>       [,1]   [,2]
 [1,] 540873 391328
@@ -797,7 +823,7 @@ attr(,"package")
 <h3 id="separate-chain-ladder-ignoring-correlations">Separate chain-ladder ignoring correlations<a class="anchor" aria-label="anchor" href="#separate-chain-ladder-ignoring-correlations"></a>
 </h3>
 <p>The form of regression models used in estimating the development parameters is controlled by the <code>fit.method</code> argument. If we specify <code>fit.method = "OLS"</code>, the ordinary least squares will be used and the estimation of development factors for each triangle is independent of the others. In this case, the residual covariance matrix <span class="math inline">\(\Sigma_k\)</span> is diagonal. As a result, the multivariate model is equivalent to running multiple Mack chain-ladders separately.</p>
-<div class="sourceCode" id="cb86"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb90"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">fit1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/MultiChainLadder.html">MultiChainLadder</a></span><span class="op">(</span><span class="va">liab</span>, fit.method <span class="op">=</span> <span class="st">"OLS"</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">fit1</span><span class="op">)</span><span class="op">$</span><span class="va">report.summary</span>, <span class="st">"["</span>, <span class="fl">15</span>, <span class="op">)</span></code></pre></div>
 <pre><code>$`Summary Statistics for Triangle 1`
@@ -813,7 +839,7 @@ $`Summary Statistics for Triangle 1+2`
 Total 20103203      0.7098 28322077 8218874 457278 0.0556</code></pre>
 <p>In the above, we only show the total reserve estimate for each triangle to reduce the output. The full summary including the estimate for each year can be retrieved using the usual <code>summary</code> function. By default, the <code>summary</code> function produces reserve statistics for all individual triangles, as well as for the portfolio that is assumed to be the sum of the two triangles. This behaviour can be changed by supplying the <code>portfolio</code> argument. See the documentation for details.</p>
 <p>We can verify if this is indeed the same as the univariate Mack chain ladder. For example, we can apply the <code>MackChainLadder</code> function to each triangle:</p>
-<div class="sourceCode" id="cb88"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb92"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="va">liab</span>, <span class="va">MackChainLadder</span>, est.sigma <span class="op">=</span> <span class="st">"Mack"</span><span class="op">)</span>
 <span class="co"># the same as the first triangle above</span>
 <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="va">fit</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/t.html" class="external-link">t</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">$</span><span class="va">Totals</span><span class="op">)</span><span class="op">)</span></code></pre></div>
@@ -825,7 +851,7 @@ $AutoLiab
        Latest:   Dev: Ultimate:   IBNR: Mack S.E.: CV(IBNR):
 Totals 8759806 0.8093  10823418 2063612     162872   0.07893</code></pre>
 <p>The argument <code>mse.method</code> controls how the mean square errors are computed. By default, it implements the Mack method. An alternative method is the conditional re-sampling approach in <span class="citation">(Buchwalder et al. 2006)</span>, which assumes the estimated parameters are independent. This is used when <code>mse.method = "Independence"</code>. For example, the following reproduces the result in <span class="citation">(Buchwalder et al. 2006)</span>. Note that the first argument must be a list, even though only one triangle is used.</p>
-<div class="sourceCode" id="cb90"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb94"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="op">(</span><span class="va">B1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/MultiChainLadder.html">MultiChainLadder</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">GenIns</span><span class="op">)</span>, fit.method <span class="op">=</span> <span class="st">"OLS"</span>,
     mse.method <span class="op">=</span> <span class="st">"Independence"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <pre><code>$`Summary Statistics for Input Triangle`
@@ -846,7 +872,7 @@ Total 34,358,090      0.6478 53,038,946 18,680,856 2,447,618 0.131</code></pre>
 <h3 id="multivariate-chain-ladder-using-seemingly-unrelated-regressions">Multivariate chain-ladder using seemingly unrelated regressions<a class="anchor" aria-label="anchor" href="#multivariate-chain-ladder-using-seemingly-unrelated-regressions"></a>
 </h3>
 <p>To allow correlations to be incorporated, we employ the seemingly unrelated regressions (see the package <code>systemfit</code>, <span class="citation">(Henningsen and Hamann 2007)</span>) that simultaneously model the two triangles in each development period. This is invoked when we specify <code>fit.method = "SUR"</code>:</p>
-<div class="sourceCode" id="cb92"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb96"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">fit2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/MultiChainLadder.html">MultiChainLadder</a></span><span class="op">(</span><span class="va">liab</span>, fit.method <span class="op">=</span> <span class="st">"SUR"</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">fit2</span><span class="op">)</span><span class="op">$</span><span class="va">report.summary</span>, <span class="st">"["</span>, <span class="fl">15</span>, <span class="op">)</span></code></pre></div>
 <pre><code>$`Summary Statistics for Triangle 1`
@@ -861,12 +887,12 @@ $`Summary Statistics for Triangle 1+2`
         Latest Dev.To.Date Ultimate    IBNR    S.E    CV
 Total 20103203        0.71 28316248 8213045 500607 0.061</code></pre>
 <p>We see that the portfolio prediction error is inflated to <span class="math inline">\(500,607\)</span> from <span class="math inline">\(457,278\)</span> in the separate development model (“OLS”). This is because of the positive correlation between the two triangles. The estimated correlation for each development period can be retrieved through the <code>residCor</code> function:</p>
-<div class="sourceCode" id="cb94"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb98"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/unlist.html" class="external-link">unlist</a></span><span class="op">(</span><span class="fu"><a href="../reference/residCov-methods.html">residCor</a></span><span class="op">(</span><span class="va">fit2</span><span class="op">)</span><span class="op">)</span>, <span class="fl">3</span><span class="op">)</span></code></pre></div>
 <pre><code> [1]  0.247  0.495  0.682  0.446  0.487  0.451 -0.172  0.805  0.337  0.688
 [11] -0.004  1.000  0.021</code></pre>
 <p>Similarly, most methods that work for linear models such as <code>coef</code>, <code>fitted</code>, <code>resid</code> and so on will also work. Since we have a sequence of models, the retrieved results from these methods are stored in a list. For example, we can retrieve the estimated development factors for each period as</p>
-<div class="sourceCode" id="cb96"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb100"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/do.call.html" class="external-link">do.call</a></span><span class="op">(</span><span class="st">"rbind"</span>, <span class="fu"><a href="https://rdrr.io/r/stats/coef.html" class="external-link">coef</a></span><span class="op">(</span><span class="va">fit2</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <pre><code>      eq1_x[[1]] eq2_x[[2]]
  [1,]      3.227     2.2224
@@ -897,7 +923,7 @@ Summary and diagnostic plots from a <code>MultiChainLadder</code> object
 <p>Internally, the <code>MultiChainLadder</code> calls the <code>systemfit</code> function to fit the regression models period by period. When SUR models are specified, there are several ways to estimate the residual covariance matrix <span class="math inline">\(\Sigma_k\)</span>. Available methods are <code>noDfCor</code>, <code>geomean</code>, <code>max</code>, and <code>Theil</code> with the default as <code>geomean</code>. The method <code>Theil</code> will produce unbiased covariance estimate, but the resulting estimate may not be positive semi-definite. This is also the estimator used by <span class="citation">(M. Merz and Wüthrich 2008b)</span>. However, this method does not work out of the box for the <code>liab</code> data, and is perhaps one of the reasons <span class="citation">(M. Merz and Wüthrich 2008b)</span> used extrapolation to get the estimate for the last several periods.</p>
 <p>Indeed, for most applications, we recommend the use of separate chain ladders for the tail periods to stabilize the estimation - there are few data points in the tail and running a multivariate model often produces extremely volatile estimates or even fails. To facilitate such an approach, the package offers the <code>MultiChainLadder2</code> function, which implements a split-and-join procedure: we split the input data into two parts, specify a multivariate model with rich structures on the first part (with enough data) to reflect the multivariate dependencies, apply separate univariate chain-ladders on the second part, and then join the two models together to produce the final predictions. The splitting is determined by the <code>last</code> argument, which specifies how many of the development periods in the tail go into the second part of the split. The type of the model structure to be specified for the first part of the split model in <code>MultiChainLadder2</code> is controlled by the <code>type</code> argument. It takes one of the following values: <code>MCL</code> - the multivariate chain-ladder with diagonal development matrix; <code>MCL+int</code> - the multivariate chain-ladder with additional intercepts; <code>GMCL-int</code> - the general multivariate chain-ladder without intercepts; and <code>GMCL</code> - the full general multivariate chain-ladder with intercepts and non-diagonal development matrix.</p>
 <p>For example, the following fits the SUR method to the first part (the first 11 columns) using the unbiased residual covariance estimator in <span class="citation">(M. Merz and Wüthrich 2008b)</span>, and separate chain-ladders for the rest:</p>
-<div class="sourceCode" id="cb98"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb102"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="va"><a href="http://www.systemfit.org" class="external-link">systemfit</a></span><span class="op">)</span>
 <span class="va">W1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/MultiChainLadder.html">MultiChainLadder2</a></span><span class="op">(</span><span class="va">liab</span>, mse.method <span class="op">=</span> <span class="st">"Independence"</span>,
         control <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/systemfit/man/systemfit.control.html" class="external-link">systemfit.control</a></span><span class="op">(</span>methodResidCov <span class="op">=</span> <span class="st">"Theil"</span><span class="op">)</span><span class="op">)</span>
@@ -914,7 +940,7 @@ $`Summary Statistics for Triangle 1+2`
         Latest Dev.To.Date Ultimate    IBNR    S.E     CV
 Total 20103203      0.7099 28318437 8215234 505376 0.0615</code></pre>
 <p>Similarly, the iterative residual covariance estimator in <span class="citation">(M. Merz and Wüthrich 2008b)</span> can also be used, in which we use the control parameter <code>maxiter</code> to determine the number of iterations:</p>
-<div class="sourceCode" id="cb100"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb104"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">)</span><span class="op">{</span>
   <span class="va">W2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/MultiChainLadder.html">MultiChainLadder2</a></span><span class="op">(</span><span class="va">liab</span>, mse.method <span class="op">=</span> <span class="st">"Independence"</span>,
       control <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/systemfit/man/systemfit.control.html" class="external-link">systemfit.control</a></span><span class="op">(</span>methodResidCov <span class="op">=</span> <span class="st">"Theil"</span>, maxiter <span class="op">=</span> <span class="va">i</span><span class="op">)</span><span class="op">)</span>
@@ -931,7 +957,7 @@ Total 8,215,362 505,444
 Total 8,215,362 505,444
            IBNR     S.E
 Total 8,215,362 505,444</code></pre>
-<div class="sourceCode" id="cb102"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb106"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">W2</span><span class="op">)</span><span class="op">$</span><span class="va">report.summary</span>, <span class="st">"["</span>, <span class="fl">15</span>, <span class="op">)</span></code></pre></div>
 <pre><code>$`Summary Statistics for Triangle 1`
         Latest Dev.To.Date Ultimate    IBNR    S.E     CV
@@ -951,14 +977,14 @@ Total 20103203      0.7099 28318565 8215362 505444 0.0615</code></pre>
 <h3 id="model-with-intercepts">Model with intercepts<a class="anchor" aria-label="anchor" href="#model-with-intercepts"></a>
 </h3>
 <p>Consider the <code>auto</code> triangles from0 <span class="citation">(Zhang 2010)</span>. It includes three automobile insurance triangles: personal auto paid, personal auto incurred, and commercial auto paid.</p>
-<div class="sourceCode" id="cb104"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb108"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">auto</span><span class="op">)</span></code></pre></div>
 <pre><code>List of 3
  $ PersonalAutoPaid    : num [1:10, 1:10] 101125 102541 114932 114452 115597 ...
  $ PersonalAutoIncurred: num [1:10, 1:10] 325423 323627 358410 405319 434065 ...
  $ CommercialAutoPaid  : num [1:10, 1:10] 19827 22331 22533 23128 25053 ...</code></pre>
 <p>It is a reasonable expectation that these triangles will be correlated. So we run a MCL model on them:</p>
-<div class="sourceCode" id="cb106"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb110"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">f0</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/MultiChainLadder.html">MultiChainLadder2</a></span><span class="op">(</span><span class="va">auto</span>, type <span class="op">=</span> <span class="st">"MCL"</span><span class="op">)</span>
 <span class="co"># show correlation- the last three columns have zero correlation</span>
 <span class="co"># because separate chain-ladders are used</span>
@@ -969,16 +995,16 @@ Total 20103203      0.7099 28318565 8215362 505444 0.0615</code></pre>
 (2,3) 0.198 -0.3217 0.558 0.380  0.3586 0.931    0    0    0</code></pre>
 <p>However, from the residual plot, the first row in Figure @ref(fig:multi_resid), it is evident that the default mean structure in the MCL model is not adequate. Usually this is a common problem with the chain-ladder based models, owing to the missing of intercepts.</p>
 <p>We can improve the above model by including intercepts in the SUR fit as follows:</p>
-<div class="sourceCode" id="cb108"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb112"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">f1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/MultiChainLadder.html">MultiChainLadder2</a></span><span class="op">(</span><span class="va">auto</span>, type <span class="op">=</span> <span class="st">"MCL+int"</span><span class="op">)</span></code></pre></div>
 <p>The corresponding residual plot is shown in the second row in the figure below. We see that these residuals are randomly scattered around zero and there is no clear pattern compared to the plot from the MCL model.</p>
 <div class="figure" style="text-align: center">
-<img src="ChainLadder_files/figure-html/unnamed-chunk-47-1.png" alt="Residual plots for the MCL model (first row) and the GMCL (MCL+int) model (second row) for the auto data" width="60%"><p class="caption">
+<img src="ChainLadder_files/figure-html/unnamed-chunk-49-1.png" alt="Residual plots for the MCL model (first row) and the GMCL (MCL+int) model (second row) for the auto data" width="60%"><p class="caption">
 Residual plots for the MCL model (first row) and the GMCL (MCL+int) model (second row) for the auto data
 </p>
 </div>
 <p>The default summary computes the portfolio estimates as the sum of all the triangles. This is not desirable because the first two triangles are both from the personal auto line. We can overwrite this via the <code>portfolio</code> argument. For example, the following uses the two paid triangles as the portfolio estimate:</p>
-<div class="sourceCode" id="cb109"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb113"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">f1</span>, portfolio <span class="op">=</span> <span class="st">"1+3"</span><span class="op">)</span><span class="op">@</span><span class="va">report.summary</span>, <span class="st">"["</span>, <span class="fl">11</span>, <span class="op">)</span></code></pre></div>
 <pre><code>$`Summary Statistics for Triangle 1`
        Latest Dev.To.Date Ultimate   IBNR   S.E     CV
@@ -1000,14 +1026,14 @@ Total 4334390      0.8263  5245636 911246 38753 0.0425</code></pre>
 <h3 id="joint-modelling-of-the-paid-and-incurred-losses">Joint modelling of the paid and incurred losses<a class="anchor" aria-label="anchor" href="#joint-modelling-of-the-paid-and-incurred-losses"></a>
 </h3>
 <p>Although the model with intercepts proved to be an improvement over the MCL model, it still fails to account for the structural relationship between triangles. In particular, it produces divergent paid-to-incurred loss ratios for the personal auto line:</p>
-<div class="sourceCode" id="cb111"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb115"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">ult</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">f1</span><span class="op">)</span><span class="op">$</span><span class="va">Ultimate</span>
 <span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">ult</span><span class="op">[</span>, <span class="fl">1</span><span class="op">]</span> <span class="op">/</span><span class="va">ult</span><span class="op">[</span>, <span class="fl">2</span><span class="op">]</span>, <span class="fl">3</span><span class="op">)</span></code></pre></div>
 <pre><code>    1     2     3     4     5     6     7     8     9    10 Total 
 0.995 0.995 0.993 0.992 0.995 0.996 1.021 1.067 1.112 1.114 1.027 </code></pre>
 <p>We see that for accident years 9-10, the paid-to-incurred loss ratios are more than 110%. This can be fixed by allowing the development of the paid/incurred triangles to depend on each other. That is, we include the past values from the paid triangle as predictors when developing the incurred triangle, and vice versa.</p>
 <p>We illustrate this ignoring the commercial auto triangle. See the demo for a model that uses all three triangles. We also include the MCL model and the Munich chain-ladder as a comparison:</p>
-<div class="sourceCode" id="cb113"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb117"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">da</span> <span class="op">&lt;-</span> <span class="va">auto</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">2</span><span class="op">]</span>
 <span class="co"># MCL with diagonal development</span>
 <span class="va">M0</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/MultiChainLadder.html">MultiChainLadder</a></span><span class="op">(</span><span class="va">da</span><span class="op">)</span>
@@ -1050,7 +1076,7 @@ Total 105.58  99.68  99.88</code></pre>
 <h3 id="clarks-ldf-method">Clark’s LDF method<a class="anchor" aria-label="anchor" href="#clarks-ldf-method"></a>
 </h3>
 <p>Consider again the RAA triangle. Accepting all defaults, the Clark LDF Method would estimate total ultimate losses of 272,009 and a reserve (FutureValue) of 111,022, or almost twice the value based on the volume weighted average link ratios and loglinear fit in section 3.2.1 above.</p>
-<div class="sourceCode" id="cb115"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb119"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/ClarkLDF.html">ClarkLDF</a></span><span class="op">(</span><span class="va">RAA</span><span class="op">)</span></code></pre></div>
 <pre><code> Origin CurrentValue    Ldf UltimateValue FutureValue StdError  CV%
    1981       18,834  1.216        22,906       4,072    2,792 68.6
@@ -1065,7 +1091,7 @@ Total 105.58  99.68  99.88</code></pre>
    1990        2,063 12.394        25,569      23,506   17,227 73.3
   Total      160,987              272,009     111,022   36,102 32.5</code></pre>
 <p>Most of the difference is due to the heavy tail, 21.6%, implied by the inverse power curve fit. Clark recognizes that the log-logistic curve can take an unreasonably long length of time to flatten out. If according to the actuary’s experience most claims close as of, say, 20 years, the growth curve can be truncated accordingly by using the <code>maxage</code> argument:</p>
-<div class="sourceCode" id="cb117"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb121"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/ClarkLDF.html">ClarkLDF</a></span><span class="op">(</span><span class="va">RAA</span>, maxage <span class="op">=</span> <span class="fl">20</span><span class="op">)</span></code></pre></div>
 <pre><code> Origin CurrentValue    Ldf UltimateValue FutureValue StdError  CV%
    1981       18,834  1.124        21,168       2,334    1,765 75.6
@@ -1080,7 +1106,7 @@ Total 105.58  99.68  99.88</code></pre>
    1990        2,063 11.454        23,629      21,566   15,899 73.7
   Total      160,987              251,369      90,382   26,375 29.2</code></pre>
 <p>The Weibull growth curve tends to be faster developing than the log-logistic:</p>
-<div class="sourceCode" id="cb119"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb123"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/ClarkLDF.html">ClarkLDF</a></span><span class="op">(</span><span class="va">RAA</span>, G<span class="op">=</span><span class="st">"weibull"</span><span class="op">)</span></code></pre></div>
 <pre><code> Origin CurrentValue   Ldf UltimateValue FutureValue StdError   CV%
    1981       18,834 1.022        19,254         420      700 166.5
@@ -1095,7 +1121,7 @@ Total 105.58  99.68  99.88</code></pre>
    1990        2,063 9.815        20,248      18,185   12,929  71.1
   Total      160,987             220,920      59,933   19,149  32.0</code></pre>
 <p>It is recommend to inspect the residuals to help assess the reasonableness of the model relative to the actual data.</p>
-<div class="sourceCode" id="cb121"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb125"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="fu"><a href="../reference/ClarkLDF.html">ClarkLDF</a></span><span class="op">(</span><span class="va">RAA</span>, G<span class="op">=</span><span class="st">"weibull"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <p><img src="ChainLadder_files/figure-html/LDFweibull-1.png" width="60%" style="display: block; margin: auto;"></p>
 <p>Although there is some evidence of heteroscedasticity with increasing ages and fitted values, the residuals otherwise appear randomly scattered around a horizontal line through the origin. The q-q plot shows evidence of a lack of fit in the tails, but the p-value of almost 0.2 can be considered too high to reject outright the assumption of normally distributed standardized residuals<a class="footnote-ref" tabindex="0" data-bs-toggle="popover" data-bs-content="&lt;p&gt;As an exercise, the reader can confirm that the normal distribution assumption is rejected at the 5% level with the log-logistic curve&lt;/p&gt;"><sup>4</sup></a>.</p>
@@ -1104,7 +1130,7 @@ Total 105.58  99.68  99.88</code></pre>
 <h3 id="clarks-cap-cod-method">Clark’s Cap Cod method<a class="anchor" aria-label="anchor" href="#clarks-cap-cod-method"></a>
 </h3>
 <p>The RAA data set, widely researched in the literature, has no premium associated with it traditionally. Let’s assume a constant earned premium of 40000 each year, and a Weibull growth function:</p>
-<div class="sourceCode" id="cb122"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb126"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/ClarkCapeCod.html">ClarkCapeCod</a></span><span class="op">(</span><span class="va">RAA</span>, Premium <span class="op">=</span> <span class="fl">40000</span>, G <span class="op">=</span> <span class="st">"weibull"</span><span class="op">)</span></code></pre></div>
 <pre><code> Origin CurrentValue Premium   ELR FutureGrowthFactor FutureValue UltimateValue
    1981       18,834  40,000 0.566             0.0192         436        19,270
@@ -1132,7 +1158,7 @@ Total 105.58  99.68  99.88</code></pre>
    12,713  19.4</code></pre>
 <p>The estimated expected loss ratio is 0.566. The total outstanding loss is about 10% higher than with the LDF method. The standard error, however, is lower, probably due to the fact that there are fewer parameters to estimate with the CapeCod method, resulting in less parameter risk.</p>
 <p>A plot of this model shows similar residuals By Origin and Projected Age to those from the LDF method, a better spread By Fitted Value, and a slightly better q-q plot, particularly in the upper tail.</p>
-<div class="sourceCode" id="cb124"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb128"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="fu"><a href="../reference/ClarkCapeCod.html">ClarkCapeCod</a></span><span class="op">(</span><span class="va">RAA</span>, Premium <span class="op">=</span> <span class="fl">40000</span>, G <span class="op">=</span> <span class="st">"weibull"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <p><img src="ChainLadder_files/figure-html/CapeCod-1.png" width="60%" style="display: block; margin: auto;"></p>
 </div>
@@ -1149,7 +1175,7 @@ Total 105.58  99.68  99.88</code></pre>
 <p>The <code>glmReserve</code> function takes an insurance loss triangle, converts it to incremental losses internally if necessary, transforms it to the long format (see <code>as.data.frame</code>) and fits the resulting loss data with a generalised linear model where the mean structure includes both the accident year and the development lag effects. The function also provides both analytical and bootstrapping methods to compute the associated prediction errors. The bootstrapping approach also simulates the full predictive distribution, based on which the user can compute other uncertainty measures such as predictive intervals.</p>
 <p>Only the Tweedie family of distributions are allowed, that is, the exponential family that admits a power variance function <span class="math inline">\(V(\mu)=\mu^p\)</span>. The variance power <span class="math inline">\(p\)</span> is specified in the <code>var.power</code> argument, and controls the type of the distribution. When the Tweedie compound Poisson distribution <span class="math inline">\(1 &lt; p &lt; 2\)</span> is to be used, the user has the option to specify <code>var.power = NULL</code>, where the variance power <span class="math inline">\(p\)</span> will be estimated from the data using the <code>cplm</code> package <span class="citation">(Zhang 2012)</span>.</p>
 <p>For example, the following fits the over-dispersed Poisson model and spells out the estimated reserve information:</p>
-<div class="sourceCode" id="cb125"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb129"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># load data</span>
 <span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">GenIns</span><span class="op">)</span>
 <span class="va">GenIns</span> <span class="op">&lt;-</span> <span class="va">GenIns</span> <span class="op">/</span> <span class="fl">1000</span>
@@ -1167,7 +1193,7 @@ Total 105.58  99.68  99.88</code></pre>
 10       344     0.06922     4970  4626 1980.1 0.4280
 total  30457     0.61982    49138 18681 2945.7 0.1577</code></pre>
 <p>We can also extract the underlying GLM model by specifying <code>type = "model"</code> in the <code>summary</code> function:</p>
-<div class="sourceCode" id="cb127"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb131"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">fit1</span>, type <span class="op">=</span> <span class="st">"model"</span><span class="op">)</span></code></pre></div>
 <pre><code>
 Call:
@@ -1210,7 +1236,7 @@ AIC: NA
 
 Number of Fisher Scoring iterations: 4</code></pre>
 <p>Similarly, we can fit the Gamma and a compound Poisson GLM reserving model by changing the <code>var.power</code> argument:</p>
-<div class="sourceCode" id="cb129"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb133"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Gamma GLM</span>
 <span class="op">(</span><span class="va">fit2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/glmReserve.html">glmReserve</a></span><span class="op">(</span><span class="va">GenIns</span>, var.power <span class="op">=</span> <span class="fl">2</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <pre><code>      Latest Dev.To.Date Ultimate  IBNR     S.E     CV
@@ -1224,11 +1250,11 @@ Number of Fisher Scoring iterations: 4</code></pre>
 9       1363     0.24854     5485  4122 1175.95 0.2853
 10       344     0.07078     4860  4516 1667.39 0.3692
 total  30457     0.62742    48543 18086 2702.71 0.1494</code></pre>
-<div class="sourceCode" id="cb131"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb135"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># compound Poisson GLM (variance function estimated from the data):</span>
 <span class="co"># (fit3 &lt;- glmReserve(GenIns, var.power = NULL))</span></code></pre></div>
 <p>By default, the formulaic approach is used to compute the prediction errors. We can also carry out bootstrapping simulations by specifying <code>mse.method = "bootstrap"</code> (note that this argument supports partial match):</p>
-<div class="sourceCode" id="cb132"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb136"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">11</span><span class="op">)</span>
 <span class="op">(</span><span class="va">fit5</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/glmReserve.html">glmReserve</a></span><span class="op">(</span><span class="va">GenIns</span>, mse.method <span class="op">=</span> <span class="st">"boot"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <pre><code>      Latest Dev.To.Date Ultimate  IBNR    S.E     CV
@@ -1243,13 +1269,13 @@ total  30457     0.62742    48543 18086 2702.71 0.1494</code></pre>
 10       344     0.06922     4970  4626 1986.3 0.4294
 total  30457     0.61982    49138 18681 2955.4 0.1582</code></pre>
 <p>When bootstrapping is used, the resulting object has three additional components - <code>sims.par</code>, <code>sims.reserve.mean</code>, and <code>sims.reserve.pred</code> that store the simulated parameters, mean values and predicted values of the reserves for each year, respectively.</p>
-<div class="sourceCode" id="cb134"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb138"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">fit5</span><span class="op">)</span></code></pre></div>
 <pre><code>[1] "call"              "summary"           "Triangle"         
 [4] "FullTriangle"      "model"             "sims.par"         
 [7] "sims.reserve.mean" "sims.reserve.pred"</code></pre>
 <p>We can thus compute the quantiles of the predictions based on the simulated samples in the <code>sims.reserve.pred</code> element as:</p>
-<div class="sourceCode" id="cb136"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb140"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">pr</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="va">fit5</span><span class="op">$</span><span class="va">sims.reserve.pred</span><span class="op">)</span>
 <span class="va">qv</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.025</span>, <span class="fl">0.25</span>, <span class="fl">0.5</span>, <span class="fl">0.75</span>, <span class="fl">0.975</span><span class="op">)</span>
 <span class="va">res.q</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/t.html" class="external-link">t</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/apply.html" class="external-link">apply</a></span><span class="op">(</span><span class="va">pr</span>, <span class="fl">2</span>, <span class="va">quantile</span>, <span class="va">qv</span><span class="op">)</span><span class="op">)</span>
@@ -1265,7 +1291,7 @@ total  30457     0.61982    49138 18681 2955.4 0.1582</code></pre>
 9  2,462 3,555 4,222 4,988 6,879
 10   809 3,394 4,505 5,904 9,236</code></pre>
 <p>The full predictive distribution of the simulated reserves for each year can be visualized easily:</p>
-<div class="sourceCode" id="cb138"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb142"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span>
 <span class="va">prm</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/reshape.html" class="external-link">reshape</a></span><span class="op">(</span><span class="va">pr</span>, varying<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">pr</span><span class="op">)</span><span class="op">)</span>, v.names <span class="op">=</span> <span class="st">"reserve"</span>, 
                timevar <span class="op">=</span> <span class="st">"year"</span>, direction<span class="op">=</span><span class="st">"long"</span><span class="op">)</span>
@@ -1326,7 +1352,7 @@ I_{i,j-1} = I_{i,j} \exp(-\zeta_{i,j-1}),
 \]</span></p>
 <p>This is not a full Bayesian approach but has the advantage to give analytical expressions for the posterior distributions and the prediction uncertainty.</p>
 <p>The Paid-incurred Chain model is implemented in the <code>ChainLadder</code> package via the function <code>PaidIncurredChain</code>. As an example we apply the function to the USAA paid and incurred triangles:</p>
-<div class="sourceCode" id="cb139"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb143"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">PIC</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/PaidIncurredChain.html">PaidIncurredChain</a></span><span class="op">(</span><span class="va">USAApaid</span>, <span class="va">USAAincurred</span><span class="op">)</span>
 <span class="va">PIC</span></code></pre></div>
 <pre><code>$Ult.Loss.Origin
@@ -1362,7 +1388,7 @@ $Res.Tot
 $s.e.
 [1] 113940</code></pre>
 <p>We can access the reserves by origin year via</p>
-<div class="sourceCode" id="cb141"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb145"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">PIC</span><span class="op">$</span><span class="va">Res.Origin</span></code></pre></div>
 <pre><code>          [,1]
  [1,]    965.3
@@ -1375,7 +1401,7 @@ $s.e.
  [8,] 443903.3
  [9,] 778393.5</code></pre>
 <p>and the total reserve via</p>
-<div class="sourceCode" id="cb143"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb147"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">PIC</span><span class="op">$</span><span class="va">Res.Tot</span></code></pre></div>
 <pre><code>[1] 1643953</code></pre>
 <p><code>s.e.</code> is the square root of mean square error of prediction for the total ultimate loss.</p>
@@ -1420,7 +1446,7 @@ $s.e.
 <p>The one year claims development result (CDR) can be estimate via the generic <code>CDR</code> function for objects of <code>MackChainLadder</code> and <code>BootChainLadder</code>.</p>
 <p>Further, the <code>tweedieReserve</code> function offers also the option to estimate the one year CDR, by setting the argument <code>rereserving=TRUE</code>.</p>
 <p>For example, to reproduce the results of <span class="citation">(Merz and Wüthrich 2014)</span> use:</p>
-<div class="sourceCode" id="cb145"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb149"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">M</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/MackChainLadder.html">MackChainLadder</a></span><span class="op">(</span><span class="va">MW2014</span>, est.sigma<span class="op">=</span><span class="st">"Mack"</span><span class="op">)</span>
 <span class="va">cdrM</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/CDR.html">CDR</a></span><span class="op">(</span><span class="va">M</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="va">cdrM</span>, <span class="fl">1</span><span class="op">)</span></code></pre></div>
@@ -1444,7 +1470,7 @@ $s.e.
 17     9596.6      733.2    1295.7
 Total 24134.9     1842.9    3233.7</code></pre>
 <p>To review the full claims development picture set the argument <code>dev="all"</code>:</p>
-<div class="sourceCode" id="cb147"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb151"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">cdrAll</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/CDR.html">CDR</a></span><span class="op">(</span><span class="va">M</span>,dev<span class="op">=</span><span class="st">"all"</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="va">cdrAll</span>, <span class="fl">1</span><span class="op">)</span></code></pre></div>
 <pre><code>         IBNR CDR(1)S.E. CDR(2)S.E. CDR(3)S.E. CDR(4)S.E. CDR(5)S.E. CDR(6)S.E.
@@ -1535,7 +1561,7 @@ P_{i,j} \backsim ODP(m_{i,j},\phi \cdot m_{i,j}),
 \end{equation*}
 \]</span></p>
 <p>where <code>a</code> and <code>p</code> are positive constants. The user is able to test different <code>p</code> values through the <code>var.power</code> function argument. Besides, in order to validate the Tweedie’s <code>p</code> parameter, it could be interesting to plot the likelihood profile at defined <code>p</code> values (through the <code>p.check</code> argument) for a given a dataset and a regression structure. This could be achieved setting the <code>p.optim=TRUE</code> argument.</p>
-<div class="sourceCode" id="cb149"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb153"><pre class="downlit sourceCode r">
 <code class="sourceCode R"> <span class="va">p_profile</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/tweedieReserve.html">tweedieReserve</a></span><span class="op">(</span><span class="va">MW2008</span>, p.optim<span class="op">=</span><span class="cn">TRUE</span>,
    p.check<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">1.1</span>,<span class="fl">1.2</span>,<span class="fl">1.3</span>,<span class="fl">1.4</span>,<span class="fl">1.5</span>,<span class="fl">2</span>,<span class="fl">3</span><span class="op">)</span>,
    design.type<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">1</span>,<span class="fl">1</span><span class="op">)</span>,
@@ -1560,7 +1586,7 @@ P_{i,j} \backsim ODP(m_{i,j},\phi \cdot m_{i,j}),
 <div class="section level2">
 <h2 id="further-resources">Further resources<a class="anchor" aria-label="anchor" href="#further-resources"></a>
 </h2>
-<p>For a full Bayesian approach to claims reserving in R with Stan see ‘Hierarchical Compartmental Reserving Models’ <span class="citation">(Gesmann and Morris 2020)</span>.</p>
+<p>For a full Bayesian approach to claims reserving in R with Stan using the brms package see <a href="https://compartmentalmodels.gitlab.io/researchpaper/index.html" class="external-link">‘Hierarchical Compartmental Reserving Models’</a> <span class="citation">(Gesmann and Morris 2020)</span>.</p>
 <p>Other useful documents and resources to get started with R in the context of actuarial work:</p>
 <ul>
 <li>Introduction to R for Actuaries <span class="citation">(De Silva 2006)</span>.</li>
@@ -1579,13 +1605,24 @@ P_{i,j} \backsim ODP(m_{i,j},\phi \cdot m_{i,j}),
 <p>Below is a list of further R packages in the context of insurance. The list is by no-means complete, and the CRAN Task Views <a href="https://CRAN.R-project.org/view=Finance" class="external-link">‘Empirical Finance’</a> and <a href="https://CRAN.R-project.org/view=Distributions" class="external-link">‘Probability Distributions’</a> will provide links to additional resources.</p>
 <ul>
 <li>cplm: Likelihood-based and Bayesian methods for fitting Tweedie compound Poisson linear models <span class="citation">(Zhang 2012)</span>.</li>
-<li>lossDev: A Bayesian time series loss development model. Features include skewed-t distribution with time-varying scale parameter, Reversible Jump MCMC for determining the functional form of the consumption path, and a structural break in this path <span class="citation">(Laws and Schmid 2011)</span>.</li>
 <li>DCL: Claims Reserving under the Double Chain-Ladder Model. Statistical modelling and forecasting in claims reserving in non-life insurance under the Double Chain-Ladder framework by <span class="citation">(Miranda, Nielsen, and Verrall 2012)</span>.</li>
-<li>favir: Formatted Actuarial Vignettes in R. FAViR lowers the learning curve of the R environment. It is a series of peer-reviewed Sweave papers that use a consistent style <span class="citation">(Escoto 2011)</span>.</li>
 <li>actuar: Loss distributions modelling, risk theory (including ruin theory), simulation of compound hierarchical models and credibility theory <span class="citation">(Dutang, Goulet, and Pigeon 2008)</span>.</li>
 <li>fitdistrplus: Help to fit of a parametric distribution to non-censored or censored data <span class="citation">(Delignette-Muller et al. 2010)</span>.</li>
-<li>mondate: R package to keep track of dates in terms of months <span class="citation">(Murphy 2011)</span>.</li>
-<li>lifecontingencies: Package to perform actuarial evaluation of life contingencies <span class="citation">(Spedicato 2011)</span>.</li>
+<li>mondate: R package to keep track of dates in terms of months <span class="citation">(Murphy 2021)</span>.</li>
+<li>lifecontingencies: Package to perform actuarial evaluation of life contingencies <span class="citation">(Spedicato 2022)</span>.</li>
+<li>raw: R Actuarial Workshops, several sets of publicly available data of interest to non-life actuaries <span class="citation">(Fannin 2021)</span>
+</li>
+<li>SPLICE: Synthetic Paid Loss and Incurred Cost Experience (SPLICE) Simulator <span class="citation">(Avanzi, Taylor, and Wang 2021)</span>
+</li>
+<li>SynthETIC: Synthetic Experience Tracking Insurance Claims <span class="citation">(Avanzi et al. 2021)</span>
+</li>
+<li>NetSimR: Actuarial Functions for Non-Life Insurance Modelling <span class="citation">(Parizas 2019)</span>
+</li>
+</ul>
+<p>No longer on CRAN:</p>
+<ul>
+<li>lossDev: A Bayesian time series loss development model. Features include skewed-t distribution with time-varying scale parameter, Reversible Jump MCMC for determining the functional form of the consumption path, and a structural break in this path <span class="citation">(Laws and Schmid 2011)</span>.</li>
+<li>favir: Formatted Actuarial Vignettes in R. FAViR lowers the learning curve of the R environment. It is a series of peer-reviewed Sweave papers that use a consistent style <span class="citation">(Escoto 2011)</span>.</li>
 <li>MRMR: Multivariate Regression Models for Reserving <span class="citation">(Fannin 2013)</span>.</li>
 </ul>
 </div>
@@ -1595,6 +1632,12 @@ P_{i,j} \backsim ODP(m_{i,j},\phi \cdot m_{i,j}),
 </h1>
 
 <div id="refs" class="references">
+<div id="ref-SPLICE">
+<p>Avanzi, Benjamin, Greg Taylor, and Melantha Wang. 2021. <em>SPLICE: Synthetic Paid Loss and Incurred Cost Experience (Splice) Simulator</em>. <a href="https://CRAN.R-project.org/package=SPLICE" class="external-link">https://CRAN.R-project.org/package=SPLICE</a>.</p>
+</div>
+<div id="ref-SynthETIC">
+<p>Avanzi, Benjamin, Greg Taylor, Melantha Wang, and Bernard Wong. 2021. “SynthETIC: An Individual Insurance Claim Simulator with Feature Control.” <em>Insurance: Mathematics and Economics</em> 100 (September): 296–308. <a href="https://doi.org/10.1016/j.insmatheco.2021.06.004" class="external-link">https://doi.org/10.1016/j.insmatheco.2021.06.004</a>.</p>
+</div>
 <div id="ref-Buchwalder:2006">
 <p>Buchwalder, M., H. Bühlmann, M. Merz, and M. V Wüthrich. 2006. “The Mean Square Error of Prediction in the Chain Ladder Reserving Method (Mack and Murphy Revisited).” <em>North American Actuarial Journal</em> 36: 521–42.</p>
 </div>
@@ -1621,6 +1664,9 @@ P_{i,j} \backsim ODP(m_{i,j},\phi \cdot m_{i,j}),
 </div>
 <div id="ref-MRMR">
 <p>Fannin, Brian A. 2013. <em>MRMR: Multivariate Regression Models for Reserving</em>. <a href="https://CRAN.R-project.org/package=MRMR" class="external-link">https://CRAN.R-project.org/package=MRMR</a>.</p>
+</div>
+<div id="ref-raw">
+<p>———. 2021. <em>Raw: R Actuarial Workshops</em>. <a href="https://CRAN.R-project.org/package=raw" class="external-link">https://CRAN.R-project.org/package=raw</a>.</p>
 </div>
 <div id="ref-gesmann2014claims">
 <p>Gesmann, Markus. 2014. “Claims Reserving and IBNR.” In <em>Computational Actuarial Science with R</em>, 545–84. Chapman; Hall/CRC.</p>
@@ -1677,10 +1723,13 @@ P_{i,j} \backsim ODP(m_{i,j},\phi \cdot m_{i,j}),
 <p>Murphy, Daniel. 1994. “Unbiased Loss Development Factors.” <em>PCAS</em> 81: 154–222.</p>
 </div>
 <div id="ref-Murphy2011">
-<p>———. 2011. <em>Mondate: Keep Track of Dates in Terms of Months</em>. <a href="https://CRAN.R-project.org/package=mondate" class="external-link">https://CRAN.R-project.org/package=mondate</a>.</p>
+<p>———. 2021. <em>Mondate: Keep Track of Dates in Terms of Months</em>. <a href="https://CRAN.R-project.org/package=mondate" class="external-link">https://CRAN.R-project.org/package=mondate</a>.</p>
 </div>
 <div id="ref-JamesOrr:2012">
 <p>Orr, James. 2012. <em>GIROC Reserving Research Workstream</em>. Institute of Actuaries.</p>
+</div>
+<div id="ref-NetSimR">
+<p>Parizas, Yiannis. 2019. “Escaping the Triangle.” <em>The Actuary Magazine</em> June. <a href="https://www.theactuary.com/features/2019/06/2019/06/05/escaping-triangle" class="external-link">https://www.theactuary.com/features/2019/06/2019/06/05/escaping-triangle</a>.</p>
 </div>
 <div id="ref-ProhlSchmidt2005">
 <p>Pröhl, Carsten, and Klaus D. Schmidt. 2005. “Multivariate Chain-Ladder.” <em>Dresdner Schriften Zur Versicherungsmathematik</em>.</p>
@@ -1689,16 +1738,13 @@ P_{i,j} \backsim ODP(m_{i,j},\phi \cdot m_{i,j}),
 <p>Quarg, Gerhard, and Thomas Mack. 2004. “Munich Chain Ladder.” Munich Re Group.</p>
 </div>
 <div id="ref-Rdata">
-<p>R Development Core Team. 2012a. <em>R Data Import/Export</em>. R Foundation for Statistical Computing; <a href="https://cran.r-project.org/doc/manuals/R-data.pdf" class="external-link">https://cran.r-project.org/doc/manuals/R-data.pdf</a>.</p>
+<p>R Development Core Team. 2022a. <em>R Data Import/Export</em>. R Foundation for Statistical Computing; <a href="https://cran.r-project.org/doc/manuals/R-data.pdf" class="external-link">https://cran.r-project.org/doc/manuals/R-data.pdf</a>.</p>
 </div>
 <div id="ref-Radmin">
-<p>———. 2012b. <em>R Installation and Administration</em>. R Foundation for Statistical Computing; <a href="https://cran.r-project.org/doc/manuals/R-admin.pdf" class="external-link">https://cran.r-project.org/doc/manuals/R-admin.pdf</a>.</p>
-</div>
-<div id="ref-Schmidt2011">
-<p>Schmidt, Klaus D. 2011. “A Bibliography on Loss Reserving.” <a href="https://tu-dresden.de/mn/math/stochastik/ressourcen/dateien/schmidt/dsvm/reserve.pdf?lang=de" class="external-link">https://tu-dresden.de/mn/math/stochastik/ressourcen/dateien/schmidt/dsvm/reserve.pdf?lang=de</a>.</p>
+<p>———. 2022b. <em>R Installation and Administration</em>. R Foundation for Statistical Computing; <a href="https://cran.r-project.org/doc/manuals/R-admin.pdf" class="external-link">https://cran.r-project.org/doc/manuals/R-admin.pdf</a>.</p>
 </div>
 <div id="ref-Spedicato2011">
-<p>Spedicato, Giorgio Alfredo. 2011. <em>Introduction to Lifecontingencies Package</em>. 0.0.4 ed. StatisticalAdvisor Inc; <a href="https://CRAN.R-project.org/package=lifecontingencies/" class="external-link">https://CRAN.R-project.org/package=lifecontingencies/</a>.</p>
+<p>Spedicato, Giorgio Alfredo. 2022. <em>Introduction to Lifecontingencies Package</em>. 1.3.8 ed. StatisticalAdvisor Inc; <a href="https://CRAN.R-project.org/package=lifecontingencies/" class="external-link">https://CRAN.R-project.org/package=lifecontingencies/</a>.</p>
 </div>
 <div id="ref-ZehnwirthBarnettProceedings">
 <p>Zehnwirth, Ben, and Glen Barnett. 2000. “Best Estimates for Reserves.” <em>Proceedings of the CAS</em> LXXXVII (167).</p>
