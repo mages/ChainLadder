@@ -573,14 +573,23 @@ triangle `RAA`:
 
 ```{r }
 mack <- MackChainLadder(RAA, est.sigma="Mack")
-mack
+mack # same as summary(mack) 
 ```
+
 
 We can access the loss development factors and the full triangle via:
 
 ```{r }
 mack$f
 mack$FullTriangle
+```
+
+If you are only interested in the summary statistics then use: 
+
+```{r}
+mack_smmry <- summary(mack) # See also ?summary.MackChainLadder
+mack_smmry$ByOrigin
+mack_smmry$Totals
 ```
 
 To check that Mack's assumption are valid review the residual plots,
@@ -626,10 +635,17 @@ plot(MCLpaid)
 plot(MCLincurred)
 par(mfrow=c(1,1))
 ```
-```{r fig=TRUE, fig.asp=1.5}
+
+```{r}
 # Following the example in Quarg's (2004) paper:
 MCL <- MunichChainLadder(MCLpaid, MCLincurred, est.sigmaP=0.1, est.sigmaI=0.1)
 MCL
+```
+
+You can use `summary(MCL)$ByOrigin` and `summary(MCL)$Totals` 
+to extract the information from the output above.
+
+```{r fig=TRUE, fig.asp=1.5}
 plot(MCL)
 ```
 
@@ -653,6 +669,8 @@ such as mean, prediction error or  quantiles can be derived.
 B <- BootChainLadder(RAA, R=999, process.distr="gamma")
 B
 ```
+
+You can use `summary(B)$ByOrigin` and `summary(B)$Totals` to extract the information from the output above.
 
 ```{r fig=TRUE, fig.asp=1.5}
 plot(B)
@@ -1531,7 +1549,7 @@ Please refer to `help(tweedieReserve)` for additional information.
 
 ## Further resources
 
-For a full Bayesian approach to claims reserving in R with Stan see 'Hierarchical Compartmental Reserving Models' [@gesmann_morris].
+For a full Bayesian approach to claims reserving in R with Stan using the brms package see ['Hierarchical Compartmental Reserving Models'](https://compartmentalmodels.gitlab.io/researchpaper/index.html) [@gesmann_morris].
 
 Other useful documents and resources to get started with R in the
 context of actuarial work:
@@ -1552,16 +1570,9 @@ The list is by no-means complete, and the CRAN Task Views ['Empirical
  
  - cplm: Likelihood-based and Bayesian methods for 
  fitting Tweedie compound Poisson linear models [@Zhang:2012].
- - lossDev: A Bayesian time series loss development model. Features include
- skewed-t distribution with time-varying scale parameter, Reversible Jump MCMC 
- for determining the functional form of the consumption path, and a structural 
- break in this path [@LawsSchmid2011].
  - DCL: Claims Reserving under the Double Chain-Ladder Model. Statistical
  modelling and forecasting in claims reserving in non-life insurance under the
  Double Chain-Ladder framework by [@miranda_nielsen_verrall_2012].
- - favir: Formatted Actuarial Vignettes in R. FAViR lowers the learning
- curve of the R environment. It is a series of peer-reviewed Sweave
- papers that use a consistent style [@Escoto2011].
  - actuar: Loss distributions modelling, risk theory (including ruin theory),
  simulation of compound hierarchical models and
  credibility theory [@DutangGouletPigeon2008].
@@ -1570,9 +1581,24 @@ The list is by no-means complete, and the CRAN Task Views ['Empirical
  - mondate: R package to keep track of dates in terms of months [@Murphy2011].
  - lifecontingencies: Package to perform actuarial evaluation of life 
  contingencies [@Spedicato2011].
+ - raw: R Actuarial Workshops, several sets of publicly available data of interest to non-life actuaries [@raw]
+ - SPLICE: Synthetic Paid Loss and Incurred Cost Experience (SPLICE) Simulator [@SPLICE]
+ - SynthETIC: Synthetic Experience Tracking Insurance Claims [@SynthETIC]
+ - NetSimR: Actuarial Functions for Non-Life Insurance Modelling
+ [@NetSimR]
+
+No longer on CRAN:
+
+ - lossDev: A Bayesian time series loss development model. Features include
+ skewed-t distribution with time-varying scale parameter, Reversible Jump MCMC 
+ for determining the functional form of the consumption path, and a structural 
+ break in this path [@LawsSchmid2011].
+ - favir: Formatted Actuarial Vignettes in R. FAViR lowers the learning
+ curve of the R environment. It is a series of peer-reviewed Sweave
+ papers that use a consistent style [@Escoto2011].
  - MRMR: Multivariate Regression Models for Reserving [@MRMR].
 
-
+ 
 # References
 
 \bibliographystyle{alpha}
