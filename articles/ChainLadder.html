@@ -106,7 +106,7 @@ To cite package 'ChainLadder' in publications use:
 <p>Thus, it should come as no surprise that the biggest item on the liability side of an insurer’s balance sheet is often the provision or reserves for future claims payments. Those reserves can be broken down in case reserves (or outstanding claims), which are losses already reported to the insurance company and losses that are incurred but not reported (IBNR) yet.</p>
 <p>Historically, reserving was based on deterministic calculations with pen and paper, combined with expert judgement. Since the 1980’s, with the arrival of personal computer, spreadsheet software became very popular for reserving. Spreadsheets not only reduced the calculation time, but allowed actuaries to test different scenarios and the sensitivity of their forecasts.</p>
 <p>As the computer became more powerful, ideas of more sophisticated models started to evolve. Changes in regulatory requirements, e.g. Solvency II in Europe, have fostered further research and promoted the use of stochastic and statistical techniques. In particular, for many countries extreme percentiles of reserve deterioration over a fixed time period have to be estimated for the purpose of capital setting.</p>
-<p>Over the years several methods and models have been developed to estimate both the level and variability of reserves for insurance claims, see <span class="citation">(<span class="citeproc-not-found" data-reference-id="Schmidt2011"><strong>???</strong></span>)</span> or <span class="citation">(England and Verrall 2002)</span> for an overview.</p>
+<p>Over the years several methods and models have been developed to estimate both the level and variability of reserves for insurance claims, see <span class="citation">(Schmidt 2017)</span> or <span class="citation">(England and Verrall 2002)</span> for an overview.</p>
 <p>In practice the Mack chain-ladder and bootstrap chain-ladder models are used by many actuaries along with stress testing / scenario analysis and expert judgement to estimate ranges of reasonable outcomes, see the surveys of UK actuaries in 2002, <span class="citation">(Lyons et al. 2002)</span>, and across the Lloyd’s market in 2012, <span class="citation">(Orr 2012)</span>.</p>
 </div>
 </div>
@@ -698,23 +698,23 @@ Ultimate: 32,371   32,688      0.99</code></pre>
 
      Latest Mean Ultimate Mean IBNR IBNR.S.E IBNR 75% IBNR 95%
 1981 18,834        18,834         0        0        0        0
-1982 16,704        16,842       138      735      170    1,401
-1983 23,466        24,047       581    1,292    1,136    2,937
-1984 27,067        28,659     1,592    1,946    2,452    5,336
-1985 26,180        28,808     2,628    2,309    3,931    6,573
-1986 15,852        19,458     3,606    2,420    4,866    8,343
-1987 12,314        17,809     5,495    3,145    7,196   11,108
-1988 13,112        24,179    11,067    5,085   14,041   20,453
-1989  5,395        16,264    10,869    6,159   14,081   22,321
-1990  2,063        19,215    17,152   13,699   24,517   41,559
+1982 16,704        16,912       208      699      212    1,592
+1983 23,466        24,150       684    1,397    1,191    3,396
+1984 27,067        28,781     1,714    1,897    2,734    5,327
+1985 26,180        29,080     2,900    2,335    4,257    7,046
+1986 15,852        19,622     3,770    2,548    5,026    8,664
+1987 12,314        17,858     5,544    3,041    7,285   11,093
+1988 13,112        23,924    10,812    4,815   13,756   19,343
+1989  5,395        16,296    10,901    5,947   14,221   22,072
+1990  2,063        18,878    16,815   13,479   23,894   43,418
 
                  Totals
 Latest:         160,987
-Mean Ultimate:  214,114
-Mean IBNR:       53,127
-IBNR.S.E         18,559
-Total IBNR 75%:  64,815
-Total IBNR 95%:  85,920</code></pre>
+Mean Ultimate:  214,336
+Mean IBNR:       53,349
+IBNR.S.E         18,138
+Total IBNR 75%:  64,799
+Total IBNR 95%:  86,875</code></pre>
 <p>You can use <code>summary(B)$ByOrigin</code> and <code>summary(B)$Totals</code> to extract the information from the output above.</p>
 <div class="sourceCode" id="cb75"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">B</span><span class="op">)</span></code></pre></div>
@@ -725,22 +725,22 @@ Total IBNR 95%:  85,920</code></pre>
 <pre><code>$ByOrigin
      IBNR 75% IBNR 95% IBNR 99% IBNR 99.5%
 1981      0.0        0        0          0
-1982    170.4     1401     2768       3346
-1983   1136.2     2937     4560       5278
-1984   2452.0     5336     8149       9242
-1985   3931.2     6573    10162      11237
-1986   4865.8     8343    10617      11420
-1987   7196.2    11108    16206      17875
-1988  14041.4    20453    26281      27982
-1989  14081.0    22321    28842      31967
-1990  24516.5    41559    57521      64278
+1982    211.5     1592     3110       3617
+1983   1190.9     3396     5527       6448
+1984   2734.5     5327     7022       7310
+1985   4257.3     7046     9853      10824
+1986   5026.4     8664    12614      13404
+1987   7284.7    11093    13695      14748
+1988  13755.8    19343    23127      25315
+1989  14220.9    22072    28273      30976
+1990  23893.7    43418    55347      60572
 
 $Totals
             Totals
-IBNR 75%:    64815
-IBNR 95%:    85920
-IBNR 99%:   101977
-IBNR 99.5%: 113956</code></pre>
+IBNR 75%:    64799
+IBNR 95%:    86875
+IBNR 99%:   101932
+IBNR 99.5%: 108251</code></pre>
 <p>The distribution of the IBNR appears to follow a log-normal distribution, so let’s fit it:</p>
 <div class="sourceCode" id="cb78"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">## fit a distribution to the IBNR</span>
@@ -750,8 +750,8 @@ IBNR 99.5%: 113956</code></pre>
 <span class="va">fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/MASS/man/fitdistr.html" class="external-link">fitdistr</a></span><span class="op">(</span><span class="va">B</span><span class="op">$</span><span class="va">IBNR.Totals</span><span class="op">[</span><span class="va">B</span><span class="op">$</span><span class="va">IBNR.Totals</span><span class="op">&gt;</span><span class="fl">0</span><span class="op">]</span>, <span class="st">"lognormal"</span><span class="op">)</span>
 <span class="va">fit</span></code></pre></div>
 <pre><code>    meanlog      sdlog  
-  10.816456    0.368713 
- ( 0.011666) ( 0.008249)</code></pre>
+  10.825608    0.349871 
+ ( 0.011069) ( 0.007827)</code></pre>
 <div class="sourceCode" id="cb80"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/curve.html" class="external-link">curve</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Lognormal.html" class="external-link">plnorm</a></span><span class="op">(</span><span class="va">x</span>,<span class="va">fit</span><span class="op">$</span><span class="va">estimate</span><span class="op">[</span><span class="st">"meanlog"</span><span class="op">]</span>, <span class="va">fit</span><span class="op">$</span><span class="va">estimate</span><span class="op">[</span><span class="st">"sdlog"</span><span class="op">]</span><span class="op">)</span>,
       col<span class="op">=</span><span class="st">"red"</span>, add<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
@@ -1742,6 +1742,9 @@ P_{i,j} \backsim ODP(m_{i,j},\phi \cdot m_{i,j}),
 </div>
 <div id="ref-Radmin">
 <p>———. 2022b. <em>R Installation and Administration</em>. R Foundation for Statistical Computing; <a href="https://cran.r-project.org/doc/manuals/R-admin.pdf" class="external-link">https://cran.r-project.org/doc/manuals/R-admin.pdf</a>.</p>
+</div>
+<div id="ref-Schmidt2011">
+<p>Schmidt, Klaus D. 2017. “A Bibliography on Loss Reserving.” <a href="https://tu-dresden.de/mn/math/stochastik/ressourcen/dateien/schmidt/dsvm/reserve.pdf?lang=de" class="external-link">https://tu-dresden.de/mn/math/stochastik/ressourcen/dateien/schmidt/dsvm/reserve.pdf?lang=de</a>.</p>
 </div>
 <div id="ref-Spedicato2011">
 <p>Spedicato, Giorgio Alfredo. 2022. <em>Introduction to Lifecontingencies Package</em>. 1.3.8 ed. StatisticalAdvisor Inc; <a href="https://CRAN.R-project.org/package=lifecontingencies/" class="external-link">https://CRAN.R-project.org/package=lifecontingencies/</a>.</p>
