@@ -1,7 +1,7 @@
 # ChainLadder 0.2.15 
 
  * Started using pkgdown to create package website 
- * Added ChainLadder heaxgon graphic
+ * Added ChainLadder hexagon graphic
  * Moved vignettes/NEWS.Rmd to NEW.md to autogenerate changelog with pkgdown
  * Clarified how to extract MackChainLadder objects in package vignette 
  
