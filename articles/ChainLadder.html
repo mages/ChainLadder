@@ -698,23 +698,23 @@ Ultimate: 32,371   32,688      0.99</code></pre>
 
      Latest Mean Ultimate Mean IBNR IBNR.S.E IBNR 75% IBNR 95%
 1981 18,834        18,834         0        0        0        0
-1982 16,704        16,912       208      699      212    1,592
-1983 23,466        24,150       684    1,397    1,191    3,396
-1984 27,067        28,781     1,714    1,897    2,734    5,327
-1985 26,180        29,080     2,900    2,335    4,257    7,046
-1986 15,852        19,622     3,770    2,548    5,026    8,664
-1987 12,314        17,858     5,544    3,041    7,285   11,093
-1988 13,112        23,924    10,812    4,815   13,756   19,343
-1989  5,395        16,296    10,901    5,947   14,221   22,072
-1990  2,063        18,878    16,815   13,479   23,894   43,418
+1982 16,704        16,839       135      673      160    1,244
+1983 23,466        24,059       593    1,367    1,073    3,142
+1984 27,067        28,768     1,701    1,870    2,580    5,247
+1985 26,180        28,996     2,816    2,347    4,051    7,209
+1986 15,852        19,570     3,718    2,385    5,112    8,326
+1987 12,314        17,877     5,563    3,203    7,396   11,631
+1988 13,112        23,889    10,777    4,970   13,626   19,838
+1989  5,395        16,443    11,048    6,077   14,729   21,918
+1990  2,063        18,937    16,874   13,560   24,042   41,674
 
                  Totals
 Latest:         160,987
-Mean Ultimate:  214,336
-Mean IBNR:       53,349
-IBNR.S.E         18,138
-Total IBNR 75%:  64,799
-Total IBNR 95%:  86,875</code></pre>
+Mean Ultimate:  214,210
+Mean IBNR:       53,223
+IBNR.S.E         18,792
+Total IBNR 75%:  64,487
+Total IBNR 95%:  85,466</code></pre>
 <p>You can use <code>summary(B)$ByOrigin</code> and <code>summary(B)$Totals</code> to extract the information from the output above.</p>
 <div class="sourceCode" id="cb75"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">B</span><span class="op">)</span></code></pre></div>
@@ -725,22 +725,22 @@ Total IBNR 95%:  86,875</code></pre>
 <pre><code>$ByOrigin
      IBNR 75% IBNR 95% IBNR 99% IBNR 99.5%
 1981      0.0        0        0          0
-1982    211.5     1592     3110       3617
-1983   1190.9     3396     5527       6448
-1984   2734.5     5327     7022       7310
-1985   4257.3     7046     9853      10824
-1986   5026.4     8664    12614      13404
-1987   7284.7    11093    13695      14748
-1988  13755.8    19343    23127      25315
-1989  14220.9    22072    28273      30976
-1990  23893.7    43418    55347      60572
+1982    160.3     1244     3099       3461
+1983   1073.4     3142     5016       5715
+1984   2580.4     5247     7418       8096
+1985   4050.7     7209    10507      11134
+1986   5112.4     8326    10836      11293
+1987   7396.3    11631    15338      16539
+1988  13626.2    19838    26132      27377
+1989  14729.4    21918    29787      31616
+1990  24041.9    41674    58190      67848
 
 $Totals
             Totals
-IBNR 75%:    64799
-IBNR 95%:    86875
-IBNR 99%:   101932
-IBNR 99.5%: 108251</code></pre>
+IBNR 75%:    64487
+IBNR 95%:    85466
+IBNR 99%:   106733
+IBNR 99.5%: 116578</code></pre>
 <p>The distribution of the IBNR appears to follow a log-normal distribution, so let’s fit it:</p>
 <div class="sourceCode" id="cb78"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">## fit a distribution to the IBNR</span>
@@ -750,8 +750,8 @@ IBNR 99.5%: 108251</code></pre>
 <span class="va">fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/MASS/man/fitdistr.html" class="external-link">fitdistr</a></span><span class="op">(</span><span class="va">B</span><span class="op">$</span><span class="va">IBNR.Totals</span><span class="op">[</span><span class="va">B</span><span class="op">$</span><span class="va">IBNR.Totals</span><span class="op">&gt;</span><span class="fl">0</span><span class="op">]</span>, <span class="st">"lognormal"</span><span class="op">)</span>
 <span class="va">fit</span></code></pre></div>
 <pre><code>    meanlog      sdlog  
-  10.825608    0.349871 
- ( 0.011069) ( 0.007827)</code></pre>
+  10.815865    0.377965 
+ ( 0.011958) ( 0.008456)</code></pre>
 <div class="sourceCode" id="cb80"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/curve.html" class="external-link">curve</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Lognormal.html" class="external-link">plnorm</a></span><span class="op">(</span><span class="va">x</span>,<span class="va">fit</span><span class="op">$</span><span class="va">estimate</span><span class="op">[</span><span class="st">"meanlog"</span><span class="op">]</span>, <span class="va">fit</span><span class="op">$</span><span class="va">estimate</span><span class="op">[</span><span class="st">"sdlog"</span><span class="op">]</span><span class="op">)</span>,
       col<span class="op">=</span><span class="st">"red"</span>, add<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
