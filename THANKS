@@ -30,4 +30,5 @@ Many thanks to all who provided ideas, suggestions, corrections and bug reports:
   missing values
 - Valentin Cornaciu for reporting a bug standard error estimation in 
   MackChainLadder when tail factor > 1 and alpha = 2
+- Kennedy Mwavu for reporting in issue regarding checking the weight argument in glmReserve
 

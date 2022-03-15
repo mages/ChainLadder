@@ -1,3 +1,7 @@
+# ChainLadder 0.2.16 
+
+ * Fixed typo checking for weight argument in glmReserve. Thanks to Kennedy Mwavu for reporting this issue
+
 # ChainLadder 0.2.15 
 
  * Started using pkgdown to create package website 

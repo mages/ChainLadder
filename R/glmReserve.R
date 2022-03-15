@@ -16,7 +16,7 @@ glmReserve <- function(triangle, var.power = 1, link.power = 0,
   if ("offset" %in% names(list(...)))
     stop("'offset' should be passed using the 
          'exposure' attribute of the triangle!")
-  if ("weigth" %in% names(list(...)))
+  if ("weight" %in% names(list(...)))
     stop("'weight' should not be used")  
   
   # convert to incremental losses if needed    
