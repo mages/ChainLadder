@@ -87,9 +87,14 @@ CDR.MackChainLadder <- function(x, dev=1, ...){
   f <- x$f[ind]
   ratio <- sigma2/f^2
   Latest <- rev(summary(x)[["ByOrigin"]][["Latest"]])[ind]
-  alpha <-  Latest / apply(x$Triangle, 2, sum, na.rm=TRUE)[ind]
+  w <- cbind(1, x$weights[, 1:(J0-1)])   #weights matrix 
+  alpha <-  Latest / apply(x$Triangle*w, 2, sum, na.rm=TRUE)[ind]
   
   CL_param <- data.frame(f, sigma2, ratio, alpha)
+  
+  #creating weighted matrix
+  w_full <- x$weights
+  w_full[which(is.na(w_full))] = 1
   
   # Check if a tail factor has been set, which means sigma tail 
   # was either set or estimated by MackChainLadder and hence 
@@ -97,7 +102,7 @@ CDR.MackChainLadder <- function(x, dev=1, ...){
   if(nrow(CL_param) == J0){
     stop(paste0("Sorry, tail factors are currently not supported."))
   }
-  CL_results <- CL_MSEPs(C_ij, I0, J0, CL_param) # Calculation MSEP's 
+  CL_results <- CL_MSEPs(C_ij*w_full, I0, J0, CL_param) # Calculation MSEP's 
   CL_results[, 2:(J0+2)] <- CL_results[, 2:(J0+2)]^(1/2)
   
   CL_results <- data.frame(CL_results)
