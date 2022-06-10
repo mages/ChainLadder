@@ -71,27 +71,35 @@ print(x, Amountdigits=0, ELRdigits=3, Gdigits=4, CVdigits=3,
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>x</dt>
 <dd><p>object resulting from a run of the ClarkLDF or ClarkCapeCod function.</p></dd>
-<dt>Amountdigits</dt>
+
+    <dt>Amountdigits</dt>
 <dd><p>number of digits to display to the right of the decimal point for "amount" columns</p></dd>
-<dt>LDFdigits</dt>
+
+    <dt>LDFdigits</dt>
 <dd><p>number of digits to display to the right of the decimal point for the
         loss development factor (LDF) column</p></dd>
-<dt>CVdigits</dt>
+
+    <dt>CVdigits</dt>
 <dd><p>number of digits to display to the right of the decimal point for the 
         coefficient of variation (CV) column</p></dd>
-<dt>ELRdigits</dt>
+
+    <dt>ELRdigits</dt>
 <dd><p>number of digits to display to the right of the decimal point for the
         expected loss ratio (ELR) column</p></dd>
-<dt>Gdigits</dt>
+
+    <dt>Gdigits</dt>
 <dd><p>number of digits to display to the right of the decimal point for the
         "growth function factor" column; 
         default of 4 conforms with the table on pp. 67, 68 of Clark's paper</p></dd>
-<dt>row.names</dt>
+
+    <dt>row.names</dt>
 <dd><p>logical (or character vector), 
         indicating whether (or what) row names should be printed
         (same as for <code><a href="https://rdrr.io/r/base/print.dataframe.html" class="external-link">print.data.frame</a></code>)</p></dd>
-<dt>...</dt>
+
+    <dt>...</dt>
 <dd><p>further arguments passed to <code>print</code></p></dd>
+
 </dl></div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
@@ -104,8 +112,15 @@ invokes its <code>print</code> method.</p>
     </div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p><code>data.frame</code>s whose columns are the <code>character</code> representation
-of their respective <code><a href="summary.clark.html">summary.ClarkLDF</a></code>or <code><a href="summary.clark.html">summary.ClarkCapeCod</a></code><code>data.frame</code>s.</p>
+    
+
+<p><code>data.frame</code>s whose columns are the <code>character</code> representation
+of their respective <code><a href="summary.clark.html">summary.ClarkLDF</a></code></p>
+ 
+
+<p>or <code><a href="summary.clark.html">summary.ClarkCapeCod</a></code></p>
+<p></p>
+<p><code>data.frame</code>s.</p>
     </div>
     <div class="section level2">
     <h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a></h2>
@@ -216,7 +231,7 @@ of their respective <code><a href="summary.clark.html">summary.ClarkLDF</a></cod
 </div>
 
 <div class="pkgdown-footer-right">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.</p>
 </div>
 
     </footer></div>

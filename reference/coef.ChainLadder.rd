@@ -65,13 +65,17 @@
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>object</dt>
 <dd><p>output of the <code><a href="chainladder.html">chainladder</a></code> function</p></dd>
-<dt>...</dt>
+
+  <dt>...</dt>
 <dd><p>optional arguments which may become named
     attributes of the resulting vector</p></dd>
+
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>The function returns a vector of the single-parameter coefficients -- also
+    
+
+<p>The function returns a vector of the single-parameter coefficients -- also
   called age-to-age (ATA) or report-to-report (RTR) factors --
   of the models produced by running the 'chainladder' function.</p>
     </div>
@@ -104,7 +108,7 @@
 </div>
 
 <div class="pkgdown-footer-right">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.</p>
 </div>
 
     </footer></div>

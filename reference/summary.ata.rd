@@ -65,13 +65,18 @@
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>object</dt>
 <dd><p>object resulting from a call to <code><a href="ata.html">ata</a></code></p></dd>
-<dt>digits</dt>
+
+
+    <dt>digits</dt>
 <dd><p>integer indicating the number of decimal places
         for rounding the factors.
         The default is 3.
         <code>NULL</code> indicates that rounding should take place.</p></dd>
-<dt>...</dt>
+
+    <dt>...</dt>
 <dd><p>not used</p></dd>
+
+
 </dl></div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
@@ -83,7 +88,9 @@ as rows at the bottom.</p>
     </div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>A <code>matrix</code>.</p>
+    
+
+<p>A <code>matrix</code>.</p>
     </div>
     <div class="section level2">
     <h2 id="author">Author<a class="anchor" aria-label="anchor" href="#author"></a></h2>
@@ -123,7 +130,7 @@ as rows at the bottom.</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.</p>
 </div>
 
     </footer></div>

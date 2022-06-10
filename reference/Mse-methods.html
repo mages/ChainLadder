@@ -66,13 +66,17 @@
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>ModelFit</dt>
 <dd><p>An object of class "GMCLFit" or "MCLFit".</p></dd>
-<dt>FullTriangles</dt>
+
+  <dt>FullTriangles</dt>
 <dd><p>An object of class "triangles". Should be the output from a call of <code>predict</code>.</p></dd>
-<dt>mse.method</dt>
+
+  <dt>mse.method</dt>
 <dd><p>Character strings that specify the MSE estimation method. Only works for "MCLFit". Use <code>"Mack"</code> for the generazliation of the Mack (1993) approach, and <code>"Independence"</code> for the conditional resampling approach in Merz and Wuthrich (2008).</p></dd>
-<dt>...</dt>
+
+  <dt>...</dt>
 <dd><p>Currently not used.</p></dd>
-</dl></div>
+
+  </dl></div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
     <p>These functions calculate the conditional mean square errors using the recursive formulas in Zhang (2010), which is a generalization of the Mack (1993, 1999) formulas. In the GMCL model, the conditional  mean square error for single accident years and aggregated accident years are calcualted as:</p>
@@ -86,21 +90,30 @@
     </div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p><code>Mse</code>  returns an object of class "MultiChainLadderMse" that has  the following elements:</p>
+    <p></p>
+<p><code>Mse</code>  returns an object of class "MultiChainLadderMse" that has  the following elements:</p>
 <dl><dt>mse.ay</dt>
 <dd><p>condtional mse for each accdient year</p></dd>
-<dt>mse.ay.est</dt>
+
+  <dt>mse.ay.est</dt>
 <dd><p>conditional estimation mse for each accdient year</p></dd>
-<dt>mse.ay.proc</dt>
+
+  <dt>mse.ay.proc</dt>
 <dd><p>conditional process mse for each accdient year</p></dd>
-<dt>mse.total</dt>
+
+  <dt>mse.total</dt>
 <dd><p>condtional mse for aggregated accdient years</p></dd>
-<dt>mse.total.est</dt>
+
+  <dt>mse.total.est</dt>
 <dd><p>conditional estimation mse for aggregated accdient years</p></dd>
-<dt>mse.total.proc</dt>
+
+  <dt>mse.total.proc</dt>
 <dd><p>conditional process mse for aggregated accdient years</p></dd>
-<dt>FullTriangles</dt>
+
+  <dt>FullTriangles</dt>
 <dd><p>completed triangles</p></dd>
+ 
+
 </dl></div>
     <div class="section level2">
     <h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a></h2>
@@ -125,7 +138,7 @@
 </div>
 
 <div class="pkgdown-footer-right">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.</p>
 </div>
 
     </footer></div>

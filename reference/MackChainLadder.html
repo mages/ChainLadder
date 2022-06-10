@@ -74,20 +74,23 @@ tail<span class="op">=</span><span class="cn">FALSE</span>, tail.se<span class="
     <code><a href="qpaid.html">qpaid</a></code> for how to use (mxn)-development triangles with
     m&lt;n, say higher development period frequency (e.g quarterly) than
     origin period frequency (e.g accident years).</p></dd>
-<dt>weights</dt>
+
+  <dt>weights</dt>
 <dd><p>weights. Default: 1, which sets the weights for all
     triangle entries to 1. Otherwise specify weights as a matrix of the same
     dimension as <code>Triangle</code> with all weight entries in [0; 1].
     Hence, any entry set to 0 or <code>NA</code> eliminates that age-to-age factor 
     from inclusion in the model. See also 'Details'</p></dd>
-<dt>alpha</dt>
+
+  <dt>alpha</dt>
 <dd><p>'weighting' parameters.
     Default: 1 for all development periods; alpha=1 gives the historical 
     chain-ladder age-to-age factors, alpha=0 gives the straight average of the
     observed individual development factors and alpha=2 is the result of
     an ordinary regression of \(C_{i,k+1}\) against \(C_{i,k}\) with
     intercept 0, see also 'Details' below, <code><a href="chainladder.html">chainladder</a></code> and Mack's 1999 paper</p></dd>
-<dt>est.sigma</dt>
+
+  <dt>est.sigma</dt>
 <dd><p>defines how to estimate \(sigma_{n-1}\), the
     variability of the individual age-to-age factors at development time
     \(n-1\).
@@ -99,32 +102,37 @@ tail<span class="op">=</span><span class="cn">FALSE</span>, tail.se<span class="
     Similarly, if Triangle is so small that log-linear regression is being
     attempted on a vector of only one non-NA average link ratio,
     the 'Mack' method will be used instead and a warning message printed.</p></dd>
-<dt>tail</dt>
+  
+  <dt>tail</dt>
 <dd><p>can be logical or a numeric value.
     If <code>tail=FALSE</code> no tail factor will be applied, if <code>tail=TRUE</code> 
     a tail factor will be estimated via a linear extrapolation of
     \(log(chain-ladder factors - 1)\), if <code>tail</code> is a numeric
     value than this value will be used instead.</p></dd>
-<dt>tail.se</dt>
+
+  <dt>tail.se</dt>
 <dd><p>defines how the standard error of the tail factor is estimated. Only needed if
     a tail factor &gt; 1 is provided. Default is <code>NULL</code>. If
     <code>tail.se</code> is <code>NULL</code>, <code>tail.se</code> is estimated via
     "log-linear" regression, if <code>tail.se</code> is a numeric
     value than this value will be used instead.</p></dd>
-<dt>tail.sigma</dt>
+  
+  <dt>tail.sigma</dt>
 <dd><p>defines how to estimate individual tail variability. Only needed if
       a tail factor &gt; 1 is provided.
     Default is <code>NULL</code>. If <code>tail.sigma</code> is <code>NULL</code>,
     <code>tail.sigma</code> 
     is estimated via "log-linear" regression, if <code>tail.sigma</code> is a numeric
     value than this value will be used instead</p></dd>
-<dt>mse.method</dt>
+  
+  <dt>mse.method</dt>
 <dd><p>method used for the recursive estimate of the parameter risk component 
     of the mean square error.
     Value "Mack" (default) coincides with Mack's formula;
     "Independence" includes the additional cross-product term
     as in Murphy and BBMW. 
     Refer to References below.</p></dd>
+  
 </dl></div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
@@ -159,53 +167,72 @@ tail<span class="op">=</span><span class="cn">FALSE</span>, tail.se<span class="
     </div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>MackChainLadder returns a list with the following elements</p>
+    
+
+<p>MackChainLadder returns a list with the following elements</p>
 <dl><dt>call</dt>
 <dd><p>matched call</p></dd>
-<dt>Triangle</dt>
+ 
+  <dt>Triangle</dt>
 <dd><p>input triangle of cumulative claims</p></dd>
-<dt>FullTriangle</dt>
+
+  <dt>FullTriangle</dt>
 <dd><p>forecasted full triangle</p></dd>
-<dt>Models</dt>
+
+  <dt>Models</dt>
 <dd><p>linear regression models for each development period</p></dd>
-<dt>f</dt>
+
+  <dt>f</dt>
 <dd><p>chain-ladder age-to-age factors</p></dd>
-<dt>f.se</dt>
+
+  <dt>f.se</dt>
 <dd><p>standard errors of the chain-ladder age-to-age factors f
     (assumption CL1)</p></dd>
-<dt>F.se</dt>
+
+  <dt>F.se</dt>
 <dd><p>standard errors of the true chain-ladder age-to-age factors
     \(F_{ik}\) (square root of the variance in assumption CL2)</p></dd>
-<dt>sigma</dt>
+
+  <dt>sigma</dt>
 <dd><p>sigma parameter in CL2</p></dd>
-<dt>Mack.ProcessRisk</dt>
+
+  <dt>Mack.ProcessRisk</dt>
 <dd><p>variability in the projection of future losses
     not explained by the variability of the link ratio estimators (unexplained variation)</p></dd>
-<dt>Mack.ParameterRisk</dt>
+
+  <dt>Mack.ParameterRisk</dt>
 <dd><p>variability in the projection of future
     losses explained by the variability of the link-ratio estimators
     alone (explained variation)</p></dd>
-<dt>Mack.S.E</dt>
+
+  <dt>Mack.S.E</dt>
 <dd><p>total variability in the projection of future losses
     by the chain-ladder method; the square root of the mean square error
     of the chain-ladder estimate: \(\mbox{Mack.S.E.}^2 = \mbox{Mack.ProcessRisk}^2 +
     \mbox{Mack.ParameterRisk}^2\)</p></dd>
-<dt>Total.Mack.S.E</dt>
+
+  <dt>Total.Mack.S.E</dt>
 <dd><p>total variability of projected loss for all
     origin years combined</p></dd>
-<dt>Total.ProcessRisk</dt>
+
+  <dt>Total.ProcessRisk</dt>
 <dd><p>vector of process risk estimate of the total 
     of projected loss for all origin years combined by development period</p></dd>
-<dt>Total.ParameterRisk</dt>
+
+  <dt>Total.ParameterRisk</dt>
 <dd><p>vector of parameter risk estimate of the total 
     of projected loss for all origin years combined by development period</p></dd>
-<dt>weights</dt>
+
+  <dt>weights</dt>
 <dd><p>weights used</p></dd>
-<dt>alpha</dt>
+
+  <dt>alpha</dt>
 <dd><p>alphas used</p></dd>
-<dt>tail</dt>
+
+  <dt>tail</dt>
 <dd><p>tail factor used. If tail was set to TRUE the output will
     include the linear model used to estimate the tail factor</p></dd>
+
 </dl></div>
     <div class="section level2">
     <h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a></h2>
@@ -479,7 +506,7 @@ Actuarial Society</em> - Arlington, Virginia 1994: LXXXI 154-222</cite></p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.</p>
 </div>
 
     </footer></div>

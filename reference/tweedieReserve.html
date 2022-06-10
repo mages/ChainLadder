@@ -79,16 +79,19 @@ framework. Finally, it allows the user to validate the model error while changin
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>triangle</dt>
 <dd><p>An object of class <code><a href="Triangles.html">triangle</a></code>.</p></dd>
-<dt>var.power</dt>
+
+  <dt>var.power</dt>
 <dd><p>The index (p) of the power variance function \(V(\mu)=\mu^p\). 
     Default to <code>p = 1</code>, which is the over-dispersed Poisson model. 
     If <code>NULL</code>, it will be assumed to be in <code>(1, 2)</code> and 
     estimated using the <code>cplm</code> package.  
     See <code><a href="https://rdrr.io/pkg/statmod/man/tweedie.html" class="external-link">tweedie</a></code>.</p></dd>
-<dt>link.power</dt>
+
+  <dt>link.power</dt>
 <dd><p>The index of power link function. The default <code>link.power = 0</code> 
   produces a log link. See <code><a href="https://rdrr.io/pkg/statmod/man/tweedie.html" class="external-link">tweedie</a></code>.</p></dd>
-<dt>design.type</dt>
+
+  <dt>design.type</dt>
 <dd><p>It's a 3 dimension array that specifies the design matrix underlying 
   the GLM. The dimensions represent respectively: origin period, 
   development and calendar period. Accepted values are: <code>0</code> (not   
@@ -96,58 +99,72 @@ framework. Finally, it allows the user to validate the model error while changin
   variable). Default to <code>c(1,1,0)</code>, which is the common 
   specification in actuarial literature (origin and development period 
   as factors, calendar period not modelled). If a parameter for the calendar period is specified,       a linear regression on the log CY parameter is fitted to estimate future values, thus is recommended to validate them running a plot of the gamma values (see output <code>gamma_y</code>) .</p></dd>
-<dt>rereserving</dt>
+
+  <dt>rereserving</dt>
 <dd><p>Boolean, if <code>TRUE</code> the one year risk view loss reserve 
   distribution is derived. Default to <code>FALSE</code>. Note, the runtime 
   can materially increase if set to <code>TRUE</code>.</p></dd>
-<dt>cum</dt>
+
+  <dt>cum</dt>
 <dd><p>Boolean, indicating whether the input triangle is
   cumulative or incremental along the development period. 
   If <code>TRUE</code>, then
   <code>triangle</code> is assumed to be on the cumulative scale, and it will
   be converted to incremental losses internally before a GLM is fitted.</p></dd>
-<dt>exposure</dt>
+
+  <dt>exposure</dt>
 <dd><p>Boolean, if <code>TRUE</code> the <code>exposure</code> defined in the 
   <code><a href="Triangles.html">triangle</a></code> object is specified as <code>offset</code> in the GLM 
   model specification. Default to <code>FALSE</code>.</p></dd>
-<dt>bootstrap</dt>
+
+  <dt>bootstrap</dt>
 <dd><p>Integer, it specifies the type of bootstrap for parameter error.
   Accepted values are: <code>0</code> (disabled), <code>1</code> (parametric), 
   <code>2</code> (semi-parametric). Default to <code>1</code>.</p></dd>
-<dt>boot.adj</dt>
+
+  <dt>boot.adj</dt>
 <dd><p>Integer, it specified the methodology when using semi-parametric 
   bootstrapping. Accepted values are: <code>0</code> (cycles until all the 
   values of the pseudo-triangle are &gt;= 0), <code>1</code> (overwrite negative 
   values to 0.01). Default to <code>0</code>. Note, runtime can materially 
   increase when set to  <code>0</code>, as it could struggle to find pseudo-triangles &gt;= 0)</p></dd>
-<dt>nsim</dt>
+
+  <dt>nsim</dt>
 <dd><p>Integer, number of simulations to derive the loss reserve distribution.   
   Default to <code>1000</code>. Note, high num of simulations could materially 
   increase runtime, in particular if a re-reserving algorithm is used 
   as well.</p></dd>
-<dt>proc.err</dt>
+
+  <dt>proc.err</dt>
 <dd><p>Boolean, if <code>TRUE</code> a process error (coherent with the specified 
   model) is added to the forecasted distribution. Default to <code>TRUE</code>.</p></dd>
-<dt>p.optim</dt>
+
+  <dt>p.optim</dt>
 <dd><p>Boolean, if <code>TRUE</code> the model estimates the MLE for the Tweedie's 
   <code>p</code> parameter. Default to <code>FALSE</code>. Recommended to use to validate the Tweedie's     <code>p</code> parameter.</p></dd>
-<dt>p.check</dt>
+
+  <dt>p.check</dt>
 <dd><p>If <code>p.optim=TRUE</code>, a vector of <code>p</code> values for consideration. The values must all be larger than one (if the response variable has exact zeros, the values must all be between one and two). Default to <code>c(0,seq(1.1,2.1,by=0.1),3)</code>. As fitting the Tweedie p-value isn't a straightforward process, please refer to <code>tweedie.profile</code>, <code>p.vec</code> argument.</p></dd>
+
+
 <dt>progressBar</dt>
 <dd><p>Boolean, if <code>TRUE</code> a progress bar will be shown in the console to 
   give an indication of bootstrap progress.</p></dd>
-<dt>...</dt>
+
+  <dt>...</dt>
 <dd><p>Arguments to be passed onto the function <code><a href="https://rdrr.io/r/stats/glm.html" class="external-link">glm</a></code> or 
   <code>cpglm</code> such as <code>contrasts</code> or <code>control</code>. It is 
   important that <code>offset</code> and <code>weight</code> should not be specified. 
   Otherwise, an error will be reported and the program will quit.</p></dd>
+
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     <p>The output is an object of class <code>"glm"</code> that has the following components:</p>
 <dl><dt>call</dt>
 <dd><p>the matched call.</p></dd>
-<dt>summary</dt>
+
+  <dt>summary</dt>
 <dd><p>A data frame containing the predicted loss reserve 
   statistics. The following items are displayed:</p><ul><li><p><code>Latest</code>: Latest paid</p></li>
 <li><p><code>Det.Reserve</code>: Deterministic reserve, i.e. the MLE GLM 
@@ -178,26 +195,35 @@ framework. Finally, it allows the user to validate the model error while changin
 <li><p><code>Emergence.Pattern</code>: It's the emergence pattern defined 
       as <code>Prediction.Error_1yr/Prediction.Error</code>.</p></li>
 </ul><p></p></dd>
-<dt>Triangle</dt>
+
+  <dt>Triangle</dt>
 <dd><p>The input triangle.</p></dd>
-<dt>FullTriangle</dt>
+
+  <dt>FullTriangle</dt>
 <dd><p>The completed triangle, where empty cells in the 
   original triangle are filled with model predictions.</p></dd>
-<dt>model</dt>
+
+  <dt>model</dt>
 <dd><p>The fitted GLM, a class of <code>glm</code> or <code>cpglm</code>. 
   It is most convenient to work with this component when model fit 
   information is wanted.</p></dd>
-<dt>scale</dt>
+
+  
+  <dt>scale</dt>
 <dd><p>The dispersion parameter phi</p></dd>
-<dt>bias</dt>
+
+  <dt>bias</dt>
 <dd><p>The model bias, defined as <code>bias&lt;-sqrt(n/d.f)</code></p></dd>
-<dt>GLMReserve</dt>
+
+  <dt>GLMReserve</dt>
 <dd><p>Deterministic reserve, i.e. the MLE GLM estimate 
   of the Reserve</p></dd>
-<dt>gamma_y</dt>
+
+  <dt>gamma_y</dt>
 <dd><p>When the calendar year is used, it displays the observed 
   and fitted calendar year (usually called "gamma"") factors.</p></dd>
-<dt>res.diag</dt>
+
+  <dt>res.diag</dt>
 <dd><p>It's a data frame for residual diagnostics. It 
   contains:</p><ul><li><p><code>unscaled</code>: The GLM Pearson residuals.</p></li>
 <li><p><code>unscaled.biasadj</code>: The GLM Person residuals adjusted by 
@@ -210,12 +236,15 @@ framework. Finally, it allows the user to validate the model error while changin
 <li><p><code>origin</code>: Origin year.</p></li>
 <li><p><code>cy</code>: Calendar year.</p></li>
 </ul><p></p></dd>
+
 </dl><p>[If <code>boostrap&gt;1</code>]</p>
 <dl><dt>distr.res_ult</dt>
 <dd><p>The full distribution "Ultimate View"</p></dd>
+
 </dl><p>[If <code>rereserve=TRUE</code>]</p>
 <dl><dt>distr.res_1yr</dt>
 <dd><p>The full distribution "1yr View"</p></dd>
+
 </dl></div>
     <div class="section level2">
     <h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a></h2>
@@ -322,7 +351,7 @@ B.A.J. 4, IV. 903-923. 1998</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.</p>
 </div>
 
     </footer></div>

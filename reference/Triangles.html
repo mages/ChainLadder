@@ -92,44 +92,63 @@ as.data.frame turns a triangle into a data frame."><meta property="og:image" con
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>Triangle</dt>
 <dd><p>a triangle</p></dd>
-<dt>bycol</dt>
+
+  <dt>bycol</dt>
 <dd><p>logical. If <code>FALSE</code> (the default) the triangle is filled by
     rows, otherwise the triangle is filled by columns.</p></dd>
-<dt>origin</dt>
+
+  <dt>origin</dt>
 <dd><p>name of the origin period, default is <code>"origin"</code>.</p></dd>
-<dt>dev</dt>
+
+  <dt>dev</dt>
 <dd><p>name of the development period, default is <code>"dev"</code>.</p></dd>
-<dt>value</dt>
+
+  <dt>value</dt>
 <dd><p>name of the value, default is <code>"value"</code>.</p></dd>
-<dt>row.names</dt>
+
+  <dt>row.names</dt>
 <dd><p>default is set to <code>NULL</code> and will merge origin
     and dev. period to create row names.</p></dd>
-<dt>lob</dt>
+
+  <dt>lob</dt>
 <dd><p>default is <code>NULL</code>. The idea is to use <code>lob</code> (line
     of business) as an additional column to label a triangle in a long format, see the
     examples for more details.</p></dd>
-<dt>optional</dt>
+
+  <dt>optional</dt>
 <dd><p>not used</p></dd>
-<dt>na.rm</dt>
+
+  <dt>na.rm</dt>
 <dd><p>logical. Remove missing values?</p></dd>
-<dt>x</dt>
+
+  <dt>x</dt>
 <dd><p>a matrix of class 'triangle'</p></dd>
-</dl><p><!-- %  \item{data}{a \code{data.frame} or a \code{data.frame} with --><!-- %    additional class attribute 'triangle' columns for origin and --><!-- %    development periods and a value column,e.g claims} --></p>
+
+  </dl><p><!-- %  \item{data}{a \code{data.frame} or a \code{data.frame} with --></p>
+<p></p>
+<p><!-- %    additional class attribute 'triangle' columns for origin and --></p>
+<p></p>
+<p><!-- %    development periods and a value column,e.g claims} --></p>
 <dl><dt>xlab</dt>
 <dd><p>a label for the x axis, defaults to 'dev. period'</p></dd>
-<dt>ylab</dt>
+
+  <dt>ylab</dt>
 <dd><p>a label for the y axis, defaults to NULL</p></dd>
-<dt>lattice</dt>
+
+  <dt>lattice</dt>
 <dd><p>logical. If <code>FALSE</code> the function
     <code><a href="https://rdrr.io/r/graphics/matplot.html" class="external-link">matplot</a></code> is used to plot the developments of the
     triangle in one graph, otherwise the <code>xyplot</code> function
     of the lattice package is used, to plot developments of each origin
     period in a different panel.</p></dd>
-<dt>type</dt>
+
+  <dt>type</dt>
 <dd><p>type, see <code><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot.default</a></code></p></dd>
-<dt>...</dt>
+
+  <dt>...</dt>
 <dd><p>vectors of data in <code>triangle</code>, see details;
     arguments to be passed to other methods everywhere else.</p></dd>
+
 </dl></div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
@@ -313,7 +332,7 @@ converted into numeric.</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.</p>
 </div>
 
     </footer></div>

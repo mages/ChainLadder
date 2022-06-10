@@ -70,7 +70,8 @@ as the "age" of the losses in that column.
 The row names of the matrix should uniquely define the year of
 origin of the losses in that row.
 Losses may be inception-to-date or incremental.</p></dd>
-<dt>Premium</dt>
+
+  <dt>Premium</dt>
 <dd><p>The vector of premium to use in the method.
 If a scalar (vector of length 1) is given,
 that value will be used for all origin periods.
@@ -78,37 +79,44 @@ that value will be used for all origin periods.
 If the length is greater than 1 but 
 does not equal the number of rows of <code>Triangle</code>
 the <code>Premium</code> values will be "recycled" with a warning.</p></dd>
-<dt>cumulative</dt>
+
+  <dt>cumulative</dt>
 <dd><p>If <code>TRUE</code> (the default), values in <code>Triangle</code> are
 inception to date.
 If <code>FALSE</code>, <code>Triangle</code> holds incremental losses.</p></dd>
-<dt>maxage</dt>
+
+  <dt>maxage</dt>
 <dd><p>The "ultimate" age to which losses should be projected.</p></dd>
-<dt>adol</dt>
+
+  <dt>adol</dt>
 <dd><p>If <code>TRUE</code> (the default), the growth function should be applied
 to the length of time from the average date of loss ("adol")
 of losses in the origin year.
 If <code>FALSE</code>, the growth function should be applied
 to the length of time since the beginning of the origin year.</p></dd>
-<dt>adol.age</dt>
+
+  <dt>adol.age</dt>
 <dd><p>Only pertinent if <code>adol</code> is <code>TRUE</code>.
 The age of the average date of losses within an origin period
 in the same units as the "ages" of the <code>Triangle</code> matrix.
 If <code>NULL</code> (the default) it will be assumed to be half the width
 of an origin period (which would be the case if losses can be assumed
 to occur uniformly over an origin period).</p></dd>
-<dt>origin.width</dt>
+
+  <dt>origin.width</dt>
 <dd><p>Only pertinent if <code>adol</code> is <code>TRUE</code>.
 The width of an origin period
 in the same units as the "ages" of the <code>Triangle</code> matrix.
 If <code>NULL</code> (the default) it will be assumed to be the mean difference
 in the "ages" of the triangle, 
 with a warning if not all differences are equal.</p></dd>
-<dt>G</dt>
+
+  <dt>G</dt>
 <dd><p>A <code>character</code> scalar identifying the "growth function."
 The two growth functions defined at this time are "loglogistic"
 (the default)
 and "weibull".</p></dd>
+
 </dl></div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
@@ -146,97 +154,133 @@ reasonableness of the model relative to the actual data
     </div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>A <code>list</code> of class "ClarkLDF" with the components listed below.
+    
+
+<p>A <code>list</code> of class "ClarkLDF" with the components listed below.
 ("Key" to naming convention: all caps represent parameters;
 mixed case represent origin-level amounts;
 all-lower-case represent observation-level (origin, development age) results.)</p>
 <dl><dt>method</dt>
 <dd><p>"CapeCod"</p></dd>
-<dt>growthFunction</dt>
+
+    <dt>growthFunction</dt>
 <dd><p>name of the growth function</p></dd>
-<dt>Origin</dt>
+
+    <dt>Origin</dt>
 <dd><p>names of the rows of the triangle</p></dd>
-<dt>Premium</dt>
+
+    <dt>Premium</dt>
 <dd><p>Premium amount for each origin year</p></dd>
-<dt>CurrentValue</dt>
+
+    <dt>CurrentValue</dt>
 <dd><p>the most mature value for each row</p></dd>
-<dt>CurrentAge</dt>
+
+    <dt>CurrentAge</dt>
 <dd><p>the most mature "age" for each row</p></dd>
-<dt>CurrentAge.used</dt>
+
+    <dt>CurrentAge.used</dt>
 <dd><p>the most mature age used; differs from "CurrentAge"
         when adol=TRUE</p></dd>
-<dt>MAXAGE</dt>
+
+    <dt>MAXAGE</dt>
 <dd><p>same as 'maxage' argument</p></dd>
-<dt>MAXAGE.USED</dt>
+
+    <dt>MAXAGE.USED</dt>
 <dd><p>the maximum age for development 
         from the average date of loss; 
         differs from MAXAGE when adol=TRUE</p></dd>
-<dt>FutureValue</dt>
+
+    <dt>FutureValue</dt>
 <dd><p>the projected loss amounts ("Reserves" in Clark's paper)</p></dd>
-<dt>ProcessSE</dt>
+
+    <dt>ProcessSE</dt>
 <dd><p>the process standard error of the FutureValue</p></dd>
-<dt>ParameterSE</dt>
+
+    <dt>ParameterSE</dt>
 <dd><p>the parameter standard error of the FutureValue</p></dd>
-<dt>StdError</dt>
+
+    <dt>StdError</dt>
 <dd><p>the total standard error (process + parameter) 
         of the FutureValue</p></dd>
-<dt>Total</dt>
+
+    <dt>Total</dt>
 <dd><p>a <code>list</code> with amounts that appear on the "Total" row
         for components "Origin" (="Total"), "CurrentValue", "FutureValue",
         "ProcessSE", "ParameterSE", and "StdError"</p></dd>
-<dt>PAR</dt>
+
+    <dt>PAR</dt>
 <dd><p>the estimated parameters</p></dd>
-<dt>ELR</dt>
+
+    <dt>ELR</dt>
 <dd><p>the estimated loss ratio parameter</p></dd>
-<dt>THETAG</dt>
+
+    <dt>THETAG</dt>
 <dd><p>the estimated parameters of the growth function</p></dd>
-<dt>GrowthFunction</dt>
+
+    <dt>GrowthFunction</dt>
 <dd><p>value of the growth function as of the 
         CurrentAge.used</p></dd>
-<dt>GrowthFunctionMAXAGE</dt>
+
+    <dt>GrowthFunctionMAXAGE</dt>
 <dd><p>value of the growth function as of the
         MAXAGE.used</p></dd>
-<dt>FutureGrowthFactor</dt>
+
+    <dt>FutureGrowthFactor</dt>
 <dd><p>the ("unreported" or "unpaid") percent of
         ultimate loss that has yet to be recorded</p></dd>
-<dt>SIGMA2</dt>
+
+    <dt>SIGMA2</dt>
 <dd><p>the estimate of the sigma^2 parameter</p></dd>
-<dt>Ldf</dt>
+
+    <dt>Ldf</dt>
 <dd><p>the "to-ultimate" loss development factor
         (sometimes called the "cumulative development factor")
         as defined in Clark's paper for each origin year</p></dd>
-<dt>LdfMAXAGE</dt>
+
+    <dt>LdfMAXAGE</dt>
 <dd><p>the "to-ultimate" loss development factor as of 
         the maximum age used in the model</p></dd>
-<dt>TruncatedLdf</dt>
+
+    <dt>TruncatedLdf</dt>
 <dd><p>the "truncated" loss development factor for developing
         the current diagonal to
         the maximum age used in the model</p></dd>
-<dt>FutureValueGradient</dt>
+
+    <dt>FutureValueGradient</dt>
 <dd><p>the gradient of the FutureValue function</p></dd>
-<dt>origin</dt>
+
+    <dt>origin</dt>
 <dd><p>the origin year corresponding to each observed value of incremental loss</p></dd>
-<dt>age</dt>
+
+    <dt>age</dt>
 <dd><p>the age of each observed value of incremental loss</p></dd>
-<dt>fitted</dt>
+
+    <dt>fitted</dt>
 <dd><p>the expected value of each observed value of incremental loss 
         (the "mu's" of Clark's paper)</p></dd>
-<dt>residuals</dt>
+
+    <dt>residuals</dt>
 <dd><p>the actual minus fitted value for 
         each observed incremental loss</p></dd>
-<dt>stdresid</dt>
+
+    <dt>stdresid</dt>
 <dd><p>the standardized residuals for 
         each observed incremental loss
         (= residuals/sqrt(sigma2*fitted), 
         referred to as "normalized residuals" in Clark's paper; see p. 62)</p></dd>
-<dt>FI</dt>
+
+    <dt>FI</dt>
 <dd><p>the "Fisher Information" matrix as defined in Clark's paper
     (i.e., without the sigma^2 value)</p></dd>
-<dt>value</dt>
+
+    <dt>value</dt>
 <dd><p>the value of the loglikelihood function at the solution point</p></dd>
-<dt>counts</dt>
+
+    <dt>counts</dt>
 <dd><p>the number of calls to the loglikelihood function
         and its gradient function when numerical convergence was achieved</p></dd>
+
+
 </dl></div>
     <div class="section level2">
     <h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a></h2>
@@ -400,7 +444,7 @@ all-lower-case represent observation-level (origin, development age) results.)</
 </div>
 
 <div class="pkgdown-footer-right">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.</p>
 </div>
 
     </footer></div>

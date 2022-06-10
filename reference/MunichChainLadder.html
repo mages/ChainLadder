@@ -74,70 +74,95 @@
 <dd><p>cumulative paid claims triangle. Assume columns are the development
     period, use transpose otherwise. A (mxn)-matrix \(P_{ik}\) 
     which is filled for \(k \leq n+1-i; i=1,\ldots,m; m\geq n\)</p></dd>
-<dt>Incurred</dt>
+
+  <dt>Incurred</dt>
 <dd><p>cumulative incurred claims triangle. Assume columns are the development
     period, use transpose otherwise. A (mxn)-matrix
     \(I_{ik}\) which is filled for \(k \leq n+1-i; i=1,\ldots,m,
       m\geq n \)</p></dd>
-<dt>est.sigmaP</dt>
+
+  <dt>est.sigmaP</dt>
 <dd><p>defines how \(sigma_{n-1}\) for the Paid triangle
     is estimated, see <code>est.sigma</code> in <code><a href="MackChainLadder.html">MackChainLadder</a></code> for
     more details, as <code>est.sigmaP</code> gets passed on to
     <code>MackChainLadder</code></p></dd>
-<dt>est.sigmaI</dt>
+
+  <dt>est.sigmaI</dt>
 <dd><p>defines how \(sigma_{n-1}\) for the Incurred triangle
     is estimated, see <code>est.sigma</code> in <code><a href="MackChainLadder.html">MackChainLadder</a></code> for
     more details, as <code>est.sigmaI</code> is passed on to
     <code>MackChainLadder</code></p></dd>
-<dt>tailP</dt>
+
+  <dt>tailP</dt>
 <dd><p>defines how the tail of the <code>Paid</code> triangle is estimated and
     is passed on to <code><a href="MackChainLadder.html">MackChainLadder</a></code>, see <code>tail</code> just there.</p></dd>
-<dt>tailI</dt>
+
+  <dt>tailI</dt>
 <dd><p>defines how the tail of the <code>Incurred</code> triangle is estimated and
     is passed on to <code><a href="MackChainLadder.html">MackChainLadder</a></code>, see <code>tail</code> just there.</p></dd>
+
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>MunichChainLadder returns a list with the following elements</p>
+    
+
+<p>MunichChainLadder returns a list with the following elements</p>
 <dl><dt>call</dt>
 <dd><p>matched call</p></dd>
-<dt>Paid</dt>
+ 
+  <dt>Paid</dt>
 <dd><p>input paid triangle</p></dd>
-<dt>Incurred</dt>
+
+  <dt>Incurred</dt>
 <dd><p>input incurred triangle</p></dd>
-<dt>MCLPaid</dt>
+
+  <dt>MCLPaid</dt>
 <dd><p>Munich-chain-ladder forecasted full triangle on paid data</p></dd>
-<dt>MCLIncurred</dt>
+
+  <dt>MCLIncurred</dt>
 <dd><p>Munich-chain-ladder forecasted full triangle on incurred data</p></dd>
-<dt>MackPaid</dt>
+
+  <dt>MackPaid</dt>
 <dd><p>Mack-chain-ladder output of the paid triangle</p></dd>
-<dt>MackIncurred</dt>
+
+  <dt>MackIncurred</dt>
 <dd><p>Mack-chain-ladder output of the incurred triangle</p></dd>
-<dt>PaidResiduals</dt>
+
+  <dt>PaidResiduals</dt>
 <dd><p>paid residuals</p></dd>
-<dt>IncurredResiduals</dt>
+
+  <dt>IncurredResiduals</dt>
 <dd><p>incurred residuals</p></dd>
-<dt>QResiduals</dt>
+
+  <dt>QResiduals</dt>
 <dd><p>paid/incurred residuals</p></dd>
-<dt>QinverseResiduals</dt>
+
+  <dt>QinverseResiduals</dt>
 <dd><p>incurred/paid residuals</p></dd>
-<dt>lambdaP</dt>
+
+  <dt>lambdaP</dt>
 <dd><p>dependency coefficient between paid chain-ladder
     age-to-age factors and
     incurred/paid age-to-age factors</p></dd>
-<dt>lambdaI</dt>
+
+  <dt>lambdaI</dt>
 <dd><p>dependency coefficient between incurred chain-ladder
     ratios and paid/incurred ratios</p></dd>
-<dt>qinverse.f</dt>
+
+  <dt>qinverse.f</dt>
 <dd><p>chain-ladder-link age-to-age factors of the incurred/paid triangle</p></dd>
-<dt>rhoP.sigma</dt>
+
+  <dt>rhoP.sigma</dt>
 <dd><p>estimated conditional deviation around the
     paid/incurred age-to-age factors</p></dd>
-<dt>q.f</dt>
+
+  <dt>q.f</dt>
 <dd><p>chain-ladder age-to-age factors of the paid/incurred triangle</p></dd>
-<dt>rhoI.sigma</dt>
+
+  <dt>rhoI.sigma</dt>
 <dd><p>estimated conditional deviation around the
     incurred/paid age-to-age factors</p></dd>
+
 </dl></div>
     <div class="section level2">
     <h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a></h2>
@@ -392,7 +417,7 @@
 </div>
 
 <div class="pkgdown-footer-right">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.</p>
 </div>
 
     </footer></div>

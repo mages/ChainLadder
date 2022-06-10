@@ -66,26 +66,40 @@
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>Triangles</dt>
 <dd><p>a list of cumulative claims triangles of the same dimensions.</p></dd>
-<dt>fit.method</dt>
+
+  <dt>fit.method</dt>
 <dd><p>the method used to fit the multivariate regression in each development period. The default is <code>"SUR"</code> - seemingly unrelated regressions. When <code>"OLS"</code> (Ordinary Least Squares) is used, this is the same as developing each triangle separately.</p></dd>
-<dt>delta</dt>
+ 
+  <dt>delta</dt>
 <dd><p>parameter for controlling weights. It is used to determine the covariance structure \(D(Y_{i,k}^{\delta/2})\Sigma_k D(Y_{i,k}^{\delta/2})\). The default value <code>1</code> means that the variance is proportional to the cumulative loss from the previous period.</p></dd>
-<dt>int</dt>
+   
+  <dt>int</dt>
 <dd><p>a numeric vector that indicates which development periods have intercepts specified. This only takes effect for <code>model = "GMCL"</code>. The default <code>NULL</code> means that no intercepts are specified.</p></dd>
-<dt>restrict.regMat</dt>
+   
+  <dt>restrict.regMat</dt>
 <dd><p>a list of matrix specifying parameter restriction matrix for each period. This is only used for <code>model = "GMCL"</code>. The default value <code>NULL</code> means no restriction is imposed on the development matrix. For example, if there are 3 triangles, there will be 9 parameters in the development matrix for each period if <code>restrict.regMat = NULL</code>. See <code>systemfit</code> for how to specify the appropriate parameter constraints.</p></dd>
-<dt>extrap</dt>
+ 
+  <dt>extrap</dt>
 <dd><p>a logical value indicating whether to use Mack's extrapolation method for the last period to get the residual variance  estimation. It only takes effect for  <code>model = "MCL"</code>. If the data are  trapezoids, it is set to be <code>FALSE</code> automatically and a warning message is given.</p></dd>
-<dt>mse.method</dt>
+
+  <dt>mse.method</dt>
 <dd><p>method to estimate the mean square error. It can be either <code>"Mack"</code> or <code>"Independence"</code>, which are  the multivariate generalization of Mack's formulas and the conditional re-sampling approach, respectively.</p></dd>
-<dt>model</dt>
+
+  <dt>model</dt>
 <dd><p>the structure of the model to be fitted. It is either <code>"MCL"</code> or <code>"GMCL"</code>. See details below.</p></dd>
-<dt>last</dt>
+
+  
+  <dt>last</dt>
 <dd><p>an integer. The <code>MultiChainLadder2</code> function splits the triangles into 2 parts internally (see details below), and the <code>last</code> argument indicates how many of the development periods in the tail go into the second part of the split. The default is <code>3</code>.</p></dd>
-<dt>type</dt>
+
+  
+  <dt>type</dt>
 <dd><p>the type of the model structure to be specified for the first part of the split model in <code>MultiChainLadder2</code>. <code>"MCL"</code>- the multivariate chain-ladder with diagonal development matrix; <code>"MCL+int"</code>- the multivariate chain-ladder with additional intercepts; <code>"GMCL-int"</code>- the general multivariate chain-ladder without intercepts; and <code>"GMCL"</code> - the full general multivariate chain-ladder with intercepts and non-diagonal development matrix.</p></dd>
-<dt>...</dt>
+
+  <dt>...</dt>
 <dd><p>arguments passed to <code>systemfit</code>.</p></dd>
+
+
 </dl></div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
@@ -113,39 +127,56 @@ $$\epsilon_{i,k} \, \mbox{are symmetrically distributed}.$$</p>
     </div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p><code>MultiChainLadder</code> returns an object of class <code>MultiChainLadder</code>  with the following slots:</p>
+    <p></p>
+<p><code>MultiChainLadder</code> returns an object of class <code>MultiChainLadder</code>  with the following slots:</p>
 <dl><dt>model</dt>
 <dd><p>the model structure used, either <code>"MCL"</code> or <code>"GMCL"</code></p></dd>
-<dt>Triangles</dt>
+
+  <dt>Triangles</dt>
 <dd><p>input triangles of cumulative claims that are converted to class <code>triangles</code> internally.</p></dd>
-<dt>models</dt>
+
+  <dt>models</dt>
 <dd><p>fitted models for each development period. This is the output from the call of <code>systemfit</code>.</p></dd>
-<dt>coefficients</dt>
+
+  <dt>coefficients</dt>
 <dd><p>estimated regression coefficients or development parameters. They are put into the matrix format for the GMCL model.</p></dd>
-<dt>coefCov</dt>
+
+  <dt>coefCov</dt>
 <dd><p>estimated variance-covariance matrix for the regression coefficients.</p></dd>
-<dt>residCov</dt>
+
+  <dt>residCov</dt>
 <dd><p>estimated residual covariance matrix.</p></dd>
-<dt>fit.method</dt>
+
+  <dt>fit.method</dt>
 <dd><p>multivariate regression estimation method</p></dd>
-<dt>delta</dt>
+
+  <dt>delta</dt>
 <dd><p>the value of delta</p></dd>
-<dt>mse.ay</dt>
+
+  <dt>mse.ay</dt>
 <dd><p>mean square error matrix for each accident year</p></dd>
-<dt>mse.ay.est</dt>
+
+  <dt>mse.ay.est</dt>
 <dd><p>estimation error matrix for each accident year</p></dd>
-<dt>mse.ay.proc</dt>
+
+  <dt>mse.ay.proc</dt>
 <dd><p>process error matrix for each accident year</p></dd>
-<dt>mse.total</dt>
+
+  <dt>mse.total</dt>
 <dd><p>mean square error matrix for all accident years combined</p></dd>
-<dt>mse.total.est</dt>
+
+  <dt>mse.total.est</dt>
 <dd><p>estimation error matrix for all accident years combined</p></dd>
-<dt>mse.total.proc</dt>
+
+  <dt>mse.total.proc</dt>
 <dd><p>process error matrix for all accident years combined</p></dd>
-<dt>FullTriangles</dt>
+
+  <dt>FullTriangles</dt>
 <dd><p>the forecasted full triangles of class <code>triangles</code></p></dd>
-<dt>int</dt>
+
+  <dt>int</dt>
 <dd><p>intercept indicators</p></dd>
+
 </dl></div>
     <div class="section level2">
     <h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a></h2>
@@ -362,7 +393,7 @@ $$\epsilon_{i,k} \, \mbox{are symmetrically distributed}.$$</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.</p>
 </div>
 
     </footer></div>

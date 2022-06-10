@@ -68,14 +68,16 @@ cumulative run-off triangle. This function is used by Mack- and MunichChainLadde
     <code><a href="qpaid.html">qpaid</a></code> for how to use (mxn)-development triangles with
     m&lt;n, say higher development period frequency (e.g quarterly) than
     origin period frequency (e.g annual).</p></dd>
-<dt>weights</dt>
+
+  <dt>weights</dt>
 <dd><p>weights. Default: 1, which sets the weights for all
     triangle entries to 1. Otherwise specify weights as a matrix of the same
     dimension as <code>Triangle</code> with all weight entries in [0; 1], where entry
     \(w_{i,k}\) corresponds to the point \(C_{i,k+1}/C_{i,k}\). 
     Hence, any entry set to 0 or <code>NA</code> eliminates that age-to-age factor 
     from inclusion in the model. See also 'Details'.</p></dd>
-<dt>delta</dt>
+
+  <dt>delta</dt>
 <dd><p>'weighting' parameters. Default: 1;
     delta=1 gives the historical chain-ladder age-to-age factors, 
     delta=2 gives the straight average of the
@@ -84,6 +86,7 @@ cumulative run-off triangle. This function is used by Mack- and MunichChainLadde
     intercept 0, see Barnett &amp; Zehnwirth (2000).</p>    
 <p>Please note that <code><a href="MackChainLadder.html">MackChainLadder</a></code> uses the argument <code>alpha</code>, 
     with <code>alpha = 2 - delta</code>, following the original paper Mack (1999)</p></dd>
+
 </dl></div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
@@ -110,15 +113,21 @@ three different regression approaches: <code>lm(y~x + 0, weights=weights/x^delta
     </div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>chainladder returns a list with the following elements:</p>
+    
+
+<p>chainladder returns a list with the following elements:</p>
 <dl><dt>Models</dt>
 <dd><p>linear regression models for each development period</p></dd>
-<dt>Triangle</dt>
+
+  <dt>Triangle</dt>
 <dd><p>input triangle of cumulative claims</p></dd>
-<dt>weights</dt>
+
+  <dt>weights</dt>
 <dd><p>weights used</p></dd>
-<dt>delta</dt>
+
+  <dt>delta</dt>
 <dd><p>deltas used</p></dd>
+
 </dl></div>
     <div class="section level2">
     <h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a></h2>
@@ -376,7 +385,7 @@ three different regression approaches: <code>lm(y~x + 0, weights=weights/x^delta
 </div>
 
 <div class="pkgdown-footer-right">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.</p>
 </div>
 
     </footer></div>

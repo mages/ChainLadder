@@ -69,8 +69,10 @@
     <dl><dt>object</dt>
 <dd><p>object resulting from a run of the <code><a href="ClarkLDF.html">ClarkLDF</a></code> 
         or <code><a href="ClarkCapeCod.html">ClarkCapeCod</a></code> functions.</p></dd>
-<dt>...</dt>
+
+    <dt>...</dt>
 <dd><p>not currently used</p></dd>
+
 </dl></div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
@@ -81,8 +83,15 @@ typical "Bornhuetter-Ferguson-type" exhibit.</p>
     </div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p><code>summary.ClarkLDF</code> and <code>summary.ClarkCapeCod</code> return 
-<code>data.frame</code>s whose columns are objects of the appropriate <code>mode</code>        (i.e., <code>character</code> for "Origin", otherwise <code>numeric</code>)</p>
+    <p></p>
+<p><code>summary.ClarkLDF</code> and <code>summary.ClarkCapeCod</code> return</p>
+<p></p>
+<p><code>data.frame</code>s whose columns are objects of the appropriate <code>mode</code></p>
+
+
+<p>(i.e., <code>character</code> for "Origin", otherwise <code>numeric</code>)</p>
+
+
     </div>
     <div class="section level2">
     <h2 id="author">Author<a class="anchor" aria-label="anchor" href="#author"></a></h2>
@@ -133,7 +142,7 @@ typical "Bornhuetter-Ferguson-type" exhibit.</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.</p>
 </div>
 
     </footer></div>

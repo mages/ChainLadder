@@ -78,20 +78,24 @@ CLFMdelta(Triangle, selected, tolerance = .0005, ...)</code></pre></div>
     <code><a href="qpaid.html">qpaid</a></code> for how to use (mxn)-development triangles with
     m&lt;n, say higher development period frequency (e.g quarterly) than
     origin period frequency (e.g accident years).</p></dd>
-<dt>selected</dt>
+
+  <dt>selected</dt>
 <dd><p>a vector of selected age-to-age factors or "link ratios",
     one for each development period of 'Triangle'</p></dd>
-<dt>tolerance</dt>
+
+  <dt>tolerance</dt>
 <dd><p>a 'tolerance' parameters. Default: .0005;
     for each element of 'selected' 
     a solution 'delta' will be found -- if possible --
     so that the chainladder model indexed by
     'delta' results in a multiplicative coefficient within 'tolerance' 
     of the 'selected' factor.</p></dd>
+
 </dl><p><!-- %  \item{step.a}{the starting width of the search intervals} --></p>
 <dl><dt>...</dt>
 <dd><p>not in use</p></dd>
-</dl></div>
+
+  </dl></div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
     
@@ -134,8 +138,14 @@ by convention,
     </div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>A vector of real numbers, say delta0, such that 
-<code>coef(chainladder(Triangle, delta = delta0))</code> = <code>selected</code>  within <code>tolerance</code>.
+    
+
+<p>A vector of real numbers, say delta0, such that</p>
+<p></p>
+<p><code>coef(chainladder(Triangle, delta = delta0))</code> = <code>selected</code></p>
+
+
+<p>within <code>tolerance</code>.
   A <code>logical</code> attribute 'foundSolution' indicates if a solution was
   found for each element of <code>selected</code>.</p>
     </div>
@@ -198,7 +208,7 @@ by convention,
 </div>
 
 <div class="pkgdown-footer-right">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.</p>
 </div>
 
     </footer></div>

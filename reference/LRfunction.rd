@@ -61,11 +61,14 @@
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>x</dt>
 <dd><p>beginning value of loss during a development period</p></dd>
-<dt>y</dt>
+
+   <dt>y</dt>
 <dd><p>ending value of loss during a development period</p></dd>
-<dt>delta</dt>
+
+  <dt>delta</dt>
 <dd><p>numeric</p></dd>
-</dl></div>
+
+  </dl></div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
     
@@ -76,7 +79,9 @@ See formula (5) in the References.</p>
     </div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>A vector of link ratios.</p>
+    
+
+<p>A vector of link ratios.</p>
     </div>
     <div class="section level2">
     <h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a></h2>
@@ -108,7 +113,7 @@ See formula (5) in the References.</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.</p>
 </div>
 
     </footer></div>

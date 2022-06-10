@@ -68,21 +68,25 @@ for an object of class <code>triangle</code>.</p>
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>Triangle</dt>
 <dd><p>a loss "triangle". Must be a <code>matrix</code>.</p></dd>
-<dt>NArow.rm</dt>
+
+    <dt>NArow.rm</dt>
 <dd><p><code>logical</code> indicating if 
         rows of age-to-age (ata) factors that are all <code>NA</code>
         should be removed.
         "All-NA" rows typically occur for the most recent origin year
         of a loss triangle.</p></dd>
-<dt>colname.sep</dt>
+
+    <dt>colname.sep</dt>
 <dd><p>a <code>character</code> indicating the separator
         character to place between the column names of <code>Triangle</code>
         that will be used to lable the columns of the resulting 
         matrix of ata factors</p></dd>
-<dt>colname.order</dt>
+
+    <dt>colname.order</dt>
 <dd><p>"ascending" indicates that the less mature
         age comes first in the column labels of the ata matrix</p></dd>
-</dl></div>
+
+    </dl></div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
     <p><code>ata</code> constructs a matrix of age-to-age (ata) factors resulting
@@ -92,7 +96,9 @@ Simple averages and volume weighted averages are saved as
     </div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>A <code>matrix</code> with "smpl" and "vwtd" attributes.</p>
+    
+
+<p>A <code>matrix</code> with "smpl" and "vwtd" attributes.</p>
     </div>
     <div class="section level2">
     <h2 id="author">Author<a class="anchor" aria-label="anchor" href="#author"></a></h2>
@@ -163,7 +169,7 @@ Simple averages and volume weighted averages are saved as
 </div>
 
 <div class="pkgdown-footer-right">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.</p>
 </div>
 
     </footer></div>

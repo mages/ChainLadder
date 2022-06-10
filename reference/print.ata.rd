@@ -65,16 +65,20 @@ of a call to the <code>ata</code> function.</p>
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>x</dt>
 <dd><p>object resulting from a call to the <code><a href="ata.html">ata</a></code> function</p></dd>
-<dt>...</dt>
+
+    <dt>...</dt>
 <dd><p>further arguments passed to <code>print</code></p></dd>
-</dl></div>
+
+    </dl></div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
     <p><code>print.ata</code> simply <code>print</code>s <code><a href="summary.ata.html">summary.ata</a></code>.</p>
     </div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>A <code>summary.ata</code> matrix, invisibly.</p>
+    
+
+<p>A <code>summary.ata</code> matrix, invisibly.</p>
     </div>
     <div class="section level2">
     <h2 id="author">Author<a class="anchor" aria-label="anchor" href="#author"></a></h2>
@@ -133,7 +137,7 @@ of a call to the <code>ata</code> function.</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.</p>
 </div>
 
     </footer></div>
