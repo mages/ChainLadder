@@ -43,7 +43,7 @@ MunichChainLadder <- function(Paid, Incurred, w=1
        
     MackPaid = MackChainLadder(Paid, weights = w, tail=tailP, est.sigma=est.sigmaP)
     MackIncurred = MackChainLadder(Incurred, weights = w, tail=tailI, est.sigma=est.sigmaI)
-
+    w <- checkWeights(w, Paid)
        
     myQModel <- vector("list", n)
     q.f <- rep(1,n)
