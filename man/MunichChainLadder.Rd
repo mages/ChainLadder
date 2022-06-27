@@ -12,7 +12,7 @@
 \usage{
 MunichChainLadder(Paid, Incurred, 
                   est.sigmaP = "log-linear", est.sigmaI = "log-linear", 
-                  tailP=FALSE, tailI=FALSE)
+                  tailP=FALSE, tailI=FALSE, weights=1)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -37,6 +37,10 @@ MunichChainLadder(Paid, Incurred,
     is passed on to \code{\link{MackChainLadder}}, see \code{tail} just there.}
   \item{tailI}{defines how the tail of the \code{Incurred} triangle is estimated and
     is passed on to \code{\link{MackChainLadder}}, see \code{tail} just there.}
+  \item{weights}{weights. Default: 1, which sets the weights for all triangle entries to 1. 
+                 Otherwise specify weights as a matrix of the same dimension as Triangle with all weight entries in [0; 1]. 
+                 Hence, any entry set to 0 or NA eliminates that age-to-age factor from inclusion in the model. See also 'Details' in MackChainladder function.
+                 The weight matrix is the same for Paid and Incurred.}
 }
 %\details{
 % 
