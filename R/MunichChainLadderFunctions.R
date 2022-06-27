@@ -42,8 +42,8 @@ MunichChainLadder <- function(Paid, Incurred,
     if(m > n)
       stop("MunichChainLadder does not support triangles with fewer development periods than origin periods.\n")
        
-    MackPaid = MackChainLadder(Paid, weights=w, tail=tailP, est.sigma=est.sigmaP)
-    MackIncurred = MackChainLadder(Incurred, weights=w, tail=tailI, est.sigma=est.sigmaI)
+    MackPaid = MackChainLadder(Paid, weights=weights, tail=tailP, est.sigma=est.sigmaP)
+    MackIncurred = MackChainLadder(Incurred, weights=weights, tail=tailI, est.sigma=est.sigmaI)
     weights <- checkWeights(weights, Paid)
        
     myQModel <- vector("list", n)
