@@ -26,11 +26,12 @@ getMCLResiduals <- function(res, n){
 ##############################################################################
 ## Munich Chain Ladder
 ##
-MunichChainLadder <- function(Paid, Incurred, w=1
+MunichChainLadder <- function(Paid, Incurred,
                               est.sigmaP="log-linear",
                               est.sigmaI="log-linear",
                               tailP=FALSE,
-                              tailI=FALSE){
+                              tailI=FALSE, 
+			      weights=1){
 
     if(!all(dim(Paid) == dim(Incurred)))
  	stop("Paid and Incurred triangle must have same dimension.\n")
@@ -43,7 +44,7 @@ MunichChainLadder <- function(Paid, Incurred, w=1
        
     MackPaid = MackChainLadder(Paid, weights=w, tail=tailP, est.sigma=est.sigmaP)
     MackIncurred = MackChainLadder(Incurred, weights=w, tail=tailI, est.sigma=est.sigmaI)
-    w <- checkWeights(w, Paid)
+    weights <- checkWeights(weights, Paid)
        
     myQModel <- vector("list", n)
     q.f <- rep(1,n)
@@ -51,7 +52,7 @@ MunichChainLadder <- function(Paid, Incurred, w=1
 
     for(s in c(1:n)){
  	myQModel[[s]] <- lm(Paid[1:(n-s+1),s] ~ Incurred[1:(n-s+1),s] + 0,
-                            weights=1/Incurred[1:(n-s+1),s]*w[1:(n - s + 1), s])
+                            weights=1/Incurred[1:(n-s+1),s]*weights[1:(n - s + 1), s])
 
         q.f[s] <- summary(myQModel[[s]])$coef[1]
 	rhoI.sigma[s] <- summary(myQModel[[s]])$sigma
@@ -64,7 +65,7 @@ MunichChainLadder <- function(Paid, Incurred, w=1
 
     for(s in c(1:n)){
         myQinverseModel[[s]] <- lm(Incurred[1:(n-s+1),s] ~ Paid[1:(n-s+1),s] + 0,
-                                   weights=1/Paid[1:(n-s+1),s]*w[1:(n - s + 1), s])
+                                   weights=1/Paid[1:(n-s+1),s]*weights[1:(n - s + 1), s])
 
 	qinverse.f[s] = summary(myQinverseModel[[s]])$coef[1]
 	rhoP.sigma[s] = summary(myQinverseModel[[s]])$sigma
@@ -77,23 +78,23 @@ MunichChainLadder <- function(Paid, Incurred, w=1
     PaidSigma <- t(matrix(rep(MackPaid$sigma,(m-1)), ncol=(m-1)))
     PaidRatios <- Paid[-m,-1]/Paid[-m,-n]
     t <- (row(PaidRatios)+col(PaidRatios)-1)
-    w_t <- ifelse(t<=max(col(PaidRatios)-sum(w[,1])-1), 0, ifelse(t>max(col(PaidRatios)), NA, 1))
-    PaidResiduals <- (PaidRatios - Paidf)/PaidSigma[, 1:ncol(Paidf)] * sqrt(Paid[-m,-n])*w_t
+    weights_t <- ifelse(t<=max(col(PaidRatios)-sum(weights[,1])-1), 0, ifelse(t>max(col(PaidRatios)), NA, 1))
+    PaidResiduals <- (PaidRatios - Paidf)/PaidSigma[, 1:ncol(Paidf)] * sqrt(Paid[-m,-n])*weights_t
 
     Incurredf <-  t(matrix(rep(MackIncurred$f[-n],(m-1)), ncol=(m-1)))
     IncurredSigma <- t(matrix(rep(MackIncurred$sigma,(m-1)), ncol=(m-1)))
     IncurredRatios <- Incurred[-m,-1]/Incurred[-m,-n]
-    IncurredResiduals <- (IncurredRatios - Incurredf)/IncurredSigma[,1:ncol(Incurredf)] * sqrt(Incurred[-m,-n])*w_t
+    IncurredResiduals <- (IncurredRatios - Incurredf)/IncurredSigma[,1:ncol(Incurredf)] * sqrt(Incurred[-m,-n])*weights_t
 
     QRatios <- (Paid/Incurred)[,-n]
     Qf <- t(matrix(rep(q.f[-n],m), ncol=m))
     QSigma <- t(matrix(rep(rhoI.sigma[-n],m), ncol=m))
-    QResiduals <- (QRatios - Qf)/QSigma * sqrt(Incurred[,-n])*w[, -n]
+    QResiduals <- (QRatios - Qf)/QSigma * sqrt(Incurred[,-n])*weights[, -n]
 
     QinverseRatios <- 1/QRatios
     Qinversef <- 1/Qf
     QinverseSigma <- t(matrix(rep(rhoP.sigma[-n],m), ncol=m))
-    QinverseResiduals <- (QinverseRatios - Qinversef)/QinverseSigma * sqrt(Paid[,-n])*w[, -n]
+    QinverseResiduals <- (QinverseRatios - Qinversef)/QinverseSigma * sqrt(Paid[,-n])*weights[, -n]
 
     QinverseResiduals <-  getMCLResiduals(QinverseResiduals,n)
     QResiduals <-  getMCLResiduals(QResiduals,n)
