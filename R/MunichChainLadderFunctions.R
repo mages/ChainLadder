@@ -77,8 +77,8 @@ MunichChainLadder <- function(Paid, Incurred,
     Paidf <-  t(matrix(rep(MackPaid$f[-n],(m-1)), ncol=(m-1)))
     PaidSigma <- t(matrix(rep(MackPaid$sigma,(m-1)), ncol=(m-1)))
     PaidRatios <- Paid[-m,-1]/Paid[-m,-n]
-    t <- (row(PaidRatios)+col(PaidRatios)-1)
-    weights_t <- ifelse(t<=max(col(PaidRatios)-sum(weights[,1])-1), 0, ifelse(t>max(col(PaidRatios)), NA, 1))
+    t <- (row(PaidRatios)+col(PaidRatios)-3)
+    weights_t <- ifelse(t<=max(col(PaidRatios)-sum(weights[,1])-1), 0, ifelse(t>max(col(PaidRatios)-2), NA, 1))
     PaidResiduals <- (PaidRatios - Paidf)/PaidSigma[, 1:ncol(Paidf)] * sqrt(Paid[-m,-n])*weights_t
 
     Incurredf <-  t(matrix(rep(MackIncurred$f[-n],(m-1)), ncol=(m-1)))
