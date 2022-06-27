@@ -14,5 +14,5 @@ test.MCLweights <- function() {
   Ult <- c(34055.98, 33291.31)
   
   ## test output from MunichChainLadder
-  checkEquals(summary(MCL)$Totals[2,1:2], Ult ,tol=1, checkNames = FALSE)
+  checkEquals(as.numeric(summary(MCL)$Totals[2,1:2]), Ult ,tol=1)
 }
