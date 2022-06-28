@@ -19,6 +19,9 @@ used in insurance claims reserving, including:
   - convert cumulative into incremental and incremental into cumulative triangles
   - visualise triangles
 
+For a Python claims reserving package visit [chainladder-python](https://github.com/casact/chainladder-python#readme).
+
+
 ## Installation
 
 You can install the stable version from
@@ -56,6 +59,8 @@ See also:
 
   Markus Gesmann. Claims Reserving and IBNR. [Computational Actuarial Science
   with R](https://www.crcpress.com/product/isbn/9781466592599). 2014. Chapman and Hall/CRC
+
+
 
 ## License
 
