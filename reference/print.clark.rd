@@ -139,10 +139,10 @@ of their respective <code><a href="summary.clark.html">summary.ClarkLDF</a></cod
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="va">X</span> <span class="op">&lt;-</span> <span class="va">GenIns</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">X</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fl">12</span><span class="op">*</span><span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">X</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">y</span> <span class="op">&lt;-</span> <span class="fu"><a href="ClarkCapeCod.html">ClarkCapeCod</a></span><span class="op">(</span><span class="va">X</span>, Premium<span class="op">=</span><span class="fl">10000000</span><span class="op">+</span><span class="fl">400000</span><span class="op">*</span><span class="fl">0</span><span class="op">:</span><span class="fl">9</span>, maxage<span class="op">=</span><span class="fl">240</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">y</span><span class="op">)</span> </span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">X</span> <span class="op">&lt;-</span> <span class="va">GenIns</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">X</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fl">12</span><span class="op">*</span><span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">X</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">y</span> <span class="op">&lt;-</span> <span class="fu"><a href="ClarkCapeCod.html">ClarkCapeCod</a></span><span class="op">(</span><span class="va">X</span>, Premium<span class="op">=</span><span class="fl">10000000</span><span class="op">+</span><span class="fl">400000</span><span class="op">*</span><span class="fl">0</span><span class="op">:</span><span class="fl">9</span>, maxage<span class="op">=</span><span class="fl">240</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">y</span><span class="op">)</span> </span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>       Origin CurrentValue  Premium      ELR FutureGrowthFactor FutureValue</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1          1      3901463 1.00e+07 0.597026          0.1303902    778463.4</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2          2      5339085 1.04e+07 0.597026          0.1594364    989952.1</span>
@@ -167,7 +167,7 @@ of their respective <code><a href="summary.clark.html">summary.ClarkLDF</a></cod
 <span class="r-out co"><span class="r-pr">#&gt;</span> 9           6988434  726347.9 0.1291253</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 10          7340695  786672.0 0.1124350</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Total      64014435 3402778.6 0.1147403</span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">y</span><span class="op">)</span>  <span class="co"># (or simply 'y') Same as summary(y) but with "pretty formats"</span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">y</span><span class="op">)</span>  <span class="co"># (or simply 'y') Same as summary(y) but with "pretty formats"</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  Origin CurrentValue     Premium   ELR FutureGrowthFactor FutureValue</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>       1    3,901,463  10,000,000 0.597             0.1304     778,463</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>       2    5,339,085  10,400,000 0.597             0.1594     989,952</span>
@@ -192,9 +192,9 @@ of their respective <code><a href="summary.clark.html">summary.ClarkLDF</a></cod
 <span class="r-out co"><span class="r-pr">#&gt;</span>      6,988,434   726,348 12.9</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>      7,340,695   786,672 11.2</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     64,014,435 3,402,779 11.5</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">## Greater growth factors when projecting to infinite maximum age</span></span>
-<span class="r-in"><span class="fu"><a href="ClarkCapeCod.html">ClarkCapeCod</a></span><span class="op">(</span><span class="va">X</span>, Premium<span class="op">=</span><span class="fl">10000000</span><span class="op">+</span><span class="fl">400000</span><span class="op">*</span><span class="fl">0</span><span class="op">:</span><span class="fl">9</span>, maxage<span class="op">=</span><span class="cn">Inf</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## Greater growth factors when projecting to infinite maximum age</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="ClarkCapeCod.html">ClarkCapeCod</a></span><span class="op">(</span><span class="va">X</span>, Premium<span class="op">=</span><span class="fl">10000000</span><span class="op">+</span><span class="fl">400000</span><span class="op">*</span><span class="fl">0</span><span class="op">:</span><span class="fl">9</span>, maxage<span class="op">=</span><span class="cn">Inf</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  Origin CurrentValue     Premium   ELR FutureGrowthFactor FutureValue</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>       1    3,901,463  10,000,000 0.597             0.2217   1,323,698</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>       2    5,339,085  10,400,000 0.597             0.2508   1,556,996</span>
@@ -219,7 +219,7 @@ of their respective <code><a href="summary.clark.html">summary.ClarkLDF</a></cod
 <span class="r-out co"><span class="r-pr">#&gt;</span>      7,708,144   889,806 14.0</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>      8,082,215   941,203 12.2</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     70,448,208 5,378,616 14.9</span>
-<span class="r-in"></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
@@ -231,7 +231,7 @@ of their respective <code><a href="summary.clark.html">summary.ClarkLDF</a></cod
 </div>
 
 <div class="pkgdown-footer-right">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
 </div>
 
     </footer></div>

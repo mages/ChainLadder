@@ -162,41 +162,41 @@ by convention,
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"></span>
-<span class="r-in"><span class="va">x</span> <span class="op">&lt;-</span> <span class="va">RAA</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">9</span>,<span class="fl">1</span><span class="op">]</span></span>
-<span class="r-in"><span class="va">y</span> <span class="op">&lt;-</span> <span class="va">RAA</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">9</span>,<span class="fl">2</span><span class="op">]</span></span>
-<span class="r-in"><span class="cn">F</span> <span class="op">&lt;-</span> <span class="va">y</span><span class="op">/</span><span class="va">x</span></span>
-<span class="r-in"><span class="fu">CLFMdelta</span><span class="op">(</span><span class="va">RAA</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">9</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">2</span><span class="op">]</span>, selected <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="cn">F</span><span class="op">)</span><span class="op">)</span> <span class="co"># value is 2, 'foundSolution' is TRUE</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="va">RAA</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">9</span>,<span class="fl">1</span><span class="op">]</span></span></span>
+<span class="r-in"><span><span class="va">y</span> <span class="op">&lt;-</span> <span class="va">RAA</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">9</span>,<span class="fl">2</span><span class="op">]</span></span></span>
+<span class="r-in"><span><span class="cn">F</span> <span class="op">&lt;-</span> <span class="va">y</span><span class="op">/</span><span class="va">x</span></span></span>
+<span class="r-in"><span><span class="fu">CLFMdelta</span><span class="op">(</span><span class="va">RAA</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">9</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">2</span><span class="op">]</span>, selected <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="cn">F</span><span class="op">)</span><span class="op">)</span> <span class="co"># value is 2, 'foundSolution' is TRUE</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> attr(,"foundSolution")</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] TRUE</span>
-<span class="r-in"><span class="fu">CLFMdelta</span><span class="op">(</span><span class="va">RAA</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">9</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">2</span><span class="op">]</span>, selected <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">y</span><span class="op">)</span> <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span> <span class="co"># value is 1, 'foundSolution' is TRUE</span></span>
+<span class="r-in"><span><span class="fu">CLFMdelta</span><span class="op">(</span><span class="va">RAA</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">9</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">2</span><span class="op">]</span>, selected <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">y</span><span class="op">)</span> <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span> <span class="co"># value is 1, 'foundSolution' is TRUE</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> attr(,"foundSolution")</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] TRUE</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">selected</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="cn">F</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">y</span><span class="op">)</span> <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="co"># an average of averages</span></span>
-<span class="r-in"><span class="fu">CLFMdelta</span><span class="op">(</span><span class="va">RAA</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">9</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">2</span><span class="op">]</span>, <span class="va">selected</span><span class="op">)</span> <span class="co"># about 1.725</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">selected</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="cn">F</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">y</span><span class="op">)</span> <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="co"># an average of averages</span></span></span>
+<span class="r-in"><span><span class="fu">CLFMdelta</span><span class="op">(</span><span class="va">RAA</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">9</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">2</span><span class="op">]</span>, <span class="va">selected</span><span class="op">)</span> <span class="co"># about 1.725</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>        1 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1.724596 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> attr(,"foundSolution")</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] TRUE</span>
-<span class="r-in"><span class="fu">CLFMdelta</span><span class="op">(</span><span class="va">RAA</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">9</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">2</span><span class="op">]</span>, selected <span class="op">=</span> <span class="fl">2</span><span class="op">)</span> <span class="co"># negative solutions are possible</span></span>
+<span class="r-in"><span><span class="fu">CLFMdelta</span><span class="op">(</span><span class="va">RAA</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">9</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">2</span><span class="op">]</span>, selected <span class="op">=</span> <span class="fl">2</span><span class="op">)</span> <span class="co"># negative solutions are possible</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>         1 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> -1.160568 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> attr(,"foundSolution")</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] TRUE</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Demonstrating an "unreasonable" selected factor.</span></span>
-<span class="r-in"><span class="fu">CLFMdelta</span><span class="op">(</span><span class="va">RAA</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">9</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">2</span><span class="op">]</span>, selected <span class="op">=</span> <span class="fl">1.9</span><span class="op">)</span> <span class="co"># NA solution, with warning</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Demonstrating an "unreasonable" selected factor.</span></span></span>
+<span class="r-in"><span><span class="fu">CLFMdelta</span><span class="op">(</span><span class="va">RAA</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">9</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">2</span><span class="op">]</span>, selected <span class="op">=</span> <span class="fl">1.9</span><span class="op">)</span> <span class="co"># NA solution, with warning</span></span></span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>No optimal delta solution for age 1. Returning NA.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  1 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> NA </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> attr(,"foundSolution")</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] FALSE</span>
-<span class="r-in"></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
@@ -208,7 +208,7 @@ by convention,
 </div>
 
 <div class="pkgdown-footer-right">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
 </div>
 
     </footer></div>

@@ -57,8 +57,8 @@ of a call to the <code>ata</code> function.</p>
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="co"># S3 method for ata</span>
-<span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="co"># S3 method for ata</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -91,10 +91,10 @@ of a call to the <code>ata</code> function.</p>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="ata.html">ata</a></span><span class="op">(</span><span class="va">GenIns</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">## Print ata factors rounded to 3 decimal places, the summary.ata default</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span> </span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="ata.html">ata</a></span><span class="op">(</span><span class="va">GenIns</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## Print ata factors rounded to 3 decimal places, the summary.ata default</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span> </span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>       dev</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> origin   1-2   2-3   3-4   4-5   5-6   6-7   7-8   8-9  9-10</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   1    3.143 1.543 1.278 1.238 1.209 1.044 1.040 1.063 1.018</span>
@@ -108,10 +108,10 @@ of a call to the <code>ata</code> function.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   9    3.619    NA    NA    NA    NA    NA    NA    NA    NA</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   smpl 3.566 1.746 1.452 1.181 1.111 1.085 1.053 1.075 1.018</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   vwtd 3.491 1.747 1.457 1.174 1.104 1.086 1.054 1.077 1.018</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">## Round to 4 decimal places and print cells corresponding </span></span>
-<span class="r-in"><span class="co">## to future observations as blanks.</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">x</span>, digits<span class="op">=</span><span class="fl">4</span><span class="op">)</span>, na.print<span class="op">=</span><span class="st">""</span><span class="op">)</span> </span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## Round to 4 decimal places and print cells corresponding </span></span></span>
+<span class="r-in"><span><span class="co">## to future observations as blanks.</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">x</span>, digits<span class="op">=</span><span class="fl">4</span><span class="op">)</span>, na.print<span class="op">=</span><span class="st">""</span><span class="op">)</span> </span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>       dev</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> origin    1-2    2-3    3-4    4-5    5-6    6-7    7-8    8-9   9-10</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   1    3.1432 1.5428 1.2783 1.2377 1.2092 1.0441 1.0404 1.0630 1.0177</span>
@@ -125,7 +125,7 @@ of a call to the <code>ata</code> function.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   9    3.6192                                                        </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   smpl 3.5661 1.7456 1.4520 1.1810 1.1112 1.0848 1.0527 1.0748 1.0177</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   vwtd 3.4906 1.7473 1.4574 1.1739 1.1038 1.0863 1.0539 1.0766 1.0177</span>
-<span class="r-in"></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
@@ -137,7 +137,7 @@ of a call to the <code>ata</code> function.</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
 </div>
 
     </footer></div>

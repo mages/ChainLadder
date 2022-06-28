@@ -63,9 +63,9 @@
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">MunichChainLadder</span><span class="op">(</span><span class="va">Paid</span>, <span class="va">Incurred</span>, 
-                  est.sigmaP <span class="op">=</span> <span class="st">"log-linear"</span>, est.sigmaI <span class="op">=</span> <span class="st">"log-linear"</span>, 
-                  tailP<span class="op">=</span><span class="cn">FALSE</span>, tailI<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">MunichChainLadder</span><span class="op">(</span><span class="va">Paid</span>, <span class="va">Incurred</span>, </span>
+<span>                  est.sigmaP <span class="op">=</span> <span class="st">"log-linear"</span>, est.sigmaI <span class="op">=</span> <span class="st">"log-linear"</span>, </span>
+<span>                  tailP<span class="op">=</span><span class="cn">FALSE</span>, tailI<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -183,8 +183,8 @@
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"></span>
-<span class="r-in"><span class="va">MCLpaid</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">MCLpaid</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>       dev</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> origin    1    2    3    4    5    6    7</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>      1  576 1804 1970 2024 2074 2102 2131</span>
@@ -194,7 +194,7 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span>      5 1868 3778 4648   NA   NA   NA   NA</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>      6 1442 4010   NA   NA   NA   NA   NA</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>      7 2044   NA   NA   NA   NA   NA   NA</span>
-<span class="r-in"><span class="va">MCLincurred</span></span>
+<span class="r-in"><span><span class="va">MCLincurred</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>       dev</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> origin    1    2    3    4    5    6    7</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>      1  978 2104 2134 2144 2174 2182 2174</span>
@@ -204,15 +204,15 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span>      5 2812 4882 4852   NA   NA   NA   NA</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>      6 2642 4406   NA   NA   NA   NA   NA</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>      7 5022   NA   NA   NA   NA   NA   NA</span>
-<span class="r-in"><span class="va">op</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span>mfrow<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">2</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">MCLpaid</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">MCLincurred</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="va">op</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span>mfrow<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">2</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">MCLpaid</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">MCLincurred</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="MunichChainLadder-1.png" alt="" width="700" height="433"></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span><span class="va">op</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Following the example in Quarg's (2004) paper:</span></span>
-<span class="r-in"><span class="va">MCL</span> <span class="op">&lt;-</span> <span class="fu">MunichChainLadder</span><span class="op">(</span><span class="va">MCLpaid</span>, <span class="va">MCLincurred</span>, est.sigmaP<span class="op">=</span><span class="fl">0.1</span>, est.sigmaI<span class="op">=</span><span class="fl">0.1</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">MCL</span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span><span class="va">op</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Following the example in Quarg's (2004) paper:</span></span></span>
+<span class="r-in"><span><span class="va">MCL</span> <span class="op">&lt;-</span> <span class="fu">MunichChainLadder</span><span class="op">(</span><span class="va">MCLpaid</span>, <span class="va">MCLincurred</span>, est.sigmaP<span class="op">=</span><span class="fl">0.1</span>, est.sigmaI<span class="op">=</span><span class="fl">0.1</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">MCL</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> MunichChainLadder(Paid = MCLpaid, Incurred = MCLincurred, est.sigmaP = 0.1, </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     est.sigmaI = 0.1)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
@@ -237,10 +237,10 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span>             Paid Incurred P/I Ratio</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Latest:   25,525   29,694      0.86</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Ultimate: 32,371   32,688      0.99</span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">MCL</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">MCL</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="MunichChainLadder-2.png" alt="" width="700" height="433"></span>
-<span class="r-in"><span class="co"># You can access the standard chain-ladder (Mack) output via</span></span>
-<span class="r-in"><span class="va">MCL</span><span class="op">$</span><span class="va">MackPaid</span></span>
+<span class="r-in"><span><span class="co"># You can access the standard chain-ladder (Mack) output via</span></span></span>
+<span class="r-in"><span><span class="va">MCL</span><span class="op">$</span><span class="va">MackPaid</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> MackChainLadder(Triangle = Paid, est.sigma = est.sigmaP, tail = tailP)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   Latest Dev.To.Date Ultimate    IBNR Mack.S.E CV(IBNR)</span>
@@ -259,7 +259,7 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> IBNR:      5,938.21</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Mack.S.E     987.23</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> CV(IBNR):      0.17</span>
-<span class="r-in"><span class="va">MCL</span><span class="op">$</span><span class="va">MackIncurred</span></span>
+<span class="r-in"><span><span class="va">MCL</span><span class="op">$</span><span class="va">MackIncurred</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> MackChainLadder(Triangle = Incurred, est.sigma = est.sigmaI, </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     tail = tailI)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
@@ -279,9 +279,9 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> IBNR:      3,376.85</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Mack.S.E     994.23</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> CV(IBNR):      0.29</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Input triangles section 3.3.1</span></span>
-<span class="r-in"><span class="va">MCL</span><span class="op">$</span><span class="va">Paid</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Input triangles section 3.3.1</span></span></span>
+<span class="r-in"><span><span class="va">MCL</span><span class="op">$</span><span class="va">Paid</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>       dev</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> origin    1    2    3    4    5    6    7</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>      1  576 1804 1970 2024 2074 2102 2131</span>
@@ -291,7 +291,7 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span>      5 1868 3778 4648   NA   NA   NA   NA</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>      6 1442 4010   NA   NA   NA   NA   NA</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>      7 2044   NA   NA   NA   NA   NA   NA</span>
-<span class="r-in"><span class="va">MCL</span><span class="op">$</span><span class="va">Incurred</span></span>
+<span class="r-in"><span><span class="va">MCL</span><span class="op">$</span><span class="va">Incurred</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>       dev</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> origin    1    2    3    4    5    6    7</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>      1  978 2104 2134 2144 2174 2182 2174</span>
@@ -301,30 +301,30 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span>      5 2812 4882 4852   NA   NA   NA   NA</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>      6 2642 4406   NA   NA   NA   NA   NA</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>      7 5022   NA   NA   NA   NA   NA   NA</span>
-<span class="r-in"><span class="co"># Parameters from section 3.3.2</span></span>
-<span class="r-in"><span class="co"># Standard chain-ladder age-to-age factors</span></span>
-<span class="r-in"><span class="va">MCL</span><span class="op">$</span><span class="va">MackPaid</span><span class="op">$</span><span class="va">f</span></span>
+<span class="r-in"><span><span class="co"># Parameters from section 3.3.2</span></span></span>
+<span class="r-in"><span><span class="co"># Standard chain-ladder age-to-age factors</span></span></span>
+<span class="r-in"><span><span class="va">MCL</span><span class="op">$</span><span class="va">MackPaid</span><span class="op">$</span><span class="va">f</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 2.436686 1.131242 1.029345 1.020756 1.021111 1.013796 1.000000</span>
-<span class="r-in"><span class="va">MCL</span><span class="op">$</span><span class="va">MackIncurred</span><span class="op">$</span><span class="va">f</span></span>
+<span class="r-in"><span><span class="va">MCL</span><span class="op">$</span><span class="va">MackIncurred</span><span class="op">$</span><span class="va">f</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 1.6520910 1.0186398 0.9998699 1.0110581 0.9901751 0.9963336 1.0000000</span>
-<span class="r-in"><span class="va">MCL</span><span class="op">$</span><span class="va">MackPaid</span><span class="op">$</span><span class="va">sigma</span></span>
+<span class="r-in"><span><span class="va">MCL</span><span class="op">$</span><span class="va">MackPaid</span><span class="op">$</span><span class="va">sigma</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 13.4559310  3.6656420  0.4819578  0.2100029  0.4787308  0.1000000</span>
-<span class="r-in"><span class="va">MCL</span><span class="op">$</span><span class="va">MackIncurred</span><span class="op">$</span><span class="va">sigma</span></span>
+<span class="r-in"><span><span class="va">MCL</span><span class="op">$</span><span class="va">MackIncurred</span><span class="op">$</span><span class="va">sigma</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 9.7273990 2.5444838 1.0040570 0.1200991 0.8603340 0.1000000</span>
-<span class="r-in"><span class="co"># Check Mack's assumptions graphically</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">MCL</span><span class="op">$</span><span class="va">MackPaid</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="co"># Check Mack's assumptions graphically</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">MCL</span><span class="op">$</span><span class="va">MackPaid</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="MunichChainLadder-3.png" alt="" width="700" height="433"></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">MCL</span><span class="op">$</span><span class="va">MackIncurred</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">MCL</span><span class="op">$</span><span class="va">MackIncurred</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="MunichChainLadder-4.png" alt="" width="700" height="433"></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">MCL</span><span class="op">$</span><span class="va">q.f</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">MCL</span><span class="op">$</span><span class="va">q.f</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.5325822 0.8488621 0.9275964 0.9450735 0.9491744 0.9598792 0.9802208</span>
-<span class="r-in"><span class="va">MCL</span><span class="op">$</span><span class="va">rhoP.sigma</span></span>
+<span class="r-in"><span><span class="va">MCL</span><span class="op">$</span><span class="va">rhoP.sigma</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 14.9430129  4.9899464  2.1665565  1.6186098  1.7910011  0.2359799  0.1966189</span>
-<span class="r-in"><span class="va">MCL</span><span class="op">$</span><span class="va">rhoI.sigma</span></span>
+<span class="r-in"><span><span class="va">MCL</span><span class="op">$</span><span class="va">rhoI.sigma</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 5.7107795 3.8192859 1.9184007 1.4606629 1.6370399 0.2219648 0.2494577</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">MCL</span><span class="op">$</span><span class="va">PaidResiduals</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">MCL</span><span class="op">$</span><span class="va">PaidResiduals</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [1]  1.240062341 -0.409542454  0.627731906 -0.432520662 -1.330415661</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [6]  0.971284236           NA -0.454493935 -0.257500458  0.003519297</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [11] -0.984526495  1.660669736           NA           NA -0.178096214</span>
@@ -335,7 +335,7 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> [36]           NA           NA           NA           NA           NA</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [41]           NA           NA           NA           NA           NA</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [46]           NA           NA           NA           NA</span>
-<span class="r-in"><span class="va">MCL</span><span class="op">$</span><span class="va">IncurredResiduals</span></span>
+<span class="r-in"><span><span class="va">MCL</span><span class="op">$</span><span class="va">IncurredResiduals</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [1]  1.605020358 -1.183723533 -0.846383581  0.299450714  0.458137992</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [6]  0.082352480           NA -0.078980622 -1.039118036  1.565493903</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [11]  0.004806834 -0.680589085           NA           NA  0.221585430</span>
@@ -346,8 +346,8 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> [36]           NA           NA           NA           NA           NA</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [41]           NA           NA           NA           NA           NA</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [46]           NA           NA           NA           NA</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">MCL</span><span class="op">$</span><span class="va">QinverseResiduals</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">MCL</span><span class="op">$</span><span class="va">QinverseResiduals</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [1] -0.28866099  0.49565517  0.45015637 -1.10614730 -1.07679458 -0.11554182</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [7]          NA -0.10001795  1.16766593 -0.23897922 -0.76095980  1.40633581</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [13]          NA          NA  0.10639977  1.34252842  0.80771329 -0.61487164</span>
@@ -357,7 +357,7 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> [37]          NA          NA          NA          NA          NA          NA</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [43]          NA          NA          NA          NA          NA          NA</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [49]          NA</span>
-<span class="r-in"><span class="va">MCL</span><span class="op">$</span><span class="va">QResiduals</span></span>
+<span class="r-in"><span><span class="va">MCL</span><span class="op">$</span><span class="va">QResiduals</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [1]  0.30871615 -0.47335565 -0.43743334  1.24543896  1.22304681  0.11895559</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [7]          NA  0.10271271 -1.13141939  0.24623239  0.79537557 -1.37205649</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [13]          NA          NA -0.10709430 -1.31687503 -0.80498376  0.62550343</span>
@@ -367,8 +367,8 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> [37]          NA          NA          NA          NA          NA          NA</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [43]          NA          NA          NA          NA          NA          NA</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [49]          NA</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">MCL</span><span class="op">$</span><span class="va">lambdaP</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">MCL</span><span class="op">$</span><span class="va">lambdaP</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Call:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> lm(formula = PaidResiduals ~ QinverseResiduals + 0)</span>
@@ -377,7 +377,7 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> QinverseResiduals  </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>             0.636  </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-in"><span class="va">MCL</span><span class="op">$</span><span class="va">lambdaI</span></span>
+<span class="r-in"><span><span class="va">MCL</span><span class="op">$</span><span class="va">lambdaI</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Call:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> lm(formula = IncurredResiduals ~ QResiduals + 0)</span>
@@ -386,8 +386,8 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> QResiduals  </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     0.4362  </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-in"><span class="co"># Section 3.3.3 Results</span></span>
-<span class="r-in"><span class="va">MCL</span><span class="op">$</span><span class="va">MCLPaid</span></span>
+<span class="r-in"><span><span class="co"># Section 3.3.3 Results</span></span></span>
+<span class="r-in"><span><span class="va">MCL</span><span class="op">$</span><span class="va">MCLPaid</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>      1       2        3        4        5        6         </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1  576 1804.00 1970.000 2024.000 2074.000 2102.000 2131.000</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2  866 1948.00 2162.000 2232.000 2284.000 2348.000 2382.512</span>
@@ -396,7 +396,7 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> 5 1868 3778.00 4648.000 4761.928 4848.086 4922.643 4937.412</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 6 1442 4010.00 4387.718 4493.324 4573.894 4642.893 4655.543</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 7 2044 5658.75 6944.326 7176.571 7329.680 7485.196 7548.518</span>
-<span class="r-in"><span class="va">MCL</span><span class="op">$</span><span class="va">MCLIncurred</span></span>
+<span class="r-in"><span><span class="va">MCL</span><span class="op">$</span><span class="va">MCLIncurred</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>      1       2        3        4        5        6         </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1  978 2104.00 2134.000 2144.000 2174.000 2182.000 2174.000</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2 1844 2552.00 2466.000 2480.000 2508.000 2454.000 2443.520</span>
@@ -405,7 +405,7 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> 5 2812 4882.00 4852.000 4884.997 4944.225 4931.215 4950.330</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 6 2642 4406.00 4566.563 4600.621 4656.710 4646.230 4665.171</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 7 5022 7828.26 7687.543 7643.941 7726.764 7649.849 7649.759</span>
-<span class="r-in"></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
@@ -417,7 +417,7 @@
 </div>
 
 <div class="pkgdown-footer-right">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
 </div>
 
     </footer></div>

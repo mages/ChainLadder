@@ -54,7 +54,7 @@
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">qpaid</span><span class="op">)</span>; <span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">qincurred</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">qpaid</span><span class="op">)</span>; <span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">qincurred</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -68,35 +68,35 @@
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/dim.html" class="external-link">dim</a></span><span class="op">(</span><span class="va">qpaid</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/dim.html" class="external-link">dim</a></span><span class="op">(</span><span class="va">qpaid</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 12 45</span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/dim.html" class="external-link">dim</a></span><span class="op">(</span><span class="va">qincurred</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/dim.html" class="external-link">dim</a></span><span class="op">(</span><span class="va">qincurred</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 12 45</span>
-<span class="r-in"><span class="va">op</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span>mfrow<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">2</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">ymax</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">max</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">qpaid</span>,<span class="va">qincurred</span><span class="op">)</span>,na.rm<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span><span class="op">*</span><span class="fl">1.05</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/graphics/matplot.html" class="external-link">matplot</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/t.html" class="external-link">t</a></span><span class="op">(</span><span class="va">qpaid</span><span class="op">)</span>, type<span class="op">=</span><span class="st">"l"</span>, main<span class="op">=</span><span class="st">"Paid development"</span>, </span>
-<span class="r-in">      xlab<span class="op">=</span><span class="st">"Dev. quarter"</span>, ylab<span class="op">=</span><span class="st">"$"</span>, ylim<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="va">ymax</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/graphics/matplot.html" class="external-link">matplot</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/t.html" class="external-link">t</a></span><span class="op">(</span><span class="va">qincurred</span><span class="op">)</span>, type<span class="op">=</span><span class="st">"l"</span>, main<span class="op">=</span><span class="st">"Incurred development"</span>, </span>
-<span class="r-in">          xlab<span class="op">=</span><span class="st">"Dev. quarter"</span>, ylab<span class="op">=</span><span class="st">"$"</span>, ylim<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="va">ymax</span><span class="op">)</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="va">op</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span>mfrow<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">2</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">ymax</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">max</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">qpaid</span>,<span class="va">qincurred</span><span class="op">)</span>,na.rm<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span><span class="op">*</span><span class="fl">1.05</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/matplot.html" class="external-link">matplot</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/t.html" class="external-link">t</a></span><span class="op">(</span><span class="va">qpaid</span><span class="op">)</span>, type<span class="op">=</span><span class="st">"l"</span>, main<span class="op">=</span><span class="st">"Paid development"</span>, </span></span>
+<span class="r-in"><span>      xlab<span class="op">=</span><span class="st">"Dev. quarter"</span>, ylab<span class="op">=</span><span class="st">"$"</span>, ylim<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="va">ymax</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/matplot.html" class="external-link">matplot</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/t.html" class="external-link">t</a></span><span class="op">(</span><span class="va">qincurred</span><span class="op">)</span>, type<span class="op">=</span><span class="st">"l"</span>, main<span class="op">=</span><span class="st">"Incurred development"</span>, </span></span>
+<span class="r-in"><span>          xlab<span class="op">=</span><span class="st">"Dev. quarter"</span>, ylab<span class="op">=</span><span class="st">"$"</span>, ylim<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="va">ymax</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="qpaid-1.png" alt="" width="700" height="433"></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span><span class="va">op</span><span class="op">)</span></span>
-<span class="r-in"><span class="co">## MackChainLadder expects a quadratic matrix so let's expand </span></span>
-<span class="r-in"><span class="co">## the triangle to a quarterly origin period.</span></span>
-<span class="r-in"><span class="va">n</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">ncol</a></span><span class="op">(</span><span class="va">qpaid</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">Paid</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="cn">NA</span>, <span class="va">n</span>, <span class="va">n</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">Paid</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">1</span>,<span class="va">n</span>,<span class="fl">4</span><span class="op">)</span>,<span class="op">]</span> <span class="op">&lt;-</span> <span class="va">qpaid</span></span>
-<span class="r-in"><span class="va">M</span> <span class="op">&lt;-</span> <span class="fu"><a href="MackChainLadder.html">MackChainLadder</a></span><span class="op">(</span><span class="va">Paid</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span><span class="va">op</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="co">## MackChainLadder expects a quadratic matrix so let's expand </span></span></span>
+<span class="r-in"><span><span class="co">## the triangle to a quarterly origin period.</span></span></span>
+<span class="r-in"><span><span class="va">n</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">ncol</a></span><span class="op">(</span><span class="va">qpaid</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">Paid</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="cn">NA</span>, <span class="va">n</span>, <span class="va">n</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">Paid</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">1</span>,<span class="va">n</span>,<span class="fl">4</span><span class="op">)</span>,<span class="op">]</span> <span class="op">&lt;-</span> <span class="va">qpaid</span></span></span>
+<span class="r-in"><span><span class="va">M</span> <span class="op">&lt;-</span> <span class="fu"><a href="MackChainLadder.html">MackChainLadder</a></span><span class="op">(</span><span class="va">Paid</span><span class="op">)</span></span></span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Information: essentially no variation in development data for period(s):</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> '39-40', '40-41'</span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">M</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">M</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="qpaid-2.png" alt="" width="700" height="433"></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># We expand the incurred triangle in the same way </span></span>
-<span class="r-in"><span class="va">Incurred</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="cn">NA</span>, <span class="va">n</span>, <span class="va">n</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">Incurred</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">1</span>,<span class="va">n</span>,<span class="fl">4</span><span class="op">)</span>,<span class="op">]</span> <span class="op">&lt;-</span> <span class="va">qincurred</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># With the expanded triangles we can apply MunichChainLadder</span></span>
-<span class="r-in"><span class="fu"><a href="MunichChainLadder.html">MunichChainLadder</a></span><span class="op">(</span><span class="va">Paid</span>, <span class="va">Incurred</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># We expand the incurred triangle in the same way </span></span></span>
+<span class="r-in"><span><span class="va">Incurred</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="cn">NA</span>, <span class="va">n</span>, <span class="va">n</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">Incurred</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">1</span>,<span class="va">n</span>,<span class="fl">4</span><span class="op">)</span>,<span class="op">]</span> <span class="op">&lt;-</span> <span class="va">qincurred</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># With the expanded triangles we can apply MunichChainLadder</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="MunichChainLadder.html">MunichChainLadder</a></span><span class="op">(</span><span class="va">Paid</span>, <span class="va">Incurred</span><span class="op">)</span></span></span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Information: essentially no variation in development data for period(s):</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> '39-40', '40-41'</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> MunichChainLadder(Paid = Paid, Incurred = Incurred)</span>
@@ -132,35 +132,35 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span>             Paid Incurred P/I Ratio</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Latest:   12,895   13,646      0.94</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Ultimate: 16,243   16,242      1.00</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># In the same way we can apply BootChainLadder</span></span>
-<span class="r-in"><span class="co"># We reduce the size of bootstrap replicates R </span></span>
-<span class="r-in"><span class="co"># from the default of 999 to 99 purely to reduce run time.</span></span>
-<span class="r-in"><span class="fu"><a href="BootChainLadder.html">BootChainLadder</a></span><span class="op">(</span><span class="va">Paid</span>, R<span class="op">=</span><span class="fl">99</span><span class="op">)</span> </span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># In the same way we can apply BootChainLadder</span></span></span>
+<span class="r-in"><span><span class="co"># We reduce the size of bootstrap replicates R </span></span></span>
+<span class="r-in"><span><span class="co"># from the default of 999 to 99 purely to reduce run time.</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="BootChainLadder.html">BootChainLadder</a></span><span class="op">(</span><span class="va">Paid</span>, R<span class="op">=</span><span class="fl">99</span><span class="op">)</span> </span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> BootChainLadder(Triangle = Paid, R = 99)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    Latest Mean Ultimate Mean IBNR  IBNR.S.E IBNR 75%  IBNR 95%</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1   1,100         1,100      0.00      0.00     0.00      0.00</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5   1,298         1,300      2.12      3.52     3.94      8.36</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 9   1,198         1,201      2.77      4.54     4.72     10.45</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 13  1,293         1,301      8.09      6.09    11.99     19.03</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 17  1,573         1,602     29.37     10.63    37.33     49.13</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 21  1,054         1,099     45.22     10.84    52.14     62.73</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 25  1,387         1,497    109.55     15.31   121.56    134.16</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 29  1,760         1,996    235.84     31.89   254.73    293.73</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 33  1,100         1,392    292.33     33.82   312.00    352.47</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 37    948         1,588    639.96     65.92   685.63    745.30</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 41    183         1,059    875.60    140.26   981.64  1,107.77</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 45      1         3,224  3,223.37 13,072.97 2,250.90 10,148.19</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    Latest Mean Ultimate Mean IBNR  IBNR.S.E IBNR 75% IBNR 95%</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1   1,100         1,100      0.00      0.00     0.00     0.00</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5   1,298         1,301      2.53      3.98     4.77     9.72</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9   1,198         1,201      2.55      4.83     5.58    11.28</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 13  1,293         1,300      7.23      6.65    11.02    17.87</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 17  1,573         1,601     27.70     10.96    34.30    47.86</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 21  1,054         1,100     46.49     11.62    54.63    67.32</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 25  1,387         1,499    111.71     19.94   124.23   146.12</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 29  1,760         1,993    232.60     29.49   255.25   282.88</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 33  1,100         1,392    291.71     30.27   306.43   342.78</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 37    948         1,569    620.55     59.39   657.04   717.91</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 41    183         1,041    857.93    146.61   956.39 1,062.90</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 45      1         1,737  1,736.07 12,823.62 1,915.63 5,665.94</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                 Totals</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Latest:         12,895</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Mean Ultimate:  18,359</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Mean IBNR:       5,464</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> IBNR.S.E        13,067</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Total IBNR 75%:  4,493</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Total IBNR 95%: 12,465</span>
-<span class="r-in"></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Mean Ultimate:  16,832</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Mean IBNR:       3,937</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> IBNR.S.E        12,840</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Total IBNR 75%:  4,051</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Total IBNR 95%:  7,793</span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
@@ -172,7 +172,7 @@
 </div>
 
 <div class="pkgdown-footer-right">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
 </div>
 
     </footer></div>

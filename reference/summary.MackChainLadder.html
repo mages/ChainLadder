@@ -57,11 +57,11 @@
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="co"># S3 method for MackChainLadder</span>
-<span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">object</span>, <span class="va">...</span><span class="op">)</span>
-
-<span class="co"># S3 method for MackChainLadder</span>
-<span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="co"># S3 method for MackChainLadder</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">object</span>, <span class="va">...</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># S3 method for MackChainLadder</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -106,8 +106,8 @@
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"> <span class="va">R</span> <span class="op">&lt;-</span> <span class="fu"><a href="MackChainLadder.html">MackChainLadder</a></span><span class="op">(</span><span class="va">RAA</span><span class="op">)</span></span>
-<span class="r-in"> <span class="va">R</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span> <span class="va">R</span> <span class="op">&lt;-</span> <span class="fu"><a href="MackChainLadder.html">MackChainLadder</a></span><span class="op">(</span><span class="va">RAA</span><span class="op">)</span></span></span>
+<span class="r-in"><span> <span class="va">R</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> MackChainLadder(Triangle = RAA)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>      Latest Dev.To.Date Ultimate   IBNR Mack.S.E CV(IBNR)</span>
@@ -129,7 +129,7 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> IBNR:      52,135.23</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Mack.S.E   26,880.74</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> CV(IBNR):       0.52</span>
-<span class="r-in"> <span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">R</span><span class="op">)</span></span>
+<span class="r-in"><span> <span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">R</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $ByOrigin</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>      Latest Dev.To.Date Ultimate       IBNR   Mack.S.E  CV(IBNR)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1981  18834   1.0000000 18834.00     0.0000     0.0000       NaN</span>
@@ -152,7 +152,7 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> Mack S.E.: 2.688074e+04</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> CV(IBNR):  5.155965e-01</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-in"> <span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">R</span><span class="op">)</span><span class="op">$</span><span class="va">ByOrigin</span><span class="op">$</span><span class="va">Ultimate</span></span>
+<span class="r-in"><span> <span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">R</span><span class="op">)</span><span class="op">$</span><span class="va">ByOrigin</span><span class="op">$</span><span class="va">Ultimate</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [1] 18834.00 16857.95 24083.37 28703.14 28926.74 19501.10 17749.30 24019.19</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [9] 16044.98 18402.44</span>
 </code></pre></div>
@@ -166,7 +166,7 @@
 </div>
 
 <div class="pkgdown-footer-right">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
 </div>
 
     </footer></div>

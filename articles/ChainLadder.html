@@ -77,7 +77,7 @@
       <img src="../logo.png" class="logo" alt=""><h1>ChainLadder: Claims reserving with R</h1>
                         <h4 data-toc-skip class="author">Alessandro Carrato, Fabio Concina, Markus Gesmann, Dan Murphy, Mario Wüthrich and Wayne Zhang</h4>
             
-            <h4 data-toc-skip class="date">2022-06-10</h4>
+            <h4 data-toc-skip class="date">2022-06-28</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/mages/ChainLadder/blob/HEAD/vignettes/ChainLadder.Rmd" class="external-link"><code>vignettes/ChainLadder.Rmd</code></a></small>
       <div class="d-none name"><code>ChainLadder.Rmd</code></div>
@@ -139,14 +139,14 @@ To cite package 'ChainLadder' in publications use:
 <p>This vignette will give the reader a brief overview of the functionality of the ChainLadder package. The functions are discussed and explained in more detail in the respective help files and examples, see also <span class="citation">(Gesmann 2014)</span>.</p>
 <p>A set of demos is shipped with the packages and the list of demos is available via:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/demo.html" class="external-link">demo</a></span><span class="op">(</span>package<span class="op">=</span><span class="st">"ChainLadder"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/demo.html" class="external-link">demo</a></span><span class="op">(</span>package<span class="op">=</span><span class="st">"ChainLadder"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level4">
 <h4 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h4>
 <p>You can install ChainLadder in the usual way from CRAN, e.g.:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">'ChainLadder'</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">'ChainLadder'</span><span class="op">)</span></span></code></pre></div>
 <p>For more details about installing packages see <span class="citation">(R Development Core Team 2022b)</span>.</p>
 </div>
 </div>
@@ -160,11 +160,11 @@ To cite package 'ChainLadder' in publications use:
 <p>Data on the diagonals present payments in the same calendar period. Note, data of individual policies is usually aggregated to homogeneous lines of business, division levels or perils.</p>
 <p>Most reserving methods of the ChainLadder package expect triangles as input data sets with development periods along the columns and the origin period in rows. The package comes with several example triangles. The following R command will list them all:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/mages/ChainLadder" class="external-link">ChainLadder</a></span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span>package<span class="op">=</span><span class="st">"ChainLadder"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/mages/ChainLadder" class="external-link">ChainLadder</a></span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span>package<span class="op">=</span><span class="st">"ChainLadder"</span><span class="op">)</span></span></code></pre></div>
 <p>Let’s look at one example triangle more closely. The following triangle shows data from the Reinsurance Association of America (RAA):</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">RAA</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">RAA</span></span></code></pre></div>
 <pre><code>      dev
 origin    1     2     3     4     5     6     7     8     9    10
   1981 5012  8269 10907 11805 13539 16181 18009 18608 18662 18834
@@ -184,7 +184,7 @@ origin    1     2     3     4     5     6     7     8     9    10
 </h5>
 <p>The first thing you often want to do is to plot the data to get an overview. For a data set of class <code>triangle</code> the ChainLadder package provides default plotting methods to give a graphical overview of the data:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">RAA</span><span class="op">/</span><span class="fl">1000</span>,  main <span class="op">=</span> <span class="st">"Claims development by origin year"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">RAA</span><span class="op">/</span><span class="fl">1000</span>,  main <span class="op">=</span> <span class="st">"Claims development by origin year"</span><span class="op">)</span></span></code></pre></div>
 <div class="figure" style="text-align: center">
 <img src="ChainLadder_files/figure-html/RAAplot-1.png" alt="Claims development chart of the RAA triangle, with one line per origin period." width="60%"><p class="caption">
 Claims development chart of the RAA triangle, with one line per origin period.
@@ -192,7 +192,7 @@ Claims development chart of the RAA triangle, with one line per origin period.
 </div>
 <p>Setting the argument <code>lattice=TRUE</code> will produce individual plots for each origin period.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">RAA</span><span class="op">/</span><span class="fl">1000</span>, lattice<span class="op">=</span><span class="cn">TRUE</span>, main <span class="op">=</span> <span class="st">"Claims development by origin year"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">RAA</span><span class="op">/</span><span class="fl">1000</span>, lattice<span class="op">=</span><span class="cn">TRUE</span>, main <span class="op">=</span> <span class="st">"Claims development by origin year"</span><span class="op">)</span></span></code></pre></div>
 <div class="figure" style="text-align: center">
 <img src="ChainLadder_files/figure-html/RAAplot2-1.png" alt="Claims development chart of the RAA triangle, with individual panels for each origin period" width="60%"><p class="caption">
 Claims development chart of the RAA triangle, with individual panels for each origin period
@@ -206,15 +206,15 @@ Claims development chart of the RAA triangle, with individual panels for each or
 </h4>
 <p>The ChainLadder packages comes with two helper functions, <code>cum2incr</code> and <code>incr2cum</code> to transform cumulative triangles into incremental triangles and vice versa:</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">raa.inc</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/utilityfunctions.html">cum2incr</a></span><span class="op">(</span><span class="va">RAA</span><span class="op">)</span>
-<span class="co">## Show first origin period and its incremental development</span>
-<span class="va">raa.inc</span><span class="op">[</span><span class="fl">1</span>,<span class="op">]</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">raa.inc</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/utilityfunctions.html">cum2incr</a></span><span class="op">(</span><span class="va">RAA</span><span class="op">)</span></span>
+<span><span class="co">## Show first origin period and its incremental development</span></span>
+<span><span class="va">raa.inc</span><span class="op">[</span><span class="fl">1</span>,<span class="op">]</span></span></code></pre></div>
 <pre><code>   1    2    3    4    5    6    7    8    9   10 
 5012 3257 2638  898 1734 2642 1828  599   54  172 </code></pre>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">raa.cum</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/utilityfunctions.html">incr2cum</a></span><span class="op">(</span><span class="va">raa.inc</span><span class="op">)</span>
-<span class="co">## Show first origin period and its cumulative development</span>
-<span class="va">raa.cum</span><span class="op">[</span><span class="fl">1</span>,<span class="op">]</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">raa.cum</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/utilityfunctions.html">incr2cum</a></span><span class="op">(</span><span class="va">raa.inc</span><span class="op">)</span></span>
+<span><span class="co">## Show first origin period and its cumulative development</span></span>
+<span><span class="va">raa.cum</span><span class="op">[</span><span class="fl">1</span>,<span class="op">]</span></span></code></pre></div>
 <pre><code>    1     2     3     4     5     6     7     8     9    10 
  5012  8269 10907 11805 13539 16181 18009 18608 18662 18834 </code></pre>
 <div class="section level5">
@@ -234,35 +234,35 @@ Screen shot of a triangle in a spreadsheet software.
 </div>
 <p>Now open R and go through the following commands:</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">myCSVfile</span> <span class="op">&lt;-</span> <span class="st">"path/to/folder/with/triangle.csv"</span>
-<span class="co">## Use the R command:</span>
-<span class="co"># myCSVfile &lt;- file.choose() to select the file interactively</span>
-<span class="va">tri</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html" class="external-link">read.csv</a></span><span class="op">(</span>file<span class="op">=</span><span class="va">myCSVfile</span>, header <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
-<span class="co">## Use read.csv2 if semicolons are used as a separator likely</span>
-<span class="co">## to be the case if you are in continental Europe</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/mages/ChainLadder" class="external-link">ChainLadder</a></span><span class="op">)</span>
-<span class="co">## Convert to triangle</span>
-<span class="va">tri</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/Triangles.html">as.triangle</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">as.matrix</a></span><span class="op">(</span><span class="va">tri</span><span class="op">)</span><span class="op">)</span>
-<span class="co"># Job done.</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">myCSVfile</span> <span class="op">&lt;-</span> <span class="st">"path/to/folder/with/triangle.csv"</span></span>
+<span><span class="co">## Use the R command:</span></span>
+<span><span class="co"># myCSVfile &lt;- file.choose() to select the file interactively</span></span>
+<span><span class="va">tri</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html" class="external-link">read.csv</a></span><span class="op">(</span>file<span class="op">=</span><span class="va">myCSVfile</span>, header <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span><span class="co">## Use read.csv2 if semicolons are used as a separator likely</span></span>
+<span><span class="co">## to be the case if you are in continental Europe</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/mages/ChainLadder" class="external-link">ChainLadder</a></span><span class="op">)</span></span>
+<span><span class="co">## Convert to triangle</span></span>
+<span><span class="va">tri</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/Triangles.html">as.triangle</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">as.matrix</a></span><span class="op">(</span><span class="va">tri</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co"># Job done.</span></span></code></pre></div>
 
 <p>Small data sets can be transferred to R backwards and forwards via the clipboard under MS Windows.</p>
 <p>Select a data set in the spreadsheet and copy it into the clipboard, then go to R and type:</p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">tri</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html" class="external-link">read.table</a></span><span class="op">(</span>file<span class="op">=</span><span class="st">"clipboard"</span>, sep<span class="op">=</span><span class="st">"\t"</span>, na.strings<span class="op">=</span><span class="st">""</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">tri</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html" class="external-link">read.table</a></span><span class="op">(</span>file<span class="op">=</span><span class="st">"clipboard"</span>, sep<span class="op">=</span><span class="st">"\t"</span>, na.strings<span class="op">=</span><span class="st">""</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level6">
 <h6 id="reading-data-from-a-data-base">Reading data from a data base<a class="anchor" aria-label="anchor" href="#reading-data-from-a-data-base"></a>
 </h6>
 <p>R makes it easy to access data using SQL statements, e.g. via an ODBC connection<a class="footnote-ref" tabindex="0" data-bs-toggle="popover" data-bs-content="&lt;p&gt;See the &lt;code&gt;RODBC&lt;/code&gt; and &lt;code&gt;DBI&lt;/code&gt; packages&lt;/p&gt;"><sup>1</sup></a>, for more details see <span class="citation">(R Development Core Team 2022a)</span>. The ChainLadder packages includes a demo to showcase how data can be imported from a MS Access data base, see:</p>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/demo.html" class="external-link">demo</a></span><span class="op">(</span><span class="va">DatabaseExamples</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/demo.html" class="external-link">demo</a></span><span class="op">(</span><span class="va">DatabaseExamples</span><span class="op">)</span></span></code></pre></div>
 <p>In this section we use data stored in a CSV-file<a class="footnote-ref" tabindex="0" data-bs-toggle="popover" data-bs-content="&lt;p&gt;Please ensure that your CSV-file is free from formatting, e.g. characters to separate units of thousands, as those columns will be read as characters or factors rather than numerical values.&lt;/p&gt;"><sup>2</sup></a> to demonstrate some typical operations you will want to carry out with data stored in data bases. CSV stands for comma separated values, stored in a text file. Note many European countries use a comma as decimal point and a semicolon as field separator, see also the help file to <code>read.csv2</code>. In most cases your triangles will be stored in tables and not in a classical triangle shape. The ChainLadder package contains a CSV-file with sample data in a long table format. We read the data into R’s memory with the <code>read.csv</code> command and look at the first couple of rows and summarise it:</p>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">filename</span> <span class="op">&lt;-</span>  <span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"Database"</span>,
-                                   package<span class="op">=</span><span class="st">"ChainLadder"</span><span class="op">)</span>,
-                       <span class="st">"TestData.csv"</span><span class="op">)</span>
-<span class="va">myData</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html" class="external-link">read.csv</a></span><span class="op">(</span><span class="va">filename</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">myData</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">filename</span> <span class="op">&lt;-</span>  <span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"Database"</span>,</span>
+<span>                                   package<span class="op">=</span><span class="st">"ChainLadder"</span><span class="op">)</span>,</span>
+<span>                       <span class="st">"TestData.csv"</span><span class="op">)</span></span>
+<span><span class="va">myData</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html" class="external-link">read.csv</a></span><span class="op">(</span><span class="va">filename</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">myData</span><span class="op">)</span></span></code></pre></div>
 <pre><code>  origin dev  value lob
 1   1977   1 153638 ABC
 2   1978   1 178536 ABC
@@ -271,7 +271,7 @@ Screen shot of a triangle in a spreadsheet software.
 5   1981   1 219810 ABC
 6   1982   1 205654 ABC</code></pre>
 <div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">myData</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">myData</span><span class="op">)</span></span></code></pre></div>
 <pre><code>     origin          dev            value             lob           
  Min.   :   1   Min.   : 1.00   Min.   : -17657   Length:701        
  1st Qu.:   3   1st Qu.: 2.00   1st Qu.:  10324   Class :character  
@@ -281,8 +281,8 @@ Screen shot of a triangle in a spreadsheet software.
  Max.   :1991   Max.   :14.00   Max.   :3258646                     </code></pre>
 <p>Let’s focus on one subset of the data. We select the RAA data again:</p>
 <div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">raa</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/subset.html" class="external-link">subset</a></span><span class="op">(</span><span class="va">myData</span>, <span class="va">lob</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="st">"RAA"</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">raa</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">raa</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/subset.html" class="external-link">subset</a></span><span class="op">(</span><span class="va">myData</span>, <span class="va">lob</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="st">"RAA"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">raa</span><span class="op">)</span></span></code></pre></div>
 <pre><code>   origin dev value lob
 67   1981   1  5012 RAA
 68   1982   1   106 RAA
@@ -292,11 +292,11 @@ Screen shot of a triangle in a spreadsheet software.
 72   1986   1  1513 RAA</code></pre>
 <p>To transform the long table of the RAA data into a triangle we use the function <code>as.triangle</code>. The arguments we have to specify are the column names of the origin and development period and further the column which contains the values:</p>
 <div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">raa.tri</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/Triangles.html">as.triangle</a></span><span class="op">(</span><span class="va">raa</span>,
-                       origin<span class="op">=</span><span class="st">"origin"</span>,
-                       dev<span class="op">=</span><span class="st">"dev"</span>,
-                       value<span class="op">=</span><span class="st">"value"</span><span class="op">)</span>
-<span class="va">raa.tri</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">raa.tri</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/Triangles.html">as.triangle</a></span><span class="op">(</span><span class="va">raa</span>,</span>
+<span>                       origin<span class="op">=</span><span class="st">"origin"</span>,</span>
+<span>                       dev<span class="op">=</span><span class="st">"dev"</span>,</span>
+<span>                       value<span class="op">=</span><span class="st">"value"</span><span class="op">)</span></span>
+<span><span class="va">raa.tri</span></span></code></pre></div>
 <pre><code>      dev
 origin    1    2    3    4    5    6    7   8   9  10
   1981 5012 3257 2638  898 1734 2642 1828 599  54 172
@@ -312,8 +312,8 @@ origin    1    2    3    4    5    6    7   8   9  10
 <p>We note that the data has been stored as an incremental data set. As mentioned above, we could now use the function <code>incr2cum</code> to transform the triangle into a cumulative format.</p>
 <p>We can transform a triangle back into a data frame structure:</p>
 <div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">raa.df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="va">raa.tri</span>, na.rm<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">raa.df</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">raa.df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="va">raa.tri</span>, na.rm<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">raa.df</span><span class="op">)</span></span></code></pre></div>
 <pre><code>       origin dev value
 1981-1   1981   1  5012
 1982-1   1982   1   106
@@ -334,12 +334,12 @@ Flow chart of data between R and data bases
 </h5>
 <p>For small data sets or while testing procedures, it may be useful to create triangles interactively from the command line. There are two main ways to proceed. With the first we create a matrix of data (including missing values in the lower right portion of the triangle) and then convert it into a triangle with <code>as.triangle</code>:</p>
 <div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/Triangles.html">as.triangle</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">100</span>, <span class="fl">150</span>, <span class="fl">175</span>, <span class="fl">180</span>, <span class="fl">200</span>,
-                     <span class="fl">110</span>, <span class="fl">168</span>, <span class="fl">192</span>, <span class="fl">205</span>, <span class="cn">NA</span>,
-                     <span class="fl">115</span>, <span class="fl">169</span>, <span class="fl">202</span>, <span class="cn">NA</span>,  <span class="cn">NA</span>,
-                     <span class="fl">125</span>, <span class="fl">185</span>, <span class="cn">NA</span>,  <span class="cn">NA</span>,  <span class="cn">NA</span>,
-                     <span class="fl">150</span>, <span class="cn">NA</span>,  <span class="cn">NA</span>,  <span class="cn">NA</span>,  <span class="cn">NA</span><span class="op">)</span>,
-                   nrow <span class="op">=</span> <span class="fl">5</span>, byrow <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/Triangles.html">as.triangle</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">100</span>, <span class="fl">150</span>, <span class="fl">175</span>, <span class="fl">180</span>, <span class="fl">200</span>,</span>
+<span>                     <span class="fl">110</span>, <span class="fl">168</span>, <span class="fl">192</span>, <span class="fl">205</span>, <span class="cn">NA</span>,</span>
+<span>                     <span class="fl">115</span>, <span class="fl">169</span>, <span class="fl">202</span>, <span class="cn">NA</span>,  <span class="cn">NA</span>,</span>
+<span>                     <span class="fl">125</span>, <span class="fl">185</span>, <span class="cn">NA</span>,  <span class="cn">NA</span>,  <span class="cn">NA</span>,</span>
+<span>                     <span class="fl">150</span>, <span class="cn">NA</span>,  <span class="cn">NA</span>,  <span class="cn">NA</span>,  <span class="cn">NA</span><span class="op">)</span>,</span>
+<span>                   nrow <span class="op">=</span> <span class="fl">5</span>, byrow <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <pre><code>      dev
 origin   1   2   3   4   5
      1 100 150 175 180 200
@@ -349,11 +349,11 @@ origin   1   2   3   4   5
      5 150  NA  NA  NA  NA</code></pre>
 <p>We may also create the triangle directly with <code>triangle</code> by providing the rows (or columns) of <em>known</em> data as vectors, thereby omitting the missing values:</p>
 <div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/Triangles.html">triangle</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">100</span>, <span class="fl">150</span>, <span class="fl">175</span>, <span class="fl">180</span>, <span class="fl">200</span><span class="op">)</span>,
-         <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">110</span>, <span class="fl">168</span>, <span class="fl">192</span>, <span class="fl">205</span><span class="op">)</span>,
-         <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">115</span>, <span class="fl">169</span>, <span class="fl">202</span><span class="op">)</span>,
-         <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">125</span>, <span class="fl">185</span><span class="op">)</span>,
-         <span class="fl">150</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/Triangles.html">triangle</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">100</span>, <span class="fl">150</span>, <span class="fl">175</span>, <span class="fl">180</span>, <span class="fl">200</span><span class="op">)</span>,</span>
+<span>         <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">110</span>, <span class="fl">168</span>, <span class="fl">192</span>, <span class="fl">205</span><span class="op">)</span>,</span>
+<span>         <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">115</span>, <span class="fl">169</span>, <span class="fl">202</span><span class="op">)</span>,</span>
+<span>         <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">125</span>, <span class="fl">185</span><span class="op">)</span>,</span>
+<span>         <span class="fl">150</span><span class="op">)</span></span></code></pre></div>
 <pre><code>      dev
 origin   1   2   3   4   5
      1 100 150 175 180 200
@@ -378,44 +378,44 @@ origin   1   2   3   4   5
 \end{aligned}
 \]</span></p>
 <div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># Calculate age-to-age factors for RAA triangle</span>
-<span class="va">n</span> <span class="op">&lt;-</span> <span class="fl">10</span>
-<span class="va">f</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">sapply</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="op">(</span><span class="va">n</span><span class="op">-</span><span class="fl">1</span><span class="op">)</span>,
-            <span class="kw">function</span><span class="op">(</span><span class="va">i</span><span class="op">)</span><span class="op">{</span>
-              <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">RAA</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="op">(</span><span class="va">n</span><span class="op">-</span><span class="va">i</span><span class="op">)</span><span class="op">)</span>,<span class="va">i</span><span class="op">+</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span><span class="op">/</span><span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">RAA</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="op">(</span><span class="va">n</span><span class="op">-</span><span class="va">i</span><span class="op">)</span><span class="op">)</span>,<span class="va">i</span><span class="op">]</span><span class="op">)</span>
-            <span class="op">}</span>
-<span class="op">)</span>
-<span class="va">f</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># Calculate age-to-age factors for RAA triangle</span></span>
+<span><span class="va">n</span> <span class="op">&lt;-</span> <span class="fl">10</span></span>
+<span><span class="va">f</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">sapply</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="op">(</span><span class="va">n</span><span class="op">-</span><span class="fl">1</span><span class="op">)</span>,</span>
+<span>            <span class="kw">function</span><span class="op">(</span><span class="va">i</span><span class="op">)</span><span class="op">{</span></span>
+<span>              <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">RAA</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="op">(</span><span class="va">n</span><span class="op">-</span><span class="va">i</span><span class="op">)</span><span class="op">)</span>,<span class="va">i</span><span class="op">+</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span><span class="op">/</span><span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">RAA</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="op">(</span><span class="va">n</span><span class="op">-</span><span class="va">i</span><span class="op">)</span><span class="op">)</span>,<span class="va">i</span><span class="op">]</span><span class="op">)</span></span>
+<span>            <span class="op">}</span></span>
+<span><span class="op">)</span></span>
+<span><span class="va">f</span></span></code></pre></div>
 <pre><code>[1] 2.999 1.624 1.271 1.172 1.113 1.042 1.033 1.017 1.009</code></pre>
 <p>Often it is not suitable to assume that the oldest origin year is fully developed. A typical approach is to extrapolate the development ratios, e.g. assuming a linear model on a log scale.</p>
 <div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">dev.period</span> <span class="op">&lt;-</span> <span class="fl">1</span><span class="op">:</span><span class="op">(</span><span class="va">n</span><span class="op">-</span><span class="fl">1</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log</a></span><span class="op">(</span><span class="va">f</span><span class="op">-</span><span class="fl">1</span><span class="op">)</span> <span class="op">~</span> <span class="va">dev.period</span>, 
-     main<span class="op">=</span><span class="st">"Log-linear extrapolation of age-to-age factors"</span><span class="op">)</span>
-<span class="va">tail.model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log</a></span><span class="op">(</span><span class="va">f</span><span class="op">-</span><span class="fl">1</span><span class="op">)</span> <span class="op">~</span> <span class="va">dev.period</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/graphics/abline.html" class="external-link">abline</a></span><span class="op">(</span><span class="va">tail.model</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">dev.period</span> <span class="op">&lt;-</span> <span class="fl">1</span><span class="op">:</span><span class="op">(</span><span class="va">n</span><span class="op">-</span><span class="fl">1</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log</a></span><span class="op">(</span><span class="va">f</span><span class="op">-</span><span class="fl">1</span><span class="op">)</span> <span class="op">~</span> <span class="va">dev.period</span>, </span>
+<span>     main<span class="op">=</span><span class="st">"Log-linear extrapolation of age-to-age factors"</span><span class="op">)</span></span>
+<span><span class="va">tail.model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log</a></span><span class="op">(</span><span class="va">f</span><span class="op">-</span><span class="fl">1</span><span class="op">)</span> <span class="op">~</span> <span class="va">dev.period</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/abline.html" class="external-link">abline</a></span><span class="op">(</span><span class="va">tail.model</span><span class="op">)</span></span></code></pre></div>
 <p><img src="ChainLadder_files/figure-html/unnamed-chunk-16-1.png" width="60%" style="display: block; margin: auto;"></p>
 <div class="sourceCode" id="cb33"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">co</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/coef.html" class="external-link">coef</a></span><span class="op">(</span><span class="va">tail.model</span><span class="op">)</span>
-<span class="co">## extrapolate another 100 dev. period</span>
-<span class="va">tail</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">exp</a></span><span class="op">(</span><span class="va">co</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">n</span><span class="op">:</span><span class="op">(</span><span class="va">n</span> <span class="op">+</span> <span class="fl">100</span><span class="op">)</span><span class="op">)</span> <span class="op">*</span> <span class="va">co</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span><span class="op">)</span> <span class="op">+</span> <span class="fl">1</span>
-<span class="va">f.tail</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/prod.html" class="external-link">prod</a></span><span class="op">(</span><span class="va">tail</span><span class="op">)</span>
-<span class="va">f.tail</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">co</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/coef.html" class="external-link">coef</a></span><span class="op">(</span><span class="va">tail.model</span><span class="op">)</span></span>
+<span><span class="co">## extrapolate another 100 dev. period</span></span>
+<span><span class="va">tail</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">exp</a></span><span class="op">(</span><span class="va">co</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">n</span><span class="op">:</span><span class="op">(</span><span class="va">n</span> <span class="op">+</span> <span class="fl">100</span><span class="op">)</span><span class="op">)</span> <span class="op">*</span> <span class="va">co</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span><span class="op">)</span> <span class="op">+</span> <span class="fl">1</span></span>
+<span><span class="va">f.tail</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/prod.html" class="external-link">prod</a></span><span class="op">(</span><span class="va">tail</span><span class="op">)</span></span>
+<span><span class="va">f.tail</span></span></code></pre></div>
 <pre><code>[1] 1.009</code></pre>
 <p>The age-to-age factors allow us to plot the expected claims development patterns.</p>
 <div class="sourceCode" id="cb35"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="fl">100</span><span class="op">*</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rev.html" class="external-link">rev</a></span><span class="op">(</span><span class="fl">1</span><span class="op">/</span><span class="fu"><a href="https://rdrr.io/r/base/cumsum.html" class="external-link">cumprod</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rev.html" class="external-link">rev</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">f</span>, <span class="va">tail</span><span class="op">[</span><span class="va">tail</span><span class="op">&gt;</span><span class="fl">1.0001</span><span class="op">]</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>, t<span class="op">=</span><span class="st">"b"</span>,
-     main<span class="op">=</span><span class="st">"Expected claims development pattern"</span>,
-     xlab<span class="op">=</span><span class="st">"Dev. period"</span>, ylab<span class="op">=</span><span class="st">"Development % of ultimate loss"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="fl">100</span><span class="op">*</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rev.html" class="external-link">rev</a></span><span class="op">(</span><span class="fl">1</span><span class="op">/</span><span class="fu"><a href="https://rdrr.io/r/base/cumsum.html" class="external-link">cumprod</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rev.html" class="external-link">rev</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">f</span>, <span class="va">tail</span><span class="op">[</span><span class="va">tail</span><span class="op">&gt;</span><span class="fl">1.0001</span><span class="op">]</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>, t<span class="op">=</span><span class="st">"b"</span>,</span>
+<span>     main<span class="op">=</span><span class="st">"Expected claims development pattern"</span>,</span>
+<span>     xlab<span class="op">=</span><span class="st">"Dev. period"</span>, ylab<span class="op">=</span><span class="st">"Development % of ultimate loss"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="ChainLadder_files/figure-html/unnamed-chunk-17-1.png" width="60%" style="display: block; margin: auto;"></p>
 <p>The link ratios are then applied to the latest known cumulative claims amount to forecast the next development period. The <em>squaring</em> of the RAA triangle is calculated below, where an <em>ultimate</em> column is appended to the right to accommodate the expected development beyond the oldest age (10) of the triangle due to the tail factor (1.009) being greater than unity.</p>
 <div class="sourceCode" id="cb36"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">f</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">f</span>, <span class="va">f.tail</span><span class="op">)</span>
-<span class="va">fullRAA</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">cbind</a></span><span class="op">(</span><span class="va">RAA</span>, Ult <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">10</span><span class="op">)</span><span class="op">)</span>
-<span class="kw">for</span><span class="op">(</span><span class="va">k</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="va">n</span><span class="op">)</span><span class="op">{</span>
-  <span class="va">fullRAA</span><span class="op">[</span><span class="op">(</span><span class="va">n</span><span class="op">-</span><span class="va">k</span><span class="op">+</span><span class="fl">1</span><span class="op">)</span><span class="op">:</span><span class="va">n</span>, <span class="va">k</span><span class="op">+</span><span class="fl">1</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="va">fullRAA</span><span class="op">[</span><span class="op">(</span><span class="va">n</span><span class="op">-</span><span class="va">k</span><span class="op">+</span><span class="fl">1</span><span class="op">)</span><span class="op">:</span><span class="va">n</span>,<span class="va">k</span><span class="op">]</span><span class="op">*</span><span class="va">f</span><span class="op">[</span><span class="va">k</span><span class="op">]</span>
-<span class="op">}</span>
-<span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="va">fullRAA</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">f</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">f</span>, <span class="va">f.tail</span><span class="op">)</span></span>
+<span><span class="va">fullRAA</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">cbind</a></span><span class="op">(</span><span class="va">RAA</span>, Ult <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">10</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="kw">for</span><span class="op">(</span><span class="va">k</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="va">n</span><span class="op">)</span><span class="op">{</span></span>
+<span>  <span class="va">fullRAA</span><span class="op">[</span><span class="op">(</span><span class="va">n</span><span class="op">-</span><span class="va">k</span><span class="op">+</span><span class="fl">1</span><span class="op">)</span><span class="op">:</span><span class="va">n</span>, <span class="va">k</span><span class="op">+</span><span class="fl">1</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="va">fullRAA</span><span class="op">[</span><span class="op">(</span><span class="va">n</span><span class="op">-</span><span class="va">k</span><span class="op">+</span><span class="fl">1</span><span class="op">)</span><span class="op">:</span><span class="va">n</span>,<span class="va">k</span><span class="op">]</span><span class="op">*</span><span class="va">f</span><span class="op">[</span><span class="va">k</span><span class="op">]</span></span>
+<span><span class="op">}</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="va">fullRAA</span><span class="op">)</span></span></code></pre></div>
 <pre><code>        1     2     3     4     5     6     7     8     9    10   Ult
 1981 5012  8269 10907 11805 13539 16181 18009 18608 18662 18834 19012
 1982  106  4285  5396 10666 13782 15599 15496 16169 16704 16858 17017
@@ -429,34 +429,34 @@ origin   1   2   3   4   5
 1990 2063  6188 10046 12767 14959 16655 17353 17931 18234 18402 18576</code></pre>
 <p>The total estimated outstanding loss under this method is about 54100:</p>
 <div class="sourceCode" id="cb38"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">fullRAA</span><span class="op">[</span> ,<span class="fl">11</span><span class="op">]</span> <span class="op">-</span> <span class="fu"><a href="../reference/getLatestCumulative.html">getLatestCumulative</a></span><span class="op">(</span><span class="va">RAA</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">fullRAA</span><span class="op">[</span> ,<span class="fl">11</span><span class="op">]</span> <span class="op">-</span> <span class="fu"><a href="../reference/getLatestCumulative.html">getLatestCumulative</a></span><span class="op">(</span><span class="va">RAA</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <pre><code>[1] 54146</code></pre>
 <p>This approach is also called Loss Development Factor (LDF) method.</p>
 <p>More generally, the factors used to square the triangle need not always be drawn from the dollar weighted averages of the triangle. Other sources of factors from which the actuary may <em>select</em> link ratios include simple averages from the triangle, averages weighted toward more recent observations or adjusted for outliers, and benchmark patterns based on related, more credible loss experience. Also, since the ultimate value of claims is simply the product of the most current diagonal and the cumulative product of the link ratios, the completion of interior of the triangle is usually not displayed in favor of that multiplicative calculation.</p>
 <p>For example, suppose the actuary decides that the volume weighted factors from the RAA triangle are representative of expected future growth, but discards the 1.009 tail factor derived from the loglinear fit in favor of a five percent tail (1.05) based on loss data from a larger book of similar business. The LDF method might be displayed in R as follows.</p>
 <div class="sourceCode" id="cb40"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">linkratios</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/attr.html" class="external-link">attr</a></span><span class="op">(</span><span class="fu"><a href="../reference/ata.html">ata</a></span><span class="op">(</span><span class="va">RAA</span><span class="op">)</span>, <span class="st">"vwtd"</span><span class="op">)</span>, tail <span class="op">=</span> <span class="fl">1.05</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="va">linkratios</span>, <span class="fl">3</span><span class="op">)</span> <span class="co"># display to only three decimal places</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">linkratios</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/attr.html" class="external-link">attr</a></span><span class="op">(</span><span class="fu"><a href="../reference/ata.html">ata</a></span><span class="op">(</span><span class="va">RAA</span><span class="op">)</span>, <span class="st">"vwtd"</span><span class="op">)</span>, tail <span class="op">=</span> <span class="fl">1.05</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="va">linkratios</span>, <span class="fl">3</span><span class="op">)</span> <span class="co"># display to only three decimal places</span></span></code></pre></div>
 <pre><code>  1-2   2-3   3-4   4-5   5-6   6-7   7-8   8-9  9-10  tail 
 2.999 1.624 1.271 1.172 1.113 1.042 1.033 1.017 1.009 1.050 </code></pre>
 <div class="sourceCode" id="cb42"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">LDF</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/rev.html" class="external-link">rev</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/cumsum.html" class="external-link">cumprod</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rev.html" class="external-link">rev</a></span><span class="op">(</span><span class="va">linkratios</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">LDF</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">RAA</span><span class="op">)</span> <span class="co"># so the display matches the triangle</span>
-<span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="va">LDF</span>, <span class="fl">3</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">LDF</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/rev.html" class="external-link">rev</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/cumsum.html" class="external-link">cumprod</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rev.html" class="external-link">rev</a></span><span class="op">(</span><span class="va">linkratios</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">LDF</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">RAA</span><span class="op">)</span> <span class="co"># so the display matches the triangle</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="va">LDF</span>, <span class="fl">3</span><span class="op">)</span></span></code></pre></div>
 <pre><code>    1     2     3     4     5     6     7     8     9    10 
 9.366 3.123 1.923 1.513 1.292 1.160 1.113 1.078 1.060 1.050 </code></pre>
 <div class="sourceCode" id="cb44"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">currentEval</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/getLatestCumulative.html">getLatestCumulative</a></span><span class="op">(</span><span class="va">RAA</span><span class="op">)</span>
-<span class="co"># Reverse the LDFs so the first, least mature factor [1]</span>
-<span class="co">#   is applied to the last origin year (1990)</span>
-<span class="va">EstdUlt</span> <span class="op">&lt;-</span> <span class="va">currentEval</span> <span class="op">*</span> <span class="fu"><a href="https://rdrr.io/r/base/rev.html" class="external-link">rev</a></span><span class="op">(</span><span class="va">LDF</span><span class="op">)</span> <span class="co">#</span>
-<span class="co"># Start with the body of the exhibit</span>
-<span class="va">Exhibit</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span><span class="va">currentEval</span>, LDF <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rev.html" class="external-link">rev</a></span><span class="op">(</span><span class="va">LDF</span><span class="op">)</span>, <span class="fl">3</span><span class="op">)</span>, <span class="va">EstdUlt</span><span class="op">)</span>
-<span class="co"># Tack on a Total row</span>
-<span class="va">Exhibit</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">rbind</a></span><span class="op">(</span><span class="va">Exhibit</span>,
-<span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>currentEval<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">currentEval</span><span class="op">)</span>, LDF<span class="op">=</span><span class="cn">NA</span>, EstdUlt<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">EstdUlt</span><span class="op">)</span>,
-           row.names <span class="op">=</span> <span class="st">"Total"</span><span class="op">)</span><span class="op">)</span>
-<span class="va">Exhibit</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">currentEval</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/getLatestCumulative.html">getLatestCumulative</a></span><span class="op">(</span><span class="va">RAA</span><span class="op">)</span></span>
+<span><span class="co"># Reverse the LDFs so the first, least mature factor [1]</span></span>
+<span><span class="co">#   is applied to the last origin year (1990)</span></span>
+<span><span class="va">EstdUlt</span> <span class="op">&lt;-</span> <span class="va">currentEval</span> <span class="op">*</span> <span class="fu"><a href="https://rdrr.io/r/base/rev.html" class="external-link">rev</a></span><span class="op">(</span><span class="va">LDF</span><span class="op">)</span> <span class="co">#</span></span>
+<span><span class="co"># Start with the body of the exhibit</span></span>
+<span><span class="va">Exhibit</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span><span class="va">currentEval</span>, LDF <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rev.html" class="external-link">rev</a></span><span class="op">(</span><span class="va">LDF</span><span class="op">)</span>, <span class="fl">3</span><span class="op">)</span>, <span class="va">EstdUlt</span><span class="op">)</span></span>
+<span><span class="co"># Tack on a Total row</span></span>
+<span><span class="va">Exhibit</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">rbind</a></span><span class="op">(</span><span class="va">Exhibit</span>,</span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>currentEval<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">currentEval</span><span class="op">)</span>, LDF<span class="op">=</span><span class="cn">NA</span>, EstdUlt<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">EstdUlt</span><span class="op">)</span>,</span>
+<span>           row.names <span class="op">=</span> <span class="st">"Total"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">Exhibit</span></span></code></pre></div>
 <pre><code>      currentEval   LDF EstdUlt
 1981        18834 1.050   19776
 1982        16704 1.060   17701
@@ -471,11 +471,11 @@ origin   1   2   3   4   5
 Total      160987    NA  223778</code></pre>
 <p>Since the early 1990s several papers have been published to embed the simple chain-ladder method into a statistical framework. Ben Zehnwirth and Glenn Barnett point out in <span class="citation">(Zehnwirth and Barnett 2000)</span> that the age-to-age link ratios can be regarded as the coefficients of a weighted linear regression through the origin, see also <span class="citation">(Murphy 1994)</span>.</p>
 <div class="sourceCode" id="cb46"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">lmCL</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">i</span>, <span class="va">Triangle</span><span class="op">)</span><span class="op">{</span>
-  <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">y</span><span class="op">~</span><span class="va">x</span><span class="op">+</span><span class="fl">0</span>, weights<span class="op">=</span><span class="fl">1</span><span class="op">/</span><span class="va">Triangle</span><span class="op">[</span>,<span class="va">i</span><span class="op">]</span>,
-     data<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>x<span class="op">=</span><span class="va">Triangle</span><span class="op">[</span>,<span class="va">i</span><span class="op">]</span>, y<span class="op">=</span><span class="va">Triangle</span><span class="op">[</span>,<span class="va">i</span><span class="op">+</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span><span class="op">)</span>
-<span class="op">}</span>
-<span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">sapply</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="op">(</span><span class="va">n</span><span class="op">-</span><span class="fl">1</span><span class="op">)</span><span class="op">)</span>, <span class="va">lmCL</span>, <span class="va">RAA</span><span class="op">)</span>, <span class="va">coef</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">lmCL</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">i</span>, <span class="va">Triangle</span><span class="op">)</span><span class="op">{</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">y</span><span class="op">~</span><span class="va">x</span><span class="op">+</span><span class="fl">0</span>, weights<span class="op">=</span><span class="fl">1</span><span class="op">/</span><span class="va">Triangle</span><span class="op">[</span>,<span class="va">i</span><span class="op">]</span>,</span>
+<span>     data<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>x<span class="op">=</span><span class="va">Triangle</span><span class="op">[</span>,<span class="va">i</span><span class="op">]</span>, y<span class="op">=</span><span class="va">Triangle</span><span class="op">[</span>,<span class="va">i</span><span class="op">+</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="op">}</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">sapply</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="op">(</span><span class="va">n</span><span class="op">-</span><span class="fl">1</span><span class="op">)</span><span class="op">)</span>, <span class="va">lmCL</span>, <span class="va">RAA</span><span class="op">)</span>, <span class="va">coef</span><span class="op">)</span></span></code></pre></div>
 <pre><code>    x     x     x     x     x     x     x     x     x 
 2.999 1.624 1.271 1.172 1.113 1.042 1.033 1.017 1.009 </code></pre>
 </div>
@@ -501,8 +501,8 @@ Total      160987    NA  223778</code></pre>
 <p>The Mack method is implemented in the ChainLadder package via the function <code>MackChainLadder</code>.</p>
 <p>As an example we apply the <code>MackChainLadder</code> function to our triangle <code>RAA</code>:</p>
 <div class="sourceCode" id="cb48"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">mack</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/MackChainLadder.html">MackChainLadder</a></span><span class="op">(</span><span class="va">RAA</span>, est.sigma<span class="op">=</span><span class="st">"Mack"</span><span class="op">)</span>
-<span class="va">mack</span> <span class="co"># same as summary(mack) </span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">mack</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/MackChainLadder.html">MackChainLadder</a></span><span class="op">(</span><span class="va">RAA</span>, est.sigma<span class="op">=</span><span class="st">"Mack"</span><span class="op">)</span></span>
+<span><span class="va">mack</span> <span class="co"># same as summary(mack) </span></span></code></pre></div>
 <pre><code>MackChainLadder(Triangle = RAA, est.sigma = "Mack")
 
      Latest Dev.To.Date Ultimate   IBNR Mack.S.E CV(IBNR)
@@ -526,10 +526,10 @@ Mack.S.E   26,909.01
 CV(IBNR):       0.52</code></pre>
 <p>We can access the loss development factors and the full triangle via:</p>
 <div class="sourceCode" id="cb50"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">mack</span><span class="op">$</span><span class="va">f</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">mack</span><span class="op">$</span><span class="va">f</span></span></code></pre></div>
 <pre><code> [1] 2.999 1.624 1.271 1.172 1.113 1.042 1.033 1.017 1.009 1.000</code></pre>
 <div class="sourceCode" id="cb52"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">mack</span><span class="op">$</span><span class="va">FullTriangle</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">mack</span><span class="op">$</span><span class="va">FullTriangle</span></span></code></pre></div>
 <pre><code>      dev
 origin    1     2     3     4     5     6     7     8     9    10
   1981 5012  8269 10907 11805 13539 16181 18009 18608 18662 18834
@@ -544,8 +544,8 @@ origin    1     2     3     4     5     6     7     8     9    10
   1990 2063  6188 10046 12767 14959 16655 17353 17931 18234 18402</code></pre>
 <p>If you are only interested in the summary statistics then use:</p>
 <div class="sourceCode" id="cb54"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">mack_smmry</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">mack</span><span class="op">)</span> <span class="co"># See also ?summary.MackChainLadder</span>
-<span class="va">mack_smmry</span><span class="op">$</span><span class="va">ByOrigin</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">mack_smmry</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">mack</span><span class="op">)</span> <span class="co"># See also ?summary.MackChainLadder</span></span>
+<span><span class="va">mack_smmry</span><span class="op">$</span><span class="va">ByOrigin</span></span></code></pre></div>
 <pre><code>     Latest Dev.To.Date Ultimate    IBNR Mack.S.E CV(IBNR)
 1981  18834      1.0000    18834     0.0      0.0      NaN
 1982  16704      0.9909    16858   154.0    206.2   1.3395
@@ -558,7 +558,7 @@ origin    1     2     3     4     5     6     7     8     9    10
 1989   5395      0.3362    16045 10650.0   6333.2   0.5947
 1990   2063      0.1121    18402 16339.4  24566.3   1.5035</code></pre>
 <div class="sourceCode" id="cb56"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">mack_smmry</span><span class="op">$</span><span class="va">Totals</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">mack_smmry</span><span class="op">$</span><span class="va">Totals</span></span></code></pre></div>
 <pre><code>              Totals
 Latest:    1.610e+05
 Dev:       7.554e-01
@@ -568,7 +568,7 @@ Mack S.E.: 2.691e+04
 CV(IBNR):  5.161e-01</code></pre>
 <p>To check that Mack’s assumption are valid review the residual plots, you should see no trends in either of them.</p>
 <div class="sourceCode" id="cb58"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">mack</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">mack</span><span class="op">)</span></span></code></pre></div>
 <div class="figure" style="text-align: center">
 <img src="ChainLadder_files/figure-html/MackPlot1-1.png" alt="Some residual show clear trends, indicating that the Mack assumptions are not well met" width="60%"><p class="caption">
 Some residual show clear trends, indicating that the Mack assumptions are not well met
@@ -576,7 +576,7 @@ Some residual show clear trends, indicating that the Mack assumptions are not we
 </div>
 <p>We can plot the development, including the forecast and estimated standard errors by origin period by setting the argument <code>lattice=TRUE</code>.</p>
 <div class="sourceCode" id="cb59"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">mack</span>, lattice<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">mack</span>, lattice<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 <p><img src="ChainLadder_files/figure-html/MackPlot2-1.png" width="60%" style="display: block; margin: auto;"></p>
 <div class="section level5">
 <h5 id="using-a-subset-of-the-triangle">Using a subset of the triangle<a class="anchor" aria-label="anchor" href="#using-a-subset-of-the-triangle"></a>
@@ -584,8 +584,8 @@ Some residual show clear trends, indicating that the Mack assumptions are not we
 <p>The <code>weights</code> argument allows for the selection of a subset of the triangle for the projections.</p>
 <p>For example, in order to use only the last 5 calendar years of the triangle, set the <code>weights</code> as follows:</p>
 <div class="sourceCode" id="cb60"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">calPeriods</span> <span class="op">&lt;-</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/row.html" class="external-link">row</a></span><span class="op">(</span><span class="va">RAA</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/col.html" class="external-link">col</a></span><span class="op">(</span><span class="va">RAA</span><span class="op">)</span> <span class="op">-</span> <span class="fl">1</span><span class="op">)</span>
-<span class="op">(</span><span class="va">weights</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html" class="external-link">ifelse</a></span><span class="op">(</span><span class="va">calPeriods</span> <span class="op">&lt;=</span> <span class="fl">5</span>, <span class="fl">0</span>, <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html" class="external-link">ifelse</a></span><span class="op">(</span><span class="va">calPeriods</span> <span class="op">&gt;</span> <span class="fl">10</span>, <span class="cn">NA</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">calPeriods</span> <span class="op">&lt;-</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/row.html" class="external-link">row</a></span><span class="op">(</span><span class="va">RAA</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/col.html" class="external-link">col</a></span><span class="op">(</span><span class="va">RAA</span><span class="op">)</span> <span class="op">-</span> <span class="fl">1</span><span class="op">)</span></span>
+<span><span class="op">(</span><span class="va">weights</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html" class="external-link">ifelse</a></span><span class="op">(</span><span class="va">calPeriods</span> <span class="op">&lt;=</span> <span class="fl">5</span>, <span class="fl">0</span>, <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html" class="external-link">ifelse</a></span><span class="op">(</span><span class="va">calPeriods</span> <span class="op">&gt;</span> <span class="fl">10</span>, <span class="cn">NA</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <pre><code>      [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10]
  [1,]    0    0    0    0    0    1    1    1    1     1
  [2,]    0    0    0    0    1    1    1    1    1    NA
@@ -598,7 +598,7 @@ Some residual show clear trends, indicating that the Mack assumptions are not we
  [9,]    1    1   NA   NA   NA   NA   NA   NA   NA    NA
 [10,]    1   NA   NA   NA   NA   NA   NA   NA   NA    NA</code></pre>
 <div class="sourceCode" id="cb62"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/MackChainLadder.html">MackChainLadder</a></span><span class="op">(</span><span class="va">RAA</span>, weights<span class="op">=</span><span class="va">weights</span>, est.sigma <span class="op">=</span> <span class="st">"Mack"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/MackChainLadder.html">MackChainLadder</a></span><span class="op">(</span><span class="va">RAA</span>, weights<span class="op">=</span><span class="va">weights</span>, est.sigma <span class="op">=</span> <span class="st">"Mack"</span><span class="op">)</span></span></code></pre></div>
 <pre><code>MackChainLadder(Triangle = RAA, weights = weights, est.sigma = "Mack")
 
      Latest Dev.To.Date Ultimate   IBNR Mack.S.E CV(IBNR)
@@ -627,7 +627,7 @@ CV(IBNR):       0.34</code></pre>
 </h4>
 <p>Munich chain-ladder is a reserving method that reduces the gap between IBNR projections based on paid losses and IBNR projections based on incurred losses. The Munich chain-ladder method uses correlations between paid and incurred losses of the historical data into the projection for the future <span class="citation">(Quarg and Mack 2004)</span>.</p>
 <div class="sourceCode" id="cb64"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">MCLpaid</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">MCLpaid</span></span></code></pre></div>
 <pre><code>      dev
 origin    1    2    3    4    5    6    7
      1  576 1804 1970 2024 2074 2102 2131
@@ -638,7 +638,7 @@ origin    1    2    3    4    5    6    7
      6 1442 4010   NA   NA   NA   NA   NA
      7 2044   NA   NA   NA   NA   NA   NA</code></pre>
 <div class="sourceCode" id="cb66"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">MCLincurred</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">MCLincurred</span></span></code></pre></div>
 <pre><code>      dev
 origin    1    2    3    4    5    6    7
      1  978 2104 2134 2144 2174 2182 2174
@@ -649,16 +649,16 @@ origin    1    2    3    4    5    6    7
      6 2642 4406   NA   NA   NA   NA   NA
      7 5022   NA   NA   NA   NA   NA   NA</code></pre>
 <div class="sourceCode" id="cb68"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span>mfrow<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">2</span><span class="op">)</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">MCLpaid</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">MCLincurred</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span>mfrow<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">2</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">MCLpaid</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">MCLincurred</span><span class="op">)</span></span></code></pre></div>
 <p><img src="ChainLadder_files/figure-html/unnamed-chunk-26-1.png" width="60%" style="display: block; margin: auto;"></p>
 <div class="sourceCode" id="cb69"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span>mfrow<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">1</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span>mfrow<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">1</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <div class="sourceCode" id="cb70"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># Following the example in Quarg's (2004) paper:</span>
-<span class="va">MCL</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/MunichChainLadder.html">MunichChainLadder</a></span><span class="op">(</span><span class="va">MCLpaid</span>, <span class="va">MCLincurred</span>, est.sigmaP<span class="op">=</span><span class="fl">0.1</span>, est.sigmaI<span class="op">=</span><span class="fl">0.1</span><span class="op">)</span>
-<span class="va">MCL</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># Following the example in Quarg's (2004) paper:</span></span>
+<span><span class="va">MCL</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/MunichChainLadder.html">MunichChainLadder</a></span><span class="op">(</span><span class="va">MCLpaid</span>, <span class="va">MCLincurred</span>, est.sigmaP<span class="op">=</span><span class="fl">0.1</span>, est.sigmaI<span class="op">=</span><span class="fl">0.1</span><span class="op">)</span></span>
+<span><span class="va">MCL</span></span></code></pre></div>
 <pre><code>MunichChainLadder(Paid = MCLpaid, Incurred = MCLincurred, est.sigmaP = 0.1, 
     est.sigmaI = 0.1)
 
@@ -685,7 +685,7 @@ Latest:   25,525   29,694      0.86
 Ultimate: 32,371   32,688      0.99</code></pre>
 <p>You can use <code>summary(MCL)$ByOrigin</code> and <code>summary(MCL)$Totals</code> to extract the information from the output above.</p>
 <div class="sourceCode" id="cb72"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">MCL</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">MCL</span><span class="op">)</span></span></code></pre></div>
 <p><img src="ChainLadder_files/figure-html/unnamed-chunk-28-1.png" width="60%" style="display: block; margin: auto;"></p>
 </div>
 <div class="section level4">
@@ -693,71 +693,71 @@ Ultimate: 32,371   32,688      0.99</code></pre>
 </h4>
 <p>The <code>BootChainLadder</code> function uses a two-stage bootstrapping/simulation approach following the paper by England and Verrall <span class="citation">(England and Verrall 2002)</span>. In the first stage an ordinary chain-ladder methods is applied to the cumulative claims triangle. From this we calculate the scaled Pearson residuals which we bootstrap R times to forecast future incremental claims payments via the standard chain-ladder method. In the second stage we simulate the process error with the bootstrap value as the mean and using the process distribution assumed. The set of reserves obtained in this way forms the predictive distribution, from which summary statistics such as mean, prediction error or quantiles can be derived.</p>
 <div class="sourceCode" id="cb73"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co">## See also the example in section 8 of England &amp; Verrall (2002)</span>
-<span class="co">## on page 55.</span>
-<span class="va">B</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/BootChainLadder.html">BootChainLadder</a></span><span class="op">(</span><span class="va">RAA</span>, R<span class="op">=</span><span class="fl">999</span>, process.distr<span class="op">=</span><span class="st">"gamma"</span><span class="op">)</span>
-<span class="va">B</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co">## See also the example in section 8 of England &amp; Verrall (2002)</span></span>
+<span><span class="co">## on page 55.</span></span>
+<span><span class="va">B</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/BootChainLadder.html">BootChainLadder</a></span><span class="op">(</span><span class="va">RAA</span>, R<span class="op">=</span><span class="fl">999</span>, process.distr<span class="op">=</span><span class="st">"gamma"</span><span class="op">)</span></span>
+<span><span class="va">B</span></span></code></pre></div>
 <pre><code>BootChainLadder(Triangle = RAA, R = 999, process.distr = "gamma")
 
      Latest Mean Ultimate Mean IBNR IBNR.S.E IBNR 75% IBNR 95%
 1981 18,834        18,834         0        0        0        0
-1982 16,704        16,880       176      725      228    1,560
-1983 23,466        24,221       755    1,395    1,297    3,630
-1984 27,067        28,701     1,634    1,829    2,529    5,170
-1985 26,180        29,041     2,861    2,325    4,098    7,024
-1986 15,852        19,568     3,716    2,513    5,201    8,316
-1987 12,314        17,862     5,548    3,229    7,216   11,615
-1988 13,112        24,144    11,032    4,967   13,943   19,796
-1989  5,395        16,251    10,856    5,885   14,237   21,713
-1990  2,063        19,628    17,565   13,532   25,556   43,147
+1982 16,704        16,833       129      667      198    1,312
+1983 23,466        24,093       627    1,315    1,057    3,150
+1984 27,067        28,810     1,743    1,964    2,695    5,610
+1985 26,180        28,956     2,776    2,392    3,964    7,452
+1986 15,852        19,633     3,781    2,613    5,236    8,718
+1987 12,314        17,796     5,482    2,990    7,145   11,024
+1988 13,112        24,026    10,914    5,041   13,895   20,464
+1989  5,395        16,187    10,792    6,007   14,433   21,637
+1990  2,063        19,401    17,338   14,045   24,725   43,069
 
                  Totals
 Latest:         160,987
-Mean Ultimate:  215,129
-Mean IBNR:       54,142
-IBNR.S.E         18,158
-Total IBNR 75%:  65,555
-Total IBNR 95%:  87,151</code></pre>
+Mean Ultimate:  214,569
+Mean IBNR:       53,582
+IBNR.S.E         18,824
+Total IBNR 75%:  65,007
+Total IBNR 95%:  88,551</code></pre>
 <p>You can use <code>summary(B)$ByOrigin</code> and <code>summary(B)$Totals</code> to extract the information from the output above.</p>
 <div class="sourceCode" id="cb75"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">B</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">B</span><span class="op">)</span></span></code></pre></div>
 <p><img src="ChainLadder_files/figure-html/unnamed-chunk-30-1.png" width="60%" style="display: block; margin: auto;"></p>
 <p>Quantiles of the bootstrap IBNR can be calculated via the <code>quantile</code> function:</p>
 <div class="sourceCode" id="cb76"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/stats/quantile.html" class="external-link">quantile</a></span><span class="op">(</span><span class="va">B</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.75</span>,<span class="fl">0.95</span>,<span class="fl">0.99</span>, <span class="fl">0.995</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/quantile.html" class="external-link">quantile</a></span><span class="op">(</span><span class="va">B</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.75</span>,<span class="fl">0.95</span>,<span class="fl">0.99</span>, <span class="fl">0.995</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <pre><code>$ByOrigin
      IBNR 75% IBNR 95% IBNR 99% IBNR 99.5%
 1981      0.0        0        0          0
-1982    228.3     1560     2616       3430
-1983   1297.2     3630     5165       5855
-1984   2529.2     5170     7749       8092
-1985   4098.1     7024    10396      10957
-1986   5201.5     8316    11274      12143
-1987   7216.1    11615    15686      16703
-1988  13942.9    19796    25871      27051
-1989  14237.3    21713    28130      29503
-1990  25555.6    43147    55795      61093
+1982    197.5     1312     2210       2729
+1983   1057.4     3150     5085       5660
+1984   2694.9     5610     7436       8181
+1985   3963.9     7452     9975      10347
+1986   5236.4     8718    11530      12306
+1987   7145.2    11024    13802      14937
+1988  13895.2    20464    25289      27033
+1989  14433.4    21637    28165      32205
+1990  24724.6    43069    60643      69115
 
 $Totals
             Totals
-IBNR 75%:    65555
-IBNR 95%:    87151
-IBNR 99%:   101950
-IBNR 99.5%: 108052</code></pre>
+IBNR 75%:    65007
+IBNR 95%:    88551
+IBNR 99%:   103348
+IBNR 99.5%: 112477</code></pre>
 <p>The distribution of the IBNR appears to follow a log-normal distribution, so let’s fit it:</p>
 <div class="sourceCode" id="cb78"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co">## fit a distribution to the IBNR</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="http://www.stats.ox.ac.uk/pub/MASS4/" class="external-link">MASS</a></span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/ecdf.html" class="external-link">ecdf</a></span><span class="op">(</span><span class="va">B</span><span class="op">$</span><span class="va">IBNR.Totals</span><span class="op">)</span><span class="op">)</span>
-<span class="co">## fit a log-normal distribution</span>
-<span class="va">fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/MASS/man/fitdistr.html" class="external-link">fitdistr</a></span><span class="op">(</span><span class="va">B</span><span class="op">$</span><span class="va">IBNR.Totals</span><span class="op">[</span><span class="va">B</span><span class="op">$</span><span class="va">IBNR.Totals</span><span class="op">&gt;</span><span class="fl">0</span><span class="op">]</span>, <span class="st">"lognormal"</span><span class="op">)</span>
-<span class="va">fit</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co">## fit a distribution to the IBNR</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="http://www.stats.ox.ac.uk/pub/MASS4/" class="external-link">MASS</a></span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/ecdf.html" class="external-link">ecdf</a></span><span class="op">(</span><span class="va">B</span><span class="op">$</span><span class="va">IBNR.Totals</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">## fit a log-normal distribution</span></span>
+<span><span class="va">fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/MASS/man/fitdistr.html" class="external-link">fitdistr</a></span><span class="op">(</span><span class="va">B</span><span class="op">$</span><span class="va">IBNR.Totals</span><span class="op">[</span><span class="va">B</span><span class="op">$</span><span class="va">IBNR.Totals</span><span class="op">&gt;</span><span class="fl">0</span><span class="op">]</span>, <span class="st">"lognormal"</span><span class="op">)</span></span>
+<span><span class="va">fit</span></span></code></pre></div>
 <pre><code>    meanlog      sdlog  
-  10.839961    0.355023 
- ( 0.011232) ( 0.007943)</code></pre>
+  10.825047    0.369012 
+ ( 0.011675) ( 0.008255)</code></pre>
 <div class="sourceCode" id="cb80"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/curve.html" class="external-link">curve</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Lognormal.html" class="external-link">plnorm</a></span><span class="op">(</span><span class="va">x</span>,<span class="va">fit</span><span class="op">$</span><span class="va">estimate</span><span class="op">[</span><span class="st">"meanlog"</span><span class="op">]</span>, <span class="va">fit</span><span class="op">$</span><span class="va">estimate</span><span class="op">[</span><span class="st">"sdlog"</span><span class="op">]</span><span class="op">)</span>,
-      col<span class="op">=</span><span class="st">"red"</span>, add<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/curve.html" class="external-link">curve</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Lognormal.html" class="external-link">plnorm</a></span><span class="op">(</span><span class="va">x</span>,<span class="va">fit</span><span class="op">$</span><span class="va">estimate</span><span class="op">[</span><span class="st">"meanlog"</span><span class="op">]</span>, <span class="va">fit</span><span class="op">$</span><span class="va">estimate</span><span class="op">[</span><span class="st">"sdlog"</span><span class="op">]</span><span class="op">)</span>,</span>
+<span>      col<span class="op">=</span><span class="st">"red"</span>, add<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 <p><img src="ChainLadder_files/figure-html/unnamed-chunk-32-1.png" width="60%" style="display: block; margin: auto;"></p>
 </div>
 <div class="section level4">
@@ -784,24 +784,24 @@ Y_{i,k+1} = A_k + B_k \cdot Y_{i,k} + \epsilon_{i,k},
 
 <p>Consider the two liability loss triangles from <span class="citation">(M. Merz and Wüthrich 2008b)</span>. It comes as a list of two matrices:</p>
 <div class="sourceCode" id="cb81"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">liab</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">liab</span><span class="op">)</span></span></code></pre></div>
 <pre><code>List of 2
  $ GeneralLiab: num [1:14, 1:14] 59966 49685 51914 84937 98921 ...
  $ AutoLiab   : num [1:14, 1:14] 114423 152296 144325 145904 170333 ...</code></pre>
 <p>We can convert a list to a <code>triangles</code> object using</p>
 <div class="sourceCode" id="cb83"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">liab2</span> <span class="op">&lt;-</span> <span class="fu">as</span><span class="op">(</span><span class="va">liab</span>, <span class="st">"triangles"</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/base/class.html" class="external-link">class</a></span><span class="op">(</span><span class="va">liab2</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">liab2</span> <span class="op">&lt;-</span> <span class="fu">as</span><span class="op">(</span><span class="va">liab</span>, <span class="st">"triangles"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/class.html" class="external-link">class</a></span><span class="op">(</span><span class="va">liab2</span><span class="op">)</span></span></code></pre></div>
 <pre><code>[1] "triangles"
 attr(,"package")
 [1] "ChainLadder"</code></pre>
 <p>We can find out what methods are available for this class:</p>
 <div class="sourceCode" id="cb85"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">showMethods</span><span class="op">(</span>classes <span class="op">=</span> <span class="st">"triangles"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu">showMethods</span><span class="op">(</span>classes <span class="op">=</span> <span class="st">"triangles"</span><span class="op">)</span></span></code></pre></div>
 <p>For example, if we want to extract the last three columns of each triangle, we can use the <code>[</code> operator as follows:</p>
 <div class="sourceCode" id="cb86"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># use drop = TRUE to remove rows that are all NA's</span>
-<span class="va">liab2</span><span class="op">[</span>, <span class="fl">12</span><span class="op">:</span><span class="fl">14</span>, drop <span class="op">=</span> <span class="cn">TRUE</span><span class="op">]</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># use drop = TRUE to remove rows that are all NA's</span></span>
+<span><span class="va">liab2</span><span class="op">[</span>, <span class="fl">12</span><span class="op">:</span><span class="fl">14</span>, drop <span class="op">=</span> <span class="cn">TRUE</span><span class="op">]</span></span></code></pre></div>
 <pre><code>An object of class "triangles"
 [[1]]
        [,1]   [,2]   [,3]
@@ -816,7 +816,7 @@ attr(,"package")
 [3,] 540742     NA     NA</code></pre>
 <p>The following combines two columns of the triangles to form a new matrix:</p>
 <div class="sourceCode" id="cb88"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">cbind2</span><span class="op">(</span><span class="va">liab2</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span>, <span class="fl">12</span><span class="op">]</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu">cbind2</span><span class="op">(</span><span class="va">liab2</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span>, <span class="fl">12</span><span class="op">]</span><span class="op">)</span></span></code></pre></div>
 <pre><code>       [,1]   [,2]
 [1,] 540873 391328
 [2,] 563571 485138
@@ -827,8 +827,8 @@ attr(,"package")
 </h4>
 <p>The form of regression models used in estimating the development parameters is controlled by the <code>fit.method</code> argument. If we specify <code>fit.method = "OLS"</code>, the ordinary least squares will be used and the estimation of development factors for each triangle is independent of the others. In this case, the residual covariance matrix <span class="math inline">\(\Sigma_k\)</span> is diagonal. As a result, the multivariate model is equivalent to running multiple Mack chain-ladders separately.</p>
 <div class="sourceCode" id="cb90"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">fit1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/MultiChainLadder.html">MultiChainLadder</a></span><span class="op">(</span><span class="va">liab</span>, fit.method <span class="op">=</span> <span class="st">"OLS"</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">fit1</span><span class="op">)</span><span class="op">$</span><span class="va">report.summary</span>, <span class="st">"["</span>, <span class="fl">15</span>, <span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">fit1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/MultiChainLadder.html">MultiChainLadder</a></span><span class="op">(</span><span class="va">liab</span>, fit.method <span class="op">=</span> <span class="st">"OLS"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">fit1</span><span class="op">)</span><span class="op">$</span><span class="va">report.summary</span>, <span class="st">"["</span>, <span class="fl">15</span>, <span class="op">)</span></span></code></pre></div>
 <pre><code>$`Summary Statistics for Triangle 1`
         Latest Dev.To.Date Ultimate    IBNR    S.E     CV
 Total 11343397      0.6482 17498658 6155261 427289 0.0694
@@ -843,9 +843,9 @@ Total 20103203      0.7098 28322077 8218874 457278 0.0556</code></pre>
 <p>In the above, we only show the total reserve estimate for each triangle to reduce the output. The full summary including the estimate for each year can be retrieved using the usual <code>summary</code> function. By default, the <code>summary</code> function produces reserve statistics for all individual triangles, as well as for the portfolio that is assumed to be the sum of the two triangles. This behaviour can be changed by supplying the <code>portfolio</code> argument. See the documentation for details.</p>
 <p>We can verify if this is indeed the same as the univariate Mack chain ladder. For example, we can apply the <code>MackChainLadder</code> function to each triangle:</p>
 <div class="sourceCode" id="cb92"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="va">liab</span>, <span class="va">MackChainLadder</span>, est.sigma <span class="op">=</span> <span class="st">"Mack"</span><span class="op">)</span>
-<span class="co"># the same as the first triangle above</span>
-<span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="va">fit</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/t.html" class="external-link">t</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">$</span><span class="va">Totals</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="va">liab</span>, <span class="va">MackChainLadder</span>, est.sigma <span class="op">=</span> <span class="st">"Mack"</span><span class="op">)</span></span>
+<span><span class="co"># the same as the first triangle above</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="va">fit</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/t.html" class="external-link">t</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">$</span><span class="va">Totals</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <pre><code>$GeneralLiab
         Latest:   Dev: Ultimate:   IBNR: Mack S.E.: CV(IBNR):
 Totals 11343397 0.6482  17498658 6155261     427289   0.06942
@@ -855,8 +855,8 @@ $AutoLiab
 Totals 8759806 0.8093  10823418 2063612     162872   0.07893</code></pre>
 <p>The argument <code>mse.method</code> controls how the mean square errors are computed. By default, it implements the Mack method. An alternative method is the conditional re-sampling approach in <span class="citation">(Buchwalder et al. 2006)</span>, which assumes the estimated parameters are independent. This is used when <code>mse.method = "Independence"</code>. For example, the following reproduces the result in <span class="citation">(Buchwalder et al. 2006)</span>. Note that the first argument must be a list, even though only one triangle is used.</p>
 <div class="sourceCode" id="cb94"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="op">(</span><span class="va">B1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/MultiChainLadder.html">MultiChainLadder</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">GenIns</span><span class="op">)</span>, fit.method <span class="op">=</span> <span class="st">"OLS"</span>,
-    mse.method <span class="op">=</span> <span class="st">"Independence"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="op">(</span><span class="va">B1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/MultiChainLadder.html">MultiChainLadder</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">GenIns</span><span class="op">)</span>, fit.method <span class="op">=</span> <span class="st">"OLS"</span>,</span>
+<span>    mse.method <span class="op">=</span> <span class="st">"Independence"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <pre><code>$`Summary Statistics for Input Triangle`
           Latest Dev.To.Date   Ultimate       IBNR       S.E    CV
 1      3,901,463      1.0000  3,901,463          0         0 0.000
@@ -876,8 +876,8 @@ Total 34,358,090      0.6478 53,038,946 18,680,856 2,447,618 0.131</code></pre>
 </h4>
 <p>To allow correlations to be incorporated, we employ the seemingly unrelated regressions (see the package <code>systemfit</code>, <span class="citation">(Henningsen and Hamann 2007)</span>) that simultaneously model the two triangles in each development period. This is invoked when we specify <code>fit.method = "SUR"</code>:</p>
 <div class="sourceCode" id="cb96"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">fit2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/MultiChainLadder.html">MultiChainLadder</a></span><span class="op">(</span><span class="va">liab</span>, fit.method <span class="op">=</span> <span class="st">"SUR"</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">fit2</span><span class="op">)</span><span class="op">$</span><span class="va">report.summary</span>, <span class="st">"["</span>, <span class="fl">15</span>, <span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">fit2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/MultiChainLadder.html">MultiChainLadder</a></span><span class="op">(</span><span class="va">liab</span>, fit.method <span class="op">=</span> <span class="st">"SUR"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">fit2</span><span class="op">)</span><span class="op">$</span><span class="va">report.summary</span>, <span class="st">"["</span>, <span class="fl">15</span>, <span class="op">)</span></span></code></pre></div>
 <pre><code>$`Summary Statistics for Triangle 1`
         Latest Dev.To.Date Ultimate    IBNR    S.E     CV
 Total 11343397      0.6484 17494907 6151510 419293 0.0682
@@ -891,12 +891,12 @@ $`Summary Statistics for Triangle 1+2`
 Total 20103203        0.71 28316248 8213045 500607 0.061</code></pre>
 <p>We see that the portfolio prediction error is inflated to <span class="math inline">\(500,607\)</span> from <span class="math inline">\(457,278\)</span> in the separate development model (“OLS”). This is because of the positive correlation between the two triangles. The estimated correlation for each development period can be retrieved through the <code>residCor</code> function:</p>
 <div class="sourceCode" id="cb98"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/unlist.html" class="external-link">unlist</a></span><span class="op">(</span><span class="fu"><a href="../reference/residCov-methods.html">residCor</a></span><span class="op">(</span><span class="va">fit2</span><span class="op">)</span><span class="op">)</span>, <span class="fl">3</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/unlist.html" class="external-link">unlist</a></span><span class="op">(</span><span class="fu"><a href="../reference/residCov-methods.html">residCor</a></span><span class="op">(</span><span class="va">fit2</span><span class="op">)</span><span class="op">)</span>, <span class="fl">3</span><span class="op">)</span></span></code></pre></div>
 <pre><code> [1]  0.247  0.495  0.682  0.446  0.487  0.451 -0.172  0.805  0.337  0.688
 [11] -0.004  1.000  0.021</code></pre>
 <p>Similarly, most methods that work for linear models such as <code>coef</code>, <code>fitted</code>, <code>resid</code> and so on will also work. Since we have a sequence of models, the retrieved results from these methods are stored in a list. For example, we can retrieve the estimated development factors for each period as</p>
 <div class="sourceCode" id="cb100"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/do.call.html" class="external-link">do.call</a></span><span class="op">(</span><span class="st">"rbind"</span>, <span class="fu"><a href="https://rdrr.io/r/stats/coef.html" class="external-link">coef</a></span><span class="op">(</span><span class="va">fit2</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/do.call.html" class="external-link">do.call</a></span><span class="op">(</span><span class="st">"rbind"</span>, <span class="fu"><a href="https://rdrr.io/r/stats/coef.html" class="external-link">coef</a></span><span class="op">(</span><span class="va">fit2</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <pre><code>      eq1_x[[1]] eq2_x[[2]]
  [1,]      3.227     2.2224
  [2,]      1.719     1.2688
@@ -927,10 +927,10 @@ Summary and diagnostic plots from a <code>MultiChainLadder</code> object
 <p>Indeed, for most applications, we recommend the use of separate chain ladders for the tail periods to stabilize the estimation - there are few data points in the tail and running a multivariate model often produces extremely volatile estimates or even fails. To facilitate such an approach, the package offers the <code>MultiChainLadder2</code> function, which implements a split-and-join procedure: we split the input data into two parts, specify a multivariate model with rich structures on the first part (with enough data) to reflect the multivariate dependencies, apply separate univariate chain-ladders on the second part, and then join the two models together to produce the final predictions. The splitting is determined by the <code>last</code> argument, which specifies how many of the development periods in the tail go into the second part of the split. The type of the model structure to be specified for the first part of the split model in <code>MultiChainLadder2</code> is controlled by the <code>type</code> argument. It takes one of the following values: <code>MCL</code> - the multivariate chain-ladder with diagonal development matrix; <code>MCL+int</code> - the multivariate chain-ladder with additional intercepts; <code>GMCL-int</code> - the general multivariate chain-ladder without intercepts; and <code>GMCL</code> - the full general multivariate chain-ladder with intercepts and non-diagonal development matrix.</p>
 <p>For example, the following fits the SUR method to the first part (the first 11 columns) using the unbiased residual covariance estimator in <span class="citation">(M. Merz and Wüthrich 2008b)</span>, and separate chain-ladders for the rest:</p>
 <div class="sourceCode" id="cb102"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="va"><a href="http://www.systemfit.org" class="external-link">systemfit</a></span><span class="op">)</span>
-<span class="va">W1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/MultiChainLadder.html">MultiChainLadder2</a></span><span class="op">(</span><span class="va">liab</span>, mse.method <span class="op">=</span> <span class="st">"Independence"</span>,
-        control <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/systemfit/man/systemfit.control.html" class="external-link">systemfit.control</a></span><span class="op">(</span>methodResidCov <span class="op">=</span> <span class="st">"Theil"</span><span class="op">)</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">W1</span><span class="op">)</span><span class="op">$</span><span class="va">report.summary</span>, <span class="st">"["</span>, <span class="fl">15</span>, <span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="va"><a href="http://www.systemfit.org" class="external-link">systemfit</a></span><span class="op">)</span></span>
+<span><span class="va">W1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/MultiChainLadder.html">MultiChainLadder2</a></span><span class="op">(</span><span class="va">liab</span>, mse.method <span class="op">=</span> <span class="st">"Independence"</span>,</span>
+<span>        control <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/systemfit/man/systemfit.control.html" class="external-link">systemfit.control</a></span><span class="op">(</span>methodResidCov <span class="op">=</span> <span class="st">"Theil"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">W1</span><span class="op">)</span><span class="op">$</span><span class="va">report.summary</span>, <span class="st">"["</span>, <span class="fl">15</span>, <span class="op">)</span></span></code></pre></div>
 <pre><code>$`Summary Statistics for Triangle 1`
         Latest Dev.To.Date Ultimate    IBNR    S.E     CV
 Total 11343397      0.6483 17497403 6154006 427041 0.0694
@@ -944,12 +944,12 @@ $`Summary Statistics for Triangle 1+2`
 Total 20103203      0.7099 28318437 8215234 505376 0.0615</code></pre>
 <p>Similarly, the iterative residual covariance estimator in <span class="citation">(M. Merz and Wüthrich 2008b)</span> can also be used, in which we use the control parameter <code>maxiter</code> to determine the number of iterations:</p>
 <div class="sourceCode" id="cb104"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">)</span><span class="op">{</span>
-  <span class="va">W2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/MultiChainLadder.html">MultiChainLadder2</a></span><span class="op">(</span><span class="va">liab</span>, mse.method <span class="op">=</span> <span class="st">"Independence"</span>,
-      control <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/systemfit/man/systemfit.control.html" class="external-link">systemfit.control</a></span><span class="op">(</span>methodResidCov <span class="op">=</span> <span class="st">"Theil"</span>, maxiter <span class="op">=</span> <span class="va">i</span><span class="op">)</span><span class="op">)</span>
-  <span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/format.html" class="external-link">format</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">W2</span><span class="op">)</span><span class="op">@</span><span class="va">report.summary</span><span class="op">[[</span><span class="fl">3</span><span class="op">]</span><span class="op">]</span><span class="op">[</span><span class="fl">15</span>, <span class="fl">4</span><span class="op">:</span><span class="fl">5</span><span class="op">]</span>,
-          digits <span class="op">=</span> <span class="fl">6</span>, big.mark <span class="op">=</span> <span class="st">","</span><span class="op">)</span><span class="op">)</span>
-<span class="op">}</span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">)</span><span class="op">{</span></span>
+<span>  <span class="va">W2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/MultiChainLadder.html">MultiChainLadder2</a></span><span class="op">(</span><span class="va">liab</span>, mse.method <span class="op">=</span> <span class="st">"Independence"</span>,</span>
+<span>      control <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/systemfit/man/systemfit.control.html" class="external-link">systemfit.control</a></span><span class="op">(</span>methodResidCov <span class="op">=</span> <span class="st">"Theil"</span>, maxiter <span class="op">=</span> <span class="va">i</span><span class="op">)</span><span class="op">)</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/format.html" class="external-link">format</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">W2</span><span class="op">)</span><span class="op">@</span><span class="va">report.summary</span><span class="op">[[</span><span class="fl">3</span><span class="op">]</span><span class="op">]</span><span class="op">[</span><span class="fl">15</span>, <span class="fl">4</span><span class="op">:</span><span class="fl">5</span><span class="op">]</span>,</span>
+<span>          digits <span class="op">=</span> <span class="fl">6</span>, big.mark <span class="op">=</span> <span class="st">","</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="op">}</span></span></code></pre></div>
 <pre><code>           IBNR     S.E
 Total 8,215,234 505,376
            IBNR     S.E
@@ -961,7 +961,7 @@ Total 8,215,362 505,444
            IBNR     S.E
 Total 8,215,362 505,444</code></pre>
 <div class="sourceCode" id="cb106"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">W2</span><span class="op">)</span><span class="op">$</span><span class="va">report.summary</span>, <span class="st">"["</span>, <span class="fl">15</span>, <span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">W2</span><span class="op">)</span><span class="op">$</span><span class="va">report.summary</span>, <span class="st">"["</span>, <span class="fl">15</span>, <span class="op">)</span></span></code></pre></div>
 <pre><code>$`Summary Statistics for Triangle 1`
         Latest Dev.To.Date Ultimate    IBNR    S.E     CV
 Total 11343397      0.6483 17497526 6154129 427074 0.0694
@@ -981,17 +981,17 @@ Total 20103203      0.7099 28318565 8215362 505444 0.0615</code></pre>
 </h4>
 <p>Consider the <code>auto</code> triangles from0 <span class="citation">(Zhang 2010)</span>. It includes three automobile insurance triangles: personal auto paid, personal auto incurred, and commercial auto paid.</p>
 <div class="sourceCode" id="cb108"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">auto</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">auto</span><span class="op">)</span></span></code></pre></div>
 <pre><code>List of 3
  $ PersonalAutoPaid    : num [1:10, 1:10] 101125 102541 114932 114452 115597 ...
  $ PersonalAutoIncurred: num [1:10, 1:10] 325423 323627 358410 405319 434065 ...
  $ CommercialAutoPaid  : num [1:10, 1:10] 19827 22331 22533 23128 25053 ...</code></pre>
 <p>It is a reasonable expectation that these triangles will be correlated. So we run a MCL model on them:</p>
 <div class="sourceCode" id="cb110"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">f0</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/MultiChainLadder.html">MultiChainLadder2</a></span><span class="op">(</span><span class="va">auto</span>, type <span class="op">=</span> <span class="st">"MCL"</span><span class="op">)</span>
-<span class="co"># show correlation- the last three columns have zero correlation</span>
-<span class="co"># because separate chain-ladders are used</span>
-<span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/do.call.html" class="external-link">do.call</a></span><span class="op">(</span><span class="va">cbind</span>, <span class="fu"><a href="../reference/residCov-methods.html">residCor</a></span><span class="op">(</span><span class="va">f0</span><span class="op">)</span><span class="op">)</span>, digits <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">f0</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/MultiChainLadder.html">MultiChainLadder2</a></span><span class="op">(</span><span class="va">auto</span>, type <span class="op">=</span> <span class="st">"MCL"</span><span class="op">)</span></span>
+<span><span class="co"># show correlation- the last three columns have zero correlation</span></span>
+<span><span class="co"># because separate chain-ladders are used</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/do.call.html" class="external-link">do.call</a></span><span class="op">(</span><span class="va">cbind</span>, <span class="fu"><a href="../reference/residCov-methods.html">residCor</a></span><span class="op">(</span><span class="va">f0</span><span class="op">)</span><span class="op">)</span>, digits <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span></code></pre></div>
 <pre><code>       [,1]    [,2]  [,3]  [,4]    [,5]  [,6] [,7] [,8] [,9]
 (1,2) 0.327 -0.0101 0.598 0.711  0.8565 0.928    0    0    0
 (1,3) 0.870  0.9064 0.939 0.261 -0.0607 0.911    0    0    0
@@ -999,7 +999,7 @@ Total 20103203      0.7099 28318565 8215362 505444 0.0615</code></pre>
 <p>However, from the residual plot, the first row in Figure @ref(fig:multi_resid), it is evident that the default mean structure in the MCL model is not adequate. Usually this is a common problem with the chain-ladder based models, owing to the missing of intercepts.</p>
 <p>We can improve the above model by including intercepts in the SUR fit as follows:</p>
 <div class="sourceCode" id="cb112"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">f1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/MultiChainLadder.html">MultiChainLadder2</a></span><span class="op">(</span><span class="va">auto</span>, type <span class="op">=</span> <span class="st">"MCL+int"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">f1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/MultiChainLadder.html">MultiChainLadder2</a></span><span class="op">(</span><span class="va">auto</span>, type <span class="op">=</span> <span class="st">"MCL+int"</span><span class="op">)</span></span></code></pre></div>
 <p>The corresponding residual plot is shown in the second row in the figure below. We see that these residuals are randomly scattered around zero and there is no clear pattern compared to the plot from the MCL model.</p>
 <div class="figure" style="text-align: center">
 <img src="ChainLadder_files/figure-html/unnamed-chunk-49-1.png" alt="Residual plots for the MCL model (first row) and the GMCL (MCL+int) model (second row) for the auto data" width="60%"><p class="caption">
@@ -1008,7 +1008,7 @@ Residual plots for the MCL model (first row) and the GMCL (MCL+int) model (secon
 </div>
 <p>The default summary computes the portfolio estimates as the sum of all the triangles. This is not desirable because the first two triangles are both from the personal auto line. We can overwrite this via the <code>portfolio</code> argument. For example, the following uses the two paid triangles as the portfolio estimate:</p>
 <div class="sourceCode" id="cb113"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">f1</span>, portfolio <span class="op">=</span> <span class="st">"1+3"</span><span class="op">)</span><span class="op">@</span><span class="va">report.summary</span>, <span class="st">"["</span>, <span class="fl">11</span>, <span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">f1</span>, portfolio <span class="op">=</span> <span class="st">"1+3"</span><span class="op">)</span><span class="op">@</span><span class="va">report.summary</span>, <span class="st">"["</span>, <span class="fl">11</span>, <span class="op">)</span></span></code></pre></div>
 <pre><code>$`Summary Statistics for Triangle 1`
        Latest Dev.To.Date Ultimate   IBNR   S.E     CV
 Total 3290539      0.8537  3854572 564033 19089 0.0338
@@ -1030,29 +1030,29 @@ Total 4334390      0.8263  5245636 911246 38753 0.0425</code></pre>
 </h4>
 <p>Although the model with intercepts proved to be an improvement over the MCL model, it still fails to account for the structural relationship between triangles. In particular, it produces divergent paid-to-incurred loss ratios for the personal auto line:</p>
 <div class="sourceCode" id="cb115"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">ult</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">f1</span><span class="op">)</span><span class="op">$</span><span class="va">Ultimate</span>
-<span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">ult</span><span class="op">[</span>, <span class="fl">1</span><span class="op">]</span> <span class="op">/</span><span class="va">ult</span><span class="op">[</span>, <span class="fl">2</span><span class="op">]</span>, <span class="fl">3</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">ult</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">f1</span><span class="op">)</span><span class="op">$</span><span class="va">Ultimate</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">ult</span><span class="op">[</span>, <span class="fl">1</span><span class="op">]</span> <span class="op">/</span><span class="va">ult</span><span class="op">[</span>, <span class="fl">2</span><span class="op">]</span>, <span class="fl">3</span><span class="op">)</span></span></code></pre></div>
 <pre><code>    1     2     3     4     5     6     7     8     9    10 Total 
 0.995 0.995 0.993 0.992 0.995 0.996 1.021 1.067 1.112 1.114 1.027 </code></pre>
 <p>We see that for accident years 9-10, the paid-to-incurred loss ratios are more than 110%. This can be fixed by allowing the development of the paid/incurred triangles to depend on each other. That is, we include the past values from the paid triangle as predictors when developing the incurred triangle, and vice versa.</p>
 <p>We illustrate this ignoring the commercial auto triangle. See the demo for a model that uses all three triangles. We also include the MCL model and the Munich chain-ladder as a comparison:</p>
 <div class="sourceCode" id="cb117"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">da</span> <span class="op">&lt;-</span> <span class="va">auto</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">2</span><span class="op">]</span>
-<span class="co"># MCL with diagonal development</span>
-<span class="va">M0</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/MultiChainLadder.html">MultiChainLadder</a></span><span class="op">(</span><span class="va">da</span><span class="op">)</span>
-<span class="co"># non-diagonal development matrix with no intercepts</span>
-<span class="va">M1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/MultiChainLadder.html">MultiChainLadder2</a></span><span class="op">(</span><span class="va">da</span>, type <span class="op">=</span> <span class="st">"GMCL-int"</span><span class="op">)</span>
-<span class="co"># Munich chain-ladder</span>
-<span class="va">M2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/MunichChainLadder.html">MunichChainLadder</a></span><span class="op">(</span><span class="va">da</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span>, <span class="va">da</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span><span class="op">)</span>
-<span class="co"># compile results and compare projected paid to incured ratios</span>
-<span class="va">r1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">M0</span>, <span class="va">M1</span><span class="op">)</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">{</span>
-          <span class="va">ult</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">@</span><span class="va">Ultimate</span>
-          <span class="va">ult</span><span class="op">[</span>, <span class="fl">1</span><span class="op">]</span> <span class="op">/</span> <span class="va">ult</span><span class="op">[</span>, <span class="fl">2</span><span class="op">]</span>
-      <span class="op">}</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">r1</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"MCL"</span>, <span class="st">"GMCL"</span><span class="op">)</span>
-<span class="va">r2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">M2</span><span class="op">)</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">[</span>, <span class="fl">6</span><span class="op">]</span>
-<span class="va">r2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">r2</span>, <span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">M2</span><span class="op">)</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span><span class="op">[</span><span class="fl">2</span>, <span class="fl">3</span><span class="op">]</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/do.call.html" class="external-link">do.call</a></span><span class="op">(</span><span class="va">cbind</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">r1</span>, <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>MuCl <span class="op">=</span> <span class="va">r2</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">*</span> <span class="fl">100</span>, digits <span class="op">=</span> <span class="fl">4</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">da</span> <span class="op">&lt;-</span> <span class="va">auto</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">2</span><span class="op">]</span></span>
+<span><span class="co"># MCL with diagonal development</span></span>
+<span><span class="va">M0</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/MultiChainLadder.html">MultiChainLadder</a></span><span class="op">(</span><span class="va">da</span><span class="op">)</span></span>
+<span><span class="co"># non-diagonal development matrix with no intercepts</span></span>
+<span><span class="va">M1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/MultiChainLadder.html">MultiChainLadder2</a></span><span class="op">(</span><span class="va">da</span>, type <span class="op">=</span> <span class="st">"GMCL-int"</span><span class="op">)</span></span>
+<span><span class="co"># Munich chain-ladder</span></span>
+<span><span class="va">M2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/MunichChainLadder.html">MunichChainLadder</a></span><span class="op">(</span><span class="va">da</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span>, <span class="va">da</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span>
+<span><span class="co"># compile results and compare projected paid to incured ratios</span></span>
+<span><span class="va">r1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">M0</span>, <span class="va">M1</span><span class="op">)</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">{</span></span>
+<span>          <span class="va">ult</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">@</span><span class="va">Ultimate</span></span>
+<span>          <span class="va">ult</span><span class="op">[</span>, <span class="fl">1</span><span class="op">]</span> <span class="op">/</span> <span class="va">ult</span><span class="op">[</span>, <span class="fl">2</span><span class="op">]</span></span>
+<span>      <span class="op">}</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">r1</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"MCL"</span>, <span class="st">"GMCL"</span><span class="op">)</span></span>
+<span><span class="va">r2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">M2</span><span class="op">)</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">[</span>, <span class="fl">6</span><span class="op">]</span></span>
+<span><span class="va">r2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">r2</span>, <span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">M2</span><span class="op">)</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span><span class="op">[</span><span class="fl">2</span>, <span class="fl">3</span><span class="op">]</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/do.call.html" class="external-link">do.call</a></span><span class="op">(</span><span class="va">cbind</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">r1</span>, <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>MuCl <span class="op">=</span> <span class="va">r2</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">*</span> <span class="fl">100</span>, digits <span class="op">=</span> <span class="fl">4</span><span class="op">)</span></span></code></pre></div>
 <pre><code>         MCL   GMCL   MuCl
 1      99.50  99.50  99.50
 2      99.49  99.49  99.55
@@ -1080,7 +1080,7 @@ Total 105.58  99.68  99.88</code></pre>
 </h4>
 <p>Consider again the RAA triangle. Accepting all defaults, the Clark LDF Method would estimate total ultimate losses of 272,009 and a reserve (FutureValue) of 111,022, or almost twice the value based on the volume weighted average link ratios and loglinear fit in section 3.2.1 above.</p>
 <div class="sourceCode" id="cb119"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/ClarkLDF.html">ClarkLDF</a></span><span class="op">(</span><span class="va">RAA</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/ClarkLDF.html">ClarkLDF</a></span><span class="op">(</span><span class="va">RAA</span><span class="op">)</span></span></code></pre></div>
 <pre><code> Origin CurrentValue    Ldf UltimateValue FutureValue StdError  CV%
    1981       18,834  1.216        22,906       4,072    2,792 68.6
    1982       16,704  1.251        20,899       4,195    2,833 67.5
@@ -1095,7 +1095,7 @@ Total 105.58  99.68  99.88</code></pre>
   Total      160,987              272,009     111,022   36,102 32.5</code></pre>
 <p>Most of the difference is due to the heavy tail, 21.6%, implied by the inverse power curve fit. Clark recognizes that the log-logistic curve can take an unreasonably long length of time to flatten out. If according to the actuary’s experience most claims close as of, say, 20 years, the growth curve can be truncated accordingly by using the <code>maxage</code> argument:</p>
 <div class="sourceCode" id="cb121"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/ClarkLDF.html">ClarkLDF</a></span><span class="op">(</span><span class="va">RAA</span>, maxage <span class="op">=</span> <span class="fl">20</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/ClarkLDF.html">ClarkLDF</a></span><span class="op">(</span><span class="va">RAA</span>, maxage <span class="op">=</span> <span class="fl">20</span><span class="op">)</span></span></code></pre></div>
 <pre><code> Origin CurrentValue    Ldf UltimateValue FutureValue StdError  CV%
    1981       18,834  1.124        21,168       2,334    1,765 75.6
    1982       16,704  1.156        19,314       2,610    1,893 72.6
@@ -1110,7 +1110,7 @@ Total 105.58  99.68  99.88</code></pre>
   Total      160,987              251,369      90,382   26,375 29.2</code></pre>
 <p>The Weibull growth curve tends to be faster developing than the log-logistic:</p>
 <div class="sourceCode" id="cb123"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/ClarkLDF.html">ClarkLDF</a></span><span class="op">(</span><span class="va">RAA</span>, G<span class="op">=</span><span class="st">"weibull"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/ClarkLDF.html">ClarkLDF</a></span><span class="op">(</span><span class="va">RAA</span>, G<span class="op">=</span><span class="st">"weibull"</span><span class="op">)</span></span></code></pre></div>
 <pre><code> Origin CurrentValue   Ldf UltimateValue FutureValue StdError   CV%
    1981       18,834 1.022        19,254         420      700 166.5
    1982       16,704 1.037        17,317         613      855 139.5
@@ -1125,7 +1125,7 @@ Total 105.58  99.68  99.88</code></pre>
   Total      160,987             220,920      59,933   19,149  32.0</code></pre>
 <p>It is recommend to inspect the residuals to help assess the reasonableness of the model relative to the actual data.</p>
 <div class="sourceCode" id="cb125"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="fu"><a href="../reference/ClarkLDF.html">ClarkLDF</a></span><span class="op">(</span><span class="va">RAA</span>, G<span class="op">=</span><span class="st">"weibull"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="fu"><a href="../reference/ClarkLDF.html">ClarkLDF</a></span><span class="op">(</span><span class="va">RAA</span>, G<span class="op">=</span><span class="st">"weibull"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p><img src="ChainLadder_files/figure-html/LDFweibull-1.png" width="60%" style="display: block; margin: auto;"></p>
 <p>Although there is some evidence of heteroscedasticity with increasing ages and fitted values, the residuals otherwise appear randomly scattered around a horizontal line through the origin. The q-q plot shows evidence of a lack of fit in the tails, but the p-value of almost 0.2 can be considered too high to reject outright the assumption of normally distributed standardized residuals<a class="footnote-ref" tabindex="0" data-bs-toggle="popover" data-bs-content="&lt;p&gt;As an exercise, the reader can confirm that the normal distribution assumption is rejected at the 5% level with the log-logistic curve&lt;/p&gt;"><sup>4</sup></a>.</p>
 </div>
@@ -1134,7 +1134,7 @@ Total 105.58  99.68  99.88</code></pre>
 </h4>
 <p>The RAA data set, widely researched in the literature, has no premium associated with it traditionally. Let’s assume a constant earned premium of 40000 each year, and a Weibull growth function:</p>
 <div class="sourceCode" id="cb126"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/ClarkCapeCod.html">ClarkCapeCod</a></span><span class="op">(</span><span class="va">RAA</span>, Premium <span class="op">=</span> <span class="fl">40000</span>, G <span class="op">=</span> <span class="st">"weibull"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/ClarkCapeCod.html">ClarkCapeCod</a></span><span class="op">(</span><span class="va">RAA</span>, Premium <span class="op">=</span> <span class="fl">40000</span>, G <span class="op">=</span> <span class="st">"weibull"</span><span class="op">)</span></span></code></pre></div>
 <pre><code> Origin CurrentValue Premium   ELR FutureGrowthFactor FutureValue UltimateValue
    1981       18,834  40,000 0.566             0.0192         436        19,270
    1982       16,704  40,000 0.566             0.0320         725        17,429
@@ -1162,7 +1162,7 @@ Total 105.58  99.68  99.88</code></pre>
 <p>The estimated expected loss ratio is 0.566. The total outstanding loss is about 10% higher than with the LDF method. The standard error, however, is lower, probably due to the fact that there are fewer parameters to estimate with the CapeCod method, resulting in less parameter risk.</p>
 <p>A plot of this model shows similar residuals By Origin and Projected Age to those from the LDF method, a better spread By Fitted Value, and a slightly better q-q plot, particularly in the upper tail.</p>
 <div class="sourceCode" id="cb128"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="fu"><a href="../reference/ClarkCapeCod.html">ClarkCapeCod</a></span><span class="op">(</span><span class="va">RAA</span>, Premium <span class="op">=</span> <span class="fl">40000</span>, G <span class="op">=</span> <span class="st">"weibull"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="fu"><a href="../reference/ClarkCapeCod.html">ClarkCapeCod</a></span><span class="op">(</span><span class="va">RAA</span>, Premium <span class="op">=</span> <span class="fl">40000</span>, G <span class="op">=</span> <span class="st">"weibull"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p><img src="ChainLadder_files/figure-html/CapeCod-1.png" width="60%" style="display: block; margin: auto;"></p>
 </div>
 </div>
@@ -1179,11 +1179,11 @@ Total 105.58  99.68  99.88</code></pre>
 <p>Only the Tweedie family of distributions are allowed, that is, the exponential family that admits a power variance function <span class="math inline">\(V(\mu)=\mu^p\)</span>. The variance power <span class="math inline">\(p\)</span> is specified in the <code>var.power</code> argument, and controls the type of the distribution. When the Tweedie compound Poisson distribution <span class="math inline">\(1 &lt; p &lt; 2\)</span> is to be used, the user has the option to specify <code>var.power = NULL</code>, where the variance power <span class="math inline">\(p\)</span> will be estimated from the data using the <code>cplm</code> package <span class="citation">(Zhang 2012)</span>.</p>
 <p>For example, the following fits the over-dispersed Poisson model and spells out the estimated reserve information:</p>
 <div class="sourceCode" id="cb129"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># load data</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">GenIns</span><span class="op">)</span>
-<span class="va">GenIns</span> <span class="op">&lt;-</span> <span class="va">GenIns</span> <span class="op">/</span> <span class="fl">1000</span>
-<span class="co"># fit Poisson GLM</span>
-<span class="op">(</span><span class="va">fit1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/glmReserve.html">glmReserve</a></span><span class="op">(</span><span class="va">GenIns</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># load data</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">GenIns</span><span class="op">)</span></span>
+<span><span class="va">GenIns</span> <span class="op">&lt;-</span> <span class="va">GenIns</span> <span class="op">/</span> <span class="fl">1000</span></span>
+<span><span class="co"># fit Poisson GLM</span></span>
+<span><span class="op">(</span><span class="va">fit1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/glmReserve.html">glmReserve</a></span><span class="op">(</span><span class="va">GenIns</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <pre><code>      Latest Dev.To.Date Ultimate  IBNR    S.E     CV
 2       5339     0.98252     5434    95  110.1 1.1589
 3       4909     0.91263     5379   470  216.0 0.4597
@@ -1197,7 +1197,7 @@ Total 105.58  99.68  99.88</code></pre>
 total  30457     0.61982    49138 18681 2945.7 0.1577</code></pre>
 <p>We can also extract the underlying GLM model by specifying <code>type = "model"</code> in the <code>summary</code> function:</p>
 <div class="sourceCode" id="cb131"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">fit1</span>, type <span class="op">=</span> <span class="st">"model"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">fit1</span>, type <span class="op">=</span> <span class="st">"model"</span><span class="op">)</span></span></code></pre></div>
 <pre><code>
 Call:
 glm(formula = value ~ factor(origin) + factor(dev), family = fam, 
@@ -1240,8 +1240,8 @@ AIC: NA
 Number of Fisher Scoring iterations: 4</code></pre>
 <p>Similarly, we can fit the Gamma and a compound Poisson GLM reserving model by changing the <code>var.power</code> argument:</p>
 <div class="sourceCode" id="cb133"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># Gamma GLM</span>
-<span class="op">(</span><span class="va">fit2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/glmReserve.html">glmReserve</a></span><span class="op">(</span><span class="va">GenIns</span>, var.power <span class="op">=</span> <span class="fl">2</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># Gamma GLM</span></span>
+<span><span class="op">(</span><span class="va">fit2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/glmReserve.html">glmReserve</a></span><span class="op">(</span><span class="va">GenIns</span>, var.power <span class="op">=</span> <span class="fl">2</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <pre><code>      Latest Dev.To.Date Ultimate  IBNR     S.E     CV
 2       5339     0.98288     5432    93   45.17 0.4857
 3       4909     0.91655     5356   447  160.56 0.3592
@@ -1254,12 +1254,12 @@ Number of Fisher Scoring iterations: 4</code></pre>
 10       344     0.07078     4860  4516 1667.39 0.3692
 total  30457     0.62742    48543 18086 2702.71 0.1494</code></pre>
 <div class="sourceCode" id="cb135"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># compound Poisson GLM (variance function estimated from the data):</span>
-<span class="co"># (fit3 &lt;- glmReserve(GenIns, var.power = NULL))</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># compound Poisson GLM (variance function estimated from the data):</span></span>
+<span><span class="co"># (fit3 &lt;- glmReserve(GenIns, var.power = NULL))</span></span></code></pre></div>
 <p>By default, the formulaic approach is used to compute the prediction errors. We can also carry out bootstrapping simulations by specifying <code>mse.method = "bootstrap"</code> (note that this argument supports partial match):</p>
 <div class="sourceCode" id="cb136"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">11</span><span class="op">)</span>
-<span class="op">(</span><span class="va">fit5</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/glmReserve.html">glmReserve</a></span><span class="op">(</span><span class="va">GenIns</span>, mse.method <span class="op">=</span> <span class="st">"boot"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">11</span><span class="op">)</span></span>
+<span><span class="op">(</span><span class="va">fit5</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/glmReserve.html">glmReserve</a></span><span class="op">(</span><span class="va">GenIns</span>, mse.method <span class="op">=</span> <span class="st">"boot"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <pre><code>      Latest Dev.To.Date Ultimate  IBNR    S.E     CV
 2       5339     0.98252     5434    95  108.7 1.1440
 3       4909     0.91263     5379   470  207.8 0.4421
@@ -1273,16 +1273,16 @@ total  30457     0.62742    48543 18086 2702.71 0.1494</code></pre>
 total  30457     0.61982    49138 18681 2955.4 0.1582</code></pre>
 <p>When bootstrapping is used, the resulting object has three additional components - <code>sims.par</code>, <code>sims.reserve.mean</code>, and <code>sims.reserve.pred</code> that store the simulated parameters, mean values and predicted values of the reserves for each year, respectively.</p>
 <div class="sourceCode" id="cb138"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">fit5</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">fit5</span><span class="op">)</span></span></code></pre></div>
 <pre><code>[1] "call"              "summary"           "Triangle"         
 [4] "FullTriangle"      "model"             "sims.par"         
 [7] "sims.reserve.mean" "sims.reserve.pred"</code></pre>
 <p>We can thus compute the quantiles of the predictions based on the simulated samples in the <code>sims.reserve.pred</code> element as:</p>
 <div class="sourceCode" id="cb140"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">pr</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="va">fit5</span><span class="op">$</span><span class="va">sims.reserve.pred</span><span class="op">)</span>
-<span class="va">qv</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.025</span>, <span class="fl">0.25</span>, <span class="fl">0.5</span>, <span class="fl">0.75</span>, <span class="fl">0.975</span><span class="op">)</span>
-<span class="va">res.q</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/t.html" class="external-link">t</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/apply.html" class="external-link">apply</a></span><span class="op">(</span><span class="va">pr</span>, <span class="fl">2</span>, <span class="va">quantile</span>, <span class="va">qv</span><span class="op">)</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/format.html" class="external-link">format</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="va">res.q</span><span class="op">)</span>, big.mark <span class="op">=</span> <span class="st">","</span><span class="op">)</span>, quote <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">pr</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="va">fit5</span><span class="op">$</span><span class="va">sims.reserve.pred</span><span class="op">)</span></span>
+<span><span class="va">qv</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.025</span>, <span class="fl">0.25</span>, <span class="fl">0.5</span>, <span class="fl">0.75</span>, <span class="fl">0.975</span><span class="op">)</span></span>
+<span><span class="va">res.q</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/t.html" class="external-link">t</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/apply.html" class="external-link">apply</a></span><span class="op">(</span><span class="va">pr</span>, <span class="fl">2</span>, <span class="va">quantile</span>, <span class="va">qv</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/format.html" class="external-link">format</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="va">res.q</span><span class="op">)</span>, big.mark <span class="op">=</span> <span class="st">","</span><span class="op">)</span>, quote <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
 <pre><code>   2.5%  25%   50%   75%   97.5%
 2      0    40    91   175   375
 3    125   339   463   612   941
@@ -1295,14 +1295,14 @@ total  30457     0.61982    49138 18681 2955.4 0.1582</code></pre>
 10   809 3,394 4,505 5,904 9,236</code></pre>
 <p>The full predictive distribution of the simulated reserves for each year can be visualized easily:</p>
 <div class="sourceCode" id="cb142"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span>
-<span class="va">prm</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/reshape.html" class="external-link">reshape</a></span><span class="op">(</span><span class="va">pr</span>, varying<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">pr</span><span class="op">)</span><span class="op">)</span>, v.names <span class="op">=</span> <span class="st">"reserve"</span>, 
-               timevar <span class="op">=</span> <span class="st">"year"</span>, direction<span class="op">=</span><span class="st">"long"</span><span class="op">)</span>
-<span class="va">gg</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">prm</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">reserve</span><span class="op">)</span><span class="op">)</span>
-<span class="va">gg</span> <span class="op">&lt;-</span> <span class="va">gg</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_density.html" class="external-link">geom_density</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="va">year</span><span class="op">)</span>, alpha <span class="op">=</span> <span class="fl">0.3</span><span class="op">)</span> <span class="op">+</span>
-        <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html" class="external-link">facet_wrap</a></span><span class="op">(</span><span class="op">~</span><span class="va">year</span>, nrow <span class="op">=</span> <span class="fl">2</span>, scales <span class="op">=</span> <span class="st">"free"</span><span class="op">)</span>  <span class="op">+</span>
-         <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>legend.position <span class="op">=</span> <span class="st">"none"</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">gg</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span></span>
+<span><span class="va">prm</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/reshape.html" class="external-link">reshape</a></span><span class="op">(</span><span class="va">pr</span>, varying<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">pr</span><span class="op">)</span><span class="op">)</span>, v.names <span class="op">=</span> <span class="st">"reserve"</span>, </span>
+<span>               timevar <span class="op">=</span> <span class="st">"year"</span>, direction<span class="op">=</span><span class="st">"long"</span><span class="op">)</span></span>
+<span><span class="va">gg</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">prm</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">reserve</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">gg</span> <span class="op">&lt;-</span> <span class="va">gg</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_density.html" class="external-link">geom_density</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="va">year</span><span class="op">)</span>, alpha <span class="op">=</span> <span class="fl">0.3</span><span class="op">)</span> <span class="op">+</span></span>
+<span>        <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html" class="external-link">facet_wrap</a></span><span class="op">(</span><span class="op">~</span><span class="va">year</span>, nrow <span class="op">=</span> <span class="fl">2</span>, scales <span class="op">=</span> <span class="st">"free"</span><span class="op">)</span>  <span class="op">+</span></span>
+<span>         <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>legend.position <span class="op">=</span> <span class="st">"none"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">gg</span><span class="op">)</span></span></code></pre></div>
 <div class="figure" style="text-align: center">
 <img src="glmReservePlot.png" alt="The predictive distribution of loss reserves for each year based on bootstrapping" width="60%"><p class="caption">
 The predictive distribution of loss reserves for each year based on bootstrapping
@@ -1356,8 +1356,8 @@ I_{i,j-1} = I_{i,j} \exp(-\zeta_{i,j-1}),
 <p>This is not a full Bayesian approach but has the advantage to give analytical expressions for the posterior distributions and the prediction uncertainty.</p>
 <p>The Paid-incurred Chain model is implemented in the <code>ChainLadder</code> package via the function <code>PaidIncurredChain</code>. As an example we apply the function to the USAA paid and incurred triangles:</p>
 <div class="sourceCode" id="cb143"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">PIC</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/PaidIncurredChain.html">PaidIncurredChain</a></span><span class="op">(</span><span class="va">USAApaid</span>, <span class="va">USAAincurred</span><span class="op">)</span>
-<span class="va">PIC</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">PIC</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/PaidIncurredChain.html">PaidIncurredChain</a></span><span class="op">(</span><span class="va">USAApaid</span>, <span class="va">USAAincurred</span><span class="op">)</span></span>
+<span><span class="va">PIC</span></span></code></pre></div>
 <pre><code>$Ult.Loss.Origin
          [,1]
  [1,]  983113
@@ -1392,7 +1392,7 @@ $s.e.
 [1] 113940</code></pre>
 <p>We can access the reserves by origin year via</p>
 <div class="sourceCode" id="cb145"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">PIC</span><span class="op">$</span><span class="va">Res.Origin</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">PIC</span><span class="op">$</span><span class="va">Res.Origin</span></span></code></pre></div>
 <pre><code>          [,1]
  [1,]    965.3
  [2,]   3159.6
@@ -1405,7 +1405,7 @@ $s.e.
  [9,] 778393.5</code></pre>
 <p>and the total reserve via</p>
 <div class="sourceCode" id="cb147"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">PIC</span><span class="op">$</span><span class="va">Res.Tot</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">PIC</span><span class="op">$</span><span class="va">Res.Tot</span></span></code></pre></div>
 <pre><code>[1] 1643953</code></pre>
 <p><code>s.e.</code> is the square root of mean square error of prediction for the total ultimate loss.</p>
 <p>It’s important to notice that the model is implemented in the special case of non-informative priors for <span class="math inline">\(\Phi_m\)</span> and <span class="math inline">\(\Psi_n\)</span>; this means that we let <span class="math inline">\(s^2_m \to \infty\)</span> and <span class="math inline">\(t^2_n \to \infty\)</span>.</p>
@@ -1450,9 +1450,9 @@ $s.e.
 <p>Further, the <code>tweedieReserve</code> function offers also the option to estimate the one year CDR, by setting the argument <code>rereserving=TRUE</code>.</p>
 <p>For example, to reproduce the results of <span class="citation">(Merz and Wüthrich 2014)</span> use:</p>
 <div class="sourceCode" id="cb149"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">M</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/MackChainLadder.html">MackChainLadder</a></span><span class="op">(</span><span class="va">MW2014</span>, est.sigma<span class="op">=</span><span class="st">"Mack"</span><span class="op">)</span>
-<span class="va">cdrM</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/CDR.html">CDR</a></span><span class="op">(</span><span class="va">M</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="va">cdrM</span>, <span class="fl">1</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">M</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/MackChainLadder.html">MackChainLadder</a></span><span class="op">(</span><span class="va">MW2014</span>, est.sigma<span class="op">=</span><span class="st">"Mack"</span><span class="op">)</span></span>
+<span><span class="va">cdrM</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/CDR.html">CDR</a></span><span class="op">(</span><span class="va">M</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="va">cdrM</span>, <span class="fl">1</span><span class="op">)</span></span></code></pre></div>
 <pre><code>         IBNR CDR(1)S.E. Mack.S.E.
 1         0.0        0.0       0.0
 2         1.0        0.4       0.4
@@ -1474,8 +1474,8 @@ $s.e.
 Total 24134.9     1842.9    3233.7</code></pre>
 <p>To review the full claims development picture set the argument <code>dev="all"</code>:</p>
 <div class="sourceCode" id="cb151"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">cdrAll</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/CDR.html">CDR</a></span><span class="op">(</span><span class="va">M</span>,dev<span class="op">=</span><span class="st">"all"</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="va">cdrAll</span>, <span class="fl">1</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">cdrAll</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/CDR.html">CDR</a></span><span class="op">(</span><span class="va">M</span>,dev<span class="op">=</span><span class="st">"all"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="va">cdrAll</span>, <span class="fl">1</span><span class="op">)</span></span></code></pre></div>
 <pre><code>         IBNR CDR(1)S.E. CDR(2)S.E. CDR(3)S.E. CDR(4)S.E. CDR(5)S.E. CDR(6)S.E.
 1         0.0        0.0        0.0        0.0        0.0        0.0        0.0
 2         1.0        0.4        0.0        0.0        0.0        0.0        0.0
@@ -1565,19 +1565,19 @@ P_{i,j} \backsim ODP(m_{i,j},\phi \cdot m_{i,j}),
 \]</span></p>
 <p>where <code>a</code> and <code>p</code> are positive constants. The user is able to test different <code>p</code> values through the <code>var.power</code> function argument. Besides, in order to validate the Tweedie’s <code>p</code> parameter, it could be interesting to plot the likelihood profile at defined <code>p</code> values (through the <code>p.check</code> argument) for a given a dataset and a regression structure. This could be achieved setting the <code>p.optim=TRUE</code> argument.</p>
 <div class="sourceCode" id="cb153"><pre class="downlit sourceCode r">
-<code class="sourceCode R"> <span class="va">p_profile</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/tweedieReserve.html">tweedieReserve</a></span><span class="op">(</span><span class="va">MW2008</span>, p.optim<span class="op">=</span><span class="cn">TRUE</span>,
-   p.check<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">1.1</span>,<span class="fl">1.2</span>,<span class="fl">1.3</span>,<span class="fl">1.4</span>,<span class="fl">1.5</span>,<span class="fl">2</span>,<span class="fl">3</span><span class="op">)</span>,
-   design.type<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">1</span>,<span class="fl">1</span><span class="op">)</span>,
-   rereserving<span class="op">=</span><span class="cn">FALSE</span>,
-   bootstrap<span class="op">=</span><span class="fl">0</span>,
-   progressBar<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span>
-<span class="co"># 0 1.1 1.2 1.3 1.4 1.5 2 3</span>
-<span class="co"># ........Done.</span>
-<span class="co"># MLE of p is between 0 and 1, which is impossible.</span>
-<span class="co"># Instead, the MLE of p has been set to NA .</span>
-<span class="co"># Please check your data and the call to tweedie.profile().</span>
-<span class="co"># Error in if ((xi.max == xi.vec[1]) | (xi.max == xi.vec[length(xi.vec)])) { :</span>
-<span class="co"># missing value where TRUE/FALSE needed</span></code></pre></div>
+<code class="sourceCode R"><span> <span class="va">p_profile</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/tweedieReserve.html">tweedieReserve</a></span><span class="op">(</span><span class="va">MW2008</span>, p.optim<span class="op">=</span><span class="cn">TRUE</span>,</span>
+<span>   p.check<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">1.1</span>,<span class="fl">1.2</span>,<span class="fl">1.3</span>,<span class="fl">1.4</span>,<span class="fl">1.5</span>,<span class="fl">2</span>,<span class="fl">3</span><span class="op">)</span>,</span>
+<span>   design.type<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">1</span>,<span class="fl">1</span><span class="op">)</span>,</span>
+<span>   rereserving<span class="op">=</span><span class="cn">FALSE</span>,</span>
+<span>   bootstrap<span class="op">=</span><span class="fl">0</span>,</span>
+<span>   progressBar<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span></span>
+<span><span class="co"># 0 1.1 1.2 1.3 1.4 1.5 2 3</span></span>
+<span><span class="co"># ........Done.</span></span>
+<span><span class="co"># MLE of p is between 0 and 1, which is impossible.</span></span>
+<span><span class="co"># Instead, the MLE of p has been set to NA .</span></span>
+<span><span class="co"># Please check your data and the call to tweedie.profile().</span></span>
+<span><span class="co"># Error in if ((xi.max == xi.vec[1]) | (xi.max == xi.vec[length(xi.vec)])) { :</span></span>
+<span><span class="co"># missing value where TRUE/FALSE needed</span></span></code></pre></div>
 <p><img src="tweedieReserve.png" width="60%" style="display: block; margin: auto;"></p>
 <p>This example shows that the MLE of p seems to be between 0 and 1, which is not possible as Tweedie models aren’t defined for 0 &lt; p &lt; 1, thus the Error message. But, despite this, we can conclude that overall a value <code>p=1</code> could be reasonable for this dataset and the chosen regression function, as it seems to be near the MLE. Other sensitivities could be run on:</p>
 <ul>
@@ -1780,7 +1780,7 @@ P_{i,j} \backsim ODP(m_{i,j},\phi \cdot m_{i,j}),
 
 <div class="pkgdown-footer-right">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
 </div>
 
     </footer>

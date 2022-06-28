@@ -75,17 +75,17 @@ as.data.frame turns a triangle into a data frame."><meta property="og:image" con
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">triangle</span><span class="op">(</span><span class="va">...</span>, bycol<span class="op">=</span><span class="cn">FALSE</span>, origin<span class="op">=</span><span class="st">"origin"</span>, dev<span class="op">=</span><span class="st">"dev"</span>, value<span class="op">=</span><span class="st">"value"</span><span class="op">)</span>
-
-<span class="co"># S3 method for matrix</span>
-<span class="fu">as.triangle</span><span class="op">(</span><span class="va">Triangle</span>, origin<span class="op">=</span><span class="st">"origin"</span>, dev<span class="op">=</span><span class="st">"dev"</span>, value<span class="op">=</span><span class="st">"value"</span>, <span class="va">...</span><span class="op">)</span>
-<span class="co"># S3 method for data.frame</span>
-<span class="fu">as.triangle</span><span class="op">(</span><span class="va">Triangle</span>, origin<span class="op">=</span><span class="st">"origin"</span>, dev<span class="op">=</span><span class="st">"dev"</span>, value<span class="op">=</span><span class="st">"value"</span>, <span class="va">...</span><span class="op">)</span>
-<span class="co"># S3 method for triangle</span>
-<span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="va">x</span>, row.names<span class="op">=</span><span class="cn">NULL</span>, <span class="va">optional</span>, lob<span class="op">=</span><span class="cn">NULL</span>, na.rm<span class="op">=</span><span class="cn">FALSE</span>, <span class="va">...</span><span class="op">)</span>
-<span class="fu">as.triangle</span><span class="op">(</span><span class="va">Triangle</span>, origin<span class="op">=</span><span class="st">"origin"</span>, dev<span class="op">=</span><span class="st">"dev"</span>, value<span class="op">=</span><span class="st">"value"</span>, <span class="va">...</span><span class="op">)</span>
-<span class="co"># S3 method for triangle</span>
-<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">x</span>, type <span class="op">=</span> <span class="st">"b"</span>, xlab <span class="op">=</span> <span class="st">"dev. period"</span>, ylab <span class="op">=</span> <span class="cn">NULL</span>, lattice<span class="op">=</span><span class="cn">FALSE</span>, <span class="va">...</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">triangle</span><span class="op">(</span><span class="va">...</span>, bycol<span class="op">=</span><span class="cn">FALSE</span>, origin<span class="op">=</span><span class="st">"origin"</span>, dev<span class="op">=</span><span class="st">"dev"</span>, value<span class="op">=</span><span class="st">"value"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># S3 method for matrix</span></span>
+<span><span class="fu">as.triangle</span><span class="op">(</span><span class="va">Triangle</span>, origin<span class="op">=</span><span class="st">"origin"</span>, dev<span class="op">=</span><span class="st">"dev"</span>, value<span class="op">=</span><span class="st">"value"</span>, <span class="va">...</span><span class="op">)</span></span>
+<span><span class="co"># S3 method for data.frame</span></span>
+<span><span class="fu">as.triangle</span><span class="op">(</span><span class="va">Triangle</span>, origin<span class="op">=</span><span class="st">"origin"</span>, dev<span class="op">=</span><span class="st">"dev"</span>, value<span class="op">=</span><span class="st">"value"</span>, <span class="va">...</span><span class="op">)</span></span>
+<span><span class="co"># S3 method for triangle</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="va">x</span>, row.names<span class="op">=</span><span class="cn">NULL</span>, <span class="va">optional</span>, lob<span class="op">=</span><span class="cn">NULL</span>, na.rm<span class="op">=</span><span class="cn">FALSE</span>, <span class="va">...</span><span class="op">)</span></span>
+<span><span class="fu">as.triangle</span><span class="op">(</span><span class="va">Triangle</span>, origin<span class="op">=</span><span class="st">"origin"</span>, dev<span class="op">=</span><span class="st">"dev"</span>, value<span class="op">=</span><span class="st">"value"</span>, <span class="va">...</span><span class="op">)</span></span>
+<span><span class="co"># S3 method for triangle</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">x</span>, type <span class="op">=</span> <span class="st">"b"</span>, xlab <span class="op">=</span> <span class="st">"dev. period"</span>, ylab <span class="op">=</span> <span class="cn">NULL</span>, lattice<span class="op">=</span><span class="cn">FALSE</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -181,7 +181,7 @@ converted into numeric.</p>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="va">GenIns</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">GenIns</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>       dev</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> origin      1       2       3       4       5       6       7       8       9</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     1  357848 1124788 1735330 2218270 2745596 3319994 3466336 3606286 3833515</span>
@@ -206,15 +206,15 @@ converted into numeric.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     8       NA</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     9       NA</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     10      NA</span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">GenIns</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">GenIns</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="Triangles-1.png" alt="" width="700" height="433"></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">GenIns</span>, lattice<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">GenIns</span>, lattice<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="Triangles-2.png" alt="" width="700" height="433"></span>
-<span class="r-in"></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">## Convert long format into triangle</span></span>
-<span class="r-in"><span class="co">## Triangles are usually stored as 'long' tables in data bases</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">GenInsLong</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## Convert long format into triangle</span></span></span>
+<span class="r-in"><span><span class="co">## Triangles are usually stored as 'long' tables in data bases</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">GenInsLong</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   accyear devyear incurred claims</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1       1       1          357848</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2       2       1          352118</span>
@@ -222,7 +222,7 @@ converted into numeric.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 4       4       1          310608</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 5       5       1          443160</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 6       6       1          396132</span>
-<span class="r-in"><span class="fu">as.triangle</span><span class="op">(</span><span class="va">GenInsLong</span>, origin<span class="op">=</span><span class="st">"accyear"</span>, dev<span class="op">=</span><span class="st">"devyear"</span>, <span class="st">"incurred claims"</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="fu">as.triangle</span><span class="op">(</span><span class="va">GenInsLong</span>, origin<span class="op">=</span><span class="st">"accyear"</span>, dev<span class="op">=</span><span class="st">"devyear"</span>, <span class="st">"incurred claims"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>        devyear</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> accyear      1       2       3       4       5       6       7       8       9</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>      1  357848 1124788 1735330 2218270 2745596 3319994 3466336 3606286 3833515</span>
@@ -247,9 +247,9 @@ converted into numeric.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span>      8       NA</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>      9       NA</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>      10      NA</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">X</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="va">RAA</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">X</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">X</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="va">RAA</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">X</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>        origin dev value</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1981-1   1981   1  5012</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1982-1   1982   1   106</span>
@@ -257,9 +257,9 @@ converted into numeric.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1984-1   1984   1  5655</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1985-1   1985   1  1092</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1986-1   1986   1  1513</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">Y</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="va">RAA</span>, lob<span class="op">=</span><span class="st">"General Liability"</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">Y</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">Y</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="va">RAA</span>, lob<span class="op">=</span><span class="st">"General Liability"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">Y</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>        origin dev value               lob</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1981-1   1981   1  5012 General Liability</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1982-1   1982   1   106 General Liability</span>
@@ -267,13 +267,13 @@ converted into numeric.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1984-1   1984   1  5655 General Liability</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1985-1   1985   1  1092 General Liability</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1986-1   1986   1  1513 General Liability</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">## Basic creation of a triangle from loss development data</span></span>
-<span class="r-in"><span class="fu">triangle</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">100</span>, <span class="fl">150</span>, <span class="fl">175</span>, <span class="fl">180</span>, <span class="fl">200</span><span class="op">)</span>,</span>
-<span class="r-in">         <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">110</span>, <span class="fl">168</span>, <span class="fl">192</span>, <span class="fl">205</span><span class="op">)</span>,</span>
-<span class="r-in">         <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">115</span>, <span class="fl">169</span>, <span class="fl">202</span><span class="op">)</span>,</span>
-<span class="r-in">         <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">125</span>, <span class="fl">185</span><span class="op">)</span>,</span>
-<span class="r-in">         <span class="fl">150</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## Basic creation of a triangle from loss development data</span></span></span>
+<span class="r-in"><span><span class="fu">triangle</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">100</span>, <span class="fl">150</span>, <span class="fl">175</span>, <span class="fl">180</span>, <span class="fl">200</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>         <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">110</span>, <span class="fl">168</span>, <span class="fl">192</span>, <span class="fl">205</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>         <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">115</span>, <span class="fl">169</span>, <span class="fl">202</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>         <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">125</span>, <span class="fl">185</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>         <span class="fl">150</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>       dev</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> origin   1   2   3   4   5</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>      1 100 150 175 180 200</span>
@@ -281,13 +281,13 @@ converted into numeric.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span>      3 115 169 202  NA  NA</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>      4 125 185  NA  NA  NA</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>      5 150  NA  NA  NA  NA</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">## Same, with named origin periods</span></span>
-<span class="r-in"><span class="fu">triangle</span><span class="op">(</span><span class="st">"2012"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">100</span>, <span class="fl">150</span>, <span class="fl">175</span>, <span class="fl">180</span>, <span class="fl">200</span><span class="op">)</span>,</span>
-<span class="r-in">         <span class="st">"2013"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">110</span>, <span class="fl">168</span>, <span class="fl">192</span>, <span class="fl">205</span><span class="op">)</span>,</span>
-<span class="r-in">         <span class="st">"2014"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">115</span>, <span class="fl">169</span>, <span class="fl">202</span><span class="op">)</span>,</span>
-<span class="r-in">         <span class="st">"2015"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">125</span>, <span class="fl">185</span><span class="op">)</span>,</span>
-<span class="r-in">         <span class="st">"2016"</span> <span class="op">=</span> <span class="fl">150</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## Same, with named origin periods</span></span></span>
+<span class="r-in"><span><span class="fu">triangle</span><span class="op">(</span><span class="st">"2012"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">100</span>, <span class="fl">150</span>, <span class="fl">175</span>, <span class="fl">180</span>, <span class="fl">200</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>         <span class="st">"2013"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">110</span>, <span class="fl">168</span>, <span class="fl">192</span>, <span class="fl">205</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>         <span class="st">"2014"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">115</span>, <span class="fl">169</span>, <span class="fl">202</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>         <span class="st">"2015"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">125</span>, <span class="fl">185</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>         <span class="st">"2016"</span> <span class="op">=</span> <span class="fl">150</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>       dev</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> origin   1   2   3   4   5</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   2012 100 150 175 180 200</span>
@@ -295,17 +295,17 @@ converted into numeric.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   2014 115 169 202  NA  NA</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   2015 125 185  NA  NA  NA</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   2016 150  NA  NA  NA  NA</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">## Again, with also named development periods</span></span>
-<span class="r-in"><span class="fu">triangle</span><span class="op">(</span><span class="st">"2012"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"12 months"</span> <span class="op">=</span> <span class="fl">100</span>,</span>
-<span class="r-in">                    <span class="st">"24 months"</span> <span class="op">=</span> <span class="fl">150</span>,</span>
-<span class="r-in">                    <span class="st">"36 months"</span> <span class="op">=</span> <span class="fl">175</span>,</span>
-<span class="r-in">                    <span class="st">"48 months"</span> <span class="op">=</span> <span class="fl">180</span>,</span>
-<span class="r-in">                    <span class="st">"60 months"</span> <span class="op">=</span> <span class="fl">200</span><span class="op">)</span>,</span>
-<span class="r-in">         <span class="st">"2013"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">110</span>, <span class="fl">168</span>, <span class="fl">192</span>, <span class="fl">205</span><span class="op">)</span>,</span>
-<span class="r-in">         <span class="st">"2014"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">115</span>, <span class="fl">169</span>, <span class="fl">202</span><span class="op">)</span>,</span>
-<span class="r-in">         <span class="st">"2015"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">125</span>, <span class="fl">185</span><span class="op">)</span>,</span>
-<span class="r-in">         <span class="st">"2016"</span> <span class="op">=</span> <span class="fl">150</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## Again, with also named development periods</span></span></span>
+<span class="r-in"><span><span class="fu">triangle</span><span class="op">(</span><span class="st">"2012"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"12 months"</span> <span class="op">=</span> <span class="fl">100</span>,</span></span>
+<span class="r-in"><span>                    <span class="st">"24 months"</span> <span class="op">=</span> <span class="fl">150</span>,</span></span>
+<span class="r-in"><span>                    <span class="st">"36 months"</span> <span class="op">=</span> <span class="fl">175</span>,</span></span>
+<span class="r-in"><span>                    <span class="st">"48 months"</span> <span class="op">=</span> <span class="fl">180</span>,</span></span>
+<span class="r-in"><span>                    <span class="st">"60 months"</span> <span class="op">=</span> <span class="fl">200</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>         <span class="st">"2013"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">110</span>, <span class="fl">168</span>, <span class="fl">192</span>, <span class="fl">205</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>         <span class="st">"2014"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">115</span>, <span class="fl">169</span>, <span class="fl">202</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>         <span class="st">"2015"</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">125</span>, <span class="fl">185</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>         <span class="st">"2016"</span> <span class="op">=</span> <span class="fl">150</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>       dev</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> origin 12 months 24 months 36 months 48 months 60 months</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   2012       100       150       175       180       200</span>
@@ -313,9 +313,9 @@ converted into numeric.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   2014       115       169       202        NA        NA</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   2015       125       185        NA        NA        NA</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   2016       150        NA        NA        NA        NA</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">## Quick, simplified usage</span></span>
-<span class="r-in"><span class="fu">triangle</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">100</span>, <span class="fl">150</span>, <span class="fl">175</span>, <span class="fl">110</span>, <span class="fl">168</span>, <span class="fl">115</span><span class="op">)</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## Quick, simplified usage</span></span></span>
+<span class="r-in"><span><span class="fu">triangle</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">100</span>, <span class="fl">150</span>, <span class="fl">175</span>, <span class="fl">110</span>, <span class="fl">168</span>, <span class="fl">115</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>       dev</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> origin   1   2   3</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>      1 100 150 175</span>
@@ -332,7 +332,7 @@ converted into numeric.</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
 </div>
 
     </footer></div>

@@ -57,8 +57,8 @@
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="co"># S3 method for ata</span>
-<span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">object</span>, digits<span class="op">=</span><span class="fl">3</span>, <span class="va">...</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="co"># S3 method for ata</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">object</span>, digits<span class="op">=</span><span class="fl">3</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -103,8 +103,8 @@ as rows at the bottom.</p>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="va">y</span> <span class="op">&lt;-</span> <span class="fu"><a href="ata.html">ata</a></span><span class="op">(</span><span class="va">RAA</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">y</span>, digits<span class="op">=</span><span class="fl">4</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">y</span> <span class="op">&lt;-</span> <span class="fu"><a href="ata.html">ata</a></span><span class="op">(</span><span class="va">RAA</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">y</span>, digits<span class="op">=</span><span class="fl">4</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>       dev</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> origin     1-2    2-3    3-4    4-5    5-6    6-7    7-8    8-9   9-10</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   1981  1.6498 1.3190 1.0823 1.1469 1.1951 1.1130 1.0333 1.0029 1.0092</span>
@@ -118,7 +118,7 @@ as rows at the bottom.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   1989  1.7220     NA     NA     NA     NA     NA     NA     NA     NA</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   smpl  8.2061 1.6959 1.3145 1.1829 1.1270 1.0433 1.0344 1.0180 1.0092</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   vwtd  2.9994 1.6235 1.2709 1.1717 1.1134 1.0419 1.0333 1.0169 1.0092</span>
-<span class="r-in"></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
@@ -130,7 +130,7 @@ as rows at the bottom.</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
 </div>
 
     </footer></div>

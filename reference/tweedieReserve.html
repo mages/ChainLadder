@@ -66,13 +66,13 @@ framework. Finally, it allows the user to validate the model error while changin
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">tweedieReserve</span><span class="op">(</span><span class="va">triangle</span>, var.power <span class="op">=</span> <span class="fl">1</span>, 
-                    link.power <span class="op">=</span> <span class="fl">0</span>, design.type <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">0</span><span class="op">)</span>, 
-                    rereserving <span class="op">=</span> <span class="cn">FALSE</span>, cum <span class="op">=</span> <span class="cn">TRUE</span>, exposure <span class="op">=</span> <span class="cn">FALSE</span>, 
-                    bootstrap <span class="op">=</span> <span class="fl">1</span>, boot.adj <span class="op">=</span> <span class="fl">0</span>, nsim <span class="op">=</span> <span class="fl">1000</span>, 
-                    proc.err <span class="op">=</span> <span class="cn">TRUE</span>, p.optim <span class="op">=</span> <span class="cn">FALSE</span>,
-                    p.check <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">1.1</span>, <span class="fl">2.1</span>, by <span class="op">=</span> <span class="fl">0.1</span><span class="op">)</span>, <span class="fl">3</span><span class="op">)</span>,
-                    progressBar <span class="op">=</span> <span class="cn">TRUE</span>, <span class="va">...</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">tweedieReserve</span><span class="op">(</span><span class="va">triangle</span>, var.power <span class="op">=</span> <span class="fl">1</span>, </span>
+<span>                    link.power <span class="op">=</span> <span class="fl">0</span>, design.type <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">0</span><span class="op">)</span>, </span>
+<span>                    rereserving <span class="op">=</span> <span class="cn">FALSE</span>, cum <span class="op">=</span> <span class="cn">TRUE</span>, exposure <span class="op">=</span> <span class="cn">FALSE</span>, </span>
+<span>                    bootstrap <span class="op">=</span> <span class="fl">1</span>, boot.adj <span class="op">=</span> <span class="fl">0</span>, nsim <span class="op">=</span> <span class="fl">1000</span>, </span>
+<span>                    proc.err <span class="op">=</span> <span class="cn">TRUE</span>, p.optim <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>                    p.check <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">1.1</span>, <span class="fl">2.1</span>, by <span class="op">=</span> <span class="fl">0.1</span><span class="op">)</span>, <span class="fl">3</span><span class="op">)</span>,</span>
+<span>                    progressBar <span class="op">=</span> <span class="cn">TRUE</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -283,63 +283,63 @@ B.A.J. 4, IV. 903-923. 1998</p>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span>
-<span class="r-in"><span class="co">## Verrall's ODP Model is a Tweedie with p=1, log link and </span></span>
-<span class="r-in"><span class="co">## origin/development periods as factors, thus c(1,1,0)</span></span>
-<span class="r-in"><span class="va">res1</span> <span class="op">&lt;-</span> <span class="fu">tweedieReserve</span><span class="op">(</span><span class="va">MW2008</span>, var.power<span class="op">=</span><span class="fl">1</span>, link.power<span class="op">=</span><span class="fl">0</span>, </span>
-<span class="r-in">                           design.type<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">1</span>,<span class="fl">0</span><span class="op">)</span>, rereserving<span class="op">=</span><span class="cn">TRUE</span>,</span>
-<span class="r-in">                           progressBar<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">## To get directly ultimate view and respective one year view </span></span>
-<span class="r-in"><span class="co">## at selected percentiles</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">res1</span><span class="op">)</span> </span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">#To get other interesting statistics</span></span>
-<span class="r-in"><span class="va">res1</span><span class="op">$</span><span class="va">summary</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">## In order to validate the Tweedie parameter 'p', it is interesting to </span></span>
-<span class="r-in"><span class="co">## review its loglikelihood profile. Please note that, given the nature </span></span>
-<span class="r-in"><span class="co">## of our data, it is expected that we may have some fitting issues for </span></span>
-<span class="r-in"><span class="co">## given 'p' parameters, thus any results/errors should be considered </span></span>
-<span class="r-in"><span class="co">## only indicatively. Considering different regression structures is anyway </span></span>
-<span class="r-in"><span class="co">## recommended. Different 'p' values can be defined via the p.check array </span></span>
-<span class="r-in"><span class="co">## as input of the function. </span></span>
-<span class="r-in"><span class="co">## See help(tweedie.profile), p.vec parameter, for further information.</span></span>
-<span class="r-in"><span class="co">## Note: The parameters rereserving and bootstrap can be set to 0 to speed up </span></span>
-<span class="r-in"><span class="co">## the process, as they aren't needed. </span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">## Runs a 'p' loglikelihood profile on the parameters </span></span>
-<span class="r-in"><span class="co">## p=c(0,1.1,1.2,1.3,1.4,1.5,2,3)</span></span>
-<span class="r-in"><span class="va">res2</span> <span class="op">&lt;-</span> <span class="fu">tweedieReserve</span><span class="op">(</span><span class="va">MW2008</span>, p.optim<span class="op">=</span><span class="cn">TRUE</span>, </span>
-<span class="r-in">                       p.check<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">1.1</span>,<span class="fl">1.2</span>,<span class="fl">1.3</span>,<span class="fl">1.4</span>,<span class="fl">1.5</span>,<span class="fl">2</span>,<span class="fl">3</span><span class="op">)</span>, </span>
-<span class="r-in">                       design.type<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">1</span>,<span class="fl">0</span><span class="op">)</span>, </span>
-<span class="r-in">                        rereserving<span class="op">=</span><span class="cn">FALSE</span>, bootstrap<span class="op">=</span><span class="fl">0</span>, </span>
-<span class="r-in">                        progressBar<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">## As it is possible to see in this example, the MLE of p (or xi) results </span></span>
-<span class="r-in"><span class="co">## between 0 and 1, which is not possible as Tweedie models aren't </span></span>
-<span class="r-in"><span class="co">## defined for 0 &lt; p &lt; 1, thus the Error message. </span></span>
-<span class="r-in"><span class="co">## But, despite this, we can conclude that overall the value p=1 could be </span></span>
-<span class="r-in"><span class="co">## reasonable for this dataset, as anyway it seems to be near the MLE. </span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">## In order to consider an inflation parameter across the origin period, </span></span>
-<span class="r-in"><span class="co">## it may be interesting to change the regression structure to c(0,1,1) </span></span>
-<span class="r-in"><span class="co">## to get the same estimates of the Arithmetic Separation Method, as </span></span>
-<span class="r-in"><span class="co">## referred in Gigante/Sigalotti. </span></span>
-<span class="r-in"><span class="va">res3</span> <span class="op">&lt;-</span> <span class="fu">tweedieReserve</span><span class="op">(</span><span class="va">MW2008</span>, var.power<span class="op">=</span><span class="fl">1</span>, link.power<span class="op">=</span><span class="fl">0</span>, </span>
-<span class="r-in">                           design.type<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">1</span>,<span class="fl">1</span><span class="op">)</span>, rereserving<span class="op">=</span><span class="cn">TRUE</span>,</span>
-<span class="r-in">                           progressBar<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">res3</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">## An assessment on future fitted calendar year values (usually defined </span></span>
-<span class="r-in"><span class="co">## as "gamma") is recommended</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">res3</span><span class="op">$</span><span class="va">gamma_y</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">## Model residuals can be plotted using the res.diag output</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">scaled.biasadj</span> <span class="op">~</span> <span class="va">dev</span>, data<span class="op">=</span><span class="va">res3</span><span class="op">$</span><span class="va">res.diag</span><span class="op">)</span> <span class="co"># Development year</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">scaled.biasadj</span> <span class="op">~</span> <span class="va">cy</span>, data<span class="op">=</span><span class="va">res3</span><span class="op">$</span><span class="va">res.diag</span><span class="op">)</span> <span class="co"># Calendar year</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">scaled.biasadj</span> <span class="op">~</span> <span class="va">origin</span>, data<span class="op">=</span><span class="va">res3</span><span class="op">$</span><span class="va">res.diag</span><span class="op">)</span> <span class="co"># Origin year</span></span>
-<span class="r-in"><span class="op">}</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span><span class="co">## Verrall's ODP Model is a Tweedie with p=1, log link and </span></span></span>
+<span class="r-in"><span><span class="co">## origin/development periods as factors, thus c(1,1,0)</span></span></span>
+<span class="r-in"><span><span class="va">res1</span> <span class="op">&lt;-</span> <span class="fu">tweedieReserve</span><span class="op">(</span><span class="va">MW2008</span>, var.power<span class="op">=</span><span class="fl">1</span>, link.power<span class="op">=</span><span class="fl">0</span>, </span></span>
+<span class="r-in"><span>                           design.type<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">1</span>,<span class="fl">0</span><span class="op">)</span>, rereserving<span class="op">=</span><span class="cn">TRUE</span>,</span></span>
+<span class="r-in"><span>                           progressBar<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## To get directly ultimate view and respective one year view </span></span></span>
+<span class="r-in"><span><span class="co">## at selected percentiles</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">res1</span><span class="op">)</span> </span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">#To get other interesting statistics</span></span></span>
+<span class="r-in"><span><span class="va">res1</span><span class="op">$</span><span class="va">summary</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## In order to validate the Tweedie parameter 'p', it is interesting to </span></span></span>
+<span class="r-in"><span><span class="co">## review its loglikelihood profile. Please note that, given the nature </span></span></span>
+<span class="r-in"><span><span class="co">## of our data, it is expected that we may have some fitting issues for </span></span></span>
+<span class="r-in"><span><span class="co">## given 'p' parameters, thus any results/errors should be considered </span></span></span>
+<span class="r-in"><span><span class="co">## only indicatively. Considering different regression structures is anyway </span></span></span>
+<span class="r-in"><span><span class="co">## recommended. Different 'p' values can be defined via the p.check array </span></span></span>
+<span class="r-in"><span><span class="co">## as input of the function. </span></span></span>
+<span class="r-in"><span><span class="co">## See help(tweedie.profile), p.vec parameter, for further information.</span></span></span>
+<span class="r-in"><span><span class="co">## Note: The parameters rereserving and bootstrap can be set to 0 to speed up </span></span></span>
+<span class="r-in"><span><span class="co">## the process, as they aren't needed. </span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## Runs a 'p' loglikelihood profile on the parameters </span></span></span>
+<span class="r-in"><span><span class="co">## p=c(0,1.1,1.2,1.3,1.4,1.5,2,3)</span></span></span>
+<span class="r-in"><span><span class="va">res2</span> <span class="op">&lt;-</span> <span class="fu">tweedieReserve</span><span class="op">(</span><span class="va">MW2008</span>, p.optim<span class="op">=</span><span class="cn">TRUE</span>, </span></span>
+<span class="r-in"><span>                       p.check<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">1.1</span>,<span class="fl">1.2</span>,<span class="fl">1.3</span>,<span class="fl">1.4</span>,<span class="fl">1.5</span>,<span class="fl">2</span>,<span class="fl">3</span><span class="op">)</span>, </span></span>
+<span class="r-in"><span>                       design.type<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">1</span>,<span class="fl">0</span><span class="op">)</span>, </span></span>
+<span class="r-in"><span>                        rereserving<span class="op">=</span><span class="cn">FALSE</span>, bootstrap<span class="op">=</span><span class="fl">0</span>, </span></span>
+<span class="r-in"><span>                        progressBar<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## As it is possible to see in this example, the MLE of p (or xi) results </span></span></span>
+<span class="r-in"><span><span class="co">## between 0 and 1, which is not possible as Tweedie models aren't </span></span></span>
+<span class="r-in"><span><span class="co">## defined for 0 &lt; p &lt; 1, thus the Error message. </span></span></span>
+<span class="r-in"><span><span class="co">## But, despite this, we can conclude that overall the value p=1 could be </span></span></span>
+<span class="r-in"><span><span class="co">## reasonable for this dataset, as anyway it seems to be near the MLE. </span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## In order to consider an inflation parameter across the origin period, </span></span></span>
+<span class="r-in"><span><span class="co">## it may be interesting to change the regression structure to c(0,1,1) </span></span></span>
+<span class="r-in"><span><span class="co">## to get the same estimates of the Arithmetic Separation Method, as </span></span></span>
+<span class="r-in"><span><span class="co">## referred in Gigante/Sigalotti. </span></span></span>
+<span class="r-in"><span><span class="va">res3</span> <span class="op">&lt;-</span> <span class="fu">tweedieReserve</span><span class="op">(</span><span class="va">MW2008</span>, var.power<span class="op">=</span><span class="fl">1</span>, link.power<span class="op">=</span><span class="fl">0</span>, </span></span>
+<span class="r-in"><span>                           design.type<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">1</span>,<span class="fl">1</span><span class="op">)</span>, rereserving<span class="op">=</span><span class="cn">TRUE</span>,</span></span>
+<span class="r-in"><span>                           progressBar<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">res3</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## An assessment on future fitted calendar year values (usually defined </span></span></span>
+<span class="r-in"><span><span class="co">## as "gamma") is recommended</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">res3</span><span class="op">$</span><span class="va">gamma_y</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## Model residuals can be plotted using the res.diag output</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">scaled.biasadj</span> <span class="op">~</span> <span class="va">dev</span>, data<span class="op">=</span><span class="va">res3</span><span class="op">$</span><span class="va">res.diag</span><span class="op">)</span> <span class="co"># Development year</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">scaled.biasadj</span> <span class="op">~</span> <span class="va">cy</span>, data<span class="op">=</span><span class="va">res3</span><span class="op">$</span><span class="va">res.diag</span><span class="op">)</span> <span class="co"># Calendar year</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">scaled.biasadj</span> <span class="op">~</span> <span class="va">origin</span>, data<span class="op">=</span><span class="va">res3</span><span class="op">$</span><span class="va">res.diag</span><span class="op">)</span> <span class="co"># Origin year</span></span></span>
+<span class="r-in"><span><span class="op">}</span></span></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
@@ -351,7 +351,7 @@ B.A.J. 4, IV. 903-923. 1998</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
 </div>
 
     </footer></div>

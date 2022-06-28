@@ -57,13 +57,13 @@ for the distribution-free chain-ladder model (Mack) and Bootstrap model.</p>
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">CDR</span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span><span class="op">)</span>
-<span class="co"># S3 method for MackChainLadder</span>
-<span class="fu">CDR</span><span class="op">(</span><span class="va">x</span>, dev<span class="op">=</span><span class="fl">1</span>, <span class="va">...</span><span class="op">)</span>
-<span class="co"># S3 method for BootChainLadder</span>
-<span class="fu">CDR</span><span class="op">(</span><span class="va">x</span>, probs<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.75</span>, <span class="fl">0.95</span><span class="op">)</span>, <span class="va">...</span><span class="op">)</span>
-<span class="co"># S3 method for default</span>
-<span class="fu">CDR</span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">CDR</span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span><span class="op">)</span></span>
+<span><span class="co"># S3 method for MackChainLadder</span></span>
+<span><span class="fu">CDR</span><span class="op">(</span><span class="va">x</span>, dev<span class="op">=</span><span class="fl">1</span>, <span class="va">...</span><span class="op">)</span></span>
+<span><span class="co"># S3 method for BootChainLadder</span></span>
+<span><span class="fu">CDR</span><span class="op">(</span><span class="va">x</span>, probs<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.75</span>, <span class="fl">0.95</span><span class="op">)</span>, <span class="va">...</span><span class="op">)</span></span>
+<span><span class="co"># S3 method for default</span></span>
+<span><span class="fu">CDR</span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -126,8 +126,8 @@ Markus Gesmann for <code>CDR.BootChainLadder</code>.</p>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co"># Example from the 2008 Merz, Wuthrich paper mentioned above</span></span>
-<span class="r-in"><span class="va">MW2008</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># Example from the 2008 Merz, Wuthrich paper mentioned above</span></span></span>
+<span class="r-in"><span><span class="va">MW2008</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>       dev</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> origin       1       2       3       4       5       6       7       8       9</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>      1 2202584 3210449 3468122 3545070 3621627 3644636 3669012 3674511 3678633</span>
@@ -139,10 +139,10 @@ Markus Gesmann for <code>CDR.BootChainLadder</code>.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span>      7 2148216 3219775 3428335      NA      NA      NA      NA      NA      NA</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>      8 2143728 3158581      NA      NA      NA      NA      NA      NA      NA</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>      9 2144738      NA      NA      NA      NA      NA      NA      NA      NA</span>
-<span class="r-in"><span class="va">M</span> <span class="op">&lt;-</span> <span class="fu"><a href="MackChainLadder.html">MackChainLadder</a></span><span class="op">(</span><span class="va">MW2008</span>, est.sigma<span class="op">=</span><span class="st">"Mack"</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">M</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="va">M</span> <span class="op">&lt;-</span> <span class="fu"><a href="MackChainLadder.html">MackChainLadder</a></span><span class="op">(</span><span class="va">MW2008</span>, est.sigma<span class="op">=</span><span class="st">"Mack"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">M</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="CDR-1.png" alt="" width="700" height="433"></span>
-<span class="r-in"><span class="fu">CDR</span><span class="op">(</span><span class="va">M</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="fu">CDR</span><span class="op">(</span><span class="va">M</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>              IBNR CDR(1)S.E.   Mack.S.E.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1           0.000     0.0000      0.0000</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2        4377.670   566.1744    566.1744</span>
@@ -154,8 +154,8 @@ Markus Gesmann for <code>CDR.BootChainLadder</code>.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 8      411864.225 28119.3180  45090.1821</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 9     1433505.008 53320.8210  69552.3397</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Total 2237826.107 81080.5468 108401.3875</span>
-<span class="r-in"><span class="co"># Return all run-off result developments</span></span>
-<span class="r-in"><span class="fu">CDR</span><span class="op">(</span><span class="va">M</span>, dev<span class="op">=</span><span class="st">"all"</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="co"># Return all run-off result developments</span></span></span>
+<span class="r-in"><span><span class="fu">CDR</span><span class="op">(</span><span class="va">M</span>, dev<span class="op">=</span><span class="st">"all"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>              IBNR CDR(1)S.E. CDR(2)S.E. CDR(3)S.E. CDR(4)S.E. CDR(5)S.E.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1           0.000     0.0000     0.0000     0.0000     0.0000     0.0000</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2        4377.670   566.1744     0.0000     0.0000     0.0000     0.0000</span>
@@ -178,9 +178,9 @@ Markus Gesmann for <code>CDR.BootChainLadder</code>.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 8      1208.1604   401.9014     0.0000          0  45090.1821</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 9      3598.2399  1200.5081   399.4584          0  69552.3397</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Total  3876.0093  1281.3024   399.4584          0 108401.3875</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Example from the 2014 Merz, Wuthrich paper mentioned above</span></span>
-<span class="r-in"><span class="va">MW2014</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Example from the 2014 Merz, Wuthrich paper mentioned above</span></span></span>
+<span class="r-in"><span><span class="va">MW2014</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>       dev</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> origin     0     1     2     3     4     5     6     7     8     9    10    11</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     1  13109 20355 21337 22043 22401 22658 22997 23158 23492 23664 23699 23904</span>
@@ -219,10 +219,10 @@ Markus Gesmann for <code>CDR.BootChainLadder</code>.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     15    NA    NA    NA    NA    NA</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     16    NA    NA    NA    NA    NA</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     17    NA    NA    NA    NA    NA</span>
-<span class="r-in"><span class="va">W</span> <span class="op">&lt;-</span> <span class="fu"><a href="MackChainLadder.html">MackChainLadder</a></span><span class="op">(</span><span class="va">MW2014</span>, est.sigma<span class="op">=</span><span class="st">"Mack"</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">W</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="va">W</span> <span class="op">&lt;-</span> <span class="fu"><a href="MackChainLadder.html">MackChainLadder</a></span><span class="op">(</span><span class="va">MW2014</span>, est.sigma<span class="op">=</span><span class="st">"Mack"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">W</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="CDR-2.png" alt="" width="700" height="433"></span>
-<span class="r-in"><span class="fu">CDR</span><span class="op">(</span><span class="va">W</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="fu">CDR</span><span class="op">(</span><span class="va">W</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>               IBNR   CDR(1)S.E.    Mack.S.E.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1         0.000000    0.0000000    0.0000000</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2         1.022874    0.4083149    0.4083149</span>
@@ -242,42 +242,42 @@ Markus Gesmann for <code>CDR.BootChainLadder</code>.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 16     3384.341045  668.2337878 1106.1262716</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 17     9596.552341  733.2222786 1295.6909824</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Total 24134.870088 1842.8507073 3233.6807352</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Example with the BootChainLadder function, assuming overdispered Poisson model</span></span>
-<span class="r-in"><span class="va">B</span> <span class="op">&lt;-</span> <span class="fu"><a href="BootChainLadder.html">BootChainLadder</a></span><span class="op">(</span><span class="va">MW2008</span>, process.distr<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"od.pois"</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">B</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Example with the BootChainLadder function, assuming overdispered Poisson model</span></span></span>
+<span class="r-in"><span><span class="va">B</span> <span class="op">&lt;-</span> <span class="fu"><a href="BootChainLadder.html">BootChainLadder</a></span><span class="op">(</span><span class="va">MW2008</span>, process.distr<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"od.pois"</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">B</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> BootChainLadder(Triangle = MW2008, process.distr = c("od.pois"))</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>      Latest Mean Ultimate Mean IBNR IBNR.S.E  IBNR 75%  IBNR 95%</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1 3,678,633     3,678,633         0        0         0         0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2 3,902,425     3,907,219     4,794    6,188     7,241    17,230</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3 3,898,825     3,908,674     9,849    7,895    14,100    24,698</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4 3,548,422     3,577,573    29,151   12,533    37,024    52,361</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5 3,585,812     3,637,361    51,549   15,371    61,856    77,586</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6 3,641,036     3,753,033   111,997   22,782   125,890   153,091</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7 3,428,335     3,615,979   187,644   28,326   205,860   235,589</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8 3,158,581     3,571,667   413,086   46,037   442,148   491,092</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 9 2,144,738     3,583,801 1,439,063  100,823 1,503,675 1,606,576</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2 3,902,425     3,906,766     4,341    5,826     6,676    15,505</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3 3,898,825     3,908,065     9,240    7,568    13,387    22,638</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4 3,548,422     3,576,651    28,229   12,168    36,148    50,135</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5 3,585,812     3,637,801    51,989   15,030    61,866    79,039</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6 3,641,036     3,753,415   112,379   23,829   128,220   154,445</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7 3,428,335     3,614,850   186,515   30,950   207,512   240,656</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8 3,158,581     3,575,369   416,788   45,319   446,158   491,658</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9 2,144,738     3,580,827 1,436,089   97,293 1,506,468 1,592,189</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                     Totals</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Latest:         30,986,807</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Mean Ultimate:  33,233,941</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Mean IBNR:       2,247,134</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> IBNR.S.E           129,052</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Total IBNR 75%:  2,328,400</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Total IBNR 95%:  2,459,777</span>
-<span class="r-in"><span class="fu">CDR</span><span class="op">(</span><span class="va">B</span><span class="op">)</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Mean Ultimate:  33,232,378</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Mean IBNR:       2,245,571</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> IBNR.S.E           132,035</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Total IBNR 75%:  2,332,138</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Total IBNR 95%:  2,463,107</span>
+<span class="r-in"><span><span class="fu">CDR</span><span class="op">(</span><span class="va">B</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>              IBNR   IBNR.S.E  CDR(1)S.E  CDR(1)75%  CDR(1)95%</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1           0.000      0.000      0.000       0.00       0.00</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2        4793.963   6188.484   6188.484    7241.00   17230.30</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3        9849.039   7895.032   5867.012   12537.81   20366.94</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4       29151.208  12533.181  10769.516   35566.78   48523.79</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5       51549.194  15371.430  11054.953   57785.96   72330.40</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6      111996.817  22781.768  16253.191  120863.57  139869.04</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7      187643.732  28326.238  19669.728  200346.84  222799.54</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8      413086.499  46036.880  33737.444  433596.86  465808.51</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 9     1439063.352 100822.509  88507.169 1492538.03 1582032.79</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Total 2247133.805 129052.315 108613.842 2313728.66 2425880.46</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2        4341.261   5825.740   5825.740    6676.00   15505.00</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3        9239.969   7568.126   6031.401   12436.40   21166.78</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4       28228.562  12167.906  10487.217   35268.45   47808.56</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5       51989.303  15030.494  10697.560   58077.13   70937.88</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6      112378.995  23829.227  17430.459  122245.94  145032.29</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7      186515.375  30950.022  20297.270  199944.31  222040.43</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8      416788.082  45318.603  34405.399  436527.23  477465.36</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9     1436089.202  97293.182  88585.058 1495488.19 1581373.41</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Total 2245570.750 132035.024 111616.422 2321887.71 2428060.00</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
@@ -289,7 +289,7 @@ Markus Gesmann for <code>CDR.BootChainLadder</code>.</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
 </div>
 
     </footer></div>

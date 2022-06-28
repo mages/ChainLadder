@@ -60,8 +60,8 @@ for an object of class <code>triangle</code>.</p>
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">ata</span><span class="op">(</span><span class="va">Triangle</span>, NArow.rm <span class="op">=</span> <span class="cn">TRUE</span>, colname.sep <span class="op">=</span> <span class="st">"-"</span>,
-        colname.order<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"ascending"</span>,<span class="st">"descending"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">ata</span><span class="op">(</span><span class="va">Triangle</span>, NArow.rm <span class="op">=</span> <span class="cn">TRUE</span>, colname.sep <span class="op">=</span> <span class="st">"-"</span>,</span>
+<span>        colname.order<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"ascending"</span>,<span class="st">"descending"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -111,7 +111,7 @@ Simple averages and volume weighted averages are saved as
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="fu">ata</span><span class="op">(</span><span class="va">GenIns</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">ata</span><span class="op">(</span><span class="va">GenIns</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>       dev</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> origin   1-2   2-3   3-4   4-5   5-6   6-7   7-8   8-9  9-10</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   1    3.143 1.543 1.278 1.238 1.209 1.044 1.040 1.063 1.018</span>
@@ -125,25 +125,25 @@ Simple averages and volume weighted averages are saved as
 <span class="r-out co"><span class="r-pr">#&gt;</span>   9    3.619    NA    NA    NA    NA    NA    NA    NA    NA</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   smpl 3.566 1.746 1.452 1.181 1.111 1.085 1.053 1.075 1.018</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   vwtd 3.491 1.747 1.457 1.174 1.104 1.086 1.054 1.077 1.018</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Volume weighted average age-to-age factor of the "RAA" data</span></span>
-<span class="r-in"><span class="va">y</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/attr.html" class="external-link">attr</a></span><span class="op">(</span><span class="fu">ata</span><span class="op">(</span><span class="va">RAA</span><span class="op">)</span>, <span class="st">"vwtd"</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">y</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Volume weighted average age-to-age factor of the "RAA" data</span></span></span>
+<span class="r-in"><span><span class="va">y</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/attr.html" class="external-link">attr</a></span><span class="op">(</span><span class="fu">ata</span><span class="op">(</span><span class="va">RAA</span><span class="op">)</span>, <span class="st">"vwtd"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">y</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>      1-2      2-3      3-4      4-5      5-6      6-7      7-8      8-9 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2.999359 1.623523 1.270888 1.171675 1.113385 1.041935 1.033264 1.016936 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     9-10 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1.009217 </span>
-<span class="r-in"><span class="co"># "To ultimate" factors with a 10% tail</span></span>
-<span class="r-in"><span class="va">y</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/rev.html" class="external-link">rev</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/cumsum.html" class="external-link">cumprod</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rev.html" class="external-link">rev</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">y</span>, <span class="fl">1.1</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">y</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">RAA</span><span class="op">)</span>, <span class="st">"Ult"</span>, sep<span class="op">=</span><span class="st">"-"</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">y</span></span>
+<span class="r-in"><span><span class="co"># "To ultimate" factors with a 10% tail</span></span></span>
+<span class="r-in"><span><span class="va">y</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/rev.html" class="external-link">rev</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/cumsum.html" class="external-link">cumprod</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rev.html" class="external-link">rev</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">y</span>, <span class="fl">1.1</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">y</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">RAA</span><span class="op">)</span>, <span class="st">"Ult"</span>, sep<span class="op">=</span><span class="st">"-"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">y</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    1-Ult    2-Ult    3-Ult    4-Ult    5-Ult    6-Ult    7-Ult    8-Ult </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 9.812257 3.271452 2.015033 1.585531 1.353218 1.215409 1.166493 1.128940 </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    9-Ult   10-Ult </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1.110138 1.100000 </span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">## Label the development columns in "ratio-type" format</span></span>
-<span class="r-in"><span class="fu">ata</span><span class="op">(</span><span class="va">RAA</span>, colname.sep<span class="op">=</span><span class="st">":"</span>, colname.order<span class="op">=</span><span class="st">"desc"</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## Label the development columns in "ratio-type" format</span></span></span>
+<span class="r-in"><span><span class="fu">ata</span><span class="op">(</span><span class="va">RAA</span>, colname.sep<span class="op">=</span><span class="st">":"</span>, colname.order<span class="op">=</span><span class="st">"desc"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>       dev</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> origin    2:1   3:2   4:3   5:4   6:5   7:6   8:7   9:8  10:9</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   1981  1.650 1.319 1.082 1.147 1.195 1.113 1.033 1.003 1.009</span>
@@ -157,7 +157,7 @@ Simple averages and volume weighted averages are saved as
 <span class="r-out co"><span class="r-pr">#&gt;</span>   1989  1.722    NA    NA    NA    NA    NA    NA    NA    NA</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   smpl  8.206 1.696 1.315 1.183 1.127 1.043 1.034 1.018 1.009</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   vwtd  2.999 1.624 1.271 1.172 1.113 1.042 1.033 1.017 1.009</span>
-<span class="r-in"></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
@@ -169,7 +169,7 @@ Simple averages and volume weighted averages are saved as
 </div>
 
 <div class="pkgdown-footer-right">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
 </div>
 
     </footer></div>

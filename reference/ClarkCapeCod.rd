@@ -54,9 +54,9 @@
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">ClarkCapeCod</span><span class="op">(</span><span class="va">Triangle</span>, <span class="va">Premium</span>, cumulative <span class="op">=</span> <span class="cn">TRUE</span>, maxage <span class="op">=</span> <span class="cn">Inf</span>, 
-        adol <span class="op">=</span> <span class="cn">TRUE</span>, adol.age <span class="op">=</span> <span class="cn">NULL</span>, origin.width <span class="op">=</span> <span class="cn">NULL</span>,
-        G <span class="op">=</span> <span class="st">"loglogistic"</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">ClarkCapeCod</span><span class="op">(</span><span class="va">Triangle</span>, <span class="va">Premium</span>, cumulative <span class="op">=</span> <span class="cn">TRUE</span>, maxage <span class="op">=</span> <span class="cn">Inf</span>, </span>
+<span>        adol <span class="op">=</span> <span class="cn">TRUE</span>, adol.age <span class="op">=</span> <span class="cn">NULL</span>, origin.width <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>        G <span class="op">=</span> <span class="st">"loglogistic"</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -300,10 +300,10 @@ all-lower-case represent observation-level (origin, development age) results.)</
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="va">X</span> <span class="op">&lt;-</span> <span class="va">GenIns</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">X</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fl">12</span><span class="op">*</span><span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">X</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">CC.loglogistic</span>  <span class="op">&lt;-</span> <span class="fu">ClarkCapeCod</span><span class="op">(</span><span class="va">X</span>, Premium<span class="op">=</span><span class="fl">10000000</span><span class="op">+</span><span class="fl">400000</span><span class="op">*</span><span class="fl">0</span><span class="op">:</span><span class="fl">9</span>, maxage<span class="op">=</span><span class="fl">240</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">CC.loglogistic</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">X</span> <span class="op">&lt;-</span> <span class="va">GenIns</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">X</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fl">12</span><span class="op">*</span><span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">X</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">CC.loglogistic</span>  <span class="op">&lt;-</span> <span class="fu">ClarkCapeCod</span><span class="op">(</span><span class="va">X</span>, Premium<span class="op">=</span><span class="fl">10000000</span><span class="op">+</span><span class="fl">400000</span><span class="op">*</span><span class="fl">0</span><span class="op">:</span><span class="fl">9</span>, maxage<span class="op">=</span><span class="fl">240</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">CC.loglogistic</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  Origin CurrentValue     Premium   ELR FutureGrowthFactor FutureValue</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>       1    3,901,463  10,000,000 0.597             0.1304     778,463</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>       2    5,339,085  10,400,000 0.597             0.1594     989,952</span>
@@ -328,11 +328,11 @@ all-lower-case represent observation-level (origin, development age) results.)</
 <span class="r-out co"><span class="r-pr">#&gt;</span>      6,988,434   726,348 12.9</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>      7,340,695   786,672 11.2</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     64,014,435 3,402,779 11.5</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Clark's "CapeCod method" also works with triangles that have  </span></span>
-<span class="r-in"><span class="co"># more development periods than origin periods. The Premium</span></span>
-<span class="r-in"><span class="co"># is a contrived match to the "made up" 'qincurred' Triangle.</span></span>
-<span class="r-in"><span class="fu">ClarkCapeCod</span><span class="op">(</span><span class="va">qincurred</span>, Premium<span class="op">=</span><span class="fl">1250</span><span class="op">+</span><span class="fl">150</span><span class="op">*</span><span class="fl">0</span><span class="op">:</span><span class="fl">11</span>, G<span class="op">=</span><span class="st">"loglogistic"</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Clark's "CapeCod method" also works with triangles that have  </span></span></span>
+<span class="r-in"><span><span class="co"># more development periods than origin periods. The Premium</span></span></span>
+<span class="r-in"><span><span class="co"># is a contrived match to the "made up" 'qincurred' Triangle.</span></span></span>
+<span class="r-in"><span><span class="fu">ClarkCapeCod</span><span class="op">(</span><span class="va">qincurred</span>, Premium<span class="op">=</span><span class="fl">1250</span><span class="op">+</span><span class="fl">150</span><span class="op">*</span><span class="fl">0</span><span class="op">:</span><span class="fl">11</span>, G<span class="op">=</span><span class="st">"loglogistic"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  Origin CurrentValue Premium   ELR FutureGrowthFactor FutureValue UltimateValue</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    1995        1,100   1,250 0.726             0.0071           6         1,106</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    1996        1,300   1,400 0.726             0.0089           9         1,309</span>
@@ -361,21 +361,21 @@ all-lower-case represent observation-level (origin, development age) results.)</
 <span class="r-out co"><span class="r-pr">#&gt;</span>       247  19.5</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>       318  15.2</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>       546  12.3</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Method also works for a "triangle" with only one row:</span></span>
-<span class="r-in"><span class="co"># 1st row of GenIns; need "drop=FALSE" to avoid becoming a vector.</span></span>
-<span class="r-in"><span class="fu">ClarkCapeCod</span><span class="op">(</span><span class="va">GenIns</span><span class="op">[</span><span class="fl">1</span>, , drop<span class="op">=</span><span class="cn">FALSE</span><span class="op">]</span>, Premium<span class="op">=</span><span class="fl">1000000</span>, maxage<span class="op">=</span><span class="fl">20</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Method also works for a "triangle" with only one row:</span></span></span>
+<span class="r-in"><span><span class="co"># 1st row of GenIns; need "drop=FALSE" to avoid becoming a vector.</span></span></span>
+<span class="r-in"><span><span class="fu">ClarkCapeCod</span><span class="op">(</span><span class="va">GenIns</span><span class="op">[</span><span class="fl">1</span>, , drop<span class="op">=</span><span class="cn">FALSE</span><span class="op">]</span>, Premium<span class="op">=</span><span class="fl">1000000</span>, maxage<span class="op">=</span><span class="fl">20</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  Origin CurrentValue   Premium   ELR FutureGrowthFactor FutureValue</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>       1    3,901,463 1,000,000 5.180             0.1329     688,191</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   Total    3,901,463 1,000,000                              688,191</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  UltimateValue StdError  CV%</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>      4,589,654  332,977 48.4</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>      4,589,654  332,977 48.4</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># If one value of Premium is appropriate for all origin years</span></span>
-<span class="r-in"><span class="co"># (e.g., losses are on-level and adjusted for exposure)</span></span>
-<span class="r-in"><span class="co"># then only a single value for Premium need be provided.</span></span>
-<span class="r-in"><span class="fu">ClarkCapeCod</span><span class="op">(</span><span class="va">GenIns</span>, Premium<span class="op">=</span><span class="fl">1000000</span>, maxage<span class="op">=</span><span class="fl">20</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># If one value of Premium is appropriate for all origin years</span></span></span>
+<span class="r-in"><span><span class="co"># (e.g., losses are on-level and adjusted for exposure)</span></span></span>
+<span class="r-in"><span><span class="co"># then only a single value for Premium need be provided.</span></span></span>
+<span class="r-in"><span><span class="fu">ClarkCapeCod</span><span class="op">(</span><span class="va">GenIns</span>, Premium<span class="op">=</span><span class="fl">1000000</span>, maxage<span class="op">=</span><span class="fl">20</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  Origin CurrentValue    Premium   ELR FutureGrowthFactor FutureValue</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>       1    3,901,463  1,000,000 6.506             0.1220     793,689</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>       2    5,339,085  1,000,000 6.506             0.1497     973,638</span>
@@ -400,13 +400,13 @@ all-lower-case represent observation-level (origin, development age) results.)</
 <span class="r-out co"><span class="r-pr">#&gt;</span>      5,972,408   648,803 14.1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>      5,982,023   697,588 12.4</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     59,667,455 3,009,180 11.9</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Use of the weibull function generates a warning that the parameter risk </span></span>
-<span class="r-in"><span class="co"># approximation results in some negative variances. This may be of small </span></span>
-<span class="r-in"><span class="co"># concern since it happens only for older years with near-zero </span></span>
-<span class="r-in"><span class="co"># estimated reserves, but the warning should not be disregarded </span></span>
-<span class="r-in"><span class="co"># if it occurs with real data.</span></span>
-<span class="r-in"><span class="va">Y</span> <span class="op">&lt;-</span> <span class="fu">ClarkCapeCod</span><span class="op">(</span><span class="va">qincurred</span>, Premium<span class="op">=</span><span class="fl">1250</span><span class="op">+</span><span class="fl">150</span><span class="op">*</span><span class="fl">0</span><span class="op">:</span><span class="fl">11</span>, G<span class="op">=</span><span class="st">"weibull"</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Use of the weibull function generates a warning that the parameter risk </span></span></span>
+<span class="r-in"><span><span class="co"># approximation results in some negative variances. This may be of small </span></span></span>
+<span class="r-in"><span><span class="co"># concern since it happens only for older years with near-zero </span></span></span>
+<span class="r-in"><span><span class="co"># estimated reserves, but the warning should not be disregarded </span></span></span>
+<span class="r-in"><span><span class="co"># if it occurs with real data.</span></span></span>
+<span class="r-in"><span><span class="va">Y</span> <span class="op">&lt;-</span> <span class="fu">ClarkCapeCod</span><span class="op">(</span><span class="va">qincurred</span>, Premium<span class="op">=</span><span class="fl">1250</span><span class="op">+</span><span class="fl">150</span><span class="op">*</span><span class="fl">0</span><span class="op">:</span><span class="fl">11</span>, G<span class="op">=</span><span class="st">"weibull"</span><span class="op">)</span></span></span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>The parameter risk approximation produced 'negative variances' for the following origin years (values set to zero):</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> Origin  Reserve ApproxVar RelativeVar </span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span>   1995  0.00124 -6.17e-05     -0.0499 </span>
@@ -417,21 +417,21 @@ all-lower-case represent observation-level (origin, development age) results.)</
 <span class="r-wrn co"><span class="r-pr">#&gt;</span>   2000  5.86716 -8.22e+01    -14.0080 </span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span>   2001 22.99806 -4.54e+02    -19.7348 </span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span>   2002 79.44399 -1.09e+03    -13.7447 </span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># The plot of the standardized residuals by age indicates that the more</span></span>
-<span class="r-in"><span class="co"># mature observations are more loosely grouped than the less mature, just</span></span>
-<span class="r-in"><span class="co"># the opposite of the behavior under the loglogistic curve.</span></span>
-<span class="r-in"><span class="co"># This suggests that the model might be improved by analyzing the Triangle </span></span>
-<span class="r-in"><span class="co"># in two different "blocks": less mature vs. more mature. </span></span>
-<span class="r-in"><span class="co"># The QQ-plot shows that the tails of the empirical distribution of</span></span>
-<span class="r-in"><span class="co"># standardized residuals are "fatter" than a standard normal. </span></span>
-<span class="r-in"><span class="co"># The fact that the p-value is essentially zero says that there is </span></span>
-<span class="r-in"><span class="co"># virtually no chance that the standardized residuals could be </span></span>
-<span class="r-in"><span class="co"># considered draws from a standard normal random variable.</span></span>
-<span class="r-in"><span class="co"># The overall conclusion is that Clark's ODP-based CapeCod model with </span></span>
-<span class="r-in"><span class="co"># the weibull growth function does not match up well with the qincurred </span></span>
-<span class="r-in"><span class="co"># triangle and these premiums.</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">Y</span><span class="op">)</span> </span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># The plot of the standardized residuals by age indicates that the more</span></span></span>
+<span class="r-in"><span><span class="co"># mature observations are more loosely grouped than the less mature, just</span></span></span>
+<span class="r-in"><span><span class="co"># the opposite of the behavior under the loglogistic curve.</span></span></span>
+<span class="r-in"><span><span class="co"># This suggests that the model might be improved by analyzing the Triangle </span></span></span>
+<span class="r-in"><span><span class="co"># in two different "blocks": less mature vs. more mature. </span></span></span>
+<span class="r-in"><span><span class="co"># The QQ-plot shows that the tails of the empirical distribution of</span></span></span>
+<span class="r-in"><span><span class="co"># standardized residuals are "fatter" than a standard normal. </span></span></span>
+<span class="r-in"><span><span class="co"># The fact that the p-value is essentially zero says that there is </span></span></span>
+<span class="r-in"><span><span class="co"># virtually no chance that the standardized residuals could be </span></span></span>
+<span class="r-in"><span><span class="co"># considered draws from a standard normal random variable.</span></span></span>
+<span class="r-in"><span><span class="co"># The overall conclusion is that Clark's ODP-based CapeCod model with </span></span></span>
+<span class="r-in"><span><span class="co"># the weibull growth function does not match up well with the qincurred </span></span></span>
+<span class="r-in"><span><span class="co"># triangle and these premiums.</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">Y</span><span class="op">)</span> </span></span>
 <span class="r-plt img"><img src="ClarkCapeCod-1.png" alt="" width="700" height="433"></span>
 </code></pre></div>
     </div>
@@ -444,7 +444,7 @@ all-lower-case represent observation-level (origin, development age) results.)</
 </div>
 
 <div class="pkgdown-footer-right">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
 </div>
 
     </footer></div>

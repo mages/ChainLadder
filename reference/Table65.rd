@@ -54,9 +54,9 @@
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">Table64</span><span class="op">(</span><span class="va">x</span><span class="op">)</span>
-<span class="fu">Table65</span><span class="op">(</span><span class="va">x</span><span class="op">)</span>
-<span class="fu">Table68</span><span class="op">(</span><span class="va">x</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">Table64</span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
+<span><span class="fu">Table65</span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
+<span><span class="fu">Table68</span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -92,7 +92,7 @@ Table64 is specific to "LDF", Table68 to "CapeCod".</p>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="fu">Table65</span><span class="op">(</span><span class="fu"><a href="ClarkLDF.html">ClarkLDF</a></span><span class="op">(</span><span class="va">GenIns</span>, maxage<span class="op">=</span><span class="fl">20</span><span class="op">)</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">Table65</span><span class="op">(</span><span class="fu"><a href="ClarkLDF.html">ClarkLDF</a></span><span class="op">(</span><span class="va">GenIns</span>, maxage<span class="op">=</span><span class="fl">20</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    Origin CurrentValue FutureValue ProcessSE ProcessCV ParameterSE ParameterCV</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1       1      3901463    666530.8  209582.5      31.4    156593.2        23.5</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2       2      5339085   1157423.1  275610.3      23.8    254781.7        22.0</span>
@@ -117,7 +117,7 @@ Table64 is specific to "LDF", Table68 to "CapeCod".</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 9  1344652.2    26.9</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 10 2892103.5    46.5</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    4848938.3    16.8</span>
-<span class="r-in"><span class="fu">Table64</span><span class="op">(</span><span class="fu"><a href="ClarkLDF.html">ClarkLDF</a></span><span class="op">(</span><span class="va">GenIns</span>, maxage<span class="op">=</span><span class="fl">20</span><span class="op">)</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="fu">Table64</span><span class="op">(</span><span class="fu"><a href="ClarkLDF.html">ClarkLDF</a></span><span class="op">(</span><span class="va">GenIns</span>, maxage<span class="op">=</span><span class="fl">20</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    Origin CurrentValue CurrentAge AgeUsed GrowthFunction       Ldf TruncatedLdf</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1                   NA         20    19.5     0.90550697  1.104354     1.000000</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2       1      3901463         10     9.5     0.77338151  1.293023     1.170841</span>
@@ -144,10 +144,10 @@ Table64 is specific to "LDF", Table68 to "CapeCod".</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 10        6354929   4991635.1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 11        6567720   6223706.3</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 12       63272813  28914722.7</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">X</span> <span class="op">&lt;-</span> <span class="va">GenIns</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">X</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fl">12</span><span class="op">*</span><span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">X</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu">Table65</span><span class="op">(</span><span class="fu"><a href="ClarkCapeCod.html">ClarkCapeCod</a></span><span class="op">(</span><span class="va">X</span>, Premium<span class="op">=</span><span class="fl">10000000</span><span class="op">+</span><span class="fl">400000</span><span class="op">*</span><span class="fl">0</span><span class="op">:</span><span class="fl">9</span>, maxage<span class="op">=</span><span class="cn">Inf</span><span class="op">)</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">X</span> <span class="op">&lt;-</span> <span class="va">GenIns</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">X</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fl">12</span><span class="op">*</span><span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">X</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">Table65</span><span class="op">(</span><span class="fu"><a href="ClarkCapeCod.html">ClarkCapeCod</a></span><span class="op">(</span><span class="va">X</span>, Premium<span class="op">=</span><span class="fl">10000000</span><span class="op">+</span><span class="fl">400000</span><span class="op">*</span><span class="fl">0</span><span class="op">:</span><span class="fl">9</span>, maxage<span class="op">=</span><span class="cn">Inf</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    Origin CurrentValue FutureValue ProcessSE ProcessCV ParameterSE ParameterCV</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1       1      3901463     1323698  284493.9      21.5    340851.2        25.7</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2       2      5339085     1556996  308547.7      19.8    380563.1        24.4</span>
@@ -172,7 +172,7 @@ Table64 is specific to "LDF", Table68 to "CapeCod".</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 9   889805.5    14.0</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 10  941202.7    12.2</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    5378615.7    14.9</span>
-<span class="r-in"><span class="fu">Table68</span><span class="op">(</span><span class="fu"><a href="ClarkCapeCod.html">ClarkCapeCod</a></span><span class="op">(</span><span class="va">X</span>, Premium<span class="op">=</span><span class="fl">10000000</span><span class="op">+</span><span class="fl">400000</span><span class="op">*</span><span class="fl">0</span><span class="op">:</span><span class="fl">9</span>, maxage<span class="op">=</span><span class="cn">Inf</span><span class="op">)</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="fu">Table68</span><span class="op">(</span><span class="fu"><a href="ClarkCapeCod.html">ClarkCapeCod</a></span><span class="op">(</span><span class="va">X</span>, Premium<span class="op">=</span><span class="fl">10000000</span><span class="op">+</span><span class="fl">400000</span><span class="op">*</span><span class="fl">0</span><span class="op">:</span><span class="fl">9</span>, maxage<span class="op">=</span><span class="cn">Inf</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    Origin  Premium CurrentAge AgeUsed GrowthFunction FutureGrowthFactor</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1               NA        Inf     Inf     1.00000000          0.0000000</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2       1 1.00e+07        120     114     0.77828466          0.2217153</span>
@@ -199,7 +199,7 @@ Table64 is specific to "LDF", Table68 to "CapeCod".</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 10     7880744     6344850</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 11     8119554     7738201</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 12    70449074    36090118</span>
-<span class="r-in"></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
@@ -211,7 +211,7 @@ Table64 is specific to "LDF", Table68 to "CapeCod".</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
 </div>
 
     </footer></div>

@@ -57,8 +57,8 @@ for the ClarkLDF and ClarkCapeCod methods.</p>
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="co"># S3 method for clark</span>
-<span class="fu"><a href="https://rdrr.io/r/stats/vcov.html" class="external-link">vcov</a></span><span class="op">(</span><span class="va">object</span>, <span class="va">...</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="co"># S3 method for clark</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/stats/vcov.html" class="external-link">vcov</a></span><span class="op">(</span><span class="va">object</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -96,43 +96,43 @@ ClarkLDF and by ClarkCapeCod and calculates the matrix
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"></span>
-<span class="r-in"><span class="va">x</span> <span class="op">&lt;-</span> <span class="va">GenIns</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fl">12</span><span class="op">*</span><span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">Y</span> <span class="op">&lt;-</span> <span class="fu"><a href="ClarkCapeCod.html">ClarkCapeCod</a></span><span class="op">(</span><span class="va">x</span>, Premium<span class="op">=</span><span class="fl">10000000</span><span class="op">+</span><span class="fl">400000</span><span class="op">*</span><span class="fl">0</span><span class="op">:</span><span class="fl">9</span>, maxage<span class="op">=</span><span class="fl">240</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/vcov.html" class="external-link">vcov</a></span><span class="op">(</span><span class="va">Y</span><span class="op">)</span>,<span class="fl">6</span><span class="op">)</span> <span class="co">## Compare to matrix on p. 69 of Clark's paper</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="va">GenIns</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fl">12</span><span class="op">*</span><span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">Y</span> <span class="op">&lt;-</span> <span class="fu"><a href="ClarkCapeCod.html">ClarkCapeCod</a></span><span class="op">(</span><span class="va">x</span>, Premium<span class="op">=</span><span class="fl">10000000</span><span class="op">+</span><span class="fl">400000</span><span class="op">*</span><span class="fl">0</span><span class="op">:</span><span class="fl">9</span>, maxage<span class="op">=</span><span class="fl">240</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/vcov.html" class="external-link">vcov</a></span><span class="op">(</span><span class="va">Y</span><span class="op">)</span>,<span class="fl">6</span><span class="op">)</span> <span class="co">## Compare to matrix on p. 69 of Clark's paper</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>             ELR     omega     theta</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ELR    0.002387 -0.002964  0.238498</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> omega -0.002964  0.007804 -0.396186</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> theta  0.238498 -0.396186 32.471686</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># The estimates of the loglogistic parameters</span></span>
-<span class="r-in"><span class="va">Y</span><span class="op">$</span><span class="va">THETAG</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># The estimates of the loglogistic parameters</span></span></span>
+<span class="r-in"><span><span class="va">Y</span><span class="op">$</span><span class="va">THETAG</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     omega     theta </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  1.448797 47.917507 </span>
-<span class="r-in"><span class="co"># The standard errors of the estimated parameters</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">sqrt</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">tail</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/diag.html" class="external-link">diag</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/vcov.html" class="external-link">vcov</a></span><span class="op">(</span><span class="va">Y</span><span class="op">)</span><span class="op">)</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="co"># The standard errors of the estimated parameters</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">sqrt</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">tail</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/diag.html" class="external-link">diag</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/vcov.html" class="external-link">vcov</a></span><span class="op">(</span><span class="va">Y</span><span class="op">)</span><span class="op">)</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>      omega      theta </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 0.08834184 5.69839331 </span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># The parameter risks of the estimated reserves are calculated </span></span>
-<span class="r-in"><span class="co"># according to the formula on p. 54 of Clark's paper. For example, for</span></span>
-<span class="r-in"><span class="co"># the 5th accident year, pre- and post-multiply the covariance matrix</span></span>
-<span class="r-in"><span class="co"># by a matrix consisting of the gradient entries for just that accident year</span></span>
-<span class="r-in"><span class="va">FVgrad5</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="va">Y</span><span class="op">$</span><span class="va">FutureValueGradient</span><span class="op">[</span>, <span class="fl">5</span><span class="op">]</span>, ncol<span class="op">=</span><span class="fl">1</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">sqrt</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/t.html" class="external-link">t</a></span><span class="op">(</span><span class="va">FVgrad5</span><span class="op">)</span> <span class="op"><a href="https://rdrr.io/r/base/matmult.html" class="external-link">%*%</a></span> <span class="fu"><a href="https://rdrr.io/r/stats/vcov.html" class="external-link">vcov</a></span><span class="op">(</span><span class="va">Y</span><span class="op">)</span> <span class="op"><a href="https://rdrr.io/r/base/matmult.html" class="external-link">%*%</a></span> <span class="va">FVgrad5</span><span class="op">)</span> <span class="co">## compares to 314,829 in Clark's paper</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># The parameter risks of the estimated reserves are calculated </span></span></span>
+<span class="r-in"><span><span class="co"># according to the formula on p. 54 of Clark's paper. For example, for</span></span></span>
+<span class="r-in"><span><span class="co"># the 5th accident year, pre- and post-multiply the covariance matrix</span></span></span>
+<span class="r-in"><span><span class="co"># by a matrix consisting of the gradient entries for just that accident year</span></span></span>
+<span class="r-in"><span><span class="va">FVgrad5</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="va">Y</span><span class="op">$</span><span class="va">FutureValueGradient</span><span class="op">[</span>, <span class="fl">5</span><span class="op">]</span>, ncol<span class="op">=</span><span class="fl">1</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">sqrt</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/t.html" class="external-link">t</a></span><span class="op">(</span><span class="va">FVgrad5</span><span class="op">)</span> <span class="op"><a href="https://rdrr.io/r/base/matmult.html" class="external-link">%*%</a></span> <span class="fu"><a href="https://rdrr.io/r/stats/vcov.html" class="external-link">vcov</a></span><span class="op">(</span><span class="va">Y</span><span class="op">)</span> <span class="op"><a href="https://rdrr.io/r/base/matmult.html" class="external-link">%*%</a></span> <span class="va">FVgrad5</span><span class="op">)</span> <span class="co">## compares to 314,829 in Clark's paper</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>          [,1]</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1,] 312675.8</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># The estimated reserves for accident year 5:</span></span>
-<span class="r-in"><span class="va">Y</span><span class="op">$</span><span class="va">FutureValue</span><span class="op">[</span><span class="fl">5</span><span class="op">]</span>   <span class="co">## compares to 2,046,646 in the paper</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># The estimated reserves for accident year 5:</span></span></span>
+<span class="r-in"><span><span class="va">Y</span><span class="op">$</span><span class="va">FutureValue</span><span class="op">[</span><span class="fl">5</span><span class="op">]</span>   <span class="co">## compares to 2,046,646 in the paper</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 2041248</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Recalculate the parameter risk CV for all accident years in total (10.6% in paper):</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">sqrt</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/t.html" class="external-link">t</a></span><span class="op">(</span><span class="va">Y</span><span class="op">$</span><span class="va">FutureValueGradient</span><span class="op">)</span> <span class="op"><a href="https://rdrr.io/r/base/matmult.html" class="external-link">%*%</a></span> <span class="fu"><a href="https://rdrr.io/r/stats/vcov.html" class="external-link">vcov</a></span><span class="op">(</span><span class="va">Y</span><span class="op">)</span> <span class="op"><a href="https://rdrr.io/r/base/matmult.html" class="external-link">%*%</a></span> <span class="va">Y</span><span class="op">$</span><span class="va">FutureValueGradient</span><span class="op">)</span><span class="op">)</span> <span class="op">/</span> </span>
-<span class="r-in">    <span class="va">Y</span><span class="op">$</span><span class="va">Total</span><span class="op">$</span><span class="va">FutureValue</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Recalculate the parameter risk CV for all accident years in total (10.6% in paper):</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">sqrt</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/t.html" class="external-link">t</a></span><span class="op">(</span><span class="va">Y</span><span class="op">$</span><span class="va">FutureValueGradient</span><span class="op">)</span> <span class="op"><a href="https://rdrr.io/r/base/matmult.html" class="external-link">%*%</a></span> <span class="fu"><a href="https://rdrr.io/r/stats/vcov.html" class="external-link">vcov</a></span><span class="op">(</span><span class="va">Y</span><span class="op">)</span> <span class="op"><a href="https://rdrr.io/r/base/matmult.html" class="external-link">%*%</a></span> <span class="va">Y</span><span class="op">$</span><span class="va">FutureValueGradient</span><span class="op">)</span><span class="op">)</span> <span class="op">/</span> </span></span>
+<span class="r-in"><span>    <span class="va">Y</span><span class="op">$</span><span class="va">Total</span><span class="op">$</span><span class="va">FutureValue</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0.1053735</span>
-<span class="r-in"></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
@@ -144,7 +144,7 @@ ClarkLDF and by ClarkCapeCod and calculates the matrix
 </div>
 
 <div class="pkgdown-footer-right">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
 </div>
 
     </footer></div>

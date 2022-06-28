@@ -54,9 +54,9 @@
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">ClarkLDF</span><span class="op">(</span><span class="va">Triangle</span>, cumulative <span class="op">=</span> <span class="cn">TRUE</span>, maxage <span class="op">=</span> <span class="cn">Inf</span>, 
-        adol <span class="op">=</span> <span class="cn">TRUE</span>, adol.age <span class="op">=</span> <span class="cn">NULL</span>, origin.width <span class="op">=</span> <span class="cn">NULL</span>,
-        G <span class="op">=</span> <span class="st">"loglogistic"</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">ClarkLDF</span><span class="op">(</span><span class="va">Triangle</span>, cumulative <span class="op">=</span> <span class="cn">TRUE</span>, maxage <span class="op">=</span> <span class="cn">Inf</span>, </span>
+<span>        adol <span class="op">=</span> <span class="cn">TRUE</span>, adol.age <span class="op">=</span> <span class="cn">NULL</span>, origin.width <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>        G <span class="op">=</span> <span class="st">"loglogistic"</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -291,8 +291,8 @@ all-lower-case represent observation-level (origin, development age) results.)</
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="va">X</span> <span class="op">&lt;-</span> <span class="va">GenIns</span></span>
-<span class="r-in"><span class="fu">ClarkLDF</span><span class="op">(</span><span class="va">X</span>, maxage<span class="op">=</span><span class="fl">20</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">X</span> <span class="op">&lt;-</span> <span class="va">GenIns</span></span></span>
+<span class="r-in"><span><span class="fu">ClarkLDF</span><span class="op">(</span><span class="va">X</span>, maxage<span class="op">=</span><span class="fl">20</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  Origin CurrentValue    Ldf UltimateValue FutureValue  StdError  CV%</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>       1    3,901,463  1.171     4,567,994     666,531   261,622 39.3</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>       2    5,339,085  1.217     6,496,508   1,157,423   375,333 32.4</span>
@@ -305,10 +305,10 @@ all-lower-case represent observation-level (origin, development age) results.)</
 <span class="r-out co"><span class="r-pr">#&gt;</span>       9    1,363,294  4.661     6,354,929   4,991,635 1,344,652 26.9</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>      10      344,014 19.091     6,567,720   6,223,706 2,892,103 46.5</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   Total   34,358,090           63,272,813  28,914,723 4,848,938 16.8</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Clark's "LDF method" also works with triangles that have  </span></span>
-<span class="r-in"><span class="co"># more development periods than origin periods</span></span>
-<span class="r-in"><span class="fu">ClarkLDF</span><span class="op">(</span><span class="va">qincurred</span>, G<span class="op">=</span><span class="st">"loglogistic"</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Clark's "LDF method" also works with triangles that have  </span></span></span>
+<span class="r-in"><span><span class="co"># more development periods than origin periods</span></span></span>
+<span class="r-in"><span><span class="fu">ClarkLDF</span><span class="op">(</span><span class="va">qincurred</span>, G<span class="op">=</span><span class="st">"loglogistic"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  Origin CurrentValue     Ldf UltimateValue FutureValue StdError   CV%</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    1995        1,100   1.006         1,107           7       17 242.9</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    1996        1,300   1.008         1,310          10       21 200.1</span>
@@ -323,22 +323,22 @@ all-lower-case represent observation-level (origin, development age) results.)</
 <span class="r-out co"><span class="r-pr">#&gt;</span>    2005          422   2.643         1,115         693      280  40.4</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    2006           13 339.514         4,414       4,401    7,891 179.3</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   Total       13,646                19,627       5,981    7,891 131.9</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Method also works for a "triangle" with only one row:</span></span>
-<span class="r-in"><span class="co"># 1st row of GenIns; need "drop=FALSE" to avoid becoming a vector.</span></span>
-<span class="r-in"><span class="fu">ClarkLDF</span><span class="op">(</span><span class="va">GenIns</span><span class="op">[</span><span class="fl">1</span>, , drop<span class="op">=</span><span class="cn">FALSE</span><span class="op">]</span>, maxage<span class="op">=</span><span class="fl">20</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Method also works for a "triangle" with only one row:</span></span></span>
+<span class="r-in"><span><span class="co"># 1st row of GenIns; need "drop=FALSE" to avoid becoming a vector.</span></span></span>
+<span class="r-in"><span><span class="fu">ClarkLDF</span><span class="op">(</span><span class="va">GenIns</span><span class="op">[</span><span class="fl">1</span>, , drop<span class="op">=</span><span class="cn">FALSE</span><span class="op">]</span>, maxage<span class="op">=</span><span class="fl">20</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  Origin CurrentValue   Ldf UltimateValue FutureValue StdError  CV%</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>       1    3,901,463 1.176     4,589,676     688,213  334,290 48.6</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   Total    3,901,463           4,589,676     688,213  334,290 48.6</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># The age of the first evaluation may be prior to the end of the origin period.</span></span>
-<span class="r-in"><span class="co"># Here the ages are in units of "months" and the first evaluation </span></span>
-<span class="r-in"><span class="co"># is at the end of the third quarter.</span></span>
-<span class="r-in"><span class="va">X</span> <span class="op">&lt;-</span> <span class="va">GenIns</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">X</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fl">12</span> <span class="op">*</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">X</span><span class="op">)</span><span class="op">)</span> <span class="op">-</span> <span class="fl">3</span></span>
-<span class="r-in"><span class="co"># The indicated liability increases from 1st example above, </span></span>
-<span class="r-in"><span class="co"># but not significantly.</span></span>
-<span class="r-in"><span class="fu">ClarkLDF</span><span class="op">(</span><span class="va">X</span>, maxage<span class="op">=</span><span class="fl">240</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># The age of the first evaluation may be prior to the end of the origin period.</span></span></span>
+<span class="r-in"><span><span class="co"># Here the ages are in units of "months" and the first evaluation </span></span></span>
+<span class="r-in"><span><span class="co"># is at the end of the third quarter.</span></span></span>
+<span class="r-in"><span><span class="va">X</span> <span class="op">&lt;-</span> <span class="va">GenIns</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">X</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fl">12</span> <span class="op">*</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">X</span><span class="op">)</span><span class="op">)</span> <span class="op">-</span> <span class="fl">3</span></span></span>
+<span class="r-in"><span><span class="co"># The indicated liability increases from 1st example above, </span></span></span>
+<span class="r-in"><span><span class="co"># but not significantly.</span></span></span>
+<span class="r-in"><span><span class="fu">ClarkLDF</span><span class="op">(</span><span class="va">X</span>, maxage<span class="op">=</span><span class="fl">240</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  Origin CurrentValue    Ldf UltimateValue FutureValue  StdError  CV%</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>       1    3,901,463  1.189     4,638,605     737,142   277,588 37.7</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>       2    5,339,085  1.237     6,605,692   1,266,607   397,311 31.4</span>
@@ -351,14 +351,14 @@ all-lower-case represent observation-level (origin, development age) results.)</
 <span class="r-out co"><span class="r-pr">#&gt;</span>       9    1,363,294  4.810     6,556,934   5,193,640 1,389,410 26.8</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>      10      344,014 19.039     6,549,543   6,205,529 2,862,366 46.1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   Total   34,358,090           64,264,722  29,906,632 4,983,456 16.7</span>
-<span class="r-in"><span class="co"># When maxage is infinite, the phase shift has a more noticeable impact:</span></span>
-<span class="r-in"><span class="co"># a 4-5% increase of the overall CV.</span></span>
-<span class="r-in"><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu">ClarkLDF</span><span class="op">(</span><span class="va">GenIns</span>, maxage<span class="op">=</span><span class="cn">Inf</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">y</span> <span class="op">&lt;-</span> <span class="fu">ClarkLDF</span><span class="op">(</span><span class="va">X</span>, maxage<span class="op">=</span><span class="cn">Inf</span><span class="op">)</span></span>
-<span class="r-in"><span class="co"># Percent change in the bottom line CV:</span></span>
-<span class="r-in"><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">tail</a></span><span class="op">(</span><span class="va">y</span><span class="op">$</span><span class="va">Table65</span><span class="op">$</span><span class="va">TotalCV</span>, <span class="fl">1</span><span class="op">)</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">tail</a></span><span class="op">(</span><span class="va">x</span><span class="op">$</span><span class="va">Table65</span><span class="op">$</span><span class="va">TotalCV</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span> <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">tail</a></span><span class="op">(</span><span class="va">x</span><span class="op">$</span><span class="va">Table65</span><span class="op">$</span><span class="va">TotalCV</span>, <span class="fl">1</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="co"># When maxage is infinite, the phase shift has a more noticeable impact:</span></span></span>
+<span class="r-in"><span><span class="co"># a 4-5% increase of the overall CV.</span></span></span>
+<span class="r-in"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu">ClarkLDF</span><span class="op">(</span><span class="va">GenIns</span>, maxage<span class="op">=</span><span class="cn">Inf</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">y</span> <span class="op">&lt;-</span> <span class="fu">ClarkLDF</span><span class="op">(</span><span class="va">X</span>, maxage<span class="op">=</span><span class="cn">Inf</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="co"># Percent change in the bottom line CV:</span></span></span>
+<span class="r-in"><span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">tail</a></span><span class="op">(</span><span class="va">y</span><span class="op">$</span><span class="va">Table65</span><span class="op">$</span><span class="va">TotalCV</span>, <span class="fl">1</span><span class="op">)</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">tail</a></span><span class="op">(</span><span class="va">x</span><span class="op">$</span><span class="va">Table65</span><span class="op">$</span><span class="va">TotalCV</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span> <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">tail</a></span><span class="op">(</span><span class="va">x</span><span class="op">$</span><span class="va">Table65</span><span class="op">$</span><span class="va">TotalCV</span>, <span class="fl">1</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> numeric(0)</span>
-<span class="r-in"></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
@@ -370,7 +370,7 @@ all-lower-case represent observation-level (origin, development age) results.)</
 </div>
 
 <div class="pkgdown-footer-right">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
 </div>
 
     </footer></div>

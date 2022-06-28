@@ -54,11 +54,11 @@
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="co"># S3 method for MunichChainLadder</span>
-<span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">object</span>, <span class="va">...</span><span class="op">)</span>
-
-<span class="co"># S3 method for MunichChainLadder</span>
-<span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="co"># S3 method for MunichChainLadder</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">object</span>, <span class="va">...</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># S3 method for MunichChainLadder</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -105,7 +105,7 @@
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="va">M</span> <span class="op">&lt;-</span> <span class="fu"><a href="MunichChainLadder.html">MunichChainLadder</a></span><span class="op">(</span><span class="va">MCLpaid</span>, <span class="va">MCLincurred</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">M</span> <span class="op">&lt;-</span> <span class="fu"><a href="MunichChainLadder.html">MunichChainLadder</a></span><span class="op">(</span><span class="va">MCLpaid</span>, <span class="va">MCLincurred</span><span class="op">)</span></span></span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>'loglinear' model to estimate sigma_n doesn't appear appropriate. </span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> p-value &gt; 5.</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span>  est.sigma will be overwritten to 'Mack'.</span>
@@ -114,7 +114,7 @@
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> p-value &gt; 5.</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span>  est.sigma will be overwritten to 'Mack'.</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span>  Mack's estimation method will be used instead.</span>
-<span class="r-in"><span class="va">M</span></span>
+<span class="r-in"><span><span class="va">M</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> MunichChainLadder(Paid = MCLpaid, Incurred = MCLincurred)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   Latest Paid Latest Incurred Latest P/I Ratio Ult. Paid Ult. Incurred</span>
@@ -138,7 +138,7 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span>             Paid Incurred P/I Ratio</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Latest:   25,525   29,694      0.86</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Ultimate: 32,121   32,720      0.98</span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">M</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">M</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $ByOrigin</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   Latest Paid Latest Incurred Latest P/I Ratio Ult. Paid Ult. Incurred</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1        2131            2174        0.9802208  2131.000      2174.000</span>
@@ -162,7 +162,7 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> Latest:   25525.0 29694.00 0.8596013</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Ultimate: 32121.5 32719.51 0.9817230</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">M</span><span class="op">)</span><span class="op">$</span><span class="va">ByOrigin</span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">M</span><span class="op">)</span><span class="op">$</span><span class="va">ByOrigin</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   Latest Paid Latest Incurred Latest P/I Ratio Ult. Paid Ult. Incurred</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1        2131            2174        0.9802208  2131.000      2174.000</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2        2348            2454        0.9568052  2384.842      2443.222</span>
@@ -190,7 +190,7 @@
 </div>
 
 <div class="pkgdown-footer-right">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
 </div>
 
     </footer></div>

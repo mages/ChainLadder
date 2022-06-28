@@ -54,8 +54,8 @@
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">glmReserve</span><span class="op">(</span><span class="va">triangle</span>, var.power <span class="op">=</span> <span class="fl">1</span>, link.power <span class="op">=</span> <span class="fl">0</span>, cum <span class="op">=</span> <span class="cn">TRUE</span>, 
-      mse.method <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"formula"</span>, <span class="st">"bootstrap"</span><span class="op">)</span>,  nsim <span class="op">=</span> <span class="fl">1000</span>, nb <span class="op">=</span> <span class="cn">FALSE</span>, <span class="va">...</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">glmReserve</span><span class="op">(</span><span class="va">triangle</span>, var.power <span class="op">=</span> <span class="fl">1</span>, link.power <span class="op">=</span> <span class="fl">0</span>, cum <span class="op">=</span> <span class="cn">TRUE</span>, </span>
+<span>      mse.method <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"formula"</span>, <span class="st">"bootstrap"</span><span class="op">)</span>,  nsim <span class="op">=</span> <span class="fl">1000</span>, nb <span class="op">=</span> <span class="cn">FALSE</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -170,11 +170,11 @@ Some of these may be included in the future release.</p>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">GenIns</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">GenIns</span> <span class="op">&lt;-</span> <span class="va">GenIns</span> <span class="op">/</span> <span class="fl">1000</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># over-dispersed Poisson: reproduce ChainLadder estimates</span></span>
-<span class="r-in"><span class="op">(</span><span class="va">fit1</span> <span class="op">&lt;-</span> <span class="fu">glmReserve</span><span class="op">(</span><span class="va">GenIns</span><span class="op">)</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">GenIns</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">GenIns</span> <span class="op">&lt;-</span> <span class="va">GenIns</span> <span class="op">/</span> <span class="fl">1000</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># over-dispersed Poisson: reproduce ChainLadder estimates</span></span></span>
+<span class="r-in"><span><span class="op">(</span><span class="va">fit1</span> <span class="op">&lt;-</span> <span class="fu">glmReserve</span><span class="op">(</span><span class="va">GenIns</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>          Latest Dev.To.Date  Ultimate  IBNR       S.E        CV</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2      5339.085  0.98251776  5434.085    95  110.0999 1.1589460</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 3      4909.315  0.91262828  5379.315   470  216.0434 0.4596668</span>
@@ -186,7 +186,7 @@ Some of these may be included in the future release.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 9      1363.294  0.24162052  5642.294  4279 1046.5138 0.2445697</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 10      344.014  0.06921791  4970.014  4626 1980.1014 0.4280375</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> total 30456.627  0.61982291 49137.627 18681 2945.6609 0.1576822</span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">fit1</span>, type <span class="op">=</span> <span class="st">"model"</span><span class="op">)</span>   <span class="co"># extract the underlying glm</span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">fit1</span>, type <span class="op">=</span> <span class="st">"model"</span><span class="op">)</span>   <span class="co"># extract the underlying glm</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Call:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> glm(formula = value ~ factor(origin) + factor(dev), family = fam, </span>
@@ -228,24 +228,24 @@ Some of these may be included in the future release.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Number of Fisher Scoring iterations: 4</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># which:</span></span>
-<span class="r-in"><span class="co"># 1 Original triangle </span></span>
-<span class="r-in"><span class="co"># 2 Full triangle </span></span>
-<span class="r-in"><span class="co"># 3 Reserve distribution</span></span>
-<span class="r-in"><span class="co"># 4 Residual plot</span></span>
-<span class="r-in"><span class="co"># 5 QQ-plot</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># plot original triangle</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">fit1</span>, which <span class="op">=</span> <span class="fl">1</span>, xlab <span class="op">=</span> <span class="st">"dev year"</span>, ylab <span class="op">=</span> <span class="st">"cum loss"</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># which:</span></span></span>
+<span class="r-in"><span><span class="co"># 1 Original triangle </span></span></span>
+<span class="r-in"><span><span class="co"># 2 Full triangle </span></span></span>
+<span class="r-in"><span><span class="co"># 3 Reserve distribution</span></span></span>
+<span class="r-in"><span><span class="co"># 4 Residual plot</span></span></span>
+<span class="r-in"><span><span class="co"># 5 QQ-plot</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># plot original triangle</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">fit1</span>, which <span class="op">=</span> <span class="fl">1</span>, xlab <span class="op">=</span> <span class="st">"dev year"</span>, ylab <span class="op">=</span> <span class="st">"cum loss"</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="glmReserve-1.png" alt="" width="700" height="433"></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># plot residuals </span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">fit1</span>, which <span class="op">=</span> <span class="fl">4</span>, xlab <span class="op">=</span> <span class="st">"fitted values"</span>, ylab <span class="op">=</span> <span class="st">"residuals"</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># plot residuals </span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">fit1</span>, which <span class="op">=</span> <span class="fl">4</span>, xlab <span class="op">=</span> <span class="st">"fitted values"</span>, ylab <span class="op">=</span> <span class="st">"residuals"</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="glmReserve-2.png" alt="" width="700" height="433"></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Gamma GLM:</span></span>
-<span class="r-in"><span class="op">(</span><span class="va">fit2</span> <span class="op">&lt;-</span> <span class="fu">glmReserve</span><span class="op">(</span><span class="va">GenIns</span>, var.power <span class="op">=</span> <span class="fl">2</span><span class="op">)</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Gamma GLM:</span></span></span>
+<span class="r-in"><span><span class="op">(</span><span class="va">fit2</span> <span class="op">&lt;-</span> <span class="fu">glmReserve</span><span class="op">(</span><span class="va">GenIns</span>, var.power <span class="op">=</span> <span class="fl">2</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>          Latest Dev.To.Date  Ultimate  IBNR        S.E        CV</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2      5339.085  0.98287950  5432.085    93   45.16637 0.4856599</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 3      4909.315  0.91654710  5356.315   447  160.55717 0.3591883</span>
@@ -257,9 +257,9 @@ Some of these may be included in the future release.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 9      1363.294  0.24853618  5485.294  4122 1175.94587 0.2852853</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 10      344.014  0.07078457  4860.014  4516 1667.39240 0.3692189</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> total 30456.627  0.62742025 48542.627 18086 2702.70978 0.1494366</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># compound Poisson GLM (variance function estimated from the data):</span></span>
-<span class="r-in"><span class="op">(</span><span class="va">fit3</span> <span class="op">&lt;-</span> <span class="fu">glmReserve</span><span class="op">(</span><span class="va">GenIns</span>, var.power <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># compound Poisson GLM (variance function estimated from the data):</span></span></span>
+<span class="r-in"><span><span class="op">(</span><span class="va">fit3</span> <span class="op">&lt;-</span> <span class="fu">glmReserve</span><span class="op">(</span><span class="va">GenIns</span>, var.power <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>          Latest Dev.To.Date  Ultimate  IBNR        S.E        CV</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2      5339.085  0.98269860  5433.085    94   91.59865 0.9744537</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 3      4909.315  0.91330741  5375.315   466  186.54619 0.4003137</span>
@@ -271,14 +271,14 @@ Some of these may be included in the future release.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 9      1363.294  0.24230764  5626.294  4263 1019.45920 0.2391413</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 10      344.014  0.06942745  4955.014  4611 1910.99069 0.4144417</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> total 30456.627  0.62058068 49077.627 18621 2831.45526 0.1520571</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Now suppose we have an exposure measure</span></span>
-<span class="r-in"><span class="co"># we can put it as an offset term in the model</span></span>
-<span class="r-in"><span class="co"># to do this, use the "exposure" attribute of the 'triangle'</span></span>
-<span class="r-in"><span class="va">expos</span> <span class="op">&lt;-</span> <span class="op">(</span><span class="fl">7</span> <span class="op">+</span> <span class="fl">1</span><span class="op">:</span><span class="fl">10</span> <span class="op">*</span> <span class="fl">0.4</span><span class="op">)</span> <span class="op">*</span> <span class="fl">100</span></span>
-<span class="r-in"><span class="va">GenIns2</span> <span class="op">&lt;-</span> <span class="va">GenIns</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/attr.html" class="external-link">attr</a></span><span class="op">(</span><span class="va">GenIns2</span>, <span class="st">"exposure"</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="va">expos</span></span>
-<span class="r-in"><span class="op">(</span><span class="va">fit4</span> <span class="op">&lt;-</span> <span class="fu">glmReserve</span><span class="op">(</span><span class="va">GenIns2</span><span class="op">)</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Now suppose we have an exposure measure</span></span></span>
+<span class="r-in"><span><span class="co"># we can put it as an offset term in the model</span></span></span>
+<span class="r-in"><span><span class="co"># to do this, use the "exposure" attribute of the 'triangle'</span></span></span>
+<span class="r-in"><span><span class="va">expos</span> <span class="op">&lt;-</span> <span class="op">(</span><span class="fl">7</span> <span class="op">+</span> <span class="fl">1</span><span class="op">:</span><span class="fl">10</span> <span class="op">*</span> <span class="fl">0.4</span><span class="op">)</span> <span class="op">*</span> <span class="fl">100</span></span></span>
+<span class="r-in"><span><span class="va">GenIns2</span> <span class="op">&lt;-</span> <span class="va">GenIns</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/attr.html" class="external-link">attr</a></span><span class="op">(</span><span class="va">GenIns2</span>, <span class="st">"exposure"</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="va">expos</span></span></span>
+<span class="r-in"><span><span class="op">(</span><span class="va">fit4</span> <span class="op">&lt;-</span> <span class="fu">glmReserve</span><span class="op">(</span><span class="va">GenIns2</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>          Latest Dev.To.Date  Ultimate  IBNR       S.E        CV</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2      5339.085  0.98251776  5434.085    95  110.0999 1.1589460</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 3      4909.315  0.91262828  5379.315   470  216.0434 0.4596668</span>
@@ -290,13 +290,13 @@ Some of these may be included in the future release.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 9      1363.294  0.24162052  5642.294  4279 1046.5138 0.2445697</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 10      344.014  0.06921791  4970.014  4626 1980.1014 0.4280375</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> total 30456.627  0.61982291 49137.627 18681 2945.6609 0.1576822</span>
-<span class="r-in"><span class="co"># If the triangle's rownames are not convertible to numeric,</span></span>
-<span class="r-in"><span class="co"># supply names to the exposures</span></span>
-<span class="r-in"><span class="va">GenIns3</span> <span class="op">&lt;-</span> <span class="va">GenIns2</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">rownames</a></span><span class="op">(</span><span class="va">GenIns3</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="fl">2007</span><span class="op">:</span><span class="fl">2016</span>, <span class="st">"-01-01"</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">expos</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">rownames</a></span><span class="op">(</span><span class="va">GenIns3</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/attr.html" class="external-link">attr</a></span><span class="op">(</span><span class="va">GenIns3</span>, <span class="st">"exposure"</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="va">expos</span></span>
-<span class="r-in"><span class="op">(</span><span class="va">fit4b</span> <span class="op">&lt;-</span> <span class="fu">glmReserve</span><span class="op">(</span><span class="va">GenIns3</span><span class="op">)</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="co"># If the triangle's rownames are not convertible to numeric,</span></span></span>
+<span class="r-in"><span><span class="co"># supply names to the exposures</span></span></span>
+<span class="r-in"><span><span class="va">GenIns3</span> <span class="op">&lt;-</span> <span class="va">GenIns2</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">rownames</a></span><span class="op">(</span><span class="va">GenIns3</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="fl">2007</span><span class="op">:</span><span class="fl">2016</span>, <span class="st">"-01-01"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">expos</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">rownames</a></span><span class="op">(</span><span class="va">GenIns3</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/attr.html" class="external-link">attr</a></span><span class="op">(</span><span class="va">GenIns3</span>, <span class="st">"exposure"</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="va">expos</span></span></span>
+<span class="r-in"><span><span class="op">(</span><span class="va">fit4b</span> <span class="op">&lt;-</span> <span class="fu">glmReserve</span><span class="op">(</span><span class="va">GenIns3</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>               Latest Dev.To.Date  Ultimate  IBNR       S.E        CV</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2008-01-01  5339.085  0.98251776  5434.085    95  110.0999 1.1589460</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2009-01-01  4909.315  0.91262828  5379.315   470  216.0434 0.4596668</span>
@@ -308,22 +308,22 @@ Some of these may be included in the future release.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2015-01-01  1363.294  0.24162052  5642.294  4279 1046.5138 0.2445697</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2016-01-01   344.014  0.06921791  4970.014  4626 1980.1014 0.4280375</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> total      30456.627  0.61982291 49137.627 18681 2945.6609 0.1576822</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># use bootstrapping to compute prediction error</span></span>
-<span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">11</span><span class="op">)</span></span>
-<span class="r-in"><span class="op">(</span><span class="va">fit5</span> <span class="op">&lt;-</span> <span class="fu">glmReserve</span><span class="op">(</span><span class="va">GenIns</span>, mse.method <span class="op">=</span> <span class="st">"boot"</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># compute the quantiles of the predicted loss reserves</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/t.html" class="external-link">t</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/apply.html" class="external-link">apply</a></span><span class="op">(</span><span class="va">fit5</span><span class="op">$</span><span class="va">sims.reserve.pred</span>, <span class="fl">2</span>, <span class="va">quantile</span>, </span>
-<span class="r-in">        <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.025</span>, <span class="fl">0.25</span>, <span class="fl">0.5</span>, <span class="fl">0.75</span>, <span class="fl">0.975</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in">        </span>
-<span class="r-in"><span class="co"># plot distribution of reserve</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">fit5</span>, which <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span>
-<span class="r-in"><span class="op">}</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># alternative over-dispersed Poisson: negative binomial GLM</span></span>
-<span class="r-in"><span class="op">(</span><span class="va">fit6</span> <span class="op">&lt;-</span> <span class="fu">glmReserve</span><span class="op">(</span><span class="va">GenIns</span>, nb <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># use bootstrapping to compute prediction error</span></span></span>
+<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">11</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">(</span><span class="va">fit5</span> <span class="op">&lt;-</span> <span class="fu">glmReserve</span><span class="op">(</span><span class="va">GenIns</span>, mse.method <span class="op">=</span> <span class="st">"boot"</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># compute the quantiles of the predicted loss reserves</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/t.html" class="external-link">t</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/apply.html" class="external-link">apply</a></span><span class="op">(</span><span class="va">fit5</span><span class="op">$</span><span class="va">sims.reserve.pred</span>, <span class="fl">2</span>, <span class="va">quantile</span>, </span></span>
+<span class="r-in"><span>        <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.025</span>, <span class="fl">0.25</span>, <span class="fl">0.5</span>, <span class="fl">0.75</span>, <span class="fl">0.975</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span>        </span></span>
+<span class="r-in"><span><span class="co"># plot distribution of reserve</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">fit5</span>, which <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">}</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># alternative over-dispersed Poisson: negative binomial GLM</span></span></span>
+<span class="r-in"><span><span class="op">(</span><span class="va">fit6</span> <span class="op">&lt;-</span> <span class="fu">glmReserve</span><span class="op">(</span><span class="va">GenIns</span>, nb <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>          Latest Dev.To.Date  Ultimate  IBNR        S.E        CV</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2      5339.085  0.98287950  5432.085    93   39.61362 0.4259529</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 3      4909.315  0.91654710  5356.315   447  133.65746 0.2990100</span>
@@ -335,7 +335,7 @@ Some of these may be included in the future release.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 9      1363.294  0.24826462  5491.294  4128  967.75982 0.2344379</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 10      344.014  0.07075545  4862.014  4518 1380.13957 0.3054758</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> total 30456.627  0.62723935 48556.627 18100 2232.91773 0.1233656</span>
-<span class="r-in"></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
@@ -347,7 +347,7 @@ Some of these may be included in the future release.</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
 </div>
 
     </footer></div>

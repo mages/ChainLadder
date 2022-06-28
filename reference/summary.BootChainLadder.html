@@ -57,21 +57,21 @@
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="co"># S3 method for BootChainLadder</span>
-<span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">object</span>, probs<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.75</span>,<span class="fl">0.95</span><span class="op">)</span>, <span class="va">...</span><span class="op">)</span>
-
-<span class="co"># S3 method for BootChainLadder</span>
-<span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">x</span>, probs<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.75</span>,<span class="fl">0.95</span><span class="op">)</span>, <span class="va">...</span><span class="op">)</span>
-
-<span class="co"># S3 method for BootChainLadder</span>
-<span class="fu"><a href="https://rdrr.io/r/stats/quantile.html" class="external-link">quantile</a></span><span class="op">(</span><span class="va">x</span>, probs<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.75</span>, <span class="fl">0.95</span><span class="op">)</span>, na.rm <span class="op">=</span> <span class="cn">FALSE</span>,
-              names <span class="op">=</span> <span class="cn">TRUE</span>, type <span class="op">=</span> <span class="fl">7</span>,<span class="va">...</span><span class="op">)</span>
-
-<span class="co"># S3 method for BootChainLadder</span>
-<span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span><span class="op">)</span>
-
-<span class="co"># S3 method for BootChainLadder</span>
-<span class="fu"><a href="https://rdrr.io/r/stats/residuals.html" class="external-link">residuals</a></span><span class="op">(</span><span class="va">object</span>, <span class="va">...</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="co"># S3 method for BootChainLadder</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">object</span>, probs<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.75</span>,<span class="fl">0.95</span><span class="op">)</span>, <span class="va">...</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># S3 method for BootChainLadder</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">x</span>, probs<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.75</span>,<span class="fl">0.95</span><span class="op">)</span>, <span class="va">...</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># S3 method for BootChainLadder</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/stats/quantile.html" class="external-link">quantile</a></span><span class="op">(</span><span class="va">x</span>, probs<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.75</span>, <span class="fl">0.95</span><span class="op">)</span>, na.rm <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>              names <span class="op">=</span> <span class="cn">TRUE</span>, type <span class="op">=</span> <span class="fl">7</span>,<span class="va">...</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># S3 method for BootChainLadder</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># S3 method for BootChainLadder</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/stats/residuals.html" class="external-link">residuals</a></span><span class="op">(</span><span class="va">object</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -134,92 +134,92 @@
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="va">B</span> <span class="op">&lt;-</span> <span class="fu"><a href="BootChainLadder.html">BootChainLadder</a></span><span class="op">(</span><span class="va">RAA</span>, R<span class="op">=</span><span class="fl">999</span>, process.distr<span class="op">=</span><span class="st">"gamma"</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">B</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">B</span> <span class="op">&lt;-</span> <span class="fu"><a href="BootChainLadder.html">BootChainLadder</a></span><span class="op">(</span><span class="va">RAA</span>, R<span class="op">=</span><span class="fl">999</span>, process.distr<span class="op">=</span><span class="st">"gamma"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">B</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> BootChainLadder(Triangle = RAA, R = 999, process.distr = "gamma")</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>      Latest Mean Ultimate Mean IBNR IBNR.S.E IBNR 75% IBNR 95%</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1981 18,834        18,834         0        0        0        0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1982 16,704        16,846       142      643      171    1,298</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1983 23,466        24,165       699    1,306    1,233    3,243</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1984 27,067        28,788     1,721    1,989    2,743    5,204</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1985 26,180        28,939     2,759    2,346    4,061    7,134</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1986 15,852        19,646     3,794    2,490    5,157    8,413</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1987 12,314        17,968     5,654    3,107    7,442   11,208</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1988 13,112        24,372    11,260    5,107   14,350   19,959</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1989  5,395        16,644    11,249    6,160   14,931   22,913</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1990  2,063        19,582    17,519   14,745   24,744   45,008</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1982 16,704        16,856       152      695      195    1,269</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1983 23,466        24,125       659    1,243    1,053    3,178</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1984 27,067        28,651     1,584    1,800    2,602    5,006</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1985 26,180        28,998     2,818    2,446    4,254    7,306</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1986 15,852        19,597     3,745    2,431    5,116    8,208</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1987 12,314        17,919     5,605    3,195    7,481   11,533</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1988 13,112        24,341    11,229    5,172   14,116   20,828</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1989  5,395        16,588    11,193    6,221   14,727   22,494</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1990  2,063        19,489    17,426   13,384   24,792   43,403</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                  Totals</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Latest:         160,987</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Mean Ultimate:  215,785</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Mean IBNR:       54,798</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> IBNR.S.E         19,562</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Total IBNR 75%:  66,359</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Total IBNR 95%:  89,208</span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">B</span><span class="op">)</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Mean Ultimate:  215,398</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Mean IBNR:       54,411</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> IBNR.S.E         18,809</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Total IBNR 75%:  66,272</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Total IBNR 95%:  87,680</span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">B</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $ByOrigin</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>      Latest Mean Ultimate  Mean IBNR    SD IBNR   IBNR 75%  IBNR 95%</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1981  18834      18834.00     0.0000     0.0000     0.0000     0.000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1982  16704      16846.05   142.0493   643.3937   170.7525  1297.650</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1983  23466      24165.44   699.4401  1305.6717  1233.1215  3243.383</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1984  27067      28788.25  1721.2509  1989.0940  2742.8747  5204.187</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1985  26180      28939.43  2759.4255  2345.9957  4061.3485  7134.227</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1986  15852      19646.01  3794.0132  2489.7113  5156.5044  8413.413</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1987  12314      17967.59  5653.5864  3107.2046  7442.0415 11208.202</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1988  13112      24372.20 11260.2017  5106.9133 14349.7285 19958.551</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1989   5395      16643.79 11248.7918  6160.4367 14931.2064 22913.201</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1990   2063      19582.10 17519.0965 14745.1141 24744.0056 45008.206</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1982  16704      16855.68   151.6837   694.5177   195.0983  1269.251</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1983  23466      24125.12   659.1235  1243.4357  1053.2866  3177.792</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1984  27067      28650.78  1583.7759  1799.9282  2601.5153  5006.049</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1985  26180      28997.67  2817.6735  2446.2085  4254.4665  7305.904</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1986  15852      19597.14  3745.1389  2430.7951  5116.4696  8207.876</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1987  12314      17918.95  5604.9486  3194.8593  7480.9498 11533.372</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1988  13112      24341.15 11229.1488  5171.7119 14115.5300 20827.961</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1989   5395      16588.18 11193.1753  6221.4982 14726.7310 22494.463</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1990   2063      19489.22 17426.2207 13384.3809 24791.6874 43403.387</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $Totals</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                    Totals</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Latest:         160987.00</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Mean Ultimate:  215784.86</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Mean IBNR:       54797.86</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> SD IBNR:         19561.67</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Total IBNR 75%:  66359.26</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Total IBNR 95%:  89207.78</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Mean Ultimate:  215397.89</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Mean IBNR:       54410.89</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> SD IBNR:         18808.97</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Total IBNR 75%:  66272.15</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Total IBNR 95%:  87679.58</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">B</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">B</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $ByOrigin</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>       Mean IBNR</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1981     0.0000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1982   142.0493</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1983   699.4401</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1984  1721.2509</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1985  2759.4255</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1986  3794.0132</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1987  5653.5864</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1988 11260.2017</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1989 11248.7918</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1990 17519.0965</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1982   151.6837</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1983   659.1235</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1984  1583.7759</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1985  2817.6735</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1986  3745.1389</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1987  5604.9486</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1988 11229.1488</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1989 11193.1753</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1990 17426.2207</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $Totals</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>               Total</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Mean IBNR: 54797.86</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Mean IBNR: 54410.89</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/stats/quantile.html" class="external-link">quantile</a></span><span class="op">(</span><span class="va">B</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.75</span>,<span class="fl">0.95</span>,<span class="fl">0.99</span>, <span class="fl">0.995</span><span class="op">)</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/stats/quantile.html" class="external-link">quantile</a></span><span class="op">(</span><span class="va">B</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.75</span>,<span class="fl">0.95</span>,<span class="fl">0.99</span>, <span class="fl">0.995</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $ByOrigin</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>        IBNR 75%  IBNR 95%  IBNR 99% IBNR 99.5%</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1981     0.0000     0.000     0.000      0.000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1982   170.7525  1297.650  2497.417   3203.868</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1983  1233.1215  3243.383  5284.478   6039.985</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1984  2742.8747  5204.187  8094.348   9129.597</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1985  4061.3485  7134.227  9594.701  10718.101</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1986  5156.5044  8413.413 11245.023  11725.385</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1987  7442.0415 11208.202 14518.419  15573.605</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1988 14349.7285 19958.551 26666.819  27767.303</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1989 14931.2064 22913.201 28049.225  29826.806</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1990 24744.0056 45008.206 65424.403  79306.208</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1982   195.0983  1269.251  2728.370   3348.545</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1983  1053.2866  3177.792  5210.840   5623.010</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1984  2601.5153  5006.049  7200.219   7508.235</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1985  4254.4665  7305.904 10018.876  10906.958</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1986  5116.4696  8207.876 11552.824  12538.014</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1987  7480.9498 11533.372 15248.452  16536.096</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1988 14115.5300 20827.961 27156.332  27973.752</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1989 14726.7310 22494.463 29331.673  30387.541</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1990 24791.6874 43403.387 55867.475  61597.066</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $Totals</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                Totals</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> IBNR 75%:    66359.26</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> IBNR 95%:    89207.78</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> IBNR 99%:   110829.10</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> IBNR 99.5%: 115974.15</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> IBNR 75%:    66272.15</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> IBNR 95%:    87679.58</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> IBNR 99%:   105267.08</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> IBNR 99.5%: 111434.74</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-in"></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
@@ -231,7 +231,7 @@
 </div>
 
 <div class="pkgdown-footer-right">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
 </div>
 
     </footer></div>

@@ -57,8 +57,8 @@ convert to data.frame ("long") format.</p>
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">as.LongTriangle</span><span class="op">(</span><span class="va">Triangle</span>, varnames <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/dimnames.html" class="external-link">dimnames</a></span><span class="op">(</span><span class="va">Triangle</span><span class="op">)</span><span class="op">)</span>, 
-                value.name <span class="op">=</span> <span class="st">"value"</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">as.LongTriangle</span><span class="op">(</span><span class="va">Triangle</span>, varnames <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/dimnames.html" class="external-link">dimnames</a></span><span class="op">(</span><span class="va">Triangle</span><span class="op">)</span><span class="op">)</span>, </span>
+<span>                value.name <span class="op">=</span> <span class="st">"value"</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -111,7 +111,7 @@ See Examples section.</p>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="fu">as.LongTriangle</span><span class="op">(</span><span class="va">GenIns</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">as.LongTriangle</span><span class="op">(</span><span class="va">GenIns</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    origin dev   value</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1       1   1  357848</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2       2   1  352118</span>
@@ -168,10 +168,10 @@ See Examples section.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 81      1   9 3833515</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 82      2   9 5339085</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 91      1  10 3901463</span>
-<span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span>
-<span class="r-in"><span class="fu">ggplot</span><span class="op">(</span><span class="fu">as.LongTriangle</span><span class="op">(</span><span class="va">GenIns</span><span class="op">)</span>, </span>
-<span class="r-in">       <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">dev</span>, y <span class="op">=</span> <span class="va">value</span>, group <span class="op">=</span> <span class="va">origin</span>, color <span class="op">=</span> <span class="va">origin</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="fu">geom_line</span><span class="op">(</span><span class="op">)</span></span>
-<span class="r-in"><span class="op">}</span></span>
+<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span><span class="fu">ggplot</span><span class="op">(</span><span class="fu">as.LongTriangle</span><span class="op">(</span><span class="va">GenIns</span><span class="op">)</span>, </span></span>
+<span class="r-in"><span>       <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">dev</span>, y <span class="op">=</span> <span class="va">value</span>, group <span class="op">=</span> <span class="va">origin</span>, color <span class="op">=</span> <span class="va">origin</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="fu">geom_line</span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">}</span></span></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
@@ -183,7 +183,7 @@ See Examples section.</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
 </div>
 
     </footer></div>
