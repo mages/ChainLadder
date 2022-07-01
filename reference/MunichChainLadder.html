@@ -65,7 +65,7 @@
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">MunichChainLadder</span><span class="op">(</span><span class="va">Paid</span>, <span class="va">Incurred</span>, </span>
 <span>                  est.sigmaP <span class="op">=</span> <span class="st">"log-linear"</span>, est.sigmaI <span class="op">=</span> <span class="st">"log-linear"</span>, </span>
-<span>                  tailP<span class="op">=</span><span class="cn">FALSE</span>, tailI<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
+<span>                  tailP<span class="op">=</span><span class="cn">FALSE</span>, tailI<span class="op">=</span><span class="cn">FALSE</span>, weights<span class="op">=</span><span class="fl">1</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -100,6 +100,12 @@
   <dt>tailI</dt>
 <dd><p>defines how the tail of the <code>Incurred</code> triangle is estimated and
     is passed on to <code><a href="MackChainLadder.html">MackChainLadder</a></code>, see <code>tail</code> just there.</p></dd>
+
+  <dt>weights</dt>
+<dd><p>weights. Default: 1, which sets the weights for all triangle entries to 1. 
+                 Otherwise specify weights as a matrix of the same dimension as Triangle with all weight entries in [0; 1]. 
+                 Hence, any entry set to 0 or NA eliminates that age-to-age factor from inclusion in the model. See also 'Details' in MackChainladder function.
+                 The weight matrix is the same for Paid and Incurred.</p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -241,7 +247,8 @@
 <span class="r-plt img"><img src="MunichChainLadder-2.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span><span class="co"># You can access the standard chain-ladder (Mack) output via</span></span></span>
 <span class="r-in"><span><span class="va">MCL</span><span class="op">$</span><span class="va">MackPaid</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> MackChainLadder(Triangle = Paid, est.sigma = est.sigmaP, tail = tailP)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> MackChainLadder(Triangle = Paid, weights = weights, est.sigma = est.sigmaP, </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     tail = tailP)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   Latest Dev.To.Date Ultimate    IBNR Mack.S.E CV(IBNR)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1  2,131       1.000    2,131     0.0     0.00      NaN</span>
@@ -260,7 +267,7 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> Mack.S.E     987.23</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> CV(IBNR):      0.17</span>
 <span class="r-in"><span><span class="va">MCL</span><span class="op">$</span><span class="va">MackIncurred</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> MackChainLadder(Triangle = Incurred, est.sigma = est.sigmaI, </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> MackChainLadder(Triangle = Incurred, weights = weights, est.sigma = est.sigmaI, </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     tail = tailI)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   Latest Dev.To.Date Ultimate    IBNR Mack.S.E CV(IBNR)</span>
