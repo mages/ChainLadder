@@ -701,23 +701,23 @@ Ultimate: 32,371   32,688      0.99</code></pre>
 
      Latest Mean Ultimate Mean IBNR IBNR.S.E IBNR 75% IBNR 95%
 1981 18,834        18,834         0        0        0        0
-1982 16,704        16,939       235      788      267    1,616
-1983 23,466        24,089       623    1,221    1,084    3,216
-1984 27,067        28,920     1,853    1,977    2,784    5,801
-1985 26,180        29,070     2,890    2,450    4,049    7,474
-1986 15,852        19,607     3,755    2,576    5,077    8,765
-1987 12,314        17,767     5,453    3,082    7,135   11,125
-1988 13,112        24,205    11,093    4,780   13,979   19,969
-1989  5,395        16,247    10,852    5,950   14,471   22,216
-1990  2,063        19,562    17,499   14,288   25,524   44,038
+1982 16,704        16,874       170      770      186    1,523
+1983 23,466        24,142       676    1,279    1,145    2,986
+1984 27,067        28,806     1,739    1,981    2,637    5,872
+1985 26,180        28,961     2,781    2,309    3,952    6,947
+1986 15,852        19,660     3,808    2,497    5,054    8,606
+1987 12,314        17,872     5,558    3,095    7,470   11,016
+1988 13,112        24,300    11,188    4,861   14,125   20,059
+1989  5,395        16,313    10,918    6,129   14,746   22,014
+1990  2,063        19,181    17,118   13,013   24,963   41,864
 
                  Totals
 Latest:         160,987
-Mean Ultimate:  215,241
-Mean IBNR:       54,254
-IBNR.S.E         18,976
-Total IBNR 75%:  65,808
-Total IBNR 95%:  87,413</code></pre>
+Mean Ultimate:  214,942
+Mean IBNR:       53,955
+IBNR.S.E         18,621
+Total IBNR 75%:  64,746
+Total IBNR 95%:  87,409</code></pre>
 <p>You can use <code>summary(B)$ByOrigin</code> and <code>summary(B)$Totals</code> to extract the information from the output above.</p>
 <div class="sourceCode" id="cb75"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">B</span><span class="op">)</span></span></code></pre></div>
@@ -728,22 +728,22 @@ Total IBNR 95%:  87,413</code></pre>
 <pre><code>$ByOrigin
      IBNR 75% IBNR 95% IBNR 99% IBNR 99.5%
 1981      0.0        0        0          0
-1982    267.5     1616     3594       3869
-1983   1084.5     3216     4421       5260
-1984   2784.2     5801     7576       7855
-1985   4049.3     7474    10697      11812
-1986   5077.3     8765    12176      13141
-1987   7135.4    11125    15521      16138
-1988  13979.4    19969    23834      25371
-1989  14470.6    22216    27689      29517
-1990  25524.2    44038    59595      70189
+1982    186.3     1523     3137       3898
+1983   1145.3     2986     4632       6251
+1984   2637.1     5872     7937       9475
+1985   3952.2     6947    10624      11433
+1986   5054.2     8606    11122      11804
+1987   7470.3    11016    14853      15626
+1988  14125.1    20059    23687      25826
+1989  14746.0    22014    27782      28719
+1990  24962.8    41864    55429      58217
 
 $Totals
             Totals
-IBNR 75%:    65808
-IBNR 95%:    87413
-IBNR 99%:   107285
-IBNR 99.5%: 112471</code></pre>
+IBNR 75%:    64746
+IBNR 95%:    87409
+IBNR 99%:   105368
+IBNR 99.5%: 110881</code></pre>
 <p>The distribution of the IBNR appears to follow a log-normal distribution, so let’s fit it:</p>
 <div class="sourceCode" id="cb78"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">## fit a distribution to the IBNR</span></span>
@@ -753,8 +753,8 @@ IBNR 99.5%: 112471</code></pre>
 <span><span class="va">fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/MASS/man/fitdistr.html" class="external-link">fitdistr</a></span><span class="op">(</span><span class="va">B</span><span class="op">$</span><span class="va">IBNR.Totals</span><span class="op">[</span><span class="va">B</span><span class="op">$</span><span class="va">IBNR.Totals</span><span class="op">&gt;</span><span class="fl">0</span><span class="op">]</span>, <span class="st">"lognormal"</span><span class="op">)</span></span>
 <span><span class="va">fit</span></span></code></pre></div>
 <pre><code>    meanlog      sdlog  
-  10.837112    0.369535 
- ( 0.011692) ( 0.008267)</code></pre>
+  10.834635    0.357994 
+ ( 0.011326) ( 0.008009)</code></pre>
 <div class="sourceCode" id="cb80"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/curve.html" class="external-link">curve</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Lognormal.html" class="external-link">plnorm</a></span><span class="op">(</span><span class="va">x</span>,<span class="va">fit</span><span class="op">$</span><span class="va">estimate</span><span class="op">[</span><span class="st">"meanlog"</span><span class="op">]</span>, <span class="va">fit</span><span class="op">$</span><span class="va">estimate</span><span class="op">[</span><span class="st">"sdlog"</span><span class="op">]</span><span class="op">)</span>,</span>
 <span>      col<span class="op">=</span><span class="st">"red"</span>, add<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
@@ -1747,7 +1747,7 @@ P_{i,j} \backsim ODP(m_{i,j},\phi \cdot m_{i,j}),
 <p>———. 2022b. <em>R Installation and Administration</em>. R Foundation for Statistical Computing; <a href="https://cran.r-project.org/doc/manuals/R-admin.pdf" class="external-link">https://cran.r-project.org/doc/manuals/R-admin.pdf</a>.</p>
 </div>
 <div id="ref-Schmidt2011">
-<p>Schmidt, Klaus D. 2017. “A Bibliography on Loss Reserving.” <a href="https://tu-dresden.de/mn/math/stochastik/ressourcen/dateien/schmidt/dsvm/reserve.pdf?lang=de" class="external-link">https://tu-dresden.de/mn/math/stochastik/ressourcen/dateien/schmidt/dsvm/reserve.pdf?lang=de</a>.</p>
+<p>Schmidt, Klaus D. 2017. “A Bibliography on Loss Reserving.” <a href="https://tu-dresden.de/mn/math/stochastik/ressourcen/dateien/schmidt/dsvm/reserve.pdf" class="external-link">https://tu-dresden.de/mn/math/stochastik/ressourcen/dateien/schmidt/dsvm/reserve.pdf</a>.</p>
 </div>
 <div id="ref-Spedicato2011">
 <p>Spedicato, Giorgio Alfredo. 2022. <em>Introduction to Lifecontingencies Package</em>. 1.3.8 ed. StatisticalAdvisor Inc; <a href="https://CRAN.R-project.org/package=lifecontingencies/" class="external-link">https://CRAN.R-project.org/package=lifecontingencies/</a>.</p>
