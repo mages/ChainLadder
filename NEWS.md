@@ -1,5 +1,6 @@
 # ChainLadder 0.2.16 
 
+ * New weights argument for MuinchChainLadder
  * Fixed typo checking for weight argument in glmReserve. Thanks to Kennedy Mwavu for reporting this issue
  * Fixed weights in CDR.MackChainLadder. Thanks to Giorgia Chieruzzi for contributing the patch
 

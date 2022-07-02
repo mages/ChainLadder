@@ -32,4 +32,4 @@ Many thanks to all who provided ideas, suggestions, corrections and bug reports:
   MackChainLadder when tail factor > 1 and alpha = 2
 - Kennedy Mwavu for reporting in issue regarding checking the weight argument in glmReserve
 - Giorgia Chieruzzi for fixing use of weights in CDR.MackChainLadder
-
+- Marco Spina for adding weights argument to MuinchChainLadder
