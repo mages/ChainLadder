@@ -3,7 +3,7 @@ Type: Package
 Title: Statistical Methods and Models for Claims Reserving in 
        General Insurance
 Version: 0.2.16
-Date: 2022-07-02
+Date: 2022-07-27
 Authors@R: c(person("Markus", "Gesmann", role = c("aut", "cre"),
              email = "markus.gesmann@googlemail.com"),
              person("Daniel", "Murphy", role = "aut", 
@@ -54,7 +54,7 @@ Suggests:
 VignetteBuilder:
     knitr
 License: GPL (>= 2)
-URL: https://github.com/mages/ChainLadder, https://mages.github.io/ChainLadder/
+URL: https://mages.github.io/ChainLadder/
 BugReports: https://github.com/mages/ChainLadder/issues 
 LazyLoad: yes
 LazyData: yes
