@@ -13,7 +13,7 @@ QuantileIFRS17 <- function(MCL, Correlation, RiskMargin)
   }
   ## Check that we have at least two triangles
   if(length(MCL) < 2){
-    stop("Please provide at least a list of at least two MackChainLadder objects.")
+    stop("Please provide a list of at least two MackChainLadder objects.")
   }
   ## Check that the triangles are of the same dimensions
   dims <- sapply(MCL, function(x) dim(x$Triangle))
