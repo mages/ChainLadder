@@ -94,9 +94,8 @@ To cite package 'ChainLadder' in publications use:
 
   Gesmann M, Murphy D, Zhang Y, Carrato A, Wuthrich M, Concina F, Dal
   Moro E (2022). _ChainLadder: Statistical Methods and Models for
-  Claims Reserving in General Insurance_.
-  https://github.com/mages/ChainLadder,
-  https://mages.github.io/ChainLadder/.</code></pre>
+  Claims Reserving in General Insurance_. R package version 0.2.16,
+  &lt;https://mages.github.io/ChainLadder/&gt;.</code></pre>
 <div class="section level3">
 <h3 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
 </h3>
@@ -160,7 +159,7 @@ To cite package 'ChainLadder' in publications use:
 <p>Data on the diagonals present payments in the same calendar period. Note, data of individual policies is usually aggregated to homogeneous lines of business, division levels or perils.</p>
 <p>Most reserving methods of the ChainLadder package expect triangles as input data sets with development periods along the columns and the origin period in rows. The package comes with several example triangles. The following R command will list them all:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/mages/ChainLadder" class="external-link">ChainLadder</a></span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://mages.github.io/ChainLadder/" class="external-link">ChainLadder</a></span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span>package<span class="op">=</span><span class="st">"ChainLadder"</span><span class="op">)</span></span></code></pre></div>
 <p>Let’s look at one example triangle more closely. The following triangle shows data from the Reinsurance Association of America (RAA):</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
@@ -240,7 +239,7 @@ Screen shot of a triangle in a spreadsheet software.
 <span><span class="va">tri</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html" class="external-link">read.csv</a></span><span class="op">(</span>file<span class="op">=</span><span class="va">myCSVfile</span>, header <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span><span class="co">## Use read.csv2 if semicolons are used as a separator likely</span></span>
 <span><span class="co">## to be the case if you are in continental Europe</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/mages/ChainLadder" class="external-link">ChainLadder</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://mages.github.io/ChainLadder/" class="external-link">ChainLadder</a></span><span class="op">)</span></span>
 <span><span class="co">## Convert to triangle</span></span>
 <span><span class="va">tri</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/Triangles.html">as.triangle</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">as.matrix</a></span><span class="op">(</span><span class="va">tri</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co"># Job done.</span></span></code></pre></div>
@@ -701,23 +700,23 @@ Ultimate: 32,371   32,688      0.99</code></pre>
 
      Latest Mean Ultimate Mean IBNR IBNR.S.E IBNR 75% IBNR 95%
 1981 18,834        18,834         0        0        0        0
-1982 16,704        16,851       147      684      185    1,421
-1983 23,466        24,120       654    1,358    1,104    3,212
-1984 27,067        28,763     1,696    1,956    2,562    5,442
-1985 26,180        29,087     2,907    2,402    4,231    7,281
-1986 15,852        19,643     3,791    2,604    5,262    8,507
-1987 12,314        17,927     5,613    3,174    7,468   11,509
-1988 13,112        24,241    11,129    4,878   14,042   19,909
-1989  5,395        16,200    10,805    6,250   14,635   22,655
-1990  2,063        18,092    16,029   13,442   22,768   40,222
+1982 16,704        16,900       196      712      212    1,431
+1983 23,466        24,139       673    1,435    1,071    3,476
+1984 27,067        28,788     1,721    1,897    2,640    5,423
+1985 26,180        29,020     2,840    2,358    4,169    7,242
+1986 15,852        19,661     3,809    2,449    5,198    8,328
+1987 12,314        17,768     5,454    3,114    7,357   11,539
+1988 13,112        24,168    11,056    5,010   13,939   19,975
+1989  5,395        16,536    11,141    5,960   14,729   22,230
+1990  2,063        19,814    17,751   14,000   24,666   42,095
 
                  Totals
 Latest:         160,987
-Mean Ultimate:  213,759
-Mean IBNR:       52,772
-IBNR.S.E         18,940
-Total IBNR 75%:  64,055
-Total IBNR 95%:  86,457</code></pre>
+Mean Ultimate:  215,629
+Mean IBNR:       54,642
+IBNR.S.E         19,473
+Total IBNR 75%:  65,390
+Total IBNR 95%:  88,629</code></pre>
 <p>You can use <code>summary(B)$ByOrigin</code> and <code>summary(B)$Totals</code> to extract the information from the output above.</p>
 <div class="sourceCode" id="cb75"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">B</span><span class="op">)</span></span></code></pre></div>
@@ -728,22 +727,22 @@ Total IBNR 95%:  86,457</code></pre>
 <pre><code>$ByOrigin
      IBNR 75% IBNR 95% IBNR 99% IBNR 99.5%
 1981      0.0        0        0          0
-1982    184.7     1421     2785       3486
-1983   1104.5     3212     4971       6237
-1984   2561.5     5442     8316       8811
-1985   4231.4     7281     9664      11273
-1986   5261.8     8507    12186      13574
-1987   7468.0    11509    15043      15561
-1988  14041.7    19909    24376      25269
-1989  14635.3    22655    28866      29998
-1990  22767.7    40222    55515      67855
+1982    211.8     1431     3359       3769
+1983   1071.4     3476     5572       6970
+1984   2639.8     5423     7487       9097
+1985   4168.8     7242     9551      10801
+1986   5198.1     8328    11374      11751
+1987   7356.8    11539    14806      16461
+1988  13938.9    19975    25870      29581
+1989  14729.4    22230    28889      31198
+1990  24665.8    42095    63286      69750
 
 $Totals
             Totals
-IBNR 75%:    64055
-IBNR 95%:    86457
-IBNR 99%:   104732
-IBNR 99.5%: 109819</code></pre>
+IBNR 75%:    65390
+IBNR 95%:    88629
+IBNR 99%:   114312
+IBNR 99.5%: 126837</code></pre>
 <p>The distribution of the IBNR appears to follow a log-normal distribution, so let’s fit it:</p>
 <div class="sourceCode" id="cb78"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">## fit a distribution to the IBNR</span></span>
@@ -753,8 +752,8 @@ IBNR 99.5%: 109819</code></pre>
 <span><span class="va">fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/MASS/man/fitdistr.html" class="external-link">fitdistr</a></span><span class="op">(</span><span class="va">B</span><span class="op">$</span><span class="va">IBNR.Totals</span><span class="op">[</span><span class="va">B</span><span class="op">$</span><span class="va">IBNR.Totals</span><span class="op">&gt;</span><span class="fl">0</span><span class="op">]</span>, <span class="st">"lognormal"</span><span class="op">)</span></span>
 <span><span class="va">fit</span></span></code></pre></div>
 <pre><code>    meanlog      sdlog  
-  10.805361    0.383799 
- ( 0.012143) ( 0.008586)</code></pre>
+  10.844516    0.367541 
+ ( 0.011628) ( 0.008223)</code></pre>
 <div class="sourceCode" id="cb80"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/curve.html" class="external-link">curve</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Lognormal.html" class="external-link">plnorm</a></span><span class="op">(</span><span class="va">x</span>,<span class="va">fit</span><span class="op">$</span><span class="va">estimate</span><span class="op">[</span><span class="st">"meanlog"</span><span class="op">]</span>, <span class="va">fit</span><span class="op">$</span><span class="va">estimate</span><span class="op">[</span><span class="st">"sdlog"</span><span class="op">]</span><span class="op">)</span>,</span>
 <span>      col<span class="op">=</span><span class="st">"red"</span>, add<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
@@ -1732,7 +1731,7 @@ P_{i,j} \backsim ODP(m_{i,j},\phi \cdot m_{i,j}),
 <p>Orr, James. 2012. <em>GIROC Reserving Research Workstream</em>. Institute of Actuaries.</p>
 </div>
 <div id="ref-NetSimR">
-<p>Parizas, Yiannis. 2019. “Escaping the Triangle.” <em>The Actuary Magazine</em> June. <a href="https://www.theactuary.com/features/2019/06/2019/06/05/escaping-triangle" class="external-link">https://www.theactuary.com/features/2019/06/2019/06/05/escaping-triangle</a>.</p>
+<p>Parizas, Yiannis. 2019. “Escaping the Triangle.” <em>The Actuary Magazine</em> June.</p>
 </div>
 <div id="ref-ProhlSchmidt2005">
 <p>Pröhl, Carsten, and Klaus D. Schmidt. 2005. “Multivariate Chain-Ladder.” <em>Dresdner Schriften Zur Versicherungsmathematik</em>.</p>
