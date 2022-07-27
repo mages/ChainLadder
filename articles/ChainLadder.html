@@ -14,8 +14,8 @@
 <link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png">
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png">
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="../deps/bootstrap-5.1.0/bootstrap.min.css" rel="stylesheet">
-<script src="../deps/bootstrap-5.1.0/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
+<link href="../deps/bootstrap-5.1.3/bootstrap.min.css" rel="stylesheet">
+<script src="../deps/bootstrap-5.1.3/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- bootstrap-toc --><script src="https://cdn.rawgit.com/afeld/bootstrap-toc/v1.0.1/dist/bootstrap-toc.min.js"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="ChainLadder: Claims reserving with R">
 <meta property="og:description" content="ChainLadder">
@@ -77,7 +77,7 @@
       <img src="../logo.png" class="logo" alt=""><h1>ChainLadder: Claims reserving with R</h1>
                         <h4 data-toc-skip class="author">Alessandro Carrato, Fabio Concina, Markus Gesmann, Dan Murphy, Mario Wüthrich and Wayne Zhang</h4>
             
-            <h4 data-toc-skip class="date">2022-07-02</h4>
+            <h4 data-toc-skip class="date">2022-07-27</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/mages/ChainLadder/blob/HEAD/vignettes/ChainLadder.Rmd" class="external-link"><code>vignettes/ChainLadder.Rmd</code></a></small>
       <div class="d-none name"><code>ChainLadder.Rmd</code></div>
@@ -701,23 +701,23 @@ Ultimate: 32,371   32,688      0.99</code></pre>
 
      Latest Mean Ultimate Mean IBNR IBNR.S.E IBNR 75% IBNR 95%
 1981 18,834        18,834         0        0        0        0
-1982 16,704        16,871       167      727      203    1,467
-1983 23,466        24,053       587    1,313    1,055    2,985
-1984 27,067        28,760     1,693    1,941    2,584    5,354
-1985 26,180        29,039     2,859    2,404    4,037    7,361
-1986 15,852        19,491     3,639    2,353    4,999    7,875
-1987 12,314        17,867     5,553    3,225    7,459   11,586
-1988 13,112        24,073    10,961    5,228   13,952   20,708
-1989  5,395        16,064    10,669    5,870   14,582   21,213
-1990  2,063        19,648    17,585   13,775   24,868   43,673
+1982 16,704        16,851       147      684      185    1,421
+1983 23,466        24,120       654    1,358    1,104    3,212
+1984 27,067        28,763     1,696    1,956    2,562    5,442
+1985 26,180        29,087     2,907    2,402    4,231    7,281
+1986 15,852        19,643     3,791    2,604    5,262    8,507
+1987 12,314        17,927     5,613    3,174    7,468   11,509
+1988 13,112        24,241    11,129    4,878   14,042   19,909
+1989  5,395        16,200    10,805    6,250   14,635   22,655
+1990  2,063        18,092    16,029   13,442   22,768   40,222
 
                  Totals
 Latest:         160,987
-Mean Ultimate:  214,700
-Mean IBNR:       53,713
-IBNR.S.E         18,924
-Total IBNR 75%:  65,308
-Total IBNR 95%:  87,363</code></pre>
+Mean Ultimate:  213,759
+Mean IBNR:       52,772
+IBNR.S.E         18,940
+Total IBNR 75%:  64,055
+Total IBNR 95%:  86,457</code></pre>
 <p>You can use <code>summary(B)$ByOrigin</code> and <code>summary(B)$Totals</code> to extract the information from the output above.</p>
 <div class="sourceCode" id="cb75"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">B</span><span class="op">)</span></span></code></pre></div>
@@ -728,22 +728,22 @@ Total IBNR 95%:  87,363</code></pre>
 <pre><code>$ByOrigin
      IBNR 75% IBNR 95% IBNR 99% IBNR 99.5%
 1981      0.0        0        0          0
-1982    202.6     1467     2882       3411
-1983   1054.6     2985     5131       5758
-1984   2583.8     5354     7833       9343
-1985   4036.8     7361    10922      11561
-1986   4999.2     7875    10342      11318
-1987   7459.1    11586    15053      17208
-1988  13951.7    20708    26987      29780
-1989  14581.8    21213    28050      29192
-1990  24868.3    43673    58957      66287
+1982    184.7     1421     2785       3486
+1983   1104.5     3212     4971       6237
+1984   2561.5     5442     8316       8811
+1985   4231.4     7281     9664      11273
+1986   5261.8     8507    12186      13574
+1987   7468.0    11509    15043      15561
+1988  14041.7    19909    24376      25269
+1989  14635.3    22655    28866      29998
+1990  22767.7    40222    55515      67855
 
 $Totals
             Totals
-IBNR 75%:    65308
-IBNR 95%:    87363
-IBNR 99%:   103705
-IBNR 99.5%: 112588</code></pre>
+IBNR 75%:    64055
+IBNR 95%:    86457
+IBNR 99%:   104732
+IBNR 99.5%: 109819</code></pre>
 <p>The distribution of the IBNR appears to follow a log-normal distribution, so let’s fit it:</p>
 <div class="sourceCode" id="cb78"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">## fit a distribution to the IBNR</span></span>
@@ -753,8 +753,8 @@ IBNR 99.5%: 112588</code></pre>
 <span><span class="va">fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/MASS/man/fitdistr.html" class="external-link">fitdistr</a></span><span class="op">(</span><span class="va">B</span><span class="op">$</span><span class="va">IBNR.Totals</span><span class="op">[</span><span class="va">B</span><span class="op">$</span><span class="va">IBNR.Totals</span><span class="op">&gt;</span><span class="fl">0</span><span class="op">]</span>, <span class="st">"lognormal"</span><span class="op">)</span></span>
 <span><span class="va">fit</span></span></code></pre></div>
 <pre><code>    meanlog      sdlog  
-  10.824260    0.383241 
- ( 0.012125) ( 0.008574)</code></pre>
+  10.805361    0.383799 
+ ( 0.012143) ( 0.008586)</code></pre>
 <div class="sourceCode" id="cb80"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/curve.html" class="external-link">curve</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Lognormal.html" class="external-link">plnorm</a></span><span class="op">(</span><span class="va">x</span>,<span class="va">fit</span><span class="op">$</span><span class="va">estimate</span><span class="op">[</span><span class="st">"meanlog"</span><span class="op">]</span>, <span class="va">fit</span><span class="op">$</span><span class="va">estimate</span><span class="op">[</span><span class="st">"sdlog"</span><span class="op">]</span><span class="op">)</span>,</span>
 <span>      col<span class="op">=</span><span class="st">"red"</span>, add<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
@@ -1780,7 +1780,7 @@ P_{i,j} \backsim ODP(m_{i,j},\phi \cdot m_{i,j}),
 
 <div class="pkgdown-footer-right">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
     </footer>
