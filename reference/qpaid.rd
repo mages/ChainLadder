@@ -139,27 +139,27 @@
 <span class="r-in"><span><span class="fu"><a href="BootChainLadder.html">BootChainLadder</a></span><span class="op">(</span><span class="va">Paid</span>, R<span class="op">=</span><span class="fl">99</span><span class="op">)</span> </span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> BootChainLadder(Triangle = Paid, R = 99)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    Latest Mean Ultimate Mean IBNR IBNR.S.E IBNR 75% IBNR 95%</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1   1,100         1,100      0.00     0.00     0.00     0.00</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5   1,298         1,300      2.28     4.24     3.89     9.86</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 9   1,198         1,201      3.03     4.95     5.35    10.22</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 13  1,293         1,301      8.29     6.82    13.26    19.30</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 17  1,573         1,601     27.71    11.76    36.03    45.79</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 21  1,054         1,101     46.80    12.79    54.90    67.45</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 25  1,387         1,499    111.97    16.78   118.97   141.02</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 29  1,760         1,994    234.36    26.69   251.21   279.05</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 33  1,100         1,394    294.14    36.66   314.06   349.43</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 37    948         1,591    643.50    60.61   680.99   740.47</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 41    183         1,099    915.65   182.36   966.34 1,256.64</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 45      1           962    960.94 3,631.64 1,909.39 6,049.74</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    Latest Mean Ultimate Mean IBNR  IBNR.S.E IBNR 75% IBNR 95%</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1   1,100         1,100      0.00      0.00     0.00     0.00</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5   1,298         1,300      2.31      3.78     4.77     8.38</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9   1,198         1,201      2.59      4.35     5.31    10.14</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 13  1,293         1,301      7.64      6.58    10.96    18.99</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 17  1,573         1,601     27.59     10.14    34.71    48.10</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 21  1,054         1,099     44.91     12.16    51.12    71.04</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 25  1,387         1,491    104.35     17.80   116.48   135.62</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 29  1,760         1,990    230.39     24.31   245.71   267.32</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 33  1,100         1,387    287.47     27.82   311.78   327.49</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 37    948         1,584    636.20     59.32   666.86   743.80</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 41    183         1,064    881.24    183.03   959.28 1,151.62</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 45      1         6,978  6,976.59 42,624.29 2,236.09 6,800.71</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                 Totals</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Latest:         12,895</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Mean Ultimate:  16,144</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Mean IBNR:       3,249</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> IBNR.S.E         3,636</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Total IBNR 75%:  4,072</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Total IBNR 95%:  8,217</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Mean Ultimate:  22,096</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Mean IBNR:       9,201</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> IBNR.S.E        42,649</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Total IBNR 75%:  4,492</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Total IBNR 95%:  8,872</span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
