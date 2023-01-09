@@ -6,7 +6,7 @@
   distribution of reserves or IBNRs for a cumulative claims development triangle.
 }
 \usage{
-BootChainLadder(Triangle, R = 999, process.distr=c("gamma", "od.pois"))
+BootChainLadder(Triangle, R = 999, process.distr=c("gamma", "od.pois"), seed = NULL)
 }
 
 \arguments{
@@ -20,6 +20,7 @@ BootChainLadder(Triangle, R = 999, process.distr=c("gamma", "od.pois"))
   \item{process.distr}{ character string indicating which process
     distribution to be assumed. One of "gamma" (default), 
     or "od.pois" (over-dispersed Poisson), can be abbreviated}
+  \item{seed}{optional seed for the random generator}
 }
 \details{
   The \code{BootChainLadder} function uses a two-stage

@@ -1,3 +1,7 @@
+# ChainLadder 0.2.17
+
+ * New seed argument for BootChainLadder to set an optional seed for the random generator
+
 # ChainLadder 0.2.16 
 
  * New weights argument for MuinchChainLadder

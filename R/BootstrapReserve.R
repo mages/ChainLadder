@@ -2,7 +2,9 @@
 ## Copyright: Markus Gesmann, markus.gesmann@gmail.com
 ## Date:19/10/2008
 
-BootChainLadder <- function(Triangle, R = 999, process.distr=c("gamma", "od.pois")){
+BootChainLadder <- function(Triangle, R = 999, 
+                            process.distr=c("gamma", "od.pois"),
+                            seed = NULL){
   
   
   if(!'matrix' %in% class(Triangle))
@@ -58,7 +60,7 @@ BootChainLadder <- function(Triangle, R = 999, process.distr=c("gamma", "od.pois
   ## Resample the adjusted residuals with replacement, creating a new
   ## past triangle of residuals.
   
-  simClaims <- randomClaims(exp.inc.triangle, adj.resids, R)
+  simClaims <- randomClaims(exp.inc.triangle, adj.resids, R, seed)
   
   ## Fit the standard chain-ladder model to the pseudo-cumulative data.
   ## Project to form a future triangle of cumulative payments.
@@ -399,13 +401,15 @@ getExpected <- function(ults, ultDFs){
   return(ults * ultDFs)
 }
 
-sampleResiduals <- function(resids, positions, n.sims){
+sampleResiduals <- function(resids, positions, n.sims, seed){
   ## Author: Nigel de Silva
   ## Worry about excluding, zoning, etc. residuals later
   
   resids <- as.vector(resids)
   resids <- resids[!is.na(resids)]
-  
+  if(!is.null(seed)){
+    set.seed(seed)
+  }
   .sample <- sample(resids, prod(dim(positions)[-3])*n.sims, replace=T)
   .sample <- array(.sample, dim=c(dim(positions)[-3], n.sims))
   .sample[is.na(positions)] <- NA
@@ -413,9 +417,9 @@ sampleResiduals <- function(resids, positions, n.sims){
   return(.sample)
 }
 
-randomClaims <- function(exp.clms, resids, n.sims){
+randomClaims <- function(exp.clms, resids, n.sims, seed){
   ## Author: Nigel de Silva
-  .residSample <- sampleResiduals(resids, exp.clms, n.sims)
+  .residSample <- sampleResiduals(resids, exp.clms, n.sims, seed)
   exp.clms <- expandArray(exp.clms, 3, n.sims)
   out <- .residSample * sqrt(abs(exp.clms)) + exp.clms
   
