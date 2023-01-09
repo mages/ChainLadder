@@ -81,10 +81,14 @@ BootChainLadder <- function(Triangle, R = 999,
   simExp <- getIncremental(getExpected(simUlts, 1/simUltDFs))
   simExp[!is.na(simClaims)] <- NA
   processTriangle <-array(NA,c(n,n,R))
-  
+  if(!is.null(seed)){
+    set.seed(seed)
+  }
   if(process.distr=="gamma")
     processTriangle[!is.na(simExp)] <- sign(simExp[!is.na(simExp)])*rgamma(length(simExp[!is.na(simExp)]), shape=abs(simExp[!is.na(simExp)]/scale.phi), scale=scale.phi)
-  
+  if(!is.null(seed)){
+    set.seed(seed)
+  }
   if(process.distr=="od.pois")
     processTriangle <-  apply(simExp,c(1,2,3), function(x)
       ifelse(is.na(x), NA, sign(x)*rpois.od(1, abs(x), scale.phi)))
