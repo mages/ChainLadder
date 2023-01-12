@@ -58,7 +58,7 @@ citation(package="ChainLadder")
 See also:
 
   Markus Gesmann. Claims Reserving and IBNR. [Computational Actuarial Science
-  with R](https://www.crcpress.com/product/isbn/9781466592599). 2014. Chapman and Hall/CRC
+  with R](https://www.routledge.com/Computational-Actuarial-Science-with-R/Charpentier/p/book/9781466592599). 2014. Chapman and Hall/CRC
 
 
 
