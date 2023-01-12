@@ -1,3 +1,5 @@
+# ChainLadder 0.2.18
+
 # ChainLadder 0.2.17
 
  * New seed argument for BootChainLadder to set an optional seed for the random generator
