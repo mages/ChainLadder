@@ -33,7 +33,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">ChainLadder</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.17</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.18</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -100,7 +100,7 @@ To cite package 'ChainLadder' in publications use:
 
   Gesmann M, Murphy D, Zhang Y, Carrato A, Wuthrich M, Concina F, Dal
   Moro E (2023). _ChainLadder: Statistical Methods and Models for
-  Claims Reserving in General Insurance_. R package version 0.2.17,
+  Claims Reserving in General Insurance_. R package version 0.2.18,
   &lt;https://mages.github.io/ChainLadder/&gt;.</code></pre>
 <div class="section level3">
 <h3 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
@@ -919,23 +919,23 @@ derived.</p>
 
      Latest Mean Ultimate Mean IBNR IBNR.S.E IBNR 75% IBNR 95%
 1981 18,834        18,834         0        0        0        0
-1982 16,704        16,849       145      682      174    1,298
-1983 23,466        24,146       680    1,317    1,139    3,300
-1984 27,067        28,777     1,710    1,919    2,705    5,398
-1985 26,180        28,983     2,803    2,413    4,044    7,347
-1986 15,852        19,598     3,746    2,454    5,128    8,231
-1987 12,314        17,783     5,469    3,024    7,238   11,201
-1988 13,112        24,142    11,030    4,988   13,830   20,077
-1989  5,395        16,772    11,377    6,312   14,937   23,232
-1990  2,063        19,671    17,608   14,716   25,143   43,872
+1982 16,704        16,851       147      753      180    1,545
+1983 23,466        24,179       713    1,358    1,136    3,379
+1984 27,067        28,878     1,811    1,914    2,796    5,388
+1985 26,180        29,074     2,894    2,386    4,136    7,350
+1986 15,852        19,595     3,743    2,513    5,217    8,495
+1987 12,314        17,901     5,587    3,126    7,523   11,335
+1988 13,112        24,202    11,090    4,931   14,079   20,170
+1989  5,395        16,356    10,961    6,101   14,334   22,221
+1990  2,063        19,191    17,128   13,906   24,122   43,203
 
                  Totals
 Latest:         160,987
-Mean Ultimate:  215,556
-Mean IBNR:       54,569
-IBNR.S.E         19,846
-Total IBNR 75%:  66,872
-Total IBNR 95%:  89,565</code></pre>
+Mean Ultimate:  215,060
+Mean IBNR:       54,073
+IBNR.S.E         19,357
+Total IBNR 75%:  65,408
+Total IBNR 95%:  87,777</code></pre>
 <p>You can use <code>summary(B)$ByOrigin</code> and
 <code>summary(B)$Totals</code> to extract the information from the
 output above.</p>
@@ -949,22 +949,22 @@ output above.</p>
 <pre><code>$ByOrigin
      IBNR 75% IBNR 95% IBNR 99% IBNR 99.5%
 1981      0.0        0        0          0
-1982    173.9     1298     2916       3501
-1983   1138.7     3300     4981       5898
-1984   2704.8     5398     7764       8771
-1985   4043.7     7347    10080      11759
-1986   5128.5     8231    10821      11911
-1987   7238.4    11201    14317      15377
-1988  13830.2    20077    26191      28489
-1989  14937.1    23232    29666      31037
-1990  25143.4    43872    58796      73321
+1982    179.7     1545     2856       3543
+1983   1135.8     3379     5346       6313
+1984   2796.2     5388     7965       8716
+1985   4136.4     7350    10119      10978
+1986   5217.0     8495    11016      13364
+1987   7522.8    11335    14106      15041
+1988  14078.9    20170    24930      27605
+1989  14333.6    22221    29119      32323
+1990  24121.8    43203    56974      62670
 
 $Totals
             Totals
-IBNR 75%:    66872
-IBNR 95%:    89565
-IBNR 99%:   109784
-IBNR 99.5%: 118784</code></pre>
+IBNR 75%:    65408
+IBNR 95%:    87777
+IBNR 99%:   110257
+IBNR 99.5%: 119642</code></pre>
 <p>The distribution of the IBNR appears to follow a log-normal
 distribution, so let’s fit it:</p>
 <div class="sourceCode" id="cb78"><pre class="downlit sourceCode r">
@@ -975,8 +975,8 @@ distribution, so let’s fit it:</p>
 <span><span class="va">fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/MASS/man/fitdistr.html" class="external-link">fitdistr</a></span><span class="op">(</span><span class="va">B</span><span class="op">$</span><span class="va">IBNR.Totals</span><span class="op">[</span><span class="va">B</span><span class="op">$</span><span class="va">IBNR.Totals</span><span class="op">&gt;</span><span class="fl">0</span><span class="op">]</span>, <span class="st">"lognormal"</span><span class="op">)</span></span>
 <span><span class="va">fit</span></span></code></pre></div>
 <pre><code>    meanlog      sdlog  
-  10.837180    0.388815 
- ( 0.012302) ( 0.008699)</code></pre>
+  10.831872    0.375090 
+ ( 0.011867) ( 0.008391)</code></pre>
 <div class="sourceCode" id="cb80"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/curve.html" class="external-link">curve</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Lognormal.html" class="external-link">plnorm</a></span><span class="op">(</span><span class="va">x</span>,<span class="va">fit</span><span class="op">$</span><span class="va">estimate</span><span class="op">[</span><span class="st">"meanlog"</span><span class="op">]</span>, <span class="va">fit</span><span class="op">$</span><span class="va">estimate</span><span class="op">[</span><span class="st">"sdlog"</span><span class="op">]</span><span class="op">)</span>,</span>
 <span>      col<span class="op">=</span><span class="st">"red"</span>, add<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
