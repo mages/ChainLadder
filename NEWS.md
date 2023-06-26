@@ -1,6 +1,8 @@
 # ChainLadder 0.2.18
 
-# ChainLadder 0.2.17
+ * Changes to the Matrix package (in 1.5-5) have impacted the MultiChainLadder2 function, which need to be resolved. In some cases the function fails when the data results in near-singular matrix inversions
+ 
+ # ChainLadder 0.2.17
 
  * New seed argument for BootChainLadder to set an optional seed for the random generator
 
