@@ -80,7 +80,7 @@
 Carrato, Fabio Concina, Markus Gesmann, Dan Murphy, Mario Wüthrich and
 Wayne Zhang</h4>
             
-            <h4 data-toc-skip class="date">2023-06-26</h4>
+            <h4 data-toc-skip class="date">2023-06-27</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/mages/ChainLadder/blob/HEAD/vignettes/ChainLadder.Rmd" class="external-link"><code>vignettes/ChainLadder.Rmd</code></a></small>
       <div class="d-none name"><code>ChainLadder.Rmd</code></div>
@@ -918,23 +918,23 @@ derived.</p>
 
      Latest Mean Ultimate Mean IBNR IBNR.S.E IBNR 75% IBNR 95%
 1981 18,834        18,834         0        0        0        0
-1982 16,704        16,849       145      693      189    1,325
-1983 23,466        24,123       657    1,350    1,111    3,314
-1984 27,067        28,758     1,691    2,015    2,639    5,630
-1985 26,180        28,932     2,752    2,430    3,909    7,424
-1986 15,852        19,514     3,662    2,469    4,929    8,260
-1987 12,314        17,880     5,566    3,127    7,325   11,483
-1988 13,112        24,184    11,072    5,200   13,824   20,836
-1989  5,395        16,248    10,853    6,150   14,340   22,919
-1990  2,063        19,220    17,157   13,509   25,178   40,899
+1982 16,704        16,873       169      708      205    1,320
+1983 23,466        24,107       641    1,264    1,171    3,033
+1984 27,067        28,683     1,616    1,996    2,499    5,335
+1985 26,180        29,029     2,849    2,327    4,018    7,352
+1986 15,852        19,563     3,711    2,529    4,989    8,170
+1987 12,314        17,914     5,600    3,173    7,404   11,407
+1988 13,112        24,365    11,253    4,981   14,517   20,356
+1989  5,395        16,165    10,770    6,122   14,360   22,462
+1990  2,063        19,994    17,931   13,900   25,819   43,557
 
                  Totals
 Latest:         160,987
-Mean Ultimate:  214,542
-Mean IBNR:       53,555
-IBNR.S.E         19,339
-Total IBNR 75%:  65,055
-Total IBNR 95%:  87,316</code></pre>
+Mean Ultimate:  215,528
+Mean IBNR:       54,541
+IBNR.S.E         19,064
+Total IBNR 75%:  66,439
+Total IBNR 95%:  89,581</code></pre>
 <p>You can use <code>summary(B)$ByOrigin</code> and
 <code>summary(B)$Totals</code> to extract the information from the
 output above.</p>
@@ -948,22 +948,22 @@ output above.</p>
 <pre><code>$ByOrigin
      IBNR 75% IBNR 95% IBNR 99% IBNR 99.5%
 1981      0.0        0        0          0
-1982    189.2     1325     2599       3151
-1983   1110.8     3314     5437       6495
-1984   2639.2     5630     8734       9851
-1985   3908.6     7424    10682      11366
-1986   4929.3     8260    11989      12544
-1987   7325.3    11483    14717      15218
-1988  13824.3    20836    27383      28778
-1989  14339.5    22919    28598      30477
-1990  25177.9    40899    54782      66037
+1982    205.4     1320     2616       3213
+1983   1171.1     3033     4754       5189
+1984   2498.8     5335     7869       8752
+1985   4018.0     7352     9967      10782
+1986   4989.1     8170    11280      12614
+1987   7404.0    11407    15171      16431
+1988  14517.4    20356    24531      27186
+1989  14360.4    22462    27265      29739
+1990  25818.9    43557    62865      67938
 
 $Totals
             Totals
-IBNR 75%:    65055
-IBNR 95%:    87316
-IBNR 99%:   109776
-IBNR 99.5%: 119684</code></pre>
+IBNR 75%:    66439
+IBNR 95%:    89581
+IBNR 99%:   104887
+IBNR 99.5%: 116213</code></pre>
 <p>The distribution of the IBNR appears to follow a log-normal
 distribution, so let’s fit it:</p>
 <div class="sourceCode" id="cb78"><pre class="downlit sourceCode r">
@@ -974,8 +974,8 @@ distribution, so let’s fit it:</p>
 <span><span class="va">fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/MASS/man/fitdistr.html" class="external-link">fitdistr</a></span><span class="op">(</span><span class="va">B</span><span class="op">$</span><span class="va">IBNR.Totals</span><span class="op">[</span><span class="va">B</span><span class="op">$</span><span class="va">IBNR.Totals</span><span class="op">&gt;</span><span class="fl">0</span><span class="op">]</span>, <span class="st">"lognormal"</span><span class="op">)</span></span>
 <span><span class="va">fit</span></span></code></pre></div>
 <pre><code>    meanlog      sdlog  
-  10.821543    0.374463 
- ( 0.011847) ( 0.008377)</code></pre>
+  10.841791    0.373626 
+ ( 0.011821) ( 0.008359)</code></pre>
 <div class="sourceCode" id="cb80"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/curve.html" class="external-link">curve</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Lognormal.html" class="external-link">plnorm</a></span><span class="op">(</span><span class="va">x</span>,<span class="va">fit</span><span class="op">$</span><span class="va">estimate</span><span class="op">[</span><span class="st">"meanlog"</span><span class="op">]</span>, <span class="va">fit</span><span class="op">$</span><span class="va">estimate</span><span class="op">[</span><span class="st">"sdlog"</span><span class="op">]</span><span class="op">)</span>,</span>
 <span>      col<span class="op">=</span><span class="st">"red"</span>, add<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
@@ -1325,7 +1325,7 @@ Users are encouraged to explore how other options available in
 <div class="section level4">
 <h4 id="model-with-intercepts">Model with intercepts<a class="anchor" aria-label="anchor" href="#model-with-intercepts"></a>
 </h4>
-<p>Consider the <code>auto</code> triangles from0 <span class="citation">(Zhang 2010)</span>. It includes three automobile
+<p>Consider the <code>auto</code> triangles from <span class="citation">(Zhang 2010)</span>. It includes three automobile
 insurance triangles: personal auto paid, personal auto incurred, and
 commercial auto paid.</p>
 <div class="sourceCode" id="cb108"><pre class="downlit sourceCode r">
@@ -1357,8 +1357,8 @@ as follows:</p>
 figure below. We see that these residuals are randomly scattered around
 zero and there is no clear pattern compared to the plot from the MCL
 model.</p>
-<p>** The rest of this section needs updating following changes to the
-Matrix package**</p>
+<p><em>The rest of this section needs updating following changes to the
+Matrix package</em></p>
 <p>The default summary computes the portfolio estimates as the sum of
 all the triangles. This is not desirable because the first two triangles
 are both from the personal auto line. We can overwrite this via the
