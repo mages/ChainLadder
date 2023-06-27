@@ -80,11 +80,11 @@ MackChainLadder <- function(
   # Then finally, ...
   if (tail.factor > 1) {
     ## EXPECTED VALUES
-    FullTriangle <- tail.E(FullTriangle, tail.factor)
+    FullTriangle <- tail_E(FullTriangle, tail.factor)
     ## STANDARD ERRORS
     ## Estimate the standard error of f and F in the tail
     ##  If tail.se and/or tail.sigma provided, return those values
-    StdErr <- tail.SE(FullTriangle, StdErr, Total.SE, tail.factor,
+    StdErr <- tail_SE(FullTriangle, StdErr, Total.SE, tail.factor,
                       tail.se = tail.se, tail.sigma = tail.sigma,
                       alpha = alpha)
   }
@@ -319,7 +319,7 @@ estimate.sigma <- function(sigma){
 ########################################################################
 ## Estimate expected value when tail
 
-tail.E <- function(FullTriangle, tail.factor){
+tail_E <- function(FullTriangle, tail.factor){
   n <- ncol(FullTriangle)
   m <- nrow(FullTriangle)
   
@@ -332,7 +332,7 @@ tail.E <- function(FullTriangle, tail.factor){
 ########################################################################
 ## Estimate standard error for tail
 
-tail.SE <- function(FullTriangle, StdErr, Total.SE, tail.factor, 
+tail_SE <- function(FullTriangle, StdErr, Total.SE, tail.factor, 
                     tail.se = NULL, tail.sigma = NULL, alpha) {
   n <- ncol(FullTriangle)
   m <- nrow(FullTriangle)
