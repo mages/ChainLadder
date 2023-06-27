@@ -918,23 +918,23 @@ derived.</p>
 
      Latest Mean Ultimate Mean IBNR IBNR.S.E IBNR 75% IBNR 95%
 1981 18,834        18,834         0        0        0        0
-1982 16,704        16,873       169      708      205    1,320
-1983 23,466        24,107       641    1,264    1,171    3,033
-1984 27,067        28,683     1,616    1,996    2,499    5,335
-1985 26,180        29,029     2,849    2,327    4,018    7,352
-1986 15,852        19,563     3,711    2,529    4,989    8,170
-1987 12,314        17,914     5,600    3,173    7,404   11,407
-1988 13,112        24,365    11,253    4,981   14,517   20,356
-1989  5,395        16,165    10,770    6,122   14,360   22,462
-1990  2,063        19,994    17,931   13,900   25,819   43,557
+1982 16,704        16,860       156      672      198    1,235
+1983 23,466        24,106       640    1,342    1,117    2,838
+1984 27,067        28,713     1,646    1,840    2,576    5,192
+1985 26,180        29,049     2,869    2,402    4,042    7,492
+1986 15,852        19,479     3,627    2,433    5,063    8,211
+1987 12,314        17,892     5,578    3,039    7,521   11,450
+1988 13,112        24,076    10,964    5,188   13,784   21,208
+1989  5,395        16,274    10,879    6,290   14,595   22,496
+1990  2,063        19,683    17,620   14,377   25,289   43,737
 
                  Totals
 Latest:         160,987
-Mean Ultimate:  215,528
-Mean IBNR:       54,541
-IBNR.S.E         19,064
-Total IBNR 75%:  66,439
-Total IBNR 95%:  89,581</code></pre>
+Mean Ultimate:  214,965
+Mean IBNR:       53,978
+IBNR.S.E         19,619
+Total IBNR 75%:  63,956
+Total IBNR 95%:  92,375</code></pre>
 <p>You can use <code>summary(B)$ByOrigin</code> and
 <code>summary(B)$Totals</code> to extract the information from the
 output above.</p>
@@ -948,22 +948,22 @@ output above.</p>
 <pre><code>$ByOrigin
      IBNR 75% IBNR 95% IBNR 99% IBNR 99.5%
 1981      0.0        0        0          0
-1982    205.4     1320     2616       3213
-1983   1171.1     3033     4754       5189
-1984   2498.8     5335     7869       8752
-1985   4018.0     7352     9967      10782
-1986   4989.1     8170    11280      12614
-1987   7404.0    11407    15171      16431
-1988  14517.4    20356    24531      27186
-1989  14360.4    22462    27265      29739
-1990  25818.9    43557    62865      67938
+1982    198.4     1235     2538       2869
+1983   1117.3     2838     5189       5819
+1984   2576.1     5192     7601       8286
+1985   4041.7     7492    10377      12200
+1986   5062.7     8211    10285      11000
+1987   7521.1    11450    13574      14370
+1988  13784.5    21208    26327      27939
+1989  14595.4    22496    29390      31437
+1990  25288.6    43737    59400      80182
 
 $Totals
             Totals
-IBNR 75%:    66439
-IBNR 95%:    89581
-IBNR 99%:   104887
-IBNR 99.5%: 116213</code></pre>
+IBNR 75%:    63956
+IBNR 95%:    92375
+IBNR 99%:   115777
+IBNR 99.5%: 122422</code></pre>
 <p>The distribution of the IBNR appears to follow a log-normal
 distribution, so let’s fit it:</p>
 <div class="sourceCode" id="cb78"><pre class="downlit sourceCode r">
@@ -974,8 +974,8 @@ distribution, so let’s fit it:</p>
 <span><span class="va">fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/MASS/man/fitdistr.html" class="external-link">fitdistr</a></span><span class="op">(</span><span class="va">B</span><span class="op">$</span><span class="va">IBNR.Totals</span><span class="op">[</span><span class="va">B</span><span class="op">$</span><span class="va">IBNR.Totals</span><span class="op">&gt;</span><span class="fl">0</span><span class="op">]</span>, <span class="st">"lognormal"</span><span class="op">)</span></span>
 <span><span class="va">fit</span></span></code></pre></div>
 <pre><code>    meanlog      sdlog  
-  10.841791    0.373626 
- ( 0.011821) ( 0.008359)</code></pre>
+  10.831755    0.363732 
+ ( 0.011508) ( 0.008137)</code></pre>
 <div class="sourceCode" id="cb80"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/curve.html" class="external-link">curve</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Lognormal.html" class="external-link">plnorm</a></span><span class="op">(</span><span class="va">x</span>,<span class="va">fit</span><span class="op">$</span><span class="va">estimate</span><span class="op">[</span><span class="st">"meanlog"</span><span class="op">]</span>, <span class="va">fit</span><span class="op">$</span><span class="va">estimate</span><span class="op">[</span><span class="st">"sdlog"</span><span class="op">]</span><span class="op">)</span>,</span>
 <span>      col<span class="op">=</span><span class="st">"red"</span>, add<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
@@ -1357,8 +1357,8 @@ as follows:</p>
 figure below. We see that these residuals are randomly scattered around
 zero and there is no clear pattern compared to the plot from the MCL
 model.</p>
-<p><em>The rest of this section needs updating following changes to the
-Matrix package</em></p>
+<p><strong>The rest of this section needs updating following changes to
+the Matrix package</strong></p>
 <p>The default summary computes the portfolio estimates as the sum of
 all the triangles. This is not desirable because the first two triangles
 are both from the personal auto line. We can overwrite this via the
