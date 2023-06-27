@@ -1005,7 +1005,9 @@ below. We see that these residuals are randomly
 scattered around zero and there is no clear pattern compared to the
 plot from the MCL model.
 
-**The rest of this section needs updating following changes to the Matrix package**
+<span style="color:red">
+**!The rest of this and the following section needs updating following changes to the Matrix package!**
+</span>
 
 ```{r fig = TRUE, fig.cap="Residual plots for the MCL model (first row) and the GMCL (MCL+int) model (second row) for the auto data", echo = FALSE, fig.asp = 1.2, eval = FALSE}
 parold <- par(mfrow = c(2, 3), mar = c(3, 3, 2, 1))
