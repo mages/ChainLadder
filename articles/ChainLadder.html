@@ -80,7 +80,7 @@
 Carrato, Fabio Concina, Markus Gesmann, Dan Murphy, Mario Wüthrich and
 Wayne Zhang</h4>
             
-            <h4 data-toc-skip class="date">2023-06-27</h4>
+            <h4 data-toc-skip class="date">2023-07-13</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/mages/ChainLadder/blob/HEAD/vignettes/ChainLadder.Rmd" class="external-link"><code>vignettes/ChainLadder.Rmd</code></a></small>
       <div class="d-none name"><code>ChainLadder.Rmd</code></div>
@@ -918,23 +918,23 @@ derived.</p>
 
      Latest Mean Ultimate Mean IBNR IBNR.S.E IBNR 75% IBNR 95%
 1981 18,834        18,834         0        0        0        0
-1982 16,704        16,868       164      683      158    1,497
-1983 23,466        24,163       697    1,384    1,117    3,132
-1984 27,067        28,713     1,646    1,798    2,604    4,845
-1985 26,180        29,098     2,918    2,328    4,175    7,142
-1986 15,852        19,536     3,684    2,392    5,123    8,207
-1987 12,314        17,728     5,414    3,153    7,102   11,445
-1988 13,112        24,318    11,206    5,019   13,998   20,411
-1989  5,395        16,176    10,781    6,223   14,252   22,086
-1990  2,063        18,744    16,681   13,021   23,678   39,414
+1982 16,704        16,861       157      651      179    1,312
+1983 23,466        24,149       683    1,288    1,141    3,038
+1984 27,067        28,826     1,759    1,975    2,574    5,624
+1985 26,180        29,109     2,929    2,430    4,211    7,517
+1986 15,852        19,674     3,822    2,670    5,282    8,965
+1987 12,314        17,720     5,406    3,281    7,275   10,972
+1988 13,112        24,213    11,101    5,044   14,357   19,793
+1989  5,395        16,055    10,660    5,878   14,158   21,746
+1990  2,063        19,007    16,944   13,097   24,725   41,351
 
                  Totals
 Latest:         160,987
-Mean Ultimate:  214,180
-Mean IBNR:       53,193
-IBNR.S.E         18,472
-Total IBNR 75%:  63,315
-Total IBNR 95%:  87,646</code></pre>
+Mean Ultimate:  214,448
+Mean IBNR:       53,461
+IBNR.S.E         18,846
+Total IBNR 75%:  64,662
+Total IBNR 95%:  86,803</code></pre>
 <p>You can use <code>summary(B)$ByOrigin</code> and
 <code>summary(B)$Totals</code> to extract the information from the
 output above.</p>
@@ -948,22 +948,22 @@ output above.</p>
 <pre><code>$ByOrigin
      IBNR 75% IBNR 95% IBNR 99% IBNR 99.5%
 1981      0.0        0        0          0
-1982    158.3     1497     2881       3330
-1983   1117.4     3132     5894       7145
-1984   2603.5     4845     7662       8384
-1985   4174.9     7142     9897      10930
-1986   5122.6     8207    10509      11985
-1987   7101.9    11445    15008      16167
-1988  13998.2    20411    25434      26114
-1989  14252.2    22086    29634      32392
-1990  23678.3    39414    56188      63437
+1982    178.9     1312     2784       3542
+1983   1140.8     3038     4823       6453
+1984   2573.8     5624     8698       9442
+1985   4211.0     7517    10902      11394
+1986   5282.5     8965    12184      13447
+1987   7274.6    10972    16527      17636
+1988  14357.2    19793    24498      26737
+1989  14157.5    21746    27282      27929
+1990  24725.5    41351    55041      58763
 
 $Totals
             Totals
-IBNR 75%:    63315
-IBNR 95%:    87646
-IBNR 99%:   104712
-IBNR 99.5%: 111788</code></pre>
+IBNR 75%:    64662
+IBNR 95%:    86803
+IBNR 99%:   105889
+IBNR 99.5%: 116828</code></pre>
 <p>The distribution of the IBNR appears to follow a log-normal
 distribution, so let’s fit it:</p>
 <div class="sourceCode" id="cb78"><pre class="downlit sourceCode r">
@@ -974,8 +974,8 @@ distribution, so let’s fit it:</p>
 <span><span class="va">fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/MASS/man/fitdistr.html" class="external-link">fitdistr</a></span><span class="op">(</span><span class="va">B</span><span class="op">$</span><span class="va">IBNR.Totals</span><span class="op">[</span><span class="va">B</span><span class="op">$</span><span class="va">IBNR.Totals</span><span class="op">&gt;</span><span class="fl">0</span><span class="op">]</span>, <span class="st">"lognormal"</span><span class="op">)</span></span>
 <span><span class="va">fit</span></span></code></pre></div>
 <pre><code>    meanlog      sdlog  
-  10.819039    0.364721 
- ( 0.011539) ( 0.008159)</code></pre>
+  10.818968    0.388128 
+ ( 0.012280) ( 0.008683)</code></pre>
 <div class="sourceCode" id="cb80"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/curve.html" class="external-link">curve</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Lognormal.html" class="external-link">plnorm</a></span><span class="op">(</span><span class="va">x</span>,<span class="va">fit</span><span class="op">$</span><span class="va">estimate</span><span class="op">[</span><span class="st">"meanlog"</span><span class="op">]</span>, <span class="va">fit</span><span class="op">$</span><span class="va">estimate</span><span class="op">[</span><span class="st">"sdlog"</span><span class="op">]</span><span class="op">)</span>,</span>
 <span>      col<span class="op">=</span><span class="st">"red"</span>, add<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
@@ -1514,7 +1514,7 @@ distribution assumption is rejected at the 5% level with the
 log-logistic curve&lt;/p&gt;"><sup>4</sup></a>.</p>
 </div>
 <div class="section level4">
-<h4 id="clarks-cap-cod-method">Clark’s Cap Cod method<a class="anchor" aria-label="anchor" href="#clarks-cap-cod-method"></a>
+<h4 id="clarks-cape-cod-method">Clark’s Cape Cod method<a class="anchor" aria-label="anchor" href="#clarks-cape-cod-method"></a>
 </h4>
 <p>The RAA data set, widely researched in the literature, has no premium
 associated with it traditionally. Let’s assume a constant earned premium
