@@ -1154,7 +1154,7 @@ assumption of normally distributed standardized residuals^[As
 an exercise, the reader can confirm that the normal distribution
 assumption is rejected at the 5% level with the log-logistic curve].
 
-### Clark's Cap Cod method
+### Clark's Cape Cod method
 
 The RAA data set, widely researched in the literature, has no premium
 associated with it traditionally. Let's assume a constant earned
