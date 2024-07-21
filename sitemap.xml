@@ -1,222 +1,76 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>http://mages.github.io/ChainLadder/404.html</loc>
-  </url>
-  <url>
-    <loc>http://mages.github.io/ChainLadder/articles/ChainLadder.html</loc>
-  </url>
-  <url>
-    <loc>http://mages.github.io/ChainLadder/articles/index.html</loc>
-  </url>
-  <url>
-    <loc>http://mages.github.io/ChainLadder/authors.html</loc>
-  </url>
-  <url>
-    <loc>http://mages.github.io/ChainLadder/index.html</loc>
-  </url>
-  <url>
-    <loc>http://mages.github.io/ChainLadder/news/index.html</loc>
-  </url>
-  <url>
-    <loc>http://mages.github.io/ChainLadder/reference/ABC.html</loc>
-  </url>
-  <url>
-    <loc>http://mages.github.io/ChainLadder/reference/AutoBI.html</loc>
-  </url>
-  <url>
-    <loc>http://mages.github.io/ChainLadder/reference/BS.paid.adj.html</loc>
-  </url>
-  <url>
-    <loc>http://mages.github.io/ChainLadder/reference/BootChainLadder.html</loc>
-  </url>
-  <url>
-    <loc>http://mages.github.io/ChainLadder/reference/CDR.html</loc>
-  </url>
-  <url>
-    <loc>http://mages.github.io/ChainLadder/reference/ChainLadder-package.html</loc>
-  </url>
-  <url>
-    <loc>http://mages.github.io/ChainLadder/reference/ClarkLDF.html</loc>
-  </url>
-  <url>
-    <loc>http://mages.github.io/ChainLadder/reference/GenIns.html</loc>
-  </url>
-  <url>
-    <loc>http://mages.github.io/ChainLadder/reference/Join2Fits.html</loc>
-  </url>
-  <url>
-    <loc>http://mages.github.io/ChainLadder/reference/JoinFitMse.html</loc>
-  </url>
-  <url>
-    <loc>http://mages.github.io/ChainLadder/reference/M3IR5.html</loc>
-  </url>
-  <url>
-    <loc>http://mages.github.io/ChainLadder/reference/MCLpaid.html</loc>
-  </url>
-  <url>
-    <loc>http://mages.github.io/ChainLadder/reference/MW2008.html</loc>
-  </url>
-  <url>
-    <loc>http://mages.github.io/ChainLadder/reference/MW2014.html</loc>
-  </url>
-  <url>
-    <loc>http://mages.github.io/ChainLadder/reference/MackChainLadder.html</loc>
-  </url>
-  <url>
-    <loc>http://mages.github.io/ChainLadder/reference/MedMal.html</loc>
-  </url>
-  <url>
-    <loc>http://mages.github.io/ChainLadder/reference/Mortgage.html</loc>
-  </url>
-  <url>
-    <loc>http://mages.github.io/ChainLadder/reference/Mse-methods.html</loc>
-  </url>
-  <url>
-    <loc>http://mages.github.io/ChainLadder/reference/MultiChainLadder-class.html</loc>
-  </url>
-  <url>
-    <loc>http://mages.github.io/ChainLadder/reference/MultiChainLadder.html</loc>
-  </url>
-  <url>
-    <loc>http://mages.github.io/ChainLadder/reference/MultiChainLadderFit-class.html</loc>
-  </url>
-  <url>
-    <loc>http://mages.github.io/ChainLadder/reference/MultiChainLadderMse-class.html</loc>
-  </url>
-  <url>
-    <loc>http://mages.github.io/ChainLadder/reference/MultiChainLadderSummary-class.html</loc>
-  </url>
-  <url>
-    <loc>http://mages.github.io/ChainLadder/reference/MunichChainLadder.html</loc>
-  </url>
-  <url>
-    <loc>http://mages.github.io/ChainLadder/reference/NullNum-class.html</loc>
-  </url>
-  <url>
-    <loc>http://mages.github.io/ChainLadder/reference/PaidIncurredChain.html</loc>
-  </url>
-  <url>
-    <loc>http://mages.github.io/ChainLadder/reference/QuantileIFRS17.html</loc>
-  </url>
-  <url>
-    <loc>http://mages.github.io/ChainLadder/reference/RAA.html</loc>
-  </url>
-  <url>
-    <loc>http://mages.github.io/ChainLadder/reference/Triangles.html</loc>
-  </url>
-  <url>
-    <loc>http://mages.github.io/ChainLadder/reference/UKMotor.html</loc>
-  </url>
-  <url>
-    <loc>http://mages.github.io/ChainLadder/reference/USAA.html</loc>
-  </url>
-  <url>
-    <loc>http://mages.github.io/ChainLadder/reference/as.LongTriangle.html</loc>
-  </url>
-  <url>
-    <loc>http://mages.github.io/ChainLadder/reference/auto.html</loc>
-  </url>
-  <url>
-    <loc>http://mages.github.io/ChainLadder/reference/chainladder.html</loc>
-  </url>
-  <url>
-    <loc>http://mages.github.io/ChainLadder/reference/checkTriangleInflation.html</loc>
-  </url>
-  <url>
-    <loc>http://mages.github.io/ChainLadder/reference/cyEffTest.html</loc>
-  </url>
-  <url>
-    <loc>http://mages.github.io/ChainLadder/reference/dfCorTest.html</loc>
-  </url>
-  <url>
-    <loc>http://mages.github.io/ChainLadder/reference/getLatestCumulative.html</loc>
-  </url>
-  <url>
-    <loc>http://mages.github.io/ChainLadder/reference/glmReserve.html</loc>
-  </url>
-  <url>
-    <loc>http://mages.github.io/ChainLadder/reference/index.html</loc>
-  </url>
-  <url>
-    <loc>http://mages.github.io/ChainLadder/reference/inflateTriangle.html</loc>
-  </url>
-  <url>
-    <loc>http://mages.github.io/ChainLadder/reference/liab.html</loc>
-  </url>
-  <url>
-    <loc>http://mages.github.io/ChainLadder/reference/plot-methods.html</loc>
-  </url>
-  <url>
-    <loc>http://mages.github.io/ChainLadder/reference/plot.BootChainLadder.html</loc>
-  </url>
-  <url>
-    <loc>http://mages.github.io/ChainLadder/reference/plot.MackChainLadder.html</loc>
-  </url>
-  <url>
-    <loc>http://mages.github.io/ChainLadder/reference/plot.MunichChainLadder.html</loc>
-  </url>
-  <url>
-    <loc>http://mages.github.io/ChainLadder/reference/plot.checkTriangleInflation.html</loc>
-  </url>
-  <url>
-    <loc>http://mages.github.io/ChainLadder/reference/plot.cyEffTest.html</loc>
-  </url>
-  <url>
-    <loc>http://mages.github.io/ChainLadder/reference/plot.dfCorTest.html</loc>
-  </url>
-  <url>
-    <loc>http://mages.github.io/ChainLadder/reference/predict.TriangleModel.html</loc>
-  </url>
-  <url>
-    <loc>http://mages.github.io/ChainLadder/reference/print.checkTriangleInflation.html</loc>
-  </url>
-  <url>
-    <loc>http://mages.github.io/ChainLadder/reference/print.cyEffTest.html</loc>
-  </url>
-  <url>
-    <loc>http://mages.github.io/ChainLadder/reference/print.dfCorTest.html</loc>
-  </url>
-  <url>
-    <loc>http://mages.github.io/ChainLadder/reference/quantile.MackChainLadder.html</loc>
-  </url>
-  <url>
-    <loc>http://mages.github.io/ChainLadder/reference/residCov-methods.html</loc>
-  </url>
-  <url>
-    <loc>http://mages.github.io/ChainLadder/reference/residuals.MackChainLadder.html</loc>
-  </url>
-  <url>
-    <loc>http://mages.github.io/ChainLadder/reference/summary-methods.html</loc>
-  </url>
-  <url>
-    <loc>http://mages.github.io/ChainLadder/reference/summary.BootChainLadder.html</loc>
-  </url>
-  <url>
-    <loc>http://mages.github.io/ChainLadder/reference/summary.MackChainLadder.html</loc>
-  </url>
-  <url>
-    <loc>http://mages.github.io/ChainLadder/reference/summary.MunichChainLadder.html</loc>
-  </url>
-  <url>
-    <loc>http://mages.github.io/ChainLadder/reference/summary.checkTriangleInflation.html</loc>
-  </url>
-  <url>
-    <loc>http://mages.github.io/ChainLadder/reference/summary.cyEffTest.html</loc>
-  </url>
-  <url>
-    <loc>http://mages.github.io/ChainLadder/reference/summary.dfCorTest.html</loc>
-  </url>
-  <url>
-    <loc>http://mages.github.io/ChainLadder/reference/triangles-class.html</loc>
-  </url>
-  <url>
-    <loc>http://mages.github.io/ChainLadder/reference/tweedieMethods.html</loc>
-  </url>
-  <url>
-    <loc>http://mages.github.io/ChainLadder/reference/tweedieReserve.html</loc>
-  </url>
-  <url>
-    <loc>http://mages.github.io/ChainLadder/reference/utilityfunctions.html</loc>
-  </url>
+<urlset xmlns = 'http://www.sitemaps.org/schemas/sitemap/0.9'>
+<url><loc>http://mages.github.io/ChainLadder/404.html</loc></url>
+<url><loc>http://mages.github.io/ChainLadder/articles/ChainLadder.html</loc></url>
+<url><loc>http://mages.github.io/ChainLadder/articles/index.html</loc></url>
+<url><loc>http://mages.github.io/ChainLadder/authors.html</loc></url>
+<url><loc>http://mages.github.io/ChainLadder/index.html</loc></url>
+<url><loc>http://mages.github.io/ChainLadder/news/index.html</loc></url>
+<url><loc>http://mages.github.io/ChainLadder/reference/ABC.html</loc></url>
+<url><loc>http://mages.github.io/ChainLadder/reference/AutoBI.html</loc></url>
+<url><loc>http://mages.github.io/ChainLadder/reference/BS.paid.adj.html</loc></url>
+<url><loc>http://mages.github.io/ChainLadder/reference/BootChainLadder.html</loc></url>
+<url><loc>http://mages.github.io/ChainLadder/reference/CDR.html</loc></url>
+<url><loc>http://mages.github.io/ChainLadder/reference/ChainLadder-package.html</loc></url>
+<url><loc>http://mages.github.io/ChainLadder/reference/ClarkLDF.html</loc></url>
+<url><loc>http://mages.github.io/ChainLadder/reference/GenIns.html</loc></url>
+<url><loc>http://mages.github.io/ChainLadder/reference/Join2Fits.html</loc></url>
+<url><loc>http://mages.github.io/ChainLadder/reference/JoinFitMse.html</loc></url>
+<url><loc>http://mages.github.io/ChainLadder/reference/M3IR5.html</loc></url>
+<url><loc>http://mages.github.io/ChainLadder/reference/MCLpaid.html</loc></url>
+<url><loc>http://mages.github.io/ChainLadder/reference/MW2008.html</loc></url>
+<url><loc>http://mages.github.io/ChainLadder/reference/MW2014.html</loc></url>
+<url><loc>http://mages.github.io/ChainLadder/reference/MackChainLadder.html</loc></url>
+<url><loc>http://mages.github.io/ChainLadder/reference/MedMal.html</loc></url>
+<url><loc>http://mages.github.io/ChainLadder/reference/Mortgage.html</loc></url>
+<url><loc>http://mages.github.io/ChainLadder/reference/Mse-methods.html</loc></url>
+<url><loc>http://mages.github.io/ChainLadder/reference/MultiChainLadder-class.html</loc></url>
+<url><loc>http://mages.github.io/ChainLadder/reference/MultiChainLadder.html</loc></url>
+<url><loc>http://mages.github.io/ChainLadder/reference/MultiChainLadderFit-class.html</loc></url>
+<url><loc>http://mages.github.io/ChainLadder/reference/MultiChainLadderMse-class.html</loc></url>
+<url><loc>http://mages.github.io/ChainLadder/reference/MultiChainLadderSummary-class.html</loc></url>
+<url><loc>http://mages.github.io/ChainLadder/reference/MunichChainLadder.html</loc></url>
+<url><loc>http://mages.github.io/ChainLadder/reference/NullNum-class.html</loc></url>
+<url><loc>http://mages.github.io/ChainLadder/reference/PaidIncurredChain.html</loc></url>
+<url><loc>http://mages.github.io/ChainLadder/reference/QuantileIFRS17.html</loc></url>
+<url><loc>http://mages.github.io/ChainLadder/reference/RAA.html</loc></url>
+<url><loc>http://mages.github.io/ChainLadder/reference/Triangles.html</loc></url>
+<url><loc>http://mages.github.io/ChainLadder/reference/UKMotor.html</loc></url>
+<url><loc>http://mages.github.io/ChainLadder/reference/USAA.html</loc></url>
+<url><loc>http://mages.github.io/ChainLadder/reference/as.LongTriangle.html</loc></url>
+<url><loc>http://mages.github.io/ChainLadder/reference/auto.html</loc></url>
+<url><loc>http://mages.github.io/ChainLadder/reference/chainladder.html</loc></url>
+<url><loc>http://mages.github.io/ChainLadder/reference/checkTriangleInflation.html</loc></url>
+<url><loc>http://mages.github.io/ChainLadder/reference/cyEffTest.html</loc></url>
+<url><loc>http://mages.github.io/ChainLadder/reference/dfCorTest.html</loc></url>
+<url><loc>http://mages.github.io/ChainLadder/reference/getLatestCumulative.html</loc></url>
+<url><loc>http://mages.github.io/ChainLadder/reference/glmReserve.html</loc></url>
+<url><loc>http://mages.github.io/ChainLadder/reference/index.html</loc></url>
+<url><loc>http://mages.github.io/ChainLadder/reference/inflateTriangle.html</loc></url>
+<url><loc>http://mages.github.io/ChainLadder/reference/liab.html</loc></url>
+<url><loc>http://mages.github.io/ChainLadder/reference/plot-methods.html</loc></url>
+<url><loc>http://mages.github.io/ChainLadder/reference/plot.BootChainLadder.html</loc></url>
+<url><loc>http://mages.github.io/ChainLadder/reference/plot.MackChainLadder.html</loc></url>
+<url><loc>http://mages.github.io/ChainLadder/reference/plot.MunichChainLadder.html</loc></url>
+<url><loc>http://mages.github.io/ChainLadder/reference/plot.checkTriangleInflation.html</loc></url>
+<url><loc>http://mages.github.io/ChainLadder/reference/plot.cyEffTest.html</loc></url>
+<url><loc>http://mages.github.io/ChainLadder/reference/plot.dfCorTest.html</loc></url>
+<url><loc>http://mages.github.io/ChainLadder/reference/predict.TriangleModel.html</loc></url>
+<url><loc>http://mages.github.io/ChainLadder/reference/print.checkTriangleInflation.html</loc></url>
+<url><loc>http://mages.github.io/ChainLadder/reference/print.cyEffTest.html</loc></url>
+<url><loc>http://mages.github.io/ChainLadder/reference/print.dfCorTest.html</loc></url>
+<url><loc>http://mages.github.io/ChainLadder/reference/quantile.MackChainLadder.html</loc></url>
+<url><loc>http://mages.github.io/ChainLadder/reference/residCov-methods.html</loc></url>
+<url><loc>http://mages.github.io/ChainLadder/reference/residuals.MackChainLadder.html</loc></url>
+<url><loc>http://mages.github.io/ChainLadder/reference/summary-methods.html</loc></url>
+<url><loc>http://mages.github.io/ChainLadder/reference/summary.BootChainLadder.html</loc></url>
+<url><loc>http://mages.github.io/ChainLadder/reference/summary.MackChainLadder.html</loc></url>
+<url><loc>http://mages.github.io/ChainLadder/reference/summary.MunichChainLadder.html</loc></url>
+<url><loc>http://mages.github.io/ChainLadder/reference/summary.checkTriangleInflation.html</loc></url>
+<url><loc>http://mages.github.io/ChainLadder/reference/summary.cyEffTest.html</loc></url>
+<url><loc>http://mages.github.io/ChainLadder/reference/summary.dfCorTest.html</loc></url>
+<url><loc>http://mages.github.io/ChainLadder/reference/triangles-class.html</loc></url>
+<url><loc>http://mages.github.io/ChainLadder/reference/tweedieMethods.html</loc></url>
+<url><loc>http://mages.github.io/ChainLadder/reference/tweedieReserve.html</loc></url>
+<url><loc>http://mages.github.io/ChainLadder/reference/utilityfunctions.html</loc></url>
 </urlset>
+
