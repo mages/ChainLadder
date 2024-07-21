@@ -18,7 +18,7 @@ lattice=FALSE, which=1:6, \dots)
   \item{title}{see \code{\link{title}}}  
   \item{lattice}{logical. Default is set to \code{FALSE} and plots as
   described in the details section are produced. If \code{lattice=TRUE}, the function
-  \code{\link{xyplot}} of the lattice package is used to plot
+  \code{\link[lattice]{xyplot}} of the lattice package is used to plot
   developments by origin period in different panels, plus Mack's S.E.}  
   \item{which}{if a subset of the plots is required, specify a subset of the numbers 1:6.}
   \item{\dots}{ optional arguments. See \code{\link{plot.default}} for

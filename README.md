@@ -66,5 +66,5 @@ See also:
 
 This package is free and open source software, licensed under [GPL](https://www.gnu.org/copyleft/gpl.html).
 
-<a rel="license" href="https://creativecommons.org/licenses/by-sa/4.0/deed.en_GB"><img alt="Creative Commons Licence" class="c1" src="https://i.creativecommons.org/l/by-sa/4.0/80x15.png" /></a><br />
-<span>ChainLadder documentation</span> is licensed under a <a rel="license" href="https://creativecommons.org/licenses/by-sa/4.0/deed.en_GB">Creative Commons Attribution-ShareAlike 4.0 International License</a>. 
+<a rel="license" href="https://creativecommons.org/licenses/by-sa/4.0/deed.en"><img alt="Creative Commons Licence" class="c1" src="https://i.creativecommons.org/l/by-sa/4.0/80x15.png" /></a><br />
+<span>ChainLadder documentation</span> is licensed under a <a rel="license" href="https://creativecommons.org/licenses/by-sa/4.0/deed.en">Creative Commons Attribution-ShareAlike 4.0 International License</a>. 

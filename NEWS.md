@@ -1,6 +1,10 @@
+# ChainLadder 0.2.19
+
+ * Fixed links in documentation that had references to a functions from a different R packages, as reported by CRAN checks
+
 # ChainLadder 0.2.18
 
-   * Changes to the Matrix package (in 1.5-5) have impacted the MultiChainLadder2 function, which need to be resolved. In some cases the function fails when the data results in near-singular matrix inversions
+ * Changes to the Matrix package (in 1.5-5) have impacted the MultiChainLadder2 function, which need to be resolved. In some cases the function fails when the data results in near-singular matrix inversions
  
 # ChainLadder 0.2.17
 

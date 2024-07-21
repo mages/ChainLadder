@@ -54,7 +54,7 @@ as.triangle(Triangle, origin="origin", dev="dev", value="value", \dots)
   \item{ylab}{a label for the y axis, defaults to NULL}
   \item{lattice}{logical. If \code{FALSE} the function
     \code{\link{matplot}} is used to plot the developments of the
-    triangle in one graph, otherwise the \code{\link{xyplot}} function
+    triangle in one graph, otherwise the \code{\link[lattice]{xyplot}} function
     of the lattice package is used, to plot developments of each origin
     period in a different panel.}
   \item{type}{type, see \code{\link{plot.default}}}
