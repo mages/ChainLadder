@@ -1,6 +1,6 @@
 # ChainLadder 0.2.19
 
- * Fixed links in documentation that had references to a functions from a different R packages, as reported by CRAN checks
+ * Fixed links in documentation that had references to a functions from different R packages, as reported by CRAN checks
 
 # ChainLadder 0.2.18
 
