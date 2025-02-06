@@ -1,3 +1,7 @@
+# ChainLadder 0.2.20
+
+ * Removed old database demo to comply with new CRAN checks
+
 # ChainLadder 0.2.19
 
  * Fixed links in documentation that had references to a functions from different R packages, as reported by CRAN checks

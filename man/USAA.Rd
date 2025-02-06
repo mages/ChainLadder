@@ -19,10 +19,10 @@ NAIC Schedule P contains information on claims for major personal and
 commercial lines for all property-casualty insurers that write business in US.
 }
 \source{
-\url{https://www.casact.org}
+Casualty Actuarial Society
 }
 \references{
-CAS website.
+CAS website: https://www.casact.org
 }
 \examples{
 data(USAApaid)

@@ -297,12 +297,6 @@ tri <- read.table(file="clipboard", sep="\t", na.strings="")
 R makes it easy to access data using SQL statements,
 e.g. via an ODBC connection^[See the `RODBC` and `DBI` packages], 
 for more details see [@Rdata].
-The ChainLadder packages includes a demo to showcase
-how data can be imported from a MS Access data base, see:
-
-```{r eval=FALSE}
-demo(DatabaseExamples)
-```
 
 In this section we use data stored in a CSV-file^[Please
 ensure that your CSV-file is free from formatting, e.g. characters to
