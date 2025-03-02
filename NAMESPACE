@@ -35,6 +35,7 @@ export(ata)
 export(as.LongTriangle)
 export(CLFMdelta, LRfunction)
 export(glmReserve)
+export(mlReserve)
 export(cyEffTest, dfCorTest, checkTriangleInflation, inflateTriangle, BS.paid.adj)
 
 #Classes
