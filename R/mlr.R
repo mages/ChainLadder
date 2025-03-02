@@ -56,7 +56,8 @@ mlReserve <- function(triangle, var.power = 1, link.power = 0,
   # divide data 
   ldaFit <- subset(lda, !is.na(lda$value)) #warnings?  
   ldaOut <- subset(lda, is.na(lda$value)) 
-   
+  misc::debug_print(ldaFit) 
+  misc::debug_print(ldaOut) 
   # fit the model
   ldaFit$value <- round(ldaFit$value)  #warning
   mlFit <- try(fit_func(value ~ factor(origin) + factor(dev), 
@@ -111,14 +112,15 @@ mlReserve <- function(triangle, var.power = 1, link.power = 0,
                 model = mlFit, 
                 sims.par =  matrix(0),
                 sims.reserve.mean =  matrix(0),
-                sims.reserve.pred =  matrix(0))
+                sims.reserve.pred =  matrix(0), 
+                residuals = resids)
   
-  class(out) <- "glmReserve"
+  class(out) <- "mlReserve"
   return(out)  
 }
 
-# summary and print method for glmReserve
-summary.glmReserve <- function(object, type = c("triangle", "model"), ...){
+# summary and print method for mlReserve
+summary.mlReserve <- function(object, type = c("triangle", "model"), ...){
   type <- match.arg(type)
   if (type == "triangle")
     print(object$summary)
@@ -126,35 +128,27 @@ summary.glmReserve <- function(object, type = c("triangle", "model"), ...){
     summary(object$model)
 }
 
-print.glmReserve <- function(x, ...) {
+print.mlReserve <- function(x, ...) {
   summary(x)
   
   invisible(x)
 }
 
-# return pearson residuals (scaled)
-residuals.glmReserve <- function(object, ...){
-  m <- object$model
-  r <- residuals(m, type = "pearson")
-  if (class(m)[1] == "glm") {
-    phi <- sum((m$weights * m$residuals^2)[m$weights > 0])/m$df.residual
-  } else if (class(m)[1] == "glm"){
-    phi <- 1
-  } else {
-    phi <- m$phi
-  }
-  return(r/sqrt(phi))
+residuals.mlReserve <- function(object, ...){
+  object$residuals
 }
 
-resid.glmReserve <- function(object, ...)
-  residuals(object)
+resid.mlReserve <- function(object, ...)
+{
+  object$residuals 
+}
 
 # 1 Original triangle 
 # 2 Full triangle 
 # 3 Reserve distribution
 # 4 Residual plot
 # 5 QQnorm
-plot.glmReserve <- function(x, which = 1, ...){
+plot.mlReserve <- function(x, which = 1, ...){
   model <- x$model
   if (which == 1){
     plot(x$Triangle, ...)  

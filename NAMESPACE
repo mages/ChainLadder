@@ -91,6 +91,12 @@ S3method(residuals, glmReserve)
 S3method(resid, glmReserve)
 S3method(plot, glmReserve)
 
+S3method(print, mlReserve)
+S3method(summary, mlReserve)
+S3method(residuals, mlReserve)
+S3method(resid, mlReserve)
+S3method(plot, mlReserve)
+
 
 S3method(predict, TriangleModel)
 S3method(predict, ChainLadder)
