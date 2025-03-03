@@ -1,16 +1,55 @@
-###################################################
-##    Demo of glm-based insurance loss reserving 
-###################################################
+---
+title: "Reserving using Machine Learning"
+author: "T. Moudiki"
+abstract: "Using Machine Learning for the estimation of outstanding claims reserves in general insurance. With 
+GLM, SVM, Random Forest, GLMNET, Ranger Random Forest and 
+Extrememly Randomized Trees"
+date: "`r Sys.Date()`"
+output:
+  rmarkdown::html_vignette:
+    toc: true
+    toc_depth: 3
+bibliography: ChainLadder.bib
+vignette: >
+  %\VignetteIndexEntry{Reserving using Machine Learning}
+  %!\VignetteEncoding{UTF-8}
+  %\VignetteKeywords{Claims, reserving, IBNR, chain-ladder, statistical software}
+  %\VignetteEngine{knitr::rmarkdown}
+  \usepackage[utf8]{inputenc}
+---
 
+```{r options, echo=FALSE}
+library(knitr)
+library(lattice)
+options(prompt = "R> ", digits = 4, show.signif.stars = TRUE)
+options(continue="   ")
+opts_chunk$set(
+  comment = NA,
+  message = FALSE,
+  warning = FALSE,
+  fig.asp = 0.8,
+  fig.width = 6,
+  out.width = "60%",
+  fig.align = "center"
+)
+suppressPackageStartupMessages(library(ChainLadder))
+```
+
+```{r, echo=FALSE}
+print(citation("ChainLadder"), bibtex=FALSE)
+```
+
+
+```{r fig.width=8.5}
 # Load required data
 data(GenIns)
 GenIns <- GenIns / 1000
 
-# 0. GLM model (reproduces ChainLadder estimates)
+# 1. GLM model (reproduces ChainLadder estimates)
 fit1 <- ChainLadder::mlReserve(GenIns, fit_func = stats::glm)
 print("GLM model results:")
 summary(fit1)
-summary(fit1, type = "model")   # extract the underlying glm
+
 
 # Visualize results
 par(mfrow = c(1, 2))
@@ -21,11 +60,10 @@ plot(fit1, which = 1, xlab = "dev year", ylab = "cum loss",
 plot(fit1, which = 2, xlab = "dev year", ylab = "cum loss",
      main = "Full Triangle")
 
-# 1. SVM model (reproduces ChainLadder estimates)
+# 2. SVM model (reproduces ChainLadder estimates)
 fit1 <- ChainLadder::mlReserve(GenIns, fit_func = e1071::svm)
 print("SVM model results:")
 summary(fit1)
-summary(fit1, type = "model")   # extract the underlying glm
 
 # Visualize results
 par(mfrow = c(1, 2))
@@ -37,12 +75,12 @@ plot(fit1, which = 2, xlab = "dev year", ylab = "cum loss",
      main = "Full Triangle")
 
 
-# 2. Random Forest model (reproduces ChainLadder estimates)
+# 3. Random Forest model (reproduces ChainLadder estimates)
 fit1 <- ChainLadder::mlReserve(GenIns, fit_func = randomForest::randomForest, 
                                predict_func = predict)
 print("RF model results:")
 summary(fit1)
-summary(fit1, type = "model")   # extract the underlying glm
+
 
 # Visualize results
 par(mfrow = c(1, 2))
@@ -54,12 +92,12 @@ plot(fit1, which = 2, xlab = "dev year", ylab = "cum loss",
      main = "Full Triangle")
 
 
-# 3. GLMNET model (reproduces ChainLadder estimates)
+# 4. GLMNET model (reproduces ChainLadder estimates)
 fit1 <- ChainLadder::mlReserve(GenIns, fit_func = glmnet::cv.glmnet, 
                                predict_func = predict)
 print("GLMNET model results:")
 summary(fit1)
-summary(fit1, type = "model")   # extract the underlying glm
+
 
 # Visualize results
 par(mfrow = c(1, 2))
@@ -70,7 +108,7 @@ plot(fit1, which = 1, xlab = "dev year", ylab = "cum loss",
 plot(fit1, which = 2, xlab = "dev year", ylab = "cum loss",
      main = "Full Triangle")
 
-# 4. Ranger -- Random Forest model (reproduces ChainLadder estimates)
+# 5. Ranger -- Random Forest model (reproduces ChainLadder estimates)
 fit_func <- function(x, y, ...)
 {
   df <- data.frame(y=y, x) # naming of columns is mandatory for `predict`
@@ -87,7 +125,7 @@ fit1 <- ChainLadder::mlReserve(GenIns, fit_func = fit_func,
                                predict_func = predict_func)
 print("Ranger model results:")
 summary(fit1)
-summary(fit1, type = "model")   # extract the underlying glm
+
 
 # Visualize results
 par(mfrow = c(1, 2))
@@ -98,17 +136,21 @@ plot(fit1, which = 1, xlab = "dev year", ylab = "cum loss",
 plot(fit1, which = 2, xlab = "dev year", ylab = "cum loss",
      main = "Full Triangle")
 
+# 6 - Extremely Randomized Trees 
 
-# Optional: Bootstrap example (commented out as it takes longer)
-# set.seed(11)
-# fit5 <- mlReserve(GenIns, mse.method = "boot")
-# print("\nBootstrap model results:")
-# summary(fit5)
-# 
-# # Compute quantiles of predicted loss reserves
-# print("\nReserve quantiles:")
-# t(apply(fit5$sims.reserve.pred, 2, quantile, 
-#         c(0.025, 0.25, 0.5, 0.75, 0.975)))
-# 
-# # Plot distribution of reserve
-# plot(fit5, which = 3)
+fit_func <- function(x, y, ...)
+{
+  df <- data.frame(y=y, x) # naming of columns is mandatory for `predict`
+  ranger::ranger(y ~ ., data=df, 
+                 splitrule = "extratrees",
+                 replace = FALSE,
+                 sample.fraction = 1,...)
+}
+
+fit1 <- ChainLadder::mlReserve(GenIns, fit_func = fit_func, 
+                               predict_func = predict_func)
+print("ExtraTrees model results:")
+summary(fit1)
+
+```
+

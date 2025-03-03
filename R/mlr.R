@@ -1,5 +1,5 @@
 ###################################################
-##    glm-based insurance loss reserving 
+##    ML-based insurance loss reserving 
 ##            T. Moudiki
 ##     thierry.moudiki@gmail.com
 ###################################################
@@ -58,8 +58,6 @@ mlReserve <- function(triangle, var.power = 1, link.power = 0,
   ldaFit$offset <- NULL
   ldaOut <- subset(lda, is.na(lda$value)) 
   ldaOut$offset <- NULL
-  misc::debug_print(ldaFit) 
-  misc::debug_print(ldaOut) 
   # fit the model
   ldaFit$value <- round(ldaFit$value)  #warning
   mlFit <- try(fit_func(value ~ factor(origin) + factor(dev), 
@@ -74,15 +72,11 @@ mlReserve <- function(triangle, var.power = 1, link.power = 0,
                             y = ldaFit$value), silent = FALSE)
     }
   }
-  misc::debug_print(mlFit)
-  misc::debug_print(ldaOut)
-  misc::debug_print(ldaOut[, c("origin", "dev")])
   yp <- try(predict_func(mlFit, ldaOut[, c("origin", "dev")]), silent = TRUE)
   if (inherits(yp, "try-error"))
   {
     yp <- predict_func(mlFit, as.matrix(ldaOut[, c("origin", "dev")]))
   }
-  misc::debug_print(yp)
   ################################
   ## calculate reserves 
   ################################
@@ -95,9 +89,7 @@ mlReserve <- function(triangle, var.power = 1, link.power = 0,
   eta <- yp  # store predictions before summing
   # sum to get reserve by year
   resMeanAy <- tapply(yp, factor(ldaOut$origin), sum)
-  misc::debug_print(resMeanAy)                
   resMeanTot <- sum(resMeanAy)
-  misc::debug_print(resMeanTot)                
 
   ################################
   ## calculate prediction errs 
