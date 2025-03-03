@@ -45,7 +45,7 @@ print(citation("ChainLadder"), bibtex=FALSE)
 data(GenIns)
 GenIns <- GenIns / 1000
 
-# 1. GLM model (reproduces ChainLadder estimates)
+# 1. GLM model 
 fit1 <- ChainLadder::mlReserve(GenIns, fit_func = stats::glm)
 print("GLM model results:")
 summary(fit1)
@@ -60,7 +60,7 @@ plot(fit1, which = 1, xlab = "dev year", ylab = "cum loss",
 plot(fit1, which = 2, xlab = "dev year", ylab = "cum loss",
      main = "Full Triangle")
 
-# 2. SVM model (reproduces ChainLadder estimates)
+# 2. SVM model 
 fit1 <- ChainLadder::mlReserve(GenIns, fit_func = e1071::svm)
 print("SVM model results:")
 summary(fit1)
@@ -75,7 +75,7 @@ plot(fit1, which = 2, xlab = "dev year", ylab = "cum loss",
      main = "Full Triangle")
 
 
-# 3. Random Forest model (reproduces ChainLadder estimates)
+# 3. Random Forest model 
 fit1 <- ChainLadder::mlReserve(GenIns, fit_func = randomForest::randomForest, 
                                predict_func = predict)
 print("RF model results:")
@@ -92,7 +92,7 @@ plot(fit1, which = 2, xlab = "dev year", ylab = "cum loss",
      main = "Full Triangle")
 
 
-# 4. GLMNET model (reproduces ChainLadder estimates)
+# 4. GLMNET model 
 fit1 <- ChainLadder::mlReserve(GenIns, fit_func = glmnet::cv.glmnet, 
                                predict_func = predict)
 print("GLMNET model results:")
@@ -108,7 +108,7 @@ plot(fit1, which = 1, xlab = "dev year", ylab = "cum loss",
 plot(fit1, which = 2, xlab = "dev year", ylab = "cum loss",
      main = "Full Triangle")
 
-# 5. Ranger -- Random Forest model (reproduces ChainLadder estimates)
+# 5. Ranger -- Random Forest model 
 fit_func <- function(x, y, ...)
 {
   df <- data.frame(y=y, x) # naming of columns is mandatory for `predict`

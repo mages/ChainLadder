@@ -50,7 +50,7 @@ Imports:
     ggplot2,
     MASS
 Suggests:
-    RUnit, knitr, rmarkdown
+    RUnit, knitr, rmarkdown, e1071, glmnet, randomForest, ranger
 VignetteBuilder:
     knitr
 License: GPL (>= 2)
