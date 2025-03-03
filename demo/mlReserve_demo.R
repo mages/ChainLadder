@@ -38,21 +38,34 @@ plot(fit1, which = 2, xlab = "dev year", ylab = "cum loss",
 
 
 # 2. Random Forest model (reproduces ChainLadder estimates)
-fit1 <- ChainLadder::mlReserve(GenIns, fit_func = randomForest::randomForest)
+fit1 <- ChainLadder::mlReserve(GenIns, fit_func = randomForest::randomForest, 
+                               predict_func = predict)
 print("RF model results:")
 summary(fit1)
 summary(fit1, type = "model")   # extract the underlying glm
 
 # Visualize results
-par(mfrow = c(2, 2))
+par(mfrow = c(1, 2))
 # Original triangle
 plot(fit1, which = 1, xlab = "dev year", ylab = "cum loss", 
      main = "Original Triangle")
-# Residual plot
-plot(fit1, which = 4, xlab = "fitted values", ylab = "residuals",
-     main = "Residual Plot")
-# QQ plot
-plot(fit1, which = 5, main = "Normal Q-Q Plot")
+# Full triangle
+plot(fit1, which = 2, xlab = "dev year", ylab = "cum loss",
+     main = "Full Triangle")
+
+
+# 3. GLMNET model (reproduces ChainLadder estimates)
+fit1 <- ChainLadder::mlReserve(GenIns, fit_func = glmnet::cv.glmnet, 
+                               predict_func = predict)
+print("GLMNET model results:")
+summary(fit1)
+summary(fit1, type = "model")   # extract the underlying glm
+
+# Visualize results
+par(mfrow = c(1, 2))
+# Original triangle
+plot(fit1, which = 1, xlab = "dev year", ylab = "cum loss", 
+     main = "Original Triangle")
 # Full triangle
 plot(fit1, which = 2, xlab = "dev year", ylab = "cum loss",
      main = "Full Triangle")

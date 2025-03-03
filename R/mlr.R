@@ -54,17 +54,34 @@ mlReserve <- function(triangle, var.power = 1, link.power = 0,
   }
   
   # divide data 
-  ldaFit <- subset(lda, !is.na(lda$value)) #warnings?  
+  ldaFit <- subset(lda, !is.na(lda$value)) 
+  ldaFit$offset <- NULL
   ldaOut <- subset(lda, is.na(lda$value)) 
+  ldaOut$offset <- NULL
   misc::debug_print(ldaFit) 
   misc::debug_print(ldaOut) 
   # fit the model
   ldaFit$value <- round(ldaFit$value)  #warning
   mlFit <- try(fit_func(value ~ factor(origin) + factor(dev), 
-                       data = ldaFit, ...))
+                       data = ldaFit, ...), silent = TRUE)
+  if (inherits(mlFit, "try-error"))
+  {
+    mlFit <- try(fit_func(value ~ ., 
+                          data = ldaFit, ...), silent = TRUE)
+    if (inherits(mlFit, "try-error"))
+    {
+      mlFit <- try(fit_func(x = as.matrix(ldaFit[, c("origin", "dev")]), 
+                            y = ldaFit$value), silent = FALSE)
+    }
+  }
   misc::debug_print(mlFit)
   misc::debug_print(ldaOut)
-  yp <- predict_func(mlFit, ldaOut[, c("origin", "dev")])
+  misc::debug_print(ldaOut[, c("origin", "dev")])
+  yp <- try(predict_func(mlFit, ldaOut[, c("origin", "dev")]), silent = TRUE)
+  if (inherits(yp, "try-error"))
+  {
+    yp <- predict_func(mlFit, as.matrix(ldaOut[, c("origin", "dev")]))
+  }
   misc::debug_print(yp)
   ################################
   ## calculate reserves 
@@ -130,7 +147,6 @@ summary.mlReserve <- function(object, type = c("triangle", "model"), ...){
 
 print.mlReserve <- function(x, ...) {
   summary(x)
-  
   invisible(x)
 }
 
