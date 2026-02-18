@@ -10,8 +10,8 @@ results as required under Solvency II.
     To cite package 'ChainLadder' in publications use:
 
       Gesmann M, Murphy D, Zhang Y, Carrato A, Wuthrich M, Concina F, Dal
-      Moro E (2025). _ChainLadder: Statistical Methods and Models for
-      Claims Reserving in General Insurance_. R package version 0.2.20,
+      Moro E (2026). _ChainLadder: Statistical Methods and Models for
+      Claims Reserving in General Insurance_. R package version 0.2.21,
       <https://mages.github.io/ChainLadder/>.
 
 ### Introduction

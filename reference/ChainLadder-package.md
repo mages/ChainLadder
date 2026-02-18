@@ -53,8 +53,7 @@ Modelling the claims development result for solvency purposes. Michael
 Merz, Mario V. Wüthrich. Casualty Actuarial Society E-Forum, Fall 2008.
 
 Claims Run-Off Uncertainty: The Full Picture. Michael Merz, Mario V.
-Wüthrich. Swiss Finance Institute Research Paper No. 14-69.
-<https://www.ssrn.com/abstract=2524352>. 2014
+Wüthrich. Swiss Finance Institute Research Paper No. 14-69. 2014
 
 Markus Gesmann. Claims Reserving and IBNR. *Computational Actuarial
 Science with R*. Chapman and Hall/CRC. 2014

@@ -1,5 +1,13 @@
 # Changelog
 
+## ChainLadder 0.2.21
+
+- Fixed operator precedence bug in PaidIncurredChain() that inflated
+  reserves by ~2.9%
+- Improved code quality: renamed variables shadowing base R,
+  pre-allocate vectors, used idiomatic R, removed dead code
+- Added regression test
+
 ## ChainLadder 0.2.20
 
 CRAN release: 2025-02-06

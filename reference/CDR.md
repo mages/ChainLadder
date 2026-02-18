@@ -66,8 +66,7 @@ result for solvency purposes.* Casualty Actuarial Society E-Forum, Fall
 2008.
 
 Michael Merz, Mario V. Wüthrich. *Claims Run-Off Uncertainty: The Full
-Picture.* Swiss Finance Institute Research Paper No. 14-69.
-<https://www.ssrn.com/abstract=2524352>. 2014
+Picture.* Swiss Finance Institute Research Paper No. 14-69. 2014
 
 ## Author
 
