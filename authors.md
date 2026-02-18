@@ -35,7 +35,7 @@
 ## Citation
 
 Source:
-[`DESCRIPTION`](https://github.com/mages/ChainLadder/blob/master/DESCRIPTION)
+[`DESCRIPTION`](https://github.com/mages/ChainLadder/blob/0.2.21/DESCRIPTION)
 
 Gesmann M, Murphy D, Zhang Y, Carrato A, Wuthrich M, Concina F, Dal Moro
 E (2026). *ChainLadder: Statistical Methods and Models for Claims
