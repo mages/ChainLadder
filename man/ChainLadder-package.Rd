@@ -47,7 +47,7 @@
 Michael Merz, Mario V. Wüthrich. Casualty Actuarial Society E-Forum, Fall 2008.}
 
 \cite{Claims Run-Off Uncertainty: The Full Picture. Michael Merz, 
-Mario V. Wüthrich. Swiss Finance Institute Research Paper No. 14-69. \url{https://www.ssrn.com/abstract=2524352}. 2014}
+Mario V. Wüthrich. Swiss Finance Institute Research Paper No. 14-69. 2014}
 
 \cite{Markus Gesmann. Claims Reserving and IBNR. 
   \emph{Computational Actuarial Science with R}. Chapman and Hall/CRC. 2014}
