@@ -6,12 +6,11 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>ChainLadder: Claims reserving with R • ChainLadder</title>
-<!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
-<link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
-<link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png">
-<link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png">
-<link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png">
-<link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png">
+<!-- favicons --><link rel="icon" type="image/png" sizes="96x96" href="../favicon-96x96.png">
+<link rel="icon" type="”image/svg+xml”" href="../favicon.svg">
+<link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
+<link rel="icon" sizes="any" href="../favicon.ico">
+<link rel="manifest" href="../site.webmanifest">
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
 <script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
@@ -61,9 +60,9 @@
 Carrato, Fabio Concina, Markus Gesmann, Dan Murphy, Mario Wüthrich and
 Wayne Zhang</h4>
             
-            <h4 data-toc-skip class="date">2025-02-06</h4>
+            <h4 data-toc-skip class="date">2026-02-18</h4>
       
-      <small class="dont-index">Source: <a href="https://github.com/mages/ChainLadder/blob/0.2.20/vignettes/ChainLadder.Rmd" class="external-link"><code>vignettes/ChainLadder.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/mages/ChainLadder/blob/master/vignettes/ChainLadder.Rmd" class="external-link"><code>vignettes/ChainLadder.Rmd</code></a></small>
       <div class="d-none name"><code>ChainLadder.Rmd</code></div>
     </div>
 
@@ -263,7 +262,7 @@ of the data:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">RAA</span><span class="op">/</span><span class="fl">1000</span>,  main <span class="op">=</span> <span class="st">"Claims development by origin year"</span><span class="op">)</span></span></code></pre></div>
 <div class="figure" style="text-align: center">
-<img src="ChainLadder_files/figure-html/RAAplot-1.png" alt="Claims development chart of the RAA triangle, with one line per origin period." width="60%"><p class="caption">
+<img src="ChainLadder_files/figure-html/RAAplot-1.png" class="r-plt" alt="Claims development chart of the RAA triangle, with one line per origin period." width="60%"><p class="caption">
 Claims development chart of the RAA triangle, with one line per origin
 period.
 </p>
@@ -273,7 +272,7 @@ individual plots for each origin period.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">RAA</span><span class="op">/</span><span class="fl">1000</span>, lattice<span class="op">=</span><span class="cn">TRUE</span>, main <span class="op">=</span> <span class="st">"Claims development by origin year"</span><span class="op">)</span></span></code></pre></div>
 <div class="figure" style="text-align: center">
-<img src="ChainLadder_files/figure-html/RAAplot2-1.png" alt="Claims development chart of the RAA triangle, with individual panels for each origin period" width="60%"><p class="caption">
+<img src="ChainLadder_files/figure-html/RAAplot2-1.png" class="r-plt" alt="Claims development chart of the RAA triangle, with individual panels for each origin period" width="60%"><p class="caption">
 Claims development chart of the RAA triangle, with individual panels for
 each origin period
 </p>
@@ -319,7 +318,7 @@ describing the development period or age.</p>
 <p>Ensure the triangle has no formatting, such a commas to separate
 thousands, as those cells will be saved as characters.</p>
 <div class="figure" style="text-align: center">
-<img src="SpreadsheetTriangle.png" alt="Screen shot of a triangle in a spreadsheet software." width="60%"><p class="caption">
+<img src="SpreadsheetTriangle.png" class="r-plt" alt="Screen shot of a triangle in a spreadsheet software." width="60%"><p class="caption">
 Screen shot of a triangle in a spreadsheet software.
 </p>
 </div>
@@ -435,7 +434,7 @@ transform the triangle into a cumulative format.</p>
 results back into a data base. The following figure gives you an idea of
 a potential data flow between R and data bases.</p>
 <div class="figure" style="text-align: center">
-<img src="RandDatabases.png" alt="Flow chart of data between R and data bases" width="60%"><p class="caption">
+<img src="RandDatabases.png" class="r-plt" alt="Flow chart of data between R and data bases" width="60%"><p class="caption">
 Flow chart of data between R and data bases
 </p>
 </div>
@@ -521,7 +520,7 @@ ratios, e.g. assuming a linear model on a log scale.</p>
 <span>     main<span class="op">=</span><span class="st">"Log-linear extrapolation of age-to-age factors"</span><span class="op">)</span></span>
 <span><span class="va">tail.model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log</a></span><span class="op">(</span><span class="va">f</span><span class="op">-</span><span class="fl">1</span><span class="op">)</span> <span class="op">~</span> <span class="va">dev.period</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/abline.html" class="external-link">abline</a></span><span class="op">(</span><span class="va">tail.model</span><span class="op">)</span></span></code></pre></div>
-<p><img src="ChainLadder_files/figure-html/unnamed-chunk-15-1.png" width="60%" style="display: block; margin: auto;"></p>
+<p><img src="ChainLadder_files/figure-html/unnamed-chunk-15-1.png" class="r-plt" alt="" width="60%" style="display: block; margin: auto;"></p>
 <div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">co</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/coef.html" class="external-link">coef</a></span><span class="op">(</span><span class="va">tail.model</span><span class="op">)</span></span>
 <span><span class="co">## extrapolate another 100 dev. period</span></span>
@@ -535,7 +534,7 @@ development patterns.</p>
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="fl">100</span><span class="op">*</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rev.html" class="external-link">rev</a></span><span class="op">(</span><span class="fl">1</span><span class="op">/</span><span class="fu"><a href="https://rdrr.io/r/base/cumsum.html" class="external-link">cumprod</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rev.html" class="external-link">rev</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">f</span>, <span class="va">tail</span><span class="op">[</span><span class="va">tail</span><span class="op">&gt;</span><span class="fl">1.0001</span><span class="op">]</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>, t<span class="op">=</span><span class="st">"b"</span>,</span>
 <span>     main<span class="op">=</span><span class="st">"Expected claims development pattern"</span>,</span>
 <span>     xlab<span class="op">=</span><span class="st">"Dev. period"</span>, ylab<span class="op">=</span><span class="st">"Development % of ultimate loss"</span><span class="op">)</span></span></code></pre></div>
-<p><img src="ChainLadder_files/figure-html/unnamed-chunk-16-1.png" width="60%" style="display: block; margin: auto;"></p>
+<p><img src="ChainLadder_files/figure-html/unnamed-chunk-16-1.png" class="r-plt" alt="" width="60%" style="display: block; margin: auto;"></p>
 <p>The link ratios are then applied to the latest known cumulative
 claims amount to forecast the next development period. The
 <em>squaring</em> of the RAA triangle is calculated below, where an
@@ -753,7 +752,7 @@ you should see no trends in either of them.</p>
 <div class="sourceCode" id="cb57"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">mack</span><span class="op">)</span></span></code></pre></div>
 <div class="figure" style="text-align: center">
-<img src="ChainLadder_files/figure-html/MackPlot1-1.png" alt="Some residual show clear trends, indicating that the Mack assumptions are not well met" width="60%"><p class="caption">
+<img src="ChainLadder_files/figure-html/MackPlot1-1.png" class="r-plt" alt="Some residual show clear trends, indicating that the Mack assumptions are not well met" width="60%"><p class="caption">
 Some residual show clear trends, indicating that the Mack assumptions
 are not well met
 </p>
@@ -763,7 +762,7 @@ standard errors by origin period by setting the argument
 <code>lattice=TRUE</code>.</p>
 <div class="sourceCode" id="cb58"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">mack</span>, lattice<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
-<p><img src="ChainLadder_files/figure-html/MackPlot2-1.png" width="60%" style="display: block; margin: auto;"></p>
+<p><img src="ChainLadder_files/figure-html/MackPlot2-1.png" class="r-plt" alt="" width="60%" style="display: block; margin: auto;"></p>
 <div class="section level5">
 <h5 id="using-a-subset-of-the-triangle">Using a subset of the triangle<a class="anchor" aria-label="anchor" href="#using-a-subset-of-the-triangle"></a>
 </h5>
@@ -845,7 +844,7 @@ origin    1    2    3    4    5    6    7
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span>mfrow<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">2</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">MCLpaid</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">MCLincurred</span><span class="op">)</span></span></code></pre></div>
-<p><img src="ChainLadder_files/figure-html/unnamed-chunk-25-1.png" width="60%" style="display: block; margin: auto;"></p>
+<p><img src="ChainLadder_files/figure-html/unnamed-chunk-25-1.png" class="r-plt" alt="" width="60%" style="display: block; margin: auto;"></p>
 <div class="sourceCode" id="cb68"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span>mfrow<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">1</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <div class="sourceCode" id="cb69"><pre class="downlit sourceCode r">
@@ -881,7 +880,7 @@ Ultimate: 32,371   32,688      0.99</code></pre>
 output above.</p>
 <div class="sourceCode" id="cb71"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">MCL</span><span class="op">)</span></span></code></pre></div>
-<p><img src="ChainLadder_files/figure-html/unnamed-chunk-27-1.png" width="60%" style="display: block; margin: auto;"></p>
+<p><img src="ChainLadder_files/figure-html/unnamed-chunk-27-1.png" class="r-plt" alt="" width="60%" style="display: block; margin: auto;"></p>
 </div>
 <div class="section level4">
 <h4 id="bootstrap-chain-ladder">Bootstrap chain-ladder<a class="anchor" aria-label="anchor" href="#bootstrap-chain-ladder"></a>
@@ -929,7 +928,7 @@ Total IBNR 95%:  87,033</code></pre>
 output above.</p>
 <div class="sourceCode" id="cb74"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">B</span><span class="op">)</span></span></code></pre></div>
-<p><img src="ChainLadder_files/figure-html/unnamed-chunk-29-1.png" width="60%" style="display: block; margin: auto;"></p>
+<p><img src="ChainLadder_files/figure-html/unnamed-chunk-29-1.png" class="r-plt" alt="" width="60%" style="display: block; margin: auto;"></p>
 <p>Quantiles of the bootstrap IBNR can be calculated via the
 <code>quantile</code> function:</p>
 <div class="sourceCode" id="cb75"><pre class="downlit sourceCode r">
@@ -968,7 +967,7 @@ distribution, so let’s fit it:</p>
 <div class="sourceCode" id="cb79"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/curve.html" class="external-link">curve</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Lognormal.html" class="external-link">plnorm</a></span><span class="op">(</span><span class="va">x</span>,<span class="va">fit</span><span class="op">$</span><span class="va">estimate</span><span class="op">[</span><span class="st">"meanlog"</span><span class="op">]</span>, <span class="va">fit</span><span class="op">$</span><span class="va">estimate</span><span class="op">[</span><span class="st">"sdlog"</span><span class="op">]</span><span class="op">)</span>,</span>
 <span>      col<span class="op">=</span><span class="st">"red"</span>, add<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
-<p><img src="ChainLadder_files/figure-html/unnamed-chunk-31-1.png" width="60%" style="display: block; margin: auto;"></p>
+<p><img src="ChainLadder_files/figure-html/unnamed-chunk-31-1.png" class="r-plt" alt="" width="60%" style="display: block; margin: auto;"></p>
 </div>
 <div class="section level4">
 <h4 id="multivariate-chain-ladder">Multivariate chain-ladder<a class="anchor" aria-label="anchor" href="#multivariate-chain-ladder"></a>
@@ -1222,7 +1221,7 @@ first several accident years in that triangle.</p>
 <p>The package also offers the <code>plot</code> method that produces
 various summary and diagnostic figures:</p>
 <div class="figure" style="text-align: center">
-<img src="ChainLadder_files/figure-html/multi-1.png" alt="Summary and diagnostic plots from a `MultiChainLadder` object" width="60%"><p class="caption">
+<img src="ChainLadder_files/figure-html/multi-1.png" class="r-plt" alt="Summary and diagnostic plots from a `MultiChainLadder` object" width="60%"><p class="caption">
 Summary and diagnostic plots from a <code>MultiChainLadder</code> object
 </p>
 </div>
@@ -1518,7 +1517,7 @@ log-logistic:</p>
 reasonableness of the model relative to the actual data.</p>
 <div class="sourceCode" id="cb121"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="fu"><a href="../reference/ClarkLDF.html">ClarkLDF</a></span><span class="op">(</span><span class="va">RAA</span>, G<span class="op">=</span><span class="st">"weibull"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<p><img src="ChainLadder_files/figure-html/LDFweibull-1.png" width="60%" style="display: block; margin: auto;"></p>
+<p><img src="ChainLadder_files/figure-html/LDFweibull-1.png" class="r-plt" alt="" width="60%" style="display: block; margin: auto;"></p>
 <p>Although there is some evidence of heteroscedasticity with increasing
 ages and fitted values, the residuals otherwise appear randomly
 scattered around a horizontal line through the origin. The q-q plot
@@ -1570,7 +1569,7 @@ Age to those from the LDF method, a better spread By Fitted Value, and a
 slightly better q-q plot, particularly in the upper tail.</p>
 <div class="sourceCode" id="cb124"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="fu"><a href="../reference/ClarkCapeCod.html">ClarkCapeCod</a></span><span class="op">(</span><span class="va">RAA</span>, Premium <span class="op">=</span> <span class="fl">40000</span>, G <span class="op">=</span> <span class="st">"weibull"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<p><img src="ChainLadder_files/figure-html/CapeCod-1.png" width="60%" style="display: block; margin: auto;"></p>
+<p><img src="ChainLadder_files/figure-html/CapeCod-1.png" class="r-plt" alt="" width="60%" style="display: block; margin: auto;"></p>
 </div>
 </div>
 <div class="section level3">
@@ -1745,7 +1744,7 @@ year can be visualized easily:</p>
 <span>         <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>legend.position <span class="op">=</span> <span class="st">"none"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">gg</span><span class="op">)</span></span></code></pre></div>
 <div class="figure" style="text-align: center">
-<img src="glmReservePlot.png" alt="The predictive distribution of loss reserves for each year based on bootstrapping" width="60%"><p class="caption">
+<img src="glmReservePlot.png" class="r-plt" alt="The predictive distribution of loss reserves for each year based on bootstrapping" width="60%"><p class="caption">
 The predictive distribution of loss reserves for each year based on
 bootstrapping
 </p>
@@ -1838,53 +1837,53 @@ the USAA paid and incurred triangles:</p>
 <span><span class="va">PIC</span></span></code></pre></div>
 <pre><code>$Ult.Loss.Origin
          [,1]
- [1,]  983113
- [2,] 1078697
- [3,] 1145761
- [4,] 1245171
- [5,] 1371964
- [6,] 1433857
- [7,] 1415964
- [8,] 1410065
- [9,] 1320415
+ [1,]  983367
+ [2,] 1078418
+ [3,] 1142423
+ [4,] 1241974
+ [5,] 1367662
+ [6,] 1419425
+ [7,] 1406169
+ [8,] 1394320
+ [9,] 1324250
 
 $Ult.Loss
-[1] 11405008
+[1] 11358009
 
 $Res.Origin
-          [,1]
- [1,]    965.3
- [2,]   3159.6
- [3,]   7386.4
- [4,]  18521.4
- [5,]  47232.4
- [6,] 113727.4
- [7,] 230663.7
- [8,] 443903.3
- [9,] 778393.5
+    [,1]
+1   1219
+2   2881
+3   4048
+4  15324
+5  42930
+6  99295
+7 220869
+8 428158
+9 782229
 
 $Res.Tot
-[1] 1643953
+[1] 1596954
 
 $s.e.
-[1] 113940</code></pre>
+[1] 110977</code></pre>
 <p>We can access the reserves by origin year via</p>
 <div class="sourceCode" id="cb141"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">PIC</span><span class="op">$</span><span class="va">Res.Origin</span></span></code></pre></div>
-<pre><code>          [,1]
- [1,]    965.3
- [2,]   3159.6
- [3,]   7386.4
- [4,]  18521.4
- [5,]  47232.4
- [6,] 113727.4
- [7,] 230663.7
- [8,] 443903.3
- [9,] 778393.5</code></pre>
+<pre><code>    [,1]
+1   1219
+2   2881
+3   4048
+4  15324
+5  42930
+6  99295
+7 220869
+8 428158
+9 782229</code></pre>
 <p>and the total reserve via</p>
 <div class="sourceCode" id="cb143"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">PIC</span><span class="op">$</span><span class="va">Res.Tot</span></span></code></pre></div>
-<pre><code>[1] 1643953</code></pre>
+<pre><code>[1] 1596954</code></pre>
 <p><code>s.e.</code> is the square root of mean square error of
 prediction for the total ultimate loss.</p>
 <p>It’s important to notice that the model is implemented in the special
@@ -2121,7 +2120,7 @@ argument.</p>
 <span><span class="co"># Please check your data and the call to tweedie.profile().</span></span>
 <span><span class="co"># Error in if ((xi.max == xi.vec[1]) | (xi.max == xi.vec[length(xi.vec)])) { :</span></span>
 <span><span class="co"># missing value where TRUE/FALSE needed</span></span></code></pre></div>
-<p><img src="tweedieReserve.png" width="60%" style="display: block; margin: auto;"></p>
+<p><img src="tweedieReserve.png" class="r-plt" alt="" width="60%" style="display: block; margin: auto;"></p>
 <p>This example shows that the MLE of p seems to be between 0 and 1,
 which is not possible as Tweedie models aren’t defined for 0 &lt; p &lt;
 1, thus the Error message. But, despite this, we can conclude that
@@ -2425,7 +2424,7 @@ Nonlinear Model for Forecasting Insurance Loss Payments.”</span>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
 </div>
 
     </footer>

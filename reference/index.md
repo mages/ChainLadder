@@ -1,0 +1,215 @@
+# Package index
+
+## All functions
+
+- [`ABC`](http://mages.github.io/ChainLadder/reference/ABC.md) : Run off
+  triangle of accumulated claims data
+- [`AutoBI`](http://mages.github.io/ChainLadder/reference/AutoBI.md) :
+  Run off triangles of accumulated claim data
+- [`BS.paid.adj()`](http://mages.github.io/ChainLadder/reference/BS.paid.adj.md)
+  : Berquist-Sherman Paid Claim Development Adjustment
+- [`BootChainLadder()`](http://mages.github.io/ChainLadder/reference/BootChainLadder.md)
+  : Bootstrap-Chain-Ladder Model
+- [`CDR()`](http://mages.github.io/ChainLadder/reference/CDR.md) : One
+  year claims development result
+- [`CLFMdelta()`](http://mages.github.io/ChainLadder/reference/CLFMdelta.rd)
+  : Find "selection consistent" values of delta
+- [`ChainLadder-package`](http://mages.github.io/ChainLadder/reference/ChainLadder-package.md)
+  [`ChainLadder`](http://mages.github.io/ChainLadder/reference/ChainLadder-package.md)
+  : Methods and Models for Claims Reserving
+- [`ClarkCapeCod()`](http://mages.github.io/ChainLadder/reference/ClarkCapeCod.rd)
+  : Clark Cape Cod method
+- [`ClarkLDF()`](http://mages.github.io/ChainLadder/reference/ClarkLDF.md)
+  : Clark LDF method
+- [`GenIns`](http://mages.github.io/ChainLadder/reference/GenIns.md) :
+  Run off triangle of claims data.
+- [`Join2Fits()`](http://mages.github.io/ChainLadder/reference/Join2Fits.md)
+  : Join Two Fitted MultiChainLadder Models
+- [`JoinFitMse()`](http://mages.github.io/ChainLadder/reference/JoinFitMse.md)
+  : Join Model Fit and Mse Estimation
+- [`LRfunction()`](http://mages.github.io/ChainLadder/reference/LRfunction.rd)
+  : Calculate the Link Ratio Function
+- [`M3IR5`](http://mages.github.io/ChainLadder/reference/M3IR5.md) : Run
+  off triangle of claims data
+- [`MCLpaid`](http://mages.github.io/ChainLadder/reference/MCLpaid.md)
+  [`MCLincurred`](http://mages.github.io/ChainLadder/reference/MCLpaid.md)
+  : Run off triangles of accumulated paid and incurred claims data.
+- [`MW2008`](http://mages.github.io/ChainLadder/reference/MW2008.md) :
+  Run-off claims triangle
+- [`MW2014`](http://mages.github.io/ChainLadder/reference/MW2014.md) :
+  Run-off claims triangle
+- [`MackChainLadder()`](http://mages.github.io/ChainLadder/reference/MackChainLadder.md)
+  : Mack Chain-Ladder Model
+- [`MedMal`](http://mages.github.io/ChainLadder/reference/MedMal.md) :
+  Run off triangles of accumulated claim data
+- [`Mortgage`](http://mages.github.io/ChainLadder/reference/Mortgage.md)
+  : Run off triangle of accumulated claims data
+- [`Mse()`](http://mages.github.io/ChainLadder/reference/Mse-methods.md)
+  : Methods for Generic Function Mse
+- [`MultiChainLadder-class`](http://mages.github.io/ChainLadder/reference/MultiChainLadder-class.md)
+  [`$,MultiChainLadder-method`](http://mages.github.io/ChainLadder/reference/MultiChainLadder-class.md)
+  [`[[,MultiChainLadder,numeric,missing-method`](http://mages.github.io/ChainLadder/reference/MultiChainLadder-class.md)
+  [`[[,MultiChainLadder,character,missing-method`](http://mages.github.io/ChainLadder/reference/MultiChainLadder-class.md)
+  [`coef,MultiChainLadder-method`](http://mages.github.io/ChainLadder/reference/MultiChainLadder-class.md)
+  [`fitted,MultiChainLadder-method`](http://mages.github.io/ChainLadder/reference/MultiChainLadder-class.md)
+  [`names,MultiChainLadder-method`](http://mages.github.io/ChainLadder/reference/MultiChainLadder-class.md)
+  [`residuals,MultiChainLadder-method`](http://mages.github.io/ChainLadder/reference/MultiChainLadder-class.md)
+  [`resid,MultiChainLadder-method`](http://mages.github.io/ChainLadder/reference/MultiChainLadder-class.md)
+  [`rstandard,MultiChainLadder-method`](http://mages.github.io/ChainLadder/reference/MultiChainLadder-class.md)
+  [`show,MultiChainLadder-method`](http://mages.github.io/ChainLadder/reference/MultiChainLadder-class.md)
+  [`vcov,MultiChainLadder-method`](http://mages.github.io/ChainLadder/reference/MultiChainLadder-class.md)
+  : Class "MultiChainLadder" of Multivariate Chain-Ladder Results
+- [`MultiChainLadder()`](http://mages.github.io/ChainLadder/reference/MultiChainLadder.md)
+  [`MultiChainLadder2()`](http://mages.github.io/ChainLadder/reference/MultiChainLadder.md)
+  : Multivariate Chain-Ladder Models
+- [`MultiChainLadderFit-class`](http://mages.github.io/ChainLadder/reference/MultiChainLadderFit-class.md)
+  [`MCLFit-class`](http://mages.github.io/ChainLadder/reference/MultiChainLadderFit-class.md)
+  [`GMCLFit-class`](http://mages.github.io/ChainLadder/reference/MultiChainLadderFit-class.md)
+  [`predict,MCLFit-method`](http://mages.github.io/ChainLadder/reference/MultiChainLadderFit-class.md)
+  [`predict,GMCLFit-method`](http://mages.github.io/ChainLadder/reference/MultiChainLadderFit-class.md)
+  : Class "MultiChainLadderFit", "MCLFit" and "GMCLFit"
+- [`MultiChainLadderMse-class`](http://mages.github.io/ChainLadder/reference/MultiChainLadderMse-class.md)
+  : Class "MultiChainLadderMse"
+- [`MultiChainLadderSummary-class`](http://mages.github.io/ChainLadder/reference/MultiChainLadderSummary-class.md)
+  [`$,MultiChainLadderSummary-method`](http://mages.github.io/ChainLadder/reference/MultiChainLadderSummary-class.md)
+  [`[[,MultiChainLadderSummary,numeric,missing-method`](http://mages.github.io/ChainLadder/reference/MultiChainLadderSummary-class.md)
+  [`[[,MultiChainLadderSummary,character,missing-method`](http://mages.github.io/ChainLadder/reference/MultiChainLadderSummary-class.md)
+  [`names,MultiChainLadderSummary-method`](http://mages.github.io/ChainLadder/reference/MultiChainLadderSummary-class.md)
+  [`show,MultiChainLadderSummary-method`](http://mages.github.io/ChainLadder/reference/MultiChainLadderSummary-class.md)
+  : Class "MultiChainLadderSummary"
+- [`MunichChainLadder()`](http://mages.github.io/ChainLadder/reference/MunichChainLadder.md)
+  : Munich-chain-ladder Model
+- [`NullNum-class`](http://mages.github.io/ChainLadder/reference/NullNum-class.md)
+  [`NullChar-class`](http://mages.github.io/ChainLadder/reference/NullNum-class.md)
+  [`NullList-class`](http://mages.github.io/ChainLadder/reference/NullNum-class.md)
+  : Class "NullNum", "NullChar" and "NullList"
+- [`PaidIncurredChain()`](http://mages.github.io/ChainLadder/reference/PaidIncurredChain.md)
+  : PaidIncurredChain
+- [`QuantileIFRS17()`](http://mages.github.io/ChainLadder/reference/QuantileIFRS17.md)
+  : Quantile estimation for the IFRS 17 Risk Adjustment
+- [`RAA`](http://mages.github.io/ChainLadder/reference/RAA.md) : Run off
+  triangle of accumulated claims data
+- [`Table64()`](http://mages.github.io/ChainLadder/reference/Table65.rd)
+  [`Table65()`](http://mages.github.io/ChainLadder/reference/Table65.rd)
+  [`Table68()`](http://mages.github.io/ChainLadder/reference/Table65.rd)
+  : Functions to Reproduce Clark's Tables
+- [`triangle()`](http://mages.github.io/ChainLadder/reference/Triangles.md)
+  [`as.data.frame(`*`<triangle>`*`)`](http://mages.github.io/ChainLadder/reference/Triangles.md)
+  [`as.triangle()`](http://mages.github.io/ChainLadder/reference/Triangles.md)
+  [`plot(`*`<triangle>`*`)`](http://mages.github.io/ChainLadder/reference/Triangles.md)
+  : Generic functions for triangles
+- [`UKMotor`](http://mages.github.io/ChainLadder/reference/UKMotor.md) :
+  UK motor claims triangle
+- [`USAApaid`](http://mages.github.io/ChainLadder/reference/USAA.md) :
+  Example paid and incurred triangle data from CAS web site.
+- [`as.LongTriangle()`](http://mages.github.io/ChainLadder/reference/as.LongTriangle.md)
+  : Convert Triangle from wide to long
+- [`ata()`](http://mages.github.io/ChainLadder/reference/ata.rd) :
+  Calculate Age-to-Age Factors
+- [`auto`](http://mages.github.io/ChainLadder/reference/auto.md) : Run
+  off triangle of accumulated claim data
+- [`chainladder()`](http://mages.github.io/ChainLadder/reference/chainladder.md)
+  : Estimate age-to-age factors
+- [`checkTriangleInflation()`](http://mages.github.io/ChainLadder/reference/checkTriangleInflation.md)
+  : Check Y-o-Y Triangle Inflation Rates
+- [`coef(`*`<ChainLadder>`*`)`](http://mages.github.io/ChainLadder/reference/coef.ChainLadder.rd)
+  : Extract residuals of a ChainLadder model
+- [`cyEffTest()`](http://mages.github.io/ChainLadder/reference/cyEffTest.md)
+  : Testing for Calendar Year Effect
+- [`dfCorTest()`](http://mages.github.io/ChainLadder/reference/dfCorTest.md)
+  : Testing for Correlations between Subsequent Development Factors
+- [`getLatestCumulative()`](http://mages.github.io/ChainLadder/reference/getLatestCumulative.md)
+  : Triangle information for most recent calendar period.
+- [`glmReserve()`](http://mages.github.io/ChainLadder/reference/glmReserve.md)
+  : GLM-based Reserving Model
+- [`inflateTriangle()`](http://mages.github.io/ChainLadder/reference/inflateTriangle.md)
+  : Inflate a Triangle based on an Inflation Rate
+- [`auto`](http://mages.github.io/ChainLadder/reference/liab.md) : Run
+  off triangle of accumulated claim data
+- [`plot(`*`<MultiChainLadder>`*`,`*`<missing>`*`)`](http://mages.github.io/ChainLadder/reference/plot-methods.md)
+  : Methods for Function plot
+- [`plot(`*`<BootChainLadder>`*`)`](http://mages.github.io/ChainLadder/reference/plot.BootChainLadder.md)
+  : Plot method for a BootChainLadder object
+- [`plot(`*`<MackChainLadder>`*`)`](http://mages.github.io/ChainLadder/reference/plot.MackChainLadder.md)
+  : Plot method for a MackChainLadder object
+- [`plot(`*`<MunichChainLadder>`*`)`](http://mages.github.io/ChainLadder/reference/plot.MunichChainLadder.md)
+  : Plot method for a MunichChainLadder object
+- [`plot(`*`<checkTriangleInflation>`*`)`](http://mages.github.io/ChainLadder/reference/plot.checkTriangleInflation.md)
+  : Plot method for a checkTriangleInflation object
+- [`plot(`*`<clark>`*`)`](http://mages.github.io/ChainLadder/reference/plot.clark.rd)
+  : Plot Clark method residuals
+- [`plot(`*`<cyEffTest>`*`)`](http://mages.github.io/ChainLadder/reference/plot.cyEffTest.md)
+  : Plot method for a cyEffTest object
+- [`plot(`*`<dfCorTest>`*`)`](http://mages.github.io/ChainLadder/reference/plot.dfCorTest.md)
+  : Plot method for a dfCorTest object
+- [`predict(`*`<TriangleModel>`*`)`](http://mages.github.io/ChainLadder/reference/predict.TriangleModel.md)
+  [`predict(`*`<ChainLadder>`*`)`](http://mages.github.io/ChainLadder/reference/predict.TriangleModel.md)
+  : Prediction of a claims triangle
+- [`print(`*`<ata>`*`)`](http://mages.github.io/ChainLadder/reference/print.ata.rd)
+  : Print Age-to-Age factors
+- [`print(`*`<checkTriangleInflation>`*`)`](http://mages.github.io/ChainLadder/reference/print.checkTriangleInflation.md)
+  : Print function for a checkTriangleInflation object
+- [`print(`*`<ClarkLDF>`*`)`](http://mages.github.io/ChainLadder/reference/print.clark.rd)
+  [`print(`*`<ClarkCapeCod>`*`)`](http://mages.github.io/ChainLadder/reference/print.clark.rd)
+  : Print results of Clark methods
+- [`print(`*`<cyEffTest>`*`)`](http://mages.github.io/ChainLadder/reference/print.cyEffTest.md)
+  : Print function for a cyEffTest object
+- [`print(`*`<dfCorTest>`*`)`](http://mages.github.io/ChainLadder/reference/print.dfCorTest.md)
+  : Print function for a dfCorTest object
+- [`qpaid`](http://mages.github.io/ChainLadder/reference/qpaid.rd)
+  [`qincurred`](http://mages.github.io/ChainLadder/reference/qpaid.rd) :
+  Quarterly run off triangle of accumulated claims data
+- [`quantile(`*`<MackChainLadder>`*`)`](http://mages.github.io/ChainLadder/reference/quantile.MackChainLadder.md)
+  : quantile function for Mack-chain-ladder
+- [`residCov()`](http://mages.github.io/ChainLadder/reference/residCov-methods.md)
+  [`residCor()`](http://mages.github.io/ChainLadder/reference/residCov-methods.md)
+  : Generic function for residCov and residCor
+- [`residuals(`*`<MackChainLadder>`*`)`](http://mages.github.io/ChainLadder/reference/residuals.MackChainLadder.md)
+  : Extract residuals of a MackChainLadder model
+- [`summary(`*`<MultiChainLadder>`*`)`](http://mages.github.io/ChainLadder/reference/summary-methods.md)
+  : Methods for Function summary
+- [`summary(`*`<BootChainLadder>`*`)`](http://mages.github.io/ChainLadder/reference/summary.BootChainLadder.md)
+  [`print(`*`<BootChainLadder>`*`)`](http://mages.github.io/ChainLadder/reference/summary.BootChainLadder.md)
+  [`quantile(`*`<BootChainLadder>`*`)`](http://mages.github.io/ChainLadder/reference/summary.BootChainLadder.md)
+  [`mean(`*`<BootChainLadder>`*`)`](http://mages.github.io/ChainLadder/reference/summary.BootChainLadder.md)
+  [`residuals(`*`<BootChainLadder>`*`)`](http://mages.github.io/ChainLadder/reference/summary.BootChainLadder.md)
+  : Methods for BootChainLadder objects
+- [`summary(`*`<MackChainLadder>`*`)`](http://mages.github.io/ChainLadder/reference/summary.MackChainLadder.md)
+  [`print(`*`<MackChainLadder>`*`)`](http://mages.github.io/ChainLadder/reference/summary.MackChainLadder.md)
+  : Summary and print function for Mack-chain-ladder
+- [`summary(`*`<MunichChainLadder>`*`)`](http://mages.github.io/ChainLadder/reference/summary.MunichChainLadder.md)
+  [`print(`*`<MunichChainLadder>`*`)`](http://mages.github.io/ChainLadder/reference/summary.MunichChainLadder.md)
+  : Summary and print function for Munich-chain-ladder
+- [`summary(`*`<ata>`*`)`](http://mages.github.io/ChainLadder/reference/summary.ata.rd)
+  : Summary method for object of class 'ata'
+- [`summary(`*`<checkTriangleInflation>`*`)`](http://mages.github.io/ChainLadder/reference/summary.checkTriangleInflation.md)
+  : Summary function for a checkTriangleInflation object
+- [`summary(`*`<ClarkLDF>`*`)`](http://mages.github.io/ChainLadder/reference/summary.clark.rd)
+  [`summary(`*`<ClarkCapeCod>`*`)`](http://mages.github.io/ChainLadder/reference/summary.clark.rd)
+  : Summary methods for Clark objects
+- [`summary(`*`<cyEffTest>`*`)`](http://mages.github.io/ChainLadder/reference/summary.cyEffTest.md)
+  : Summary function for a cyEffTest object
+- [`summary(`*`<dfCorTest>`*`)`](http://mages.github.io/ChainLadder/reference/summary.dfCorTest.md)
+  : Summary function for a dfCorTest object
+- [`triangles-class`](http://mages.github.io/ChainLadder/reference/triangles-class.md)
+  [`[,triangles,missing,numeric,logical-method`](http://mages.github.io/ChainLadder/reference/triangles-class.md)
+  [`[,triangles,missing,numeric,missing-method`](http://mages.github.io/ChainLadder/reference/triangles-class.md)
+  [`[,triangles,numeric,missing,logical-method`](http://mages.github.io/ChainLadder/reference/triangles-class.md)
+  [`[,triangles,numeric,missing,missing-method`](http://mages.github.io/ChainLadder/reference/triangles-class.md)
+  [`[,triangles,numeric,numeric,missing-method`](http://mages.github.io/ChainLadder/reference/triangles-class.md)
+  [`[<-,triangles,numeric,numeric,list-method`](http://mages.github.io/ChainLadder/reference/triangles-class.md)
+  [`coerce,list,triangles-method`](http://mages.github.io/ChainLadder/reference/triangles-class.md)
+  [`dim,triangles-method`](http://mages.github.io/ChainLadder/reference/triangles-class.md)
+  [`cbind2,triangles,missing-method`](http://mages.github.io/ChainLadder/reference/triangles-class.md)
+  [`rbind2,triangles,missing-method`](http://mages.github.io/ChainLadder/reference/triangles-class.md)
+  : S4 Class "triangles"
+- [`print(`*`<tweedieReserve>`*`)`](http://mages.github.io/ChainLadder/reference/tweedieMethods.md)
+  [`summary(`*`<tweedieReserve>`*`)`](http://mages.github.io/ChainLadder/reference/tweedieMethods.md)
+  : Reserve Risk Capital Report
+- [`tweedieReserve()`](http://mages.github.io/ChainLadder/reference/tweedieReserve.md)
+  : Tweedie Stochastic Reserving Model
+- [`incr2cum()`](http://mages.github.io/ChainLadder/reference/utilityfunctions.md)
+  [`cum2incr()`](http://mages.github.io/ChainLadder/reference/utilityfunctions.md)
+  : Cumulative and incremental triangles
+- [`vcov(`*`<clark>`*`)`](http://mages.github.io/ChainLadder/reference/vcov.clark.rd)
+  : Covariance Matrix of Parameter Estimates – Clark's methods
