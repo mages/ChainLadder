@@ -219,7 +219,7 @@ MultiChainLadder <- function(Triangles,
     
     # if the last period has enough data to fit regression, set extrap=FALSE 
     if ((sum(!is.na(Triangles[[1]][,n])) > 1) && extrap) {
-      warning("Trapezoids do not need exptrapolation.\n 			
+      warning("Trapezoids do not need extrapolation.\n 			
 			The value of extrap is changed to FALSE.\n", call.=FALSE)
       
       extrap=FALSE
