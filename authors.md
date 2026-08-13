@@ -35,17 +35,17 @@
 ## Citation
 
 Source:
-[`DESCRIPTION`](https://github.com/mages/ChainLadder/blob/0.2.21/DESCRIPTION)
+[`DESCRIPTION`](https://github.com/mages/ChainLadder/blob/master/DESCRIPTION)
 
 Gesmann M, Murphy D, Zhang Y, Carrato A, Wuthrich M, Concina F, Dal Moro
 E (2026). *ChainLadder: Statistical Methods and Models for Claims
-Reserving in General Insurance*. R package version 0.2.21,
+Reserving in General Insurance*. R package version 0.2.22,
 <https://mages.github.io/ChainLadder/>.
 
     @Manual{,
       title = {ChainLadder: Statistical Methods and Models for Claims Reserving in General Insurance},
       author = {Markus Gesmann and Daniel Murphy and Yanwei (Wayne) Zhang and Alessandro Carrato and Mario Wuthrich and Fabio Concina and Eric {Dal Moro}},
       year = {2026},
-      note = {R package version 0.2.21},
+      note = {R package version 0.2.22},
       url = {https://mages.github.io/ChainLadder/},
     }

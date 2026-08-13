@@ -11,7 +11,7 @@ results as required under Solvency II.
 
       Gesmann M, Murphy D, Zhang Y, Carrato A, Wuthrich M, Concina F, Dal
       Moro E (2026). _ChainLadder: Statistical Methods and Models for
-      Claims Reserving in General Insurance_. R package version 0.2.21,
+      Claims Reserving in General Insurance_. R package version 0.2.22,
       <https://mages.github.io/ChainLadder/>.
 
 ### Introduction
@@ -115,6 +115,7 @@ A set of demos is shipped with the packages and the list of demos is
 available via:
 
 ``` r
+
 demo(package="ChainLadder")
 ```
 
@@ -123,6 +124,7 @@ demo(package="ChainLadder")
 You can install ChainLadder in the usual way from CRAN, e.g.:
 
 ``` r
+
 install.packages('ChainLadder')
 ```
 
@@ -151,6 +153,7 @@ origin period in rows. The package comes with several example triangles.
 The following R command will list them all:
 
 ``` r
+
 library(ChainLadder)
 data(package="ChainLadder")
 ```
@@ -159,6 +162,7 @@ Let’s look at one example triangle more closely. The following triangle
 shows data from the Reinsurance Association of America (RAA):
 
 ``` r
+
 RAA
 ```
 
@@ -179,9 +183,9 @@ This triangle shows the known values of loss from each origin year and
 of annual evaluations thereafter. For example, the known values of loss
 originating from the 1988 exposure period are 1351, 6947, and 13112 as
 of year ends 1988, 1989, and 1990, respectively. The *latest diagonal* –
-i.e., the vector 18834, 16704, $\ldots$ 2063 from the upper right to the
-lower left – shows the most recent evaluation available. The column
-headings – 1, 2,$\ldots$, 10 – hold the *ages* (in years) of the
+i.e., the vector 18834, 16704, $`\dots`$ 2063 from the upper right to
+the lower left – shows the most recent evaluation available. The column
+headings – 1, 2,$`\dots`$, 10 – hold the *ages* (in years) of the
 observations in the column relative to the beginning of the exposure
 period. For example, for the 1988 origin year, the age of the 13112
 value, evaluated as of 1990-12-31, is three years.
@@ -202,6 +206,7 @@ provides default plotting methods to give a graphical overview of the
 data:
 
 ``` r
+
 plot(RAA/1000,  main = "Claims development by origin year")
 ```
 
@@ -215,6 +220,7 @@ Setting the argument `lattice=TRUE` will produce individual plots for
 each origin period.
 
 ``` r
+
 plot(RAA/1000, lattice=TRUE, main = "Claims development by origin year")
 ```
 
@@ -236,6 +242,7 @@ The ChainLadder packages comes with two helper functions, `cum2incr` and
 and vice versa:
 
 ``` r
+
 raa.inc <- cum2incr(RAA)
 ## Show first origin period and its incremental development
 raa.inc[1,]
@@ -245,6 +252,7 @@ raa.inc[1,]
     5012 3257 2638  898 1734 2642 1828  599   54  172 
 
 ``` r
+
 raa.cum <- incr2cum(raa.inc)
 ## Show first origin period and its cumulative development
 raa.cum[1,]
@@ -278,6 +286,7 @@ Screen shot of a triangle in a spreadsheet software.
 Now open R and go through the following commands:
 
 ``` r
+
 myCSVfile <- "path/to/folder/with/triangle.csv"
 ## Use the R command:
 # myCSVfile <- file.choose() to select the file interactively
@@ -297,19 +306,19 @@ Select a data set in the spreadsheet and copy it into the clipboard,
 then go to R and type:
 
 ``` r
+
 tri <- read.table(file="clipboard", sep="\t", na.strings="")
 ```
 
 ###### Reading data from a data base
 
 R makes it easy to access data using SQL statements, e.g. via an ODBC
-connection[¹](#fn1), for more details see (R Development Core Team
-2022a).
+connection[^1], for more details see (R Development Core Team 2022a).
 
-In this section we use data stored in a CSV-file[²](#fn2) to demonstrate
-some typical operations you will want to carry out with data stored in
-data bases. CSV stands for comma separated values, stored in a text
-file. Note many European countries use a comma as decimal point and a
+In this section we use data stored in a CSV-file[^2] to demonstrate some
+typical operations you will want to carry out with data stored in data
+bases. CSV stands for comma separated values, stored in a text file.
+Note many European countries use a comma as decimal point and a
 semicolon as field separator, see also the help file to `read.csv2`. In
 most cases your triangles will be stored in tables and not in a
 classical triangle shape. The ChainLadder package contains a CSV-file
@@ -318,6 +327,7 @@ memory with the `read.csv` command and look at the first couple of rows
 and summarise it:
 
 ``` r
+
 filename <-  file.path(system.file("Database",
                                    package="ChainLadder"),
                        "TestData.csv")
@@ -334,20 +344,22 @@ head(myData)
     6   1982   1 205654 ABC
 
 ``` r
+
 summary(myData)
 ```
 
-         origin          dev            value             lob           
-     Min.   :   1   Min.   : 1.00   Min.   : -17657   Length:701        
-     1st Qu.:   3   1st Qu.: 2.00   1st Qu.:  10324   Class :character  
-     Median :   6   Median : 4.00   Median :  72468   Mode  :character  
-     Mean   : 642   Mean   : 4.61   Mean   : 176632                     
-     3rd Qu.:1979   3rd Qu.: 7.00   3rd Qu.: 197716                     
-     Max.   :1991   Max.   :14.00   Max.   :3258646                     
+         origin          dev            value                lob     
+     Min.   :   1   Min.   : 1.00   Min.   : -17657   Length   :701  
+     1st Qu.:   3   1st Qu.: 2.00   1st Qu.:  10324   N.unique : 10  
+     Median :   6   Median : 4.00   Median :  72468   N.blank  :  0  
+     Mean   : 642   Mean   : 4.61   Mean   : 176632   Min.nchar:  3  
+     3rd Qu.:1979   3rd Qu.: 7.00   3rd Qu.: 197716   Max.nchar: 20  
+     Max.   :1991   Max.   :14.00   Max.   :3258646                  
 
 Let’s focus on one subset of the data. We select the RAA data again:
 
 ``` r
+
 raa <- subset(myData, lob %in% "RAA")
 head(raa)
 ```
@@ -366,6 +378,7 @@ names of the origin and development period and further the column which
 contains the values:
 
 ``` r
+
 raa.tri <- as.triangle(raa,
                        origin="origin",
                        dev="dev",
@@ -393,6 +406,7 @@ the triangle into a cumulative format.
 We can transform a triangle back into a data frame structure:
 
 ``` r
+
 raa.df <- as.data.frame(raa.tri, na.rm=TRUE)
 head(raa.df)
 ```
@@ -422,6 +436,7 @@ missing values in the lower right portion of the triangle) and then
 convert it into a triangle with `as.triangle`:
 
 ``` r
+
 as.triangle(matrix(c(100, 150, 175, 180, 200,
                      110, 168, 192, 205, NA,
                      115, 169, 202, NA,  NA,
@@ -443,6 +458,7 @@ the rows (or columns) of *known* data as vectors, thereby omitting the
 missing values:
 
 ``` r
+
 triangle(c(100, 150, 175, 180, 200),
          c(110, 168, 192, 205),
          c(115, 169, 202),
@@ -470,13 +486,16 @@ same for all origin years.
 Most commonly as a first step, the age-to-age link ratios are calculated
 as the volume weighted average development ratios of a cumulative loss
 development triangle from one development period to the next
-$C_{ik},i,k = 1,\ldots,n$.
+$`C_{ik}, i,k =1, \dots, n`$.
 
-$$\begin{aligned}
-f_{k} & {= \frac{\sum\limits_{i = 1}^{n - k}C_{i,k + 1}}{\sum\limits_{i = 1}^{n - k}C_{i,k}}}
-\end{aligned}$$
+``` math
+\begin{aligned}
+  f_{k} &= \frac{\sum_{i=1}^{n-k} C_{i,k+1}}{\sum_{i=1}^{n-k}C_{i,k}}
+\end{aligned}
+```
 
 ``` r
+
 # Calculate age-to-age factors for RAA triangle
 n <- 10
 f <- sapply(1:(n-1),
@@ -494,6 +513,7 @@ developed. A typical approach is to extrapolate the development ratios,
 e.g. assuming a linear model on a log scale.
 
 ``` r
+
 dev.period <- 1:(n-1)
 plot(log(f-1) ~ dev.period, 
      main="Log-linear extrapolation of age-to-age factors")
@@ -504,6 +524,7 @@ abline(tail.model)
 ![](ChainLadder_files/figure-html/unnamed-chunk-15-1.png)
 
 ``` r
+
 co <- coef(tail.model)
 ## extrapolate another 100 dev. period
 tail <- exp(co[1] + c(n:(n + 100)) * co[2]) + 1
@@ -517,6 +538,7 @@ The age-to-age factors allow us to plot the expected claims development
 patterns.
 
 ``` r
+
 plot(100*(rev(1/cumprod(rev(c(f, tail[tail>1.0001]))))), t="b",
      main="Expected claims development pattern",
      xlab="Dev. period", ylab="Development % of ultimate loss")
@@ -532,6 +554,7 @@ age (10) of the triangle due to the tail factor (1.009) being greater
 than unity.
 
 ``` r
+
 f <- c(f, f.tail)
 fullRAA <- cbind(RAA, Ult = rep(0, 10))
 for(k in 1:n){
@@ -555,6 +578,7 @@ round(fullRAA)
 The total estimated outstanding loss under this method is about 54100:
 
 ``` r
+
 sum(fullRAA[ ,11] - getLatestCumulative(RAA))
 ```
 
@@ -581,6 +605,7 @@ larger book of similar business. The LDF method might be displayed in R
 as follows.
 
 ``` r
+
 linkratios <- c(attr(ata(RAA), "vwtd"), tail = 1.05)
 round(linkratios, 3) # display to only three decimal places
 ```
@@ -589,6 +614,7 @@ round(linkratios, 3) # display to only three decimal places
     2.999 1.624 1.271 1.172 1.113 1.042 1.033 1.017 1.009 1.050 
 
 ``` r
+
 LDF <- rev(cumprod(rev(linkratios)))
 names(LDF) <- colnames(RAA) # so the display matches the triangle
 round(LDF, 3)
@@ -598,6 +624,7 @@ round(LDF, 3)
     9.366 3.123 1.923 1.513 1.292 1.160 1.113 1.078 1.060 1.050 
 
 ``` r
+
 currentEval <- getLatestCumulative(RAA)
 # Reverse the LDFs so the first, least mature factor [1]
 #   is applied to the last origin year (1990)
@@ -631,6 +658,7 @@ age-to-age link ratios can be regarded as the coefficients of a weighted
 linear regression through the origin, see also (Murphy 1994).
 
 ``` r
+
 lmCL <- function(i, Triangle){
   lm(y~x+0, weights=1/Triangle[,i],
      data=data.frame(x=Triangle[,i], y=Triangle[,i+1]))
@@ -647,29 +675,35 @@ Thomas Mack published in 1993 (Mack 1993) a method which estimates the
 standard errors of the chain-ladder forecast without assuming a
 distribution under three conditions.
 
-Following the notation of Mack (Mack 1999) let $C_{ik}$ denote the
+Following the notation of Mack (Mack 1999) let $`C_{ik}`$ denote the
 cumulative loss amounts of origin period (e.g. accident year)
-$i = 1,\ldots,m$, with losses known for development period
-(e.g. development year) $k \leq n + 1 - i$.
+$`i=1,\ldots,m`$, with losses known for development period
+(e.g. development year) $`k \le n+1-i`$.
 
-In order to forecast the amounts $C_{ik}$ for $k > n + 1 - i$ the Mack
+In order to forecast the amounts $`C_{ik}`$ for $`k > n+1-i`$ the Mack
 chain-ladder-model assumes:
 
-$$\begin{aligned}
-{\text{CL1:}\mspace{6mu}} & {E\left\lbrack F_{ik}|C_{i1},C_{i2},\ldots,C_{ik} \right\rbrack = f_{k}{\mspace{6mu}\text{with}\mspace{6mu}}F_{ik} = \frac{C_{i,k + 1}}{C_{ik}}} \\
-{\text{CL2:}\mspace{6mu}} & {Var\left( \frac{C_{i,k + 1}}{C_{ik}}|C_{i1},C_{i2},\ldots,C_{ik} \right) = \frac{\sigma_{k}^{2}}{w_{ik}C_{ik}^{\alpha}}} \\
-{\text{CL3:}\mspace{6mu}} & {\{ C_{i1},\ldots,C_{in}\},\{ C_{j1},\ldots,C_{jn}\},{\mspace{6mu}\text{are independent for origin period}\mspace{6mu}}i \neq j}
-\end{aligned}$$
+``` math
+\begin{aligned}
+  \mbox{CL1: }  & E[ F_{ik}| C_{i1},C_{i2},\ldots,C_{ik} ] = f_k
+  \mbox{ with } F_{ik}=\frac{C_{i,k+1}}{C_{ik}}\\
+    \mbox{CL2: } &  Var( \frac{C_{i,k+1}}{C_{ik}} | C_{i1},C_{i2},
+    \ldots,C_{ik} ) = \frac{\sigma_k^2}{w_{ik} C^\alpha_{ik}}\\
+  \mbox{CL3: } & \{C_{i1},\ldots,C_{in}\}, \{
+    C_{j1},\ldots,C_{jn}\},\mbox{ are independent for origin period } i
+    \neq j
+\end{aligned}
+```
 
-with $w_{ik} \in \lbrack 0;1\rbrack,\alpha \in \{ 0,1,2\}$. If these
-assumptions hold, the Mack chain-ladder-model gives an unbiased
-estimator for IBNR (Incurred But Not Reported) claims.
+with $`w_{ik} \in [0;1], \alpha \in \{0,1,2\}`$. If these assumptions
+hold, the Mack chain-ladder-model gives an unbiased estimator for IBNR
+(Incurred But Not Reported) claims.
 
 The Mack chain-ladder model can be regarded as a weighted linear
 regression through the origin for each development period:
-`lm(y ~ x + 0, weights=w/x^(2-alpha))`, where $y$ is the vector of
-claims at development period $k + 1$ and $x$ is the vector of claims at
-development period $k$.
+`lm(y ~ x + 0, weights=w/x^(2-alpha))`, where $`y`$ is the vector of
+claims at development period $`k+1`$ and $`x`$ is the vector of claims
+at development period $`k`$.
 
 The Mack method is implemented in the ChainLadder package via the
 function `MackChainLadder`.
@@ -678,6 +712,7 @@ As an example we apply the `MackChainLadder` function to our triangle
 `RAA`:
 
 ``` r
+
 mack <- MackChainLadder(RAA, est.sigma="Mack")
 mack # same as summary(mack) 
 ```
@@ -707,12 +742,14 @@ mack # same as summary(mack)
 We can access the loss development factors and the full triangle via:
 
 ``` r
+
 mack$f
 ```
 
      [1] 2.999 1.624 1.271 1.172 1.113 1.042 1.033 1.017 1.009 1.000
 
 ``` r
+
 mack$FullTriangle
 ```
 
@@ -732,6 +769,7 @@ mack$FullTriangle
 If you are only interested in the summary statistics then use:
 
 ``` r
+
 mack_smmry <- summary(mack) # See also ?summary.MackChainLadder
 mack_smmry$ByOrigin
 ```
@@ -749,6 +787,7 @@ mack_smmry$ByOrigin
     1990   2063      0.1121    18402 16339.4  24566.3   1.5035
 
 ``` r
+
 mack_smmry$Totals
 ```
 
@@ -764,6 +803,7 @@ To check that Mack’s assumption are valid review the residual plots, you
 should see no trends in either of them.
 
 ``` r
+
 plot(mack)
 ```
 
@@ -777,6 +817,7 @@ We can plot the development, including the forecast and estimated
 standard errors by origin period by setting the argument `lattice=TRUE`.
 
 ``` r
+
 plot(mack, lattice=TRUE)
 ```
 
@@ -791,6 +832,7 @@ For example, in order to use only the last 5 calendar years of the
 triangle, set the `weights` as follows:
 
 ``` r
+
 calPeriods <- (row(RAA) + col(RAA) - 1)
 (weights <- ifelse(calPeriods <= 5, 0, ifelse(calPeriods > 10, NA, 1)))
 ```
@@ -808,6 +850,7 @@ calPeriods <- (row(RAA) + col(RAA) - 1)
     [10,]    1   NA   NA   NA   NA   NA   NA   NA   NA    NA
 
 ``` r
+
 MackChainLadder(RAA, weights=weights, est.sigma = "Mack")
 ```
 
@@ -842,6 +885,7 @@ between paid and incurred losses of the historical data into the
 projection for the future (Quarg and Mack 2004).
 
 ``` r
+
 MCLpaid
 ```
 
@@ -856,6 +900,7 @@ MCLpaid
          7 2044   NA   NA   NA   NA   NA   NA
 
 ``` r
+
 MCLincurred
 ```
 
@@ -870,6 +915,7 @@ MCLincurred
          7 5022   NA   NA   NA   NA   NA   NA
 
 ``` r
+
 par(mfrow=c(1,2))
 plot(MCLpaid)
 plot(MCLincurred)
@@ -878,10 +924,12 @@ plot(MCLincurred)
 ![](ChainLadder_files/figure-html/unnamed-chunk-25-1.png)
 
 ``` r
+
 par(mfrow=c(1,1))
 ```
 
 ``` r
+
 # Following the example in Quarg's (2004) paper:
 MCL <- MunichChainLadder(MCLpaid, MCLincurred, est.sigmaP=0.1, est.sigmaI=0.1)
 MCL
@@ -916,6 +964,7 @@ You can use `summary(MCL)$ByOrigin` and `summary(MCL)$Totals` to extract
 the information from the output above.
 
 ``` r
+
 plot(MCL)
 ```
 
@@ -936,6 +985,7 @@ summary statistics such as mean, prediction error or quantiles can be
 derived.
 
 ``` r
+
 ## See also the example in section 8 of England & Verrall (2002)
 ## on page 55.
 B <- BootChainLadder(RAA, R=999, process.distr="gamma")
@@ -968,6 +1018,7 @@ You can use `summary(B)$ByOrigin` and `summary(B)$Totals` to extract the
 information from the output above.
 
 ``` r
+
 plot(B)
 ```
 
@@ -977,6 +1028,7 @@ Quantiles of the bootstrap IBNR can be calculated via the `quantile`
 function:
 
 ``` r
+
 quantile(B, c(0.75,0.95,0.99, 0.995))
 ```
 
@@ -1004,6 +1056,7 @@ The distribution of the IBNR appears to follow a log-normal
 distribution, so let’s fit it:
 
 ``` r
+
 ## fit a distribution to the IBNR
 library(MASS)
 plot(ecdf(B$IBNR.Totals))
@@ -1017,6 +1070,7 @@ fit
      ( 0.011432) ( 0.008084)
 
 ``` r
+
 curve(plnorm(x,fit$estimate["meanlog"], fit$estimate["sdlog"]),
       col="red", add=TRUE)
 ```
@@ -1031,41 +1085,47 @@ simultaneously. The advantage of the multivariate modelling is that
 correlations among different triangles can be modelled, which will lead
 to more accurate uncertainty assessments. Reserving methods that
 explicitly model the between-triangle contemporaneous correlations can
-be found in (Pröhl and Schmidt 2005), (Michael Merz and Wüthrich 2008b).
-Another benefit of multivariate loss reserving is that structural
-relationships between triangles can also be reflected, where the
-development of one triangle depends on past losses from other triangles.
-For example, there is generally need for the joint development of the
-paid and incurred losses (Quarg and Mack 2004). Most of the
-chain-ladder-based multivariate reserving models can be summarised as
-sequential seemingly unrelated regressions (Zhang 2010). We note another
-strand of multivariate loss reserving builds a hierarchical structure
-into the model to allow estimation of one triangle to “borrow strength”
-from other triangles, reflecting the core insight of actuarial
-credibility (Zhang, Dukic, and Guszcza 2012).
+be found in (Pröhl and Schmidt 2005), (Merz and Wüthrich 2008b). Another
+benefit of multivariate loss reserving is that structural relationships
+between triangles can also be reflected, where the development of one
+triangle depends on past losses from other triangles. For example, there
+is generally need for the joint development of the paid and incurred
+losses (Quarg and Mack 2004). Most of the chain-ladder-based
+multivariate reserving models can be summarised as sequential seemingly
+unrelated regressions (Zhang 2010). We note another strand of
+multivariate loss reserving builds a hierarchical structure into the
+model to allow estimation of one triangle to “borrow strength” from
+other triangles, reflecting the core insight of actuarial credibility
+(Zhang et al. 2012).
 
-Denote $Y_{i,k} = \left( Y_{i,k}^{(1)},\cdots,Y_{i,k}^{(N)} \right)$ as
-an $N \times 1$ vector of cumulative losses at accident year $i$ and
-development year $k$ where $(n)$ refers to the n-th triangle. (Zhang
-2010) specifies the model in development period $k$ as:
+Denote $`Y_{i,k}=(Y^{(1)}_{i,k}, \cdots ,Y^{(N)}_{i,k})`$ as an $`N
+\times 1`$ vector of cumulative losses at accident year $`i`$ and
+development year $`k`$ where $`(n)`$ refers to the n-th triangle. (Zhang
+2010) specifies the model in development period $`k`$ as:
 
-$$Y_{i,k + 1} = A_{k} + B_{k} \cdot Y_{i,k} + \epsilon_{i,k},$$
+``` math
+\begin{equation}
+Y_{i,k+1} = A_k + B_k \cdot Y_{i,k} + \epsilon_{i,k},
+\end{equation}
+```
 
-where $A_{k}$ is a column of intercepts and $B_{k}$ is the development
-matrix for development period $k$. Assumptions for this model are:
+where $`A_k`$ is a column of intercepts and $`B_k`$ is the development
+matrix for development period $`k`$. Assumptions for this model are:
 
-$$\begin{aligned}
- & {E\left( \epsilon_{i,k}|Y_{i,1},\cdots,Y_{i,I + 1 - k} \right) = 0,} \\
- & {cov\left( \epsilon_{i,k}|Y_{i,1},\cdots,Y_{i,I + 1 - k} \right) = D\left( Y_{i,k}^{- \delta/2} \right)\,\Sigma_{k}\, D\left( Y_{i,k}^{- \delta/2} \right),} \\
- & {\text{losses of different accident years are independent},} \\
- & {\epsilon_{i,k}{\mspace{6mu}\text{are symmetrically distributed}}.}
-\end{aligned}$$
+``` math
+\begin{aligned}
+&E(\epsilon_{i,k}|Y_{i,1}, \cdots,Y_{i,I+1-k}) =0, \\
+&cov(\epsilon_{i,k}|Y_{i,1}, \cdots, Y_{i,I+1-k})=D(Y_{i,k}^{-\delta/2}) \, \Sigma_k \, D(Y_{i,k}^{-\delta/2}), \\
+&\text{losses of different accident years are independent}, \\
+&\epsilon_{i,k} \text{ are symmetrically distributed}.
+\end{aligned}
+```
 
-In the above, $D$ is the diagonal operator, and $\delta$ is a known
+In the above, $`D`$ is the diagonal operator, and $`\delta`$ is a known
 positive value that controls how the variance depends on the mean (as
 weights). This model is referred to as the general multivariate chain
 ladder \[GMCL\] in (Zhang 2010). A important special case where
-$A_{k} = 0$ and $B_{k}$’s are diagonal is a naive generalization of the
+$`A_k=0`$ and $`B_k`$’s are diagonal is a naive generalization of the
 chain-ladder, often referred to as the multivariate chain-ladder \[MCL\]
 (Pröhl and Schmidt 2005).
 
@@ -1075,10 +1135,11 @@ the `MultiChainLadder` function will be converted to `triangles`
 internally. We then present loss reserving methods based on the MCL and
 GMCL models in turn.
 
-Consider the two liability loss triangles from (Michael Merz and
-Wüthrich 2008b). It comes as a list of two matrices:
+Consider the two liability loss triangles from (Merz and Wüthrich
+2008b). It comes as a list of two matrices:
 
 ``` r
+
 str(liab)
 ```
 
@@ -1089,6 +1150,7 @@ str(liab)
 We can convert a list to a `triangles` object using
 
 ``` r
+
 liab2 <- as(liab, "triangles")
 class(liab2)
 ```
@@ -1100,6 +1162,7 @@ class(liab2)
 We can find out what methods are available for this class:
 
 ``` r
+
 showMethods(classes = "triangles")
 ```
 
@@ -1107,6 +1170,7 @@ For example, if we want to extract the last three columns of each
 triangle, we can use the `[` operator as follows:
 
 ``` r
+
 # use drop = TRUE to remove rows that are all NA's
 liab2[, 12:14, drop = TRUE]
 ```
@@ -1128,6 +1192,7 @@ The following combines two columns of the triangles to form a new
 matrix:
 
 ``` r
+
 cbind2(liab2[1:3, 12])
 ```
 
@@ -1142,11 +1207,12 @@ The form of regression models used in estimating the development
 parameters is controlled by the `fit.method` argument. If we specify
 `fit.method = "OLS"`, the ordinary least squares will be used and the
 estimation of development factors for each triangle is independent of
-the others. In this case, the residual covariance matrix $\Sigma_{k}$ is
+the others. In this case, the residual covariance matrix $`\Sigma_k`$ is
 diagonal. As a result, the multivariate model is equivalent to running
 multiple Mack chain-ladders separately.
 
 ``` r
+
 fit1 <- MultiChainLadder(liab, fit.method = "OLS")
 lapply(summary(fit1)$report.summary, "[", 15, )
 ```
@@ -1176,6 +1242,7 @@ ladder. For example, we can apply the `MackChainLadder` function to each
 triangle:
 
 ``` r
+
 fit <- lapply(liab, MackChainLadder, est.sigma = "Mack")
 # the same as the first triangle above
 lapply(fit, function(x) t(summary(x)$Totals))
@@ -1198,6 +1265,7 @@ reproduces the result in (Buchwalder et al. 2006). Note that the first
 argument must be a list, even though only one triangle is used.
 
 ``` r
+
 (B1 <- MultiChainLadder(list(GenIns), fit.method = "OLS",
     mse.method = "Independence"))
 ```
@@ -1225,6 +1293,7 @@ development period. This is invoked when we specify
 `fit.method = "SUR"`:
 
 ``` r
+
 fit2 <- MultiChainLadder(liab, fit.method = "SUR")
 lapply(summary(fit2)$report.summary, "[", 15, )
 ```
@@ -1241,13 +1310,14 @@ lapply(summary(fit2)$report.summary, "[", 15, )
             Latest Dev.To.Date Ultimate    IBNR    S.E    CV
     Total 20103203        0.71 28316248 8213045 500607 0.061
 
-We see that the portfolio prediction error is inflated to $500,607$ from
-$457,278$ in the separate development model (“OLS”). This is because of
-the positive correlation between the two triangles. The estimated
-correlation for each development period can be retrieved through the
-`residCor` function:
+We see that the portfolio prediction error is inflated to $`500,607`$
+from $`457,278`$ in the separate development model (“OLS”). This is
+because of the positive correlation between the two triangles. The
+estimated correlation for each development period can be retrieved
+through the `residCor` function:
 
 ``` r
+
 round(unlist(residCor(fit2)), 3)
 ```
 
@@ -1261,6 +1331,7 @@ For example, we can retrieve the estimated development factors for each
 period as
 
 ``` r
+
 do.call("rbind", coef(fit2))
 ```
 
@@ -1301,14 +1372,14 @@ these two arguments.
 Internally, the `MultiChainLadder` calls the `systemfit` function to fit
 the regression models period by period. When SUR models are specified,
 there are several ways to estimate the residual covariance matrix
-$\Sigma_{k}$. Available methods are `noDfCor`, `geomean`, `max`, and
+$`\Sigma_k`$. Available methods are `noDfCor`, `geomean`, `max`, and
 `Theil` with the default as `geomean`. The method `Theil` will produce
 unbiased covariance estimate, but the resulting estimate may not be
-positive semi-definite. This is also the estimator used by (Michael Merz
-and Wüthrich 2008b). However, this method does not work out of the box
-for the `liab` data, and is perhaps one of the reasons (Michael Merz and
-Wüthrich 2008b) used extrapolation to get the estimate for the last
-several periods.
+positive semi-definite. This is also the estimator used by (Merz and
+Wüthrich 2008b). However, this method does not work out of the box for
+the `liab` data, and is perhaps one of the reasons (Merz and Wüthrich
+2008b) used extrapolation to get the estimate for the last several
+periods.
 
 Indeed, for most applications, we recommend the use of separate chain
 ladders for the tail periods to stabilize the estimation - there are few
@@ -1333,10 +1404,10 @@ development matrix.
 
 For example, the following fits the SUR method to the first part (the
 first 11 columns) using the unbiased residual covariance estimator in
-(Michael Merz and Wüthrich 2008b), and separate chain-ladders for the
-rest:
+(Merz and Wüthrich 2008b), and separate chain-ladders for the rest:
 
 ``` r
+
 require(systemfit)
 W1 <- MultiChainLadder2(liab, mse.method = "Independence",
         control = systemfit.control(methodResidCov = "Theil"))
@@ -1355,11 +1426,12 @@ lapply(summary(W1)$report.summary, "[", 15, )
             Latest Dev.To.Date Ultimate    IBNR    S.E     CV
     Total 20103203      0.7099 28318437 8215234 505376 0.0615
 
-Similarly, the iterative residual covariance estimator in (Michael Merz
-and Wüthrich 2008b) can also be used, in which we use the control
-parameter `maxiter` to determine the number of iterations:
+Similarly, the iterative residual covariance estimator in (Merz and
+Wüthrich 2008b) can also be used, in which we use the control parameter
+`maxiter` to determine the number of iterations:
 
 ``` r
+
 for (i in 1:5){
   W2 <- MultiChainLadder2(liab, mse.method = "Independence",
       control = systemfit.control(methodResidCov = "Theil", maxiter = i))
@@ -1380,6 +1452,7 @@ for (i in 1:5){
     Total 8,215,362 505,444
 
 ``` r
+
 lapply(summary(W2)$report.summary, "[", 15, )
 ```
 
@@ -1396,9 +1469,9 @@ lapply(summary(W2)$report.summary, "[", 15, )
     Total 20103203      0.7099 28318565 8215362 505444 0.0615
 
 We see that the covariance estimate converges in three steps. These are
-very similar to the results in (Michael Merz and Wüthrich 2008b), the
-small difference being a result of the different approaches used in the
-last three periods.
+very similar to the results in (Merz and Wüthrich 2008b), the small
+difference being a result of the different approaches used in the last
+three periods.
 
 Also note that in the above two examples, the argument `control` is not
 defined in the prototype of the `MultiChainLadder`. It is an argument
@@ -1413,6 +1486,7 @@ automobile insurance triangles: personal auto paid, personal auto
 incurred, and commercial auto paid.
 
 ``` r
+
 str(auto)
 ```
 
@@ -1425,6 +1499,7 @@ It is a reasonable expectation that these triangles will be correlated.
 So we run a MCL model on them:
 
 ``` r
+
 f0 <- MultiChainLadder2(auto, type = "MCL")
 # show correlation- the last three columns have zero correlation
 # because separate chain-ladders are used
@@ -1445,6 +1520,7 @@ We can improve the above model by including intercepts in the SUR fit as
 follows:
 
 ``` r
+
 f1 <- MultiChainLadder2(auto, type = "MCL+int")
 ```
 
@@ -1462,6 +1538,7 @@ both from the personal auto line. We can overwrite this via the
 triangles as the portfolio estimate:
 
 ``` r
+
 lapply(summary(f1, portfolio = "1+3")@report.summary, "[", 11, )
 ```
 
@@ -1473,6 +1550,7 @@ between triangles. In particular, it produces divergent paid-to-incurred
 loss ratios for the personal auto line:
 
 ``` r
+
 ult <- summary(f1)$Ultimate
 print(ult[, 1] /ult[, 2], 3)
 ```
@@ -1488,6 +1566,7 @@ for a model that uses all three triangles. We also include the MCL model
 and the Munich chain-ladder as a comparison:
 
 ``` r
+
 da <- auto[1:2]
 # MCL with diagonal development
 M0 <- MultiChainLadder(da)
@@ -1509,7 +1588,7 @@ print(do.call(cbind, c(r1, list(MuCl = r2))) * 100, digits = 4)
 ### Clark’s methods
 
 The ChainLadder package contains functionality to carry out the methods
-described in the paper[³](#fn3) by David Clark (Clark 2003). Using a
+described in the paper[^3] by David Clark (Clark 2003). Using a
 longitudinal analysis approach, Clark assumes that losses develop
 according to a theoretical *growth curve*. The LDF method is a special
 case of this approach where the growth curve can be considered to be
@@ -1541,9 +1620,10 @@ based on a Taylor series expansion.
 The two functional forms for growth curves considered in Clark’s paper
 are the log-logistic function (a.k.a., the inverse power curve) and the
 Weibull function, both being two-parameter functions. Clark uses the
-parameters $\omega$ and $\theta$ in his paper. Clark’s methods work on
-incremental losses. His likelihood function is based on the assumption
-that incremental losses follow an over-dispersed Poisson (ODP) process.
+parameters $`\omega`$ and $`\theta`$ in his paper. Clark’s methods work
+on incremental losses. His likelihood function is based on the
+assumption that incremental losses follow an over-dispersed Poisson
+(ODP) process.
 
 #### Clark’s LDF method
 
@@ -1553,6 +1633,7 @@ Method would estimate total ultimate losses of 272,009 and a reserve
 weighted average link ratios and loglinear fit in section 3.2.1 above.
 
 ``` r
+
 ClarkLDF(RAA)
 ```
 
@@ -1577,6 +1658,7 @@ years, the growth curve can be truncated accordingly by using the
 `maxage` argument:
 
 ``` r
+
 ClarkLDF(RAA, maxage = 20)
 ```
 
@@ -1597,6 +1679,7 @@ The Weibull growth curve tends to be faster developing than the
 log-logistic:
 
 ``` r
+
 ClarkLDF(RAA, G="weibull")
 ```
 
@@ -1617,6 +1700,7 @@ It is recommend to inspect the residuals to help assess the
 reasonableness of the model relative to the actual data.
 
 ``` r
+
 plot(ClarkLDF(RAA, G="weibull"))
 ```
 
@@ -1627,7 +1711,7 @@ ages and fitted values, the residuals otherwise appear randomly
 scattered around a horizontal line through the origin. The q-q plot
 shows evidence of a lack of fit in the tails, but the p-value of almost
 0.2 can be considered too high to reject outright the assumption of
-normally distributed standardized residuals[⁴](#fn4).
+normally distributed standardized residuals[^4].
 
 #### Clark’s Cape Cod method
 
@@ -1636,6 +1720,7 @@ associated with it traditionally. Let’s assume a constant earned premium
 of 40000 each year, and a Weibull growth function:
 
 ``` r
+
 ClarkCapeCod(RAA, Premium = 40000, G = "weibull")
 ```
 
@@ -1675,6 +1760,7 @@ to those from the LDF method, a better spread By Fitted Value, and a
 slightly better q-q plot, particularly in the upper tail.
 
 ``` r
+
 plot(ClarkCapeCod(RAA, Premium = 40000, G = "weibull"))
 ```
 
@@ -1704,17 +1790,18 @@ other uncertainty measures such as predictive intervals.
 
 Only the Tweedie family of distributions are allowed, that is, the
 exponential family that admits a power variance function
-$V(\mu) = \mu^{p}$. The variance power $p$ is specified in the
+$`V(\mu)=\mu^p`$. The variance power $`p`$ is specified in the
 `var.power` argument, and controls the type of the distribution. When
-the Tweedie compound Poisson distribution $1 < p < 2$ is to be used, the
-user has the option to specify `var.power = NULL`, where the variance
-power $p$ will be estimated from the data using the `cplm` package
-(Zhang 2012).
+the Tweedie compound Poisson distribution $`1 < p <
+2`$ is to be used, the user has the option to specify
+`var.power = NULL`, where the variance power $`p`$ will be estimated
+from the data using the `cplm` package (Zhang 2012).
 
 For example, the following fits the over-dispersed Poisson model and
 spells out the estimated reserve information:
 
 ``` r
+
 # load data
 data(GenIns)
 GenIns <- GenIns / 1000
@@ -1738,8 +1825,10 @@ We can also extract the underlying GLM model by specifying
 `type = "model"` in the `summary` function:
 
 ``` r
+
 summary(fit1, type = "model")
 ```
+
 
     Call:
     glm(formula = value ~ factor(origin) + factor(dev), family = fam, 
@@ -1781,6 +1870,7 @@ Similarly, we can fit the Gamma and a compound Poisson GLM reserving
 model by changing the `var.power` argument:
 
 ``` r
+
 # Gamma GLM
 (fit2 <- glmReserve(GenIns, var.power = 2))
 ```
@@ -1798,6 +1888,7 @@ model by changing the `var.power` argument:
     total  30457     0.62742    48543 18086 2702.71 0.1494
 
 ``` r
+
 # compound Poisson GLM (variance function estimated from the data):
 # (fit3 <- glmReserve(GenIns, var.power = NULL))
 ```
@@ -1808,6 +1899,7 @@ errors. We can also carry out bootstrapping simulations by specifying
 match):
 
 ``` r
+
 set.seed(11)
 (fit5 <- glmReserve(GenIns, mse.method = "boot"))
 ```
@@ -1830,6 +1922,7 @@ that store the simulated parameters, mean values and predicted values of
 the reserves for each year, respectively.
 
 ``` r
+
 names(fit5)
 ```
 
@@ -1841,6 +1934,7 @@ We can thus compute the quantiles of the predictions based on the
 simulated samples in the `sims.reserve.pred` element as:
 
 ``` r
+
 pr <- as.data.frame(fit5$sims.reserve.pred)
 qv <- c(0.025, 0.25, 0.5, 0.75, 0.975)
 res.q <- t(apply(pr, 2, quantile, qv))
@@ -1862,6 +1956,7 @@ The full predictive distribution of the simulated reserves for each year
 can be visualized easily:
 
 ``` r
+
 library(ggplot2)
 prm <- reshape(pr, varying=list(names(pr)), v.names = "reserve", 
                timevar = "year", direction="long")
@@ -1881,7 +1976,7 @@ bootstrapping
 ### Paid-incurred chain model
 
 The Paid-incurred chain model was published by Merz and Wüthrich in 2010
-(M. Merz and Wüthrich 2010). It combines claims payments and incurred
+(Merz and Wüthrich 2010). It combines claims payments and incurred
 losses information in a a mathematically rigorous and consistent way to
 get a unified ultimate loss prediction.
 
@@ -1889,34 +1984,60 @@ get a unified ultimate loss prediction.
 
 The model assumptions for the Log-Normal PIC Model are the following:
 
-- Conditionally, given
-  $\Theta = (\Phi_{0},...,\Phi_{I},\Psi_{0},...,\Psi_{I - 1},\sigma_{0},...,\sigma_{I - 1},\tau_{0},...,\tau_{I - 1}$
+- Conditionally, given $`\Theta = (\Phi_0,...,\Phi_I,
+  \Psi_0,...,\Psi_{I-1},\sigma_0,...,\sigma_{I-1},\tau_0,...,\tau_{I-1}`$
   we have
   - the random vector
-    $\left( \xi_{0,0},...,\xi_{I,I},\zeta_{0,0},...,\zeta_{I,I - 1} \right)$
-    has multivariate Gaussian distribution with uncorrelated components
+    $`(\xi_{0,0},...,\xi_{I,I}, \zeta_{0,0},...,\zeta_{I,I-1})`$ has
+    multivariate Gaussian distribution with uncorrelated components
     given by \$\$
-    $$\xi_{i,j} \sim N\left( \Phi_{j},\sigma_{j}^{2} \right),$$$$\zeta_{k,l} \sim N\left( \Psi_{l},\tau_{l}^{2} \right);$$
+    ``` math
+    \begin{equation*}
+    \xi_{i,j} \sim N(\Phi_j,\sigma^2_j),
+    \end{equation*}
+    ```
+    ``` math
+    \begin{equation*}
+    \zeta_{k,l} \sim N(\Psi_l,\tau^2_l);
+    \end{equation*}
+    ```
   - cumulative payments are given by the recursion
-    $$P_{i,j} = P_{i,j - 1}\exp\left( \xi_{i,j} \right),$$ \$\$ with
-    initial value $P_{i,0} = \exp\left( \xi_{i,0} \right)$;
-  - incurred losses $I_{i,j}$ are given by the backwards recursion
-    $$I_{i,j - 1} = I_{i,j}\exp\left( - \zeta_{i,j - 1} \right),$$ with
-    initial value $I_{i,I} = P_{i,I}$.
-- The components of $\Theta$ are independent and
-  $\sigma_{j},\tau_{j} > 0$ for all j.
+    ``` math
+    \begin{equation*}
+    P_{i,j} = P_{i,j-1} \exp(\xi_{i,j}),
+    \end{equation*}
+    ```
+    \$\$ with initial value $`P_{i,0} = \exp (\xi_{i,0})`$;
+  - incurred losses $`I_{i,j}`$ are given by the backwards recursion
+    ``` math
+    \begin{equation*}
+    I_{i,j-1} = I_{i,j} \exp(-\zeta_{i,j-1}),
+    \end{equation*}
+     
+    ```
+    with initial value $`I_{i,I}=P_{i,I}`$.
+- The components of $`\Theta`$ are independent and
+  $`\sigma_j,\tau_j > 0`$ for all j.
 
 #### Parameter estimation
 
-Parameters $\Theta$ in the model are in general not known and need to be
-estimated from observations. They are estimated in a Bayesian framework.
-In the Bayesian PIC model they assume that the previous assumptions hold
-true with deterministic $\sigma_{0},...,\sigma_{J}$ and
-$\tau_{0},...,\tau_{J - 1}$ and
+Parameters $`\Theta`$ in the model are in general not known and need to
+be estimated from observations. They are estimated in a Bayesian
+framework. In the Bayesian PIC model they assume that the previous
+assumptions hold true with deterministic $`\sigma_0,...,\sigma_J`$ and
+$`\tau_0,...,\tau_{J-1}`$ and
 
-$$\Phi_{m} \sim N\left( \phi_{m},s_{m}^{2} \right),$$
+``` math
+\begin{equation*}
+\Phi_m \sim N(\phi_m,s^2_m),
+\end{equation*}
+```
 
-$$\Psi_{n} \sim N\left( \psi_{n},t_{n}^{2} \right).$$
+``` math
+\begin{equation*}
+\Psi_n \sim N(\psi_n,t^2_n).
+\end{equation*}
+```
 
 This is not a full Bayesian approach but has the advantage to give
 analytical expressions for the posterior distributions and the
@@ -1927,6 +2048,7 @@ package via the function `PaidIncurredChain`. As an example we apply the
 function to the USAA paid and incurred triangles:
 
 ``` r
+
 PIC <- PaidIncurredChain(USAApaid, USAAincurred)
 PIC
 ```
@@ -1967,6 +2089,7 @@ PIC
 We can access the reserves by origin year via
 
 ``` r
+
 PIC$Res.Origin
 ```
 
@@ -1984,6 +2107,7 @@ PIC$Res.Origin
 and the total reserve via
 
 ``` r
+
 PIC$Res.Tot
 ```
 
@@ -1993,9 +2117,8 @@ PIC$Res.Tot
 total ultimate loss.
 
 It’s important to notice that the model is implemented in the special
-case of non-informative priors for $\Phi_{m}$ and $\Psi_{n}$; this means
-that we let $\left. s_{m}^{2}\rightarrow\infty \right.$ and
-$\left. t_{n}^{2}\rightarrow\infty \right.$.
+case of non-informative priors for $`\Phi_m`$ and $`\Psi_n`$; this means
+that we let $`s^2_m \to \infty`$ and $`t^2_n \to \infty`$.
 
 ### One year claims development result
 
@@ -2007,14 +2130,14 @@ outstanding claims. Modern solvency considerations, such as Solvency II,
 require a second view of claims reserving uncertainty. This second view
 is a short-term view because it requires assessments of the one-year
 changes of the claims predictions when one updates the available
-information at the end of each accounting year. At time $t \geq n$ we
+information at the end of each accounting year. At time $`t\ge n`$ we
 have information
 
 \$\$ \begin{equation\*} {\cal D}\_{t} = \left\\C\_{i,k};~{i+k \le t+1}
 \right\\. \end{equation\*} \$\$
 
 This motivates the following sequence of predictors for the ultimate
-claim $C_{i,K}$ at times $t \geq n$
+claim $`C_{i,K}`$ at times $`t\ge n`$
 
 \$\$ \begin{equation\*} \widehat{C}^{(t)}\_{i,K}=
 \mathbb{E}\[C\_{i,K}\|{\cal D}\_t\]. \end{equation\*} \$\$
@@ -2028,10 +2151,10 @@ consider the changes in these one year updates, that is,
 
 The tower property of conditional expectation implies that the CDRs are
 on average 0, that is, \$\mathbb{E}\[{\rm CDR}\_{i,t+1}\|{\cal
-D}\_t\]=0\$ and the Merz-Wüthrich formula (Michael Merz and Wüthrich
-2008a), (Michael Merz and Wüthrich 2014) assesses the uncertainty of
-these predictions measured by the following conditional mean square
-error of prediction (MSEP)
+D}\_t\]=0\$ and the Merz-Wüthrich formula (Merz and Wüthrich 2008a),
+(Merz and Wüthrich 2014) assesses the uncertainty of these predictions
+measured by the following conditional mean square error of prediction
+(MSEP)
 
 \$\$ \begin{equation\*} {\rm msep}\_{{\rm CDR}\_{i,t+1}\|{\cal D}\_t}(0)
 = \mathbb{E} \left\[\left.\left({\rm CDR}\_{i,t+1}-0\right)^2
@@ -2049,10 +2172,10 @@ generic `CDR` function for objects of `MackChainLadder` and
 Further, the `tweedieReserve` function offers also the option to
 estimate the one year CDR, by setting the argument `rereserving=TRUE`.
 
-For example, to reproduce the results of (Michael Merz and Wüthrich
-2014) use:
+For example, to reproduce the results of (Merz and Wüthrich 2014) use:
 
 ``` r
+
 M <- MackChainLadder(MW2014, est.sigma="Mack")
 cdrM <- CDR(M)
 round(cdrM, 1)
@@ -2082,6 +2205,7 @@ To review the full claims development picture set the argument
 `dev="all"`:
 
 ``` r
+
 cdrAll <- CDR(M,dev="all")
 round(cdrAll, 1)
 ```
@@ -2156,7 +2280,11 @@ model. The argument `design.type` allows us to test different regression
 structures. The classic over-dispersed Poisson (ODP) model uses the
 following structure:
 
-$$Y \backsim {\mathtt{a}\mathtt{s}\mathtt{.}\mathtt{f}\mathtt{a}\mathtt{c}\mathtt{t}\mathtt{o}\mathtt{r}}(OY) + {\mathtt{a}\mathtt{s}\mathtt{.}\mathtt{f}\mathtt{a}\mathtt{c}\mathtt{t}\mathtt{o}\mathtt{r}}(DY),$$
+``` math
+\begin{equation*}
+Y \backsim \mathtt{as.factor}(OY) + \mathtt{as.factor}(DY),
+\end{equation*}
+```
 
 (i.e. `design.type=c(1,1,0)`). This allows, together with the log link,
 to achieve the same results of the (volume weighted) chain-ladder model,
@@ -2167,7 +2295,11 @@ the user could be then interested to change the regression structure in
 order to try to strip out these patterns (Gigante and Sigalotti 2005).
 For example, a regression structure like:
 
-$$Y \backsim {\mathtt{a}\mathtt{s}\mathtt{.}\mathtt{f}\mathtt{a}\mathtt{c}\mathtt{t}\mathtt{o}\mathtt{r}}(DY) + {\mathtt{a}\mathtt{s}\mathtt{.}\mathtt{f}\mathtt{a}\mathtt{c}\mathtt{t}\mathtt{o}\mathtt{r}}(CY),$$
+``` math
+\begin{equation*}
+Y \backsim \mathtt{as.factor}(DY) + \mathtt{as.factor}(CY),
+\end{equation*}
+```
 
 i.e. `design.type=c(0,1,1)` could be considered instead. This approach
 returns the same results of the arithmetic separation method, modelling
@@ -2175,14 +2307,22 @@ explicitly inflation parameters between consequent calendar periods.
 Another interesting assumption is the assumed underlying distribution.
 The ODP model assumes the following:
 
-$$P_{i,j} \backsim ODP\left( m_{i,j},\phi \cdot m_{i,j} \right),$$
+``` math
+\begin{equation*}
+P_{i,j} \backsim ODP(m_{i,j},\phi \cdot m_{i,j}),
+\end{equation*}
+```
 
 which is a particular case of a Tweedie distribution, with `p` parameter
 equals to 1. Generally speaking, for any random variable Y that obeys a
-Tweedie distribution, the variance ${\mathbb{V}}\lbrack Y\rbrack$
-relates to the mean ${\mathbb{E}}\lbrack Y\rbrack$ by the following law:
+Tweedie distribution, the variance $`\mathbb{V}[Y]`$ relates to the mean
+$`\mathbb{E}[Y]`$ by the following law:
 
-$${\mathbb{V}}\lbrack Y\rbrack = a \cdot {\mathbb{E}}\lbrack Y\rbrack^{p},$$
+``` math
+\begin{equation*}
+\mathbb{V}[Y] = a \cdot \mathbb{E}[Y]^p,
+\end{equation*}
+```
 
 where `a` and `p` are positive constants. The user is able to test
 different `p` values through the `var.power` function argument. Besides,
@@ -2192,6 +2332,7 @@ interesting to plot the likelihood profile at defined `p` values
 structure. This could be achieved setting the `p.optim=TRUE` argument.
 
 ``` r
+
  p_profile <- tweedieReserve(MW2008, p.optim=TRUE,
    p.check=c(0,1.1,1.2,1.3,1.4,1.5,2,3),
    design.type=c(0,1,1),
@@ -2253,11 +2394,10 @@ provide links to additional resources.
   compound Poisson linear models (Zhang 2012).
 - DCL: Claims Reserving under the Double Chain-Ladder Model. Statistical
   modelling and forecasting in claims reserving in non-life insurance
-  under the Double Chain-Ladder framework by (Miranda, Nielsen, and
-  Verrall 2012).
+  under the Double Chain-Ladder framework by (Miranda et al. 2012).
 - actuar: Loss distributions modelling, risk theory (including ruin
   theory), simulation of compound hierarchical models and credibility
-  theory (Dutang, Goulet, and Pigeon 2008).
+  theory (Dutang et al. 2008).
 - fitdistrplus: Help to fit of a parametric distribution to non-censored
   or censored data (Delignette-Muller et al. 2010).
 - mondate: R package to keep track of dates in terms of months (Murphy
@@ -2268,8 +2408,8 @@ provide links to additional resources.
   interest to non-life actuaries (Fannin 2021)
 - SPLICE: Synthetic Paid Loss and Incurred Cost Experience (SPLICE)
   Simulator (Avanzi, Taylor, and Wang 2021)
-- SynthETIC: Synthetic Experience Tracking Insurance Claims (Avanzi et
-  al. 2021)
+- SynthETIC: Synthetic Experience Tracking Insurance Claims (Avanzi,
+  Taylor, Wang, and Wong 2021)
 - NetSimR: Actuarial Functions for Non-Life Insurance Modelling (Parizas
   2019)
 
@@ -2307,8 +2447,9 @@ Clark, David R. 2003. *LDF Curve-Fitting and Stochastic Reserving: A
 Maximum Likelihood Approach*. Casualty Actuarial Society;
 <https://www.casact.org/sites/default/files/database/forum_03fforum_03ff041.pdf>.
 
-De Silva, Nigel. 2006. “An Introduction to r: Examples for Actuaries.”
-Actuarial Toolkit Working Party; <http://toolkit.pbworks.com/RToolkit>.
+De Silva, Nigel. 2006. *An Introduction to r: Examples for Actuaries*.
+Version 0.1. Actuarial Toolkit Working Party;
+<http://toolkit.pbworks.com/RToolkit>.
 
 Delignette-Muller, Marie Laure, Regis Pouillot, Jean-Baptiste Denis, and
 Christophe Dutang. 2010. *Fitdistrplus: Help to Fit of a Parametric
@@ -2321,16 +2462,16 @@ England, Peter, and Richard Verrall. 2002. “Stochastic Claims Reserving
 in General Insurance.” *British Actuarial Journal* 8: 443–544.
 
 Escoto, Benedict. 2011. *Favir: Formatted Actuarial Vignettes in r*.
-0.5–1st ed. <https://github.com/cran/favir>.
+0.5-1. [Https://github.com/cran/favir](https://github.com/cran/favir).
 
 Fannin, Brian A. 2013. *MRMR: Multivariate Regression Models for
 Reserving*. <https://CRAN.R-project.org/package=MRMR>.
 
-———. 2021. *Raw: R Actuarial Workshops*.
+Fannin, Brian A. 2021. *Raw: R Actuarial Workshops*.
 <https://CRAN.R-project.org/package=raw>.
 
 Gesmann, Markus. 2014. “Claims Reserving and IBNR.” In *Computational
-Actuarial Science with R*, 545–84. Chapman; Hall/CRC.
+Actuarial Science with R*. Chapman; Hall/CRC.
 
 Gesmann, Markus, and Jake Morris. 2020. *Hierarchical Compartmental
 Reserving Models*. Casualty Actuarial Society;
@@ -2339,10 +2480,9 @@ Reserving Models*. Casualty Actuarial Society;
 Gigante, and Sigalotti. 2005. “Model Risk in Claims Reserving with GLM.”
 *Giornale Dell IIA* LXVIII: 55–87.
 
-Gravelsons, Brian, Matthew Ball, Dan Beard, Robert Brooks, Naomi
-Couchman, Brian Gravelsons, Charlie Kefford, et al. 2009. “B12: UK
-Asbestos Working Party Update 2009.”
-<https://www.actuaries.org.uk/system/files/documents/pdf/b12asbestoswp.pdf>.
+Gravelsons, Brian, Matthew Ball, Dan Beard, et al. 2009. *B12: UK
+Asbestos Working Party Update 2009*.
+[Https://www.actuaries.org.uk/system/files/documents/pdf/b12asbestoswp.pdf](https://www.actuaries.org.uk/system/files/documents/pdf/b12asbestoswp.pdf).
 
 Henningsen, Arne, and Jeff D. Hamann. 2007. “Systemfit: A Package for
 Estimating Systems of Simultaneous Equations in r.” *Journal of
@@ -2350,10 +2490,11 @@ Statistical Software* 23 (4): 1–40.
 <https://doi.org/10.18637/jss.v023.i04>.
 
 Kaas, R., M. Goovaerts, J. Dhaene, and M. Denuit. 2001. *Modern
-Actuarial Risk Theory*. Dordrecht: Kluwer Academic Publishers.
+Actuarial Risk Theory*. Kluwer Academic Publishers.
 
 Laws, Christopher W., and Frank A. Schmid. 2011. *lossDev: Robust Loss
-Development Using MCMC*. <https://lossdev.r-forge.r-project.org>.
+Development Using MCMC*.
+[Https://lossdev.r-forge.r-project.org](https://lossdev.r-forge.r-project.org).
 
 Lyons, Graham, Will Forster, Paul Kedney, Ryan Warren, and Helen
 Wilkinson. 2002. *Claims Reserving Working Party Paper*. Institute of
@@ -2362,30 +2503,31 @@ Actuaries.
 Mack, Thomas. 1993. “Distribution-Free Calculation of the Standard Error
 of Chain Ladder Reserve Estimates.” *ASTIN Bulletin* 23: 213–25.
 
-———. 1999. “The Standard Error of Chain Ladder Reserve Estimates:
-Recursive Calculation and Inclusion of a Tail Factor.” *Astin Bulletin*
-Vol. 29 (2): 361–266.
+Mack, Thomas. 1999. “The Standard Error of Chain Ladder Reserve
+Estimates: Recursive Calculation and Inclusion of a Tail Factor.” *Astin
+Bulletin* Vol. 29 (2): 361–266.
 
 Maynard, Trevor, Nigel De Silva, Richard Holloway, Markus Gesmann, Sie
-Lau, and John Harnett. 2006. “An Actuarial Toolkit. Introducing The
-Toolkit Manifesto.”
-<https://www.actuaries.org.uk/system/files/documents/pdf/actuarial-toolkit.pdf>.
+Lau, and John Harnett. 2006. *An Actuarial Toolkit. Introducing The
+Toolkit Manifesto*.
+[Https://www.actuaries.org.uk/system/files/documents/pdf/actuarial-toolkit.pdf](https://www.actuaries.org.uk/system/files/documents/pdf/actuarial-toolkit.pdf).
 
 Merz, Michael, and Mario V. Wüthrich. 2008a. “Modelling the Claims
 Development Result for Solvency Purposes.” *CAS E-Forum* Fall: 542–68.
 
-———. 2008b. “Prediction Error of the Multivariate Chain Ladder Reserving
-Method.” *North American Actuarial Journal* 12: 175–97.
+Merz, Michael, and Mario V. Wüthrich. 2008b. “Prediction Error of the
+Multivariate Chain Ladder Reserving Method.” *North American Actuarial
+Journal* 12: 175–97.
 
-———. 2014. “Laims Run-Off Uncertainty: The Full Picture.” *SSRN
-Manuscript* 2524352.
+Merz, Michael, and Mario V. Wüthrich. 2014. “Laims Run-Off Uncertainty:
+The Full Picture.” *SSRN Manuscript* 2524352.
 
 Merz, M., and M. Wüthrich. 2010. “Paid-Incurred Chain Claims Reserving
 Method.” *Insurance: Mathematics and Economics* 46(3): 568–79.
 
-Michaels, Darren. 2002. “APH: How the Love Carnal and Silicone Implants
-Nearly Destroyed Lloyd’s (Slides).” Institute of Actuaries:
-<https://www.actuaries.org.uk/system/files/documents/pdf/aph-how-love-canal-and-silicone-breasts.pdf>.
+Michaels, Darren. 2002. *APH: How the Love Carnal and Silicone Implants
+Nearly Destroyed Lloyd’s (Slides)*.
+[Https://www.actuaries.org.uk/system/files/documents/pdf/aph-how-love-canal-and-silicone-breasts.pdf](https://www.actuaries.org.uk/system/files/documents/pdf/aph-how-love-canal-and-silicone-breasts.pdf).
 
 Miranda, María Dolores Martínez, Jens Perch Nielsen, and Richard
 Verrall. 2012. “Double Chain Ladder.” *ASTIN Bulletin* 42 (1): 59–76.
@@ -2394,8 +2536,8 @@ Verrall. 2012. “Double Chain Ladder.” *ASTIN Bulletin* 42 (1): 59–76.
 Murphy, Daniel. 1994. “Unbiased Loss Development Factors.” *PCAS* 81:
 154–222.
 
-———. 2021. *Mondate: Keep Track of Dates in Terms of Months*.
-<https://CRAN.R-project.org/package=mondate>.
+Murphy, Daniel. 2021. *Mondate: Keep Track of Dates in Terms of Months*.
+[Https://CRAN.R-project.org/package=mondate](https://CRAN.R-project.org/package=mondate).
 
 Orr, James. 2012. *GIROC Reserving Research Workstream*. Institute of
 Actuaries.
@@ -2406,22 +2548,22 @@ June.
 Pröhl, Carsten, and Klaus D. Schmidt. 2005. “Multivariate Chain-Ladder.”
 *Dresdner Schriften Zur Versicherungsmathematik*.
 
-Quarg, Gerhard, and Thomas Mack. 2004. “Munich Chain Ladder.” Munich Re
+Quarg, Gerhard, and Thomas Mack. 2004. *Munich Chain Ladder*. Munich Re
 Group.
 
 R Development Core Team. 2022a. *R Data Import/Export*. R Foundation for
 Statistical Computing;
 <https://cran.r-project.org/doc/manuals/R-data.pdf>.
 
-———. 2022b. *R Installation and Administration*. R Foundation for
-Statistical Computing;
+R Development Core Team. 2022b. *R Installation and Administration*. R
+Foundation for Statistical Computing;
 <https://cran.r-project.org/doc/manuals/R-admin.pdf>.
 
-Schmidt, Klaus D. 2017. “A Bibliography on Loss Reserving.”
-https://tu-dresden.de/mn/math/stochastik/ressourcen/dateien/schmidt/dsvm/reserve.pdf.
+Schmidt, Klaus D. 2017. *A Bibliography on Loss Reserving*.
+Https://tu-dresden.de/mn/math/stochastik/ressourcen/dateien/schmidt/dsvm/reserve.pdf.
 
 Spedicato, Giorgio Alfredo. 2022. *Introduction to Lifecontingencies
-Package*. 1.3.8 ed. StatisticalAdvisor Inc;
+Package*. 1.3.8. StatisticalAdvisor Inc;
 <https://CRAN.R-project.org/package=lifecontingencies/>.
 
 Zehnwirth, Ben, and Glen Barnett. 2000. “Best Estimates for Reserves.”
@@ -2430,22 +2572,21 @@ Zehnwirth, Ben, and Glen Barnett. 2000. “Best Estimates for Reserves.”
 Zhang, Yanwei. 2010. “A General Multivariate Chain Ladder Model.”
 *Insurance: Mathematics and Economics* 46: 588–99.
 
-———. 2012. “Likelihood-Based and Bayesian Methods for Tweedie Compound
-Poisson Linear Mixed Models.” *Statistics and Computing*.
+Zhang, Yanwei. 2012. “Likelihood-Based and Bayesian Methods for Tweedie
+Compound Poisson Linear Mixed Models.” *Statistics and Computing*.
 
 Zhang, Yanwei, Vanja Dukic, and James Guszcza. 2012. “A Bayesian
 Nonlinear Model for Forecasting Insurance Loss Payments.” *Journal of
 the Royal Statistical Society, Series A* 175: 637–56.
 
-------------------------------------------------------------------------
+[^1]: See the `RODBC` and `DBI` packages
 
-1.  See the `RODBC` and `DBI` packages
-
-2.  Please ensure that your CSV-file is free from formatting,
+[^2]: Please ensure that your CSV-file is free from formatting,
     e.g. characters to separate units of thousands, as those columns
     will be read as characters or factors rather than numerical values.
 
-3.  This paper is on the CAS Exam 6 syllabus
+[^3]: This paper is on the CAS Exam 6 syllabus
 
-4.  As an exercise, the reader can confirm that the normal distribution
-    assumption is rejected at the 5% level with the log-logistic curve
+[^4]: As an exercise, the reader can confirm that the normal
+    distribution assumption is rejected at the 5% level with the
+    log-logistic curve

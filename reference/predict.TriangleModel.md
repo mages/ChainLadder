@@ -50,6 +50,7 @@ See also
 ## Examples
 
 ``` r
+
 RAA
 #>       dev
 #> origin    1     2     3     4     5     6     7     8     9    10

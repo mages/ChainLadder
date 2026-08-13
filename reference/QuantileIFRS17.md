@@ -120,6 +120,7 @@ See also
 ## Examples
 
 ``` r
+
 QuantileIFRS17(MCL=list(M1=MackChainLadder(RAA, est.sigma = "Mack"), 
          M2=MackChainLadder(GenIns/1000, est.sigma = "Mack")), 
          Correlation=matrix(c(1,0.3, 0.3, 1), ncol=2), 

@@ -12,8 +12,8 @@
 <link rel="icon" sizes="any" href="../favicon.ico">
 <link rel="manifest" href="../site.webmanifest">
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
-<script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
+<link href="../deps/bootstrap-5.3.8/bootstrap.min.css" rel="stylesheet">
+<script src="../deps/bootstrap-5.3.8/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
 <script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="ChainLadder: Claims reserving with R">
 </head>
@@ -25,7 +25,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">ChainLadder</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.21</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.22</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -60,9 +60,9 @@
 Carrato, Fabio Concina, Markus Gesmann, Dan Murphy, Mario Wüthrich and
 Wayne Zhang</h4>
             
-            <h4 data-toc-skip class="date">2026-02-18</h4>
+            <h4 data-toc-skip class="date">2026-08-13</h4>
       
-      <small class="dont-index">Source: <a href="https://github.com/mages/ChainLadder/blob/0.2.21/vignettes/ChainLadder.Rmd" class="external-link"><code>vignettes/ChainLadder.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/mages/ChainLadder/blob/master/vignettes/ChainLadder.Rmd" class="external-link"><code>vignettes/ChainLadder.Rmd</code></a></small>
       <div class="d-none name"><code>ChainLadder.Rmd</code></div>
     </div>
 
@@ -79,7 +79,7 @@ Wayne Zhang</h4>
 
   Gesmann M, Murphy D, Zhang Y, Carrato A, Wuthrich M, Concina F, Dal
   Moro E (2026). _ChainLadder: Statistical Methods and Models for
-  Claims Reserving in General Insurance_. R package version 0.2.21,
+  Claims Reserving in General Insurance_. R package version 0.2.22,
   &lt;https://mages.github.io/ChainLadder/&gt;.</code></pre>
 <div class="section level3">
 <h3 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
@@ -375,13 +375,13 @@ the first couple of rows and summarise it:</p>
 6   1982   1 205654 ABC</code></pre>
 <div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">myData</span><span class="op">)</span></span></code></pre></div>
-<pre><code>     origin          dev            value             lob           
- Min.   :   1   Min.   : 1.00   Min.   : -17657   Length:701        
- 1st Qu.:   3   1st Qu.: 2.00   1st Qu.:  10324   Class :character  
- Median :   6   Median : 4.00   Median :  72468   Mode  :character  
- Mean   : 642   Mean   : 4.61   Mean   : 176632                     
- 3rd Qu.:1979   3rd Qu.: 7.00   3rd Qu.: 197716                     
- Max.   :1991   Max.   :14.00   Max.   :3258646                     </code></pre>
+<pre><code>     origin          dev            value                lob     
+ Min.   :   1   Min.   : 1.00   Min.   : -17657   Length   :701  
+ 1st Qu.:   3   1st Qu.: 2.00   1st Qu.:  10324   N.unique : 10  
+ Median :   6   Median : 4.00   Median :  72468   N.blank  :  0  
+ Mean   : 642   Mean   : 4.61   Mean   : 176632   Min.nchar:  3  
+ 3rd Qu.:1979   3rd Qu.: 7.00   3rd Qu.: 197716   Max.nchar: 20  
+ Max.   :1991   Max.   :14.00   Max.   :3258646                  </code></pre>
 <p>Let’s focus on one subset of the data. We select the RAA data
 again:</p>
 <div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
@@ -496,7 +496,7 @@ calculated as the volume weighted average development ratios of a
 cumulative loss development triangle from one development period to the
 next
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>C</mi><mrow><mi>i</mi><mi>k</mi></mrow></msub><mo>,</mo><mi>i</mi><mo>,</mo><mi>k</mi><mo>=</mo><mn>1</mn><mo>,</mo><mi>…</mi><mo>,</mo><mi>n</mi></mrow><annotation encoding="application/x-tex">C_{ik}, i,k =1, \dots, n</annotation></semantics></math>.</p>
-<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mtable><mtr><mtd columnalign="right" style="text-align: right"><msub><mi>f</mi><mi>k</mi></msub></mtd><mtd columnalign="left" style="text-align: left"><mo>=</mo><mfrac><mrow><munderover><mo>∑</mo><mrow><mi>i</mi><mo>=</mo><mn>1</mn></mrow><mrow><mi>n</mi><mo>−</mo><mi>k</mi></mrow></munderover><msub><mi>C</mi><mrow><mi>i</mi><mo>,</mo><mi>k</mi><mo>+</mo><mn>1</mn></mrow></msub></mrow><mrow><munderover><mo>∑</mo><mrow><mi>i</mi><mo>=</mo><mn>1</mn></mrow><mrow><mi>n</mi><mo>−</mo><mi>k</mi></mrow></munderover><msub><mi>C</mi><mrow><mi>i</mi><mo>,</mo><mi>k</mi></mrow></msub></mrow></mfrac></mtd></mtr></mtable><annotation encoding="application/x-tex">
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mtable><mtr><mtd columnalign="right" style="text-align: right; padding-right: 0"><msub><mi>f</mi><mi>k</mi></msub></mtd><mtd columnalign="left" style="text-align: left; padding-left: 0"><mo>=</mo><mfrac><mrow><munderover><mo>∑</mo><mrow><mi>i</mi><mo>=</mo><mn>1</mn></mrow><mrow><mi>n</mi><mo>−</mo><mi>k</mi></mrow></munderover><msub><mi>C</mi><mrow><mi>i</mi><mo>,</mo><mi>k</mi><mo>+</mo><mn>1</mn></mrow></msub></mrow><mrow><munderover><mo>∑</mo><mrow><mi>i</mi><mo>=</mo><mn>1</mn></mrow><mrow><mi>n</mi><mo>−</mo><mi>k</mi></mrow></munderover><msub><mi>C</mi><mrow><mi>i</mi><mo>,</mo><mi>k</mi></mrow></msub></mrow></mfrac></mtd></mtr></mtable><annotation encoding="application/x-tex">
 \begin{aligned}
   f_{k} &amp;= \frac{\sum_{i=1}^{n-k} C_{i,k+1}}{\sum_{i=1}^{n-k}C_{i,k}}
 \end{aligned}
@@ -651,7 +651,7 @@ with losses known for development period (e.g. development year)
 for
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>k</mi><mo>&gt;</mo><mi>n</mi><mo>+</mo><mn>1</mn><mo>−</mo><mi>i</mi></mrow><annotation encoding="application/x-tex">k &gt; n+1-i</annotation></semantics></math>
 the Mack chain-ladder-model assumes:</p>
-<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mtable><mtr><mtd columnalign="right" style="text-align: right"><mrow><mtext mathvariant="normal">CL1: </mtext><mspace width="0.333em"></mspace></mrow></mtd><mtd columnalign="left" style="text-align: left"><mi>E</mi><mrow><mo stretchy="true" form="prefix">[</mo><msub><mi>F</mi><mrow><mi>i</mi><mi>k</mi></mrow></msub><mo stretchy="false" form="prefix">|</mo><msub><mi>C</mi><mrow><mi>i</mi><mn>1</mn></mrow></msub><mo>,</mo><msub><mi>C</mi><mrow><mi>i</mi><mn>2</mn></mrow></msub><mo>,</mo><mi>…</mi><mo>,</mo><msub><mi>C</mi><mrow><mi>i</mi><mi>k</mi></mrow></msub><mo stretchy="true" form="postfix">]</mo></mrow><mo>=</mo><msub><mi>f</mi><mi>k</mi></msub><mrow><mspace width="0.333em"></mspace><mtext mathvariant="normal"> with </mtext><mspace width="0.333em"></mspace></mrow><msub><mi>F</mi><mrow><mi>i</mi><mi>k</mi></mrow></msub><mo>=</mo><mfrac><msub><mi>C</mi><mrow><mi>i</mi><mo>,</mo><mi>k</mi><mo>+</mo><mn>1</mn></mrow></msub><msub><mi>C</mi><mrow><mi>i</mi><mi>k</mi></mrow></msub></mfrac></mtd></mtr><mtr><mtd columnalign="right" style="text-align: right"><mrow><mtext mathvariant="normal">CL2: </mtext><mspace width="0.333em"></mspace></mrow></mtd><mtd columnalign="left" style="text-align: left"><mi>V</mi><mi>a</mi><mi>r</mi><mrow><mo stretchy="true" form="prefix">(</mo><mfrac><msub><mi>C</mi><mrow><mi>i</mi><mo>,</mo><mi>k</mi><mo>+</mo><mn>1</mn></mrow></msub><msub><mi>C</mi><mrow><mi>i</mi><mi>k</mi></mrow></msub></mfrac><mo stretchy="false" form="prefix">|</mo><msub><mi>C</mi><mrow><mi>i</mi><mn>1</mn></mrow></msub><mo>,</mo><msub><mi>C</mi><mrow><mi>i</mi><mn>2</mn></mrow></msub><mo>,</mo><mi>…</mi><mo>,</mo><msub><mi>C</mi><mrow><mi>i</mi><mi>k</mi></mrow></msub><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mfrac><msubsup><mi>σ</mi><mi>k</mi><mn>2</mn></msubsup><mrow><msub><mi>w</mi><mrow><mi>i</mi><mi>k</mi></mrow></msub><msubsup><mi>C</mi><mrow><mi>i</mi><mi>k</mi></mrow><mi>α</mi></msubsup></mrow></mfrac></mtd></mtr><mtr><mtd columnalign="right" style="text-align: right"><mrow><mtext mathvariant="normal">CL3: </mtext><mspace width="0.333em"></mspace></mrow></mtd><mtd columnalign="left" style="text-align: left"><mo stretchy="false" form="prefix">{</mo><msub><mi>C</mi><mrow><mi>i</mi><mn>1</mn></mrow></msub><mo>,</mo><mi>…</mi><mo>,</mo><msub><mi>C</mi><mrow><mi>i</mi><mi>n</mi></mrow></msub><mo stretchy="false" form="postfix">}</mo><mo>,</mo><mo stretchy="false" form="prefix">{</mo><msub><mi>C</mi><mrow><mi>j</mi><mn>1</mn></mrow></msub><mo>,</mo><mi>…</mi><mo>,</mo><msub><mi>C</mi><mrow><mi>j</mi><mi>n</mi></mrow></msub><mo stretchy="false" form="postfix">}</mo><mo>,</mo><mrow><mspace width="0.333em"></mspace><mtext mathvariant="normal"> are independent for origin period </mtext><mspace width="0.333em"></mspace></mrow><mi>i</mi><mo>≠</mo><mi>j</mi></mtd></mtr></mtable><annotation encoding="application/x-tex">
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mtable><mtr><mtd columnalign="right" style="text-align: right; padding-right: 0"><mrow><mtext mathvariant="normal">CL1: </mtext><mspace width="0.333em"></mspace></mrow></mtd><mtd columnalign="left" style="text-align: left; padding-left: 0"><mi>E</mi><mo stretchy="false" form="prefix">[</mo><msub><mi>F</mi><mrow><mi>i</mi><mi>k</mi></mrow></msub><mo stretchy="false" form="prefix">|</mo><msub><mi>C</mi><mrow><mi>i</mi><mn>1</mn></mrow></msub><mo>,</mo><msub><mi>C</mi><mrow><mi>i</mi><mn>2</mn></mrow></msub><mo>,</mo><mi>…</mi><mo>,</mo><msub><mi>C</mi><mrow><mi>i</mi><mi>k</mi></mrow></msub><mo stretchy="false" form="postfix">]</mo><mo>=</mo><msub><mi>f</mi><mi>k</mi></msub><mrow><mspace width="0.333em"></mspace><mtext mathvariant="normal"> with </mtext><mspace width="0.333em"></mspace></mrow><msub><mi>F</mi><mrow><mi>i</mi><mi>k</mi></mrow></msub><mo>=</mo><mfrac><msub><mi>C</mi><mrow><mi>i</mi><mo>,</mo><mi>k</mi><mo>+</mo><mn>1</mn></mrow></msub><msub><mi>C</mi><mrow><mi>i</mi><mi>k</mi></mrow></msub></mfrac></mtd></mtr><mtr><mtd columnalign="right" style="text-align: right; padding-right: 0"><mrow><mtext mathvariant="normal">CL2: </mtext><mspace width="0.333em"></mspace></mrow></mtd><mtd columnalign="left" style="text-align: left; padding-left: 0"><mi>V</mi><mi>a</mi><mi>r</mi><mo stretchy="false" form="prefix">(</mo><mfrac><msub><mi>C</mi><mrow><mi>i</mi><mo>,</mo><mi>k</mi><mo>+</mo><mn>1</mn></mrow></msub><msub><mi>C</mi><mrow><mi>i</mi><mi>k</mi></mrow></msub></mfrac><mo stretchy="false" form="prefix">|</mo><msub><mi>C</mi><mrow><mi>i</mi><mn>1</mn></mrow></msub><mo>,</mo><msub><mi>C</mi><mrow><mi>i</mi><mn>2</mn></mrow></msub><mo>,</mo><mi>…</mi><mo>,</mo><msub><mi>C</mi><mrow><mi>i</mi><mi>k</mi></mrow></msub><mo stretchy="false" form="postfix">)</mo><mo>=</mo><mfrac><msubsup><mi>σ</mi><mi>k</mi><mn>2</mn></msubsup><mrow><msub><mi>w</mi><mrow><mi>i</mi><mi>k</mi></mrow></msub><msubsup><mi>C</mi><mrow><mi>i</mi><mi>k</mi></mrow><mi>α</mi></msubsup></mrow></mfrac></mtd></mtr><mtr><mtd columnalign="right" style="text-align: right; padding-right: 0"><mrow><mtext mathvariant="normal">CL3: </mtext><mspace width="0.333em"></mspace></mrow></mtd><mtd columnalign="left" style="text-align: left; padding-left: 0"><mo stretchy="false" form="prefix">{</mo><msub><mi>C</mi><mrow><mi>i</mi><mn>1</mn></mrow></msub><mo>,</mo><mi>…</mi><mo>,</mo><msub><mi>C</mi><mrow><mi>i</mi><mi>n</mi></mrow></msub><mo stretchy="false" form="postfix">}</mo><mo>,</mo><mo stretchy="false" form="prefix">{</mo><msub><mi>C</mi><mrow><mi>j</mi><mn>1</mn></mrow></msub><mo>,</mo><mi>…</mi><mo>,</mo><msub><mi>C</mi><mrow><mi>j</mi><mi>n</mi></mrow></msub><mo stretchy="false" form="postfix">}</mo><mo>,</mo><mrow><mspace width="0.333em"></mspace><mtext mathvariant="normal"> are independent for origin period </mtext><mspace width="0.333em"></mspace></mrow><mi>i</mi><mo>≠</mo><mi>j</mi></mtd></mtr></mtable><annotation encoding="application/x-tex">
 \begin{aligned}
   \mbox{CL1: }  &amp; E[ F_{ik}| C_{i1},C_{i2},\ldots,C_{ik} ] = f_k
   \mbox{ with } F_{ik}=\frac{C_{i,k+1}}{C_{ik}}\\
@@ -663,7 +663,7 @@ the Mack chain-ladder-model assumes:</p>
 \end{aligned}
 </annotation></semantics></math></p>
 <p>with
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>w</mi><mrow><mi>i</mi><mi>k</mi></mrow></msub><mo>∈</mo><mrow><mo stretchy="true" form="prefix">[</mo><mn>0</mn><mo>;</mo><mn>1</mn><mo stretchy="true" form="postfix">]</mo></mrow><mo>,</mo><mi>α</mi><mo>∈</mo><mo stretchy="false" form="prefix">{</mo><mn>0</mn><mo>,</mo><mn>1</mn><mo>,</mo><mn>2</mn><mo stretchy="false" form="postfix">}</mo></mrow><annotation encoding="application/x-tex">w_{ik} \in [0;1], \alpha \in \{0,1,2\}</annotation></semantics></math>.
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>w</mi><mrow><mi>i</mi><mi>k</mi></mrow></msub><mo>∈</mo><mo stretchy="false" form="prefix">[</mo><mn>0</mn><mo>;</mo><mn>1</mn><mo stretchy="false" form="postfix">]</mo><mo>,</mo><mi>α</mi><mo>∈</mo><mo stretchy="false" form="prefix">{</mo><mn>0</mn><mo>,</mo><mn>1</mn><mo>,</mo><mn>2</mn><mo stretchy="false" form="postfix">}</mo></mrow><annotation encoding="application/x-tex">w_{ik} \in [0;1], \alpha \in \{0,1,2\}</annotation></semantics></math>.
 If these assumptions hold, the Mack chain-ladder-model gives an unbiased
 estimator for IBNR (Incurred But Not Reported) claims.</p>
 <p>The Mack chain-ladder model can be regarded as a weighted linear
@@ -979,21 +979,21 @@ that correlations among different triangles can be modelled, which will
 lead to more accurate uncertainty assessments. Reserving methods that
 explicitly model the between-triangle contemporaneous correlations can
 be found in <span class="citation">(Pröhl and Schmidt 2005)</span>,
-<span class="citation">(Michael Merz and Wüthrich 2008b)</span>. Another
-benefit of multivariate loss reserving is that structural relationships
-between triangles can also be reflected, where the development of one
-triangle depends on past losses from other triangles. For example, there
-is generally need for the joint development of the paid and incurred
-losses <span class="citation">(Quarg and Mack 2004)</span>. Most of the
+<span class="citation">(Merz and Wüthrich 2008b)</span>. Another benefit
+of multivariate loss reserving is that structural relationships between
+triangles can also be reflected, where the development of one triangle
+depends on past losses from other triangles. For example, there is
+generally need for the joint development of the paid and incurred losses
+<span class="citation">(Quarg and Mack 2004)</span>. Most of the
 chain-ladder-based multivariate reserving models can be summarised as
 sequential seemingly unrelated regressions <span class="citation">(Zhang
 2010)</span>. We note another strand of multivariate loss reserving
 builds a hierarchical structure into the model to allow estimation of
 one triangle to “borrow strength” from other triangles, reflecting the
-core insight of actuarial credibility <span class="citation">(Zhang,
-Dukic, and Guszcza 2012)</span>.</p>
+core insight of actuarial credibility <span class="citation">(Zhang et
+al. 2012)</span>.</p>
 <p>Denote
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>Y</mi><mrow><mi>i</mi><mo>,</mo><mi>k</mi></mrow></msub><mo>=</mo><mrow><mo stretchy="true" form="prefix">(</mo><msubsup><mi>Y</mi><mrow><mi>i</mi><mo>,</mo><mi>k</mi></mrow><mrow><mo stretchy="true" form="prefix">(</mo><mn>1</mn><mo stretchy="true" form="postfix">)</mo></mrow></msubsup><mo>,</mo><mi>⋯</mi><mo>,</mo><msubsup><mi>Y</mi><mrow><mi>i</mi><mo>,</mo><mi>k</mi></mrow><mrow><mo stretchy="true" form="prefix">(</mo><mi>N</mi><mo stretchy="true" form="postfix">)</mo></mrow></msubsup><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">Y_{i,k}=(Y^{(1)}_{i,k}, \cdots ,Y^{(N)}_{i,k})</annotation></semantics></math>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>Y</mi><mrow><mi>i</mi><mo>,</mo><mi>k</mi></mrow></msub><mo>=</mo><mo stretchy="false" form="prefix">(</mo><msubsup><mi>Y</mi><mrow><mi>i</mi><mo>,</mo><mi>k</mi></mrow><mrow><mo stretchy="false" form="prefix">(</mo><mn>1</mn><mo stretchy="false" form="postfix">)</mo></mrow></msubsup><mo>,</mo><mi>⋯</mi><mo>,</mo><msubsup><mi>Y</mi><mrow><mi>i</mi><mo>,</mo><mi>k</mi></mrow><mrow><mo stretchy="false" form="prefix">(</mo><mi>N</mi><mo stretchy="false" form="postfix">)</mo></mrow></msubsup><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">Y_{i,k}=(Y^{(1)}_{i,k}, \cdots ,Y^{(N)}_{i,k})</annotation></semantics></math>
 as an
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>N</mi><mo>×</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">N
 \times 1</annotation></semantics></math> vector of cumulative losses at
@@ -1002,7 +1002,7 @@ accident year
 and development year
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>k</mi><annotation encoding="application/x-tex">k</annotation></semantics></math>
 where
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="true" form="prefix">(</mo><mi>n</mi><mo stretchy="true" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">(n)</annotation></semantics></math>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false" form="prefix">(</mo><mi>n</mi><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">(n)</annotation></semantics></math>
 refers to the n-th triangle. <span class="citation">(Zhang 2010)</span>
 specifies the model in development period
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>k</mi><annotation encoding="application/x-tex">k</annotation></semantics></math>
@@ -1019,7 +1019,7 @@ is a column of intercepts and
 is the development matrix for development period
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>k</mi><annotation encoding="application/x-tex">k</annotation></semantics></math>.
 Assumptions for this model are:</p>
-<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mtable><mtr><mtd columnalign="right" style="text-align: right"></mtd><mtd columnalign="left" style="text-align: left"><mi>E</mi><mrow><mo stretchy="true" form="prefix">(</mo><msub><mi>ϵ</mi><mrow><mi>i</mi><mo>,</mo><mi>k</mi></mrow></msub><mo stretchy="false" form="prefix">|</mo><msub><mi>Y</mi><mrow><mi>i</mi><mo>,</mo><mn>1</mn></mrow></msub><mo>,</mo><mi>⋯</mi><mo>,</mo><msub><mi>Y</mi><mrow><mi>i</mi><mo>,</mo><mi>I</mi><mo>+</mo><mn>1</mn><mo>−</mo><mi>k</mi></mrow></msub><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mn>0</mn><mo>,</mo></mtd></mtr><mtr><mtd columnalign="right" style="text-align: right"></mtd><mtd columnalign="left" style="text-align: left"><mi>c</mi><mi>o</mi><mi>v</mi><mrow><mo stretchy="true" form="prefix">(</mo><msub><mi>ϵ</mi><mrow><mi>i</mi><mo>,</mo><mi>k</mi></mrow></msub><mo stretchy="false" form="prefix">|</mo><msub><mi>Y</mi><mrow><mi>i</mi><mo>,</mo><mn>1</mn></mrow></msub><mo>,</mo><mi>⋯</mi><mo>,</mo><msub><mi>Y</mi><mrow><mi>i</mi><mo>,</mo><mi>I</mi><mo>+</mo><mn>1</mn><mo>−</mo><mi>k</mi></mrow></msub><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mi>D</mi><mrow><mo stretchy="true" form="prefix">(</mo><msubsup><mi>Y</mi><mrow><mi>i</mi><mo>,</mo><mi>k</mi></mrow><mrow><mo>−</mo><mi>δ</mi><mi>/</mi><mn>2</mn></mrow></msubsup><mo stretchy="true" form="postfix">)</mo></mrow><mspace width="0.167em"></mspace><msub><mi>Σ</mi><mi>k</mi></msub><mspace width="0.167em"></mspace><mi>D</mi><mrow><mo stretchy="true" form="prefix">(</mo><msubsup><mi>Y</mi><mrow><mi>i</mi><mo>,</mo><mi>k</mi></mrow><mrow><mo>−</mo><mi>δ</mi><mi>/</mi><mn>2</mn></mrow></msubsup><mo stretchy="true" form="postfix">)</mo></mrow><mo>,</mo></mtd></mtr><mtr><mtd columnalign="right" style="text-align: right"></mtd><mtd columnalign="left" style="text-align: left"><mtext mathvariant="normal">losses of different accident years are independent</mtext><mo>,</mo></mtd></mtr><mtr><mtd columnalign="right" style="text-align: right"></mtd><mtd columnalign="left" style="text-align: left"><msub><mi>ϵ</mi><mrow><mi>i</mi><mo>,</mo><mi>k</mi></mrow></msub><mrow><mspace width="0.333em"></mspace><mtext mathvariant="normal"> are symmetrically distributed</mtext></mrow><mi>.</mi></mtd></mtr></mtable><annotation encoding="application/x-tex">
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mtable><mtr><mtd columnalign="right" style="text-align: right; padding-right: 0"></mtd><mtd columnalign="left" style="text-align: left; padding-left: 0"><mi>E</mi><mo stretchy="false" form="prefix">(</mo><msub><mi>ϵ</mi><mrow><mi>i</mi><mo>,</mo><mi>k</mi></mrow></msub><mo stretchy="false" form="prefix">|</mo><msub><mi>Y</mi><mrow><mi>i</mi><mo>,</mo><mn>1</mn></mrow></msub><mo>,</mo><mi>⋯</mi><mo>,</mo><msub><mi>Y</mi><mrow><mi>i</mi><mo>,</mo><mi>I</mi><mo>+</mo><mn>1</mn><mo>−</mo><mi>k</mi></mrow></msub><mo stretchy="false" form="postfix">)</mo><mo>=</mo><mn>0</mn><mo>,</mo></mtd></mtr><mtr><mtd columnalign="right" style="text-align: right; padding-right: 0"></mtd><mtd columnalign="left" style="text-align: left; padding-left: 0"><mi>c</mi><mi>o</mi><mi>v</mi><mo stretchy="false" form="prefix">(</mo><msub><mi>ϵ</mi><mrow><mi>i</mi><mo>,</mo><mi>k</mi></mrow></msub><mo stretchy="false" form="prefix">|</mo><msub><mi>Y</mi><mrow><mi>i</mi><mo>,</mo><mn>1</mn></mrow></msub><mo>,</mo><mi>⋯</mi><mo>,</mo><msub><mi>Y</mi><mrow><mi>i</mi><mo>,</mo><mi>I</mi><mo>+</mo><mn>1</mn><mo>−</mo><mi>k</mi></mrow></msub><mo stretchy="false" form="postfix">)</mo><mo>=</mo><mi>D</mi><mo stretchy="false" form="prefix">(</mo><msubsup><mi>Y</mi><mrow><mi>i</mi><mo>,</mo><mi>k</mi></mrow><mrow><mi>−</mi><mi>δ</mi><mi>/</mi><mn>2</mn></mrow></msubsup><mo stretchy="false" form="postfix">)</mo><mspace width="0.167em"></mspace><msub><mi mathvariant="normal">Σ</mi><mi>k</mi></msub><mspace width="0.167em"></mspace><mi>D</mi><mo stretchy="false" form="prefix">(</mo><msubsup><mi>Y</mi><mrow><mi>i</mi><mo>,</mo><mi>k</mi></mrow><mrow><mi>−</mi><mi>δ</mi><mi>/</mi><mn>2</mn></mrow></msubsup><mo stretchy="false" form="postfix">)</mo><mo>,</mo></mtd></mtr><mtr><mtd columnalign="right" style="text-align: right; padding-right: 0"></mtd><mtd columnalign="left" style="text-align: left; padding-left: 0"><mtext mathvariant="normal">losses of different accident years are independent</mtext><mo>,</mo></mtd></mtr><mtr><mtd columnalign="right" style="text-align: right; padding-right: 0"></mtd><mtd columnalign="left" style="text-align: left; padding-left: 0"><msub><mi>ϵ</mi><mrow><mi>i</mi><mo>,</mo><mi>k</mi></mrow></msub><mrow><mspace width="0.333em"></mspace><mtext mathvariant="normal"> are symmetrically distributed</mtext></mrow><mi>.</mi></mtd></mtr></mtable><annotation encoding="application/x-tex">
 \begin{aligned}
 &amp;E(\epsilon_{i,k}|Y_{i,1}, \cdots,Y_{i,I+1-k}) =0, \\
 &amp;cov(\epsilon_{i,k}|Y_{i,1}, \cdots, Y_{i,I+1-k})=D(Y_{i,k}^{-\delta/2}) \, \Sigma_k \, D(Y_{i,k}^{-\delta/2}), \\
@@ -1046,8 +1046,8 @@ functions. Indeed, any input triangles to the
 <code>MultiChainLadder</code> function will be converted to
 <code>triangles</code> internally. We then present loss reserving
 methods based on the MCL and GMCL models in turn.</p>
-<p>Consider the two liability loss triangles from <span class="citation">(Michael Merz and Wüthrich 2008b)</span>. It comes as a
-list of two matrices:</p>
+<p>Consider the two liability loss triangles from <span class="citation">(Merz and Wüthrich 2008b)</span>. It comes as a list of
+two matrices:</p>
 <div class="sourceCode" id="cb80"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">liab</span><span class="op">)</span></span></code></pre></div>
 <pre><code>List of 2
@@ -1097,7 +1097,7 @@ parameters is controlled by the <code>fit.method</code> argument. If we
 specify <code>fit.method = "OLS"</code>, the ordinary least squares will
 be used and the estimation of development factors for each triangle is
 independent of the others. In this case, the residual covariance matrix
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>Σ</mi><mi>k</mi></msub><annotation encoding="application/x-tex">\Sigma_k</annotation></semantics></math>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi mathvariant="normal">Σ</mi><mi>k</mi></msub><annotation encoding="application/x-tex">\Sigma_k</annotation></semantics></math>
 is diagonal. As a result, the multivariate model is equivalent to
 running multiple Mack chain-ladders separately.</p>
 <div class="sourceCode" id="cb89"><pre class="downlit sourceCode r">
@@ -1237,16 +1237,16 @@ the documentation for possible values of these two arguments.</p>
 <code>systemfit</code> function to fit the regression models period by
 period. When SUR models are specified, there are several ways to
 estimate the residual covariance matrix
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>Σ</mi><mi>k</mi></msub><annotation encoding="application/x-tex">\Sigma_k</annotation></semantics></math>.
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi mathvariant="normal">Σ</mi><mi>k</mi></msub><annotation encoding="application/x-tex">\Sigma_k</annotation></semantics></math>.
 Available methods are <code>noDfCor</code>, <code>geomean</code>,
 <code>max</code>, and <code>Theil</code> with the default as
 <code>geomean</code>. The method <code>Theil</code> will produce
 unbiased covariance estimate, but the resulting estimate may not be
-positive semi-definite. This is also the estimator used by <span class="citation">(Michael Merz and Wüthrich 2008b)</span>. However, this
-method does not work out of the box for the <code>liab</code> data, and
-is perhaps one of the reasons <span class="citation">(Michael Merz and
-Wüthrich 2008b)</span> used extrapolation to get the estimate for the
-last several periods.</p>
+positive semi-definite. This is also the estimator used by <span class="citation">(Merz and Wüthrich 2008b)</span>. However, this method
+does not work out of the box for the <code>liab</code> data, and is
+perhaps one of the reasons <span class="citation">(Merz and Wüthrich
+2008b)</span> used extrapolation to get the estimate for the last
+several periods.</p>
 <p>Indeed, for most applications, we recommend the use of separate chain
 ladders for the tail periods to stabilize the estimation - there are few
 data points in the tail and running a multivariate model often produces
@@ -1271,8 +1271,8 @@ general multivariate chain-ladder with intercepts and non-diagonal
 development matrix.</p>
 <p>For example, the following fits the SUR method to the first part (the
 first 11 columns) using the unbiased residual covariance estimator in
-<span class="citation">(Michael Merz and Wüthrich 2008b)</span>, and
-separate chain-ladders for the rest:</p>
+<span class="citation">(Merz and Wüthrich 2008b)</span>, and separate
+chain-ladders for the rest:</p>
 <div class="sourceCode" id="cb101"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="va"><a href="https://r-forge.r-project.org/projects/systemfit/" class="external-link">systemfit</a></span><span class="op">)</span></span>
 <span><span class="va">W1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/MultiChainLadder.html">MultiChainLadder2</a></span><span class="op">(</span><span class="va">liab</span>, mse.method <span class="op">=</span> <span class="st">"Independence"</span>,</span>
@@ -1289,9 +1289,9 @@ Total 8759806      0.8095 10821034 2061228 162785 0.079
 $`Summary Statistics for Triangle 1+2`
         Latest Dev.To.Date Ultimate    IBNR    S.E     CV
 Total 20103203      0.7099 28318437 8215234 505376 0.0615</code></pre>
-<p>Similarly, the iterative residual covariance estimator in <span class="citation">(Michael Merz and Wüthrich 2008b)</span> can also be
-used, in which we use the control parameter <code>maxiter</code> to
-determine the number of iterations:</p>
+<p>Similarly, the iterative residual covariance estimator in <span class="citation">(Merz and Wüthrich 2008b)</span> can also be used, in
+which we use the control parameter <code>maxiter</code> to determine the
+number of iterations:</p>
 <div class="sourceCode" id="cb103"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">)</span><span class="op">{</span></span>
 <span>  <span class="va">W2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/MultiChainLadder.html">MultiChainLadder2</a></span><span class="op">(</span><span class="va">liab</span>, mse.method <span class="op">=</span> <span class="st">"Independence"</span>,</span>
@@ -1323,8 +1323,8 @@ $`Summary Statistics for Triangle 1+2`
         Latest Dev.To.Date Ultimate    IBNR    S.E     CV
 Total 20103203      0.7099 28318565 8215362 505444 0.0615</code></pre>
 <p>We see that the covariance estimate converges in three steps. These
-are very similar to the results in <span class="citation">(Michael Merz
-and Wüthrich 2008b)</span>, the small difference being a result of the
+are very similar to the results in <span class="citation">(Merz and
+Wüthrich 2008b)</span>, the small difference being a result of the
 different approaches used in the last three periods.</p>
 <p>Also note that in the above two examples, the argument
 <code>control</code> is not defined in the prototype of the
@@ -1598,7 +1598,7 @@ the user can compute other uncertainty measures such as predictive
 intervals.</p>
 <p>Only the Tweedie family of distributions are allowed, that is, the
 exponential family that admits a power variance function
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>V</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>μ</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><msup><mi>μ</mi><mi>p</mi></msup></mrow><annotation encoding="application/x-tex">V(\mu)=\mu^p</annotation></semantics></math>.
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>V</mi><mo stretchy="false" form="prefix">(</mo><mi>μ</mi><mo stretchy="false" form="postfix">)</mo><mo>=</mo><msup><mi>μ</mi><mi>p</mi></msup></mrow><annotation encoding="application/x-tex">V(\mu)=\mu^p</annotation></semantics></math>.
 The variance power
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>p</mi><annotation encoding="application/x-tex">p</annotation></semantics></math>
 is specified in the <code>var.power</code> argument, and controls the
@@ -1754,10 +1754,10 @@ bootstrapping
 <h3 id="paid-incurred-chain-model">Paid-incurred chain model<a class="anchor" aria-label="anchor" href="#paid-incurred-chain-model"></a>
 </h3>
 <p>The Paid-incurred chain model was published by Merz and Wüthrich in
-2010 <span class="citation">(M. Merz and Wüthrich 2010)</span>. It
-combines claims payments and incurred losses information in a a
-mathematically rigorous and consistent way to get a unified ultimate
-loss prediction.</p>
+2010 <span class="citation">(Merz and Wüthrich 2010)</span>. It combines
+claims payments and incurred losses information in a a mathematically
+rigorous and consistent way to get a unified ultimate loss
+prediction.</p>
 <div class="section level4">
 <h4 id="model-assumptions">Model assumptions<a class="anchor" aria-label="anchor" href="#model-assumptions"></a>
 </h4>
@@ -1765,29 +1765,29 @@ loss prediction.</p>
 following:</p>
 <ul>
 <li>Conditionally, given
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>Θ</mi><mo>=</mo><mo stretchy="false" form="prefix">(</mo><msub><mi>Φ</mi><mn>0</mn></msub><mo>,</mo><mi>.</mi><mi>.</mi><mi>.</mi><mo>,</mo><msub><mi>Φ</mi><mi>I</mi></msub><mo>,</mo><msub><mi>Ψ</mi><mn>0</mn></msub><mo>,</mo><mi>.</mi><mi>.</mi><mi>.</mi><mo>,</mo><msub><mi>Ψ</mi><mrow><mi>I</mi><mo>−</mo><mn>1</mn></mrow></msub><mo>,</mo><msub><mi>σ</mi><mn>0</mn></msub><mo>,</mo><mi>.</mi><mi>.</mi><mi>.</mi><mo>,</mo><msub><mi>σ</mi><mrow><mi>I</mi><mo>−</mo><mn>1</mn></mrow></msub><mo>,</mo><msub><mi>τ</mi><mn>0</mn></msub><mo>,</mo><mi>.</mi><mi>.</mi><mi>.</mi><mo>,</mo><msub><mi>τ</mi><mrow><mi>I</mi><mo>−</mo><mn>1</mn></mrow></msub></mrow><annotation encoding="application/x-tex">\Theta = (\Phi_0,...,\Phi_I,
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi mathvariant="normal">Θ</mi><mo>=</mo><mo stretchy="false" form="prefix">(</mo><msub><mi mathvariant="normal">Φ</mi><mn>0</mn></msub><mo>,</mo><mi>.</mi><mi>.</mi><mi>.</mi><mo>,</mo><msub><mi mathvariant="normal">Φ</mi><mi>I</mi></msub><mo>,</mo><msub><mi mathvariant="normal">Ψ</mi><mn>0</mn></msub><mo>,</mo><mi>.</mi><mi>.</mi><mi>.</mi><mo>,</mo><msub><mi mathvariant="normal">Ψ</mi><mrow><mi>I</mi><mo>−</mo><mn>1</mn></mrow></msub><mo>,</mo><msub><mi>σ</mi><mn>0</mn></msub><mo>,</mo><mi>.</mi><mi>.</mi><mi>.</mi><mo>,</mo><msub><mi>σ</mi><mrow><mi>I</mi><mo>−</mo><mn>1</mn></mrow></msub><mo>,</mo><msub><mi>τ</mi><mn>0</mn></msub><mo>,</mo><mi>.</mi><mi>.</mi><mi>.</mi><mo>,</mo><msub><mi>τ</mi><mrow><mi>I</mi><mo>−</mo><mn>1</mn></mrow></msub></mrow><annotation encoding="application/x-tex">\Theta = (\Phi_0,...,\Phi_I,
 \Psi_0,...,\Psi_{I-1},\sigma_0,...,\sigma_{I-1},\tau_0,...,\tau_{I-1}</annotation></semantics></math>
 we have
 <ul>
 <li>the random vector
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="true" form="prefix">(</mo><msub><mi>ξ</mi><mrow><mn>0</mn><mo>,</mo><mn>0</mn></mrow></msub><mo>,</mo><mi>.</mi><mi>.</mi><mi>.</mi><mo>,</mo><msub><mi>ξ</mi><mrow><mi>I</mi><mo>,</mo><mi>I</mi></mrow></msub><mo>,</mo><msub><mi>ζ</mi><mrow><mn>0</mn><mo>,</mo><mn>0</mn></mrow></msub><mo>,</mo><mi>.</mi><mi>.</mi><mi>.</mi><mo>,</mo><msub><mi>ζ</mi><mrow><mi>I</mi><mo>,</mo><mi>I</mi><mo>−</mo><mn>1</mn></mrow></msub><mo stretchy="true" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">(\xi_{0,0},...,\xi_{I,I}, \zeta_{0,0},...,\zeta_{I,I-1})</annotation></semantics></math>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false" form="prefix">(</mo><msub><mi>ξ</mi><mrow><mn>0</mn><mo>,</mo><mn>0</mn></mrow></msub><mo>,</mo><mi>.</mi><mi>.</mi><mi>.</mi><mo>,</mo><msub><mi>ξ</mi><mrow><mi>I</mi><mo>,</mo><mi>I</mi></mrow></msub><mo>,</mo><msub><mi>ζ</mi><mrow><mn>0</mn><mo>,</mo><mn>0</mn></mrow></msub><mo>,</mo><mi>.</mi><mi>.</mi><mi>.</mi><mo>,</mo><msub><mi>ζ</mi><mrow><mi>I</mi><mo>,</mo><mi>I</mi><mo>−</mo><mn>1</mn></mrow></msub><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">(\xi_{0,0},...,\xi_{I,I}, \zeta_{0,0},...,\zeta_{I,I-1})</annotation></semantics></math>
 has multivariate Gaussian distribution with uncorrelated components
 given by $$
-<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>ξ</mi><mrow><mi>i</mi><mo>,</mo><mi>j</mi></mrow></msub><mo>∼</mo><mi>N</mi><mrow><mo stretchy="true" form="prefix">(</mo><msub><mi>Φ</mi><mi>j</mi></msub><mo>,</mo><msubsup><mi>σ</mi><mi>j</mi><mn>2</mn></msubsup><mo stretchy="true" form="postfix">)</mo></mrow><mo>,</mo></mrow><annotation encoding="application/x-tex">\begin{equation*}
+<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>ξ</mi><mrow><mi>i</mi><mo>,</mo><mi>j</mi></mrow></msub><mo>∼</mo><mi>N</mi><mo stretchy="false" form="prefix">(</mo><msub><mi mathvariant="normal">Φ</mi><mi>j</mi></msub><mo>,</mo><msubsup><mi>σ</mi><mi>j</mi><mn>2</mn></msubsup><mo stretchy="false" form="postfix">)</mo><mo>,</mo></mrow><annotation encoding="application/x-tex">\begin{equation*}
 \xi_{i,j} \sim N(\Phi_j,\sigma^2_j),
-\end{equation*}</annotation></semantics></math><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>ζ</mi><mrow><mi>k</mi><mo>,</mo><mi>l</mi></mrow></msub><mo>∼</mo><mi>N</mi><mrow><mo stretchy="true" form="prefix">(</mo><msub><mi>Ψ</mi><mi>l</mi></msub><mo>,</mo><msubsup><mi>τ</mi><mi>l</mi><mn>2</mn></msubsup><mo stretchy="true" form="postfix">)</mo></mrow><mo>;</mo></mrow><annotation encoding="application/x-tex">\begin{equation*}
+\end{equation*}</annotation></semantics></math><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>ζ</mi><mrow><mi>k</mi><mo>,</mo><mi>l</mi></mrow></msub><mo>∼</mo><mi>N</mi><mo stretchy="false" form="prefix">(</mo><msub><mi mathvariant="normal">Ψ</mi><mi>l</mi></msub><mo>,</mo><msubsup><mi>τ</mi><mi>l</mi><mn>2</mn></msubsup><mo stretchy="false" form="postfix">)</mo><mo>;</mo></mrow><annotation encoding="application/x-tex">\begin{equation*}
 \zeta_{k,l} \sim N(\Psi_l,\tau^2_l);
 \end{equation*}</annotation></semantics></math>
 </li>
 <li>cumulative payments are given by the recursion
-<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>P</mi><mrow><mi>i</mi><mo>,</mo><mi>j</mi></mrow></msub><mo>=</mo><msub><mi>P</mi><mrow><mi>i</mi><mo>,</mo><mi>j</mi><mo>−</mo><mn>1</mn></mrow></msub><mo>exp</mo><mrow><mo stretchy="true" form="prefix">(</mo><msub><mi>ξ</mi><mrow><mi>i</mi><mo>,</mo><mi>j</mi></mrow></msub><mo stretchy="true" form="postfix">)</mo></mrow><mo>,</mo></mrow><annotation encoding="application/x-tex">\begin{equation*}
+<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>P</mi><mrow><mi>i</mi><mo>,</mo><mi>j</mi></mrow></msub><mo>=</mo><msub><mi>P</mi><mrow><mi>i</mi><mo>,</mo><mi>j</mi><mo>−</mo><mn>1</mn></mrow></msub><mrow><mi mathvariant="normal">exp</mi><mo>⁡</mo></mrow><mo stretchy="false" form="prefix">(</mo><msub><mi>ξ</mi><mrow><mi>i</mi><mo>,</mo><mi>j</mi></mrow></msub><mo stretchy="false" form="postfix">)</mo><mo>,</mo></mrow><annotation encoding="application/x-tex">\begin{equation*}
 P_{i,j} = P_{i,j-1} \exp(\xi_{i,j}),
 \end{equation*}</annotation></semantics></math> $$ with initial value
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>P</mi><mrow><mi>i</mi><mo>,</mo><mn>0</mn></mrow></msub><mo>=</mo><mo>exp</mo><mrow><mo stretchy="true" form="prefix">(</mo><msub><mi>ξ</mi><mrow><mi>i</mi><mo>,</mo><mn>0</mn></mrow></msub><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">P_{i,0} = \exp (\xi_{i,0})</annotation></semantics></math>;</li>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>P</mi><mrow><mi>i</mi><mo>,</mo><mn>0</mn></mrow></msub><mo>=</mo><mrow><mi mathvariant="normal">exp</mi><mo>⁡</mo></mrow><mo stretchy="false" form="prefix">(</mo><msub><mi>ξ</mi><mrow><mi>i</mi><mo>,</mo><mn>0</mn></mrow></msub><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">P_{i,0} = \exp (\xi_{i,0})</annotation></semantics></math>;</li>
 <li>incurred losses
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>I</mi><mrow><mi>i</mi><mo>,</mo><mi>j</mi></mrow></msub><annotation encoding="application/x-tex">I_{i,j}</annotation></semantics></math>
 are given by the backwards recursion
-<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>I</mi><mrow><mi>i</mi><mo>,</mo><mi>j</mi><mo>−</mo><mn>1</mn></mrow></msub><mo>=</mo><msub><mi>I</mi><mrow><mi>i</mi><mo>,</mo><mi>j</mi></mrow></msub><mo>exp</mo><mrow><mo stretchy="true" form="prefix">(</mo><mo>−</mo><msub><mi>ζ</mi><mrow><mi>i</mi><mo>,</mo><mi>j</mi><mo>−</mo><mn>1</mn></mrow></msub><mo stretchy="true" form="postfix">)</mo></mrow><mo>,</mo></mrow><annotation encoding="application/x-tex">
+<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>I</mi><mrow><mi>i</mi><mo>,</mo><mi>j</mi><mo>−</mo><mn>1</mn></mrow></msub><mo>=</mo><msub><mi>I</mi><mrow><mi>i</mi><mo>,</mo><mi>j</mi></mrow></msub><mrow><mi mathvariant="normal">exp</mi><mo>⁡</mo></mrow><mo stretchy="false" form="prefix">(</mo><mi>−</mi><msub><mi>ζ</mi><mrow><mi>i</mi><mo>,</mo><mi>j</mi><mo>−</mo><mn>1</mn></mrow></msub><mo stretchy="false" form="postfix">)</mo><mo>,</mo></mrow><annotation encoding="application/x-tex">
 \begin{equation*}
 I_{i,j-1} = I_{i,j} \exp(-\zeta_{i,j-1}),
 \end{equation*}
@@ -1796,7 +1796,7 @@ I_{i,j-1} = I_{i,j} \exp(-\zeta_{i,j-1}),
 </ul>
 </li>
 <li>The components of
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>Θ</mi><annotation encoding="application/x-tex">\Theta</annotation></semantics></math>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi mathvariant="normal">Θ</mi><annotation encoding="application/x-tex">\Theta</annotation></semantics></math>
 are independent and
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>σ</mi><mi>j</mi></msub><mo>,</mo><msub><mi>τ</mi><mi>j</mi></msub><mo>&gt;</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">\sigma_j,\tau_j &gt; 0</annotation></semantics></math>
 for all j.</li>
@@ -1806,7 +1806,7 @@ for all j.</li>
 <h4 id="parameter-estimation">Parameter estimation<a class="anchor" aria-label="anchor" href="#parameter-estimation"></a>
 </h4>
 <p>Parameters
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>Θ</mi><annotation encoding="application/x-tex">\Theta</annotation></semantics></math>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi mathvariant="normal">Θ</mi><annotation encoding="application/x-tex">\Theta</annotation></semantics></math>
 in the model are in general not known and need to be estimated from
 observations. They are estimated in a Bayesian framework. In the
 Bayesian PIC model they assume that the previous assumptions hold true
@@ -1815,12 +1815,12 @@ with deterministic
 and
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>τ</mi><mn>0</mn></msub><mo>,</mo><mi>.</mi><mi>.</mi><mi>.</mi><mo>,</mo><msub><mi>τ</mi><mrow><mi>J</mi><mo>−</mo><mn>1</mn></mrow></msub></mrow><annotation encoding="application/x-tex">\tau_0,...,\tau_{J-1}</annotation></semantics></math>
 and</p>
-<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>Φ</mi><mi>m</mi></msub><mo>∼</mo><mi>N</mi><mrow><mo stretchy="true" form="prefix">(</mo><msub><mi>ϕ</mi><mi>m</mi></msub><mo>,</mo><msubsup><mi>s</mi><mi>m</mi><mn>2</mn></msubsup><mo stretchy="true" form="postfix">)</mo></mrow><mo>,</mo></mrow><annotation encoding="application/x-tex">
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi mathvariant="normal">Φ</mi><mi>m</mi></msub><mo>∼</mo><mi>N</mi><mo stretchy="false" form="prefix">(</mo><msub><mi>ϕ</mi><mi>m</mi></msub><mo>,</mo><msubsup><mi>s</mi><mi>m</mi><mn>2</mn></msubsup><mo stretchy="false" form="postfix">)</mo><mo>,</mo></mrow><annotation encoding="application/x-tex">
 \begin{equation*}
 \Phi_m \sim N(\phi_m,s^2_m),
 \end{equation*}
 </annotation></semantics></math></p>
-<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>Ψ</mi><mi>n</mi></msub><mo>∼</mo><mi>N</mi><mrow><mo stretchy="true" form="prefix">(</mo><msub><mi>ψ</mi><mi>n</mi></msub><mo>,</mo><msubsup><mi>t</mi><mi>n</mi><mn>2</mn></msubsup><mo stretchy="true" form="postfix">)</mo></mrow><mi>.</mi></mrow><annotation encoding="application/x-tex">
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi mathvariant="normal">Ψ</mi><mi>n</mi></msub><mo>∼</mo><mi>N</mi><mo stretchy="false" form="prefix">(</mo><msub><mi>ψ</mi><mi>n</mi></msub><mo>,</mo><msubsup><mi>t</mi><mi>n</mi><mn>2</mn></msubsup><mo stretchy="false" form="postfix">)</mo><mi>.</mi></mrow><annotation encoding="application/x-tex">
 \begin{equation*}
 \Psi_n \sim N(\psi_n,t^2_n).
 \end{equation*}
@@ -1888,9 +1888,9 @@ $s.e.
 prediction for the total ultimate loss.</p>
 <p>It’s important to notice that the model is implemented in the special
 case of non-informative priors for
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>Φ</mi><mi>m</mi></msub><annotation encoding="application/x-tex">\Phi_m</annotation></semantics></math>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi mathvariant="normal">Φ</mi><mi>m</mi></msub><annotation encoding="application/x-tex">\Phi_m</annotation></semantics></math>
 and
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>Ψ</mi><mi>n</mi></msub><annotation encoding="application/x-tex">\Psi_n</annotation></semantics></math>;
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi mathvariant="normal">Ψ</mi><mi>n</mi></msub><annotation encoding="application/x-tex">\Psi_n</annotation></semantics></math>;
 this means that we let
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msubsup><mi>s</mi><mi>m</mi><mn>2</mn></msubsup><mo>→</mo><mi>∞</mi></mrow><annotation encoding="application/x-tex">s^2_m \to \infty</annotation></semantics></math>
 and
@@ -1937,7 +1937,7 @@ consider the changes in these one year updates, that is,</p>
 $$</span></p>
 <p>The tower property of conditional expectation implies that the CDRs
 are on average 0, that is, <span class="math inline">$\mathbb{E}[{\rm
-CDR}_{i,t+1}|{\cal D}_t]=0$</span> and the Merz-Wüthrich formula <span class="citation">(Michael Merz and Wüthrich 2008a)</span>, <span class="citation">(Michael Merz and Wüthrich 2014)</span> assesses the
+CDR}_{i,t+1}|{\cal D}_t]=0$</span> and the Merz-Wüthrich formula <span class="citation">(Merz and Wüthrich 2008a)</span>, <span class="citation">(Merz and Wüthrich 2014)</span> assesses the
 uncertainty of these predictions measured by the following conditional
 mean square error of prediction (MSEP)</p>
 <p><span class="math display">$$
@@ -1958,7 +1958,8 @@ generic <code>CDR</code> function for objects of
 <p>Further, the <code>tweedieReserve</code> function offers also the
 option to estimate the one year CDR, by setting the argument
 <code>rereserving=TRUE</code>.</p>
-<p>For example, to reproduce the results of <span class="citation">(Michael Merz and Wüthrich 2014)</span> use:</p>
+<p>For example, to reproduce the results of <span class="citation">(Merz
+and Wüthrich 2014)</span> use:</p>
 <div class="sourceCode" id="cb145"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">M</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/MackChainLadder.html">MackChainLadder</a></span><span class="op">(</span><span class="va">MW2014</span>, est.sigma<span class="op">=</span><span class="st">"Mack"</span><span class="op">)</span></span>
 <span><span class="va">cdrM</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/CDR.html">CDR</a></span><span class="op">(</span><span class="va">M</span><span class="op">)</span></span>
@@ -2058,7 +2059,7 @@ regulator. This section gives some examples how the arguments of the
 stochastic reserving model. The argument <code>design.type</code> allows
 us to test different regression structures. The classic over-dispersed
 Poisson (ODP) model uses the following structure:</p>
-<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>Y</mi><mo>∽</mo><mrow><mi>𝚊</mi><mi>𝚜</mi><mi mathvariant="monospace">.</mi><mi>𝚏</mi><mi>𝚊</mi><mi>𝚌</mi><mi>𝚝</mi><mi>𝚘</mi><mi>𝚛</mi></mrow><mrow><mo stretchy="true" form="prefix">(</mo><mi>O</mi><mi>Y</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>+</mo><mrow><mi>𝚊</mi><mi>𝚜</mi><mi mathvariant="monospace">.</mi><mi>𝚏</mi><mi>𝚊</mi><mi>𝚌</mi><mi>𝚝</mi><mi>𝚘</mi><mi>𝚛</mi></mrow><mrow><mo stretchy="true" form="prefix">(</mo><mi>D</mi><mi>Y</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>,</mo></mrow><annotation encoding="application/x-tex">
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>Y</mi><mo>∽</mo><mrow><mi>𝚊</mi><mi>𝚜</mi><mi mathvariant="monospace">.</mi><mi>𝚏</mi><mi>𝚊</mi><mi>𝚌</mi><mi>𝚝</mi><mi>𝚘</mi><mi>𝚛</mi></mrow><mo stretchy="false" form="prefix">(</mo><mi>O</mi><mi>Y</mi><mo stretchy="false" form="postfix">)</mo><mo>+</mo><mrow><mi>𝚊</mi><mi>𝚜</mi><mi mathvariant="monospace">.</mi><mi>𝚏</mi><mi>𝚊</mi><mi>𝚌</mi><mi>𝚝</mi><mi>𝚘</mi><mi>𝚛</mi></mrow><mo stretchy="false" form="prefix">(</mo><mi>D</mi><mi>Y</mi><mo stretchy="false" form="postfix">)</mo><mo>,</mo></mrow><annotation encoding="application/x-tex">
 \begin{equation*}
 Y \backsim \mathtt{as.factor}(OY) + \mathtt{as.factor}(DY),
 \end{equation*}
@@ -2071,7 +2072,7 @@ to show a pattern, which chain-ladder isn’t capable to model. In order
 to overcome this, the user could be then interested to change the
 regression structure in order to try to strip out these patterns <span class="citation">(Gigante and Sigalotti 2005)</span>. For example, a
 regression structure like:</p>
-<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>Y</mi><mo>∽</mo><mrow><mi>𝚊</mi><mi>𝚜</mi><mi mathvariant="monospace">.</mi><mi>𝚏</mi><mi>𝚊</mi><mi>𝚌</mi><mi>𝚝</mi><mi>𝚘</mi><mi>𝚛</mi></mrow><mrow><mo stretchy="true" form="prefix">(</mo><mi>D</mi><mi>Y</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>+</mo><mrow><mi>𝚊</mi><mi>𝚜</mi><mi mathvariant="monospace">.</mi><mi>𝚏</mi><mi>𝚊</mi><mi>𝚌</mi><mi>𝚝</mi><mi>𝚘</mi><mi>𝚛</mi></mrow><mrow><mo stretchy="true" form="prefix">(</mo><mi>C</mi><mi>Y</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>,</mo></mrow><annotation encoding="application/x-tex">
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>Y</mi><mo>∽</mo><mrow><mi>𝚊</mi><mi>𝚜</mi><mi mathvariant="monospace">.</mi><mi>𝚏</mi><mi>𝚊</mi><mi>𝚌</mi><mi>𝚝</mi><mi>𝚘</mi><mi>𝚛</mi></mrow><mo stretchy="false" form="prefix">(</mo><mi>D</mi><mi>Y</mi><mo stretchy="false" form="postfix">)</mo><mo>+</mo><mrow><mi>𝚊</mi><mi>𝚜</mi><mi mathvariant="monospace">.</mi><mi>𝚏</mi><mi>𝚊</mi><mi>𝚌</mi><mi>𝚝</mi><mi>𝚘</mi><mi>𝚛</mi></mrow><mo stretchy="false" form="prefix">(</mo><mi>C</mi><mi>Y</mi><mo stretchy="false" form="postfix">)</mo><mo>,</mo></mrow><annotation encoding="application/x-tex">
 \begin{equation*}
 Y \backsim \mathtt{as.factor}(DY) + \mathtt{as.factor}(CY),
 \end{equation*}
@@ -2081,7 +2082,7 @@ This approach returns the same results of the arithmetic separation
 method, modelling explicitly inflation parameters between consequent
 calendar periods. Another interesting assumption is the assumed
 underlying distribution. The ODP model assumes the following:</p>
-<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>P</mi><mrow><mi>i</mi><mo>,</mo><mi>j</mi></mrow></msub><mo>∽</mo><mi>O</mi><mi>D</mi><mi>P</mi><mrow><mo stretchy="true" form="prefix">(</mo><msub><mi>m</mi><mrow><mi>i</mi><mo>,</mo><mi>j</mi></mrow></msub><mo>,</mo><mi>ϕ</mi><mo>⋅</mo><msub><mi>m</mi><mrow><mi>i</mi><mo>,</mo><mi>j</mi></mrow></msub><mo stretchy="true" form="postfix">)</mo></mrow><mo>,</mo></mrow><annotation encoding="application/x-tex">
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>P</mi><mrow><mi>i</mi><mo>,</mo><mi>j</mi></mrow></msub><mo>∽</mo><mi>O</mi><mi>D</mi><mi>P</mi><mo stretchy="false" form="prefix">(</mo><msub><mi>m</mi><mrow><mi>i</mi><mo>,</mo><mi>j</mi></mrow></msub><mo>,</mo><mi>ϕ</mi><mo>⋅</mo><msub><mi>m</mi><mrow><mi>i</mi><mo>,</mo><mi>j</mi></mrow></msub><mo stretchy="false" form="postfix">)</mo><mo>,</mo></mrow><annotation encoding="application/x-tex">
 \begin{equation*}
 P_{i,j} \backsim ODP(m_{i,j},\phi \cdot m_{i,j}),
 \end{equation*}
@@ -2089,11 +2090,11 @@ P_{i,j} \backsim ODP(m_{i,j},\phi \cdot m_{i,j}),
 <p>which is a particular case of a Tweedie distribution, with
 <code>p</code> parameter equals to 1. Generally speaking, for any random
 variable Y that obeys a Tweedie distribution, the variance
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>𝕍</mi><mrow><mo stretchy="true" form="prefix">[</mo><mi>Y</mi><mo stretchy="true" form="postfix">]</mo></mrow></mrow><annotation encoding="application/x-tex">\mathbb{V}[Y]</annotation></semantics></math>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>𝕍</mi><mo stretchy="false" form="prefix">[</mo><mi>Y</mi><mo stretchy="false" form="postfix">]</mo></mrow><annotation encoding="application/x-tex">\mathbb{V}[Y]</annotation></semantics></math>
 relates to the mean
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>𝔼</mi><mrow><mo stretchy="true" form="prefix">[</mo><mi>Y</mi><mo stretchy="true" form="postfix">]</mo></mrow></mrow><annotation encoding="application/x-tex">\mathbb{E}[Y]</annotation></semantics></math>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>𝔼</mi><mo stretchy="false" form="prefix">[</mo><mi>Y</mi><mo stretchy="false" form="postfix">]</mo></mrow><annotation encoding="application/x-tex">\mathbb{E}[Y]</annotation></semantics></math>
 by the following law:</p>
-<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>𝕍</mi><mrow><mo stretchy="true" form="prefix">[</mo><mi>Y</mi><mo stretchy="true" form="postfix">]</mo></mrow><mo>=</mo><mi>a</mi><mo>⋅</mo><mi>𝔼</mi><msup><mrow><mo stretchy="true" form="prefix">[</mo><mi>Y</mi><mo stretchy="true" form="postfix">]</mo></mrow><mi>p</mi></msup><mo>,</mo></mrow><annotation encoding="application/x-tex">
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>𝕍</mi><mo stretchy="false" form="prefix">[</mo><mi>Y</mi><mo stretchy="false" form="postfix">]</mo><mo>=</mo><mi>a</mi><mo>⋅</mo><mi>𝔼</mi><mo stretchy="false" form="prefix">[</mo><mi>Y</mi><msup><mo stretchy="false" form="postfix">]</mo><mi>p</mi></msup><mo>,</mo></mrow><annotation encoding="application/x-tex">
 \begin{equation*}
 \mathbb{V}[Y] = a \cdot \mathbb{E}[Y]^p,
 \end{equation*}
@@ -2172,11 +2173,10 @@ compound Poisson linear models <span class="citation">(Zhang
 2012)</span>.</li>
 <li>DCL: Claims Reserving under the Double Chain-Ladder Model.
 Statistical modelling and forecasting in claims reserving in non-life
-insurance under the Double Chain-Ladder framework by <span class="citation">(Miranda, Nielsen, and Verrall 2012)</span>.</li>
+insurance under the Double Chain-Ladder framework by <span class="citation">(Miranda et al. 2012)</span>.</li>
 <li>actuar: Loss distributions modelling, risk theory (including ruin
 theory), simulation of compound hierarchical models and credibility
-theory <span class="citation">(Dutang, Goulet, and Pigeon
-2008)</span>.</li>
+theory <span class="citation">(Dutang et al. 2008)</span>.</li>
 <li>fitdistrplus: Help to fit of a parametric distribution to
 non-censored or censored data <span class="citation">(Delignette-Muller
 et al. 2010)</span>.</li>
@@ -2191,7 +2191,7 @@ of interest to non-life actuaries <span class="citation">(Fannin
 Simulator <span class="citation">(Avanzi, Taylor, and Wang
 2021)</span>
 </li>
-<li>SynthETIC: Synthetic Experience Tracking Insurance Claims <span class="citation">(Avanzi et al. 2021)</span>
+<li>SynthETIC: Synthetic Experience Tracking Insurance Claims <span class="citation">(Avanzi, Taylor, Wang, and Wong 2021)</span>
 </li>
 <li>NetSimR: Actuarial Functions for Non-Life Insurance Modelling <span class="citation">(Parizas 2019)</span>
 </li>
@@ -2213,7 +2213,7 @@ papers that use a consistent style <span class="citation">(Escoto
 <div class="section level2">
 <h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>
 </h2>
-<div id="refs" class="references csl-bib-body hanging-indent" entry-spacing="0">
+<div id="refs" class="references csl-bib-body hanging-indent">
 <div id="ref-SPLICE" class="csl-entry">
 Avanzi, Benjamin, Greg Taylor, and Melantha Wang. 2021. <em>SPLICE:
 Synthetic Paid Loss and Incurred Cost Experience (SPLICE)
@@ -2241,8 +2241,8 @@ Reserving: A Maximum Likelihood Approach</em>. Casualty Actuarial
 Society; <a href="https://www.casact.org/sites/default/files/database/forum_03fforum_03ff041.pdf" class="external-link uri">https://www.casact.org/sites/default/files/database/forum_03fforum_03ff041.pdf</a>.
 </div>
 <div id="ref-DeSilva2006" class="csl-entry">
-De Silva, Nigel. 2006. <span>“An Introduction to r: Examples for
-Actuaries.”</span> Actuarial Toolkit Working Party; <a href="http://toolkit.pbworks.com/RToolkit" class="external-link uri">http://toolkit.pbworks.com/RToolkit</a>.
+De Silva, Nigel. 2006. <em>An Introduction to r: Examples for
+Actuaries</em>. Version 0.1. Actuarial Toolkit Working Party; <a href="http://toolkit.pbworks.com/RToolkit" class="external-link uri">http://toolkit.pbworks.com/RToolkit</a>.
 </div>
 <div id="ref-Delignette-MullerPouillotDenisDutang2011" class="csl-entry">
 Delignette-Muller, Marie Laure, Regis Pouillot, Jean-Baptiste Denis, and
@@ -2261,20 +2261,19 @@ Journal</em> 8: 443–544.
 </div>
 <div id="ref-Escoto2011" class="csl-entry">
 Escoto, Benedict. 2011. <em>Favir: Formatted Actuarial Vignettes in
-r</em>. 0.5–1st ed. <a href="https://github.com/cran/favir" class="external-link uri">https://github.com/cran/favir</a>.
+r</em>. 0.5-1. <a href="https://github.com/cran/favir" class="external-link uri">Https://github.com/cran/favir</a>.
 </div>
 <div id="ref-MRMR" class="csl-entry">
 Fannin, Brian A. 2013. <em>MRMR: Multivariate Regression Models for
 Reserving</em>. <a href="https://CRAN.R-project.org/package=MRMR" class="external-link">https://CRAN.R-project.org/package=MRMR</a>.
 </div>
 <div id="ref-raw" class="csl-entry">
-———. 2021. <em>Raw: R Actuarial Workshops</em>. <a href="https://CRAN.R-project.org/package=raw" class="external-link">https://CRAN.R-project.org/package=raw</a>.
+Fannin, Brian A. 2021. <em>Raw: R Actuarial Workshops</em>. <a href="https://CRAN.R-project.org/package=raw" class="external-link">https://CRAN.R-project.org/package=raw</a>.
 </div>
 <div id="ref-gesmann2014claims" class="csl-entry">
 Gesmann, Markus. 2014. <span>“Claims Reserving and
 <span>IBNR</span>.”</span> In <em>Computational <span>A</span>ctuarial
-<span>S</span>cience with <span>R</span></em>, 545–84. Chapman;
-Hall/CRC.
+<span>S</span>cience with <span>R</span></em>. Chapman; Hall/CRC.
 </div>
 <div id="ref-gesmann_morris" class="csl-entry">
 Gesmann, Markus, and Jake Morris. 2020. <em>Hierarchical Compartmental
@@ -2285,9 +2284,8 @@ Gigante, and Sigalotti. 2005. <span>“Model Risk in Claims Reserving with
 GLM.”</span> <em>Giornale Dell IIA</em> LXVIII: 55–87.
 </div>
 <div id="ref-Gravelsons2009" class="csl-entry">
-Gravelsons, Brian, Matthew Ball, Dan Beard, Robert Brooks, Naomi
-Couchman, Brian Gravelsons, Charlie Kefford, et al. 2009. <span>“B12: UK
-Asbestos Working Party Update 2009.”</span> <a href="https://www.actuaries.org.uk/system/files/documents/pdf/b12asbestoswp.pdf" class="external-link uri">https://www.actuaries.org.uk/system/files/documents/pdf/b12asbestoswp.pdf</a>.
+Gravelsons, Brian, Matthew Ball, Dan Beard, et al. 2009. <em>B12: UK
+Asbestos Working Party Update 2009</em>. <a href="https://www.actuaries.org.uk/system/files/documents/pdf/b12asbestoswp.pdf" class="external-link uri">Https://www.actuaries.org.uk/system/files/documents/pdf/b12asbestoswp.pdf</a>.
 </div>
 <div id="ref-systemfit" class="csl-entry">
 Henningsen, Arne, and Jeff D. Hamann. 2007. <span>“Systemfit: A Package
@@ -2296,12 +2294,12 @@ for Estimating Systems of Simultaneous Equations in r.”</span>
 </div>
 <div id="ref-KaassGoovaertsDhaeneDenuit2001" class="csl-entry">
 Kaas, R., M. Goovaerts, J. Dhaene, and M. Denuit. 2001. <em>Modern
-Actuarial Risk Theory</em>. Dordrecht: Kluwer <span>A</span>cademic
+Actuarial Risk Theory</em>. Kluwer <span>A</span>cademic
 <span>P</span>ublishers.
 </div>
 <div id="ref-LawsSchmid2011" class="csl-entry">
 Laws, Christopher W., and Frank A. Schmid. 2011. <em>lossDev: Robust
-Loss Development Using MCMC</em>. <a href="https://lossdev.r-forge.r-project.org" class="external-link uri">https://lossdev.r-forge.r-project.org</a>.
+Loss Development Using MCMC</em>. <a href="https://lossdev.r-forge.r-project.org" class="external-link uri">Https://lossdev.r-forge.r-project.org</a>.
 </div>
 <div id="ref-ClaimsReservingWorkingParty:2002" class="csl-entry">
 Lyons, Graham, Will Forster, Paul Kedney, Ryan Warren, and Helen
@@ -2314,14 +2312,14 @@ Error of Chain Ladder Reserve Estimates.”</span> <em>ASTIN Bulletin</em>
 23: 213–25.
 </div>
 <div id="ref-Mack1999" class="csl-entry">
-———. 1999. <span>“The Standard Error of Chain Ladder Reserve Estimates:
-Recursive Calculation and Inclusion of a Tail Factor.”</span> <em>Astin
-Bulletin</em> Vol. 29 (2): 361–266.
+Mack, Thomas. 1999. <span>“The Standard Error of Chain Ladder Reserve
+Estimates: Recursive Calculation and Inclusion of a Tail Factor.”</span>
+<em>Astin Bulletin</em> Vol. 29 (2): 361–266.
 </div>
 <div id="ref-MaynardDeSilvaHollowayGesmannLauHarnett2006" class="csl-entry">
 Maynard, Trevor, Nigel De Silva, Richard Holloway, Markus Gesmann, Sie
-Lau, and John Harnett. 2006. <span>“An Actuarial Toolkit. Introducing
-<span>T</span>he <span>T</span>oolkit <span>M</span>anifesto.”</span> <a href="https://www.actuaries.org.uk/system/files/documents/pdf/actuarial-toolkit.pdf" class="external-link uri">https://www.actuaries.org.uk/system/files/documents/pdf/actuarial-toolkit.pdf</a>.
+Lau, and John Harnett. 2006. <em>An Actuarial Toolkit. Introducing
+<span>T</span>he <span>T</span>oolkit <span>M</span>anifesto</em>. <a href="https://www.actuaries.org.uk/system/files/documents/pdf/actuarial-toolkit.pdf" class="external-link uri">Https://www.actuaries.org.uk/system/files/documents/pdf/actuarial-toolkit.pdf</a>.
 </div>
 <div id="ref-MW2008" class="csl-entry">
 Merz, Michael, and Mario V. Wüthrich. 2008a. <span>“Modelling the Claims
@@ -2329,13 +2327,13 @@ Development Result for Solvency Purposes.”</span> <em>CAS E-Forum</em>
 Fall: 542–68.
 </div>
 <div id="ref-MerzWuthrich2008" class="csl-entry">
-———. 2008b. <span>“Prediction Error of the Multivariate Chain Ladder
-Reserving Method.”</span> <em>North American Actuarial Journal</em> 12:
-175–97.
+Merz, Michael, and Mario V. Wüthrich. 2008b. <span>“Prediction Error of
+the Multivariate Chain Ladder Reserving Method.”</span> <em>North
+American Actuarial Journal</em> 12: 175–97.
 </div>
 <div id="ref-MerzWuthrich2014" class="csl-entry">
-———. 2014. <span>“Laims Run-Off Uncertainty: The Full Picture.”</span>
-<em>SSRN Manuscript</em> 2524352.
+Merz, Michael, and Mario V. Wüthrich. 2014. <span>“Laims Run-Off
+Uncertainty: The Full Picture.”</span> <em>SSRN Manuscript</em> 2524352.
 </div>
 <div id="ref-MerzWuthrich:2010" class="csl-entry">
 Merz, M., and M. Wüthrich. 2010. <span>“Paid-Incurred Chain Claims
@@ -2343,9 +2341,9 @@ Reserving Method.”</span> <em>Insurance: Mathematics and Economics</em>
 46(3): 568–79.
 </div>
 <div id="ref-Michaels2002" class="csl-entry">
-Michaels, Darren. 2002. <span>“<span>APH</span>: How the Love Carnal and
-Silicone Implants Nearly Destroyed <span>L</span>loyd’s
-(Slides).”</span> Institute of Actuaries: <a href="https://www.actuaries.org.uk/system/files/documents/pdf/aph-how-love-canal-and-silicone-breasts.pdf" class="external-link uri">https://www.actuaries.org.uk/system/files/documents/pdf/aph-how-love-canal-and-silicone-breasts.pdf</a>.
+Michaels, Darren. 2002. <em><span>APH</span>: How the Love Carnal and
+Silicone Implants Nearly Destroyed <span>L</span>loyd’s (Slides)</em>.
+<a href="https://www.actuaries.org.uk/system/files/documents/pdf/aph-how-love-canal-and-silicone-breasts.pdf" class="external-link uri">Https://www.actuaries.org.uk/system/files/documents/pdf/aph-how-love-canal-and-silicone-breasts.pdf</a>.
 </div>
 <div id="ref-miranda_nielsen_verrall_2012" class="csl-entry">
 Miranda, María Dolores Martínez, Jens Perch Nielsen, and Richard
@@ -2357,7 +2355,8 @@ Murphy, Daniel. 1994. <span>“Unbiased Loss Development Factors.”</span>
 <em>PCAS</em> 81: 154–222.
 </div>
 <div id="ref-Murphy2011" class="csl-entry">
-———. 2021. <em>Mondate: Keep Track of Dates in Terms of Months</em>. <a href="https://CRAN.R-project.org/package=mondate" class="external-link uri">https://CRAN.R-project.org/package=mondate</a>.
+Murphy, Daniel. 2021. <em>Mondate: Keep Track of Dates in Terms of
+Months</em>. <a href="https://CRAN.R-project.org/package=mondate" class="external-link uri">Https://CRAN.R-project.org/package=mondate</a>.
 </div>
 <div id="ref-JamesOrr:2012" class="csl-entry">
 Orr, James. 2012. <em><span>GIROC</span> Reserving Research
@@ -2373,24 +2372,24 @@ Chain-Ladder.”</span> <em>Dresdner Schriften Zur
 Versicherungsmathematik</em>.
 </div>
 <div id="ref-Quarg2004" class="csl-entry">
-Quarg, Gerhard, and Thomas Mack. 2004. <span>“Munich Chain
-Ladder.”</span> Munich Re Group.
+Quarg, Gerhard, and Thomas Mack. 2004. <em>Munich Chain Ladder</em>.
+Munich Re Group.
 </div>
 <div id="ref-Rdata" class="csl-entry">
 R Development Core Team. 2022a. <em>R Data Import/Export</em>. R
 Foundation for Statistical Computing; <a href="https://cran.r-project.org/doc/manuals/R-data.pdf" class="external-link uri">https://cran.r-project.org/doc/manuals/R-data.pdf</a>.
 </div>
 <div id="ref-Radmin" class="csl-entry">
-———. 2022b. <em>R Installation and Administration</em>. R Foundation for
-Statistical Computing; <a href="https://cran.r-project.org/doc/manuals/R-admin.pdf" class="external-link uri">https://cran.r-project.org/doc/manuals/R-admin.pdf</a>.
+R Development Core Team. 2022b. <em>R Installation and
+Administration</em>. R Foundation for Statistical Computing; <a href="https://cran.r-project.org/doc/manuals/R-admin.pdf" class="external-link uri">https://cran.r-project.org/doc/manuals/R-admin.pdf</a>.
 </div>
 <div id="ref-Schmidt2011" class="csl-entry">
-Schmidt, Klaus D. 2017. <span>“A Bibliography on Loss Reserving.”</span>
-https://tu-dresden.de/mn/math/stochastik/ressourcen/dateien/schmidt/dsvm/reserve.pdf.
+Schmidt, Klaus D. 2017. <em>A Bibliography on Loss Reserving</em>.
+Https://tu-dresden.de/mn/math/stochastik/ressourcen/dateien/schmidt/dsvm/reserve.pdf.
 </div>
 <div id="ref-Spedicato2011" class="csl-entry">
 Spedicato, Giorgio Alfredo. 2022. <em>Introduction to Lifecontingencies
-Package</em>. 1.3.8 ed. StatisticalAdvisor Inc; <a href="https://CRAN.R-project.org/package=lifecontingencies/" class="external-link uri">https://CRAN.R-project.org/package=lifecontingencies/</a>.
+Package</em>. 1.3.8. StatisticalAdvisor Inc; <a href="https://CRAN.R-project.org/package=lifecontingencies/" class="external-link uri">https://CRAN.R-project.org/package=lifecontingencies/</a>.
 </div>
 <div id="ref-ZehnwirthBarnettProceedings" class="csl-entry">
 Zehnwirth, Ben, and Glen Barnett. 2000. <span>“Best Estimates for
@@ -2401,8 +2400,8 @@ Zhang, Yanwei. 2010. <span>“A General Multivariate Chain Ladder
 Model.”</span> <em>Insurance: Mathematics and Economics</em> 46: 588–99.
 </div>
 <div id="ref-Zhang:2012" class="csl-entry">
-———. 2012. <span>“Likelihood-Based and Bayesian Methods for Tweedie
-Compound Poisson Linear Mixed Models.”</span> <em>Statistics and
+Zhang, Yanwei. 2012. <span>“Likelihood-Based and Bayesian Methods for
+Tweedie Compound Poisson Linear Mixed Models.”</span> <em>Statistics and
 Computing</em>.
 </div>
 <div id="ref-ZhangVanjaGuszcza2012" class="csl-entry">
@@ -2424,7 +2423,7 @@ Nonlinear Model for Forecasting Insurance Loss Payments.”</span>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.1.</p>
 </div>
 
     </footer>

@@ -41,6 +41,7 @@ See also
 ## Examples
 
 ``` r
+
 # See the Taylor/Ashe example in Mack's 1993 paper
 
 #original triangle

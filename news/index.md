@@ -1,6 +1,12 @@
 # Changelog
 
+## ChainLadder 0.2.22
+
+- Fixed typo in one of the warning messages in MultiChainLadder
+
 ## ChainLadder 0.2.21
+
+CRAN release: 2026-02-18
 
 - Fixed operator precedence bug in PaidIncurredChain() that inflated
   reserves by ~2.9%
